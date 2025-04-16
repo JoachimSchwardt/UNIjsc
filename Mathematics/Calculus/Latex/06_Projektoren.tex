@@ -1,0 +1,303 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+
+\begin{document}
+
+\title{06 Projektoren}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{orthogonale Projektoren}
+a)
+\begin{proof}
+$T$ ist beschränkt. Sei $\chi\in\mathcal{H}$:
+$$\|T\chi\|=|\brak\langle {\phi}| {\chi}\rangle|\cdot\|\psi\|\le \|\phi\|\cdot\|\chi\|\cdot\|\psi\|=:M\|\chi\|$$
+Also ist $\|T\|\le\|\phi\|\cdot\|\psi\|$. Es gilt zudem mit $\chi =\frac{\phi}{\|\phi\|}$, dass $\|T\|\ge\|\phi\|\cdot\|\psi\|$:
+$$\|T\frac{\phi}{\|\phi\|}\|=\|\brak\langle {\phi}| {\frac{\phi}{\|\phi\|}}\rangle\cdot\psi\|=\|\phi\|\cdot\|\psi\|$$
+Also gilt $\|T\| = \|\phi\|\cdot\|\psi\|$. Da $\phi,\psi\in\mathcal{H}\setminus\klammer\left\{ {0} \right\}$, gilt für den Kern:
+\begin{align*}
+T\chi &=\brak\langle {\phi}| {\chi}\rangle\psi=0\ \ \Rightarrow\ \ \ker T=\klammer\left\{ {\chi\in\mathcal{H}\ \vert\ \chi\bot\phi} \right\}=\klammer\left\{ {\phi} \right\}^\bot \\
+T\chi &\propto\psi\ \ \Rightarrow\ \ \mathrm{im\,}T\subseteq\klammer\left\{ {\chi\in\mathcal{H}\ \vert\ \forall c\in\mathbb{C}:\chi=c\psi} \right\}= \mathrm{lin}\klammer\left\{ {\psi} \right\}\\
+T\frac{\lambda\phi}{\|\phi\|^2}&=\lambda\psi\ \ \Rightarrow\ \ \mathrm{im\,}T = \mathrm{lin}\klammer\left\{ {\psi} \right\}
+\end{align*}
+Es gilt $T^\ast = \oper |\phi\rangle\langle \psi|$.
+\begin{align*}
+\brak\langle {\chi_1}| {T\chi_2}\rangle&=\brak\langle {\chi_1}| {\brak\langle {\phi}| {\chi_2}\rangle\psi}\rangle=\brak\langle {\psi}| {\chi_1}\rangle^\ast\brak\langle {\phi}| {\chi_2}\rangle=\brak\langle {\brak\langle {\psi}| {\chi_1}\rangle\phi}| {\chi_2}\rangle=\brak\langle {T^\ast\chi_1}| {\chi_2}\rangle
+\end{align*}
+\end{proof}
+b)
+\begin{proof}
+$T$ ist normal, genau dann wenn $\phi = c\psi$ für ein $c\in\mathbb{C}$. 
+\begin{align*}
+T^\ast T&=\oper |\phi\rangle\langle \psi|\oper |\psi\rangle\langle \phi|=\|\psi\|^2\oper |\phi\rangle\langle \phi| \\
+TT^\ast &=\oper |\psi\rangle\langle \phi|\oper |\phi\rangle\langle \psi|=\|\phi\|^2\oper |\psi\rangle\langle \psi|
+\end{align*}
+$T$ ist partiell isometrisch, genau dann wenn $\|\phi\|\cdot\|\psi\|=1$. Es gilt $(\ker T)^\bot=\klammer\left\{ {\phi} \right\}^{\bot\bot}=\mathrm{lin}\klammer\left\{ {\phi} \right\}$. Sei $T$ partiell isometrisch:
+\begin{align*}
+\|\phi\|&=\|T\phi\|=\|\brak\langle {\phi}| {\phi}\rangle\psi\|=\|\phi\|^2\|\psi\|
+\end{align*}
+Sei $\chi=\lambda\phi\in\mathrm{lin}\klammer\left\{ {\phi} \right\}$ und $\|\phi\|\cdot\|\psi\|=1$:
+\begin{align*}
+\|T\chi\|&=\|\brak\langle {\phi}| {\lambda\phi}\rangle\psi\|=|\lambda|\cdot\|\phi\|=\|\chi\|
+\end{align*}
+$T$ ist selbstadjungiert, genau dann wenn $\phi=\lambda\psi$ für ein $\lambda\in\mathbb{R}$.
+\begin{align*}
+T&=\oper |\psi\rangle\langle \phi|=\lambda\oper |\psi\rangle\langle \psi|=\oper |\lambda^\ast\psi\rangle\langle \psi|\overset{!}{=}\oper |\phi\rangle\langle \psi|=T^\ast
+\end{align*}
+$T$ ist eine Projektion, genau dann wenn $\brak\langle {\phi}| {\psi}\rangle=1$.
+\begin{align*}
+T^2&=T \ \ \Leftrightarrow\ \ \oper |\psi\rangle\langle \phi|\oper |\psi\rangle\langle \phi|=\oper |\psi\rangle\langle \phi|\ \ \Leftrightarrow\ \ \bra\langle {\phi\vert\psi  }\rangle = 1
+\end{align*}
+$T$ ist eine Orthoprojektion, genau dann wenn $\brak\langle {\phi}| {\psi}\rangle=\|\phi\|\cdot\|\psi\|=1$.
+\end{proof}
+\section{Beschränkte Operatoren}
+a)
+\begin{proof}
+Sei $S:=T^\ast T$. Wähle für den anderen Fall $T\rightarrow T^\ast$. 
+\begin{align*}
+\brak\langle {\phi}| {S\phi}\rangle&=\brak\langle {T\phi}| {T\phi}\rangle=\|T\phi\|^2\ge 0 \\
+S^\ast&=\kla\left( {T^\ast T} \right)^\ast=T^\ast T^{\ast\ast}=T^\ast T=S
+\end{align*}
+\end{proof}
+b)
+\begin{proof}
+Setze $M:=\sup\klammer\left\{ {|\brak\langle {\phi}| {T\phi}\rangle| \ \vert\ \|\phi\|\le 1} \right\}$. Es folgt $M\le\|T\|$:
+$$|\brak\langle {\phi}| {T\phi}\rangle| \le \|\phi\|\cdot\|T\phi\|\le\|T\|\cdot\|\phi\|^2$$ 
+Für $\|\phi\|, \|\psi\|\le 1$ gilt:
+\begin{align*}
+\brak\langle {\phi+\psi}| {T(\phi+\psi)}\rangle-\brak\langle {\phi-\psi}| {T(\phi-\psi}\rangle&=2\brak\langle {\phi}| {T\psi}\rangle+2\brak\langle {\psi}| {T\phi}\rangle=4\mathrm{Re\,}\brak\langle {\phi}| {T\psi}\rangle
+\end{align*}
+Mit der Parallelogrammidentität folgt daraus:
+\begin{align*}
+4\mathrm{Re\,}\brak\langle {\phi}| {T\psi}\rangle &\le M\kla\left( {\|\phi+\psi\|^2+\|\phi-\psi\|^2} \right)=2M\kla\left( {\|\phi\|^2+\|\psi\|^2} \right)\le 4M
+\end{align*}
+Es gibt $\lambda\in\mathbb{C}$ mit $|\lambda|=1$ und $\lambda\brak\langle {\phi}| {T\psi}\rangle=|\brak\langle {\phi}| {T\psi}\rangle|$. Also folgt:
+\begin{align*}
+|\brak\langle {\phi}| {T\psi}\rangle|&=\mathrm{Re\,}|\brak\langle {\phi}| {T\psi}\rangle|=\mathrm{Re\,}\lambda\brak\langle {\phi}| {T\psi}\rangle=\mathrm{Re\,}\brak\langle {\lambda^\ast\phi}| {T\psi}\rangle\le M
+\end{align*}
+\end{proof}
+c)
+\begin{proof}
+$(i)\Rightarrow(ii)$: \\
+Es gilt:
+\begin{align*}
+\mathrm{im\,}T^\ast &\subseteq \overline{\mathrm{im\,}T^\ast}=\kla\left( {\mathrm{im\,}T^\ast} \right)^{\bot \bot}=\kla\left( {\ker T} \right)^\bot
+\end{align*}
+Damit folgt:
+\begin{align*}
+\brak\langle {\kla\left( {(TT^\ast)^2-TT^\ast} \right)\psi}| {\psi}\rangle&=\brak\langle {TT^\ast\psi}| {TT^\ast\psi}\rangle-\brak\langle {TT^\ast\psi}| {\psi}\rangle=\|TT^\ast\psi\|^2-\|T^\ast\psi\|^2=0
+\end{align*}
+$(ii)\Rightarrow(i)$: \\
+Es gilt:
+\begin{align*}
+\|TT^\ast\psi\|^2&=\brak\langle {(TT^\ast)^2\psi}| {\psi}\rangle=\brak\langle {TT^\ast\psi}| {\psi}\rangle=\|T^\ast\psi\|^2
+\end{align*}
+$(ii)\Rightarrow(iii)$: \\
+Es gilt: 
+\begin{align*}
+(T^\ast TT^\ast - T^\ast)^\ast (T^\ast TT^\ast - T^\ast)&=(TT^\ast T-T) (T^\ast TT^\ast - T^\ast) \\
+&=(TT^\ast T)(T^\ast TT^\ast)-(TT^\ast T)T^\ast - T(T^\ast TT^\ast)+TT^\ast \\
+&=(TT^\ast)^3-2(TT^\ast)^2+TT^\ast =0
+\end{align*}
+Wegen der $C^\ast -$Eigenschaft folgt:
+\begin{align*}
+\|T^\ast TT^\ast -T^\ast\|^2=\|(T^\ast TT^\ast -T^\ast)^\ast (T^\ast TT^\ast - T^\ast)=0\ \ \Rightarrow\ \ T^\ast = T^\ast TT^\ast
+\end{align*}
+$(iii)\Rightarrow(ii)$: \\
+Es gilt:
+\begin{align*}
+(TT^\ast)^2&=TT^\ast TT^\ast = T(T^\ast TT^\ast)=TT^\ast
+\end{align*}
+$(iii)\Leftrightarrow(iv)$: \\
+Es gilt:
+\begin{align*}
+T^\ast &=T^\ast TT^\ast\ \ \Leftrightarrow\ \ T=(T^\ast TT^\ast)^\ast = TT^\ast T\ \ \Leftrightarrow\ \ T^\ast\ \mathrm{partiell\ isometrisch}
+\end{align*}
+\end{proof}
+d)
+\begin{proof}
+$(i)\Rightarrow(ii)$:\\
+Aus der Polarisationsidentität folgt:
+\begin{align*}
+\brak\langle {T\phi}| {T\psi}\rangle&=\frac{1}{4}\sum_{k=1}^4i^k\|i^k T\phi+T\psi\|^2=\frac{1}{4}\sum_{k=1}^4i^k\|i^k \phi+\psi\|^2=\brak\langle {\phi}| {\psi}\rangle
+\end{align*}
+$(ii)\Rightarrow(i)$:\\
+Es gilt:
+\begin{align*}
+\|T\phi\|^2&=\brak\langle {T\phi}| {T\phi}\rangle=\brak\langle {\phi}| {\phi}\rangle=\|\phi\|^2
+\end{align*}
+\end{proof}
+e)
+\begin{proof}
+$(i)\Leftrightarrow(iv)$:\\
+\begin{align*}
+T\ \tecxt\text{normal}\ \ \Leftrightarrow\ \ T^\ast T = TT^\ast\ \ \Leftrightarrow\ \ T^\ast (T^\ast)^\ast = (T^\ast)^\ast T^\ast\ \ \Leftrightarrow\ \ T^\ast\ \tecxt\text{normal}
+\end{align*}
+$(i)\Rightarrow(ii)$:\\
+Sei $\phi,\psi\in\mathcal{H}$:
+\begin{align*}
+\brak\langle {T\phi}| {T\psi}\rangle&=\brak\langle {\phi}| {T^\ast T\psi}\rangle=\brak\langle {\phi}| {TT^\ast\psi}\rangle=\brak\langle {T^\ast\phi}| {T^\ast\psi}\rangle
+\end{align*}
+$(ii)\Rightarrow(iii)$:\\
+Sei $\phi\in\mathcal{H}$:
+\begin{align*}
+\|T\phi\|^2&=\brak\langle {T\phi}| {T\phi}\rangle=\brak\langle {T^\ast\phi}| {T^\ast\phi}\rangle=\|T^\ast\phi\|^2
+\end{align*}
+$(iii)\Rightarrow(i)$:\\
+\begin{align*}
+\brak\langle {(T^\ast T-TT^\ast)\phi}| {\phi}\rangle&=\brak\langle {T\phi}| {T\phi}\rangle-\brak\langle {T^\ast\phi}| {T^\ast\phi}\rangle=0
+\end{align*}
+\end{proof}
+f)
+\begin{proof}
+$(i)\Leftrightarrow(iii)$:\\
+\begin{align*}
+T\ \tecxt\text{unitär}\ \ \Leftrightarrow\ \ T^{-1}=T^\ast\ \ \Leftrightarrow\ \ (T^{-1})^\ast=(T^\ast)^\ast\ \ \Leftrightarrow\ \ (T^\ast)^{-1}=(T^\ast)^\ast\ \ \Leftrightarrow\ \ T\ \tecxt\text{unitär}
+\end{align*}
+$(i)\Rightarrow(ii)$:\\
+Da $T$ invertierbar ist, ist $T$ insbesondere surjektiv. Außerdem ist $T$ isometrisch:
+\begin{align*}
+\|T\phi\|^2&=\brak\langle {T\phi}| {T\phi}\rangle=\brak\langle {T^\ast T\phi}| {\phi}\rangle=\brak\langle {\phi}| {\phi}\rangle=\|\phi\|^2
+\end{align*}
+$(ii)\Rightarrow(i)$:\\
+Da $T$ isometrisch ist, ist $T$ insbesondere injektiv. Mit der vorausgesetzten Surjektivität folgt also, dass $T$ bijektiv ist. Es gilt $T^\ast = T^{-1}$:
+\begin{align*}
+\brak\langle {(T^\ast T-I)\phi}| {\phi}\rangle&=\brak\langle {T\phi}| {T\phi}\rangle-\brak\langle {\phi}| {\phi}\rangle=\|T\phi\|^2-\|\phi\|^2=0
+\end{align*}
+\end{proof}
+g)
+\begin{proof}
+$(i)\Rightarrow(ii)$:\\
+Sei $\phi\in\mathcal{H  }$:
+\begin{align*}
+\brak\langle {T\phi}| {\phi}\rangle&=\brak\langle {\phi}| {T\phi}\rangle^\ast=\brak\langle {T^\ast\phi}| {\phi}\rangle^\ast=\brak\langle {T\phi}| {\phi}\rangle^\ast
+\end{align*}
+$(ii)\Rightarrow(i)$:\\
+Sei $\phi\in\mathcal{H  }$:
+\begin{align*}
+\brak\langle {(T-T^\ast)\phi}| {\phi}\rangle&=\brak\langle {T\phi}| {\phi}\rangle-\brak\langle {\phi}| {T\phi}\rangle=\brak\langle {T\phi}| {\phi}\rangle-\brak\langle {T\phi}| {\phi}\rangle^\ast=0
+\end{align*}
+\end{proof}
+\section{Projektionen}
+a)
+\begin{proof}
+$(i)\Rightarrow(ii)$:\\
+Betrachte:
+\begin{align*}
+\kla\left( {I-P} \right)^2&=I^2-IP-PI+P^2=I-2P+P=I-P
+\end{align*}
+$(ii)\Rightarrow(i)$:\\
+Da $I-P$ eine Projektion ist, ist auch $P=I-(I-P)$ eine Projektion.
+$(iii)\Rightarrow(i)$:\\
+Sei $\phi,\psi\in\mathcal{H}$:
+\begin{align*}
+\brak\langle {P^2\psi}| {\phi}\rangle&=\brak\langle {\psi}| {(P^\ast)^2\phi}\rangle=\brak\langle {\psi}| {P^\ast\phi}\rangle=\brak\langle {P\psi}| {\phi}\rangle
+\end{align*}
+Alternativ für die Äquivalenz zwischen $(i)$ und $(iii)$:
+\begin{align*}
+(P^\ast)^2&=P^\ast P^\ast = (PP)^\ast = P^\ast
+\end{align*}
+\end{proof}
+b)
+\begin{proof}
+Aus Aufgabe 3.4a) wissen wir bereits, dass $\ker P$ abgeschlossener Unterraum ist. Sei $\phi\in\mathcal{H}$. Es gilt $P\phi\in\ker (I-P)$, also ist im\,$P\subseteq\ker (I-P)$:
+\begin{align*}
+(I-P)P\phi&=IP\phi-P^2\phi=0
+\end{align*}
+Sei $\phi\in\ker (I-P)$. Dann ist $\phi=P\phi\in\tecxt\text{im\,}P$, also gilt $\ker(I-P)\subseteq\tecxt\text{im\,}P$:
+\begin{align*}
+0&=(I-P)\phi=\phi-P\phi
+\end{align*}
+Aus dem Übergang von $P\rightarrow I-P$ folgt dann mit a) die andere Behauptung.
+\end{proof}
+c)
+\begin{proof}
+Es gilt:
+\begin{align*}
+\|P\|&=\|P^2\|\le\|P\|^2\ \ \Rightarrow\ \ 0\le\|P\|(\|P\|-1)
+\end{align*}
+\end{proof}
+d)
+\begin{proof}
+$(i)\Rightarrow(ii)$:\\
+Es ist im\,$P\subseteq (\ker P)^\bot=(\tecxt\text{im\,}(I-P))^\bot$. Daraus folgt:
+\begin{align*}
+\brak\langle {P\phi}| {\phi}\rangle&=\brak\langle {P\phi}| {P\phi}\rangle+\brak\langle {P\phi}| {(I-P)\phi}\rangle=\|P\phi\|^2\ge 0
+\end{align*}
+$(ii)\Rightarrow(iii)$:\\
+Positive Operatoren sind selbstadjungiert, vgl. Aufgabe 6.2g).\\
+$(iii)\Rightarrow(iv)$:\\
+Selbstadjungierte Operatoren sind normal.\\
+$(iv)\Rightarrow(v)$:\\
+Es gilt $(PP^\ast)^2=P(P^\ast P)P^\ast =P(P P^\ast)P^\ast =P^2(P^\ast)^2=PP^\ast$. Also ist $PP^\ast$ eine Projektion und somit $P$ eine partielle Isometrie. \\
+$(v)\Rightarrow(vi)$:\\
+Da $P$ partiell isometrisch ist, ist $P^\ast P$ eine Projektion:
+\begin{align*}
+(P^\ast P-P)^\ast (P^\ast P-P)&=(P^\ast P-P^\ast)(P^\ast P-P)=(P^\ast P)^2-(P^\ast)^2P-P^\ast P^2+P^\ast P=\\
+&=(P^\ast P)^2-P^\ast P=0
+\end{align*}
+$(vi)\Rightarrow(vii)$:\\
+Wegen der $C^\ast -$Eigenschaft gilt:
+\begin{align*}
+\|P\|^2&=\|P^\ast P\|=\|P\|\ \ \Rightarrow\ \ 0=\|P\|(\|P\|-1)
+\end{align*}
+$(vii)\Rightarrow(i)$:\\
+Sei $\|P\|=1$, $\phi\in\ker P$, $\psi\in\tecxt\text{im\,}P$ und $\lambda\in\mathbb{C}$. Dann gilt:
+\begin{align*}
+P(\phi+\lambda\psi)&=P\phi+\lambda P\psi=\lambda\psi
+\end{align*}
+Damit folgt:
+\begin{align*}
+\|\lambda\psi\|^2&=\|P(\phi+\lambda\psi)\|^2\le \|\phi+\lambda\psi\|^2=\|\phi\|^2+2\tecxt\text{Re\,}\lambda\brak\langle {\phi}| {\psi}\rangle+\|\lambda\psi\|^2\\
+&\Rightarrow\ \ \|\phi\|^2\ge -2|\lambda|\tecxt\text{Re\,}e^{i\alpha}|\brak\langle {\phi}| {\psi}\rangle|e^{i\beta}=-2|\lambda|\,|\brak\langle {\phi}| {\psi}\rangle|\cos(\alpha+\beta)
+\end{align*}
+Wähle also $|\lambda|=\mu >0$ beliebig und $\alpha=\pi-\beta$:
+\begin{align*}
+\|\phi\|^2\ge 2\mu |\brak\langle {\phi}| {\psi}\rangle|
+\end{align*}
+Damit diese Ungleichung für beliebig große $\mu$ gelten kann, muss $\brak\langle {\phi}| {\psi}\rangle=0$ gelten.
+\end{proof}
+\section{$C^\ast-$Algebra}
+a)
+\begin{proof}
+Aus Aufgabe 1.2 wissen wir, dass $l^\infty$, $c$ und $c_0$ Banachräume sind. \\
+Produktfolge zweier beschränkter Folgen ist beschränkt, also gilt $xy\in l^\infty$. Insbesondere ist $\|\cdot\|_\infty$ submultiplikativ. \\
+Produktfolge zweier konvergenter Folgen ist konvergent, also ist $xy\in c$. \\
+Produktfolge zweier Nullfolgen ist eine Nullfolge, also ist $xy\in c_0$. \\
+Die Assoziativität, Bilinearität und Kommutativität der Multiplikation folgt direkt aus dem Assoziativ-, Distributiv. bzw. Kommutativgesetz im Körper $\mathbb{C}$. Das Gleiche gilt auch für die komplexe Konjugation. \\
+Sei $x_k$ eine Folge in $\mathbb{C}$. Dann folgt die $C^\ast-$Eigenschaft:
+\begin{align*}
+|\overline{x_k}x_k|=||x_k|^2|=|x_k|^2
+\end{align*}
+$c_0$ hat kein Einselement, da $I\notin c_0 $
+\end{proof}
+b)
+\begin{proof}
+Sei $x_k$ eine Folge in $l^2$. Dann gilt $M_{ab}=M_aM_b$:
+\begin{align*}
+M_{ab}x&=(a_kb_kx_k)=M_a(b_kx_k)=M_aM_bx
+\end{align*}
+Weiterhin gilt $M_{a^\ast}=M_a^\ast$:
+\begin{align*}
+\brak\langle {y}| {M_ax}\rangle&=a_k\brak\langle {y_k}| {x_k}\rangle=\brak\langle {a_k^\ast y_k}| {x_k}\rangle=\brak\langle {M_{a^\ast}y}| {x}\rangle
+\end{align*}
+\end{proof}
+\end{document}

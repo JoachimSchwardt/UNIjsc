@@ -1,0 +1,197 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{xcolor, colortbl}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{02 Coordinate systems}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{General Relativity}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+
+\section*{Task 4: Non-orthogonal coordinates}
+Given is the vector $\vec{r}=\binom{x^1+x^2}{x^2}$.
+We can compute $\vec{g}_a$ by using their definition
+\begin{align}
+\vec{g}_1 &= \partial_1\vec{r} = \binom{1}{0},&& &\vec{g}_2 &=\partial_2\vec{r} = \binom{1}{1} \label{eqn:g unten a} 
+\end{align}
+We may use the orthonormality condition $\vec{g}_a\cdot\vec{g}^b=\delta_a^b$. 
+Let $\vec{g}^{1}=\binom{\alpha_{1}}{\beta_{1}}$ and $\vec{g}^{2}=\binom{\alpha_{2}}{\beta_{2}}$.
+Then we find
+\begin{align}
+1 &\overset{!}{=} \vec{g}_1\cdot\vec{g}^1 = \alpha_1, &&& 0&\overset{!}{=}\vec{g}_2\cdot\vec{g}^1 = \alpha_1+\beta_1\ \ \Rightarrow\ \ \beta_1 = -1\\
+0 &\overset{!}{=} \vec{g}_1\cdot\vec{g}^2 = \alpha_2, &&& 1&\overset{!}{=}\vec{g}_2\cdot\vec{g}^2 = \alpha_2+\beta_2\ \ \Rightarrow\ \ \beta_2 = 1
+\end{align}
+These results can be summarized as
+\begin{align}
+\vec{g}^1 &= g^{1b}\vec{g}_b = \binom{1}{-1},&& &\vec{g}^2 &= g^{2b}\vec{g}_b = \binom{0}{1}\label{eqn:g oben a}.
+\end{align}
+The vectors are visualized in \autoref{figure:g oben unten a}.
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=2]
+\draw[->, >=latex] (0,-1) -- (0,2) node[right]{$x^2$};
+\draw[->, >=latex] (-2,0) -- (2,0) node[below]{$x^1$};
+\draw[->, >=latex, blue, ultra thick] (0,0) -- (1,0) node[above]{$\vec{g}_1$};
+\draw[->, >=latex, blue, ultra thick] (0,0) -- (1,1) node[above]{$\vec{g}_2$};
+\draw[->, >=latex, red, ultra thick] (0,0) -- (1,-1) node[right]{$\vec{g}^1$};
+\draw[->, >=latex, red, ultra thick] (0,0) -- (0,1) node[left]{$\vec{g}^2$};
+\end{tikzpicture}
+\caption{Visualization of $\vec{g}_a$ and $\vec{g}^a$.}
+\label{figure:g oben unten a}
+\end{figure}
+The metric tensor and its inverse are given by
+\begin{align}
+g_{ab} &= \begin{pmatrix}
+1&1 \\ 1&2
+\end{pmatrix}&\Rightarrow&& g^{ab} &= \begin{pmatrix}
+2&-1 \\ -1&1
+\end{pmatrix} \label{eqn:Metrik}
+\end{align}
+The kinetic energy as a function of $\dot{x}^a$ is given by
+\begin{align}
+T &= \frac{m}{2}g_{ab}\dot{x}^a\dot{x}^b = \frac{m}{2}\kla\left[ {(\dot{x}^1)^2 + 2\dot{x}^1\dot{x}^2 + 2(\dot{x}^2)^2} \right] \label{eqn:Kinetische Energie von xdot oben a}
+\end{align}
+The gradient of some function $f(x^1,x^2)$ can be written as
+\begin{align}
+\nabla f &= \vec{g}^a\partial_a f = \binom{1}{-1}\partial_1f+\binom{0}{1}\partial_2f = \binom{\partial_1f}{-\partial_1f+\partial_2f} \label{eqn:Gradient}
+\end{align}
+We can compute the coefficients for $\vec{A}=\binom{1}{0}$ and $\vec{B}=\binom{0}{1}$ using
+\begin{align}
+A_1 &= \vec{A}\cdot\vec{g}_1 = 1 & A_2 &= \vec{A}\cdot\vec{g}_2 = 1,\\
+A^1 &= \vec{A}\cdot\vec{g}^1 = 1 & A^2 &= \vec{A}\cdot\vec{g}^2 = 0,\\
+B_1 &= \vec{B}\cdot\vec{g}_1 = 0 & B_2 &= \vec{B}\cdot\vec{g}_2 = 1,\\
+B^1 &= \vec{B}\cdot\vec{g}^1 = -1 & B^2 &= \vec{B}\cdot\vec{g}^2 = 1.
+\end{align}
+
+\section*{Task 5: Cylindrical coordinates}
+Given is the vector $\vec{r}=\begin{pmatrix}
+x^1\cos x^2 \\ x^1\sin x^2 \\ x^3
+\end{pmatrix}$ where $x^1=\rho$, $x^2=\phi$ and $x^3=z$.
+We can compute $\vec{g}_a$ form the definition
+\begin{align}
+\vec{g}_1 &= \partial_1\vec{r} = \begin{pmatrix}
+\cos x^2 \\ \sin x^2 \\ 0
+\end{pmatrix} &\vec{g}_2 &= \partial_2\vec{r} = \begin{pmatrix}
+-x^1\sin x^2 \\ x^1\cos x^2 \\ 0
+\end{pmatrix}&\vec{g}_3 &= \partial_3\vec{r}=\begin{pmatrix}
+0 \\ 0 \\ 1
+\end{pmatrix} \label{eqn:zylinder:g unten a}
+\end{align}
+The metric tensor and its inverse are
+\begin{align}
+g_{ab} &= \begin{pmatrix}
+1&0&0 \\ 0&(x^1)^2&0 \\ 0&0&1
+\end{pmatrix} &\Rightarrow&& g^{ab} &= \begin{pmatrix}
+1&0&0 \\ 0&\frac{1}{(x^1)^2}&0 \\ 0&0&1
+\end{pmatrix}. \label{eqn:zylinder:Metrik}
+\end{align}
+We may use this to derive the $\vec{g}^a$ components
+\begin{align}
+\vec{g}^1 &= g^{1b}\vec{g}_b = \begin{pmatrix}
+\cos x^2 \\ \sin x^2 \\ 0
+\end{pmatrix} &\vec{g}^2 &= g^{2b}\vec{g}_b = \begin{pmatrix}
+-\frac{1}{x^1}\sin x^2 \\ \frac{1}{x^1}\cos x^2 \\ 0
+\end{pmatrix} &\vec{g}^3 &= g^{3b}\vec{g}_b = \begin{pmatrix}
+0 \\ 0 \\ 1
+\end{pmatrix}. \label{eqn:zylinder:g oben a}
+\end{align}
+The gradient of some function $f(x^1,x^2,x^3)$ may be written as
+\begin{align}
+\nabla f &= \vec{g}^a\partial_a f = \begin{pmatrix}
+\cos x^2\partial_1f-\sin x^2\frac{\partial_2f}{x^1}\\ \cos x^2\partial_1f + \cos x^2\frac{\partial_2f}{x^1} \\ \partial_3f
+\end{pmatrix}. \label{eqn:zylinder:Gradient}
+\end{align}
+The kinetic energy as a function of $\dot{x}^a$ is given by
+\begin{align}
+T &= \frac{m}{2}g_{ab}\dot{x}^a\dot{x}^b = \frac{m}{2}\kla\left[ {(\dot{x}^1)^2 + (x^1)^2(\dot{x}^2)^2 + (\dot{x}^3)^2} \right] = \\
+&= \frac{m}{2} \klam\left[ \dot{\rho}^2 + \rho^2\dot{\phi}^2 + \dot{z}^2 \right]• \label{eqn:zylinder:Kinetische Energie}
+\end{align}
+The Christoffel symbol $\Gamma_{22}^1$ can be computed using the basis vectors
+\begin{align}
+\Gamma_{22}^1 &= \vec{g}^1\partial_2\vec{g}_2 = \begin{pmatrix}
+\cos x^2 \\ \sin x^2 \\ 0
+\end{pmatrix} \cdot \begin{pmatrix}
+-x^1\cos x^2 \\ -x^1\sin x^2 \\ 0
+\end{pmatrix} = -x^1
+\end{align}
+or by using the metric tensor explicitly
+\begin{align}
+\Gamma_{22}^1 &= \frac{1}{2}g^{d1}\kla\left( {g_{d2,2}+g_{2d,2}-g_{22,d}} \right) = -\frac{1}{2}g^{11}\partial_1(x^1)^2 = -x^1.
+\end{align}
+Note that one could also use the slightly simpler form $\Gamma^c_{ab} = g^{cd}\kla\left( g_{ad,b} - \frac{1}{2}g_{ab,d} \right)$, which only requires 2 terms (but makes the symmetry $a\leftrightarrow b$ less evident).
+\\
+A completely different way of getting at the Christoffel symbols is by first considering the Euler-Lagrange equations.
+For this derivation we will use $(\rho,\phi,z)$ instead of $(x^1,x^2,x^3)$.
+In our case we have $L\equiv T$ and therefore
+\begin{align}
+0 &= \frac{\partial L}{\partial \rho} - \frac{\tecxt\text{d}}{\tecxt\text{d}t} \frac{\partial L}{\partial \dot{\rho}} \propto \rho\dot{\phi}^2 - \ddot{\rho},\\
+0 &= \frac{\partial L}{\partial \phi} - \frac{\tecxt\text{d}}{\tecxt\text{d}t} \frac{\partial L}{\partial \dot{\phi}} \propto 2\rho\dot{\rho}\dot{\phi} + \rho^2\ddot{\phi},\\
+0 &= \frac{\partial L}{\partial z} - \frac{\tecxt\text{d}}{\tecxt\text{d}t} \frac{\partial L}{\partial \dot{z}} \propto \ddot{z}.
+\end{align}
+We know that $\ddot{x}^\alpha + \Gamma^\alpha_{\mu\nu} \dot{x}^\mu \dot{x}^\nu = 0$ and may thus read off the only non-zero Christoffel symbols as
+\begin{align}
+\Gamma^\rho_{\phi\phi} &= -\rho,\\
+\Gamma^\phi_{\rho\phi} &= \frac{1}{\rho}.
+\end{align}
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

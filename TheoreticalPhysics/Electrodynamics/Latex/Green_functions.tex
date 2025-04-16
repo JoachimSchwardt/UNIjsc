@@ -1,0 +1,134 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{Green functions in Electrodynamics}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Solutions to PDEs using Fourier analysis}
+Let $\alpha\in\mathbb{N}^{|\alpha|}$ be a multiindex with $|\alpha|:=\sum_k\alpha_k$. Let $D^\alpha:=\prod_k\partial_{x_k}^{\alpha_k}$ and define the general linear differential operator of order $m$ as $L(D):=\sum_{|\alpha|=0}^mc_\alpha D^\alpha$. To (usefully) apply a  \textsc{Fourier} transformation on the resulting PDE, we need to demand constant coefficients $c_\alpha$. \\
+Our problem then becomes to find the solution $u(x)$ for an arbitrary inhomogenious linear partial differential equation with constant coefficients, which has the form:
+\begin{align*}
+L(D)u(x)&=f(x)\numberthis\label{PDE original}
+\end{align*}
+Note that $\mathcal{F}[D^\alpha f](x)=(ip)^\alpha\mathcal{F}[f](p)$. Applying $\mathcal{F}$ to (\ref{PDE original}) turns our PDE into an algebraic expression. Rearranging then results in:
+\begin{align*}
+\mathcal{F}[L(D)u](p)&=L(ip)\mathcal{F}[u](p)=\mathcal{F}[f](p)\\
+\Rightarrow\ \ \mathcal{F}[u](p)&=\mathcal{F}[f](p)\frac{1}{L(ip)}=\mathcal{F}[f]\mathcal{F}\left[\mathcal{F}^{-1}\klam\left[ {\frac{1}{L(ip)}} \right]\right]\numberthis\label{PDE fourier}
+\end{align*}
+Since $\mathcal{F}[f]\mathcal{F}[g]=(2\pi)^{-n/2}\mathcal{F}[f\ast g]$, we can solve for $u(x)$ by taking the inverse transformation on (\ref{PDE fourier}):
+\begin{align*}
+u(x)&=(2\pi)^{-n/2}f\ast\mathcal{F}^{-1}\klam\left[ {\frac{1}{L(ip)}} \right](x)=f\ast\frac{1}{(2\pi)^n}\intr\int_{\mathbb{R}^{n}}{\frac{e^{i\brak\langle {x}| {p}\rangle}}{L(ip)}}\,\mathrm{d}^{n}p=:f\ast G\numberthis\label{PDE solution green}
+\end{align*}
+The function $G$ defined in (\ref{PDE solution green}) is called a \textsc{Green}s function:
+\begin{align*}
+G(x):=\frac{1}{(2\pi)^n}\intr\int_{\mathbb{R}^{n}}{\frac{e^{i\brak\langle {x}| {p}\rangle}}{L(ip)}}\,\mathrm{d}^{n}p\numberthis\label{Green}
+\end{align*} 
+By this construction, we can already expect that every $L(D)$ has such a function. However, for this to be true the integral in (\ref{Green}) has to exist for every possible $L(D)$, which is not obvious. 
+\section{Some Green functions found in Electrodynamics}
+\subsection{Poisson equation}
+The \textsc{Poisson} equation is $\nabla^2u=f$, so we have:
+\begin{align*}
+L(D)&=\sum_k\partial_k^2\ \ \Rightarrow\ \ L(ip)=-\brak\langle {p}| {p}\rangle\numberthis\label{Poisson L operator}
+\end{align*}
+The case $n=1$ dimensions corresponds to the ordinary differential equation $u''=f$, which can be solved by simply integrating both sides twice. However for the sake of completion, let us try to find its \textsc{Green} function:
+\begin{align*}
+G(x)&=\frac{-1}{2\pi}\intr\int_{\mathbb{R}^{ }}{\frac{e^{ixp}}{p^2}}\,\mathrm{d}^{ }p\ \ &\Rightarrow &\ \ G''(x)=\frac{1}{2\pi}\intr\int_{\mathbb{R}^{ }}{e^{ixp}}\,\mathrm{d}^{ }p=\frac{\mathcal{F}^{-1}[1](x)}{\sqrt{2\pi}}=\delta(x)\\
+G(x)&=x\Theta(x)\ \ &\Rightarrow &\ \ u=f\ast G=\intx\int_{-\infty}^{x}f(y)(x-y)\,\mathrm{d}y=\iint f
+\end{align*}
+For $n=2$ the solution will be much more useful:
+\begin{align*}
+G(x)&=\frac{-1}{(2\pi)^2}\intr\int_{\mathbb{R}^{ }}{e^{ix_2p_2}\intr\int_{\mathbb{R}^{ }}{\frac{e^{ix_1p_1}}{p_1^2+p_2^2}}\,\mathrm{d}^{ }p_1}\,\mathrm{d}^{ }p_2\numberthis\label{Poisson green fubini}
+\end{align*}
+The inner integral of (\ref{Poisson green fubini}) can be solved by making use of the residue theorem:
+\begin{align*}
+I&:=\intr\int_{\mathbb{R}^{ }}{\frac{e^{ixp}}{p^2+c^2}}\,\mathrm{d}^{ }p=2\pi i\tecxt\text{Res}[f](ic)=2\pi i\lim_{p\rightarrow ic}\frac{e^{ixp}}{p+ic}=\frac{\pi}{|c|}e^{-x|c|}
+\end{align*}
+With this we can solve (\ref{Poisson green fubini}):
+\begin{align*}
+G(x)&=\frac{-1}{2\pi}\intx\int_{0}^{\infty}\frac{e^{-x_1p_2}}{p_2}\cos(x_2p_2)\,\mathrm{d}p_2\ \ \Rightarrow\ \ \partial_{x_2}G=\frac{1}{2\pi}\intx\int_{0}^{\infty}e^{-x_1p}\sin(x_2p)\,\mathrm{d}p\\
+G(x)&=\int\frac{1}{2\pi}\frac{x_2}{x_1^2+x_2^2}\,\mathrm{d}x_2\kom\overset{\substack{{u=x_1^2+x_2^2} \\ |}}{=}\frac{1}{4\pi}\intx\int_{ }^{ }\frac{1}{u}\,\mathrm{d}u\kom\overset{\substack{{\sqrt{u}=\|x\|} \\ |}}{=}\frac{1}{2\pi}\log\|x\|  \numberthis\label{Poisson green n2}
+\end{align*}
+For $n\ge 3$ we fill find a pretty generalization. For that matter we need to introduce spherical coordinates for $n$ dimensions - which is also why we need atleast 3. Let $\phi\in[0,2\pi)$, $\theta_j\in[0,\pi)$, $j\in\klammer\left\{{3, \dots, n} \right\}$ and $r^2:=\sum_jx_j^2$. Then we can express the cartesian coordinates as follows:
+\begin{align*}
+x_1&=r\sin\phi\prod_{j=3}^n\sin\theta_j&\tecxt\text{and}&&x_n&=r\cos\theta_n\\
+x_k&=r\cos\phi\prod_{j=k+1}^n\sin\theta_j&\tecxt\text{for}&&k&=2,\dots,n-1
+\end{align*}
+The \textsc{Jacobi} determinant then becomes:
+\begin{align*}
+|J_n|&=r^{n-1}\prod_{j=3}^n\sin^{j-2}\theta_j\numberthis\label{Jacobi determinant for n spherical dimensions}
+\end{align*}
+The volume and surface area of an $n$-sphere can be easily caluclated:
+\begin{align*}
+V_n&=\intx\int_{0}^{R}r^{n-1}\intx\int_{0}^{2\pi}\prod_{j=3}^n\intx\int_{0}^{\pi}\sin^{j-2}\theta_j\,\mathrm{d}\theta_j\,\mathrm{d}\phi\,\mathrm{d}r=\frac{2\pi R^n}{n}\prod_{j=3}^nB\kla\left( {\frac{1}{2},\frac{j-1}{2}} \right)=\\
+&=\frac{2\pi R^n}{n}\prod_{j=3}^n\frac{\Gamma(\frac{1}{2})\Gamma(\frac{j-1}{2})}{\Gamma(\frac{j}{2})}=\frac{2\pi^{n/2}R^n}{n}\frac{\prod_{j=2}^{n-1}\Gamma(\frac{j}{2})}{\prod_{j=3}^n\Gamma(\frac{j}{2})}=\frac{2\pi^{n/2}R^n}{n\Gamma(\frac{n}{2})}=\frac{\pi^{n/2}R^n}{\Gamma(\frac{n}{2}+1)}\numberthis\label{Volume n sphere}\\
+\sigma_n&=R^{n-1}\intx\int_{0}^{2\pi}\prod_{j=3}^n\intx\int_{0}^{\pi}\sin^{j-2}\theta_j\,\mathrm{d}\theta_j\,\mathrm{d}\phi\,\mathrm{d}r=\partial_RV_n=\frac{n\pi^{n/2}R^{n-1}}{\Gamma(\frac{n}{2}+1)}\numberthis\label{Area n sphere}
+\end{align*}
+We want to show, that $G(x):=-\frac{1}{(n-2)\sigma_n x^{n-2}}$ solves $\nabla^2G=\delta$. For $x\neq 0$ this is a simple calculation:
+\begin{align*}
+\nabla^2G&\propto\sum_k\partial_k^2\kla\left( {x^2} \right)^{\frac{2-n}{2}}=\sum_k\partial_k(2-n)x_k\kla\left( {x^2} \right)^{-\frac{n}{2}}=\\
+&=\kla\left( {x^2} \right)^{-\frac{n}{2}}(2-n)\sum_k1-n\frac{x_k^2}{x^2}=\frac{n-n}{x^n}=0
+\end{align*}
+The second condition is, that $\int\nabla^2G=1$. For this we will need the surface area calculated in (\ref{Area n sphere}):
+\begin{align*}
+I&:=-\frac{1}{(n-2)\sigma_n}\intr\int_{\mathbb{R}^{n}}\nabla^2{\frac{1}{r^{n-2}}}\,\mathrm{d}^{n}r\kom\overset{\substack{{\tecxt\textsc{Gauss}} \\ |}}{=}\\
+&=-\frac{1}{(n-2)\sigma_n}\intr\oint_{\mathbb{R}^{n-1}}{\partial_r\frac{1}{r^{n-2}}}\,|J_n|\mathrm{d}^{n-1}\theta=\frac{n-2}{(n-2)\sigma_n}\cdot\sigma_n=1
+\end{align*}
+\section{Applications}
+In cases where the \textsc{Fourier} transformation of the charge distribution is "easy" to evaluate, a slightly different approach can be taken to solve a give PDE. Going back to (\ref{PDE fourier}), we don't have to insert the identity $\mathcal{F}\mathcal{F}^{-1}$ and make use of the $\ast$-property. Instead, we could just apply the invers transformation as it stands:
+\begin{align*}
+u(x)&=\mathcal{F}^{-1}\klam\left[ {\frac{\mathcal{F}[f]}{L(ip)}} \right](x)\numberthis\label{PDE fourier direct solution}
+\end{align*}
+\subsection{Magnetic field of a circular loop}
+The relevant equation is $\nabla^2\vec{A}=-\mu_0\vec{j}$, so we could use the \textsc{Green} function for the \textsc{Poisson} equation. However, this immediatley leads to elliptic integrals. While we can't avoid them entirely, method (\ref{PDE fourier direct solution}) will still prove to be less cumbersome. Let $\vec{j}(r)=I\delta(z)\delta(R-r)e_\phi$:
+\begin{align*}
+\vec{j}(k)&=\frac{I}{(2\pi)^{-3/2}}\intx\int_{0}^{2\pi}e_\phi \intx\int_{0}^{\infty}\delta(R-r)\intr\int_{\mathbb{R}^{ }}{\delta(z)}e^{-i(k_rr\cos(\phi -k_\phi) +k_zz)}\,r\mathrm{d}^{ }z\mathrm{d}r\mathrm{d}\phi\kom\overset{\substack{{\psi=\phi-\pi} \\ |}}{=}\\
+&=\frac{-IR}{(2\pi)^{-3/2}}\intx\int_{-\pi}^{\pi}e_\psi e^{ik_rR\cos\psi\cos k_\phi}e^{ik_rR\sin\psi\sin k_\phi}\,\mathrm{d}\psi\kom\overset{\substack{{\alpha:=k_rR\cos k_\phi} \\ |}}{=}\\
+&=\frac{-2IR}{(2\pi)^{3/2}}\intx\int_{0}^{\pi}\begin{pmatrix}
+\cos\psi\cos(\beta\sin\psi) \\ \sin\psi i\sin(\beta\sin\psi)
+\end{pmatrix}e^{i\alpha\cos\psi} \,\mathrm{d}\psi\kom\overset{\substack{{\phi=\psi-\frac{\pi}{2}} \\ |}}{=}\\
+&=\frac{-4IR}{(2\pi)^{3/2}}\intx\int_{0}^{\pi/2}\begin{pmatrix}
+-i\sin\phi\cos(\beta\cos\phi)\sin(\alpha\sin\phi) \\ i\cos\phi\sin(\beta\cos\phi)\cos(\alpha\sin\phi)
+\end{pmatrix} \,\mathrm{d}\phi\kom\overset{\substack{{u=\cos\phi} \\ |}}{=}\\
+&=\frac{4iIR}{(2\pi)^{3/2}}\intx\int_{0}^{1}\begin{pmatrix}
+\cos(\beta u)\sin(\alpha\sqrt{1-u^2}) \\ -\cos(\alpha u)\sin(\beta\sqrt{1-u^2})
+\end{pmatrix} \,\mathrm{d}u
+\end{align*}
+Note that we can expand the idea of binomial coefficients as $\binom{\alpha}{k}:=\frac{\alpha!}{(\alpha-k)!k!}$. Then we have:
+\begin{align*}
+(1+x)^\alpha &=\sum_k\binom{\alpha}{k}x^k&\Rightarrow &&\sqrt{1-x^2}&=\sum_k\binom{1/2}{k}(-1)^kx^{2k}\numberthis\label{Taylor series 1+x to alpha}
+\end{align*} 
+To continue, we need to find an expression for the following integral:
+\begin{align*}
+I&:=\intx\int_{0}^{1}\cos(ax)\sin(b\sqrt{1-x^2})\,\mathrm{d}x\kom\overset{\substack{{\textsc{Taylor}\, }\sin x \\ |}}{=}\\
+&=\sum_k\frac{(-1)^kb^{2k+1}}{(2k+1)!}\intx\int_{0}^{1}\cos(ax)(1-x^2)^k\sqrt{1-x^2}\,\mathrm{d}x\kom\overset{\substack{{(\ref{Taylor series 1+x to alpha})} \\ |}}{=}\\
+&=\sum_k\frac{(-1)^kb^{2k+1}}{(2k+1)!}\sum_j(-1)^j\binom{1/2}{j}\intx\int_{0}^{1}\cos(ax)(1-x^2)^kx^{2j}\,\mathrm{d}x=\\
+&=\sum_k\frac{(-1)^kb^{2k+1}}{(2k+1)!}\sum_j(-1)^j\binom{1/2}{j}\sum_l\binom{k}{l}(-1)^l\intx\int_{0}^{1}\cos(ax)x^{2(j+l)}\,\mathrm{d}x=\\
+&=\sum_{kjl}\frac{(-1)^{k}b^{2k+1}}{(2k+1)!}\binom{1/2}{j}\binom{k}{l}\partial_a^{2(j+l)}\intx\int_{0}^{1}\cos(ax)\,\mathrm{d}x=
+\end{align*}
+
+
+
+\end{document}

@@ -1,0 +1,116 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{10 Quantenstatistik: Fermi-Dirac}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 10.1: Verschiedene Statistiken}
+Betrachte wechselwirkungsfreie Bosonen in den Zuständen $k$ mit Energie $E_k$ im grosskanonischen Ensemble. Es ist $Z_k^\tecxt\text{BE}=e^{-\beta H(k)}=e^{-\beta NE_k}$. Für die Konvergenz der geometrischen Reihe muss man $\mu< E_k$ für alle Zustände $k$ fordern:
+\begin{align*}
+Z_{gk}^\tecxt\text{BE}(\mu,k)&=\sum_N e^{\beta\mu N}Z_k^\tecxt\text{BE}(k)=\sum_N e^{\beta\mu N} e^{-N\beta E_k}=\frac{1}{1-e^{-\beta (E_k-\mu)}}\\
+\Rightarrow\ \ \ Z_{gk}^\tecxt\text{BE}(\mu)&=\prod_kZ_{gk}^\tecxt\text{BE}(\mu,k)=\prod_k\frac{1}{1-e^{-\beta (E_k-\mu)}}
+\end{align*}
+Die mittlere Besetzungszahl erhält man durch Ableiten nach dem chemischen Potential $\mu$:
+\begin{align*}
+\bra\langle {n_k}\rangle&=\frac{1}{Z_{gk}^\tecxt\text{BE}(\mu,k)}\sum_NNe^{\beta N(\mu -E_k)}=\frac{1}{\beta}\frac{1}{Z_{gk}^\tecxt\text{BE}(\mu,k)}\partial_\mu Z_{gk}^\tecxt\text{BE}(\mu,k)=\frac{1}{e^{\beta (E_k-\mu)}-1}
+\end{align*}
+Für Fermionen ist die Betrachtung etwas einfacher, weil es nur $N\in\{0,1\}$ gibt:
+\begin{align*}
+Z_{gk}^\tecxt\text{FD}(\mu,k)&=\sum_Ne^{\beta\mu N}Z_k^\tecxt\text{FD}(k)=1+e^{-\beta (E_k-\mu)}
+\end{align*}
+Die Besetzungszahl erhält man analog:
+\begin{align*}
+\bra\langle {n_k}\rangle&=\frac{1}{Z_{gk}^\tecxt\text{FD}(\mu,k)}\sum_NNe^{\beta N(\mu-E_k)}=\frac{1}{e^{\beta (E_k-\mu)}+1}
+\end{align*}
+Für die Maxwell-Boltzmann-Statistik führt man noch den Faktor $N!$ bei der Berechnung der Zustandssumme ein und nimmt an, dass die Zustände beliebig oft besetzt werden können:
+\begin{align*}
+Z_{gk}^\tecxt\text{MB}(\mu,k)&=\sum_Ne^{\beta\mu N}\frac{1}{N!}e^{-\beta NE_k}=\exp\kla\left( {e^{-\beta (E_k-\mu)}} \right)
+\end{align*}
+Die Besetzungszahl erhält man hier wieder einfach durch Ableiten, wobei die allgemeine Formel noch einmal anders formuliert wurde:
+\begin{align*}
+\bra\langle {n_k}\rangle&=\frac{1}{\beta}\partial_\mu\log Z_{gk}^\tecxt\text{MB}(\mu,k)=e^{-\beta (E_k-\mu)}
+\end{align*}
+Im Grenzfall $E\gg\mu$ ergibt sich für alle drei Besetzungszahlen das gleiche Verhalten. Bei der Fermi-Dirac Statistik muss zusätzlich noch $e^{\beta E}\gg 1$ gefordert werden:
+\begin{align*}
+\bra\langle {n^\tecxt\text{BE}}\rangle&\approx\frac{1}{e^{\beta E}-1}\approx e^{-\beta E}\\
+\bra\langle {n^\tecxt\text{FD}}\rangle&\approx\frac{1}{e^{\beta E}+1}\approx e^{-\beta E}\\
+\bra\langle {n^\tecxt\text{MB}}\rangle&\approx e^{-\beta E}
+\end{align*}
+\section*{Aufgabe 10.2: Bose-Einstein-Kondensation}
+Gegeben ist ein Würfel der Kantenlänge $L$ mit $N$ wechselwirkungsfreien Bosonen der Masse $m$ und Energie $H=-\frac{1}{2m}\nabla^2$. Der zeitunabhängige Teil der Schrödingergleichung wird dann bei periodischen Randbedingungen durch ebene Wellen $\psi =e^{i\vec{k}\cdot\vec{r}}$ gelöst. Für die Wellenvektoren findet man dann folgenden Zusammenhang:
+\begin{align*}
+\psi (\vec{r})&\overset{!}{=}\psi(\vec{r}+L\vec{e}_j)&\Rightarrow && e^{i\vec{k}\cdot\vec{r}}&=e^{i\vec{k}\cdot\vec{r}+iL\vec{k}\cdot\vec{e}_j}\\
+\Rightarrow\ \ \ 2\pi n_j&=L\vec{k}\cdot\vec{e}_j&\Rightarrow &&k_j&=\frac{2\pi}{L}n_j
+\end{align*}
+Dabei gilt $n_j\in\mathbb{Z}$. Die Zustandsdichte ergibt sich formal über ein Integral über die Oberfläche im reziproken Raum mit $E=E(\vec{k})=\frac{\vec{k}^2}{2m}$, wobei $Z(\vec{k})=1$ die Anzahl an Zuständen für einen bestimmten Wellenvektor angibt:
+\begin{align*}
+D(E)&=\oint_{k_E=\sqrt{2mE}}Z(\vec{k})\,k^2\tecxt\text{d}\Omega = 4\pi k_E^2=8\pi mE
+\end{align*}
+Im Spezialfall $\mu=0=E_0$ kann man eine ``maximale'' Teilchenzahl herleiten:
+\begin{align*}
+N_\tecxt\text{max}&=\bra\langle {N(\mu=0)}\rangle=\frac{L^3}{(2\pi)^3}\intr\int_{\mathbb{R}^{3}}{Z(\vec{k})\bra\langle {N(\vec{k})}\rangle}\,\mathrm{d}^{3}k=\\
+&=\frac{L^3}{(2\pi)^3}\intx\int_{0}^{\infty}\frac{1}{e^{\beta k^2/2m}-1}\,4\pi k^2\mathrm{d}k\kom\overset{\substack{{\beta k^2=:2m x} \\ |}}{=}\frac{L^3}{2\pi^2}\intx\int_{0}^{\infty}\frac{2mx/\beta}{e^x-1}\,\sqrt{\frac{2m}{\beta}}\frac{\mathrm{d}x}{2\sqrt{x}}=\\
+&=L^3\kla\left( {\frac{m}{2\pi\beta}} \right)^{3/2}\frac{2}{\sqrt{\pi}}\Gamma\kla\left( {\frac{3}{2}} \right)\zeta\kla\left( {\frac{3}{2}} \right)=\kla\left( {\frac{L}{\lambda_T}} \right)^3\zeta\kla\left( {\frac{3}{2}} \right)
+\end{align*}
+Dabei ist $\lambda_T:=\sqrt{2\pi /mk_BT}$ die sogenannte thermische Wellenlänge. Die kritische Temperatur ergibt sich dann wie folgt:
+\begin{align*}
+\frac{N_\tecxt\text{max}}{V}&=\kla\left( {\frac{mk_BT_c}{2\pi}} \right)^{3/2}\zeta\kla\left( {\frac{3}{2}} \right)&\Rightarrow &&T_c&=\frac{2\pi}{mk_B}\kla\left( {\frac{n_\tecxt\text{max}}{\zeta\kla\left( {\frac{3}{2}} \right)}} \right)^{2/3}
+\end{align*}
+Betrachte den Grundzustand nun getrennt. Formal gilt
+\begin{align*}
+\bra\langle {N}\rangle&=\bra\langle {N_0}\rangle+\sum_{|\vec{k}|>0}\bra\langle {N_k}\rangle,
+\end{align*}
+wobei die Reihe im oberen Fall durch ein kontinuierliches Integral genähert wurde. Also ist $\bra\langle {N_0}\rangle=\frac{1}{e^{\beta (E_0-\mu)}-1}=\frac{1}{e^{-\beta\mu}-1}$. Andererseits gilt weiterhin $\bra\langle {N_{\ge 1}}\rangle=V\lambda_T^{-3}\zeta (3/2)$, woraus 
+\begin{align*}
+\frac{\bra\langle {N_{\ge 1}}\rangle}{\bra\langle {N}\rangle}&=\kla\left( {\frac{T}{T_c}} \right)^{3/2}
+\end{align*}
+folgt. Damit ergibt sich schließlich der kritische Exponent $\beta_c=\frac{3}{2}$:
+\begin{align*}
+\frac{\bra\langle {N_0}\rangle}{\bra\langle {N}\rangle}&=1-\frac{\bra\langle {N_{\ge 1}}\rangle}{\bra\langle {N}\rangle}=1-\kla\left( {\frac{T}{T_c}} \right)^{3/2}
+\end{align*}
+\section*{Aufgabe 10.3: Zustandsgleichung eines idealen Quantengases}
+In einem Volumen $V$ seien $N$ wechselwirkungsfreie Fermionen mit der Energie $E=\frac{p^2}{2m}$. Wir verwenden daher die Fermi-Dirac-Statistik und schreiben $\rho:=\frac{1}{e^{\beta(E-\mu)}+1}$. Die Anzahl an Zuständen in einem kleinen Impulsintervall ergibt sich dann zu
+\begin{align*}
+\tecxt\text{d}N_p&=\frac{V}{(2\pi)^3}\rho\tecxt\text{d}^3p=\frac{V}{(2\pi)^3}\cdot 4\pi p^2\rho\tecxt\text{d}p.
+\end{align*}
+Damit lässt sich ein Ausdruck für den Druck herleiten:
+\begin{align*}
+P&=2\intr\int_{0}^{\infty}{\frac{\vec{p}^2}{2m}}\,\frac{\mathrm{d}^{ }N_p}{V}=\frac{1}{2\pi^2 m}\intx\int_{0}^{\infty}p^4\rho(p)\,\mathrm{d}p\kom\overset{\substack{{p=\sqrt{2mE}} \\ |}}{=}\\
+&=\frac{1}{2\pi^2 m}\intx\int_{0}^{\infty}\frac{(2mE)^2}{e^{\beta (E-\mu)}+1}\,\sqrt{\frac{m}{2E}}\mathrm{d}E
+\end{align*}
+Setze nun $x:=\beta E$ und $z:=e^{\beta\mu}$. Dann gilt folgende Darstellung für den Druck:
+\begin{align*}
+P&=\frac{1}{\beta}\kla\left( {\frac{m}{2\pi\beta}} \right)^{3/2}\frac{4}{\sqrt{\pi}}\intx\int_{0}^{\infty}\frac{x^{3/2}}{z^{-1}e^x+1}\,\mathrm{d}x=\frac{3}{\beta}\kla\left( {\frac{m}{2\pi\beta}} \right)^{3/2}f_{5/2}(z)
+\end{align*}
+Außerdem kennen wir den Zusammenhang
+\begin{align*}
+\frac{N}{V}&=\frac{1}{(2\pi)^3}\intx\int_{0}^{\infty}\rho\,4\pi p^2\mathrm{d}p=\kla\left( {\frac{m}{2\pi\beta}} \right)^{3/2}f_{3/2}(z)
+\end{align*}
+Dividiert man diesen Ausdruck noch durch den Druck, so erhält man die Zustandsgleichung:
+\begin{align*}
+\frac{Nk_BT}{3PV}&=\frac{f_{3/2}(z)}{f_{5/2}(z)}
+\end{align*}
+\end{document}

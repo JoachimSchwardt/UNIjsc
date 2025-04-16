@@ -1,0 +1,59 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+
+\begin{document}
+
+\title{Derivation of the Path Integral}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Preparation}
+We will use the following theorems:
+\begin{align*}
+I&=\sum \oper |\psi_n\rangle\langle \psi_n|=\intx\int_{ }^{ }\oper |\psi_\alpha\rangle\langle \psi_\alpha|\,\mathrm{d}\alpha\\
+\brak\langle {\psi_n}| {\psi_m}\rangle&=\delta_{nm}\ \ \ \ \mathrm{and}\ \ \ \ \brak\langle {\psi_\alpha}| {\psi_\beta}\rangle=\delta(\alpha-\beta)\\
+\brak\langle {r}| {p}\rangle &=\frac{1}{(2\pi\hbar)^{3/2}}e^{i\bra\langle {r,\,p}\rangle/\hbar}=\brak\langle {p}| {r}\rangle^\ast\\
+U(t,t_0)&=U(t,t_1)U(t_1,t_0)=U(t_0,t)^{-1}=U(t_0,t)^\dagger\\
+K(x,T;y)&=\braket\langle {x} | {e^{-iT\hat{H}/\hbar}} | {y}\rangle=\sum_n\braket\langle {x} | e^{-iT\hat{H}/\hbar} | {n}\rangle\brak\langle {n}| {y}\rangle=\sum_ne^{-iTE_n/\hbar}\psi_n(x)^\ast\psi_n(y)\\
+\psi(x,t+T)&=\int\braket\langle {x} | e^{-iT\hat{H}/\hbar} | {y}\rangle\brak\langle {y}| {\psi(y,t)}\rangle\,\mathrm{d}y=\int K(x,T;y)\psi(y,t)\,\mathrm{d}y\\
+e^{-\frac{i}{N}(A+B)}&=e^{-\frac{i}{N}A}e^{-\frac{i}{N}B}\kla\left( {1+\frac{[A,B]}{N^2}+\mathcal{O}\Big(\frac{1}{N^3}\Big)} \right)\\
+\braket\langle {p_j} | {\hat{p}\hat{x}} | {x_j}\rangle&=p_j\brak\langle {p_j}| {x_j}\rangle x_j=p_jx_j(2\pi\hbar)^{-1/2}e^{-ix_jp_j/\hbar}\\
+\intr\int_{\mathbb{R}^{ }}{e^{-ax^2+bx}}\,\mathrm{d}^{ }x&=\sqrt{\frac{\pi}{a}}e^{b^2/4a}
+\end{align*}
+\section{Derivation of the Propagator}
+Let $\hbar=1$, $\Delta t:=\frac{T}{N}$, $x_n:=x$, $x_0:=y$. The Propagator is derived by inserting completeness $N$ times and neglecting the additional terms in the \textsc{Hausdorff}-Matrix-Exponential formula. This is exact so long as we take the limit $N\rightarrow\infty$:
+\begin{align*}
+K(x,T;y)&=\braket\langle {x} | {\kla\big( {e^{-i\frac{T}{N}H}} \big)^N} | {y}\rangle=\prod_{j=1}^{N}\int_{x_j;(j\neq N)}\braket\langle {x_{j}} | {e^{-i\Delta tH}} | {x_{j-1}}\rangle\,\mathrm{d}x_j=\\
+&=\prod_{j=1}^N\int_{x_j;(j\neq N)}\int_{p_{j-1}}\brak\langle {x_j}| {p_{j-1}}\rangle\braket\langle {p_{j-1}} | {e^{-i\Delta tH}} | {x_{j-1}}\rangle\,\mathrm{d}p_{j-1}\mathrm{d}x_j=\\
+&=(2\pi)^{-N/2}\prod_{j=1}^N\int_{x_j;(j\neq N)}\int_{p_{j-1}}e^{ix_jp_{j-1}}\braket\langle {p_{j-1}} | {e^{-i\Delta t\frac{\hat{p}^2}{2m}}e^{-i\Delta tV(\hat{x})}} | {x_{j-1}}\rangle\,\mathrm{d}p_{j-1}\mathrm{d}x_j=\\
+&=(2\pi)^{-N}\prod_{j=1}^N\int_{x_j;(j\neq N)}\int_{p_{j-1}}e^{ix_jp_{j-1}}e^{-i\Delta t\frac{p_{j-1}^2}{2m}}e^{-i\Delta tV(x_{j-1})}e^{-ix_{j-1}p_{j-1}}\,\mathrm{d}p_{j-1}\mathrm{d}x_j=\\
+&=(2\pi)^{-N}\prod_{j=1}^N\int_{x_j;(j\neq N)}e^{-i\Delta tV(x_{j-1})}{\int_{p_{j-1}}e^{-i\Delta t\frac{p_{j-1}^2}{2m}+ip_{j-1}(x_j-x_{j-1})}\,\mathrm{d}p_{j-1}}\,\mathrm{d}x_j= \\
+&=(2\pi)^{-N}\kla\left( {\frac{2m\pi}{i\Delta t}} \right)^{N/2}\prod_{j=1}^N\int_{x_j;(j\neq N)}e^{-i\Delta tV(x_{j-1})}e^{\frac{im}{2\Delta t}(x_j-x_{j-1})^2}\,\mathrm{d}x_j=\\
+&=\kla\left( {\frac{mN}{2\pi iT}} \right)^{N/2}\int_{x_j;(j\neq N)}\exp\kla\left( {i\sum_{j=1}^N\klam\left[ {\frac{m}{2}\frac{(x_j-x_{j-1})^2}{\Delta t^2}-V(x_{j-1})} \right]\Delta t} \right)\,\mathrm{d}x_j\overset{N\rightarrow\infty}{\rightarrow}\\
+&=\lim_{N\rightarrow\infty}\kla\left( {\frac{mN}{2\pi iT}} \right)^{N/2}\int_{x_j}\exp\kla\left( {i\int_tL(x_j,\dot{x}_j,t)\,\mathrm{d}t} \right)\,\mathrm{d}x_j=\\
+&=\lim_{N\rightarrow\infty}\kla\left( {\frac{mN}{2\pi iT}} \right)^{N/2}\int_{\mathbb{R}^N} e^{iS[x]}\,\mathrm{d}x
+\end{align*}
+With this form of the propagator and $Z$ denoting a normalization constant, the time evolution of a wavefunction becomes:
+\begin{align*}
+\psi(x,t+T)&=\frac{1}{Z}\int_{y;(y(0)=x)}e^{iS[y]}\psi(y,t)\,\mathrm{d}y
+\end{align*}
+
+
+\end{document}

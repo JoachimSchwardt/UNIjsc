@@ -1,0 +1,83 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+
+\begin{document}
+
+\title{05 Hyperfeinstruktur}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 13: Gyromagnetischer Faktor ("klassisch")}
+Der gyromagnetische Faktor wird über das magnetische Moment und das Drehmoment definiert:
+$$g:=\frac{2m\mu }{QL}$$
+\subsection*{a)} 
+Es ist $\varrho_m=\frac{m}{\pi R^2H}\Theta(R-r)\Theta(H/2-|z|)=$ const. die homogene Materie-Dichte und $\varrho=\frac{Q_1}{\pi R^2}\delta(z-H/2)\Theta(R-r)+\frac{Q_1}{\pi R^2}\delta(z+H/2)\Theta(R-r)+\frac{Q_2}{2\pi RH}\delta (r-R)\Theta(H/2-|z|)$ die Ladungsdichte des Zylinders. Es ist dabei $Q=2Q_1+Q_2$:
+\begin{align*}
+L&=\intr\int_{\mathbb{R}^{3}}{\varrho_mr\times \dot{r}}\,\mathrm{d}^{3}r=\frac{m}{\pi R^2H}\intr\int_{0}^R\int_0^{2\pi}\int_{-H/2}^{H/2}{(re_r+ze_z)\times\omega re_\varphi}\,\mathrm{d}^{3}r=\\
+&=\frac{m\omega e_z}{\pi R^2H}\cdot 2\pi\cdot H\cdot \frac{R^4}{4}=\frac{m\omega R^2}{2}e_z \\
+\mu&=IA=\pi R^2\int \varrho\omega r\,\mathrm{d}^2r=\frac{2Q_1\omega R^2}{2}+\frac{Q_2\omega R^2}{2}=\frac{Q\omega R^2}{2} \\
+&\Rightarrow\ \ g=2\numberthis\label{g Zylinder}
+\end{align*}
+\subsection*{b)}
+Es ist $\varrho_m=\frac{3m}{4\pi R^3}\Theta(R-r)=const$. die homogene Materie-Dichte und $\varrho=\frac{Q}{2\pi R}\delta(z)\delta(R-r_\bot)$ die Ladungsdichte der Kugel. Es gilt $\dot{r}=\omega\times r=\omega r \sin\vartheta e_z$:
+\begin{align*}
+L&=\intr\int_{\mathbb{R}^{3}}{\varrho_mr\times \dot{r}}\,\mathrm{d}^{3}r=\frac{3m}{4\pi R^3}\int_0^R\int_0^\pi\int_0^{2\pi}{re_r\times\omega r\sin\vartheta e_\varphi}\,\mathrm{d}^{3}r= \\
+&=\frac{3m\omega e_z}{4\pi R^3}\cdot 2\pi\cdot \frac{4}{3}\cdot \frac{R^5}{5}=\frac{2m\omega R^2}{5} e_z \\
+\mu&=IA=\pi R^2\int \varrho\omega r\,\mathrm{d}^2r=\frac{Q\omega R^2}{2} \\
+&\Rightarrow\ \ g=\frac{5}{2}\numberthis\label{g Kugel}
+\end{align*}
+\subsection*{c)}
+Es gilt für die Geschwindigkeit der Ladungen im Fall (a) mit $Q=-e$:
+\begin{align*}
+v&=\omega r=-\frac{2\mu }{er}\kom\overset{\substack{{\mu = \frac{e}{2m}\hbar} \\ |}}{=}\frac{\hbar}{mr}
+\end{align*}
+\section*{Aufgabe 14: Hyperfeinstruktur}
+\subsection*{a)}
+\subsection*{b)}
+\section*{Aufgabe 15: Operatoren}
+Definiere:
+$$a_\pm :=\frac{1}{\sqrt{2m\omega\hbar}}\kla\left( {m\omega x\mp ip} \right)\ \ \ \ \mathrm{und}\ \ \ \ H':=\frac{H}{\hbar\omega}=\left(a_+a_-+\frac{1}{2}\right)$$
+Dann gelten mit $[x,p]=i\hbar$ und $[A,BC]=B[A,C]+[A,B]C$ folgende Kommutatorrelationen:
+\begin{align*}
+[a_-,a_+]&=\frac{1}{2m\omega\hbar}\klam\left[ {m\omega x +ip, m\omega x-ip} \right]=\frac{1}{2m\omega\hbar}\kla\left( {[m\omega x, -ip] + [ip, m\omega x]} \right)=1 \\
+[a_-, H']&=\klam\left[ {a_-, a_+a_-} \right]=a_+[a_-,a_-]+[a_-,a_+]a_-=a_- \\
+[a_+, H']&=\klam\left[ {a_+, a_+a_-} \right]=a_+[a_+,a_-]+[a_+,a_+]a_-=-a_+
+\end{align*}
+\section*{*Z3: Nullpunktsenergie}
+Es sei $\Delta p=\frac{\hbar}{2\Delta x}=\frac{\hbar}{l}$. 
+\subsection*{a)}
+Hier gilt:
+\begin{align*}
+E_{k,min}&=\sqrt{E_0^2+c^2p_{min}^2}-E_0=E_0\kla\left( {\sqrt{1+\frac{c^2\hbar^2}{E_0^2l^2}}-1} \right)\approx \frac{c^2\hbar^2}{2E_0l^2}=\frac{\hbar^2}{2ml^2}
+\end{align*}
+\subsection*{b)}
+Hier ändert sich kaum etwas:
+\begin{align*}
+E_{k,min}&=\sqrt{E_0^2+c^2p_{min}^2}-E_0=E_0\kla\left( {\sqrt{1+\frac{c^2\hbar^2}{E_0^2}\kla\left( {\frac{1}{l^2}+\frac{1}{l^2}} \right)}-1} \right)\approx \frac{c^2\hbar^2}{E_0l^2}=\frac{\hbar^2}{ml^2}
+\end{align*}
+\subsection*{c)}
+Das gleiche nochmal:
+\begin{align*}
+E_{k,min}&=\sqrt{E_0^2+c^2p_{min}^2}-E_0=E_0\kla\left( {\sqrt{1+\frac{c^2\hbar^2}{E_0^2}\kla\left( {\frac{1}{l^2}+\frac{1}{l^2}+\frac{1}{l^2}} \right)}-1} \right)\approx \frac{3c^2\hbar^2}{2E_0l^2}=\frac{3\hbar^2}{2ml^2}
+\end{align*}
+
+
+
+\end{document}

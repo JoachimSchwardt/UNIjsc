@@ -1,0 +1,129 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+
+\newcommand*{\Title}{One-Particle Problems}
+\newcommand*{\Author}{Joachim Schwardt}
+
+\input{preamble_shared}
+\input{preamble}
+
+%\titlehead{titlehead}
+\subject{Theoretical Mechanics}
+\title{\Title}
+\author{\Author}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Electromagnetic Forces}
+\subsection{Homogeneous Magnetic Field}
+Consider a particle with electric charge $q$ moving through a homogeneous magnetic field $\textbf{B} = B\textbf{e}_z$.
+The equation of motion reads
+\begin{align}
+m\ddot{\textbf{x}} &= F_\text{L} = q\dot{\textbf{x}} \times \textbf{B}.
+\end{align}
+The $z$-acceleration is trivial, $\ddot{z} = 0$, and thus $z(t) = z_0 + v_{z,0}t$.
+The other two components yield
+\begin{align}
+\begin{pmatrix}
+\dot{v}_x \\ \dot{v}_y
+\end{pmatrix} &= \frac{qB}{m} \begin{pmatrix}
+v_y \\ -v_x
+\end{pmatrix} = M \begin{pmatrix}
+v_x \\ v_y
+\end{pmatrix},
+\end{align}
+where $M=\frac{qB}{m}\begin{psmallmatrix}
+0 & 1 \\ -1 & 0
+\end{psmallmatrix}$.
+Differentiating again gives $\ddot{\textbf{v}} = M^2 \textbf{v} = - \omega^2 \textbf{v}$ with $\omega = \frac{qB}{m}$.
+We find $v_x(t) = a_1 \cos\kla*{\omega t} + a_2 \sin\kla*{\omega t}$, and upon inserting this back into $v_y = \frac{1}{\omega}\dot{v}_x$ also $v_y(t) = a_2 \cos\kla*{\omega t} - a_1 \sin\kla*{\omega t}$.
+The coefficients are determined by the initial velocity, i.e. $a_1 = v_{x,0}$ and $a_2 = v_{y,0}$.
+Integrating, we obtain the position
+\begin{align}
+x(t) &= x_0 - \frac{v_{x,0}}{\omega} + \frac{v_{x,0}}{\omega} \sin\kla*{\omega t} - \frac{v_{y,0}}{\omega} \cos\kla*{\omega t},\\
+y(t) &= y_0 - \frac{v_{y,0}}{\omega} + \frac{v_{x,0}}{\omega} \cos\kla*{\omega t} + \frac{v_{y,0}}{\omega} \sin\kla*{\omega t}.
+\end{align}
+To extract the parameters of the resulting circular motion we rewrite $a\cos(x) + b\sin(x)$ as $A\sin(x+\phi)$.
+This is possible by inverting the addition theorem,
+\begin{align}
+A\sin(x+\phi) &= A\sin(x) \cos(\phi) - A\cos(x) \sin(\phi) \overset{!}{=} a\cos(x) + b\sin(x),
+\end{align}
+giving $a=A\sin(\phi)$ and $b=A\cos(\phi)$.
+Thus, $A=\sqrt{a^2+b^2}$ and $\phi = \arctan\kla*{\frac{a}{b}}$, which yields
+$y(t) = R\sin\kla*{\omega t + \phi} + \const$ with $R = \frac{1}{\omega} |\textbf{v}_0|$ and $\phi = \arctan\kla*{\frac{v_{x,0}}{v_{y,0}}}$.
+Similarly, $x(t) = R\sin\kla*{\omega t - \frac{\pi}{2} +\phi} + \const = \const - R\cos\kla*{\omega t + \phi}$.
+The radius of the circle expands to
+\begin{align}
+R &= \frac{1}{\omega} |\textbf{v}_0| = \frac{m}{qB} |\textbf{v}_0| = \frac{m}{qB} \sqrt{v_{x,0}^2 + v_{y,0}^2}.
+\end{align}
+In accordance with physical intuition, the radius increases with larger mass (we would expect the effect of any force on a particle to diminish with its inertia), while it reduces with the strength of the Lorentz for, $qB$.
+The more surprising part of the result is the increase with \emph{increasing} velocity; it seems that despite the larger force, the radius of the circular motion expands for faster particles.
+Consequently, to keep a charged particle (e.g. in a particle accelerator) on a fixed curve, one must scale the magnetic field accordingly.
+\section{Action Principle}
+In this section we explore the principle of least action -- or, more accurately, \emph{extremal} action -- within the realm of classical mechanics.
+While statements of such philosophical nature are not particularly scientific, one may claim that this principle is the \emph{only} ``law of physics'' we have ever discovered.
+Everything else may easily be re-interpreted as a mere application of mathematics to this single law.
+However, since the Lagrangian for any system in question can not be derived from any higher principle, it would perhaps be more just to state that everything in physics may be \emph{represented} by such a Lagrangian and the respective mathematics.
+Whether this is the most fundamental description is then a matter of beliefs, and as such, we shall not bother ourselves with this question any longer.
+\subsection{The Euler-Lagrange Equation}
+Given some functional $S\klb*{x(t)} = \intx{ }{ }{L\kla*{x(t),\dot{x}(t),t}}{t}$ we obtain the equation
+\begin{align}
+0 &= \frac{\partial L}{\partial x} - \frac{\d}{\d t} \frac{\partial L}{\partial \dot{x}}.
+\end{align}
+If there is no explicit time dependence in the Lagrangian, one can derive a very useful simplification.
+Note that in this case
+\begin{align}
+\frac{\d L}{\d t} &= \frac{\partial L}{\partial t} + \frac{\partial L}{\partial x} \dot{x} + \frac{\partial L}{\partial \dot{x}} \ddot{x} = \frac{\partial L}{\partial x} \dot{x} + \frac{\d }{\d t} \frac{\partial L}{\partial \dot{x}} \dot{x} - \dot{x} \frac{\d}{\d t} \frac{\partial L}{\partial \dot{x}} = \frac{\d}{\d t} \dot{x} \frac{\partial L}{\partial \dot{x}},
+\end{align}
+which leads to
+\begin{align}
+\const &= L - \dot{x} \frac{\partial L}{\partial \dot{x}}.
+\end{align}
+\subsection{The Brachistochrone}
+As a first example, let us answer the question to a famous problem posed by Bernoulli to Newton:
+Given nothing but the force of gravity and two points, find the curve connecting these points that minimized the time\footnote{Brachistochrone derives from greek and loosely translates to ``shortest time''.} it takes a point mass to traverse the distance.
+
+Forgetting, for a moment, all the groundwork laid in the introduction to this section, it is intuitively clear that we need to somehow express the total travel time as a function of the path, which is itself a function of time.
+As such, we are searching for a function $T=T[x(t)]$.
+The total energy of the particle is $E=mgy(t) + \frac{m}{2}\dot{y}(t)^2 + \frac{m}{2}\dot{x}(t)^2$, and assuming zero initial velocity, $E=mgh$ where $h$ is the $y$-coordinate of the starting position (choose coordinates such that the second point sits at $y=0$).
+If $\ell$ is the total difference between the $x$-coordinates of start and end point, we find the travel time by writing $\ell = x(T) - x(0) = \intx{0}{T}{\dot{x}(t)}{t}$.
+This leads to
+\begin{align}
+\ell &= \intx{0}{T}{ \sqrt{2gh - 2gy(t) - \dot{y}(t)^2} }{t}.
+\end{align}
+It may seem that we have not quite achieved what we set out to do; what have is a functional of the total \emph{distance} (in $x$-direction) covered within some time $T$.
+However, conceptually this is equivalent to the original question: which curve allows the point mass to traverse the most distance within a given time interval?
+
+Defining $f(\sqrt{2g}t) = h - y(t)$ we obtain the modified functional
+\begin{align}
+S\klb*{f(t)} = \intx{0}{\sqrt{2g}T}{L\kla{f,\dot{f}}}{s} = \intx{0}{T}{\sqrt{f(s) - \dot{f}(s)^2}}{s}.
+\end{align}
+The simplified Euler-Lagrange equation then reads
+\begin{align}
+c &= L - \dot{f} \frac{\partial L}{\partial \dot{f}} = \sqrt{f - \dot{f}^2} - \dot{f} \frac{-\dot{f}}{\sqrt{f - \dot{f}^2}}
+\end{align}
+and rearranging yields $c\sqrt{f - \dot{f}^2} = f$.
+This can be solved by separation of variables, $\dot{f} = \sqrt{f - \frac{f^2}{c^2}}$.
+Integrating gives\footnote{$\intx{ }{ }{\frac{1}{\sqrt{a^2 - x^2}}}{x} = \intx{ }{ }{\frac{a\cos(\phi)}{a^2 - a^2\sin(\phi)^2}}{\phi} = \phi = \arcsin\kla*{\frac{x}{a}}$.}
+\begin{align}
+s+\const &= \intx{ }{ }{\frac{1}{\sqrt{f - \frac{1}{c^2}f^2}}}{f} = \intx{ }{ }{\klb*{\frac{1}{4}c^2 -\kla*{\frac{f}{c} - \frac{c}{2}}^2 }^{-1/2}}{f} = c \arcsin\kla*{\frac{2f}{c^2} - 1}.
+\end{align}
+This can readily be solved to obtain
+\begin{align}
+f(s) &= \frac{c^2}{2} \sin\kla*{\frac{s + \const}{c}} + \frac{c^2}{2}
+\end{align}
+and thus also $y(t) = h - f(s) = h - \frac{c^2}{2} - \frac{c^2}{2} \sin \kla*{\frac{1}{c} \klb*{\sqrt{2g}t + \const}}$.
+We want $y(0)=h$ and thus $\frac{\const}{c} = \frac{3\pi}{2}$.
+Therefore, $y(t) = h + \frac{c^2}{2} \klb*{\cos\kla*{\frac{1}{c}\sqrt{2g}t}-1}$, which also satisfies $\dot{y}(0)=0$.
+
+
+
+\end{document}

@@ -1,0 +1,79 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\kla}{}
+
+\begin{document}
+
+\title{02 Wellenfunktionen}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Compton-Streuung}
+Gegeben ist der Streuwinkel $\vartheta = \frac{\pi}{2}$. Damit gilt für die Energieänderung des Photons:
+\begin{align*}
+\lambda ' &=\lambda +\frac{h}{m_ec}(1-\cos\vartheta)\\
+-\Delta E_\gamma&=hc\left(\frac{1}{\lambda}-\frac{1}{\lambda '}\right)=\frac{hc}{\lambda}\left(1-\frac{1}{1+\frac{h}{m_ec\lambda}}\right)=\Delta E_e>0
+\end{align*}
+Aufgrund der Impulserhaltung folgt für die Bewegungsrichtung des Elektrons:
+\begin{align*}
+p_x'&=p_\gamma\ \ \ \mathrm{und }\ \ \ p_y'=p_\gamma'\\
+&\Rightarrow\ \ \phi=\arctan\frac{p_\gamma'}{p_\gamma}=\arctan\frac{\lambda}{\lambda'}=\arctan\frac{1}{1+\frac{h}{m_ec\lambda}} 
+\end{align*}
+\section{Stromdichte}
+Die Stromdichte sei definiet als $\vv{j}(\vv{r}, t):=\frac{1}{m}\mathrm{Re}\ \psi^\ast \hat{p}\psi$. Damit folgt für die gegebenen Wellenfunktionen:
+\begin{align*}
+\vv{j}_a(\vv{r}, t)&= -\frac{\hbar |A|^2}{m}\mathrm{Re}\ e^{-i(\vv{k}\cdot\vv{r}-\hbar k^2t/2m)}i\nabla e^{i(\vv{k}\cdot\vv{r}-\hbar k^2t/2m)}=\frac{\hbar |A|^2}{m}\vv{k} \\
+\vv{j}_b(\vv{r}, t)&=-\frac{r\hbar e^{-r/2a_0}\sin\vartheta }{64m\pi a_0^5}\mathrm{Re}\ e^{-i\phi}i\nabla\ re^{-r/2a_0}\sin\vartheta e^{i\phi}= \\ 
+&= -\frac{r\hbar e^{-r/2a_0}\sin\vartheta }{64m\pi a_0^5} \mathrm{Re}\ (1-\frac{r}{2a_0})e^{-r/2a_0}\sin\vartheta  ie_r+ e^{-r/2a_0}\cos\vartheta ie_\vartheta - e^{-r/2a_0}e_\phi = \\
+&=\frac{r\hbar }{64m\pi a_0^5}e^{-r/a_0}\sin\vartheta e_\varphi
+\end{align*}
+\section{Fouriertransformation}
+Für die Fouriertransformation ist es hilfreich zunächst ein Standardintegral zu betrachten:
+\begin{align*}
+I&=\int_\mathbb{R}e^{-ax^2+bx}\,\mathrm{d}x=\int_\mathbb{R}e^{-(\sqrt{a}x-b/\sqrt{4a})^2+b^2/4a}\,\mathrm{d}x=e^{b^2/4a}\int_\mathbb{R}\frac{1}{\sqrt{a}}e^{-t^2}\,\mathrm{d}t=\sqrt{\frac{\pi}{a}}e^{b^2/4a}\\
+\phi (k)&=\frac{1}{\sqrt{2\pi}}\int_\mathbb{R}\frac{1}{\sqrt{2\pi}}e^{ik_0x-\epsilon^2x^2/2}e^{-ikx}\,\mathrm{d}x=\frac{1}{\sqrt{2\pi}\epsilon}e^{-(k-k_0)^2/2\epsilon^2}
+\end{align*}
+Um zu zeigen, dass $\phi (k)\overset{\epsilon\rightarrow 0}{\rightarrow}\delta (k-k_0)$, betrachten wir das Integral von $\phi (k)$ und einer beliebigen Funktion $f(k)$:
+\begin{align*}
+I&=\frac{1}{\sqrt{2\pi}\epsilon}\int_\mathbb{R}e^{-x^2/2\epsilon^2}f(x+k_0)\,\mathrm{d}x=\frac{1}{\sqrt{2\pi}\epsilon}\int_\mathbb{R}e^{-x^2/2\epsilon^2}(f(k_0)+xf'(k_0)+\mathcal{O}(x^2))\,\mathrm{d}x=\\ 
+&=f(k_0) + \frac{1}{\sqrt{\pi}}\int_\mathbb{R}e^{-t^2}\mathcal{O}(2\epsilon^2t^2)\,\mathrm{d}t\overset{\epsilon\rightarrow 0}{\rightarrow}f(k_0)
+\end{align*}
+\section{Wellenfunktion bei einem Potentialsprung}
+Betrachte die zeitunabhängige \textsc{Schrödinger}-Gleichung um eine Stelle $x_0$, bei der das Potential um $\Delta V$ springt:
+\begin{align*}
+\int_{x_0-\epsilon}^{x_0+\epsilon}E\psi\,\mathrm{d}x &=\int_{x_0-\epsilon}^{x_0+\epsilon}-\frac{\hbar^2}{2m}\psi ''+V(x)\psi\,\mathrm{d}x= \\
+&=-\frac{\hbar^2}{2m}\psi'(x)\bigg\vert_{x_0-\epsilon}^{x_0+\epsilon}+\int_{x_0-\epsilon}^{x_0+\epsilon}V(x)\psi(x)\,\mathrm{d}x
+\end{align*}
+Im Grenzwert $\epsilon\rightarrow 0$, da $V\psi$ beschränkt und integrierbar ist:
+\begin{align*}
+0&=\lim_{\epsilon\rightarrow 0}\psi'(x_0+\epsilon)-\psi'(x_0-\epsilon)\ \ \Rightarrow\ \ \psi'(x)\ \mathrm{bleibt\ stetig!}
+\end{align*}
+Ist der Beitrag aber von der Form $V_0\delta (x-x_0)$, so ist $V\psi$ nicht mehr beschränkt und liefert auch im Grenzwert noch einen Beitrag:
+\begin{align*}
+\lim_{\epsilon\rightarrow 0}\psi'(x_0+\epsilon)-\psi'(x_0-\epsilon)=\frac{2mV_0}{\hbar^2}\psi(x_0)\neq 0\ \ \Rightarrow\ \ \psi(x)\  \mathrm{hat\ einen\ Knick\ bei\ }x_0
+\end{align*}
+VERSUCH: Konstante Näherung für $\psi$ in der $\epsilon$-Umgebung:
+\begin{align*}
+E(\psi_1+\psi_2)\epsilon &=V_0\psi_1\epsilon + (V_0+\Delta V)\psi_2\epsilon\ \ \Rightarrow\ \ \psi_2 = \frac{E -V_0}{V_0+\Delta V-E}\psi_1 = -\frac{\psi_1}{1+\frac{\Delta V}{V_0-E}}
+\end{align*} 
+Betrachte nun einen Sprung der Form $V_0\delta (x-x_0)$:
+\begin{align*}
+\int_{x_0-\epsilon}^{x_0+\epsilon}E\psi\,\mathrm{d}x &=-\frac{\hbar^2}{2m}\psi'(x)\bigg\vert_{x_0-\epsilon}^{x_0+\epsilon} +V_0\psi(x_0)\\ 
+&\Rightarrow\ \ \frac{2mE}{\hbar^2}(\Psi(x_0+\epsilon)-\Psi(x_0-\epsilon))+\Psi''(x_0+\epsilon)-\Psi''(x_0-\epsilon)=\frac{2mV_0}{\hbar^2}\psi (x_0)\\
+&\Rightarrow\ \ \Psi(x_0+\epsilon)-\Psi(x_0-\epsilon)=\frac{V_0}{E}\psi(x_0)\left(1-\cos\frac{\sqrt{2mE}}{\hbar}\epsilon\right)
+\end{align*}
+
+
+\end{document}

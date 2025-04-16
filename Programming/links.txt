@@ -1,0 +1,11 @@
+http://web.archive.org/web/20070228220729/http://blogs.sun.com/jag/entry/transcendental_meditation
+https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/ieee754/dbl-64/s_sin.c;hb=HEAD#l194
+https://stackoverflow.com/questions/2284860/how-does-c-compute-sin-and-other-math-functions
+
+
+
+http://www.gerdlamprecht.de/GrobeFPU_Fehler.htm 
+
+
+
+https://matplotlib.org/matplotblog/posts/animated-fractals/

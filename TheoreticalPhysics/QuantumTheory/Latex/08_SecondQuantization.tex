@@ -1,0 +1,309 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb, slashed}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{dsfont}
+
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\def\I{\text{i}}
+\def\E{\text{e}}
+
+\newcommand*{\titel}{08 Second quantization}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+\subject{Quantum theory 2}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Questions}
+A bosonic creation operator can only act on $\mathcal{H}_N^+$. 
+The result is
+\begin{align}
+a_\psi^\dagger\Ket | {\psi_1\dots\psi_N} \rangle&=\sqrt{N+1}\Ket | {\psi \psi_1\dots\psi_N} \rangle.
+\end{align}
+The commutation relations are
+\begin{align}
+\klam\left[ {a_n,a_m^\dagger} \right]_\mp &=\delta_{nm},\\
+\klam\left[ {a_n,a_m} \right]_\mp&=0,\\
+\klam\left[ {a_n^\dagger,a_m^\dagger} \right]_\mp&=0,
+\end{align}
+where $-\equiv$ for bosonic and $+\equiv$ for fermionic operators.
+\\
+The relationship is simply $\Ket | {0} \rangle=a_\psi\Ket | {\psi} \rangle$.
+\\
+A one-particle observable $T$ only acts on a single particle with state $\Ket | {k} \rangle$. 
+The operator can be expressed as
+\begin{align}
+T&=\sum_{jk}\braket\langle {j} | {T} | {k}\rangle a_j^\dagger a_k.
+\end{align}
+The operator $a_\psi^\dagger a_\psi\equiv \hat{n}_\psi$ is an observable, because it is hermitian $\hat{n}^\dagger = \hat{n}$.
+It counts the number of particles in the state $\psi$.
+The other one is not hermitian, so it is not an observable.
+\\
+If $H_0\Ket | {\psi} \rangle=E_0\Ket | {\psi} \rangle$, the groundstate energy of $H$ is $E=E_0+\epsilon_\tecxt\text{min}$. 
+Since the Hamiltonian has the approximate structure of a harmonic oscillator, the $b$-operators can be associated with the creation/annihilation of quasi-particles, e.g. phonons. 
+\\
+Why should the order of the $\alpha$ index in the summation matter whatsoever? 
+If it doesn't, there is no reason to distinguish the three cases, as they're all equivalent under a reordering of the indexes. 
+In the cases C we are able to deduce that $\epsilon_\tecxt\text{min}\equiv\epsilon_1$, but that is not really all that impressive.
+\\
+Note that we set the groundstate $\epsilon_0=0$. 
+This means, that C is actually a bit different, because the lowest excited state is unique.
+\section{Weakly interacting Bose gases and super-fluidity}
+Let $p:=p_l-p_i$ and $n_0\simeq N$ with $n_p=N-n_0\simeq 0$. 
+We can break up the second summation to achieve the simplification
+\begin{align}
+H&=\sum\frac{p^2}{2m}a_p^\dagger a_p+\frac{1}{2L^3}\sum\omega(p)a_{p+p_i}^\dagger  a_{p_i}a_{p_k-p}^\dagger a_{p_k},
+\end{align}
+where the order of the middle two operators was swapped (bosonic so no sign change, and unequal momenta). 
+An important term is found for $p=0$, as we find $\hat{n}_{p_i}\hat{n}_{p_k}$. 
+Extracting this term gives
+\begin{align}
+H&=\sum\frac{p^2}{2m}a_p^\dagger a_p+\frac{\omega (0)}{2L^3}\underbrace{\sum\hat{n}_{p_i}\hat{n}_{p_k}}_{\approx N^2}+\frac{1}{2L^3}\sum_{p\neq 0}\omega (p)a_{p+p_i}^\dagger  a_{p_i}a_{p_k-p}^\dagger a_{p_k}.
+\end{align}
+We can also consider the terms in the last summation with $p_k=p=-p_i$ and $p_i=0=p_k$ respectively. 
+Separating them yields
+\begin{align}
+H&\approx \sum\frac{p^2}{2m}a_p^\dagger a_p+\frac{N^2}{2L^3}\omega (0)+\frac{a_0^{\dagger 2}}{2L^3}\sum_{p\neq 0}\omega (p) a_pa_{-p}+\frac{a_0^2}{2L^3}\sum_{p\neq 0}\omega (p) a_p^\dagger a_{-p}^\dagger+\frac{1}{2L^3}R,
+\end{align}
+where we know look to approximate the residual term 
+\begin{align}
+R&:=\sum_{\neg (p=0\,\lor\, p=p_k=-p_i\,\lor\, p_i=p_k=0)}\omega (p)a_{p+p_i}^\dagger  a_{p_i}a_{p_k-p}^\dagger a_{p_k}.
+\end{align}
+Here the terms satisfying $p_i=0=p_k-p$ and $p_k=0=p_i+p$ are still contained, but only for $p\neq 0$.
+They result in the last term of first order, i.e.
+\begin{align}
+R&=\hat{n}_0\sum_{p\neq 0}\omega (p) a_p^\dagger a_p + \hat{n}_0\sum_{p\neq 0}\omega (p) a_{-p}^\dagger a_{-p}+\mathcal{O}(\hat{n}_{p\neq 0}^2).
+\end{align}
+Due to the relabeling of $p\rightarrow -p$ in the second summation, we find the first two terms to be identical.
+Note that this is only possible, because $\omega (-p) = \omega (p)$.
+The latter relation can be seen from the change of variables $q':=-q$ in the integration.
+The remaining terms are all of second order, and can be ignored in this approximation.
+The Hamiltonian then becomes
+\begin{align}
+H&\approx\sum_{p\neq 0}\klam\left[ {\frac{p^2}{2m}+\frac{n_0\omega (p)}{L^3}} \right]a_p^\dagger a_p+\frac{N^2}{2L^3}\omega (0)+\frac{a_0^{\dagger 2}}{2L^3}\sum_{p\neq 0}\omega (p) a_pa_{-p}+\frac{a_0^2}{2L^3}\sum_{p\neq 0}\omega (p) a_p^\dagger a_{-p}^\dagger.
+\end{align}
+Note that $a_0^2\equiv\sqrt{n_0}\sqrt{n_0-1}\approx N\approx \sqrt{n_0}\sqrt{n_0+1}\equiv a_0^{\dagger 2}$, which allows us to simplify the last two summations to give
+\begin{align}
+H&\approx\sum_{p\neq 0}\klam\left[ {\frac{p^2}{2m}+\frac{n_0\omega (p)}{L^3}} \right]a_p^\dagger a_p+\frac{N^2}{2L^3}\omega (0)+\frac{N}{2L^3}\sum_{p\neq 0}\omega (p) \kla\left( {a_pa_{-p} + a_p^\dagger a_{-p}^\dagger} \right).
+\end{align}
+\subsection{Complicated approach (IGNORE, not finished)}
+Define new operators as
+\begin{align}
+a_p&=:u_pb_p+v_pb_{-p}^\dagger&\tecxt\text{and}&&a_p^\dagger&=:u_pb_p^\dagger+v_pb_{-p}.
+\end{align}
+We rewrite the conditions to get
+\begin{align}
+b_p&=\frac{a_p}{u_p}-\frac{v_p}{u_p}b_{-p}^\dagger =\frac{a_{-p}^\dagger}{v_{-p}}-\frac{u_{-p}}{v_{-p}}b_{-p}^\dagger.
+\end{align}
+This allows us to deduce that 
+\begin{align}
+(v_pv_{-p}-u_pu_{-p})b_{-p}^\dagger &=a_pv_{-p}-u_pa_{-p}^\dagger
+\end{align}
+and hence
+\begin{align}
+b_p^\dagger &=\frac{u_{-p}a_p^\dagger -v_pa_{-p}}{u_pu_{-p}-v_pv_{-p}}.
+\end{align}
+Similarly, we find
+\begin{align}
+b_p^\dagger &=\frac{a_p^\dagger}{u_p}-\frac{v_p}{u_p}b_{-p}=\frac{a_{-p}}{v_{-p}}-\frac{u_{-p}}{v_{-p}}b_{-p}
+\end{align}
+and therefore
+\begin{align}
+(v_pv_{-p}-u_pu_{-p})b_{-p}&=v_{-p}a_p^\dagger -u_pa_{-p},
+\end{align}
+which finally leads to 
+\begin{align}
+b_p&=\frac{u_{-p}a_p-v_pa_{-p}^\dagger}{u_pu_{-p}-v_pv_{-p}}=(b_p^\dagger)^\dagger.
+\end{align}
+We want to determine $u_p,v_p$ such that $b,b^\dagger$ fulfill the common relations. 
+Abbreviate $d:=u_pu_{-p}-v_pv_{-p}$ to get
+\begin{align}
+\klam\left[ {b_p,b^\dagger_{p'}} \right]&=\frac{1}{dd'}\klam\left[ {u_{-p}a_p-v_pa_{-p}^\dagger,u_{-p'}a_{p'}^\dagger-v_{p'}a_{-p'}} \right]=\\
+&=\frac{1}{dd'}\kla\left( {u_{-p}u_{-p'}\klam\left[ {a_p,a_{p'}^\dagger} \right]-v_pv_{p'}\klam\left[ {a_{-p'},a_{-p}^\dagger} \right]} \right)=\\
+&=\frac{u_{-p}^2-v_p^2}{d^2}\delta_{pp'},\\
+\klam\left[ {b_p,b_{p'}} \right]&=\frac{1}{dd'}\klam\left[ {u_{-p}a_p-v_pa_{-p}^\dagger,u_{-p'}a_{p'}-v_{p'}a_{-p'}^\dagger} \right]=\\
+&=\frac{1}{dd'}\kla\left( -u_{-p}v_{p'}\klam\left[ a_p,a_{-p'}^\dagger \right]+u_{-p'}v_p\klam\left[ a_{p'},a_{-p}^\dagger \right]\ \right)=\\
+&=\frac{u_pv_p-u_{-p}v_{-p}}{d^2}\delta_{p,-p'}.
+\end{align}
+The second equation gives us $u_pv_p=u_{-p}v_{-p}$ and the first one $u_p^2-v_{-p}^2=d^2$.
+%Inserting $d$ and simplifying yields
+%\begin{align*}
+%u_p^2-v_{-p}^2&=u_p^2u_{-p}^2+v_p^2v_{-p}^2-2u_pv_pu_{-p}v_{-p}\kom\overset{\substack{{u_pv_p=u_{-p}v_{-p}} \\ |}}{=}u_p^2u_{-p}^2+v_p^2v_{-p}^2-2u_p^2v_p^2
+%\end{align*}
+We want the Hamiltonian to be diagonalized.
+Consider the product
+\begin{align}
+a_pa_{-p}&=u_pu_{-p}b_pb_{-p}+v_pv_{-p}b_p^\dagger b_{-p}^\dagger +u_pv_{-p}b_pb_p^\dagger + v_pu_{-p}b_{-p}^\dagger b_{-p},\\
+a_p^\dagger a_{-p}^\dagger &=u_pu_{-p}b_p^\dagger b_{-p}^\dagger + v_pv_{-p}b_{-p}b_p+u_pv_{-p}b_p^\dagger b_p+v_pu_{-p}b_{-p}^\dagger b_{-p}.
+\end{align}
+The off-diagonal terms would vanish, if
+\begin{align}
+0&\overset{!}{=}\sum_{p\neq 0}u_pu_{-p}b_pb_{-p}+v_pv_{-p}b_p^\dagger b_{-p}^\dagger.
+\end{align}
+For this it is sufficient that $u_{-p}=-u_p$ and $v_{-p}=-v_p$.
+This assumption trivially satisfies the second commutation relation $u_pv_p=u_{-p}v_{-p}=(-1)^2u_pv_p$.
+We find $d=v_p^2-u_p^2$, which results in the condition
+\begin{align}
+d^2&=(u_p^2-v_p^2)^2\overset{!}{=}u_p^2-v_p^2.
+\end{align}
+This is only possible if $u_p^2-v_p^2=1$.
+And now what?
+\subsection{More elegant approach}
+%comm of a and assume that for b alrdy fulfilled
+%find u^2-v^2=1 and look at the relation
+%galilean trafo from vi'=vi+v, and then simply \sum_imv_i^2...
+%maximal/critical velocity is sqrt(N\lambda / mL^3)
+Define new operators as
+\begin{align}
+a_p&=:u_pb_p+v_pb_{-p}^\dagger&\tecxt\text{and}&&a_p^\dagger&=:u_pb_p^\dagger+v_pb_{-p}.
+\end{align}
+We want $b,b^\dagger$ to fulfill the canonical commutation relations, and we want to determine the coefficients, such that the Hamiltonian becomes diagonalized.
+%We will assume the coefficients to be symmetric, i.e. $u_{-p}=u_p$ and $v_{-p}=v_p$.
+%This assumption will be discussed later.
+Consider the canonical commutation relations for $a,a^\dagger$, given by
+\begin{align}
+\klam\left[ {a_p,a_{p'}^\dagger} \right]&=\klam\left[ {u_pb_p+v_{p}b_{-p}^\dagger,u_{p'}b_{p'}^\dagger + v_{p'}b_{-p'}} \right]=(u_pu_{p'}-v_pv_{p'}) \delta_{pp'},\\
+\klam\left[ {a_p,a_{p'}} \right]&=\klam\left[ {u_pb_p+v_{p}b_{-p}^\dagger,u_{p'}b_{p'} + v_{p'}b_{-p'}^\dagger} \right]=(u_pv_{p'}-v_pu_{p'})\delta_{p,-p'}=0.
+\end{align}
+The first condition is equivalent to $u_p^2-v_p^2=1$. 
+The second one is $\frac{u_p}{u_{-p}}=\frac{v_p}{v_{-p}}$.
+The latter is automatically fulfilled, if $u_p$ and $v_p$ are either both symmetric or both anti-symmetric.
+%Due to the symmetry assumption, the second condition is automatically satisfied. 
+\\
+To diagonalize the Hamiltonian, we need three combinations of $a$ and $a^\dagger$, namely
+\begin{align}
+a_pa_{-p}&=u_p^2b_pb_{-p}+v_p^2b_p^\dagger b_{-p}^\dagger +u_pv_pb_pb_p^\dagger + u_pv_pb_{-p}^\dagger b_{-p},\\
+a_p^\dagger a_{-p}^\dagger&=u_p^2b_p^\dagger b_{-p}^\dagger+v_p^2b_p b_{-p} +u_pv_pb_pb_p^\dagger + u_pv_pb_{-p}^\dagger b_{-p},\\
+a_p^\dagger a_p&=u_p^2b_p^\dagger b_p +v_p^2b_{-p}b_{-p}^\dagger +u_pv_pb_p^\dagger b_{-p}^\dagger + u_pv_pb_pb_{-p}.
+\end{align}
+%Assuming $u_p^2+v_p^2=0$ then results in the simplification
+The first two only appear as their sum
+\begin{align}
+a_pa_{-p}+a_p^\dagger a_{-p}^\dagger&=(u_p^2+v_p^2)\kla\left( {b_pb_{-p} + b_p^\dagger b_{-p}^\dagger} \right)+ 2u_pv_pb_pb_p^\dagger +2u_pv_pb_{-p}^\dagger b_{-p}=\\
+&=(u_p^2+v_p^2)\kla\left( {b_pb_{-p} + b_p^\dagger b_{-p}^\dagger} \right) + 2u_pv_p\kla\left( {\hat{m}_p+1+\hat{m}_{-p}} \right),
+\end{align}
+where we define a new number operator $\hat{m}_p:=b_p^\dagger b_p$.
+%Combining the two conditions gives $2u_p^2=1$, or $u_p=\pm\frac{1}{\sqrt{2}}$, which leads to $v_p\pm\I\frac{1}{\sqrt{2}}$.
+Now we only need to evaluate the summation over $\hat{n}_p$ to complete the diagonalization.
+We already expressed the $\hat{n}_p$ with $b,b^\dagger$, which allows us to conclude that
+\begin{align}
+\sum_{p\neq 0}\hat{n}_p&=\sum_{p\neq 0}u_p^2b_p^\dagger b_p +v_p^2b_{-p}b_{-p}^\dagger +u_pv_pb_p^\dagger b_{-p}^\dagger + u_pv_pb_pb_{-p}=\\
+&=\sum_{p\neq 0}u_p^2\hat{m}_p+v_p^2\hat{m}_{-p} +v_p^2+u_pv_p\kla\left( {b_p^\dagger b_{-p}^\dagger +b_pb_{-p}} \right)
+\end{align}
+Inserting all the relations into our Hamiltonian results in
+\begin{align}
+H&\approx\sum_{p\neq 0}\klam\left[ {\frac{p^2}{2m}+\frac{N\omega (p)}{L^3}} \right]a_p^\dagger a_p+\frac{N^2}{2L^3}\omega (0)+\frac{N}{2L^3}\sum_{p\neq 0}\omega (p) \kla\left( {a_pa_{-p} + a_p^\dagger a_{-p}^\dagger} \right)=\\
+&=\sum_{p\neq 0}\klam\left[ {\frac{p^2}{2m}+\frac{N\omega (p)}{L^3}} \right]\klam\left[ {u_p^2\hat{m}_p+v_p^2\hat{m}_{-p} + v_p^2+u_pv_p\kla\left( {b_p^\dagger b_{-p}^\dagger +b_pb_{-p}} \right)} \right]+\frac{N^2}{2L^3}\omega (0)+\\
+&\hspace*{1cm} +\frac{N}{2L^3}\sum_{p\neq 0}\omega (p) \klam\left[ {(u_p^2+v_p^2)\kla\left( {b_pb_{-p} + b_p^\dagger b_{-p}^\dagger} \right) + 2u_pv_p\kla\left( {\hat{m}_p+1+\hat{m}_{-p}} \right)} \right]=\\
+&=\frac{N^2}{2L^3}\omega (0)+\sum_{p\neq 0}\klam\left[ {\frac{p^2}{2m}+\frac{N\omega (p)}{L^3}} \right]v_p^2+\frac{N}{L^3}\sum_{p\neq 0}\omega (p)u_pv_p\kla\left( {\hat{m}_p+1+\hat{m}_{-p}} \right)+\\
+&\hspace*{1cm} +\omega (p)\klam\left[ {1+\frac{L^3p^2}{2mN\omega (p)}} \right]\kla\left( {u_p^2\hat{m}_p+v_p^2\hat{m}_{-p}} \right) .
+\end{align}
+Here we eliminate the off-diagonal terms by setting
+\begin{align}
+0&\overset{!}{=}(u_p^2+v_p^2)\frac{N\omega (p)}{2L^3}+u_pv_p\kla\left( {\frac{p^2}{2m}+\frac{N\omega (p)}{L^3}} \right),\\
+\Rightarrow\ \ \ 0&=\frac{u_p^2+v_p^2}{2}+u_pv_p(1+x),
+\end{align}
+where we introduce the abbreviation $x:=\frac{p^2L^3}{2N\omega m}$.
+With $u_p^2=1+v_p^2$ we can solve this condition for $v_p$.
+Squaring both sides gives
+\begin{align}
+0&=\kla\left( {\frac{1}{2}+v_p^2} \right)^2-v_p^2(1+v_p^2)(1+x)^2\\
+\Rightarrow\ \ \ 0&=v_p^4+v_p^2+\frac{1}{4}-\kla\left( {v_p^2+v_p^4} \right)\kla\left( {1+2x+x^2} \right)=\\
+&=-v_p^4x(x+2)-v_p^2x(x+2)+\frac{1}{4}.
+\end{align}
+Solving for $v_p^2$ yields
+\begin{align}
+v_p^2&=-\frac{1}{2}\pm\frac{1}{2}\sqrt{1+\frac{1}{x(x+2)}}=\\
+&=\frac{1}{2}\klam\left[ {\frac{1+x}{\sqrt{x(x+2)}}-1} \right]=:\frac{r-1}{2}.
+\end{align}
+Here we choose the positive branch, because $v_p$ should be a real number.
+%Define $\epsilon (p):=\frac{2Nu_pv_p}{L^3}$ to write the Hamiltonian as
+We compute
+\begin{align}
+4u_p^2v_p^2&=(r+1)(r-1)=r^2-1=\frac{(1+x)^2}{x(x+2)}-1=\frac{1}{x(x+2)}
+\end{align}
+to find
+\begin{align}
+u_pv_p&=\pm\frac{1}{2}\frac{1}{\sqrt{x(x+2)}}.
+\end{align}
+Similarly,
+\begin{align}
+u_p^2+v_p^2&=\frac{1}{2}\kla\left( {r+1+r-1} \right)=r=\frac{1+x}{\sqrt{x(x+2)}}.
+\end{align}
+Recall that $x=\frac{p^2L^3}{2N\omega m}$. 
+Inserting the expressions into our Hamiltonian  gives
+\begin{align}
+H&\approx\frac{N^2}{2L^3}\omega (0)-\frac{1}{2}\sum_{p\neq 0}\klam\left[ {\frac{p^2}{2m}+\frac{N\omega}{L^3}} \right]\kla\left( {1-\frac{1+x}{\sqrt{x(x+2)}}} \right)-\frac{N\omega (p)}{L^3}\frac{\pm 1}{\sqrt{x(x+2)}}+\\
+&\hspace*{1cm} +\frac{N}{L^3}\sum_{p\neq 0}\frac{\pm\omega\hat{m}_p}{\sqrt{x(x+2)}}+\omega\frac{(1+x)^2}{\sqrt{x(x+2)}}\hat{m}_p.
+\end{align}
+We define
+\begin{align}
+\epsilon (p)&:=\frac{N\omega (p)}{L^3}\frac{(1+x)^2\pm 1}{\sqrt{x(x+2)}},
+\end{align}
+which allows us to express the Hamiltonian as
+\begin{align}
+H&\approx\frac{N^2}{2L^3}\omega (0)-\frac{1}{2}\sum_{p\neq 0}\klam\left[ {\frac{p^2}{2m}+\frac{N\omega (p)}{L^3}-\epsilon (p)} \right]+\sum_{p\neq 0}\epsilon (p)\hat{m}_p.
+\end{align}
+The dispersion relation diverges for the positive branch, so we have to choose the negative one here.
+Then we can simplify the expression to
+\begin{align}
+\epsilon (p)&=\frac{N\omega (p)}{L^3}\frac{(x+1)^2-1}{\sqrt{x(x+2)}}=\frac{N\omega (p)}{L^3}\sqrt{x(x+2)}=\\
+&=\sqrt{\frac{N\omega (p)}{L^3}\frac{p^2}{m}+\frac{p^4}{4m^2}}.
+\end{align}
+For $V(x)=\lambda\delta (x)$ we find $\omega (p)=\lambda $.
+The limiting cases of the dispersion relation are
+\begin{align}
+\epsilon (p)&\approx\begin{cases}\frac{p^2}{2m}&\tecxt\text{for\ } p\gg 1 \\
+p\sqrt{\frac{N\lambda}{mL^3}} & \tecxt\text{for\ } p\approx 0
+\end{cases}.
+\end{align}
+Let $v\rightarrow v-v'$. 
+Then the change of the energy in the fixed reference frame $\Delta E':=E'(v-v')-E'(v)$ is given by
+\begin{align}
+\Delta E'&=\frac{Nm}{2}(v-v')^2+(v-v')\cdot P=?
+\end{align}
+The system exhibits super-fluid properties if the velocity is smaller than the threshold
+\begin{align}
+v&\overset{!}{\le}\tecxt\text{min}_p\frac{\epsilon (p)}{p}=\sqrt{\frac{N\lambda}{mL^3}}.
+\end{align}
+
+\end{document}

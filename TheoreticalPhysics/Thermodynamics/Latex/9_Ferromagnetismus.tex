@@ -1,0 +1,108 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{9 Ferromagnetismus}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 9.1: Ferromagnetismus}
+Betrachte ein $2\times L$-Gitter von Spins unter periodischen Randbedingungen. Dann lautet der Hamiltonian
+\begin{align*}
+H&=-J\sum_{j=1}^2\sum_{k=1}^L\sigma_{j,k}\sigma_{j,k+1}-2J\sum_{k=1}^L\sigma_{j,k}\sigma_{j+1,k}
+\end{align*}
+Betrachte eine Zelle mit vier Gitterplätzen. Es gibt $2^4=16$ mögliche Zustände, die sich in der Transfermatrix zusammenfassen lassen:
+\begin{align*}
+H_{k,k+1}&=-J\klam\left[ {\sigma_{1,k}\sigma_{1,k+1}+\sigma_{2,k}\sigma_{2,k+1}+2\sigma_{1,k}\sigma_{2,k}} \right]\\
+T_{k,k+1}&=\begin{pmatrix}
+e^{-\beta JH(\sigma_{1k},\sigma_{2k},\sigma_{1k+1},\sigma_{2k+1}}
+\end{pmatrix}=\\
+&=\begin{pmatrix}
+(++++)&(+++-)&\dots\\
+(+-++)&\dots\\
+(-+++)&\dots\\
+(--++)&\dots
+\end{pmatrix} =\begin{pmatrix}
+e^{4\beta J}&e^{2\beta J}&e^{2\beta J}&1\\
+e^{-2\beta J}&1&e^{-4\beta J}&e^{-2\beta J}\\
+e^{-2\beta J}&e^{-4\beta J}&1&e^{-2\beta J}\\
+1&e^{2\beta J}&e^{2\beta J}&e^{4\beta J}
+\end{pmatrix}
+\end{align*}
+Die Berechnung der Eigenwerte erfolgt mit $z=e^{2\beta J}$:
+\begin{align*}
+\det (T-\lambda)&=\det\begin{pmatrix}
+z^2-\lambda&z&z&1\\
+\frac{1}{z}&1-\lambda&\frac{1}{z^2}&\frac{1}{z}\\
+\frac{1}{z}&\frac{1}{z^2}&1-\lambda&\frac{1}{z}\\
+1&z&z&z^2-\lambda
+\end{pmatrix}=\\
+&=\det\begin{pmatrix}
+z^2-1-\lambda&z&z&1\\
+0&1-\lambda&\frac{1}{z^2}&\frac{1}{z}\\
+0&\frac{1}{z^2}&1-\lambda&\frac{1}{z}\\
+1-z^2+\lambda&z&z&z^2-\lambda
+\end{pmatrix}=\\
+&=\det\begin{pmatrix}
+z^2-1-\lambda&z&z&1\\
+0&1-\lambda&\frac{1}{z^2}&\frac{1}{z}\\
+0&\frac{1}{z^2}&1-\lambda&\frac{1}{z}\\
+0&2z&2z&z^2+1-\lambda
+\end{pmatrix}=\\
+&=\det\begin{pmatrix}
+z^2-1-\lambda&0&z&1\\
+0&1-\frac{1}{z^2}-\lambda&\frac{1}{z^2}&\frac{1}{z}\\
+0&0&1+\frac{1}{z^2}-\lambda&\frac{2}{z}\\
+0&0&2z&z^2+1-\lambda
+\end{pmatrix}=\\
+&=\kla\left( {z^2-1-\lambda} \right)\kla\left( {1-\frac{1}{z^2}-\lambda} \right)\klam\left[ {\kla\left( {1+\frac{1}{z^2}-\lambda} \right)(z^2+1-\lambda)-4} \right]
+\end{align*}
+Setze nun $z^2=e^{4\beta J}\rightarrow z$. Die ersten beiden Eigenwerte lautet dann $\lambda_1=z-1$ und $\lambda_2=1-\frac{1}{z}$. Gesucht sind die restlichen Nullstellen des Polynoms:
+\begin{align*}
+0&\overset{!}{=}\lambda^2-\lambda\kla\left( {z+2+\frac{1}{z}} \right)-4+\kla\left( {1+\frac{1}{z}} \right)\kla\left( {1+z} \right)\\
+\Rightarrow\ \ \ \lambda_{3,4}&=\frac{z+2+z^{-1}}{2}\pm\frac{\sqrt{z^2+4+z^{-2}+4z+4z^{-1}+2-4\kla\left( {z+2+ z^{-1}-4} \right)}}{2}=\\
+&=\frac{z+2+z^{-1}}{2}\pm\frac{\sqrt{z^2+14+z^{-2}}}{2}
+\end{align*}
+Es ist $z>1$, woraus $\lambda_1=z\lambda_2>\lambda_2$ folgt. Es ist offensichtlich $\lambda_3>\lambda_4$. Insgesamt gilt $\lambda_3\ge\lambda_j$:
+\begin{align*}
+\lambda_3&\ge\frac{z+2}{2}+\frac{\sqrt{z^2}}{2}=z+1>\lambda_{1,2}
+\end{align*}
+Die Zustandssumme lautet:
+\begin{align*}
+Z&=\sum_\sigma\exp\kla\left( {-\beta H} \right)=\sum_\sigma\prod_k\exp\kla\left( {\beta J\klam\left[ {\sigma_{1,k}\sigma_{1,k+1}+\sigma_{2,k}\sigma_{2,k+1}+2\sigma_{1,k}\sigma_{2,k}} \right]} \right)=\\
+&=\sum_{\sigma_{11},\sigma_{21}}\dots\sum_{\sigma_{1L},\sigma_{2L}}\braket\langle {\sigma_{11},\sigma_{21}} | {T} | {\dots}\rangle\dots\braket\langle {\sigma_{1L},\sigma_{2L}} | {T} | {\sigma_{11},\sigma_{21}}\rangle=\\
+&=\sum_{\sigma_{11},\sigma_{21}}\braket\langle {\sigma_{11},\sigma_{21}} | {T^L} | {\sigma_{11},\sigma_{21}}\rangle=\tecxt\text{tr\,}T^L=\lambda_1^L+\lambda_2^L+\lambda_3^L+\lambda_4^L
+\end{align*}
+Im Grenzwert großer Systeme $L\rightarrow\infty$ ist nur der größte Eigenwert relevant:
+\begin{align*}
+Z&\sim\lambda_3^L=\frac{1}{2^L}\klam\left[ {z+2+\frac{1}{z}+\sqrt{z^2+14+\frac{1}{z^2}}} \right]^L
+\end{align*}
+Betrachte nun die mittlere freie Energie mit $F=-\frac{1}{\beta}\log Z$:
+\begin{align*}
+f&=\lim\frac{F}{L}=\frac{\log 2}{\beta}-\frac{1}{\beta}\log\klam\left[ {z+2+\frac{1}{z}+\sqrt{z^2+14+\frac{1}{z^2}}} \right]
+\end{align*}
+\section*{Aufgabe 9.2: Landau-Theorie des 2D Ising Modells}
+
+
+\end{document}

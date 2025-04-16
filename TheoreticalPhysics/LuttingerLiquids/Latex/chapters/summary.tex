@@ -1,0 +1,37 @@
+\chapter{Conclusion and Outlook}\label{chap:sum}
+%Our model of an \gls{ell}, or more specifically the \gls{sg}-like perturbation $H_2$ from \autoref{eqn:ell:bos:H2H4_model}, at finite temperature and for a non-trivial Luttinger parameter $K\neq 1$ demonstrably leads to the formation of \acrlongpl{ep}.
+%From a high level point of view, it is therefore justified to deem the program of this thesis a success.
+%Despite the unusual structure of the perturbation, one should not view this as a contrived academic example either; after all, the \gls{ell} corresponds to the bosonization of a concrete microscopic lattice model.\\
+Starting from a concrete microscopic lattice model, bosonization leads us to a low-energy limit described by the \gls{ell} in \autoref{eqn:ell:bos:H2H4_model}.
+The essential new component is the \gls{sg}-like perturbation $H_2$, which at finite temperature and for a non-trivial Luttinger parameter $K\neq 1$ demonstrably leads to the formation of \acrlongpl{ep}.
+Qualitatively, the analytic results thus match the prediction from numerical data for the microscopic model in \cite{EP_DynamicInduced_Quenched_Lehmann_2021}.
+The structural similarity of our \autoref{fig:ell:ep:ep_contour_dual_example} to Figure 2 in \cite{EP_DynamicInduced_Quenched_Lehmann_2021} is particularly striking.\\
+Quantitative agreement can also be achieved, but at the time requires fitting model parameters to the data.
+%As our \gls{rg} analysis demonstrates, it is conceivable that the corresponding values can also be predicted, but our perturbative one-loop calculation is insufficient for this task.
+In principle, within our \gls{rg} analysis it is conceivable that the corresponding values can also be predicted, but our perturbative one-loop calculation is insufficient for this task.
+%A possible avenue for future research would be to apply more sophisticated, non-perturbative renormalization schemes.
+%This may provide an improvement over the perturbative approach, since we work far from the fixed point of the model.\\
+Since we work far from the model's fixed point, one might gain from considering non-perturbative renormalization schemes, which provides an avenue for future research.\\
+%However, it is also possible that quantitative agreement is hindered by one of the other encountered issues.
+There are also other possibilities to pursue to try and improve the quantitative results.
+%For one, the calculation of the single-particle \gls{gf} via perturbation theory is already quite difficult at first order, and, at least using our brute-force approach, seems to become completely infeasible beyond.
+For one, using our brute-force approach, the calculation of the single-particle \gls{gf} via perturbation theory is only feasible to first order.
+The situation could be improved by a better understanding of the integrals defining the functions $J_{b,N}$ from \autoref{eqn:app:J_bN_function}, because this might allow a higher order calculation.
+As mentioned in a footnote in that section, the final result suggests a decomposition reminiscent of light-cone variables, but due to the complex nature of $\tau \pm \i x$, it is not yet clear how to exploit this.\\
+%Of course abandoning the goal of exactly computing the integrals could also prove fruitful, but controlled approximations appear to be difficult.\\ %semi-classical path integral approach?
+%Another problem is that we retain the \acrshort{uv} cut-off $\alpha$ for $K\neq 1$ in the final result, and although a finite value of $\alpha\propto\frac{1}{\beta v}$ can be argued via \gls{rg}, the analytic inconsistency with fundamental conditions on Matsubara \glspl{gf} remains.
+Furthermore, for $K\neq 1$ we retain the \acrshort{uv} cut-off $\alpha$ in the final result.
+Although a finite value of $\alpha\propto\frac{1}{\beta v}$ can be argued via \gls{rg}, the analytic inconsistency with fundamental conditions on Matsubara \glspl{gf} remains.
+On a similar note, we can not quite take a proper continuum limit for the bosonized Hamiltonian, because setting $a=0$ eliminates the perturbation $H_2$.
+Interestingly, this problem can not easily be solved by an expansion in the lattice spacing, as intermediate results are non-perturbative in $a$ due to the residue structure in certain integrals.
+Thus, removing the mild non-locality induced by $a$ while retaining the \glspl{ep} may require some additional insight.\\
+%Still, since we can not give a good argument to suggest the contrary, it should be possible to get rid of the mild non-locality induced by $a$ and still get \glspl{ep}.\\
+Finally, the method used for the numerical results is limited to moderately high temperatures and interaction strengths.
+%Both of these are less than ideal for a quantitative comparison to our low-order, field theoretic description, and in order to make progress it would be preferable to be able to at least analyse the asymptotic limit $U_\A,U_\B\rightarrow 0$.
+Both of these make a quantitative comparison to our low-order, field theoretic description more challenging.
+In order to make progress, it would be useful to be able to analyse the asymptotic limit $U_\A,U_\B\rightarrow 0$.
+One approach might be to use plain perturbation theory directly in terms of the fermions to provide an analytic benchmark.
+As discussed in \autoref{sec:ell:ep:quant_comp_num}, the special case of $U_\B=0$ is difficult to treat in our \gls{ell}.
+The fermionic approach would work directly in the $\A\B$-basis, and therefore setting $U_\B=0$ should instead simplify the calculation, which provides another incentive for this idea.
+%We hope that the problems can be resolved in the future and that our results spark interest in further research on \gls{nh} physics using bosonization and \glspl{ll}.
+%The remaining problems may potentially be resolved in the future, and hopefully our results spark some interest in further research on \gls{nh} physics using bosonization and \glspl{ll}.

@@ -1,0 +1,624 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+%\pagestyle{scrheadings}  % Stil für die Seite setzen
+%\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+%\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{04 Gauss-Elimination}
+\newcommand*{\autor}{Joachim Schwardt und Julian Fleck}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Numerik I - Aufgaben}
+\title{\titel}
+%\author{\autor}
+\author{\begin{tabular}{l|l}
+Joachim Schwardt & 4768711 \\ 
+Julian Fleck & 4759587\\ 
+\end{tabular}}
+%\author{\begin{tabular}{|l|l|}
+%\hline
+%Joachim Schwardt & 4768711 \\ \hline
+%Julian Fleck & 4759587\\ \hline
+%\end{tabular}}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Aufgabe 1}
+Gegeben ist die Matrix
+\begin{align}
+A &= \begin{pmatrix}
+2 & -1 & 0 & 0 \\
+-1 & 2 & -1 & 0 \\
+0 & -1 & 2 & -1 \\
+0 & 0 & -1 & 2
+\end{pmatrix} = LU,
+\end{align}
+die gemäß LU-Faktorisierung in eine untere Dreiecksmatrix $L$ und eine obere Dreiecksmatrix $U$ zerlegt werden soll.
+Es gilt
+\begin{align}
+L^{-1} &= L_3L_2L_1,
+\end{align}
+wobei $L_k$ eine Einheitsmatrixmatrix ist, die in der $k$-ten Spalte unterhalb der 1 die Einträge $-l_{jk}$ für $j>k$ hat.
+Dabei ist $l_{jk} = \frac{a_{jk}^{(k)}}{a_{kk}^{(k)}}$.
+Zunächst kann man $L_1$ ablesen, da
+\begin{align}
+L_1 = \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+-l_{21} & 1 & 0 & 0 \\
+-l_{31} & 0 & 1 & 0 \\
+-l_{41} & 0 & 0 & 1 \\
+\end{pmatrix} = \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+1/2 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 \\
+\end{pmatrix}.
+\end{align}
+Dann ist $A^{(2)}$ gegeben durch $L_1A^{(1)} = L_1A$, also
+\begin{align}
+A^{(2)} &=  \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+1/2 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 \\
+\end{pmatrix}\begin{pmatrix}
+2 & -1 & 0 & 0 \\
+-1 & 2 & -1 & 0 \\
+0 & -1 & 2 & -1 \\
+0 & 0 & -1 & 2
+\end{pmatrix} = \begin{pmatrix}
+2 & -1 & 0 & 0 \\
+0 & 3/2 & -1 & 0 \\
+0 & -1 & 2 & -1 \\
+0 & 0 & -1 & 2
+\end{pmatrix}.
+\end{align}
+Rekursiv folgen dann
+\begin{align}
+L_2 &= \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & -l_{32} & 1 & 0 \\
+0 & -l_{42} & 0 & 1 \\
+\end{pmatrix} = \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 2/3 & 1 & 0 \\
+0 & 0 & 0 & 1 \\
+\end{pmatrix},\\
+A^{(3)} &= L_2A^{(2)} = \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 2/3 & 1 & 0 \\
+0 & 0 & 0 & 1 \\
+\end{pmatrix}\begin{pmatrix}
+2 & -1 & 0 & 0 \\
+0 & 3/2 & -1 & 0 \\
+0 & -1 & 2 & -1 \\
+0 & 0 & -1 & 2
+\end{pmatrix} = \begin{pmatrix}
+2 & -1 & 0 & 0 \\
+0 & 3/2 & -1 & 0 \\
+0 & 0 & 4/3 & -1 \\
+0 & 0 & -1 & 2
+\end{pmatrix},\\
+L_3 &= \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & -l_{43} & 1 \\
+\end{pmatrix} = \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 3/4 & 1 \\
+\end{pmatrix},\\
+A^{(4)} &= L_3A^{(3)} = \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 3/4 & 1 \\
+\end{pmatrix}\begin{pmatrix}
+2 & -1 & 0 & 0 \\
+0 & 3/2 & -1 & 0 \\
+0 & 0 & 4/3 & -1 \\
+0 & 0 & -1 & 2
+\end{pmatrix} = \begin{pmatrix}
+2 & -1 & 0 & 0 \\
+0 & 3/2 & -1 & 0 \\
+0 & 0 & 4/3 & -1 \\
+0 & 0 & 0 & 5/4
+\end{pmatrix}.
+\end{align}
+Dann gelten
+%Dann gelten (das stimmt nicht, siehe unten!)
+%\begin{align}
+%L^{-1} = \begin{pmatrix}
+%1 & 0 & 0 & 0 \\
+%-l_{21} & 1 & 0 & 0 \\
+%-l_{31} & -l_{32} & 1 & 0 \\
+%-l_{41} & -l_{42} & -l_{43} & 1 \\
+%\end{pmatrix} = \begin{pmatrix}
+%1 & 0 & 0 & 0 \\
+%1/2 & 1 & 0 & 0 \\
+%0 & 2/3 & 1 & 0 \\
+%0 & 0 & 3/4 & 1 \\
+%\end{pmatrix}.
+%\end{align}
+%und $U = A^{(4)}$.
+%Tatsächlich ist 
+\begin{align}
+L &= \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+l_{21} & 1 & 0 & 0 \\
+l_{31} & l_{32} & 1 & 0 \\
+l_{41} & l_{42} & l_{43} & 1 \\
+\end{pmatrix} = \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+-1/2 & 1 & 0 & 0 \\
+0 & -2/3 & 1 & 0 \\
+0 & 0 & -3/4 & 1 \\
+\end{pmatrix},
+\end{align}
+und $U = A^{(4)}$.
+Überprüfen des Ergebnis gibt
+\begin{align}
+LU &= \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+-1/2 & 1 & 0 & 0 \\
+0 & -2/3 & 1 & 0 \\
+0 & 0 & -3/4 & 1 \\
+\end{pmatrix}\begin{pmatrix}
+2 & -1 & 0 & 0 \\
+0 & 3/2 & -1 & 0 \\
+0 & 0 & 4/3 & -1 \\
+0 & 0 & 0 & 5/4
+\end{pmatrix} = \\
+&= \begin{pmatrix}
+2 & -1 & 0 & 0 \\
+-1 & 2 & -1 & 0 \\
+0 & -1 & 2 & -1 \\
+0 & 0 & -1 & 2
+\end{pmatrix} = A,
+\end{align}
+womit $L$ und $U$ also korrekt bestimmt sind.
+\\
+Die Inverse von $L$ ist
+\begin{align}
+L^{-1} = L_3L_2L_1 = \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+1/2 & 1 & 0 & 0 \\
+1/3 & 2/3 & 1 & 0 \\
+1/4 & 1/2 & 3/4 & 1 \\
+\end{pmatrix} \neq L_\tecxt\text{oben}^{-1}.
+\end{align}
+Für die Inverse kann man also scheinbar nicht einfach die Vorzeichen unterhalb der Diagonalen drehen, das funktioniert nur für $L_k$ und $L_k^{-1}$.
+Für das Berechnen von $U^{-1}$ kann man Rückwärts-Substitution verwenden.
+Die Diagonaleinträge sind zunächst einfach der Kehrwert der Diagonaleinträge von $U$.
+Dann löst man iterativ
+\begin{align}
+U^{-1} &= \begin{pmatrix}
+1/2 & u_{12} & u_{13} & u_{14} \\
+0 & 2/3 & u_{23} & u_{24} \\
+0 & 0 & 3/4 & u_{34}  \\
+0 & 0 & 0 & 4/5
+\end{pmatrix}\begin{pmatrix}
+2 & -1 & 0 & 0 \\
+0 & 3/2 & -1 & 0 \\
+0 & 0 & 4/3 & -1 \\
+0 & 0 & 0 & 5/4
+\end{pmatrix} \overset{!}{=} \begin{pmatrix}
+1 & 0 & 0 & 0 \\ 
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\ 
+0 & 0 & 0 & 1 \\
+\end{pmatrix}.
+\end{align}
+es ist $-\frac{3}{4} + \frac{5}{4} u_{34} = 0$, also $u_{34} = \frac{3}{5}$.
+Analog findet man $u_{23} = \frac{2}{4} = \frac{1}{2}$ und $u_{12} = \frac{1}{3}$. 
+Es ist $-u_{23} + \frac{5}{4} u_{24} = 0$, also $u_{24} = \frac{2}{5}$.
+Analog $u_{13} = \frac{1}{4}$.
+Zuletzt ist noch $-u_{13} + \frac{5}{4}u_{14} = 0$, also $u_{14} = \frac{1}{5}$.
+Damit können wir die Inverse von $A$ einfach bestimmen, da
+\begin{align}
+A^{-1} &= U^{-1}L^{-1} = \begin{pmatrix}
+1/2 & 1/3 & 1/4 & 1/5 \\
+0 & 2/3 & 2/4 & 2/5 \\
+0 & 0 & 3/4 & 3/5  \\
+0 & 0 & 0 & 4/5
+\end{pmatrix}\begin{pmatrix}
+1 & 0 & 0 & 0 \\
+1/2 & 1 & 0 & 0 \\
+1/3 & 2/3 & 1 & 0 \\
+1/4 & 1/2 & 3/4 & 1 \\
+\end{pmatrix} = \\
+&= \begin{pmatrix}
+0.8 & 0.6 & 0.4 & 0.2 \\
+0.6 & 1.2 & 0.8 & 0.4 \\
+0.4 & 0.8 & 1.2 & 0.6 \\
+0.2 & 0.4 & 0.6 & 0.8 \\
+\end{pmatrix}.
+\end{align}
+Die Einträge liegen alle in einer ähnlichen Größenordnung, es sollten also keine numerischen Problem auftreten, wenn man $A^{-1}$ zum Lösen eines Gleichungssystems $Ax=b$ verwendet.
+%Für andere Matrizen sind Einträge der Inversen häufig extrem klein oder groß, was schnell die Rechengenauigkeit erschöpfen kann.
+%Beispielsweise hat die Matrix
+
+% B = (np.linspace(1, n**2, n**2)**2).reshape((n,n))
+
+% n = 4
+% A = np.diag(np.full(n, 2.0)) + np.diag(np.full(n-1, -1), k=1) + np.diag(np.full(n-1, -1), k=-1)
+% L = np.eye(n) + np.diag(np.full(n-1, [1/k - 1 for k in range(2, n+1, 1)]), k=-1)
+% U = np.diag(np.full(n, [1/k + 1 for k in range(1, n+1, 1)])) + np.diag(np.full(n-1, -1), k=1)
+
+%for row in range(n):
+%    print(" & ".join(f"{Ainv[row, col]:.1f}" for col in range(n)) + r" \\")
+
+
+\newpage
+\section*{Aufgabe 2}
+Gegeben ist ein ``Computer'' mit einer Rechengenauigkeit von vier signifikanten Stellen im Dezimalsystem.
+\subsection*{a)}
+Zu lösen ist das Gleichungssystem
+\begin{align}
+1,000\cdot 10^{-3} x_1 + 2,200\cdot 10^1 x_2 &= 4,000\cdot 10^1 \\
+4,420\cdot 10^2 x_1 + 4,000\cdot 10^0 x_2 &= 1,200\cdot 10^2.
+\end{align}
+Die numerische Lösung mittel Python liefert $x_1 = 2,5504\cdot 10^{-1}$ und $x_2 = 1,8182\cdot 10^0$ (gerundet auf fünf signifikante Stellen).
+\\
+Ohne Pivotisierung ist $\ell_1 = -\frac{a_{21}}{a_{11}} = -\frac{4,420\cdot 10^2}{1,000\cdot 10^{-3}} = -4,420\cdot 10^5$:
+\begin{align*}
+\tecxt\text{(II)} - \ell_1\cdot \tecxt\text{(I)   :} \ \ \  &\kla\left( 4,420\cdot 10^2 - 4,420\cdot 10^5 \cdot 1,000\cdot 10^{-3} \right)x_1 + \\
+& + \kla\left( 4,000\cdot 10^0 -  4,420\cdot 10^5\cdot 2,200\cdot 10^1 \right)x_2 = \\
+&= 1,200\cdot 10^2 - 4,420\cdot 10^5\cdot 4,000\cdot 10^1 \numberthis\\
+& (0,000\cdot 10^2)x_1 + \kla\left( 4,000\cdot 10^0 - 9,724\cdot 10^6 \right)x_2 = -1,768\cdot 10^7 \numberthis \\
+& -9,724\cdot 10^6 x_2 = -1,768\cdot 10^7 \numberthis \\
+& x_2 = \frac{1,768\cdot 10^7}{9,724\cdot 10^6} = 1,818 \cdot 10^0. \numberthis
+\end{align*}
+Für $x_1$ ergibt sich dann
+\begin{align}
+x_1 &= \frac{1}{1,000\cdot 10^{-3}}\kla\left( 4,000\cdot 10^1 - 2,200\cdot 10^1 \cdot 1,818\cdot 10^0 \right) = \\
+&= \frac{1}{1,000\cdot 10^{-3}}\kla\left( 4,000\cdot 10^1 - 4,000\cdot 10^1 \right) = \\
+&=\frac{0,000\cdot 10^1}{1,000\cdot 10^{-3}} = 0,000\cdot 10^4.
+\end{align}
+Dieses Ergebnis ist im Rahmen der Rechengenauigkeit also ``falsch'', da die Abweichung nicht in der letzten Stelle auftritt (anders ausgedrückt: $x_1=0$ ist völlig daneben :) ). 
+\\
+Mit Spaltenpivotisierung vertauschen wir die beiden Zeilen, da $|a_{11}| < |a_{21}|$.
+Dann ist $\ell_1 = -\frac{a_{21}}{a_{11}} = -\frac{1,000\cdot 10^{-3}}{4,420\cdot 10^2}  = -2,262\cdot 10^{-6}$:
+\begin{align*}
+\tecxt\text{(II)} - \ell_1\cdot \tecxt\text{(I)   :} \ \ \  &\kla\left( 1,000\cdot 10^{-3} - 2,262\cdot 10^{-6} \cdot 4,420\cdot 10^2 \right)x_1 + \\
+& + \kla\left( 2,200\cdot 10^1 - 2,262\cdot 10^{-6} \cdot 4,000\cdot 10^0 \right)x_2 = \\
+&= 4,000\cdot 10^1 - 2.262\cdot 10^{-6}\cdot 1,200\cdot 10^2 \numberthis\\
+& (1,000\cdot 10^{-3} - 9,998\cdot 10^{-4})x_1 + \\
+& + \kla\left( 2,200\cdot 10^1 - 9,048\cdot 10^{-6} \right)x_2 = 4,000\cdot 10^1 - 2.714\cdot 10^{-4} \numberthis\\
+& 2,200\cdot 10^1 x_2 = 4,000\cdot 10^1  \numberthis\\
+x_2 &= \frac{4,000\cdot 10^1}{2,200\cdot 10^1} = 1,818\cdot 10^0. \numberthis
+\end{align*}
+Für $x_1$ ergibt sich dann
+\begin{align}
+x_1 &= \frac{1}{4,420\cdot 10^{2}}\kla\left( 1,200\cdot 10^2 - 4,000\cdot 10^0 \cdot 1.818\cdot 10^0 \right) = \\
+&= \frac{1}{4,420\cdot 10^{2}}\kla\left( 1,200\cdot 10^2 - 7,272\cdot 10^0 \right) = \\
+&=\frac{1,127\cdot 10^2}{4,420\cdot 10^{2}} = 2,550\cdot 10^{-1}.
+\end{align}
+Dieses Ergebnis ist im Rahmen der Rechengenauigkeit also ``richtig''.
+\\
+Bei vollständiger Pivotisierung ändert sich nichts, da $4,420\cdot 10^2$ bereits der größere Faktor in der -- nach der Spaltenpivotisierung nun ``ersten'' --  Zeile ist.
+\subsection*{b)}
+Wir multiplizieren die erste Zeile des Gleichungssystems aus a) mit $1,000\cdot 10^6$ und die zweite mit $2,500\cdot 10^{-1}$.
+Zu lösen ist also das Gleichungssystem
+\begin{align}
+1,000\cdot 10^{3} x_1 + 2,200\cdot 10^7 x_2 &= 4,000\cdot 10^7 \\
+1,105\cdot 10^2 x_1 + 1,000\cdot 10^0 x_2 &= 3,000\cdot 10^1.
+\end{align}
+Ohne Pivotisierung ist $\ell_1 = -\frac{a_{21}}{a_{11}} = -\frac{1,105\cdot 10^2}{1,000\cdot 10^{3}} = -1,105\cdot 10^{-1}$:
+\begin{align*}
+\tecxt\text{(II)} - \ell_1\cdot \tecxt\text{(I)   :} \ \ \  &\kla\left( 1,105\cdot 10^2 - 1,105\cdot 10^{-1} \cdot 1,000\cdot 10^{3} \right)x_1 + \\
+& + \kla\left( 1,000\cdot 10^0 -  1,105\cdot 10^{-1}\cdot 2,200\cdot 10^7 \right)x_2 = \\
+&= 3,000\cdot 10^1 - 1,105\cdot 10^{-1}\cdot 4,000\cdot 10^7 \numberthis\\
+& \kla\left( 1,000\cdot 10^0 - 2,431\cdot 10^6 \right)x_2 = -4,420\cdot 10^6 \numberthis \\
+&  - 2,431\cdot 10^6 x_2 = -4,420\cdot 10^6  \numberthis \\
+& x_2 = \frac{4,420\cdot 10^6}{2,431\cdot 10^6} = 1.818 \cdot 10^0. \numberthis
+\end{align*}
+Für $x_1$ ergibt sich dann
+\begin{align}
+x_1 &= \frac{1}{1,000\cdot 10^{3}}\kla\left( 4,000\cdot 10^7 - 2,200\cdot 10^7 \cdot 1,818\cdot 10^0 \right) = \\
+&= \frac{1}{1,000\cdot 10^{3}}\kla\left( 4,000\cdot 10^7 - 4,000\cdot 10^7 \right) = \\
+&=\frac{0,000\cdot 10^7}{1,000\cdot 10^{3}} = 0,000\cdot 10^4.
+\end{align}
+Dieses Ergebnis ist im Rahmen der Rechengenauigkeit also ``falsch''. 
+\\
+Mit Spaltenpivotisierung ändert sich nichts, da bereits $|a_{11}| > |a_{21}|$.
+Bei vollständiger Pivotisierung vertauschen wir die Spalten, da $|a_{12}| > |a_{11}|$.
+Im Endergebnis müssen wir zudem noch $x_1$ und $x_2$ tauschen.
+Hier ist dann $\ell_1 = -\frac{a_{21}}{a_{11}} = -\frac{1,000\cdot 10^0}{2,200\cdot 10^{7}}  = -4.545\cdot 10^{-8}$:
+\begin{align*}
+\tecxt\text{(II)} - \ell_1\cdot \tecxt\text{(I)   :} \ \ \  &\kla\left( 1,000\cdot 10^{0} - 4.545\cdot 10^{-8} \cdot 2,200\cdot 10^{7} \right)x_1 + \\
+& + \kla\left( 1,105\cdot 10^2 - 4.545\cdot 10^{-8} \cdot 1,000\cdot 10^3 \right)x_2 = \\
+&= 3,000\cdot 10^1 - 4.545\cdot 10^{-8}\cdot 4,000\cdot 10^7 \numberthis\\
+& (1,000\cdot 10^{0} - 9,999\cdot 10^{-1})x_1 + \\
+& + \kla\left( 1,105\cdot 10^2 - 4,545\cdot 10^{-4} \right)x_2 = 3,000\cdot 10^1 - 1,818\cdot 10^{0} \numberthis\\
+& 1,105\cdot 10^2 x_2 = 2,818\cdot 10^1  \numberthis\\
+x_2 &= \frac{2,818\cdot 10^1}{1,105\cdot 10^2} = 2,550\cdot 10^{-1}. \numberthis
+\end{align*}
+Für $x_1$ ergibt sich dann
+\begin{align}
+x_1 &= \frac{1}{2,200\cdot 10^{7}}\kla\left( 4,000\cdot 10^7 - 1,000\cdot 10^3 \cdot 2,550\cdot 10^{-1} \right) = \\
+&= \frac{1}{2,200\cdot 10^{7}}\kla\left( 4,000\cdot 10^7 - 2,550\cdot 10^{2} \right) = \\
+&=\frac{4,000\cdot 10^7}{2,200\cdot 10^{7}} = 1,818\cdot 10^{0}.
+\end{align}
+Dieses Ergebnis ist im Rahmen der Rechengenauigkeit also wieder ``richtig''.
+\subsection*{c)}
+Für a) mit Spaltenpivotisierung
+\begin{align}
+P_1 &= \begin{pmatrix}
+0 & 1 \\ 1 & 0
+\end{pmatrix}
+\end{align}
+Für a) mit vollständiger Pivotisierung
+\begin{align}
+P_1 &= \begin{pmatrix}
+0 & 1 \\ 1 & 0
+\end{pmatrix}&&&P_2 &= \begin{pmatrix}
+1 & 0 \\ 0 & 1
+\end{pmatrix}
+\end{align}
+%Exakte Lösung:
+%\begin{align}
+%\begin{pmatrix}
+%\frac{1}{1000} & 22 \\
+%442 & 4
+%\end{pmatrix}\begin{pmatrix}
+%x_1 \\ x_2
+%\end{pmatrix} &= \begin{pmatrix}
+%40 \\ 120
+%\end{pmatrix}\\
+%\begin{pmatrix}
+%\frac{1}{1000} & 22 \\
+%0 & 4 - 22\cdot 1000\cdot 442
+%\end{pmatrix}\begin{pmatrix}
+%x_1 \\ x_2
+%\end{pmatrix} &= \begin{pmatrix}
+%40 \\ 120 - 40\cdot 1000\cdot 442
+%\end{pmatrix}
+%\end{align}
+%$x$
+%Also ist $x_2 = \frac{120 - 1768\cdot 10000}{4 - 9724\cdot 1000} = 1,81817$
+
+\newpage
+\section*{Aufgabe 3}
+Sei $A\in\mathbb{R}^{n\times n}$ invertierbar und $\|\cdot\|$ eine induzierte Matrixnorm. 
+Die Kondition von $A$ sei definiert als
+\begin{align}
+\kappa(A) &:= \|A\|\|A^{-1}\|.
+\end{align}
+\subsection*{a)}
+Die induzierte Matrixnorm ist definiert als
+\begin{align}
+\|A\| &:= \sup_{x\neq 0}\frac{\|Ax\|}{\|x\|}.
+\end{align}
+Aus der Homogenität der Norm folgt dann direkt die Darstellung
+\begin{align}
+\|A\| &= \sup_{x\neq 0}\left\|A\frac{x}{\|x\|}\right\| = \max_{\|y \| = 1}\|A y\|. \label{eqn:norm of A}
+\end{align}
+Die Norm der Inversen ist mit $y := A^{-1}x$ für beliebige $x\in\mathbb{R}^n$ gegeben durch
+\begin{align}
+\|A^{-1}\| &= \sup_{x\neq 0}\frac{\|A^{-1}x\|}{\| x \|} = \sup_{Ay \neq 0} \frac{\|A^{-1}Ay\|}{\|Ay\|} = \sup_{y \neq 0} \frac{\|y\|}{\|Ay\|},
+\end{align}
+da $Ay\neq 0$ aufgrund der Invertierbarkeit von $A$ äquivalent zu $y\neq 0$ ist.
+Weiterhin können wir schreiben
+\begin{align}
+\|A^{-1}\| &= \sup_{y\neq 0}\frac{1}{\left\| A \frac{y}{\|y\|}\right\|} = \max_{\|x\| = 1} \frac{1}{\|Ax\|} = \kla\left( \min_{\|x\| = 1}\|Ax\| \right)^{-1}. \label{eqn:norm of A inverse}
+\end{align}
+Im letzten Schritt haben wir dabei verwendet, dass der Ausdruck $\frac{1}{\|Ax\|}$ genau dann maximal ist, wenn der Nenner $\|Ax\|$ minimal ist.
+Insgesamt folgt aus \eqref{eqn:norm of A} und \eqref{eqn:norm of A inverse} die Darstellung
+\begin{align}
+\kappa (A) &= \frac{\underset{\|x\| = 1}{\max}\|Ax\|}{\underset{\|x\| = 1}{\min}\|Ax\|} \label{eqn:kappa A max min formel}
+\end{align}
+für die Kondition einer invertierbaren Matrix $A$.
+\subsection*{b)}
+Da die Norm per Definition positiv definit ist, gilt 
+\begin{align}
+\kappa(A) &\ge 0.
+\end{align}
+Insbesondere ist $\kappa (A) = 0$ äquivalent zu $\|A\| = 0$, und damit zu $A = 0$.
+Aber die Nullmatrix $A=0$ ist nicht invertierbar, also muss $\kappa(A) > 0$ sein.
+\\
+Sei $\alpha\in\mathbb{R}\setminus\{0\}$. Dann folgt aus der Eigenschaft \eqref{eqn:kappa A max min formel} direkt
+\begin{align}
+\kappa (\alpha A) = \frac{\underset{\|x\| = 1}{\max}\|\alpha Ax\|}{\underset{\|x\| = 1}{\min}\|\alpha Ax\|} = \frac{\underset{\|x\| = 1}{\max}|\alpha|\| Ax\|}{\underset{\|x\| = 1}{\min}|\alpha|\| Ax\|} = \kappa (A).
+\end{align}
+\subsection*{c)}
+Sei $A_k$ eine Folge invertierbarer Matrizen, die gegen eine singuläre Matrix $A\neq 0\in\mathbb{R}^{n\times n}$ konvergiert.
+Dann existiert eine Folge von Eigenwerten der $A_k$ mit $\lambda_k \rightarrow 0$ für $k\rightarrow 0$, da aus $\det A = 0$ folgt, dass mindestens ein Eigenwert gleich Null ist.
+Insbesondere kann der zugehörige Eigenvektor $x_k\in\mathbb{R}^n\setminus\{0\}$ mit $A_kx_k = \lambda_k x_k$ auf Eins normiert werden.
+Sei also $\|x_k\| = 1$.
+Dann gilt
+\begin{align}
+\frac{1}{\|A_k^{-1}\|} = \min_{\|x\| = 1} \|A_kx\| \le \|A_kx_k\| = \|\lambda_kx_k\| = |\lambda_k| \overset{k\rightarrow\infty}{\longrightarrow} 0.
+\end{align}
+Der entscheidende Punkt ist, dass wir $A\neq 0$ annehmen.
+Da die Norm definit ist, sind gilt $\|A_k\| \neq 0$ für alle $k$, aber insbesondere auch $\|A\| \neq 0$.
+Die Norm aller Folgenglieder und auch des Grenzwertes ist also streng positiv, weshalb
+\begin{align}
+\lim_{k\rightarrow\infty} \kappa (A_k) &= \|A\| \lim_{k\rightarrow\infty} \|A_k^{-1}\| 
+\end{align}
+Aus der Abschätzung für die Norm der inversen von $A_k$ folgt dann aber
+\begin{align}
+\lim_{k\rightarrow\infty} \kappa (A_k) &\ge \|A\| \lim_{k\rightarrow \infty}\frac{1}{|\lambda_k|} = \infty.
+\end{align}
+Ist $A\neq 0$ tatsächlich eine wichtige Voraussetzung? 
+Betrachte dazu das Beispiel 
+\begin{align}
+A_k &:= \begin{pmatrix}
+\frac{1}{k} & \dots & 0 \\ 
+\vdots & \ddots & \vdots \\ 
+0 & \dots & \frac{1}{k}
+\end{pmatrix}.
+\end{align}
+%Offensichtlich ist $\det A_k = \frac{1}{k^n} \rightarrow 0$ für $k\rightarrow\infty$.
+Für alle $k\in\mathbb{N}$ gilt
+\begin{align}
+\kappa (A_k) &= \frac{\underset{\|x\| = 1}{\max}\|A_kx\|}{\underset{\|x\| = 1}{\min}\|A_kx\|} = \frac{\underset{\|x\| = 1}{\max}\frac{1}{k}\|x\|}{\underset{\|x\| = 1}{\min}\frac{1}{k}\|x\|} = 1.
+\end{align}
+Insbesondere gilt also 
+$$\forall\epsilon > 0\exists K\in\mathbb{N}\forall k\ge K: |\kappa(A_k) - 1| < \epsilon, $$
+da offensichtlich $|\kappa(A_k) - 1 | = 0 < \epsilon$ für beliebige $k$ ist.
+Dies ist aber gerade die Definition des Grenzwertes, also ist 
+\begin{align}
+\lim_{k\rightarrow\infty}\kappa (A_k) &= 1.
+\end{align}
+Gleichzeitig ist aber
+\begin{align}
+\| A_k - 0\| &= \max_{\|x\| = 1} \|A_kx\| = \frac{1}{k} \overset{k\rightarrow\infty}{\longrightarrow} 0.
+\end{align}
+Die Folge invertierbarer Matrizen $A_k$ konvergiert in der Norm also gegen die Nullmatrix, die natürlich singulär ist.
+In diesem Fall gilt der Satz $\kappa(A_k)\rightarrow\infty$ also nicht.
+Anmerkung: Letzte Woche wurde die Aufgabenstellung korrigiert, wir hatten das Gegenbeispiel zu dem Zeitpunkt aber schon aufgeschrieben -- deshalb lassen wir das jetzt einfach drin :)
+
+\subsection*{d)}
+%Allgemein gilt zunächst
+%\begin{align}
+%\|A \| &= \max_{\|x\| = 1} \|Ax\| \ge \|Ax_\tecxt\text{max}\| = |\lambda_\tecxt\text{max}| \label{eqn:norm A ge lambda max}
+%\end{align}
+%für den Eigenvektoren $x_\tecxt\text{max}$ von $A$ mit (betragsmäßig) maximalem Eigenwert $\lambda_\tecxt\text{max}$.
+%Außerdem gilt analog für den normierten Eigenvektor $x_\tecxt\text{min}$ mit minimalen Eigenwert $\lambda_\tecxt\text{min}$
+%\begin{align}
+%\frac{1}{\| A^{-1} \|} &= \min_{\|x\|=1} \|Ax\| \le \|Ax_\tecxt\text{min}\| = |\lambda_\tecxt\text{min}|. \label{eqn:norm 1 over A inverse le lambda min}
+%\end{align}
+Sei nun $A$ zusätzlich symmetrisch und $\|\cdot\| = \|\cdot\|_2$.
+Aus der Symmetrie folgt, dass $A$ diagonalisierbar ist.
+Also existiert eine orthogonale Matrix $S\in\mathbb{R}^{n\times n}$, sodass
+\begin{align}
+A &= S^{-1}DS,
+\end{align}
+wobei $D\in\mathbb{R}^{n\times n}$ eine diagonale Matrix mit den Eigenwerten $\lambda_n$ von $A$ ist und $S^{-1} = S^\top$.
+Insbesondere erhält $S$ die Norm, das heißt $\|Sx\|_2 = \|x\|_2$ für beliebige $x\in\mathbb{R}^n$, da
+\begin{align}
+\|Sx\|_2^2 &= x^\top S^\top Sx = x^\top x = \|x\|_2^2.
+\end{align}
+Damit folgt
+\begin{align}
+\|A\| &= \max_{\|x\| = 1} \|S^{-1}DSx\| = \max_{\|x\| = 1} \|DSx\| \max_{\|y\| = \|Sx\| = 1} \|Dy\| = |\lambda_\tecxt\text{max}|,
+\end{align}
+%und zusammen mit \eqref{eqn:norm A ge lambda max} die Gleichheit 
+%\begin{align}
+%\|A\| &= |\lambda_\tecxt\text{max}|.
+%\end{align}
+Analog gilt für die Inverse
+%Analog gilt für die Inverse $A^{-1} = (S^{-1}DS)^{-1} = S^{-1}(S^{-1}D)^{-1} = S^{-1}D^{-1}S$ 
+\begin{align}
+\frac{1}{\|A^{-1}\|} &= \min_{\|x\| = 1} \|S^{-1}DSx\| = \min_{\|x\| = 1} \|DSx\| = \min_{\|y\| = \|Sx\| = 1} \|Dy\| = |\lambda_\tecxt\text{min}|.
+\end{align}
+Insgesamt gilt also
+\begin{align}
+\kappa (A) &= \|A\| \|A^{-1}\| = |\lambda_\tecxt\text{max}|\frac{1}{|\lambda_\tecxt\text{min}|} = \left\vert\frac{\lambda_\tecxt\text{max}}{\lambda_\tecxt\text{min}}\right\vert.
+\end{align}
+
+%Es folgt
+%\begin{align}
+%\|A\| &= \|S^{-1}DS\| = \sup_{x\neq 0}\frac{\|S^{-1}DSx\|}{\|x\|} = \sup_{y = Sx \neq 0} \frac{\|S^{-1}Dy\|}{\|S^{-1}y\|}
+%\end{align}
+%\begin{align}
+%\|A\| &= \max_{\|x\|=1} \|S^{-1}DSx\| = \max_{\|y\| = \|Sx\| = 1} \| S^{-1} Dy\|
+%\end{align}
+%\begin{align}
+%\kappa (A) &= \frac{\underset{\|x\| = 1}{\max}\|Ax\|}{\underset{\|x\| = 1}{\min}\|Ax\|} = \frac{\underset{\|x\| = 1}{\max}\|S^{-1}DSx\|}{\underset{\|x\| = 1}{\min}\|S^{-1}DSx\|} = \frac{\underset{\|x\| = 1}{\max}\|Ax\|}{\underset{\|x\| = 1}{\min}\|Ax\|} = 
+%\end{align}
+%\begin{align}
+%\|S^{-1}\| &= \sup_{x\neq 0}\frac{\|S^{-1}x\|}{\|x\|} \ge \frac{\|y\|}{\|Sy\|} &&\Rightarrow & \|S^{-1}y\|&\ge \frac{1}{\|S\|}
+%\end{align}
+
+
+\newpage
+\section*{Aufgabe 4}
+Für die Matrizen $S^n$ mit
+\begin{align}
+S_{jk}^n := \left\{\begin{matrix}
+2 & : & j=k, \\
+-1 & : & |j-k| = 1,\\
+0 & : & \tecxt\text{sonst}
+\end{matrix} \right. 
+\end{align}
+soll die Durchführbarkeit des Gauss'schen Eliminierungsverfahrens bewiesen werden.
+Wir wollen dazu explizit die Einträge der oberen Dreiecksmatrix $T^n$ konstruieren, welche sich bei dem Verfahren ergibt. 
+Da oberhalb der Hauptdiagonalen von $S^n$ hier alle Einträge unverändert bleibt, ist die allgemeine obere Dreiecksform von $T^n$ bekannt, wenn wir die Hauptdiagonalelemente angeben.
+Diese sind $T_{jj}^n = 1 + \frac{1}{j}$ für $j\le n$.
+Für $n=1$ ist offensichtlich $T_{jj}^1 = 1 + \frac{1}{j} = 2$ für $j\le n$.
+Sei also nun $T_{jj}^n = 1 + \frac{1}{j}$ für $j\le n$.
+Dann erhalten wir im vorletzten Schritt des Verfahrens also die Matrix
+\begin{align}
+\begin{pmatrix}
+\ddots & \vdots & \vdots & \vdots \\
+\dots & 1 + \frac{1}{n-2} & -1 & 0 \\
+\dots & 0 & 1 + \frac{1}{n-1} & -1 \\
+\dots & 0 & -1 & 2
+\end{pmatrix}.
+\end{align}
+Sei nun für den letzten Schritt
+\begin{align}
+\ell &:= \frac{-1}{1 + \frac{1}{n-1}} = \frac{1}{n} - 1.
+\end{align}
+Wir subtrahieren nun $\ell$ mal die vorletzte, also $(n-1)$-te, Zeile von der letzten Zeile und erhalten letztlich
+\begin{align}
+T^n &= \begin{pmatrix}
+\ddots & \vdots & \vdots & \vdots \\
+\dots & 1 + \frac{1}{n-2} & -1 & 0 \\
+\dots & 0 & 1 + \frac{1}{n-1} & -1 \\
+\dots & 0 & 0 & 2 - \ell \cdot (-1)
+\end{pmatrix} = \begin{pmatrix}
+\ddots & \vdots & \vdots & \vdots \\
+\dots & 1 + \frac{1}{n-2} & -1 & 0 \\
+\dots & 0 & 1 + \frac{1}{n-1} & -1 \\
+\dots & 0 & 0 & 1 + \frac{1}{n}
+\end{pmatrix}.
+\end{align}
+Damit ist der Induktionsbeweis vollständig.
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,259 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{ll_scrarticle}
+
+\newcommand*{\titel}{Renormalization Group Equations for the Sine-Gordon Model}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+%\subject{SUBJECT}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+
+\section{Momentum Shell Renormalization}
+In this section we want to get a first glimpse of what a proper renormalization procedure looks like.
+To keep things simple we will not pay any attention to regularizations like normal-ordering and we are thus prepared to disregard any divergences that may appear.
+Of course this is not an acceptable strategy, but the goal is more to illustrate RG flow without cluttering the notation too much.\\
+We will consider an artificial ``half'' Luttinger Liquid and the standard sine-Gordon coupling given by $H=H_0+g H_\Text{SG}$ where
+\begin{align}
+H_0 &= \frac{u}{2\pi} \intx{-L/2}{L/2}{ \kla*{\phi'(x)}^2 }{x},\\
+H_\Text{SG} &= \intx{-L/2}{L/2}{ \cos\kla*{b\phi(x)}}{x}
+\end{align}
+where $g$ is some coupling constant, $b>0$ the parameter of the SG-term and $L$ the system size that may be considered as large since we are ultimately interested in the thermodynamic limit.\\
+Momentum shell renormalization is an idea that essentially consists of a series of instructions:
+\begin{itemize}
+\item[1.] Impose a bandwidth $\Lambda$ such that only momenta $|k|<\Lambda$ are allowed.
+\item[2.] Split the range of momenta into slow and fast modes via $0<k_\s < \frac{\Lambda}{s} < k_\f < \Lambda$.
+\item[3.] ``Integrate out'' the ``fast'' modes in the sense of splitting the Fourier components into $\phi = \phi_\s + \phi_\f$ according to the respective momenta.
+\item[4.] Match the effective interaction to the initial action by rescaling variables and coupling constants. Any genuinely new terms that appear in this procedure become part of the next iteration, until the qualitative picture eventually remains the same.
+\end{itemize}
+Some of these steps are really rather vague which is why we first consider a comparatively simple model.
+As suggested by the instructions we start by introducing some finite band-width $\Lambda$.
+We are interested in the low-energy limit, so we aim to somehow reduce this band-width until we arrive at some minimal $\Lambda_\Text{min}$ that may for example be determined by the size of thermal fluctuations $T$.\\
+To start we write $\phi(x) = \phi_\s(x) + \phi_\f(x)$ where 
+\begin{align}
+\phi_\s(x) &= \frac{1}{\sqrt{L}} \intx{\s}{ }{ \powe{\i kx} \phi(k)}{k},\qquad \phi_\f(x) = \frac{1}{\sqrt{L}} \intx{\f}{ }{ \powe{\i kx} \phi(k)}{k}
+\end{align}
+and the notation $\int_\s$ stands for $\int_{|k| < \frac{\Lambda}{s}}$ and similarly $\int_\f \equiv \int_{\frac{\Lambda}{s}<|k|<\Lambda}$.
+In this simplified world without time-dependence we can already interpret the Hamiltonian as our action functional
+\begin{align}
+S[\phi] &= S_0[\phi] + S_\Text{SG}[\phi] = \frac{u}{2\pi} \intx{-L/2}{L/2}{\kla*{\phi'(x)}^2}{x} + g \intx{-L/2}{L/2}{\cos\kla*{b\phi(x)}}{x}.
+\end{align}
+Rewriting the free part in terms of the Fourier modes yields
+\begin{align}
+S_0[\phi] &= \frac{u}{2\pi} \intx{-L/2}{L/2}{ \frac{1}{L}\intx{}{}{\intx{ }{ }{\i k \powe{\i kx} \i k'\powe{\i k' x} \phi(k)\phi(k')}{k'} }{k} }{x} = \frac{u}{2\pi} \intx{ }{ }{k^2 \abs*{\phi(k)}^2}{k}.
+\end{align}
+Evidently splitting this into a ``slow'' and ``fast'' part is rather straightforward since we merely have to identify $\int_k \equiv \int_{k,\s} + \int_{k,\f}$ to get $S_0[\phi] = S_{0,\s}[\phi_\s] + S_{0,\f}[\phi_\f]$ where
+\begin{align}
+S_{0,\s}[\phi_\s] &= \frac{u}{2\pi} \intx{\s}{ }{k^2 \abs*{\phi(k)}^2}{k}, \qquad S_{0,\f}[\phi_\f] = \frac{u}{2\pi} \intx{\f}{ }{k^2 \abs*{\phi(k)}^2}{k}.
+\end{align}
+Integrating over the fast modes in $S_{0,\f}$ merely yields a global prefactor to the partition function and thus we can neglect it.
+At this stage we make the rather strong and unfounded approximation $\bra*{\powe{-S_\Text{SG}}}_\f\approx \powe{-\bra*{S_\Text{SG}}_\f}$ following Altland and Simons (Chapter 8).
+To finish the ``first step'' we now need to evaluate this expectation value
+\begin{align}
+\bra*{S_\Text{SG}}_\f &= \frac{g}{2}\intx{-L/2}{L/2}{\powe{\i b \phi_\s(x)} \int \powe{-\beta S_{0,\f}[\phi_\f]} \powe{\i b\phi_\f(x)}\,\mathcal{D}\phi_\f }{x} + \hc \\
+&= \frac{g}{2} \intx{-L/2}{L/2}{\powe{\i b\phi_\s(x)} \int \powe{-\frac{\beta u}{2\pi} \intx{\f}{ }{k^2 \abs*{\phi(k)}^2}{k} } \powe{\i b \intx{\f}{ }{ \powe{\i kx} \phi(k)}{k} } \,\mathcal{D}\phi_\f }{x} +\hc\\
+&= \frac{g}{2} \intx{-L/2}{L/2}{\powe{\i b\phi_\s(x)} \powe{-\frac{\pi}{2\beta u} b^2 \intx{\f}{ }{\frac{1}{k^2}}{k} }}{x} + \hc\\
+&= g \powe{-\frac{\pi b^2}{\beta u} \intx{\Lambda / s}{\Lambda}{\frac{1}{k^2}}{k} } \intx{-L/2}{L/2}{\cos\kla*{b\phi_\s(x)}}{x}.
+\end{align}
+Evidently this means we recover the sine-Gordon coupling, albeit with a modified coupling strength
+\begin{align}
+g' &= g \powe{-\frac{\pi b^2}{\beta u} \frac{s-1}{\Lambda} }.
+\end{align}
+Thus far the effective action defined via $\powe{-\beta S_\Text{eff}[\phi_\s]} = \powe{-\beta S_{0,\s}[\phi_\s]} \bra*{\powe{-\beta S_\Text{eff}}}_\f$ therefore takes the form
+\begin{align}
+S_\Text{eff}[\phi_\s] &\approx \frac{u}{2\pi} \intx{\s}{ }{k^2 \abs*{\phi(k)}^2}{k} + g' \intx{-L/2}{L/2}{\cos\kla*{b\phi_\s(x)}}{x}.
+\end{align}
+Although this appears to be structurally identical, the momenta are now -- as we aimed for -- restricted to $|k|<\frac{\Lambda}{s}$.
+In order to get the same structure we therefore still have to define new variables $k'=sk$, $x' = \frac{x}{s}$ and $L'=Ls$ giving
+\begin{align}
+S_\Text{eff}[\phi_\s] &\approx \frac{u}{2\pi} s^3 \intx{ }{ }{k'^2 \abs*{\phi(k')}^2 }{k'} + g' s \intx{-L'/2}{L'/2}{ \cos\kla*{b \phi_\s(x')} }{x'}.
+\end{align}
+Now we define the new fields $\phi'\equiv \phi_\s$ which then enforces $\phi'(k') = s^{3/2} \phi(k')$ due to
+\begin{align}
+\phi'(x') &= \frac{1}{\sqrt{L'}} \intx{ }{ }{\powe{\i k'x'}\phi'(k')}{k'} \overset{!}{=} \frac{1}{\sqrt{L}} \intx{\s}{ }{\powe{\i kx} \phi(k)}{k} = \phi_\s(x).
+\end{align}
+With everything rewritten in terms of the ``primed'' variables we now redefine $g' = g \powe{-\gamma} $ where $\gamma = \frac{\pi b^2}{\beta u} \frac{s-1}{\Lambda} + \log s$ and define
+\begin{align}
+S'[\phi'] &\equiv \frac{u}{2\pi} \intx{ }{ }{k'^2 \abs*{\phi'(k')}^2 }{k'} + g' \intx{-L'/2}{L'/2}{ \cos\kla*{b \phi'(x')} }{x'}.
+\end{align}
+Since this is completely identical to the original expression we may now repeat this procedure until we arrive at a cut-off $\Lambda_\Text{min}$ corresponding to some outer parameter like temperature.
+If we chose $s$ close to unity in the sense of $s\equiv 1 + \frac{\d\Lambda}{\Lambda}$ we can also write
+\begin{align}
+g' &= g \powe{-\frac{\pi b^2}{\beta u} \frac{\d\Lambda}{\Lambda^2}} \kla*{1 + \frac{\d\Lambda}{\Lambda}} = g \kla*{1 - \frac{\pi b^2}{\beta u} \frac{\d \Lambda}{\Lambda^2}} \kla*{1 + \frac{\d\Lambda}{\Lambda}} \\
+&= g \kla*{1 + \frac{\d\Lambda}{\Lambda} - \frac{\pi b^2}{\beta u} \frac{\d\Lambda}{\Lambda}}
+\end{align}
+which using $g' = g + \d g$ then turns into a differential equation of the form
+\begin{align}
+\frac{\d g}{\d \Lambda} &= \frac{g'-g}{\d\Lambda} = \frac{g}{\Lambda} \kla*{1 - \frac{\pi b^2}{\beta u}}.
+\end{align}
+This is readily solved to give $g(\Lambda) = g_0 \kla*{\frac{\Lambda}{\Lambda_0}}^{1 - \frac{\pi b^2}{\beta u}}$ where we now interpret $g_0$ as the original ``bare'' coupling $g$ and similarly $\Lambda_0$ as the original bandwidth.
+\TODO{Problems: 
+\begin{itemize}
+\item[(a)] Altland-Simons approximation is essential but also really hard to justify; may depend on specifics of model and be a somewhat subtle obstacle
+\item[(b)] Rescaling of $\phi'$ is somewhat confusing, maybe it is correct to simply choose in a way that preserves the free part of the action/Hamiltonian
+\item[(c)] Procedure is ``hit-or-miss''; what to do if the same structure is never recovered?
+\item[(d)] How can we include a lattice spacing $a$ in these arguments, how does \emph{it} scale; is the initial bandwidth $\Lambda_0 = \frac{1}{a}$?
+\item[(e)] Conceptual problem: How/Why should this ever help? So far it only seems to tell us about quantitative issues, but we have an enormous qualitative one due to the tremendous $a\rightarrow 0$-catastrophe...
+\end{itemize}
+}
+\section{Refinements}
+The strategy is still to integrate out the fast modes in some way.
+Consequently we still define an effective action $\powe{-S_\text{eff}} = \bra*{\powe{-S}}_\f = \powe{-S_{0,\s}} \bra*{\powe{-S_\text{int}}}_\f$.
+The next step is essentially equivalent to the standard cumulant expansion.
+For some variable $X$ and some notion of an expectation value one generally has
+\begin{align}
+\bra*{\powe{X}} &= 1 + \bra*{X} + \frac{1}{2} \bra*{X^2} + \frac{1}{6} \bra*{X^3} + \dots \\
+&= 1 + \bra*{X} + \frac{1}{2} \bra*{X}^2 + \frac{1}{2} \bra*{X^2}_\c + \frac{1}{6} \bra*{X}^3 + \frac{1}{6} \kla*{\bra*{X^3} - \bra*{X}^3} + \dots\\
+&= 1 + \bra*{X} + \frac{1}{2} \bra*{X^2}_\c + \frac{1}{2} \kla*{\bra*{X} + \frac{1}{2} \bra*{X^2}_\c}^2 + \frac{1}{6} \bra*{X}^3 + \frac{1}{6} \kla*{\bra*{X^3} - \bra*{X}^3 - 3\bra*{X} \bra*{X^2}_\c} + \dots\\
+&= 1 + \bra*{X} + \frac{1}{2} \bra*{X^2}_\c + \frac{1}{2} \kla*{\bra*{X} + \frac{1}{2}\bra*{X^2}_\c}^2 + \frac{1}{6}\kla*{\dots}^3 + \frac{1}{6} \bra*{X^3}_\c + \dots
+\end{align}
+where $\bra*{X^2}_\c = \bra*{\kla*{X - \bra*{X}}^2} = \bra*{X^2} - \bra*{X}^2$ is the typical connected average of two variables and similarly $\bra*{X^3}_\c = \bra*{\kla*{X - \bra*{X}}^3}$.
+Evidently higher order terms are more difficult to write down, and the nice pattern for the cumulants $\bra*{X^n}_\c$ becomes more complicated after $n=3$.
+For example $\bra*{X^4}_\c = \bra*{\kla*{X - \bra*{X}}^4} - 3 \bra*{X^2}_\c^2$.
+Still, formally we may write
+\begin{align}
+\bra*{\powe{X}} &= \powe{\bra*{X} + \frac{1}{2}\bra*{X^2}_\c + \frac{1}{6} \bra*{X^3}_\c + \dots}.
+\end{align}
+If $X$ can be considered small, for example due to a small coefficient or some other argument, we may then terminate the series on the right after the first two terms and in this way obtain the approximation
+\begin{align}
+\bra*{\powe{X}} &\approx \powe{\bra*{X} + \frac{1}{2} \bra*{X^2}_\c}.
+\end{align}
+Whether this is a good approximation may not always be apparent beforehand.
+A comparison between the relevance of $\bra*{X}$ and $\bra*{X^2}_\c$ may however give some indication of what one could expect to gain by going to third order.\\
+Let us now consider the actual sine-Gordon model $H=H_0 + gH_\text{SG}$ where
+\begin{align}
+H_0 &= \frac{u}{2\pi} \intr{ \klb*{K\kla*{\theta'(x)}^2 + \frac{1}{K} \kla*{\phi'(x)}^2} }{x},\\
+H_\text{SG} &= \frac{2}{(2\pi\alpha)^2} \intr{ \cos\kla*{b\phi(x)}}{x}.
+\end{align}
+It is common to express everything in terms of path integrals.
+However, the calculation of the correlation functions demonstrated that an operator-based approach can be significantly less cumbersome and even slightly more precise.
+Since our expectation values are really traces of the form $\bra*{\mathcal{O}} = \frac{1}{Z}\tr \kla*{\mathcal{O} \powe{-\beta H}}$ we do not think in terms of some action but rather just $\beta H$.
+We want to integrate out some momenta close to the original bandwidth, so $0<|k_\s|<\Lambda'$ and $\Lambda'<|k_\f|<\Lambda$ where $\Lambda'= \frac{\Lambda}{s}$
+For our effective Hamiltonian we first need to evaluate
+\begin{align}
+\bra*{g H_\text{SG}}_\f &= \frac{g}{(2\pi\alpha)^2} \intr{\powe{\i b\phi_\s(x)} \bra*{\powe{\i b\phi_\f(x)}}_\f }{x} +\hc\\
+&= \frac{2g}{(2\pi\alpha)^2} \intr{\cos\kla*{b\phi_\s(x)} \powe{-\frac{b^2}{2} \bra*{\phi_\f(0)^2}_\f}}{x}.
+\end{align}
+Rescaling the momenta to once again cover the same range via $k'=sk$ leads to $x=sx'$ and thus a structurally identical sine-Gordon term with the new coupling
+\begin{align}
+g' &= g s \powe{-\frac{b^2}{2} \bra*{\phi_\f(0)^2}_\f} = gs \powe{-\frac{b^2}{2} \frac{K}{4}\intx{\f}{}{\frac{1}{|k|} \klb*{\frac{2}{\powe{\beta u |k|} - 1} + 1}}{k}} = gs \powe{-K\frac{b^2}{4} \intx{\Lambda'}{\Lambda}{ \frac{1}{k} \klb*{2 n_\B(\beta uk) + 1}}{k}}.
+\end{align}
+The integral can be evaluated exactly but the result is not particularly convenient.
+In the end we want to represent the RG flow as a system of differential equations, so we turn to an infinitesimal description via $s=\powe{\d l} = 1 + \d l$.
+Since we do not care about any higher order than the first in $\d l$ the integration becomes trivial and we find $\klb*{2n_\B(\beta u\Lambda) + 1} \d l$.
+The rescaled coupling thus takes the form
+\begin{align}
+g' &= g \kla*{1 + \d l} \powe{-K\frac{b^2}{4} \klb*{2 n_\B(\beta u\Lambda) + 1} \d l} = g \kla*{1 + \d l - K \frac{b^2}{4} \klb*{2n_\B(\beta u\Lambda) + 1} \d l}.
+\end{align}
+Evidently $\Lambda(l) = \Lambda_0\powe{-l}$ and therefore
+\begin{align}
+\frac{g'(l)}{g(l)} &= 1 - K(l)\frac{b^2}{4}\klb*{2n_\B\kla*{\beta u\Lambda_0\powe{-l}} + 1}.
+\end{align}
+For the first correction to this result we now need to consider the expectation value\footnote{$\bra*{\prod \powe{C_j}} = \powe{\frac{1}{2} \sum \bra{C_j^2}} \powe{\sum_{j<k} \bra*{C_jC_k}}$}
+\begin{align}
+\bra*{g^2 H_\text{SG}^2}_\f &= \frac{g^2}{(2\pi\alpha)^4} \sum_{\epsilon_{1,2}=\pm 1} \intrnd{2}{\powe{\i \epsilon_1 b\phi_\s(x_1)}\powe{\i \epsilon_2 b\phi_\s(x_2)} \bra*{\powe{\i \epsilon_1 b\phi_\f(x_1)}\powe{\i \epsilon_2 b\phi_\f(x_2)}}_\f }{x}\\
+&= \frac{g^2}{(2\pi\alpha)^4} \sum_{\epsilon_{1,2}} \intrnd{2}{\powe{\i \epsilon_1 b\phi_\s(x_1)}\powe{\i \epsilon_2 b\phi_\s(x_2)} \powe{-b^2 \bra*{\phi_\f(0)^2}_\f} \powe{-b^2\epsilon_1\epsilon_2 \bra*{\phi_\f(x_1) \phi_\f(x_2)}_\f} }{x}.
+\end{align}
+Similar to $\bra*{\phi_\f(0)^2}_\f$ we can also evaluate the non-local correlation
+\begin{align}
+\bra*{\phi_\f(x) \phi_\f(0)}_\f &= \frac{K}{4} \intx{\f}{ }{\frac{1}{|k|} \klb*{\frac{2\cos(kx)}{\powe{\beta u|k|} - 1} + \powe{\i kx}}}{k} = \frac{K}{2} \cos(\Lambda x) \klb*{2n_\B(\beta u\Lambda) + 1} \d l.
+\end{align}
+\TODO{Giamarchi (E.17)--(E.19) is a confusing approximation; essentially he claims that $x$ is small and thus expands $\cos(b\phi_\s(x_1) - b \phi_\s(x_2)) \sim 1 - \frac{b^2}{2} x^2 \kla*{\partial_x\phi_\s}^2$.}
+\section{Path integral approach}
+The more standard procedure for RG is to use a path integral formulation.
+Since we now deal with space and time variables we introduce the vectors $r=(x,u\tau) \equiv (x,y)$ and $q=(k,\omega_n/u)$.
+Our sine-Gordon model is then given by the dimensionless action $S=S_0 + gS_\text{SG}$.
+Using $\partial_x\theta = \pi \Pi$ and $\partial_\tau \phi = -\i\partial_t\phi = -\i\partial_\Pi H = -\i \pi Ku\Pi = -\i Ku \partial_x\theta$ leads to
+\begin{align}
+S &= -\intx{0}{\beta}{\klb*{\Pi \i\partial_\tau \phi - H}}{\tau} = S_0 + gS_\text{SG}.
+\end{align}
+The components of the action can then be written as
+\begin{align}
+S_0 &= -\intx{0}{\beta}{\intx{-L/2}{L/2}{ \klc*{\frac{\i}{\pi Ku} \partial_\tau \phi \i\partial_\tau \phi - \frac{u}{2\pi}  \klb*{ K \kla*{\frac{\i}{\pi Ku} \partial_\tau\phi}^2 + \frac{1}{K} \kla*{\partial_x\phi}^2 }} }{x}}{\tau}\\
+&= \frac{1}{2\pi K} \intx{0}{\beta}{\intx{-L/2}{L/2}{\klb*{\frac{1}{u}\kla*{\partial_\tau \phi}^2 + u \kla*{\partial_x\phi}^2}}{x}}{\tau},\\
+S_\text{SG} &= \frac{2u}{(2\pi\alpha)^2} \intx{0}{\beta}{\intr{ \cos\kla*{b\phi(x,\tau)}}{x}}{\tau}.
+\end{align}
+The effective action is still defined and approximated in exactly the same way.
+Thus we need to evaluate the average
+\begin{align}
+\bra*{S_\text{SG}}_\f &= \frac{1}{(2\pi\alpha)^2} \int \powe{\i b\phi_\s(r)} \bra*{\powe{\i b\phi_\f(r)}}_\f\,\d^2r + \hc\\
+&= \frac{2}{(2\pi\alpha)^2} \int \cos\kla*{b\phi_\s(r)} \powe{-\frac{b^2}{2} \bra*{\phi_\f(0)^2}_\f}\,\d^2r.
+\end{align}
+Rescaling momenta via $q'=sq$ leads to $r=sr'$ and thus the new coupling $g'=g s^2 \powe{-b^2\Phi_{1,\f}(0)/4}$.
+Note that this also requires us to rescale $L' = \frac{L}{s}$ and $\beta' = \frac{\beta}{s}$.
+The fast correlation function is defined as
+\begin{align}
+\Phi_{1,\f}(x) &= 2\bra*{\phi_\f(x,0)\phi_\f(0,0)}_\f = 2\frac{1}{\beta^2} \sum_{n,n'} \intx{\f}{ }{\intx{\f}{ }{ \powe{\i kx-\i\omega_n^\B\tau} \bra*{\phi_\f(k,\omega_n^\B) \phi_\f(k',\omega_{n'}^\B)}_\f }{k'}}{k}.
+\end{align}
+The remaining expectation value can be obtained from a simple field integration
+\begin{align}
+\bra*{\phi(q_1)\phi(q_2)} &= \int \powe{-\frac{1}{K\beta} \sum_q q^2 \abs*{\phi(q)}^2} \phi(q_1)\phi(-q_2)^\ast\,\mathcal{D}\phi = \delta_{q_1,-q_2} \frac{K\beta}{q_1^2} = \delta_{q_1,-q_2} \frac{K\beta u}{\kla*{\omega_n^\B}^2 + u^2k^2}.
+\end{align}
+Inserting this into the fast correlator and making the transformation infinitesimal via $s=\powe{\d l} = 1 + \d l$ yields\footnote{$\sum_{n\in\mathbb{Z}} \frac{x}{n^2+x^2} = \pi \coth(\pi x)$}
+\begin{align}
+\Phi_{1,\f}(x) &= 2\frac{1}{\beta^2} \sum_{n} \intx{\f}{ }{ \powe{\i kx} \frac{K\beta u}{\kla*{\omega_n^\B}^2 + u^2k^2}}{k} = \frac{4Ku}{\beta} \sum_{n\in\mathbb{Z}} \intx{\Lambda/s}{\Lambda}{\frac{\cos(kx)}{\frac{4\pi^2}{\beta^2}n^2 + u^2k^2}}{k}\\
+&= \frac{4Ku}{\beta} \sum_{n\in\mathbb{Z}} \cos(\Lambda x) \frac{\beta^2}{4\pi^2} \frac{1}{n^2 + \frac{\beta^2 u^2\Lambda^2}{4\pi^2}} \Lambda\d l = 2K \cos(\Lambda x) \coth\kla*{\frac{\beta u\Lambda}{2}} \d l.
+\end{align}
+The connected average also requires the expectation value
+\begin{align}
+\bra*{S_\text{SG}^2}_\f &= \frac{1}{(2\pi\alpha)^4} \sum_{\epsilon_{1,2}=\pm 1} \int \powe{\i\epsilon_1  b\phi_\s(r_1)} \powe{\i \epsilon_2 b\phi_\s(r_2)} \bra*{\powe{\i \epsilon_1 b\phi_\f(r_1)} \powe{\i \epsilon_2 b\phi_\f(r_2)}}_\f \,\d^2r_1 \,\d^2r_2\\
+&= \frac{2}{(2\pi\alpha)^4} \sum_{\epsilon=\pm 1} \int \cos\kla*{b\phi_\s(r_1) + \epsilon b\phi_\s(r_2)} \powe{-b^2\bra*{\phi_\f(0)^2}_\f} \powe{-b^2 \epsilon \bra*{\phi_\f(r_1) \phi_\f(r_2)}_\f} \,\d^2r_1\,\d^2r_2\\
+&= \frac{2}{(2\pi\alpha)^4} \sum_{\epsilon=\pm 1} \int \cos\kla*{b\phi_\s(r_1) + \epsilon b\phi_\s(r_2)} \powe{-\frac{b^2}{2} \klb*{\Phi_{1,\f}(0) + \epsilon \Phi_{1,\f}(r)} } \,\d^2r_1\,\d^2r_2
+\end{align}
+where we introduced the relative coordinate $r=r_1-r_2$.
+The other part of the connected average is
+\begin{align}
+\bra*{S_\text{SG}}_\f^2 &= \frac{1}{(2\pi\alpha)^4} \powe{-\frac{b^2}{2} \Phi_{1,\f}(0)} \sum_{\epsilon_{1,2} =\pm 1} \int \powe{\i\epsilon_1 b\phi_\s(r_1)}\powe{\i\epsilon_2 b\phi_\s(r_2)}\,\d^2r_1 \,\d^2r_2\\
+&= \frac{2}{(2\pi\alpha)^4} \powe{-\frac{b^2}{2} \Phi_{1,\f}(0)} \sum_{\epsilon =\pm 1} \int \cos\kla*{b\phi_\s(r_1) + \epsilon b\phi_\s(r_2)} \,\d^2r_1 \,\d^2r_2
+\end{align}
+and combining both contributions then yields
+\begin{align}
+\bra*{S_\text{SG}^2}_\f^\c &= \frac{2}{(2\pi\alpha)^4} \sum_{\epsilon=\pm 1} \int \cos\kla*{b\phi_\s(r_1) + \epsilon b\phi_\s(r_2)} \powe{-\frac{b^2}{2} \Phi_{1,\f}(0) } \klc*{\powe{\epsilon \Phi_{1,\f}(r)} - 1} \,\d^2r_1\,\d^2r_2\\
+&= \frac{2\d l}{(2\pi\alpha)^4} \sum_{\epsilon=\pm 1} \int \cos\kla*{b\phi_\s(r_1) + \epsilon b\phi_\s(r_2)} \powe{-\frac{b^2}{2} \Phi_{1,\f}(0) } 2K\epsilon\cos(\Lambda r) \coth\kla*{\frac{\beta u\Lambda}{2}} \,\d^2r_1\,\d^2r_2.
+\end{align}
+Since this term is proportional to $\d l$ we can drop any other multiplicative $\d l$-dependence, e.g. $\Phi_{1,\f}(0) \simeq 0$.\\
+At this point our procedure appears to be somewhat stuck.
+Structurally this term is unlike anything we have seen before, but at the same time the infinitesimal prefactor suggests that it will not drastically change the model.
+The way to proceed is to split the integration into two regions.
+For larger distances $r \gtrsim \frac{1}{\Lambda}$ the term $\cos(\Lambda r) $ will oscillate more and more rapidly and the general consensus is to ignore such contributions (TODO REF AltlandSimons and Giamarchi) (\TODO{This argument has never really seemed convincing to me. We do not know anything about the fields, so I do not really believe that this integral will be negligibly small in such a general setting. I guess the more honest answer here is that there is absolutely nothing else we can do with this general expression}).\\
+For small distances $r\lesssim \frac{1}{\Lambda}$ we are left to consider two options.
+For $\epsilon=+1$ the fields in the cosine now add to $\sim 2\phi_\s(r)$ and this term is less relevant that the cosine we already have and it is probably fine to ignore it.
+For $\epsilon=-1$ we can expand in $r$ with $R = \frac{r_1 + r_2}{2}$ to get
+\begin{align}
+\cos\kla*{b\phi_\s\kla*{R + \frac{r}{2}} - b\phi_\s\kla*{R - \frac{r}{2}}} &\simeq \cos\kla*{br\cdot \nabla_R \phi_\s(R)} \simeq 1 - \frac{b^2}{2} \kla*{r\cdot \nabla_R \phi_\s(R)}^2.
+\end{align}
+Defining $F_{1,\f}(r) = \Phi_{1,\f}(r) \frac{1}{\d l}$ for convenience then gives
+\begin{align}
+\bra*{S_\text{SG}^2}_\f^\c &= \frac{2\d l}{(2\pi\alpha)^4} \int \kla*{r\cdot \nabla_R\phi_\s(R)}^2 F_{1,\f}(r) \,\d^2r\,\d^2R = 2K \frac{C}{2\pi} \d l \int \klb*{\kla*{\partial_X\phi_\s}^2 + \kla*{\partial_Y\phi_\s}^2} \,\,d^2R
+\end{align}
+where we defined the dimensionless constant $C = \frac{2\pi}{(2\pi\alpha)^4}\int r^2 \frac{1}{K} F_{1,\f}(r)\,\d^2r$.
+The effect of this term is to modify the Luttinger parameter in the free action according to
+\begin{align}
+\frac{1}{2\pi K'} &= \frac{1}{2\pi K} + g^2\frac{KC}{2\pi} \d l
+\end{align}
+which can be rewritten as the differential equation $\frac{\d}{\d l}\frac{1}{K(l)} = g^2 KC$ or equivalently $K'(l) = -g(l)^2 K(l)^3 C$.
+The usually cited form of these equations is $K'=-\frac{1}{2} g^2 K^2$, but according to Giamarchi the difference is due to the dependence on the procedure.
+Essentially, the BKT approach uses a hard cut-off in real space while momentum shell renormalization uses a hard cut-off in momentum space.
+Near the critical point $K=1$ the qualitative behaviour is identical though since $K^3-K^2 \simeq 3\Delta K - 2\Delta K = \Delta K$ is a small difference.
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

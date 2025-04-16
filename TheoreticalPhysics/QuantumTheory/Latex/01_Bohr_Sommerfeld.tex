@@ -1,0 +1,67 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\begin{document}
+
+\title{Bohr-Sommerfeld Quantisierungsregeln}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Strahlungsverteilung}
+Setze $x:=\frac{hc}{kT\lambda}$. Bestimmung der Wellenlänge maximaler Abstrahlung:
+\begin{align*}
+0&\overset{!}{=}\partial_x u(x)=\partial_x \left[\frac{4k^3T^3x^3}{h^2c^3}\frac{1}{e^x-1}\right]\propto\frac{3x^2}{e^x-1}-\frac{x^3e^x}{(e^x-1)^2}\\
+&\Rightarrow\ \ 3\overset{!}{=}\frac{xe^x}{e^x-1}=\frac{x}{1-e^{-x}}\\
+&\Rightarrow\ \ \lambda_mT=\frac{hc}{kx_m}=\mathrm{const.}\ \ \ \mathrm{mit }\ \ x_m=3-3e^{-x_m} 
+\end{align*}
+\section{Bohr-Sommerfeld Quantisierungsregeln}
+Für generalisierte Koordinaten und Impulse $q, p$ und $H=\frac{p^2}{2m}+V(q)$ gilt für die Energieniveaus $E_n$:
+$$h(n+n_c)=\oint_{H=E_n}p\,\mathrm{d}q=\iint_{H\le E_n}\,\mathrm{d}p\mathrm{d}q$$
+Für $V(q)=\left\{\begin{matrix}
+0 &,\ |q|<a/2 \\ \infty &,\ |q|\ge a/2 
+\end{matrix}\right .$:
+\begin{align*}
+h(n+n_c)&=2\sqrt{2m}\int_{-\frac{a}{2}}^{\frac{a}{2}}\sqrt{E_n}\,\mathrm{d}q=\sqrt{8mE_na^2}\ \ \Rightarrow\ \ E_n=\frac{h^2(n+n_c)^2}{8ma^2}
+\end{align*}
+Für $V(q)=V_0|q/a|^\alpha$:
+\begin{align*}
+h(n+n_c)&=4\sqrt{2m}\int_0^{a(E_n/V_0)^{1/\alpha}}\sqrt{E_n-V_0\left(\frac{q}{a}\right)^\alpha}\,\mathrm{d}q=\sqrt{32ma^2E_n}\left(\frac{E_n}{V_0}\right)^{1/\alpha}\int_0^1\sqrt{1-x^\alpha}\,\mathrm{d}x \\
+&\Rightarrow\ \ E_{n,\alpha}=I_\alpha^{-\frac{2\alpha}{\alpha +2}}V_0^\frac{2}{\alpha +2}\left(\frac{h^2(n+n_c)^2}{32ma^2}\right)^\frac{\alpha}{\alpha +2}=V_0\left(\frac{h^2(n+n_c)^2}{32ma^2V_0I_\alpha^2}\right)^\frac{\alpha}{\alpha +2} \label{E_n_alpha}\numberthis
+\end{align*}
+Hierbei gilt für $I_\alpha$ mit der euler'schen Betafunktion und $\Gamma(\frac{1}{2})=\sqrt{\pi}$:
+\begin{align*}
+I_\alpha &=\int_0^1\sqrt{1-x^\alpha}\,\mathrm{d}x=\frac{1}{\alpha}\int_0^1t^{\frac{1}{\alpha}-1}(1-t)^{\frac{3}{2}-1}\,\mathrm{d}t=B\left(\frac{3}{2},\frac{1}{\alpha}\right)\\
+I_2&=\frac{\Gamma(\frac{3}{2})\Gamma(\frac{1}{2})}{2\cdot\Gamma(\frac{3}{2}+\frac{1}{2})}=\frac{\pi}{4}\ \ \ \ \mathrm{und }\ \ \ \ I_1=\frac{\Gamma(\frac{3}{2})\Gamma(1)}{1\cdot\Gamma(\frac{3}{2}+1)}=\frac{2}{3}
+\end{align*}
+Also folgt für die Energieniveaus:
+\begin{align*}
+E_{n, 2}&=\frac{1}{\pi}\sqrt{\frac{V_0}{2ma^2}}h(n+n_c)\ \ \ \ \mathrm{und }\ \ \ \ E_{n, 1}=\left(\frac{9V_0^2h^2(n+n_c)^2}{128ma^2}\right)^\frac{1}{3}
+\end{align*}
+Für $V(q)=\left\{\begin{matrix}
+mgq &,\ q\ge 0 \\ \infty &,\ q<0 
+\end{matrix}\right .$:
+\begin{align*}
+h(n+n_c)&=2\sqrt{2m}\int_{0}^{\frac{E_n}{mg}}\sqrt{E_n-mgq}\,\mathrm{d}q=\sqrt{8m}\frac{2}{3mg}(E_n-mgq)^\frac{3}{2}\bigg\vert_{\frac{E_n}{mg}}^0=E_n^\frac{3}{2}\left(\frac{32}{9mg^2}\right)^\frac{1}{2}\\
+&\Rightarrow\ \ E_n=\left(\frac{9}{32}mg^2h^2(n+n_c)^2\right)^\frac{1}{3}
+\end{align*}
+Für $n_c=1$ bestimmt man die klassischen Umkehrpunkte aus der Bedingung $p=0$ im Hamilton:
+\begin{align*}
+E_n&=H=\frac{p^2}{2m}+mgq\ \ \Rightarrow\ \ q_u=\frac{E_n}{mg}=\left(\frac{9h^2(n+1)^2}{32m^2g}\right)^\frac{1}{3}
+\end{align*}
+\section{Wellenlängen und Energien}
+Für Photonen gilt:
+$$E_\gamma=hf=\frac{hc}{\lambda}$$
+Für Materiewellen gilt:
+\begin{align*}
+p = \hbar k=\frac{h}{\lambda}\overset{!}{=}\frac{E_\gamma}{c}\ \ \Rightarrow\ \ E=\sqrt{m^2c^4+p^2c^2}=\sqrt{E_0^2+E_\gamma^2}=\sqrt{m^2c^4+\frac{h^2c^2}{\lambda^2}}
+\end{align*}
+
+
+\end{document}

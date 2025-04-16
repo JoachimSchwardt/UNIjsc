@@ -1,0 +1,212 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{ll_scrarticle}
+
+\newcommand*{\Title}{Renormalization Group Introduction}
+\newcommand*{\Author}{Joachim Schwardt}
+\input{thesis/preamble}
+
+\title{\Title}
+\author{\Author}
+\date{\today}
+\addbibresource{thesis/bibliography.bib}
+\renewcommand{\gls}[1]{\textbf{#1}}
+\renewcommand{\acrlong}[1]{\textbf{#1}}
+\newcommand{\trspace}{real space}
+\newcommand{\tpspace}{momentum space}
+\newcommand{\rgbeta}{\bm{\beta}}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Renormalization Group}\label{chap:rg}
+%The concept of the \gls{rg} extends well beyond the realm of condensed matter physics.
+%Cardy in particular criticises the word ``the'' and notes that \gls{rg} is merely a framework of somewhat loosely defined ideas \cite[p.28]{Cardy_1996}.
+%This is highlighted by the vast number of problems treated by \gls{rg}, see e.g. \cite{RG_Theory_Fisher_1998} and references therein.
+%Within the confines of effective field theories 
+The \gls{rg} has been applied to problems in numerous different contexts, see e.g. \cite[\ssec 3]{RG_Theory_Fisher_1998}.
+Even within the confines of effective low-energy theories, which is what we use the \gls{rg} for, there exists a vast body of literature \cite{RG_SG_Wilson_Sharp_vs_Smooth_Kogut_1979,RG_NonPerturbative_Introduction_Delamotte_2012,RG_EFT_lowDim_Yanagisawa_2017}.
+More general introductions to \gls{rg} can for example be found in \cite{Cardy_1996,RG_Theory_Fisher_1998}.
+However, Cardy notes that \gls{rg} should be seen as more of a collection of general ideas that need to be adapted to a given problem \cite[p.28]{Cardy_1996}.
+Therefore many of the underlying principles can be grasped even from a discussion limited to a specific example.\\
+Since \gls{rg} is not the primary focus of this work we here restrict ourselves to two comparatively simple perturbative implementations, namely \tms{} renormalization and a \trspace{} approach based on the \acrlong{ope}.
+It should be mentioned that there also exist a multitude of much more advanced non-perturbative methods that generally go by the name of \emph{functional \gls{rg}}, see \cite{RG_Wilson_fRG_review_Dupuis_2021} for a review.
+%Unlike for the previous three topics we do not attempt a general introduction to the concept of \gls{rg}.
+%This is because, other issues with the nomenclature aside\footnote{Historically the idea of renormalization originates from the treatment of \gls{uv}-divergences in \gls{qft}, specifically quantum electrodynamics \cite[\ssec 2.3]{QFT_RG_OPE_Collins_1984}, and mathematically the \gls{rg} is not actually a group \cite[p.28]{Cardy_1996}.}, ``the'' \gls{rg} is merely a framework consisting of loosely defined ideas that needs to be adapted to a given problem \cite[\schap 3]{Cardy_1996}.
+%TODO motivation on why RG may be crucial to any continuum limit of a field theory %http://eduardo.physics.illinois.edu/phys583/ch15.pdf discussion on continuum limit near eq.15.5
+%\subsection{\gls{rg} transformations}
+%Perhaps it is most instructive to begin by stating what the \gls{rg} is \emph{not}.
+%For one, it is not a group: The purpose of the \gls{rg} is to obtain a theory where only the most relevant degrees of freedom remain.
+%But due to the corresponding loss of microscopic information this process is fundamentally not invertible, so it cannot be a group \cite{RG_Theory_Fisher_1998}.
+%More importantly, Cardy particularly criticises the word ``the'' because the concept of \gls{rg} is merely a framework that needs to be adapted to a given problem \cite[p.28]{Cardy_1996}.
+%This is highlighted by the vast number of problems treated by \gls{rg}, see e.g. \cite{RG_Theory_Fisher_1998}.
+%Given that \gls{rg} is not the primary focus of this work we restrict ourselves to the special case of an effective low-energy theory where, as the name suggests, the aforementioned relevant degrees of freedom correspond to long wavelengths.
+%In this sense compared to, say, bosonization, \gls{rg} is what an operator is to a function.
+%This already highlights a key issue with writing an introduction to \gls{rg}, especially given the constraints provided by the scope of this thesis\footnote{As well as the scope of the author's knowledge, although in this aspect the discussion of the previous topics may be similarly preposterous.}
+%The \gls{rg} is actually not a group in the mathematical sense, because it is fundamentally not invertible \cite[\schap 3]{Cardy_1996}. 
+%Although some of the ideas are similar, ``the renormalization group'' is still a somewhat unfortunate amalgamation of nomenclature.
+%Aside from not really being a group in the mathematical sense, the key issue is with the word ``the''.
+%One of the problems of bosonization is that it beyond simple quadratic terms, which form the \gls{ll}, generic contributions come in the form of \gls{sg}-like terms.
+%Within the context \glspl{ll} the purpose of a \gls{rg} analysis is at least twofold.
+%For one, the goal of the \gls{ll} as a replacement of the Fermi Liquid as low-energy theory in one dimension
+\subsection{\tMs{} \gls{rg}}\label{sec:rg:momentum_shell_rg}
+For us the purpose of \gls{rg} is to obtain an effective low-energy description of a given model which can be achieved by Wilson's original idea of successively ``integrating out'' high-energy degrees of freedom \cite{Bosonization_Shankar_1994,RG_NonPerturbative_Introduction_Delamotte_2012}.
+Here we describe a modern implementation of this primarily based on \cites[\schap 8]{AltlandSimons}[\schap 4]{Fradkin_2013}.\\
+Consider a general model described by the action $\sact[\phi] = \sact_0[\phi] + \sact_\tint[\phi]$ where the free part $\sact_0$ is assumed to be quadratic in the field (and thus diagonal in \tpspace{}).
+Let us start by making the somewhat vague notion of ``integrating out'' degrees of freedom more precise.
+Generically a field theory is limited to a finite bandwidth $\Lambda$ that regulates \gls{uv}-divergences \cite{QFT_RG_OPE_Collins_1984}.
+As such only momenta $|k|<\Lambda$ are contained in the original model and we may separate them into high- and low-energy modes by splitting the momenta into slow and fast modes via $0 \le |k_\s| < \frac{\Lambda}{s} \le |k_\f| < \Lambda$ where $s>1$.
+This gives rise to the decomposition $\phi = \phi_\s + \phi_\f$ of the underlying field $\phi$ where
+\begin{align*}
+\phi_\s(x) &= \frac{1}{L} \sum_\s \powe{\i kx} \phi(k)\,\d k \quad \text{and} \quad \phi_\f(x) = \frac{1}{L} \sum_\f \powe{\i kx} \phi(k)\,\d k.
+\end{align*}
+For compactness we write $\sum_\s \equiv \sum_{|k|<\Lambda/s}$ and similarly $\sum_\f \equiv \sum_{\Lambda/s \le |k| < \Lambda}$.
+Formally this now allows us to interpret the single physical field $\phi$ as a combination of slow and fast modes, i.e. to express the action as $\sact[\phi] \equiv \sact[\phi_\s, \phi_\f]$.\\
+Within a path-integral formalism expectation values generally take the form \cite{AltlandSimons}
+\begin{align*}
+\bra*{\mathcal{O}} &= \int \mathcal{O(\phi) \powe{-\sact[\phi]}}\,\mathcal{D}\phi.
+\end{align*}
+In \tpspace{} the integral decomposes into one over $\phi_\s$ and one over $\phi_\f$, leading to the natural definition of an effective action $\powe{-\sact_\eff} = \bra*{\powe{-\sact}}_\f$.
+An important observation is that the free part satisfies $\sact_0[\phi] = \sact_{0,\s}[\phi_\s] + \sact_{0,\f}[\phi_\f]$, i.e. it does not couple different modes.
+We can use this to simplify the definition of the effective action a bit by ignoring the constant factor originating form the fast average of the part $\powe{-\sact_{0,\f}}$.
+Therefore the usual definition reads \cite[\spage 11]{Bosonization_Shankar_1994} %or sec IV.B
+\begin{align}
+\powe{-\sact_\eff} &= \powe{-\sact_{0,\s}} \bra*{\powe{-\sact_\tint}}_\f. \label{eqn:rg:effective_S_Wilson_def}
+\end{align}
+Of course in general performing this average is just as difficult as calculating the full partition function of the system so we have to resort to perturbative schemes or other approximations.
+Here we restrict ourselves to the standard cumulant expansion
+\begin{align*}
+\bra*{\powe{-\sact_\tint}}_\f &= \powe{-\bra*{\sact_\tint}_\f + \frac{1}{2} \bra*{\sact_\tint^2}_\f^\c + \dots}
+\end{align*}
+where $\bra*{AB}^\c = \bra*{AB} - \bra*{A}\bra*{B}$ denotes the connected average \cite{RG_Wilson_SmoothCutoff_Nozieres_1987}.
+Already at the second order this expansion involves some subtle complications due to the sharp cut-off in \tpspace{}.
+To circumvent the problem one needs to implement a smooth cut-off \cites{RG_SG_Wilson_Sharp_vs_Smooth_Kogut_1979}{RG_Wilson_SmoothCutoff_Nozieres_1987}[\spage 690]{RG_QFT_Dupuis_2023}, but that is beyond the scope of this thesis.\\
+In order to obtain some group\footnote{It is really just a semi-group as the \gls{rg} transformation is not invertible. This is due to the fundamental (and intentional) loss of information about the microscopic degrees of freedom \cite[\ssec 1]{RG_Theory_Fisher_1998}.} structure that enables us to iterate the procedure we now have to match this effective action to the initial one.
+This second step can be as trivial as collecting prefactors of some contribution with original coupling $g$ into a new coupling $g'$, but in general the average over fast modes may give rise to genuinely new terms not previously contained in $\sact$.
+The usual approach to resolve this issue is to consider the original model as a linear combination of all possible interactions but only finitely many non-zero coupling strengths \cite[\ssec 4.4]{Fradkin_2013}. %TODO REF not optimal, only vaguely contained in text
+This makes it possible to rephrase the appearance of a new operator-valued expression as a mere change of, say, coupling parameter $g_5'$ that originates from the values of $g_3$ and $g_2$.\\
+Lastly one must rescale the momentum variables $k'$ and other parameters, e.g. integration variables $x'$ or lattice spacings $a'$ etc., in order to make the new model formally indistinguishable from the original one.
+This also includes the so-called \emph{field renormalization} $\phi'(k') = \zeta \phi(k)$ where the proportionality factor is chosen in a way that keeps the fixed point action $\sact_0$ invariant \cites[\spage 13]{Bosonization_Shankar_1994}[\ssec 8.3]{AltlandSimons}.\\
+We are now in a position to make the change infinitesimal $s=\powe{\d l} = 1 + \d l$, i.e. only a thin layer of the \tpspace{} is integrated out at a time.
+Since the described procedure is designed to reproduce the structure of the original model at every step this turns the \gls{rg} into a continuous process where the transformation of the couplings $g'\rightarrow g$ is described by a differential equation $\textbf{g}'(l) = \rgbeta(\textbf{g}(l))$ where $\rgbeta$ is referred to as the \emph{beta function}\footnote{This has nothing to do with either the inverse temperature or the mathematical Beta function \cite[\ssec 8.3]{AltlandSimons}.}.
+The advantage of this is that the fast averages are easier to compute for infinitesimally thin shells in \tpspace{}.
+\subsubsection{Example: kinetic fixed point action}
+Let us illustrate the procedure by showing that the typical kinetic action \cite[\ssec 4.2]{Fradkin_2013}
+\begin{align*}
+\sact &= \int_{G\subset \mathbb{R}^d} \kla*{\nabla\phi}^2 \,\d^dx
+\end{align*}
+in $d$ dimensions is invariant under the \gls{rg}.
+For simplicity let $G=[-L/2, L/2]^d$ where $L$ is the finite linear extent of the system.
+The Fourier representation of $\phi$ is given by $\phi(x) = \frac{1}{L^d} \sum_k \powe{\i k\cdot x} \phi(k)$ and inserting this into $\sact$ yields
+\begin{align*}
+\sact &= \frac{1}{L^{2d}} \sum_{k,k'} \int \powe{\i (k+k')\cdot x} \i k \cdot \i k' \phi(k) \phi(k') = \frac{1}{L^d} \sum_k k^2 \abs*{\phi(k)}^2.
+\end{align*}
+Separating slow and fast modes now reduces to the identification $\sum_k \equiv \sum_\s + \sum_\f$ and thus $\sact[\phi] = \sact_{\s}[\phi_\s] + \sact_{\f}[\phi_\f]$.
+On a technical level this clean decomposition is the reason why a quadratic action is invariant under the \gls{rg} while a generic one is not.
+Integrating out the fast modes only yields some constant prefactor since
+\begin{align*}
+\powe{-\sact_\eff[\phi_\s]} &= \bra[\big]{\powe{-\sact[\phi_\s, \phi_\f]}}_\f = \int \powe{-\sact[\phi_\s, \phi_\f]}\,\mathcal{D}\phi_\f = \powe{-\sact_{\s}[\phi_\s]} \int \powe{- \sact_{\f}[\phi_\f]}\,\mathcal{D}\phi_\f.
+\end{align*}
+One can now either choose an integration measure to normalize the integral or simply ignore the constant so we can identify $\sact_\eff = \sact_\s$.
+The momentum representation is now restricted to $|k|< \frac{\Lambda}{s}$ and to recover the original range we introduce the new momenta $k'=sk$ \cite[\ssec 15.2.4]{QFT_RG_Fradkin_2021}.
+Consistency with the \gls{ft}\footnote{Physical intuition: measuring momenta on a different scale also implies a change in the interpretation of distance.} demands $x'=\frac{x}{s}$, and in \trspace{} the action therefore becomes
+\begin{align*}
+\sact_{\s} &= \int_{G/s}\kla[\Big]{ \frac{1}{s} \nabla' \phi(sx')}^2 \,s^d\d^dx' = s^{d-2} \int_{G'} \kla*{\nabla'\phi(sx')}^2\,\d^dx'
+\end{align*}
+where $G'=G/s = \klb*{-L', L'}^d$ with $L'=\frac{L}{s}$.
+To make this invariant we introduce the renormalized field $\phi'(x') = s^{1-d/2} \phi(x)$ \cite[\ssec 8.4]{AltlandSimons}.
+Then the effective action is $\sact'[\phi'] = \sact_\s[\phi']$ where the mathematical structure is now exactly the same as in $\sact[\phi]$.
+Dropping the primes on all variables removes the final notational distinction, but one should keep in mind that physically the new action contains fewer degrees of freedom \cite[\spage 11]{Bosonization_Schulz_1995}.
+This completes the \gls{rg} step and, since no couplings need to be adjusted, $\sact$ is a fixed point of the described transformation.
+%Clearly in this simple case there is no need to make the \gls{rg} infinitesimal as any desired range of momenta can be integrated out in one go.
+\subsection{Operator Product Expansion and RG}\label{sec:rg:ope_and_rg}
+%TODO good REF is [\ssec 8]{McGreevy}
+The main problem with the \tms{} renormalization is the appearance of non-local operators beyond the tree-level which is difficult to remedy \cite{RG_Wilson_SmoothCutoff_Nozieres_1987}.
+%Note that this does not mean the naive approach presented in the previous section does not have its merits.
+%There is no reason to assume that the technical issues of the RG procedure directly impact the qualitative behaviour of the system, e.g. whether a perturbation is relevant or irrelevant.
+%But given that half of this chapter's motivation is to figure out how to improve the quantitative result of the perturbation theory by obtaining a predictor for the effective couplings and Luttinger parameter, the method still leaves some things to desire.
+But apart from this complication there is also the issue that in general the details of the beta function may differ from one implementation of the \gls{rg} to the next \cite[\sapp E]{Giamarchi_2004}.
+Thus an additional motivation for considering a second \gls{rg} approach is to investigate in which aspects the results obtained from another procedure are similar -- and in which they are different.
+%The current state of the art [verify] is to use a functional -- or \emph{non-perturbative} -- renormalization group.
+%This is somewhat more involved though and requires specialized knowledge beyond the scope of this thesis.
+The scheme we employ here is based on the \gls{ope} and the presentation closely follows \cites[\schap 5]{Cardy_1996}[\schap 4]{Fradkin_2013}. \\ %also used by McGreevy in chapter 8 and [\ssec 15.6]{QFT_RG_Fradkin_2021}
+The fundamental starting point is to introduce a short-distance cut-off to regulate the \gls{uv}.
+Note that this is less in the spirit of a continuum limit with a lattice spacing $a$ that is taken to zero and should rather be interpreted as a course-graining where the \gls{uv}-regulator is successively increased.
+Conceptually this still leads to a low-energy theory, but instead of thinking about integrating out modes with large momenta we instead think about smearing the short-distance behaviour of the system by increasing the cut-off \cite[\ssec 4.5]{Fradkin_2013}. \\ %TODO not very explicit reference
+With the previous discussion in mind let us now consider a set of operators $\mathcal{O}_j$ that are functions of some real scalar field $\phi$ in $d$-dimensional space-time.
+The scaling dimension $\Delta_\mathcal{O}$ is defined by the asymptotic behaviour of the expectation value
+\begin{align*}
+\bra*{\mathcal{O}(x) \mathcal{O}(x+\epsilon)} \overset{\epsilon\rightarrow 0}{ \sim } \frac{C_\mathcal{O}^2}{\epsilon^{2\Delta_\mathcal{O}}}
+\end{align*}
+where the normalization of the given operator should be chosen such that $C_\mathcal{O} = 1$ \cite[\ssec 15.3]{QFT_RG_Fradkin_2021}.
+We can then define a general action
+\begin{align*}
+\sact[\phi] &= \sact_0[\phi] + \sum_j g_j \alpha^{\Delta_j - d} \int \mathcal{O}_j(x)\,\d^dx
+\end{align*}
+where the $g_j$ are by construction dimensionless couplings and $\sact_0$ again corresponds to a fixed point, e.g. the kinetic term $\kla*{\nabla\phi}^2$.
+The partition function can then be written as
+\begin{align*}
+Z &= \tr \powe{-\sact[\phi]} = \tr \klb*{\powe{-\sact_0[\phi] - \sum_j g_j \alpha^{\Delta_j - d} \int \mathcal{O}_j(x) \,\d^dx}}
+\end{align*}
+where the trace runs over all field configurations.
+Let us denote the free expectation value with respect to $\sact_0$ by $\bra*{\mathcal{O}} = \frac{1}{Z_0} \tr \klb*{\powe{-\sact_0} \mathcal{O}}$ and expand the exponential containing the perturbations to get
+\begin{align*}
+\frac{Z}{Z_0} &= 1 - \sum_j \frac{g_j}{\alpha^{d-\Delta_j}} \int \bra*{\mathcal{O}_j(x)}\,\d^dx + \frac{1}{2} \sum_{j,k} \frac{g_jg_k}{\alpha^{2d - \Delta_j - \Delta_k}} \int \bra*{\mathcal{O}_j(x_1) \mathcal{O}_k(x_2)}\,\d^dx_1\d^dx_2 + \dots
+\end{align*}
+where $Z_0=\tr \powe{-\sact_0}$.
+Note that the short-distance cut-off implicitly enters the calculation because all of the integrals beyond first order assume that the variables satisfy $|x_j - x_k| > \alpha$ \cite[\spage 79]{Fradkin_2013}.\\
+The idea of the \gls{rg} is then to keep the partition function invariant under an increase of $\alpha\rightarrow \alpha'=s\alpha$ by merely varying the coupling strengths.
+In order for this program to have any chance of success we must therefore assume the set of operators to be complete in the sense that during the \gls{rg} flow no new operators appear\footnote{As in the \tms{} \gls{rg} this does not imply that the procedure cannot generate perturbations previously absent in the model. Instead, one should think of the \emph{coupling} of that perturbation to be initially zero and only increased by some feedback in the flow equations.}.\\
+Analogous to the \tms{} \gls{rg} we write $s=\powe{\d l} = 1 + \d l$ to make the transformation infinitesimal and our goal is to obtain the beta function $\frac{\d}{\d l} \textbf{g} = \rgbeta(\textbf{g})$ describing the change of the couplings.
+Within our setup this can now be computed order by order, i.e. $\rgbeta(\textbf{g}) = \textbf{g}'^{(0)} + \textbf{g}'^{(1)} + \dots$, and starting with the tree-level we have \cite[\spage 80]{Fradkin_2013}
+\begin{align*}
+g_j'^{(0)} &= g_j \kla*{\frac{\alpha'}{\alpha}}^{d-\Delta_j} = g_j + (d - \Delta_j) g_j \d l.
+\end{align*}
+From the structure of the expansion of the partition function it is clear that this adjustment not only takes care of the first order term, but also of the $\alpha$-dependence in the prefactors of all other orders \cite[\ssec 5.2]{Cardy_1996}.
+The complicated contribution comes from the change in the integration region and for the second order (or one-loop) term it is useful to consider
+\begin{align*}
+\int_{|x_1-x_2|>\alpha} &= \int_{|x_1-x_2|>\alpha'} - \int_{\alpha'>|x_1-x_2|>\alpha}.
+\end{align*}
+To make progress we now need to evaluate the second integral.
+Note that from a mathematical perspective this is reminiscent of the \tms{} \gls{rg} due to the infinitesimal integration region, but crucially this time the sharp cut-off is in \trspace{} rather than \tpspace{}.\\
+Clearly the modifications at higher orders are structurally similar and require to understand how the operators behave as their arguments get close.
+This is precisely what is answered by the \gls{ope} which encapsulates the asymptotic relation
+\begin{align}
+\mathcal{O}_j(x) \mathcal{O}_k(x+\epsilon) \overset{\epsilon\rightarrow 0}{\sim} \sum_m \frac{C_{j,k,m}}{\epsilon^{\Delta_j + \Delta_k - \Delta_m}} \mathcal{O}_m(x) \label{eqn:rg:OPE_def}
+\end{align}
+where the $C_{j,k,m}$ are the so-called \emph{\gls{ope} coefficients} \cite[\ssec 5.1]{Cardy_1996} (or \emph{structure constants} \cite[\ssec 4.4]{Fradkin_2013}). %\footnote{Also \emph{structure constants} \cite[\ssec 4.4]{Fradkin_2013} or \emph{\gls{ope} coefficients} \cite[\ssec 5.1]{Cardy_1996} or \emph{Wilson coefficients} \cite[\schap 10]{QFT_RG_OPE_Collins_1984}; there appear to be many names.} also see [\ssec 8]{McGreevy}
+One should be somewhat careful with this identity in the sense that it is generally only valid inside an expectation value and when the arguments of any other terms are sufficiently far away \cite[\ssec 5.1]{Cardy_1996}.
+Furthermore, this expansion may generate operators not contained in the initial set.
+Similar to the \tms{} \gls{rg} we assume that our set of operators is complete which here refers to closure under the \gls{ope}.
+Of course as soon as an \gls{ope} generates a new term it is likely that this term consequently spawns an entire hierarchy, leading to a combinatoric explosion.
+An argument typical for \gls{rg} is to use the scaling dimension to assign a relevance\footnote{As an explicit example in $d=2$, a \gls{sg}-term $\cos(b\phi)$ has $\Delta \propto b^2$ (see [REF OPE  (in APP?)]) and therefore if the \gls{ope} of $\cos(2\phi)$ with itself generates $\cos(4\phi)$ it might be reasonable to ignore this term if it is not contained in the original model. However, it is a priori certainly not obvious which operators to keep.} to new operators and only keep leading terms \cite[\ssec 8.2]{AltlandSimons}.
+Essentially, this provides a practical means to break the recursion.\\
+With the \gls{ope} the integral over the shell is now straight-forward\footnote{The only subtlety is that the \gls{ope} may not only depend on the magnitude of $\epsilon$ but also the angles; in the integral we essentially perform an average over all possible orientations, so the limit in the \gls{ope} is defined accordingly.} and we obtain
+\begin{align*}
+\int_{\alpha'>|x_1-x_2|>\alpha} \bra*{\mathcal{O}_j(x_1) \mathcal{O}_k(x_2)}\,\d^dx_1 \d^dx_2 &= \alpha^d S_d \d l \int \sum_m \frac{C_{j,k,m}}{\alpha^{\Delta_j + \Delta_k - \Delta_m}} \bra*{\mathcal{O}_m(x)}\,\d^dx
+\end{align*}
+where $S_d = 2\pi^{d/2} / \Gamma(d/2)$ is the surface area of the $d$-dimensional unit-hypersphere \cite[\ssec 5.2]{Cardy_1996}.
+Evidently the result leads to a correction of the linear part of the expansion of the partition function and therefore to a correction of $\rgbeta(\textbf{g})$.
+Recovering the prefactors we find the one-loop corrections to be
+\begin{align*}
+g_m'^{(1)} &= -\frac{1}{2} \alpha^d S_d \d l \sum_{j,k} \alpha^{d-\Delta_m} \frac{g_jg_k}{\alpha^{2d-\Delta_j - \Delta_k}} \frac{C_{j,k,m}}{\alpha^{\Delta_j + \Delta_k - \Delta_m}} = -\frac{1}{2} S_d\d l \sum_{j,k} C_{j,k,m} g_jg_k.
+\end{align*}
+To this order we thus obtain a structurally identical action where the modification to the coupling strengths is described the set of differential equations
+\begin{align}
+\frac{\d g_j}{\d l} &= (d - \Delta_j) g_j - \frac{1}{2} S_d \sum_{k,m} C_{k,m,j} g_kg_m. \label{eqn:rg:beta_function_1loop}
+\end{align}
+Consequently all one has to do to this order is to identify the scaling dimensions of the operators in the model and compute the \gls{ope} coefficients.\\
+Let us finish with a rather subtle but important point that results from the set of operators potentially containing terms beyond the original perturbations and some of those can include operators contained in $\sact_0$.
+Thus even though $\sact_0$ itself corresponds to a fixed point of the \gls{rg}, together with the perturbations its parameters might still be affected.
+To be more explicit, assume that $\sact_0$ contains an operator $\mathcal{O}_0$ with coupling $g_0$.
+Under the \gls{rg} flow there can then be a change of $g_0$ due to a feedback from the \gls{ope} in the form of $C_{j,k,0}$.
+However, it is important to note that even if $C_{0,0,0} \neq 0$ such a term would \emph{not} appear in the beta function.
+The reason for this is that the original summation in the expansion of the partition function only contains the perturbations, so $j,k,\dots \neq 0$.
+The \gls{ope}, on the other hand, can in principle contain $\mathcal{O}_0$ and as such the sum in \autoref{eqn:rg:OPE_def} generally runs over more indices.
+The two summations in the beta function in \autoref{eqn:rg:beta_function_1loop} originate from the expansion though, so they \emph{are} restricted to $j,k\neq 0$.
+
+\end{document}

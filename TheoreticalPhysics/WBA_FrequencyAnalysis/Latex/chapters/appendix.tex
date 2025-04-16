@@ -1,0 +1,138 @@
+\section{WBA for oscillatory signals}
+\label{sec:WBAforDualFrequencySignals}
+%\subsection{Analysis of the problem}
+In section \ref{sec:SignalsWithTwoFrequencies} we encounter a problem with the frequency analysis for our artificial oscillatory signals with certain combinations of $\nu_{1,2}$. 
+The claim is, that the analysis works if and only if the signal given by $\Delta\phi_n\,\tecxt\text{mod}\,1$ as a function of $\phi_n$ is in one piece, i.e. shows no large gaps in $\Delta\phi_n$ relative to the full extent. 
+%The motivation for the following is, that we compute the frequency as the WBA of the $\Delta\phi_n$. 
+Here $\Delta\phi_n:=\phi_{n+1}-\phi_n$ are the angle differences, and the $\phi_n$ come from the transformation of $q_n$ and $p_n$ to polar coordinates. 
+To understand this, it is helpful to first leave out the modular arithmetic, which leads to the signals shown in fig. \ref{figure:OscPeriodic2fA05PhiDiffNoMod}. 
+Here $\Delta\phi_n$ is shown for $\nu_1=\sqrt{2}-1$, and $\nu_2=\frac{1}{8}$ in blue and for swapped frequencies in orange. 
+Both signals are created with an amplitude of $A=0.5$ from eqn. (\ref{eqn:TwoFrequencySignal}).
+%, that are otherwise identical to the example from \ref{sec:SignalsWithTwoFrequencies}. 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/OscPeriodic2fA05PhiDiffNoMod.png}
+\caption[Angle differences for two dual frequency signals before modulo operation]{Angle differences $\Delta\phi_n$ as a function of $\phi_n$. 
+The angles $\phi_n$ are obtained from eqn. (\ref{eqn:TwoFrequencySignal}) with an amplitude of $A=0.5$.
+The frequencies are $\nu_1=\sqrt{2}-1$ and $\nu_2=\frac{1}{8}$ for the blue points, and are swapped for the orange points.}
+\label{figure:OscPeriodic2fA05PhiDiffNoMod}
+\end{figure}
+\\
+Notice how the resulting signals seem to be torn into two pieces, which is problematic for the frequency analysis. 
+Applying the WBA from eqn. (\ref{eqn:WBAdefinition}) to $\Delta\phi_n$ results in a value close to zero. 
+This is because the clockwise and counter clockwise rotation are indistinguishable, so the angle differences average out. 
+Therefore, it is necessary to apply some transformation to get a meaningful result. 
+As the gaps are a consequence of the discontinuity of the polar angle, the natural solution seems to be to remove those gaps. 
+%The second problem is then purely a question of how to accomplish this. 
+\\
+Let us introduce the parameterized transformation
+\begin{align*}
+\Delta\phi_n&\longrightarrow\klam\left[ {\kla\left( {\Delta\phi_n+\alpha} \right)\,\tecxt\text{mod}\,1} \right]-\alpha\numberthis\label{eqn:DeltaPhiModAlpha}
+\end{align*}
+for $\alpha\in [0,1)$ as a generalization of eqn. (\ref{eqn:pnFromPhiDiff}). 
+The case $\alpha=0$ for the signals from fig. \ref{figure:OscPeriodic2fA05PhiDiffNoMod} is already shown in fig. \ref{figure:OscPeriodic2fA05PhiDiff}. 
+The frequency pair is chosen in such a way, that the transformation only works for one of the two signals. 
+In order to show, that eqn. (\ref{eqn:DeltaPhiModAlpha}) is not a general solution for any $\alpha$, we apply it to signals for the complete $(\nu_1,\nu_2)$-frequency space, which is shown in fig. \ref{figure:OscPeriodic2fA05GridAlpha}. 
+The evenly spaced grid is created with a step size of $\delta:=\frac{\varphi_\tecxt\text{golden}}{180}$ and an initial value $\nu_{1,2}=\frac{\delta}{2}$ for the frequencies, resulting a size of about $300\times 300$ points.
+For each pair, the accuracy of the frequency analysis is represented as a color value, where the signals are again created using eqn. (\ref{eqn:TwoFrequencySignal}) with $A=0.5$ and a length of $N=1024$.
+The angle differences are transformed according to eqn. (\ref{eqn:DeltaPhiModAlpha}) for four different $\alpha$.
+This gives rise to a critical region, where the calculated frequency is incorrect.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/OscPeriodic2fA05GridAlphaWBA.png}
+%\begin{tabular}{ll}
+%\includegraphics[width=.5\linewidth]{pictures/OscPeriodic2fA05GridN10Alpha000WBA.png}&
+%\includegraphics[width=.5\linewidth]{pictures/OscPeriodic2fA05GridN10Alpha015WBA.png}\\
+%\includegraphics[width=.5\linewidth]{pictures/OscPeriodic2fA05GridN10Alpha035WBA.png}&
+%\includegraphics[width=.5\linewidth]{pictures/OscPeriodic2fA05GridN10Alpha050WBA.png}\\
+%\end{tabular}
+\caption[Critical region in the colormap of the convergence of WBA for dual frequency signals]{The color value corresponds to $|\nu_1-\nu_N|$ for signals with two frequencies $\nu_{1,2}$ and a relative amplitude of $A=0.5$ from eqn. (\ref{eqn:TwoFrequencySignal}). 
+The signal length for all plots is $N=1024$, and the $\nu_N$ are calculated as the WBA of the angle differences from eqn. (\ref{eqn:DeltaPhiModAlpha}). 
+Notice how the critical region moves along the line given by $\nu_2=\nu_1$, as $\alpha$ is varied.}
+\label{figure:OscPeriodic2fA05GridAlpha}
+\end{figure}
+\\
+This critical region is a consequence of the modulo operation in eqn. (\ref{eqn:DeltaPhiModAlpha}), that is necessary to get a value different from zero for the frequency, but splits some signals into two parts in the way described above.
+The problem persists for various values of $\alpha$, which demonstrates, that eqn. (\ref{eqn:DeltaPhiModAlpha}) can not be used as a general solution.
+\\
+%It turns out that this is precisely the criterion, for which the transformation described in (\ref{eqn:pnFromPhiDiff}) fails to retrieve the correct frequency with WBA. 
+%\FloatBarrier
+%\subsection{Solutions to the problem}
+There may be several approaches to solve this problem.
+Our algorithm follows the basic principle presented in \cite{DasSaiSanYor2019}, but does not utilize their embedding of the torus.
+The underlying assumption is, that the angle differences are only defined up to an integer.
+The angles are $\phi_n\in [-0.5,0.5)$, and hence the differences are $\Delta\phi_n\in (-1, 1)$.
+Because we compute our frequency $\nu\in[0,1)$ as the WBA of the $\Delta\phi_n$, it should be sufficient for the angle differences to also lie within an interval of length one.
+\\
+More formally, let these new angle differences be defined as
+\begin{align*}
+\hat{\Delta}\phi_n:=\Delta\phi_n -k_n\numberthis\label{eqn:HatDeltaPhi}
+\end{align*}
+for integers $k_n\in\mathbb{Z}$, which we call the compartment of each $\Delta\phi_n$, such that all $\hat{\Delta}\phi_n$ lie within an interval of length one.
+Equivalently, our goal is to find values for $k_n$, such that the $\hat{\Delta}\phi_n$ all lie within the same compartment.
+As a side note, the visual impression of a signal being split in two parts as in fig. \ref{figure:OscPeriodic2fA05PhiDiffNoMod}, can now be described by $k_n\neq k_m$ for some $n,m$.
+\\
+Define the angle difference $\Delta\phi_m$ for some index $m$ as our point of reference, i.e. choose $k_m=0$.
+Now define the differences
+\begin{align*}
+\delta_{nm}&:=\Delta\phi_n - \Delta\phi_m&\tecxt\text{and}&&\hat{\delta}_{nm}&:=\hat{\Delta}\phi_n - \hat{\Delta}\phi_m, \numberthis\label{eqn:DeltaNM}
+\end{align*}
+which are related by
+\begin{align*}
+\delta_{nm}&=\hat{\delta}_{nm}+k_n.
+\end{align*}
+Now we only need to find the $k_n$, for which the $\hat{\delta}_{nm}$ are as close to zero as possible.
+Our algorithm computes the $k_n$ based on the rules
+\begin{align*}
+k_n&=\begin{cases}
++1&\tecxt\text{if}\ \delta_{nm}>1/2 \\
+-1&\tecxt\text{if}\ \delta_{nm}<-1/2 \\
+\ 0 &\tecxt\text{else}
+\end{cases} .\numberthis\label{eqn:RulesForKN}
+\end{align*}
+The simplicity may also coincide with a potential loss of generality, since we encounter a problem for the type of orbit presented in the next section.
+However, it is unclear, whether the algorithm in \cite{DasSaiSanYor2019} would be able to resolve this either.
+%One simple solution is based on the two signals from fig. \ref{figure:OscPeriodic2fA05PhiDiffNoMod}. 
+%As we have seen, taking the modulus of $\Delta\phi_n$ results in a correct and an incorrect signal. 
+%We want a systematic way of shifting only the bottom part of $\Delta\phi_n$ by 1. 
+%For this it turns out to be sufficient, to check whether any parts of the signal lie in both $I_1=[0,\frac{1}{4})$ and $I_2=(\frac{3}{4},1]$. 
+%If this condition is met, we transform $\Delta\phi_n\longrightarrow\Delta\phi_n + 1$, for all $\Delta\phi_n<\frac{1}{2}$. 
+%This removes the critical region in the case $\alpha=0$ from fig. \ref{figure:OscPeriodic2fA05GridAlpha}. 
+%It is even possible to generalize this approach for all $\alpha$. 
+%The condition becomes based on the intervals 
+%\begin{align*}
+%I_1&:=\left[-\alpha,\frac{1}{4}-\alpha\right)&\tecxt\text{and}&&I_2&:=\left(\frac{3}{4}-\alpha,1-\alpha\right],
+%\end{align*}
+%while the transformation now reads
+%\begin{align*}
+%\Delta\phi_n&\longrightarrow\Delta\phi_n + 1&\forall n:\ \Delta\phi_n<\frac{1}{2}-\alpha.
+%\end{align*}
+%For convenience, a value of $\alpha=\frac{1}{2}$ was chosen, as that slightly simplified the implementation.
+%\\
+%A different approach could be to apply (\ref{eqn:DeltaPhiModAlpha}) to $\Delta\phi_n$ with a value of $\alpha$, that may depend on the specific signal. 
+%A candidate for such a shift is given by $\alpha=-\nu$, which does not seem particularly helpful, as we have to transform the signal to retrieve the frequency in the first place. 
+%However, a very rough approximation of said frequency would already suffice, as the value of $\alpha$ can generally be chosen from a certain range.
+\section{Failure of WBA for a specific type of orbit}
+\label{sec:FailureWBASpecificOrbit}
+In this section we want to demonstrate the failure of the WBA for some of the four dimensional orbits from section \ref{sec:FrequencySpace}.
+They appear to be particularly common near edges of the frequency space beyond the $3:1:1$ and $-1:2:0$ resonances, as well as on certain resonance lines.
+Panels (a) and (b) of fig. \ref{figure:Torus4dTransformDeltaPhi} show the projection of a transformed orbit, that is used to compute the second frequency, for two examples.
+Respectively, panels (c) and (d) show a plot of the angle differences $\hat{\Delta}\phi_n$, obtained from the algorithm in eqn. (\ref{eqn:RulesForKN}), as a function of the scaled polar angles $\phi_n$ from eqn. (\ref{eqn:MapArctan2}). 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/Torus4dTransform_DeltaPhi.png}
+\caption[Comparison of the projections and angle differences for computing $\nu_2$ with WBA in two examples]{Shown in (a) and (b) are two examples of the projection of a transformed orbit, which is used for computing the second frequency in either case.
+Shown in (c) and (d), corresponding to (a) and (b) respectively, is a plot of the angle differences $\hat{\Delta}\phi_n$.
+These are obtained from the algorithm in eqn. (\ref{eqn:RulesForKN}), as a function of the scaled polar angles $\phi_n$ from eqn. (\ref{eqn:MapArctan2}).
+The projection in (b) shows no central hole, and the respective $\hat{\Delta}\phi_n$ in (d) span over an interval of length one.
+While the two seem to be connected, the more precise statement is, that the frequency analysis with WBA fails, when the second criterion is met.}%WBA:  0.14756, Naff: 0.14756 and WBA:  0.08614, Naff: 0.07592
+\label{figure:Torus4dTransformDeltaPhi}
+\end{figure}
+\\
+For the example in (a), the projection shows a hole, and the $\hat{\Delta}\phi_n$ only span over a small interval.
+Here the frequency analysis with WBA works, i.e. gives the same result as Naff.
+In (b), the central hole is missing, and the $\hat{\Delta}\phi_n$ fill out the largest possible interval, since the length is limited to 1 by construction.
+Our claim is, that the WBA fails whenever this second criterion is met.
+In all the considered examples, the first criterion is also met, but a more extensive analysis would be required to back up this hypothetical connection.
+We could not reconstruct the ``embedding continuation method'' presented in \cite{DasSaiSanYor2019}, so it may provide a solution to this problem.
+However, none of the examples considered in this citation are -- for the lack of a better word -- quite as messy as the one from fig. \ref{figure:Torus4dTransformDeltaPhi} (b).

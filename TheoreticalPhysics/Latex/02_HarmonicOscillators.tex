@@ -1,0 +1,415 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{02 Harmonic oscillators}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Theoretical Physics (Master)}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Problem 1: \normalfont\textit{\large{Coherent states}}}
+\subsection*{a)}
+Consider eigenstates of the annihilation operator, i.e. $\hat{a}\Ket | \alpha \rangle=\alpha\Ket | \alpha \rangle$.
+This implies
+\begin{align}
+\hat{D}_\alpha\Ket | 0 \rangle&:=\e^{\alpha\hat{a}^\dagger-\alpha^\ast\hat{a}}\Ket | 0 \rangle=\e^{\alpha\hat{a}^\dagger}\e^{-\alpha^\ast\hat{a}}\e^{-\frac{1}{2}\klam\left[ \alpha\hat{a}^\dagger, -\alpha^\ast\hat{a} \right]}\Ket | 0 \rangle=\\
+&=\e^{-\frac{1}{2}|\alpha|^2}\e^{\alpha\hat{a}^\dagger}\kla\left( 1+\hat{a}+\dots \right)\Ket | 0 \rangle=\e^{-\frac{1}{2}|\alpha|^2}\e^{\alpha\hat{a}^\dagger}\Ket | 0 \rangle = \\
+&= \e^{-\frac{1}{2}|\alpha|^2}\sum_{n=0}^\infty \frac{\alpha^n}{\sqrt{n!}}\Ket | n \rangle .
+\end{align}
+Applying the annihilation operator to this we find that it is indeed an eigenstate with eigenvalue $\alpha$, since
+\begin{align}
+\hat{a}\hat{D}_\alpha\Ket | 0 \rangle &= \e^{-\frac{1}{2}|\alpha|^2}\sum_{n=1}^\infty \frac{\alpha^n}{\sqrt{n!}}\sqrt{n}\Ket | n-1 \rangle=\alpha\hat{D}_\alpha\Ket | 0 \rangle.
+\end{align}
+Thus, $\hat{D}_\alpha\Ket | 0 \rangle=\beta\Ket | \alpha \rangle$.
+We can additionally determine the proportionality constant by considering
+\begin{align}
+|\beta|^2&=\braket\langle \alpha | \beta^\ast\beta | \alpha \rangle   = \braket\langle 0 | \hat{D}_\alpha^\dagger\hat{D}_\alpha | 0 \rangle = \braket\langle 0 | \e^{\alpha^\ast\hat{a} - \alpha\hat{a}^\dagger} \e^{\alpha\hat{a}^\dagger-\alpha^\ast\hat{a}} | 0 \rangle=1,
+\end{align}
+which leads to $\beta\equiv 1$.
+\subsection*{b)}
+The Lie-Hadamard formula is given by
+\begin{align}
+\e^{\hat{A}}\hat{B}\e^{-\hat{A}}&=\sum_{n=0}^\infty\frac{1}{n!}\klam\left[ \hat{A}, \hat{B} \right]_n
+\end{align}
+where $\klam\left[ \hat{A}, \hat{B} \right]_0:=\hat{B}$ and $\klam\left[ \hat{A}, \hat{B} \right]_n:=\klam\left[ \hat{A}, \klam\left[ \hat{A}, \hat{B} \right]_{n-1} \right]$ recursively defines the nested commutators.
+In the case of $\hat{D}_\alpha^\dagger \hat{a}\hat{D}_\alpha$ we have $\hat{A}\equiv \alpha^\ast\hat{a} - \alpha\hat{a}^\dagger$ and $\hat{B}\equiv\hat{a}$.
+This results in
+\begin{align}
+\hat{D}_\alpha^\dagger \hat{a}\hat{D}_\alpha &= \hat{a} + \klam\left[ \alpha^\ast\hat{a} - \alpha\hat{a}^\dagger, \hat{a} \right]+\dots=\hat{a} + \alpha,
+\end{align}
+where the higher order terms vanish, because the first commutator is constant.
+Similarly,
+\begin{align}
+\hat{D}_\alpha^\dagger \hat{a}^\dagger\hat{D}_\alpha &= \hat{a}^\dagger + \klam\left[ \alpha^\ast\hat{a} - \alpha\hat{a}^\dagger, \hat{a}^\dagger \right]+\dots=\hat{a}^\dagger - \alpha^\ast,
+\end{align}
+which could of course also be obtained by
+\begin{align}
+\hat{D}_\alpha^\dagger \hat{a}^\dagger\hat{D}_\alpha &= \kla\left( \hat{D}_\alpha^\dagger \hat{a}\hat{D}_\alpha  \right)^\dagger.
+\end{align}
+\subsection*{c)}
+Now consider time-dependent states $\Ket | \psi(t) \rangle:=\Ket | \alpha\e^{-\i\omega t} \rangle$.
+Note that we can represent the position and momentum operators using creating and annihilation operators, i.e.
+\begin{align}
+\hat{x} &= \sqrt{\frac{\hbar}{2m\omega}}\kla\left( \hat{a}^\dagger +\hat{a} \right)&&\tecxt\text{and}& \hat{p}&=\i\sqrt{\frac{\hbar m\omega}{2}}\kla\left( \hat{a}^\dagger -\hat{a} \right).
+\end{align}
+Then we can calculate the expectation value and variance of the position operator by making use of $\Bra\langle \alpha |\hat{a}\Ket | \alpha \rangle=\alpha$ via
+\begin{align}
+\bra\langle \hat{x} \rangle_t&=\braket\langle \psi(t) | \hat{x} | \psi(t) \rangle = \sqrt{\frac{\hbar}{2m\omega}}\braket\langle \alpha\e^{-\i\omega t} | \hat{a}^\dagger + \hat{a} | \alpha\e^{-\i\omega t} \rangle = \\
+&= \sqrt{\frac{\hbar}{2m\omega}}\kla\left( \alpha^\ast\e^{\i\omega t} + \alpha\e^{-\i\omega t} \right),\\
+\tecxt\text{Var\,} \hat{x} &=\braket\langle \psi(t) | \hat{x}^2 | \psi(t) \rangle - \bra\langle \hat{x} \rangle_t^2 = \\
+&= \frac{\hbar}{2m\omega}\braket\langle \alpha\e^{-\i\omega t} | \hat{a}^{\dagger\,2} + \hat{a}^2 +2 \hat{a}^\dagger\hat{a} + 1 | \alpha\e^{-\i\omega t} \rangle - \bra\langle \hat{x} \rangle_t^2 =\\
+&= \frac{\hbar}{2m\omega}\kla\left( \alpha^{\ast\,2}\e^{2\i\omega t} + \alpha^2\e^{-2\i\omega t} + 2|\alpha|^2+1-\klam\left[ \alpha^\ast\e^{\i\omega t} + \alpha\e^{-\i\omega t} \right]^2 \right) = \\
+&=\frac{\hbar}{2 m\omega}.
+\end{align}
+Similarly, for the momentum operator we obtain
+\begin{align}
+\bra\langle \hat{p} \rangle_t&=\braket\langle \psi(t) | \hat{p} | \psi(t) \rangle = \i\sqrt{\frac{\hbar m\omega}{2}}\braket\langle \alpha\e^{-\i\omega t} | \hat{a}^\dagger - \hat{a} | \alpha\e^{-\i\omega t} \rangle = \\
+&= \i\sqrt{\frac{\hbar m\omega}{2}}\kla\left( \alpha^\ast\e^{\i\omega t} - \alpha\e^{-\i\omega t} \right),\\
+\tecxt\text{Var\,} \hat{p} &=\braket\langle \psi(t) | \hat{p}^2 | \psi(t) \rangle - \bra\langle \hat{p} \rangle_t^2 = \\
+&= -\frac{\hbar m\omega}{2}\braket\langle \alpha\e^{-\i\omega t} | \hat{a}^{\dagger\,2} + \hat{a}^2 -2 \hat{a}^\dagger\hat{a} - 1 | \alpha\e^{-\i\omega t} \rangle - \bra\langle \hat{p} \rangle_t^2 =\\
+&= -\frac{\hbar m\omega}{2}\kla\left( \alpha^{\ast\,2}\e^{2\i\omega t} + \alpha^2\e^{-2\i\omega t} - 2|\alpha|^2-1-\klam\left[ \alpha^\ast\e^{\i\omega t} - \alpha\e^{-\i\omega t} \right]^2 \right) = \\
+&=\frac{\hbar m\omega}{2}.
+\end{align}
+We can identify $\tecxt\text{Var\,}\hat{A}\equiv\Delta\hat{A}^2$, which leads to \begin{align}
+\Delta\hat{x}\Delta\hat{p}&=\sqrt{\frac{\hbar}{2m\omega}}\sqrt{\frac{\hbar m\omega}{2}}=\frac{\hbar}{2},
+\end{align}
+therefore the Heisenberg uncertainty principle is (barely) not violated.
+\subsection*{d)}
+We can derive the equations of motion using
+\begin{align}
+\i\hbar\frac{\tecxt\text{d}\hat{x}}{\tecxt\text{d}t}&=\klam\left[ \hat{x},\hat{H} \right]+\partial_t\hat{x} = \sqrt{\frac{\hbar}{2m\omega}}\hbar\omega\klam\left[ \hat{a}^\dagger + \hat{a}, \hat{a}^\dagger\hat{a} + 1 \right]= \\
+&= \frac{\hbar}{m}\sqrt{\frac{\hbar m\omega}{2}}\kla\left( \hat{a} - \hat{a}^\dagger  \right)=\i\hbar\frac{\hat{p}}{m},\\
+\i\hbar\frac{\tecxt\text{d}\hat{p}}{\tecxt\text{d}t}&=\klam\left[ \hat{p},\hat{H} \right]+\partial_t\hat{p} = \i\sqrt{\frac{\hbar m\omega}{2}}\hbar\omega\klam\left[ \hat{a}^\dagger - \hat{a}, \hat{a}^\dagger\hat{a} + 1 \right]= \\
+&= \i\hbar m\omega^2\sqrt{\frac{\hbar}{2 m\omega}}\kla\left( -\hat{a} - \hat{a}^\dagger  \right)=-\i\hbar m\omega^2\hat{x},
+\end{align}
+which can be combined to the expected differential equation of the harmonic oscillator given by
+\begin{align}
+\frac{\tecxt\text{d}^2\hat{x}}{\tecxt\text{d}t^2}+\omega^2\hat{x}&=0.
+\end{align}
+Letting $\hat{x}=:\bra\langle \hat{x} \rangle_t + \Delta\hat{x}$ we may separate this into equations of motion for the classical mean value, and the operator-valued quantum correction.
+This yields
+\begin{align}
+\frac{\tecxt\text{d}^2\bra\langle \hat{x} \rangle_t}{\tecxt\text{d}t^2}+\omega^2\bra\langle \hat{x} \rangle_t&=0,\\
+\frac{\tecxt\text{d}^2\Delta\hat{x}}{\tecxt\text{d}t^2}+\omega^2\Delta\hat{x}&=0.
+\end{align}
+\subsection*{e)}
+Now we consider an additional anharmonic potential, i.e. $\hat{H}=\hat{H}_0 + V(\hat{x})$ with $V(\hat{x})=\lambda\hat{x}^4$.
+The equation for $\dot{\hat{x}}$ does not change, since $\klam\left[ \hat{x}, V(\hat{x}) \right] = 0$.
+Since the commutator is linear, we also only need to consider the new term in the equation for $\dot{\hat{p}}$.
+Here we can make use of the identity $\klam\left[ \hat{A}, \hat{B}^N \right] = Nc\hat{B}^{N-1}$, if $c=\klam\left[ \hat{A}, \hat{B} \right]\in\mathbb{C}$.
+Then we find
+\begin{align}
+\i\hbar\frac{\tecxt\text{d}\hat{p}}{\tecxt\text{d}t} &\rightarrow \i\hbar\frac{\tecxt\text{d}\hat{p}}{\tecxt\text{d}t} + \klam\left[ \hat{p},\lambda\hat{x}^4 \right] = -\i\hbar m\omega^2\hat{x} + 4\lambda \i\hbar \hat{x}^3,
+\end{align}
+which can once again be combined to the expected differential equation of the anharmonic oscillator given by
+\begin{align}
+\frac{\tecxt\text{d}^2\hat{x}}{\tecxt\text{d}t^2} + \omega^2\hat{x} + \frac{4\lambda}{m}\hat{x}^3&=0.
+\end{align}
+This time separating this equation is not quite as straight-forward.
+Note that we can approximate
+\begin{align}
+\hat{x}^3 &= \kla\left( \bra\langle \hat{x} \rangle_t + \Delta\hat{x} \right)^3 = \bra\langle \hat{x} \rangle_t^3 + 3\bra\langle \hat{x} \rangle_t^2\Delta\hat{x} + 3\bra\langle \hat{x} \rangle_t\Delta\hat{x}^2 +  \Delta\hat{x}^3\simeq \\
+&\simeq\bra\langle \hat{x} \rangle_t^3 + 3\bra\langle \hat{x} \rangle_t^2\Delta\hat{x} + \mathcal{O}\kla\left( \Delta\hat{x}^2 \right).
+\end{align}
+This yields
+\begin{align}
+\frac{\tecxt\text{d}^2\bra\langle \hat{x} \rangle_t}{\tecxt\text{d}t^2}+\omega^2\bra\langle \hat{x} \rangle_t + \frac{4\lambda}{m}\bra\langle \hat{x} \rangle_t^3&=0,\\
+\frac{\tecxt\text{d}^2\Delta\hat{x}}{\tecxt\text{d}t^2}+\omega^2\Delta\hat{x} + \frac{12\lambda}{m}\bra\langle \hat{x} \rangle_t^2\Delta\hat{x}&=0.
+\end{align}
+
+
+\newpage
+\section*{Problem 2: \normalfont\textit{\large{Fermionic spectra}}}
+We consider fermionic creation and annihilation operators satisfying
+\begin{align}
+\klammer\left\{ \hat{c}, \hat{c}^\dagger \right\}&=1 && \tecxt\text{and} & \klammer\left\{ \hat{c},\hat{c} \right\}&= 0.
+\end{align}
+Let $\hat{n}:=\hat{c}^\dagger\hat{c}$ and consider eigenstates $\hat{n}\Ket | n \rangle=n\Ket | n \rangle$.
+Then we find
+\begin{align}
+\hat{n}\kla\left( \hat{c}\Ket | n \rangle \right) &= \hat{c}^\dagger\hat{c}^2\Ket | n \rangle\equiv 0,\\
+\hat{n}\kla\left( \hat{c}\Ket | n \rangle \right) &= \kla\left( 1 - \hat{c}\hat{c}^\dagger \right)\hat{c}\Ket | n \rangle = \hat{c}\kla\left( 1-\hat{n} \right)\Ket | n \rangle=(1-n)\kla\left( \hat{c}\Ket | n \rangle \right),
+\end{align}
+which means that $\hat{c}\Ket | n \rangle\propto \Ket | 1-n \rangle$ but also $\hat{c}\Ket | n \rangle\propto\Ket | 0 \rangle$, since the state apparently always has an eigenvalue of zero.
+This leaves only $n=1$, therefore $\hat{c}\Ket | 1 \rangle =:\alpha\Ket | 0 \rangle$, applying $\hat{c}$ to any other state simply gives zero.
+Similarly we find
+\begin{align}
+\hat{n}\kla\left( \hat{c}^\dagger\Ket | n \rangle \right) &= \hat{c}^\dagger\hat{c}\hat{c}^\dagger\Ket | n \rangle = \hat{c}^\dagger\kla\left( \hat{c}\hat{c}^\dagger + \hat{c}^\dagger\hat{c} \right)\Ket | n \rangle=\hat{c}^\dagger\Ket | n \rangle,\\
+\hat{n}\kla\left( \hat{c}^\dagger \Ket | n \rangle \right) &= \hat{c}^\dagger\kla\left( 1 - \hat{c}^\dagger\hat{c} \right)\Ket | n \rangle = \hat{c}^\dagger\kla\left( 1-\hat{n} \right)\Ket | n \rangle=(1-n)\kla\left( \hat{c}^\dagger\Ket | n \rangle \right),
+\end{align}
+which means that $\hat{c}^\dagger\Ket | n \rangle\propto \Ket | 1-n \rangle$ but also $\hat{c}^\dagger\Ket | n \rangle\propto\Ket | 1 \rangle$, since the state apparently always has an eigenvalue of one.
+This leaves only $n=0$, therefore $\hat{c}^\dagger\Ket | 0 \rangle =:\beta\Ket | 1 \rangle$, applying $\hat{c}^\dagger$ to any other state simply gives zero.\\
+Lastly, we can find the proportionality constants by simply computing
+\begin{align}
+|\alpha|^2&=\braket\langle 0 | \alpha^\ast\alpha | 0 \rangle=\braket\langle 1 | \hat{c}^\dagger\hat{c} | 1 \rangle=\braket\langle 1 | 1 | 1 \rangle=1,
+|\beta|^2&=\braket\langle 1 | \beta^\ast\beta | 1 \rangle = \braket\langle 0 | \hat{c}\hat{c}^\dagger | 0 \rangle=\braket\langle 0 | 1 - \hat{n} | 0 \rangle=1,
+\end{align}
+which means that $\alpha\equiv 1$ and$ \beta\equiv 1$.
+Therefore, we find
+\begin{align}
+\hat{c}^\dagger\Ket | 0 \rangle &= \Ket | 1 \rangle,\\
+\hat{c}\Ket | 1 \rangle &= \Ket | 0 \rangle.
+\end{align}
+\subsection*{Different approach}
+A quite different approach can be taken, that more closely resembles the derivation using bosonic operators.
+First note that $\hat{n}:=\hat{c}^\dagger \hat{c}$ is a projection operator, since
+\begin{align}
+\hat{n}^2 &= \hat{c}^\dagger\hat{c}\hat{c}^\dagger\hat{c} = \hat{c}^\dagger\kla\left( \klammer\left\{ \hat{c},\hat{c}^\dagger \right\} - \hat{c}\hat{c}^\dagger \right)\hat{c} = \hat{c}^\dagger\hat{c} = \hat{n},
+\end{align}
+where we used $(\hat{c}^\dagger)^2=0=\hat{c}^2$.
+From this it is obvious, that there can only be the eigenvalues $n\in\{0,1\}$ where $\hat{n}\Ket | n \rangle = n\Ket | n \rangle$.
+Also note that
+\begin{align}
+\klam\left[ \hat{n}, \hat{c}^\dagger \right] &= \hat{c}^\dagger\hat{c}\hat{c}^\dagger - \underbrace{\hat{c}^\dagger\hat{c}^\dagger\hat{c}}_{=\,0} = \hat{c}^\dagger \kla\left( \klammer\left\{ \hat{c}, \hat{c}^\dagger \right\} - \hat{c}^\dagger\hat{c} \right) = \hat{c}^\dagger,\\
+\klam\left[ \hat{n}, \hat{c} \right] &= \klam\left[ \hat{c}^\dagger, \hat{n} \right]^\dagger  = -\kla\left( \hat{c}^\dagger \right)^\dagger = -\hat{c}.
+\end{align}
+From this we immediately find
+\begin{align}
+\hat{n}\hat{c}\Ket | n \rangle &= \kla\left( \hat{c}\hat{n} + \klam\left[ \hat{n}, \hat{c} \right] \right)\Ket | n \rangle = \hat{c}\kla\left( \hat{n}  -1 \right)\Ket | n \rangle = (n-1)\hat{c}\Ket | n \rangle,\\
+\hat{n}\hat{c}^\dagger\Ket | n \rangle &= \kla\left( \hat{c}^\dagger\hat{n} + \klam\left[ \hat{n}, \hat{c}^\dagger \right] \right)\Ket | n \rangle = \hat{c}^\dagger\kla\left( \hat{n} + 1 \right)\Ket | n \rangle = (n+1)\hat{c}^\dagger\Ket | n \rangle.
+\end{align}
+The rest of the analysis is identical.
+
+\newpage
+\section*{Problem 3: \normalfont\textit{\large{Quenched harmonic oscillator}}}
+For $\xi\in\mathbb{C}$ define the squeezing operator as \begin{align}
+\hat{S}_\xi&:=\exp\kla\left( \frac{1}{2}\klam\left[ \xi^\ast\hat{a}^2+\xi\hat{a}^{\dagger\,2} \right] \right).
+\end{align}
+\subsection*{a)}
+Now let $\xi\in\mathbb{R}$. 
+We want to make use of the Lie-Hadamard formula.
+Note that in this case $\hat{A}\equiv -\frac{1}{2}\kla\left( \xi\hat{a}^2+\xi\hat{a}^{\dagger\,2} \right)$.
+Consider the commutation relations
+\begin{align}
+\klam\left[ \hat{A}, \hat{a} \right] &= -\xi\hat{a}^\dagger,\\
+\klam\left[ \hat{A}, \hat{a}^\dagger \right] &= -\xi\hat{a}.
+\end{align}
+Then the action of the squeezing operator amounts to
+\begin{align}
+\hat{S}_\xi\hat{a}\hat{S}_\xi &= \hat{a} + \klam\left[ \hat{A}, \hat{a} \right] + \frac{1}{2}\klam\left[ \hat{A}, \klam\left[ \hat{A}, \hat{a} \right] \right]+\dots=\\
+&=\hat{a}-\xi\hat{a}^\dagger + \frac{\xi^2}{2}\hat{a} - \frac{\xi^3}{6}\hat{a}^\dagger +\dots = \\
+&=\cosh(\xi)\hat{a}-\sinh(\xi)\hat{a}^\dagger.
+\end{align}
+\subsection*{b)}
+Consider a harmonic oscillator with the time-dependent frequency $\omega(t)=\omega + (\Omega - \omega)\Theta(t)$.
+Then we have
+\begin{align}
+\hat{a} &= \sqrt{\frac{m\omega}{2\hbar}}\hat{x} + \frac{1}{\sqrt{2\hbar m\omega}}\i\hat{p}&&\tecxt\text{and} & \hat{b} &= \sqrt{\frac{m\Omega}{2\hbar}}\hat{x} + \frac{1}{\sqrt{2\hbar m\Omega}}\i\hat{p}.
+\end{align}
+Note that
+\begin{align}
+\hat{b} + \hat{b}^\dagger &= \sqrt{\frac{\Omega}{\omega}}\kla\left( \hat{a} + \hat{a}^\dagger \right)&&\tecxt\text{and} & \hat{b} - \hat{b}^\dagger &= \sqrt{\frac{\omega}{\Omega}}\kla\left( \hat{a} - \hat{a}^\dagger \right).
+\end{align}
+Define $\alpha :=\sqrt{\frac{\omega}{\Omega}}$ and $\Delta_\pm := \frac{1}{2}\kla\left( \alpha \pm \frac{1}{\alpha} \right)$.
+Then we can use a Bogoliubov transformation to connect the ladder operators, since
+\begin{align}
+\begin{pmatrix}
+\Delta_+&\Delta_- \\ \Delta_-&\Delta_+
+\end{pmatrix}
+\begin{pmatrix}
+\hat{b} \\ \hat{b}^\dagger
+\end{pmatrix} &= \frac{1}{2}\begin{pmatrix}
+\alpha \kla\left( \hat{b} + \hat{b}^\dagger \right) + \frac{1}{\alpha}\kla\left( \hat{b} - \hat{b}^\dagger \right) \\ 
+\alpha \kla\left( \hat{b} + \hat{b}^\dagger \right) + \frac{1}{\alpha}\kla\left( -\hat{b} + \hat{b}^\dagger \right) 
+\end{pmatrix} = \\
+&=\frac{1}{2}\begin{pmatrix}
+\hat{a} + \hat{a}^\dagger + \hat{a} - \hat{a}^\dagger  \\ 
+\hat{a} + \hat{a}^\dagger - \hat{a} + \hat{a}^\dagger 
+\end{pmatrix}=\begin{pmatrix}
+\hat{a} \\ \hat{a}^\dagger
+\end{pmatrix}.
+\end{align}
+Note that
+\begin{align}
+\hat{S}_\xi\hat{a}\hat{S}_\xi &= \cosh(\xi)\hat{a} - \sinh(\xi)\hat{a}^\dagger = \\
+&=\sqrt{\frac{m\omega}{2\hbar}}\kla\left( \cosh(\xi) - \sinh(\xi) \right)\hat{x} + \frac{\i}{\sqrt{2\hbar m\omega}}\kla\left( \cosh(\xi) + \sinh(\xi) \right)\hat{p}\overset{!}{=}\hat{b}.
+\end{align}
+By comparing coefficients we find
+\begin{align}
+\sqrt{\frac{m\Omega}{2\hbar}}&=\sqrt{\frac{m\omega}{2\hbar}} \e^{-\xi}&&\tecxt\text{and}& \frac{\i}{\sqrt{2\hbar m\Omega}}&=\frac{\i}{\sqrt{2\hbar m\omega}}\e^\xi.
+\end{align}
+Both equations lead to $\xi=\frac{1}{2}\log\kla\left( \frac{\omega}{\Omega} \right)$.
+\subsection*{c)}
+We need to transform the position and momentum operators into the Heisenberg picture.
+Since $\hat{U}(t)=\exp\kla\left( \i\omega t\klam\left[ \hat{b}^\dagger\hat{b} + \frac{1}{2} \right] \right)$, this can be done using
+\begin{align}
+\hat{A}_\tecxt\text{H} &= \hat{U}^\dagger(t)\hat{A}\hat{U}(t).
+\end{align}
+A significantly simpler approach is to use the equations of motion, i.e.
+\begin{align}
+\frac{\tecxt\text{d}\hat{A}_\tecxt\text{H}}{\tecxt\text{d}t} &= \frac{1}{\i\hbar}\klam\left[ \hat{A}_\tecxt\text{H}, \hat{H} \right] + \underbrace{\partial_t\hat{A}_\tecxt\text{H}}_{=\,0}.
+\end{align}
+%At this point, one may apply the equation to find $\hat{x}(t)$ and $\hat{p}(t)$, or equivalently $\hat{b}(t)$ and $\hat{b}^\dagger(t)$.
+%The time-dependent Hamiltonian can be written as
+%\begin{align}
+%\hat{H}(t) &= \frac{\hat{p}^2}{2m} + \frac{m\omega^2(t)}{2}\hat{x}^2,
+%\end{align}
+%which leads to
+%\begin{align}
+%\dot{\hat{x}_\tecxt\text{H}} &= \frac{1}{\i\hbar}\klam\left[ \hat{x}, \frac{\hat{p}^2}{2m} \right] = \frac{\hat{p}}{m},\\
+%\dot{\hat{p}_\tecxt\text{H}} &= \frac{1}{\i\hbar}\klam\left[ \hat{p}, \frac{m\omega^2(t)}{2}\hat{x}^2 \right] = -m\omega^2(t)\hat{x}.
+%\end{align}
+For $t>0$ this leads to
+\begin{align}
+\dot{\hat{b}}_\tecxt\text{H}(t) &= \frac{1}{\i\hbar}\klam\left[ \hat{b}_\tecxt\text{H}, \hbar\Omega\kla\left( \hat{b}^\dagger_\tecxt\text{H}\hat{b}_\tecxt\text{H} + \frac{1}{2} \right) \right] = -\i\Omega\hat{b} && \Rightarrow & \hat{b}_\tecxt\text{H}(t) &= \hat{b}_\tecxt\text{H}(0)\e^{-\i\Omega t},\\
+\dot{\hat{b}}^\dagger_\tecxt\text{H} (t) &= \frac{1}{\i\hbar}\klam\left[ \hat{b}_\tecxt\text{H}^\dagger, \hbar\Omega\kla\left( \hat{b}_\tecxt\text{H}^\dagger\hat{b}_\tecxt\text{H} + \frac{1}{2} \right) \right] = \i\Omega\hat{b}^\dagger_\tecxt\text{H} && \Rightarrow & \hat{b}^\dagger_\tecxt\text{H}(t) &= \hat{b}^\dagger_\tecxt\text{H}(0)\e^{\i\Omega t},
+\end{align}
+where $\hat{b}_\tecxt\text{H}(0)\equiv\hat{b} = \Delta_+\hat{a} - \Delta_-\hat{a}^\dagger$ and $\hat{b}^\dagger(0) = \Delta_+\hat{a}^\dagger - \Delta_-\hat{a}$.\\
+Now we can compute the expectation values.
+Consider first the case of a ground state at $t<0$, i.e. 
+\begin{align}
+\bra\langle \hat{x}_\tecxt\text{H} \rangle &= \sqrt{\frac{\hbar}{2m\Omega}}\braket\langle 0 | \hat{b}_\tecxt\text{H}^\dagger(t) + \hat{b}_\tecxt\text{H}(t) | 0 \rangle =\\
+&= \sqrt{\frac{\hbar}{2m\Omega}}\braket\langle 0 | \kla\left( \Delta_+\hat{a}^\dagger - \Delta_-\hat{a} \right)\e^{\i\Omega t} + \kla\left( \Delta_+\hat{a} - \Delta_-\hat{a}^\dagger \right)\e^{-\i\Omega t} | 0 \rangle = 0.
+\end{align}
+Similarly one may show that $\bra\langle \hat{p}_\tecxt\text{H} \rangle = 0$.
+Computing the variances is more difficult, and leads to
+\begin{align}
+\bra\langle \hat{x}_\tecxt\text{H}^2 \rangle &= \frac{\hbar}{2m\Omega}\braket\langle 0 | \kla\left( \hat{b}_\tecxt\text{H}^\dagger (t) \right)^2 + \hat{b}_\tecxt\text{H}^2(t) + \hat{b}_\tecxt\text{H}^\dagger(t)\hat{b}_\tecxt\text{H}(t)  + \hat{b}_\tecxt\text{H}(t)\hat{b}_\tecxt\text{H}^\dagger(t) | 0 \rangle = \\
+&= \frac{\hbar}{2m\Omega}\braket\langle 0 | -\e^{2\i\Omega t}\Delta_+\Delta_-\hat{a}\hat{a}^\dagger - \e^{-2\i\Omega t}\Delta_+\Delta_-\hat{a}^\dagger\hat{a} + \Delta_-^2\hat{a}\hat{a}^\dagger + \Delta_+^2\hat{a}\hat{a}^\dagger  | 0 \rangle = \\
+&=\frac{\hbar}{2m\Omega}\kla\left( \Delta_+^2 + \Delta_-^2 - 2\Delta_+\Delta_-\cos\kla\left( 2\Omega t \right) \right) = \\
+&= \frac{\hbar}{2m\Omega}\kla\left( \cosh(2\xi) - \sinh(2\xi)\cos(2\Omega t) \right).
+\end{align}
+Here we used that $\Delta_+ = \cosh(\xi)$ and $\Delta_- = \sinh(\xi)$, which leads to
+\begin{align}
+\Delta_+^2 + \Delta_-^2 &= \cosh^2(\xi) + \sinh^2(\xi) = \cosh(2\xi) ,\\
+2\Delta_+\Delta_- &= 2\cosh(\xi)\sinh(\xi) = \sinh(2\xi).
+\end{align}
+Similarly for the momentum operator, one obtains
+\begin{align}
+\bra\langle \hat{p}_\tecxt\text{H}^2 \rangle &= -\frac{\hbar m\Omega}{2}\braket\langle 0 | \kla\left( \hat{b}_\tecxt\text{H}^\dagger (t) \right)^2 + \hat{b}_\tecxt\text{H}^2(t) - \hat{b}_\tecxt\text{H}^\dagger(t)\hat{b}_\tecxt\text{H}(t)  - \hat{b}_\tecxt\text{H}(t)\hat{b}_\tecxt\text{H}^\dagger(t) | 0 \rangle = \\
+&= -\frac{\hbar m\Omega}{2}\braket\langle 0 | -\e^{2\i\Omega t}\Delta_+\Delta_-\hat{a}\hat{a}^\dagger - \e^{-2\i\Omega t}\Delta_+\Delta_-\hat{a}^\dagger\hat{a} - \Delta_-^2\hat{a}\hat{a}^\dagger - \Delta_+^2\hat{a}\hat{a}^\dagger  | 0 \rangle = \\
+&=\frac{\hbar m\Omega}{2}\kla\left( \Delta_+^2 + \Delta_-^2 + 2\Delta_+\Delta_-\cos\kla\left( 2\Omega t \right) \right) = \\
+&= \frac{\hbar m\Omega}{2}\kla\left( \cosh(2\xi) + \sinh(2\xi)\cos(2\Omega t) \right).
+\end{align}
+As opposed to $t<0$, the Heisenberg relation is now no longer ``exactly'' fulfilled, as
+\begin{align}
+\Delta\hat{x}\Delta\hat{p} &= \sqrt{\bra\langle \hat{x}_\tecxt\text{H}^2 \rangle\bra\langle \hat{p}_\tecxt\text{H}^2 \rangle} = \frac{\hbar}{2}\sqrt{\cosh^2(2\xi) - \sinh^2(2\xi)\cos^2(2\Omega t)} = \\
+&=\frac{\hbar}{2}\sqrt{1 + \sinh^2(2\xi)\sin^2(2\Omega t)} \ge \frac{\hbar}{2}
+\end{align}
+only periodically reaches the lower bound of $\frac{\hbar}{2}$.\\
+If the system is initially in a coherent state, the results are a bit more complicated, since the mean values no longer vanish.
+Using $\braket\langle \alpha | \hat{a} | \alpha \rangle = \alpha$ and $\braket\langle \alpha | \hat{a}^\dagger | \alpha \rangle = \alpha^\ast$ with $\alpha =: |\alpha|\e^{\i\phi}$ one finds
+\begin{align}
+\bra\langle \hat{x}_\tecxt\text{H} \rangle &= \sqrt{\frac{\hbar}{2m\Omega}}\braket\langle \alpha | \hat{b}_\tecxt\text{H}^\dagger(t) + \hat{b}_\tecxt\text{H}(t) | \alpha \rangle =\\
+&= \sqrt{\frac{\hbar}{2m\Omega}}\braket\langle \alpha | \kla\left( \Delta_+\hat{a}^\dagger - \Delta_-\hat{a} \right)\e^{\i\Omega t} + \kla\left( \Delta_+\hat{a} - \Delta_-\hat{a}^\dagger \right)\e^{-\i\Omega t} | \alpha \rangle = \\
+&=\sqrt{\frac{\hbar}{2m\Omega}}|\alpha|\kla\left( \Delta_+\e^{\i\Omega t - \i\phi} - \Delta_-\e^{\i\Omega t + \i\phi} + \Delta_+ \e^{-\i\Omega t + \i\phi} - \Delta_-\e^{-\i\Omega t - \i\phi} \right) = \\
+&=\sqrt{\frac{2\hbar}{m\Omega}}|\alpha|\kla\left( \Delta_+\cos\kla\left( \Omega t-\phi \right) - \Delta_-\cos\kla\left( \Omega t + \phi \right) \right).
+\end{align}
+This can be further simplified using trigonometric identities, leading to
+\begin{align}
+\bra\langle \hat{x}_\tecxt\text{H} \rangle &= \sqrt{\frac{2\hbar}{m\Omega}}|\alpha| \kla\left( \klam\left[ \Delta_+ - \Delta_- \right]\cos (\Omega t)\cos(\phi) + \klam\left[ \Delta_+ + \Delta_- \right]\sin (\Omega t)\sin(\phi) \right) = \\
+&=\sqrt{\frac{2\hbar}{m\Omega}}|\alpha| \kla\left( \e^{-\xi}\cos (\Omega t)\cos(\phi) + \e^\xi\sin (\Omega t)\sin(\phi) \right).
+\end{align}
+For the momentum operator one finds
+\begin{align}
+\bra\langle \hat{p}_\tecxt\text{H} \rangle &= \i\sqrt{\frac{\hbar m\Omega}{2}}\braket\langle \alpha | \hat{b}_\tecxt\text{H}^\dagger(t) - \hat{b}_\tecxt\text{H}(t) | \alpha \rangle =\\
+&= \i\sqrt{\frac{\hbar m\Omega}{2}}\braket\langle \alpha | \kla\left( \Delta_+\hat{a}^\dagger - \Delta_-\hat{a} \right)\e^{\i\Omega t} - \kla\left( \Delta_+\hat{a} - \Delta_-\hat{a}^\dagger \right)\e^{-\i\Omega t} | \alpha \rangle = \\
+&= \i\sqrt{\frac{\hbar m\Omega}{2}}|\alpha|\kla\left( \Delta_+\e^{\i\Omega t - \i\phi} - \Delta_-\e^{\i\Omega t + \i\phi} - \Delta_+ \e^{-\i\Omega t + \i\phi} + \Delta_-\e^{-\i\Omega t - \i\phi} \right) = \\
+&= \sqrt{\frac{\hbar m\Omega}{2}}|\alpha|\kla\left( \Delta_+\sin\kla\left( \Omega t-\phi \right) - \Delta_-\sin\kla\left( \Omega t + \phi \right) \right).
+\end{align}
+This can also be further simplified using trigonometric identities, leading to
+\begin{align}
+\bra\langle \hat{p}_\tecxt\text{H} \rangle &= \sqrt{2\hbar m\Omega}|\alpha| \kla\left( \klam\left[ \Delta_+ - \Delta_- \right]\sin (\Omega t)\cos(\phi) + \klam\left[ \Delta_+ + \Delta_- \right]\cos (\Omega t)\sin(\phi) \right) = \\
+&=\sqrt{2\hbar m\Omega}|\alpha| \kla\left(  \e^{-\xi}\sin (\Omega t)\cos(\phi) + \e^{\xi}\cos (\Omega t)\sin(\phi)  \right).
+\end{align}
+Once again, computing the variances is more difficult, and leads to
+\begin{align*}
+\bra\langle \hat{x}_\tecxt\text{H}^2 \rangle &= \frac{\hbar}{2m\Omega}\braket\langle \alpha | \kla\left( \hat{b}_\tecxt\text{H}^\dagger (t) \right)^2 + \hat{b}_\tecxt\text{H}^2(t) + \hat{b}_\tecxt\text{H}^\dagger(t)\hat{b}_\tecxt\text{H}(t)  + \hat{b}_\tecxt\text{H}(t)\hat{b}_\tecxt\text{H}^\dagger(t) | \alpha \rangle =  \numberthis\\
+&= \frac{\hbar}{2m\Omega}\braket\langle \alpha | \e^{2\i\Omega t}  \kla\left( \Delta_+^2\hat{a}^\dagger \hat{a}^\dagger + \Delta_-^2 \hat{a}\hat{a} - \Delta_+\Delta_-\hat{a}\hat{a}^\dagger - \Delta_+\Delta_-\hat{a}^\dagger\hat{a} \right) + \\
+&\hspace{2cm}  + \e^{-2\i\Omega t}\kla\left( \Delta_+^2\hat{a}\hat{a} + \Delta_-^2 \hat{a}^\dagger\hat{a}^\dagger - \Delta_+\Delta_-\hat{a}\hat{a}^\dagger - \Delta_+\Delta_-\hat{a}^\dagger\hat{a} \right) + \\
+&\hspace{2cm} + \Delta_+\Delta_-\hat{a}^\dagger\hat{a} + \Delta_-\Delta_+\hat{a}\hat{a}^\dagger - \Delta_-^2\hat{a}\hat{a} - \Delta_+^2\hat{a}^\dagger\hat{a}^\dagger + \\
+&\hspace{2cm} + \Delta_+\Delta_-\hat{a}^\dagger\hat{a} + \Delta_-\Delta_+\hat{a}\hat{a}^\dagger - \Delta_-^2\hat{a}^\dagger\hat{a}^\dagger - \Delta_+^2\hat{a}\hat{a}  | \alpha \rangle =  \numberthis\\
+&= \frac{\hbar|\alpha|^2}{2m\Omega}\Big( \e^{2\i\Omega t - 2\i\phi}\Delta_+^2 + \e^{2\i\Omega t + 2\i\phi}\Delta_-^2 - 2\Delta_+\Delta_- \e^{2\i\Omega t} - \frac{\Delta_+\Delta_-}{|\alpha|^2}  + \tecxt\text{h.c.}\\
+&\hspace{1.7cm} + \Delta_+\Delta_- + \Delta_-\Delta_+ + \frac{\Delta_-\Delta_+}{|\alpha|^2} - \Delta_-^2\e^{2\i\phi} - \Delta_+^2\e^{-2\i\phi}   + \tecxt\text{h.c.}  \Big) = \numberthis\\
+&= \frac{\hbar|\alpha|^2}{m\Omega}\kla\Big( \cos\kla\left( 2\klam\left[ \Omega t - \phi \right] \right)\Delta_+^2 + \cos\kla\left( 2\klam\left[ \Omega t + \phi \right] \right)\Delta_-^2 + \\
+&\hspace{1.7cm} + 2\Delta_+\Delta_- \klam\left[ \cos\kla\left( 2\Omega t \right) - 1 \right] - \klam\left[ \Delta_+^2 + \Delta_-^2 \right]\cos (2\phi) \Big). \numberthis
+\end{align*}
+This can be further simplified to
+\begin{align*}
+\bra\langle \hat{x}_\tecxt\text{H}^2 \rangle &= \frac{\hbar|\alpha|^2}{m\Omega} \Big( \klam\left[ \klam\left[ \Delta_+^2 + \Delta_-^2 \right]\cos(2\phi) + 2\Delta_+\Delta_- \right] \klam\left[ \cos(2\Omega t) - 1 \right] + \\
+&\hspace{1.7cm} + \klam\left[ \Delta_+^2 - \Delta_-^2 \right]\sin (2\phi)\sin(2\Omega t) \Big) = \numberthis\\
+&= \frac{\hbar|\alpha|^2}{m\Omega}\kla\big( \klam\left[ \cosh(2\xi)\cos(2\phi) + \sinh(2\xi) \right]\klam\left[ \cos(2\Omega t) - 1 \right] +  \sin (2\phi)\sin(2\Omega t) \big).
+\end{align*}
+Note that the variance is then given by
+\begin{align}
+\tecxt\text{Var\,}\hat{x}_\tecxt\text{H} &= \bra\langle \hat{x}_\tecxt\text{H}^2 \rangle - \bra\langle \hat{x}_\tecxt\text{H} \rangle^2 = \frac{\hbar|\alpha|^2}{m\Omega}\cdot I,
+\end{align}
+where 
+\begin{align}
+\bra\langle \hat{x}_\tecxt\text{H} \rangle^2 &= \frac{2\hbar|\alpha|^2}{m\Omega}\kla\left( \e^{-\xi}\cos (\Omega t)\cos(\phi) + \e^\xi\sin (\Omega t)\sin(\phi) \right)^2 = \\
+&= \frac{2\hbar|\alpha|^2}{m\Omega}\kla\left( \e^{-2\xi}\cos^2(\Omega t)\cos^2(\phi) + \e^{2\xi}\sin^2(\Omega t)\sin^2(\phi) + \frac{1}{2}\sin(2\Omega t)\sin(2\phi) \right).
+\end{align}
+leads to
+\begin{align*}
+I &= \klam\left[ \cosh(2\xi)\cos(2\phi) + \sinh(2\xi) \right]\klam\left[ \cos(2\Omega t) - 1 \right] +  \sin (2\phi)\sin(2\Omega t) - \\
+&\hspace{0.7cm} - 2\kla\left( \e^{-2\xi}\cos^2(\Omega t)\cos^2(\phi) + \e^{2\xi}\sin^2(\Omega t)\sin^2(\phi) + \frac{1}{2}\sin(2\Omega t)\sin(2\phi) \right) = \numberthis \\
+&= \cosh(2\xi)\cos(2\phi)\klam\left[ \cos(2\Omega t) - 1 \right] + \sinh(2\xi)\klam\left[ \cos(2\Omega t) - 1 \right] -  \\
+&\hspace{0.7cm} - \frac{1}{2}\klam\left[ \cosh(2\xi) - \sinh(2\xi) \right] \klam\left[ 1 + \cos (2\Omega t) \right]\klam\left[ 1 + \cos(2\phi) \right] + \\
+&\hspace{0.7cm} + \frac{1}{2}\klam\left[ \cosh(2\xi) + \sinh(2\xi) \right] \klam\left[ \cos (2\Omega t) - 1 \right]\klam\left[ 1 - \cos(2\phi) \right] = \numberthis \\
+&= \cosh(2\xi) \cos(2\phi)\cos(2\Omega t)\kla\left( 1 - \frac{1}{2} - \frac{1}{2} \right) + \cosh(2\xi)\cos(2\phi) \kla\left(  -1 -\frac{1}{2} + \frac{1}{2} \right) + \\
+&\hspace{0.7cm} + \sinh (2\xi)\cos(2\Omega t)\kla\left( 1 + \frac{1}{2} + \frac{1}{2} \right) + \sinh(2\xi)\kla\left( -1 + \frac{1}{2} - \frac{1}{2} \right) + \\
+&\hspace{0.7cm} + \cosh(2\xi)\cos(2\Omega t)\kla\left( -\frac{1}{2} + \frac{1}{2} \right) + \sinh(2\xi)\cos(2\phi)\cos(2\Omega t)\kla\left( \frac{1}{2} - \frac{1}{2} \right) + \\
+&\hspace{0.7cm} + \cosh(2\xi)\kla\left( -\frac{1}{2} - \frac{1}{2} \right) + \sinh(2\xi)\cos(2\phi)\kla\left( \frac{1}{2} - \frac{1}{2} \right) = \numberthis\\
+&= \cosh(2\xi)\kla\left( -1 - \cos(2\phi) \right) + \sinh(2\xi)\kla\left( -1 + 2\cos(2\Omega t) \right) =  \numberthis\\
+&= 2\sinh(2\xi)\cos(2\Omega t) - \cosh(2\xi)\cos(2\phi) -\e^{2\xi}. \numberthis
+\end{align*}
+NOTE: apparently the result is supposed to be identical to the ``ground state example''.
+Now modulo a ton of errors, I can maybe begin to see how that's possible. 
+But NO amount of errors can possibly get rid of the $|\alpha|^2$-dependence, which I know is correct in the expectation-value-part.
+So probably the tutor as usual messed up under time pressure, and of course chose to do the only interesting problem last without listening to anyone... if I sound annoyed, it is because YES I'M ANNOYED, OK? :D
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

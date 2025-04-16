@@ -1,0 +1,223 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+%\pagestyle{scrheadings}  % Stil für die Seite setzen
+%\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+%\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{03 Quadratur}
+\newcommand*{\autor}{Joachim Schwardt und Julian Fleck}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Numerik I - Aufgaben}
+\title{\titel}
+%\author{\autor}
+\author{\begin{tabular}{l|l}
+Joachim Schwardt & 4768711 \\ 
+Julian Fleck & 4759587\\ 
+\end{tabular}}
+%\author{\begin{tabular}{|l|l|}
+%\hline
+%Joachim Schwardt & 4768711 \\ \hline
+%Julian Fleck & 4759587\\ \hline
+%\end{tabular}}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Aufgabe 1}
+Gegeben ist die Quadraturformel
+\begin{align}
+Q_{[a,b]}[f]&:= \sum_{j=1}^{n}\frac{h_j}{2}\klam\left[ f(x_j) + f(x_{j-1}) \right]+\frac{h_j^2}{12}\klam\left[ f'(x_{j-1}) - f'(x_{j}) \right].
+\end{align}
+\subsection*{a)}
+Das exakte Integral eines kubischen Spline $s_3$ mit den Stützstellen $a=x_0<\dots<x_n=b$ ist gegeben durch
+\begin{align}
+J[s_3] &:= \intx\int_{a}^{b}s_3(x)\, \mathrm{d}x = \\
+&= \sum_{j=0}^{n-1} \intx\int_{x_j}^{x_{j+1}} a_j(x-x_j)^3 + b_j(x-x_j)^2 + c_j(x-x_j) + d_j \, \mathrm{d}x = \\
+&= \sum_{j=0}^{n-1}\frac{a_j}{4}(x_{j+1}-x_j)^4 + \frac{b_j}{3}(x_{j+1}-x_j)^3 + \frac{c_j}{2}(x_{j+1}-x_j)^2 + d_j(x_{j+1}-x_j) = \\
+&= \sum_{j=1}^{n}\frac{a_{j-1}}{4}h_j^4 + \frac{b_{j-1}}{3}h_j^3 + \frac{c_{j-1}}{2}h_j^2 + d_{j-1}h_j .
+\end{align}
+Die Quadraturformel ergibt dabei
+\begin{align*}
+Q_{[a,b]}[s_3] &=\sum_{j=1}^n \frac{h_j}{2}\klam\left[ d_{j-1} + a_{j-1}h_j^3 + b_{j-1}h_j^2 + c_{j-1}h_j + d_{j-1} \right] +\\
+&\hspace{1cm} + \frac{h_j^2}{12}\klam\left[ c_{j-1} - 3a_{j-1}h_j^2 - 2b_{j-1}h_j - c_{j-1} \right] = \numberthis\\
+&=\sum_{j=1}^n a_{j-1}h_j^4\kla\left( \frac{1}{2} - \frac{3}{12} \right)+b_{j-1}h_j^3\kla\left( \frac{1}{2} - \frac{2}{12} \right) + c_{j-1}h_j^2\kla\left( \frac{1}{2} \right)+d_{j-1}h_j= \numberthis\\
+&=\sum_{j=1}^n\frac{a_{j-1}}{4}h_j^4 + \frac{b_{j-1}}{3}h_j^3 + \frac{c_{j-1}}{2}h_j^2 + d_{j-1}h_j\equiv J[s_3]. \numberthis
+\end{align*}
+Kubische Splines können mit der Quadraturformel also exakt integriert werden.
+\subsection*{b)}
+Für $h_j\equiv\tecxt\text{const.}=:h$ kann die Quadraturformel vereinfacht werden, da
+\begin{align}
+Q[f] &= \frac{h}{2}\sum_{j=1}^n f(x_j) + \frac{h}{2}\sum_{j=1}^n f(x_{j-1}) + \frac{h^2}{12}\sum_{j=1}^nf'(x_{j-1}) - \frac{h^2}{12}\sum_{j=1}^n f'(x_{j})=\\
+&= \frac{h}{2}\sum_{j=1}^n f(x_j) + \frac{h}{2}\sum_{j=0}^{n-1} f(x_{j}) + \frac{h^2}{12}\sum_{j=0}^{n-1} f'(x_{j}) - \frac{h^2}{12}\sum_{j=1}^nf'(x_j)=\\
+&= \frac{h}{2}\kla\left( f(x_0) + f(x_n) \right)+h\sum_{j=1}^{n-1} f(x_j) + \frac{h^2}{12}\kla\left( f'(x_0) - f'(x_n) \right).
+\end{align}
+
+\newpage 
+\section*{Aufgabe 2}
+Gegeben ist die Quadraturformel
+\begin{align}
+Q_n[f] &:= \sum_{j=1}^n a_jf(x_j,y_j),
+\end{align}
+um Integrale von Funktionen auf dem Einheitsdreieck $T:=\klammer\left\{ (0,0),(0,1),(1,0) \right\}$ zu approximieren.
+\subsection*{a)}
+Sei $n=1$ und die (einzige) Stützstelle gegeben durch den geometrischen Schwerpunkt des Dreiecks, d.h.
+\begin{align}
+x_1&=y_1 = \frac{1}{3}.
+\end{align}
+Die Quadraturformel lautet also explizit
+\begin{align}
+Q_1[f]&=a_1f\kla\left( \frac{1}{3},\frac{1}{3} \right).
+\end{align}
+Sei $p_1(x,y):=ax+by+c$ ein beliebiges Polynom vom Grad eins.
+Dann ist
+\begin{align}
+J[p_1]&:=\intx\int_{T}^{}p_1(x,y)\, \mathrm{d}(x,y)=\intx\int_{0}^{1}\intx\int_{0}^{1-x}ax+by+c\, \mathrm{d}y\, \mathrm{d}x=\\
+&= \intx\int_{0}^{1}ax(1-x)+c(1-x) + \frac{b}{2}(1-x)^2\, \mathrm{d}x =\\
+&= \kla\left( \frac{x^3}{3}\klam\left[ -a+\frac{b}{2} \right]+\frac{x^2}{2}\klam\left[ a-b-c \right]+x\klam\left[ c + \frac{b}{2} \right] \right)\bigg\vert_0^1 =\\
+&=\frac{a}{6}+\frac{b}{6}+\frac{c}{2}.
+\end{align}
+Andererseits ist
+\begin{align}
+Q_1[p_1] &= a_1\kla\left( \frac{a}{3} + \frac{b}{3} + c \right),
+\end{align}
+für $a_1:=\frac{1}{2}$ folgt daher $J[p_1]\equiv Q_1[p_1]$.
+Der minimale Exaktheitsgrad ist damit also gleich eins.
+Jetzt sind allerdings alle Parameter festgelegt, der maximale Exaktheitsgrad ist somit ebenfalls eins.
+Betrachte dazu einfach das Polynom $p_2(x,y)=ax^2$.
+Dann ist
+\begin{align}
+J[p_2] &= \intx\int_{0}^{1}\intx\int_{0}^{1-x}p_2(x,y)\, \mathrm{d}y\, \mathrm{d}x = \intx\int_{0}^{1}ax^2(1-x)\, \mathrm{d}x = a\kla\left( \frac{1}{3}-\frac{1}{4} \right)=\frac{a}{12}.
+\end{align}
+Allerdings liefert die Quadraturformel hier
+\begin{align}
+Q_1[p_2] &= \frac{1}{2}\cdot a\kla\left( \frac{1}{3} \right)^2 = \frac{a}{18}\neq J[p_2].
+\end{align}
+\subsection*{b)}
+Sei nun $n=3$ und die (drei) Stützstellen gegeben durch die Mittelpunkte der Kanten des Dreiecks $T$, also
+\begin{align}
+(x_1,y_1)&=\kla\left( 0,\frac{1}{2} \right),&&&\kla\left( x_2,y_2 \right)&=\kla\left( \frac{1}{2},0 \right),&&&\kla\left( x_2,y_2 \right)&= \kla\left( \frac{1}{2},\frac{1}{2} \right).
+\end{align}
+Die Quadraturformel lautet also explizit
+\begin{align}
+Q_2[f]&= a_1f\kla\left( 0,\frac{1}{2} \right) + a_2f\kla\left( \frac{1}{2}, 0 \right) + a_3f\kla\left( \frac{1}{2},\frac{1}{2} \right).
+\end{align}
+Sei $p_2(x,y):=ax^2+bxy+cy^2+dx+ey+f$ ein beliebiges Polynom vom Grad zwei.
+Dann ist
+\begin{align*}
+J[p_2]&:=\intx\int_{T}^{}p_2(x,y)\, \mathrm{d}(x,y)=\intx\int_{0}^{1}\intx\int_{0}^{1-x}ax^2+bxy+cy^2+dx+ey+f\, \mathrm{d}y\, \mathrm{d}x= \numberthis\\
+&= \intx\int_{0}^{1}ax^2(1-x)+\frac{b}{2}x(1-x)^2 + \frac{c}{3}(1-x)^3 +\\
+&\hspace{1cm} + dx(1-x) + \frac{e}{2}(1-x)^2 + f(1-x)\, \mathrm{d}x = \numberthis\\
+&= \kla\bigg( \frac{x^4}{4}\klam\left[ -a + \frac{b}{2} - \frac{c}{3} \right] + \frac{x^3}{3}\klam\left[ a-b+c - d+\frac{e}{2} \right]+ \\
+&\hspace{0.5cm} + \frac{x^2}{2}\klam\left[ \frac{b}{2} -c +d -e -f \right]•  +x\klam\left[ \frac{c}{3} + \frac{e}{2} + f \right] \bigg)\bigg\vert_0^1 =\numberthis\\
+&= \frac{a}{12} + \frac{b}{24} +\frac{c}{12} + \frac{d}{6} + \frac{e}{6} +\frac{f}{2} \numberthis .
+\end{align*}
+Andererseits ist
+\begin{align*}
+Q_2[p_2] &= a_1\kla\left( \frac{c}{4}+\frac{e}{2}+f \right) + a_2\kla\left( \frac{a}{4} + \frac{d}{2} + f \right) + a_3\kla\left( \frac{a+b+c}{4}+\frac{d+e}{2}+f \right) = \numberthis \\
+&=a\kla\left( \frac{a_2+a_3}{4} \right)+b\kla\left( \frac{a_3}{4} \right)+c\kla\left( \frac{a_1+a_3}{4} \right) +\\
+&\hspace{0.5cm} + d\kla\left( \frac{a_2+a_3}{2} \right)+ e\kla\left( \frac{a_1 + a_3}{2} \right)+f\kla\left( a_1+a_2+a_3 \right) \numberthis  .
+\end{align*}
+Wir erhalten somit die Bedingungen $a_3=\frac{1}{6}$, $a_2+a_3 = \frac{1}{3}$, $a_1+a_3=\frac{1}{3}$ und $a_1+a_2+a_3 = \frac{1}{2}$.
+Man aus der zweiten und dritten Bedingung direkt $a_1=a_2=\frac{1}{3}-a_3=\frac{1}{6}$.
+Die letzte Bedingung ist tatsächlich auch erfüllt, da $a_1+a_2+a_3=\frac{1+1+1}{6}=\frac{1}{2}$.
+Der minimale Exaktheitsgrad ist also hier gleich zwei.
+Genau wie zuvor haben wir allerdings bereits alle Parameter festgelegt, weshalb leicht zu zeigen ist, dass der Exaktheitsgrad auch maximal gleich zwei ist.
+Betrachte dazu einfach das Polynom $p_3(x,y)=ax^3$.
+Dann ist
+\begin{align}
+J[p_3] &= \intx\int_{0}^{1}\intx\int_{0}^{1-x}p_3(x,y)\, \mathrm{d}y\, \mathrm{d}x = \intx\int_{0}^{1}ax^3(1-x)\, \mathrm{d}x = a\kla\left( \frac{1}{4}-\frac{1}{5} \right)=\frac{a}{20}.
+\end{align}
+Allerdings liefert die Quadraturformel hier
+\begin{align}
+Q_2[p_3] &= \frac{1}{6}\cdot a\kla\left( \frac{1}{2} \right)^3 + \frac{1}{6}\cdot 0 + \frac{1}{6}\cdot a\kla\left( \frac{1}{2} \right)^3 = \frac{a}{24}\neq J[p_3].
+\end{align}
+
+
+\newpage
+\section*{Aufgabe 3}
+Gegeben ist die Quadraturformel
+\begin{align}
+Q_{n}[f]&:= (b-a)\sum_{j=0}^{n}a_jf(x_j).
+\end{align}
+Sei $q\in\Pi_{n+1}$ ein Polynom vom Grad $n+1$ und gegeben durch 
+\begin{align}
+q(x) &:=\prod_{j=0}^n \kla\left( x - x_j \right).
+\end{align}
+Dann folgt offensichtlich
+\begin{align}
+Q_n[q] &= (b-a)\sum_{j=0}^n a_jq(x_j)  = 0,
+\end{align}
+da per Konstruktion die Stützstellen $x_j$ per Konstruktion Nullstellen von $q$ sind.
+Betrachte nun ein Polynom vom Grad $2n+2$, welches über $p(x):=q(x)^2$ definiert sei.
+Dann sind die Stützstellen natürlich auch Nullstellen von $p$, und somit ist $Q_n(p)=0$.
+Allerdings gilt per Konstruktion $p(x)\ge 0$, weshalb
+\begin{align}
+I[p] &:= \intx\int_{a}^{b}p(x)\, \mathrm{d}x\ge 0
+\end{align}
+folgt.
+%Insbesondere kann das Integral über eine nicht-negative Funktion (wie $p(x)$) nur genau dann gleich null sein, wenn die Funktion (fast) überall verschwindet (fast im Sinne von Maßtheorie).
+%Das Integral ist also nicht gleich null, womit die Quadraturformel für $p$ nicht exakt ist.
+%\\
+%Um Maßtheorie zu vermeiden kann aber auch elementar abgeschätzt werden, dass das Integral streng größer als null ist.
+Man kann nun abschätzen, dass das Integral streng größer als null ist.
+Betrachte dazu einfach
+\begin{align}
+I[p]&\ge\intx\int_{a}^{x_1}p(x)\, \mathrm{d}x = \intx\int_{a}^{x_1}\prod_{j=0}^n\kla\left( x-x_j \right)^2\, \mathrm{d}x \ge \\
+&\ge \underbrace{\prod_{j=2}^n \kla\left( x_j - x_1 \right)^2}_{=:\, C\ > \ 0}  \intx\int_{a}^{x_1}\kla\left( x - a \right)^2\kla\left( x_1 - x \right)^2\, \mathrm{d}x \kom\overset{\substack{{y\,:=\,x-a\ \tecxt\text{und } t\,:=\,x_1 - a} \\ |}}{=} \\
+&= C\intx\int_{0}^{t}y^2\kla\left( t - y \right)^2\, \mathrm{d}y = C\kla\left( \frac{y^5}{5} + \frac{y^3t^2}{3} - \frac{ty^4}{2} \right)\bigg\vert_{\cancel{0}}^t = \\
+&= Ct^5\kla\left( \frac{1}{5}+\frac{1}{3}-\frac{1}{2} \right)=Ct^5\kla\left( \frac{1}{5} - \frac{1}{6} \right) > 0.
+\end{align}
+Das Integral ist also nicht gleich null, womit die Quadraturformel für $p$ nicht exakt ist.
+Ersteres ist natürlich ``offensichtlich'', weil das Integral über eine beliebige nicht-negative Funktion nur dann verschwinden kann, wenn die Funktion (fast) überall gleich null ist.
+Um aber mögliche Fehler bei einer solchen ``hand-wavy'' Begründung zu vermeiden, besser die kurze Rechnung.
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

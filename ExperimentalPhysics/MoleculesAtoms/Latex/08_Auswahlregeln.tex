@@ -1,0 +1,82 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+
+\begin{document}
+
+\title{08 Auswahlregeln}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 20: Feinstruktur und Auswahlregeln}
+\section*{Aufgabe 21: Symmetrie und Auswahlregeln}
+Sei $H=H(r,\vartheta)$. Dann gilt mit $\phi=:g(r,\vartheta)f(\varphi)$:
+\begin{align*}
+E\phi&=H\phi=-\frac{\hbar^2}{2m}\nabla^2gf +V(r,\vartheta)gf\ \ \Rightarrow\ \ \frac{2mr^2}{\hbar^2}(E-V(r,\vartheta))+r^2\frac{\nabla_{r,\vartheta}^2g}{g}=-\frac{1}{\sin^2\varphi}\frac{f''}{f}\\
+&\Rightarrow\ \ 0=k\sin^2\varphi f+f''\\
+L_z\phi&=\hbar \tecxt\text{m}\phi\ \ \Rightarrow\ \ \frac{\hbar}{\tecxt\text{i}}f'=\hbar \tecxt\text{m} f\ \ \Rightarrow\ \ f=e^{\tecxt\text{im}\varphi}\\
+f(2\pi)&\overset{!}{=}f(0)\ \ \Rightarrow\ \ \tecxt\text{m}\in\mathbb{Z}
+\end{align*}
+\section*{Aufgabe 22: Atomare Übergänge}
+\subsection*{a)}
+Es gilt $N'(t)=-\frac{\Gamma}{\hbar}N(t)$. Daraus folgt direkt $N(t)=N_0e^{-\frac{\Gamma}{\hbar}t}$.
+\subsection*{b)}
+Hier ist $N'(t)=-\frac{\Gamma_1}{\hbar}N(t)-\frac{\Gamma_2}{\hbar}N(t)$. Es gibt also die gleiche Lösung, $N(t)=N_0e^{-\frac{\Gamma_1+\Gamma_2}{\hbar}t}$. Die Lebensdauer ist somit $T=\frac{\hbar}{\Gamma_1+\Gamma_2}$.
+\subsection*{c)}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+1
+\end{document}

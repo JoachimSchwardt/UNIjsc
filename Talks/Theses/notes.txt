@@ -1,0 +1,238 @@
+INTRODUCTION
+Hello everyone and welcome to my presentation on frequency analysis using weighted Birkhoff averages.
+
+Visualizing the phase-space of Hamiltonian systems can help us understand its structure and learn about its properties.
+
+In two dimensions the visualization is rather simple.
+This is an example of Chrikiov's standard map, which already contains the two types of frequencies we are interested in here.
+
+The first corresponds to rotational dynamics, which are these island chains and rotational invariant curves. 
+Here the frequency measures the rate, at which the trajectories run through the phase-space in this horizontal direction.
+
+The second type corresponds to oscillatory dynamics, found near the elliptic fixed point.
+Here the frequency corresponds to the rate, at which the trajectories circle around the center.
+
+However, relevant systems are often higher-dimensional.
+
+---A mere three degrees of freedom already lead to a six-dimensional phase-space.
+While it may be possible to reduce this to a 4D symplectic map by making use of energy conservation and the introduction of a Poincaré section, visualizing a four-dimensional phase-space is generally still a difficult task.
+---
+
+Visualizing a four-dimensional phase-space is generally a difficult task.
+
+Here I want to present the frequency-space, which is a two-dimensional representation of a full four-dimensional phase-space.
+
+The downside is, that it requires a vast amount of computation, which is A reason why we are interested in exploring new methods, and potentially faster methods.
+
+In the following I want to demonstrate how weighted Birkhoff averages can be used to compute the frequency-space of a particular four-dimensional standard map.
+
+As a preliminary outlook, frequency analysis can also be used to distinguish between regular and chaotic dynamics,
+and another application is the concept of a time-dependent frequency, that can reveal information about the behavior of trapped orbits.
+
+This is another reason why my focus will be MORE on the development of the new method itself, than on interpreting the specific results.
+
+
+FREQUENCY ANALYSIS
+for a start, the weighted Birkhoff average is really just a weighted average of a discrete set of points
+
+The only purpose of these normalized weights is to improve the convergence of this expression towards the limit of the unweighted average of the x_n for N going to infinity, given that this limit exists.
+
+the weights follow the typical structure where you have this normalization factor one over S and some function g on the interval zero-one.
+
+the original authors of the method proposed this exponential bump function, which is symmetric about one half and infinitely smooth
+
+other functions are also possible
+
+at this point it is certainly not clear, how the WBA can be used to compute frequencies, but bear with me for a moment
+
+so, we will compare the results of WBA to a relatively old and well established method, namely the numerical analysis of fundamental frequencies, short Naff.
+
+without going into any details, it is based on fourier series, and it detects the frequency with the highest amplitude in the fourier spectrum
+
+this already highlights a major difference
+
+the Naff can be applied to any complex-valued input signal, whereas for the WBA we need to find suitable x_n, whose average corresponds to the frequency of the respective signal.
+
+
+TWO DIMENSIONS
+we will start by looking at a simple example of rotational dynamics to illustrate how the WBA works
+
+define a periodic map f_nu on the interval zero-one, which has a frequency nu in the same interval
+
+it takes some inital value q and adds the frequency nu.
+
+shown here are the resulting orbits for three different frequencies
+
+if nu is rational, we get a discrete set of points.
+While I am showing the trajectories with a y-offset corresponding to the frequency, any frequency with a denominator of 5 will give the same result.
+And if nu is irrational, the resulting orbit is topologically equivalent to a line.
+
+from the definition of the map, we can see that the difference of consecutive q values is analytically equal to the frequency
+
+therefore we can define those as the input to WBA, and since each x_n is equal to nu, their average is of course also nu.
+
+
+We are also interested in oscillatory dynamics.
+
+For this we define a new signal z_n by this typical pure complex oscillation term.
+
+For irrational frequencies, the resulting orbits are now topologically equivalent to a circle.
+
+The signals are two-dimensional, but we need a one-dimensional input to the WBA, such that the average corresponds to the frequency.
+
+If we switch to polar coordinates, we find that the dynamics again resemble the pure rotations form the previous example.
+This suggests, that the differences of the polar angles phi_n, should again yield the correct frequency.
+
+And indeed, if we define x_n as the mod 1 of the Delta_phi_n, these are again analytically equal to the frequency, and so is their weighted average.
+
+
+But of course the signals will generally consist of more than just one frequency.
+We expand on the oscillatory signal by adding a second complex phase, with frequency nu_2 and a smaller relative amplitude A.
+
+Since the amplitude is smaller than one, we still expect our method to result in nu_1
+
+Due to this second term, this example is no longer trivial, so we may look at the convergence behavior of WBA.
+
+Shown here is the error of either method to the frequency nu_1.
+The dashed lines correspond to the result from Naff for comparison.
+We find the super-polynomial convergence expected for WBA, and we can also numerically confirm, that the convergence is slower for rational frequencies. 
+Note that this example is very extreme, usually the difference between rational and irrational frequencies is much smaller.
+
+While the WBA is not generally faster than Naff here, this shows that our method in principal allows to compute the frequency of a more complicated signal.
+To repeat, we compute the frequency as the WBA of the angle differences of the polar angles of consecutive points.
+There is a subtle problem with the modulus 1 operation I described before, but this would require a bit too much time here.
+Just note that in some cases additional effort is required, but that the problem can be solved algorithmically.
+
+
+With this we can now turn to a first non-artificial example, which is Chirikov's two-dimensional standard map.
+
+Note that the first equation here is very similar to that of the pure rotation, only that instead of the constant frequency nu, we now have a second coordinate p_n.
+
+This means that the map is actually equivalent to the pure rotations for K equals zero, since the p_n become constant in that case.
+
+Thus it is somewhat reasonable to expect, that we can also compute the frequency for non-zero K in the same manner.
+
+Due to a numerical intricacy, we actually use the p_n as the input to the WBA, which is of course mathematically equivalent to the differences of consecutive q values.
+
+We will mostly discuss oscillatory dynamics in the four-dimensional setting, so here I want to demonstrate that the WBA of the p_n really corresponds to the correct frequency for some rotational circles.
+Shown here is a magnification of the phase-space near one of the period three island chains.
+
+The frequencies on the left are computed from orbits, whose initial values lie on the dashed line over here, which is parameterized by t from zero to one.
+
+First of all, the overall agreement between the methods is very good.
+
+By comparison to the phase-space, we also see that the regions with large discrepancies correspond to chaotic dynamics.
+And this concept of large frequency differences corresponding to chaotic dynamics will return later on.
+
+The horizontal sections correspond to the island chains, in which all orbits have the same - rational - frequency.
+
+Note that we don't find any regular dynamics with frequencies sufficiently close to an island chain, which leads to these gaps in the frequency-space.
+
+Now this map contains many interesting phenomena, like the trapped orbits I mentioned in the beginning, but we will right away progress to the four-dimensional setting.
+
+FOUR DIMENSIONS
+Here we consider Froeschlé's standard map, which consists of two subsystems, that are identical to the kicked rotor.
+But they are coupled by this additonal term C, which is proportional to the coupling strength K.
+
+For a very small K, we find that the dynamics over here are very similar to that of the two-dimensional map.
+Note that these trajectory are really four-dimensional objects, but due to the small coupling, we can still show them in the (q,p)-planes corresponding to each subsystem.
+
+Here we can also easily compute the two frequencies, using the same method as before.
+We simply compute a frequency from both projections.
+
+At this point, the only advantage of WBA remains its simplicity, and therefore computational speed, as the the rate of convergence is not significantly better than that of Naff.
+
+However, this changes in the strongly coupled case.
+Unfortunately, it does not change for the better.
+
+The projections of these two-dimensional tori on the (q,p)-planes are no longer a good representation for the WBA-method.
+On the left we find, that the result of WBA is incorrect, and also the rate of convergence is very slow.
+
+But there exists a solution to this issue.
+
+And before I present that, note that the orange example here still works, meaning that the result agrees with that of Naff. 
+Looking back to the projections, we find that this orange orbit is still similar to the previous oscillatory dynamics.
+
+The underlying idea of our approach is to find a pair of projections, in which the orbits are again topologically similar to circles.
+
+This brings up the idea of using the inertia tensor I_d in an arbitrary number of dimensions d.
+Of course we will just use it in four.
+
+Each of the x_n here is a 4D-vector and contains the p1,p2,q1,q2 coordinates.
+We diagonalize this tensor using an orthogonal matrix U, and define a new set of coordinates x_n prime as U times x_n
+
+In the following I will omit the prime.
+
+And this is the result, the same two trajectories as before, but in a new coordinate system.
+
+And to confirm that we can now compute the frequencies, we again look at the convergence behavior to find that the results of Naff and WBA agree, almost down to machine precision.
+
+Note that the convergence of WBA is slightly slower in some cases, but still comparable.
+Also, despite the additional transformation, the WBA remains faster.
+
+
+With this we are now able to compute the frequency-space for this specific set of parameters.
+
+It is constructed by choosing 10 to the 8 random initial conditions from the phase-space.
+
+For each of these, we compute nu_1 and nu_2 for a signal length of N equals 2000.
+
+This results in the frequency-space.
+
+The color of these WBA frequency pairs corresponds to a chaos indicator, which is defined as the frequency difference Delta_nu between the frequency computed from the first 2000 points of each orbit, to the frequency computed from the second 2000 points.
+
+I want to briefly cover some features of this result.
+
+The frequency-space is organized by resonance lines, on which the frequencies fulfill this resonance condition for integers m1, m2 and l. 
+The most prominent examples are the -1:2:0 and 3:1:1 resonances.
+
+Just like for the island chains in two dimensions, we do not find regular dynamics sufficiently close to a resonance, which can be seen from the gaps.
+
+The edges of the frequency-space correspond to the one-dimensional tori, which are the objects that can be visualized in the 3D phase-space slices I mentioned at the beginning.
+
+But now back to the method. 
+You may have already seen the black points in the picture.
+They correspond to a sample data set computed using Naff, and we find large discrepancies, especially in this lower region.
+
+So, how can we explain this phenomenon.
+
+I have not yet told you, how the Naff computes the second frequency in the first place, but now it becomes important.
+
+After computing the nu_1, the Naff subtracts this frequency from the input signal and just computes the next frequency.
+
+But, there is the option to not only subtract nu_1, but also its higher harmonics.
+
+This is precisely what was done to obtain the black Naff data.
+
+We recomputed these points without subtracting the higher harmonics, which lead to the red Naff data.
+
+Since you probably can't see any red points without the magnification, this already shows that the agreement between Naff and WBA is now much better.
+
+The only larger deviation now appears towards this upper edge.
+We have not yet investigated this specifically.
+
+Also note that there still exist some tori, for which the WBA-method fails to compute the second frequency.
+
+But instead of going into the details right now, I want to summarize the results
+
+
+SUMMARY
+We managed to use the WBA to compute frequencies for rotational and oscillatory dynamics in both two and four dimensions.
+A coordinate transformation based on the inertia tensor allowed us to solve the problem of non-elliptic projections in the strongly coupled case, which before lead to wrong results.
+This allowed us to successfully compute the frequency-space for a 4D map, albeit with small deviations from the Naff result.
+
+While I have not explicitly discussed this here, the frequency differences obtained from the WBA-method turn out to be a fairly efficient chaos indicator, 
+And the time-dependent frequency for trapped orbits may give a better representation than that from Naff, although we only considered this concept in the 2D map so far.
+
+As mentioned, the transformation with the inertia tensor does not appear to allow frequency analysis using WBA for certain tori.
+Specifically, the problem seems to always be with the projection for the second frequency.
+
+In the oscillatory case we implemented a continuation method for the input to the WBA, which I also skipped.
+Potentially, an improved version of this method might be able to solve the problem.
+
+
+APPENDIX
+
+WBA 4D FAILURE
+both very close in frequency space (-1:2:0 resonance)
+Pollock result for 2nd projection ;)

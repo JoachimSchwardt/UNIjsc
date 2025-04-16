@@ -1,0 +1,156 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+
+\begin{document}
+
+\title{04 \textsc{Hermite}polynome}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{\textsc{Hermite}sche Differentialgleichung}
+\subsection*{a)}
+Die \textsc{Hermite}polynome $H_n(y):=(-1)^ne^{y^2}\partial_y^ne^{-y^2}$ erfüllen für $n\in\mathbb{N}_0$ die folgende Differentialgleichung:
+\begin{align*}
+0&=\klam\left[ {\partial_y^2-2y\partial_y+2n} \right]H_n(y)\overset{(a),\,(b)}{=}\\
+&=(-1)^ne^{y^2}\klammer\left\{ {\partial_y^{n+2}e^{-y^2} + \kla\left( {4y-2y} \right)\partial_y^{n+1}e^{-y^2} + \kla\left( {2+4y^2+2n-4y^2} \right)\partial_y^ne^{-y^2}} \right\}=\numberthis\label{DGL mit n+2}\\
+&=(-1)^ne^{y^2}\klammer\left\{ {\partial_y^n\kla\left( {(-2y)^2-\cancel{2\ }} \right)e^{-y^2}+2y\partial_y^n(-2y)e^{-y^2}+(\cancel{2\ }+2n)\partial_y^ne^{-y^2}} \right\}\overset{(c)}{=}\\
+&=(-1)^ne^{y^2}\sum_{k=0}^n\binom{n}{k}\klammer\left\{ \partial_y^k\kla\left( {4y^2} \right)-2y\partial_y^k(2y)+2n\partial_y^k\kla\left( {1} \right) \right\}\partial_y^{n-k}e^{-y^2}=\\
+&=(-1)^ne^{-y^2}\klammer\left\{ {2n\partial_y^n+n\cdot (8y-4y)\partial_y^{n-1} + \frac{n}{2}(n-1)\cdot 8\partial_y^{n-2}} \right\}e^{-y^2}=\\
+&=(-1)^ne^{y^2}\cdot 2n\klammer\left\{ {\partial_y^n+2y\partial_y^{n-1}+2(n-1)\partial_y^{n-2}} \right\}e^{-y^2}\numberthis\label{DGL mit n}\\
+&\ \\
+&\ (a):\ 2y\cdot (-1)^n\partial_yH_n(y)=2ye^{y^2}\partial_y^{n+1}e^{-y^2}+(2y)^2e^{y^2}\partial_y^ne^{-y^2} \\
+&\ (b):\ (-1)^n\partial_y^2H_n(y)=e^{y^2}\partial_y^{n+2}e^{-y^2}+2\cdot 2ye^{y^2}\partial_y^{n+1}e^{-y^2}+\kla\left( {(2y)^2+2} \right)e^{y^2}\partial_y^ne^{-y^2} \\
+&\ (c):\ \partial_y^n(f(y)g(y))=\sum_{k=0}^n\binom{n}{k}\kla\left( {\partial_y^kf} \right)\kla\left( {\partial_y^{n-k}g} \right)
+\end{align*}
+Der Vergleich von (\ref{DGL mit n+2}) und (\ref{DGL mit n}) liefert dann die Iteration (alles in allem überaus umständlich):
+\begin{align*}
+\big\{ \partial_y^{n+2}&+2y\partial_y^{n+1}+2(n+1)\partial_y^n \big\}e^{-y^2}=2n\cdot\klammer\left\{ {\partial_y^{n}+2y\partial_y^{n-1}+2(n-1)\partial_y^{n-2}} \right\}e^{-y^2}=\\
+&=\dots \propto\left\{\begin{matrix}
+n\ \mathrm{gerade}\ \ \ \,: & \{\partial_y^2+2y\partial_y+2\}e^{-y^2}=0 \\
+n\ \mathrm{ungerade}: & \{\partial_y^3+2y\partial_y^2+4\partial_y\}e^{-y^2}=0
+\end{matrix}\right.
+\end{align*}
+Damit kann man dann zeigen:
+\begin{align*}
+\partial_yH_n&=(-1)^ne^{y^2}\klammer\left\{ {2y\partial_y^ne^{-y^2}+\partial_y^{n+1}e^{-y^2}} \right\}=2yH_n-H_{n+1}\ \ \Rightarrow\ \ \underline{H_{n+1}=\kla\left( {2y-\partial_y} \right)H_n}\numberthis\label{H_n+1=(2y-dy)H_n} \\
+2nH_n&=(2y-\partial_y)\partial_yH_n=(2y-\partial_y)(2yH_n-H_{n+1})=\\
+&=\partial_yH_{n+1}+4y^2H_n-2yH_{n+1}-2H_n-2y\partial_yH_n=\\
+&=\partial_yH_{n+1}+\klammer\left\{ {4y^2-2y(2y-\partial_y)-2-2y\partial_y} \right\}H_n=\partial_yH_{n+1}-2H_n \\
+&\Rightarrow\ \ \underline{\partial_yH_n = 2nH_{n-1}}\numberthis\label{dyH_n=2nH_n-1} \\
+2yH_n&=H_{n+1}+\partial_yH_n\ \ \Rightarrow\ \ \underline{2yH_n=H_{n+1}+2nH_{n-1}}\numberthis\label{2yH_n=H_n+1+2nH_n-1}
+\end{align*}
+\subsection*{b)}
+Betrachte $\phi_n(x)=A_nH_n(y)e^{-y^2/2}$ mit $y:=x/\beta$. Da $\brak\langle {\phi_n}| {\phi_m}\rangle=\delta_{nm}$ verschwinden alle Integrale über Terme mit $H_nH_m$ für $n\neq m$:
+\begin{align*}
+\Delta x^2&=\bra\langle {x^2}\rangle-\bra\langle {x}\rangle^2=\frac{A_n^2\beta^2}{4}\intr\int_{\mathbb{R}^{ }}{(2yH_n)^2e^{-y^2}}\,\mathrm{d}^{ }x-\kla\left( {\frac{A_n^2\beta}{2}\intr\int_{\mathbb{R}^{ }}{H_n(2yH_n)e^{-y^2}}\,\mathrm{d}^{ }x} \right)= \\
+&=\frac{A_n^2\beta^2}{4}\intr\int_{\mathbb{R}^{ }}{(H_{n+1}+2nH_{n-1})^2e^{-y^2}}\,\mathrm{d}^{ }x-\kla\left( {\frac{A_n^2\beta}{2}\intr\int_{\mathbb{R}^{ }}{H_n(\cancel{H_{n+1}}+2n\cancel{H_{n-1}})e^{-y^2}}\,\mathrm{d}^{ }x} \right)^2= \\
+&= \frac{A_n^2\beta^2}{4}\intr\int_{\mathbb{R}^{ }}{(H_{n+1}^2+4n\cancel{H_{n+1}H_{n-1}}+4n^2H_{n-1}^2)e^{-y^2}}\,\mathrm{d}^{ }x = \\
+&=\beta^2\kla\left( {\frac{A_n^2}{4A_{n+1}^2}+\frac{n^2A_{n-1}^2}{A_n^2}} \right)=\beta^2\kla\left( {\frac{n+1}{2}+\frac{n}{2}} \right)=\underline{\beta^2\kla\left( {n+\frac{1}{2}} \right)}\numberthis\label{Delta x^2} \\
+\Delta p^2&=\bra\langle {p^2}\rangle -\bra\langle {p}\rangle^2=\intr\int_{\mathbb{R}^{ }}{\phi_n\left(\frac{\hbar}{i}\partial_x\right)^2\phi_n}\,\mathrm{d}^{ }x-\kla\left( {\intr\int_{\mathbb{R}^{ }}{\phi_n\frac{\hbar}{i}\partial_x\phi_n}\,\mathrm{d}^{ }x} \right)^2\kom\overset{\substack{{\partial_x\,=\,\partial_y/\beta} \\ |}}{=} \\
+&=-\frac{\hbar^2A_n}{\beta^2}\intr\int_{\mathbb{R}^{ }}{\phi_n\partial_y^2H_ne^{-y^2/2}}\,\mathrm{d}^{ }x+\frac{\hbar^2A_n^2}{\beta^2}\kla\left( {\intr\int_{\mathbb{R}^{ }}{\phi_n\partial_yH_ne^{-y^2/2}}\,\mathrm{d}^{ }x} \right)^2\overset{(a)}{=} \\
+&= -\frac{\hbar^2A_n}{\beta^2}\intr\int_{\mathbb{R}^{ }}{\phi_n\kla\left( {2n[2(n-1)\cancel{H_{n-2}}-yH_{n-1}]-H_n-y[2nH_{n-1}-yH_n]} \right)e^{-y^2/2}}\,\mathrm{d}^{ }x = \\
+&= \frac{\hbar^2A_n}{\beta^2}\intr\int_{\mathbb{R}^{ }}{\phi_n\kla\left( {nH_n+H_n+nH_n} \right)e^{-y^2/2}}\,\mathrm{d}^{ }x-\frac{\hbar^2}{\beta^2}\brak\langle {y^2}\rangle = \\
+&=\frac{\hbar^2}{\beta^2}\kla\left( {2n+1-\kla\left( {n+\frac{1}{2}} \right)} \right)=\underline{\frac{\hbar^2}{\beta^2}\kla\left( {n+\frac{1}{2}} \right)}   \numberthis\label{Delta p^2} \\
+&\ (a):\ \intr\int_{\mathbb{R}^{ }}{\phi_n\partial_y\phi_n}\,\mathrm{d}^{ }x=\intr\int_{\mathbb{R}^{ }}{A_n\phi_n(2n\cancel{H_{n-1}}-yH_n)e^{-y^2/2}}\,\mathrm{d}^{ }x=0\ \ \ \ (\mathrm{vergl.\ }\bra\langle {x}\rangle=0)\\
+\Delta x&\Delta p= \hbar\kla\left( {n+\frac{1}{2}} \right)
+\end{align*}
+\section{Harmonischer Oszillator}
+\subsection*{a)}
+Es ist $p=-i\partial_x$ (atomare Einheiten); $a^\dagger,a:=\frac{\omega x\mp ip}{\sqrt{2\omega}}$:
+\begin{align*}
+[x,p]\psi&=-i(x\partial_x\psi-\partial_xx\psi)=i\psi\ \ \Rightarrow\ \ [x,p]=i\\
+x&=\frac{a^\dagger+a}{\sqrt{2\omega}}\ \ \ \ \mathrm{und}\ \ \ \ p=i\sqrt{\frac{\omega}{2}}(a^\dagger-a)\numberthis\label{x und p von a und a dagger}
+\end{align*}
+\subsection*{b)}
+$a^\dagger$ ist der zu $a$ adjungierte Operator:
+\begin{align*}
+\brak\langle {\psi}| {a\phi}\rangle&=\intx\int_{ }^{ }\psi^\ast a\phi\,\mathrm{d}x=\frac{1}{\sqrt{2\omega}}\intx\int_{ }^{ }\psi^\ast (\omega x+\partial_x)\phi\,\mathrm{d}x\overset{(a)}{=}\frac{1}{\sqrt{2\omega}}\intx\int_{ }^{ }\psi^\ast \omega x\phi - \phi\partial_x\psi^\ast \,\mathrm{d}x= \\
+&= \intx\int_{ }^{ }(a^\dagger\psi)^\ast\phi\,\mathrm{d}x=\brak\langle {a^\dagger\psi}| {\phi}\rangle\ \ \Rightarrow\ \ (a)^\dagger\equiv a^\dagger\numberthis\label{a dagger}\\
+&\ \\
+&\ (a):\ \text{Partielle Integration, Randterme verschwinden}
+\end{align*}
+Es gelten folgende Kommutatorrelationen:
+\begin{align*}
+[A,A]&=0\ \ \Rightarrow\ \ [a,a]=0=[a^\dagger, a^\dagger] \\
+[a,a^\dagger]&=\frac{1}{2\omega}[\omega x+ip, \omega x-ip]=\frac{1}{2\omega}\klammer\left\{ {\omega^2\cancelto{0}{[x,x]}+\cancelto{0}{[p,p]}-i\omega [x,p]+i\omega [p,x]} \right\}=1\numberthis\label{[a, a dagger]}
+\end{align*}
+\subsection*{c)}
+Man kann $H$ durch $a, a^\dagger$ ausdrücken:
+\begin{align*}
+H&=\frac{1}{2}p^2+\frac{1}{2}\omega^2x^2\overset{(\ref{x und p von a und a dagger})}{=}-\frac{\omega}{4}(a^\dagger a^\dagger -a^\dagger a-aa^\dagger +aa)+\frac{\omega}{4}(a^\dagger a^\dagger+a^\dagger a+aa^\dagger +aa)= \\
+&=\frac{\omega}{2}(a^\dagger a+aa^\dagger)\overset{(\ref{[a, a dagger]})}{=}\underline{\omega\kla\left( { a^\dagger a +\frac{1}{2}} \right)}=\underline{\omega\kla\left( { aa^\dagger -\frac{1}{2}} \right)} \numberthis\label{H von a, a dagger}
+\end{align*}
+Es gelten folgende Kommutatorrelationen:
+\begin{align*}
+[a,H]&=\omega [a, aa^\dagger]=\omega a[a,a^\dagger]+\omega\cancelto{0}{[a,a]}a^\dagger =\omega a \numberthis\label{[a, H]}\\
+[H,a^\dagger]&=\omega [a^\dagger a,a^\dagger]=\omega\cancelto{0}{[a^\dagger,a^\dagger]}a+\omega a^\dagger [a,a^\dagger]=\omega a^\dagger \numberthis\label{[h, a dagger]}
+\end{align*}
+\subsection*{d)}
+Für das Skalarprodukt gilt mit der Definition des adjungierten Operators:
+\begin{align*}
+\bra\langle {a^\dagger a}\rangle&=\brak\langle {\phi}| {a^\dagger a\phi}\rangle=\brak\langle {a\phi}| {a\phi}\rangle=||a\phi||^2\ge 0
+\end{align*}
+Sei $a\phi_0=0$, also ist $\phi_0$ der Grundzustand mit der minimal möglichen Energie $E_0$:
+\begin{align*}
+E_0\phi_0&=H\phi_0\overset{(\ref{H von a, a dagger})}{=}\omega\kla\left( {a^\dagger a+\frac{1}{2}} \right)\phi_0=\frac{\omega}{2}\phi_0\ \ \Rightarrow\ \ \underline{E_0=\frac{\omega}{2}} \numberthis\label{E_0} 
+\end{align*}
+\subsection*{e)}
+Sei $\phi_1:=a^\dagger \phi_0$. Dann ist $E_1=\frac{3\omega}{2}$ der zugehörige Eigenwert von $H\phi_1$:
+\begin{align*}
+E_1\phi_1&=H\phi_1\overset{(\ref{H von a, a dagger})}{=}\omega\kla\left( {a^\dagger aa^\dagger +\frac{a^\dagger}{2}} \right)\phi_0=\omega a^\dagger\kla\left( {(a^\dagger a +1)+\frac{1}{2}} \right)\phi_0=\omega a^\dagger \frac{3}{2}\phi_0=\frac{3\omega}{2}\phi_1\\
+\brak\langle {\phi_1}| {\phi_1}\rangle &=\intx\int_{ }^{ }(a^\dagger\phi_0)^\ast a^\dagger\phi_0\,\mathrm{d}x=\intx\int_{ }^{ }\phi_0^\ast aa^\dagger\phi_0\,\mathrm{d}x=\intx\int_{ }^{ }\phi_0^\ast (a^\dagger a+1)\phi_0\,\mathrm{d}x=\brak\langle {\phi_0}| {\phi_0}\rangle=1
+\end{align*}
+\subsection*{f)}
+Sei $\phi_n:=\frac{1}{\sqrt{n!}}(a^\dagger)^n\phi_0$. Wir wissen bereits, dass $\phi_1$ eine Lösung mit $E_1=1\cdot\omega +\frac{\omega}{2}$ ist. Induktionsvoraussetzung: Sei $\phi_{n-1}$ eine Lösung mit Eigenwert $E_1=(n-1)\omega +\frac{\omega}{2}$:
+\begin{align*}
+E_n\phi_n&=H\phi_n\overset{(\ref{H von a, a dagger})}{=}\omega\kla\left( {a^\dagger a+\frac{1}{2}} \right)\frac{1}{\sqrt{n}}a^\dagger\phi_{n-1}=\frac{\omega}{\sqrt{n}}a^\dagger \kla\left( {(a^\dagger a+1)+\frac{1}{2}} \right)\phi_{n-1}= \\
+&=\frac{1}{\sqrt{n}}a^\dagger \kla\left( {H+\omega} \right)\phi_{n-1}=\frac{1}{\sqrt{n}}a^\dagger \kla\left( {E_{n-1}+\omega} \right)\phi_{n-1}=\kla\left( {\omega n+\frac{\omega}{2}} \right)\phi_n\\
+&\Rightarrow\ \ \underline{E_n=\omega\kla\left( {n+\frac{1}{2}} \right)}\numberthis\label{E_n}
+\end{align*}
+Die Eigenfunktionen sind orthogonal. Sei $n>m$:
+\begin{align*}
+a(a^\dagger)^n\phi_0&=(a^\dagger a+1)(a^\dagger)^{n-1}\phi_0=\underline{\frac{1}{\omega}H(a^\dagger)^{n-1}\phi_0}+\frac{1}{2}(a^\dagger)^{n-1}\phi_0= \\
+&=\frac{1}{\omega}(a^\dagger H+\omega a^\dagger)(a^\dagger)^{n-2}\phi_0+\frac{1}{2}(a^\dagger)^{n-1}\phi_0= \\
+&=\underline{(a^\dagger)^{n-1}\phi_0+a^\dagger\frac{1}{\omega}H(a^\dagger)^{n-2}\phi_0}+\frac{1}{2}(a^\dagger)^{n-1}\phi_0= \\
+&=2(a^\dagger)^{n-1}\phi_0+(a^\dagger)^2\frac{1}{\omega}H(a^\dagger)^{n-3}\phi_0+\frac{1}{2}(a^\dagger)^{n-1}\phi_0= \\ 
+&=\dots =(n-1)(a^\dagger)^{n-1}\phi_0+(a^\dagger)^{n-1}\frac{1}{\omega}H\phi_0+\frac{1}{2}(a^\dagger)^{n-1}\phi_0=n(a^\dagger)^{n-1}\phi_0 \\
+a^{n}(a^\dagger)^n\phi_0&=n\cdot (n-1)\dots 2\cdot 1 \phi_0=n!\phi_0 \\
+\brak\langle {\phi_n}| {\phi_m}\rangle&=\frac{1}{\sqrt{n!m!}}\brak\langle {\phi_0}| {a^n(a^\dagger)^m\phi_0}\rangle\kom\overset{\substack{{n >m} \\ |}}{=}\frac{m!}{\sqrt{n!m!}}\brak\langle {\phi_0}| {a^{n-m}\phi_0}\rangle=0 \\
+\brak\langle {\phi_n}| {\phi_n}\rangle&=\frac{n!}{\sqrt{n!n!}}\brak\langle {\phi_0}| {\phi_0}\rangle=1
+\end{align*}
+\subsection*{g)}
+Man kann $\phi_0$ aus der Bedingung $a\phi_0=0$ bestimmen:
+\begin{align*}
+\omega x\phi_0&=-ip\phi_0=-\phi_0'\ \ \Rightarrow\ \ \phi_0=A_0e^{-x^2/2} \\
+1&\overset{!}{=}\brak\langle {\phi_0}| {\phi_0}\rangle=\intx\int_{ }^{ }A_0^2e^{-x^2}\,\mathrm{d}x=A_0^2\sqrt{\pi}\ \ \Rightarrow\ \ A_0=\pi^{-1/4}\numberthis\label{A_0}
+\end{align*}
+\section{Unschärferelation}
+Bestimmung von $\Delta x \Delta p$ ohne \textsc{Hermite}polynome. Da die $\phi_n$ orthogonal sind, fallen einige Terme bei der Rechnung heraus:
+\begin{align*}
+\Delta x^2&=\brak\langle {\phi_n}| {x^2\phi_n}\rangle-\brak\langle {\phi_n}| {x\phi_n}\rangle^2=\frac{1}{2\omega}\brak\langle {\phi_n}| {(a^\dagger+a)^2\phi_n}\rangle-\frac{1}{2\omega}\brak\langle {\phi_n}| {(a^\dagger +a)\phi_n}\rangle^2= \\
+&=\frac{1}{2\omega}\left(\brak\langle {\phi_n}| {(\cancel{a^2}+2aa^\dagger -1+\cancel{(a^\dagger)^2})\phi_n}\rangle-\brak\langle {\phi_n}| {(\cancel{a^\dagger}+\cancel{a})\phi_n}\rangle^2\right)= \\
+&=\frac{1}{2\omega}\kla\left( {2\brak\langle {a^\dagger\phi_n}| {a^\dagger\phi_n}\rangle-1} \right)=\frac{1}{\omega}\kla\left( {(n+1)-\frac{1}{2}} \right)=\frac{1}{\omega}\kla\left( {n+\frac{1}{2}} \right) \\
+\Delta p^2&=\brak\langle {\phi_n}| {p^2\phi_n}\rangle-\brak\langle {\phi_n}| {p\phi_n}\rangle^2=-\frac{\omega}{2}\brak\langle {\phi_n}| {(a^\dagger -a)^2\phi_n}\rangle+\frac{\omega}{2}\brak\langle {\phi_n}| {(a^\dagger -a)\phi_n}\rangle= \\
+&=\frac{\omega}{2}\kla\left( {-\brak\langle {\phi_n}| {(\cancel{a^2}-2aa^\dagger+1+\cancel{(a^\dagger)^2})\phi_n}\rangle+\brak\langle {\phi_n}| {(\cancel{a^\dagger}-\cancel{a})\phi_n}\rangle^2} \right)= \\
+&=\frac{\omega}{2}\kla\left( {2\brak\langle {a^\dagger\phi_n}| {a^\dagger\phi_n}\rangle-1} \right)=\omega\kla\left( {n+\frac{1}{2}} \right) \\
+\Delta x\Delta p&=n+\frac{1}{2}=\frac{E_n}{\omega}\numberthis\label{Delta x Delta p}
+\end{align*}
+
+\end{document}

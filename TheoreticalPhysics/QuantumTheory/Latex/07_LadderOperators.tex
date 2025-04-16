@@ -1,0 +1,126 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb, slashed}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{dsfont}
+
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\def\I{\text{i}}
+\def\E{\text{e}}
+
+\newcommand*{\titel}{07 Ladder operators}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+\subject{Quantum theory 2}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Questions}
+\section{Creation and annihilation operators}
+We have $a_n^\dagger\Ket | {n_j} \rangle^\pm=\sqrt{N+1}\Ket | {n n_j} \rangle^\pm$ for $j=1,\dots,N$.
+Hence
+\begin{align*}
+a_5^\dagger a_3^\dagger a_4^\dagger a_2^\dagger a_7^\dagger &=\sqrt{5!}\Ket | {5,3,4,2,7} \rangle^\pm
+\end{align*}
+We have $a_n\Ket | {n_j} \rangle^\pm=\frac{1}{\sqrt{N}}\sum_j\delta_{nn_j}(\pm 1)^{j+1}\Ket | {n_{j-1}n_{j+1}} \rangle^\pm$.
+Hence
+\begin{align*}
+(\tecxt\text{b}) &= 0,
+\end{align*}
+because $a_1$ is applied to a state, that does not contain a 1.
+The others are
+\begin{align*}
+a_4^\dagger a_7^\dagger a_5 a_1 a_1^\dagger a_3^\dagger a_5^\dagger a_8^\dagger\Ket | {0} \rangle &= \sqrt{(4-2+2)!}\Ket | {4,7,3,8} \rangle\\
+a_5^\dagger a_3^\dagger a_8^\dagger a_1 a_3^\dagger a_2^\dagger a_1^\dagger a_7^\dagger\Ket | {0} \rangle &=\sqrt{(8-1)!}\Ket | {5,3,8,3,2,7} \rangle
+\end{align*}
+\section{Number operator}
+We know that $\klam\left[ {a_n,a_m^\dagger} \right]=\delta_{nm}$ for bosons and $\klammer\left\{{c_n,c_m^\dagger} \right\}=\delta_{nm}$ for fermions.
+Then we can show the following relations for the number operator $\hat{N}:=\sum_j a_j^\dagger a_j$, by making use of $\klam\left[ {A,BC} \right]=B\klam\left[ {A,C} \right]+\klam\left[ {A,B} \right]C$ and $\klam\left[ {A,BC} \right]=B\klammer\left\{{A,C} \right\}-\klammer\left\{{A,B} \right\}C$:
+\begin{align*}
+\klam\left[ {\hat{N},a_k^\dagger} \right]&=\sum_j\klam\left[ {a_j^\dagger a_j,a_k^\dagger} \right]=\sum_j a_j^\dagger \klam\left[ {a_j,a_k^\dagger} \right]=a_k^\dagger\\
+\klam\left[ {\hat{N},a_k} \right]&=\sum_j\klam\left[ {a_j^\dagger a_j,a_k} \right]=\sum_j \klam\left[ {a_j^\dagger,a_k} \right]a_j =-a_k\\
+\klam\left[ {\hat{N},c_k^\dagger} \right]&=\sum_j\klam\left[ {c_j^\dagger c_j,c_k^\dagger} \right]=\sum_jc_j^\dagger\klammer\left\{{c_j,c_k^\dagger} \right\}=c_k^\dagger\\
+\klam\left[ {\hat{N},c_k} \right]&=\sum_j\klam\left[ {c_j^\dagger c_j,c_k} \right]=\sum_j-\klammer\left\{{c_j^\dagger,c_k} \right\}c_j=-c_k
+\end{align*}
+Here we used $\klam\left[ {a_n^\dagger,a_m^\dagger} \right]=0=\klammer\left\{{c_n^\dagger,c_m^\dagger} \right\}$ and $\klam\left[ {a_n,a_m} \right]=0=\klammer\left\{{c_n,c_m} \right\}$.
+\\
+Let the general Hamiltonian be
+\begin{align*}
+H&=\sum_{ij}T_{ij}a_i^\dagger a_j+\frac{1}{2}\sum_{ijkl}V_{ijkl}a_i^\dagger a_j^\dagger a_l a_k.
+\end{align*}
+Then this commutes with the number operator. 
+Consider first the kinetic part, i.e.
+\begin{align*}
+\klam\left[ {\hat{N},T} \right]&=\sum_{ij}T_{ij}\klam\left[ {\hat{N},a_i^\dagger a_j} \right]=\sum_{ij}T_{ij}a_i^\dagger (-a_j)+a_i^\dagger a_j=0.
+\end{align*}
+The potential term is more complicated, so we will only write down the relevant part
+\begin{align*}
+\klam\left[ {\hat{N},a_i^\dagger a_j^\dagger a_l a_k} \right]&=a_i^\dagger a_j^\dagger \klam\left[ {\hat{N},a_l a_k} \right]+\klam\left[ {\hat{N},a_i^\dagger a_j^\dagger} \right]a_l a_k=\\
+&=a_i^\dagger a_j^\dagger\kla\left( {a_l(-a_k) + (-a_l)a_k} \right)+\kla\left( {a_i^\dagger (+a_j^\dagger) + (+a_i^\dagger) a_j^\dagger} \right)a_l a_k=0.
+\end{align*}
+\section{Second quantization I}
+Let the discrete basis be given by $\Ket | {\psi_k} \rangle$.
+Then we can express the operator as
+\begin{align*}
+\mathcal{O}&=\sum_i\mathcal{O}_i=\sum_{jk}O_{jk}\sum_i a_j^\dagger a_k,
+\end{align*}
+where the $O_{jk}=\braket\langle {\psi_j} | {\mathcal{O}} | {\psi_k}\rangle$ are the matrix elements. 
+FIXME: how to simplify these further?
+\\
+For the momentum operator we have
+\begin{align*}
+P_{p'p}&=\braket\langle {p'} | {P} | {p}\rangle=p'\delta (p'-p)
+\end{align*}
+and therefore
+\begin{align*}
+P&=\int_{p}\int_{p'}P_{p'p}a_{p'}^\dagger a_p=\intr\int_{\mathbb{R}^{3}}{pa_{p}^\dagger a_p}\,\mathrm{d}^{3}p.
+\end{align*}
+\section{Second quantization II}
+4\texttt{D}\textsc{D}\textsf{D}\textsl{D}\textit{D}D
+\section{$N$ bosons in a cube of edge length $L$}
+\begin{align*}
+k_n&=\begin{cases}
++1&\tecxt\text{if}\ \delta_{nm}>1/2 \\
+-1&\tecxt\text{if}\ \delta_{nm}<-1/2 \\
+\ 0 &\tecxt\text{else}
+\end{cases} .\numberthis\label{eqn:RulesForKN}
+\end{align*}
+\end{document}

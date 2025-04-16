@@ -1,0 +1,77 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+
+\begin{document}
+
+\title{Leiterschleifen und Induktion}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{$A=A(t)$}
+\subsection*{a)}
+Induktionsgesetz: 
+\begin{align*}
+U_{ind}=-\frac{d}{dt}\iint_A \vv{B}\cdot d\vv{A} \overset{\substack{ \vv{B}=const\\|}}{=}-B\frac{d}{dt}\iint_A \cos(\varphi(t))dA = a^2B\omega\sin(\omega t)
+\end{align*}
+\subsection*{b)} Kraft auf Ströme:
+\begin{align*}
+d\vv{F}&=q\vv{v}\times\vv{B}=Idt\vv{v}\times\vv{B}=I\vv{dl}\times\vv{B}\\
+&\Rightarrow\ F = IlB\sin(\varphi)
+\end{align*}
+Die mechanische Leistung entspricht dann:
+\begin{align*}
+P = vF = \omega a\ q|\vv{v}\times\vv{B}|=\omega a\ IaB\sin(\omega t)=\frac{a^4B^2\omega^2\sin^2(wt)}{R}
+\end{align*} 
+\section{$B = B(t)$}
+\subsection*{a)}
+Nach Maxwell berechnet sich die Flussdichte des Leiters folgendermaßen:
+\begin{align*}
+\oint_{\partial A} \vv{B}\cdot\vv{ds} = \mu_0I(t) = \mu_0I_0\sin(\omega t)\ \Rightarrow\ B(t) = \frac{\mu_0I_0\sin(\omega t)}{2\pi r}
+\end{align*}
+Da $\vv{B}\bot\vv{A}$ folgt aus dem Induktionsgesetz:
+\begin{align*}
+U_{ind}&=-\dot{\Phi}_m = -\frac{d}{dt}\iint_A B(t)dA = -\frac{d}{dt}\int_0^{a}\int_b^{b+a} \frac{\mu_0I_0\sin(\omega t)}{2\pi x} dxdy=\\
+&=-\frac{d}{dt}\frac{a\mu_0I_0\sin(\omega t)}{2\pi}\mathrm{ln}\left(1+\frac{a}{b}\right) = -\frac{a\omega\mu_0I_0\cos(\omega t)}{2\pi}\mathrm{ln}\left(1+\frac{a}{b}\right)
+\end{align*}
+\subsection*{b)}
+Die Kraft auf die Leiterschleife beträgt:
+\begin{align*}
+\vv{F} =I_{ind}\vv{l}\times\vv{B}(t) = \frac{I_{ind}\mu_0I_0\sin(\omega t)}{2\pi}\left(\frac{a}{b}-\frac{a}{b+a}\right)\vv{e_x}=\frac{\mu_0}{2\pi}I_{ind}I_0\sin(\omega t)\left(\frac{a^2}{b(a+b)}\right)\vv{e_x}
+\end{align*}
+\subsection*{c)}
+Aus a) kennen wir bereits $\Phi_m$. Damit ergibt sich:
+\begin{align*}
+\Phi_m = L_{12}I(t)\ \Rightarrow\ L_{12} = \frac{a\mu_0I(t)}{2\pi I(t)}\mathrm{ln}\left(1+\frac{a}{b}\right) = \frac{a\mu_0}{2\pi}\mathrm{ln}\left(1+\frac{a}{b}\right)
+\end{align*}
+\section{Beweglicher Leiter im homogenen Magnetfeld} 
+\subsection*{a)}
+Die Induktionsspannung aufgrund der Flächenänderung muss berücksichtigt werden:
+\begin{align*}
+U=U_0+U_{ind}=U_0-\frac{d}{dt}\iint_A \vv{B}\cdot d\vv{A}=U_0-B\frac{d}{dt}xd=U_0-B\dot{x}d
+\end{align*}
+Newton'sche Bewegungsgleichung und Kraft auf einen stromdurchflossenen Leiter:
+\begin{align*}
+F = m\ddot{x}\ \Rightarrow\ \dot{v}=\frac1m\ IBd = \frac1m\ \frac{U}{R}Bd = \frac{BdU_0}{Rm}-\frac{B^2d^2v}{Rm} 
+\end{align*}
+\subsection*{b)}
+Die Lösung dieser Differentialgleichung ergibt:
+\begin{align*}
+v(t)&=v_h(t)+v_p(t)=C_1e^{-\frac{B^2d^2t}{Rm}}+\frac{U_0}{Bd}\overset{\substack{v(t=0)\overset{!}{=}0 \\|}}{=}\frac{U_0}{Bd}\left(1-e^{-\frac{B^2d^2t}{Rm}}\right)\\
+&\Rightarrow\ v_{max} = \frac{U_0}{Bd}
+\end{align*}
+Alternativ kann einfach die Formel für Spannung aus 3a) betrachtet werden:
+\begin{align*}
+U = U_0-Bdv\overset{!}{=}0\ \Rightarrow\ v_{max} = \frac{U_0}{Bd}
+\end{align*}
+\section{Kreisförmige Leiterschleife in $B=B(t)$}
+\begin{align*}
+U_{ind}(t)&=-N\dot{\Phi}_m(t)=-N\frac{d}{dt}B(t)\cos(\alpha)\pi R^2=N\frac{B_0}{\tau}\pi R^2\cos(\alpha)e^{-\frac{t}{\tau}}\\
+&\Rightarrow\ U_{ind}(t_1=2s) = -10\frac{2T}{1s}\frac{\pi}{e^2} (0.04m)^2\cos(45\degree) \simeq 9.62mV
+\end{align*}
+\end{document}

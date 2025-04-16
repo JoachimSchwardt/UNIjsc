@@ -1,0 +1,538 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\newcommand{\I}{\text{i}}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Variants on Formulae for Frequency Analysis}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+%\subject{subject}
+\title{\titel}
+%\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Discrete Fourier Transformation with Hann-Window}
+NOTE: The following is copied from the original file 'Naff{\_}formulae.tex'.
+\\
+Model for signal:
+\begin{align}
+  z^{\text{model}}_t &= \sum_k c_k e^{i 2 \pi \nu k t}
+  \qquad \text{ with e.g. }
+  k \in \{-3,-2,-1,0,1,2,3\}
+  \label{eq_model}
+\end{align}
+Hann-Window:
+\begin{align}
+  w_t &= 2 \sin^2 \frac{\pi t}{N} = 1 -\cos \frac{2\pi t}{N}
+       = 1 - \frac{1}{2} e^{i 2 \pi \frac{t}{N}} - \frac{1}{2} e^{- i 2 \pi \frac{t}{N}}
+\end{align}
+Will be used with $t=0,1,\dots,N-1$ (as it keeps the formulae simpler)
+instead of $t=1,\dots,N$ (as in [2]).
+
+Discrete Fourier transform (assumes $\nu$ irrational in Eq.(\ref{eq_geomseries})):
+\begin{align}
+  F^{\text{model}}_j &= \frac{1}{N} \sum_{t=0}^{N-1} z^{\text{model}}_t w_t e^{- i 2 \pi \frac{j t}{N}}
+  \qquad
+  j=0,1,\dots, N-1
+  \\
+  &=
+  \frac{1}{N} \sum_{t=0}^{N-1} \sum_k c_k e^{i 2 \pi \nu k t}
+  \left( 1 - \frac{1}{2} e^{i 2 \pi \frac{t}{N}} - \frac{1}{2} e^{- i 2 \pi \frac{t}{N}} \right)
+  e^{- i 2 \pi \frac{j t}{N}}
+  \\
+  &=
+  \frac{1}{N} \sum_k c_k \sum_{t=0}^{N-1} \left[
+                  \left( e^{i 2 \pi (\nu k - \frac{j}{N}) } \right)^t
+    - \frac{1}{2} \left( e^{i 2 \pi (\nu k - \frac{j-1}{N}) } \right)^t
+    - \frac{1}{2} \left( e^{i 2 \pi (\nu k - \frac{j+1}{N}) } \right)^t
+  \right]
+  \\
+  &=
+  c_0 (\delta_{j,0} - \frac{1}{2} \delta_{j,1} - \frac{1}{2} \delta_{j,N-1} )
+  \\
+  &
+  + \frac{1}{N} \sum_{k \ne 0} c_k \left[
+                  \frac{1-e^{i 2 \pi (\nu k - \frac{j}{N})N }}{1-e^{i 2 \pi (\nu k - \frac{j}{N}) } }
+    - \frac{1}{2} \frac{1-e^{i 2 \pi (\nu k - \frac{j-1}{N})N }}{1-e^{i 2 \pi (\nu k - \frac{j-1}{N}) } }
+    - \frac{1}{2} \frac{1-e^{i 2 \pi (\nu k - \frac{j+1}{N})N }}{1-e^{i 2 \pi (\nu k - \frac{j+1}{N}) } }
+  \right]
+  \label{eq_geomseries}
+  \\
+  &=
+  c_0 (\delta_{j,0} - \frac{1}{2} \delta_{j,1} - \frac{1}{2} \delta_{j,N-1} )
+  \\
+  &
+  + \frac{1}{N} \sum_{k \ne 0} c_k (1-e^{i 2 \pi \nu k N })\left[
+                  \frac{1}{1-e^{i 2 \pi (\nu k - \frac{j}{N}) } }
+    - \frac{1}{2} \frac{1}{1-e^{i 2 \pi (\nu k - \frac{j-1}{N}) } }
+    - \frac{1}{2} \frac{1}{1-e^{i 2 \pi (\nu k - \frac{j+1}{N}) } }
+  \right]
+  \\
+  &= \dots
+\end{align}
+%\\Note: checked by Ketzmerick and Lange (FIXME: also check validity for resonant $\nu$ of Eqs.~(\ref{eq_dfft},\ref{r_frac}))
+Final result
+\begin{equation}
+  \fbox{$
+  F^{\text{model}}_j =
+  c_0 (\delta_{j,0} - \frac{1}{2} \delta_{j,1} - \frac{1}{2} \delta_{j,N-1} )
+  - \frac{\sin^2 \frac{\pi}{N}}{N} {\displaystyle \sum_{k \ne 0}^{}} c_k
+  e^{i \pi \nu k N} \sin(\pi \nu k N) \;\;
+  \frac{\cos[\pi(\nu k - \frac{j}{N})]}
+       {\sin[\pi(\nu k - \frac{j}{N})] \sin[\pi(\nu k - \frac{j+1}{N})] \sin[\pi(\nu k - \frac{j-1}{N})]}
+  $}
+  \label{eq_dfft}
+\end{equation}
+
+
+
+\clearpage
+\section{Compute Frequencies}
+\subsection{Recalculation of Analytic Formula from [2]}
+Summary: The result of [2] is extended to frequencies close to zero, $\nu < \frac 1N$,
+or close to one, $\nu > 1-\frac 1N$.
+
+Note: The shifted use of the Hann-Window compared to [2] is
+of no relevance for the result.
+
+Use just one oscillatory component $c_1 \ne 0$ in model:
+\begin{eqnarray}
+  z^{\text{model}}_t &=& c_0 + c_1 e^{i 2 \pi \nu t}
+\end{eqnarray}
+For a given signal $z_t$ the frequency $\nu$ has to be determined with $c_0$ and $c_1$ unknown.
+Use from Eq.~(\ref{eq_dfft})
+\begin{align}
+  F^{\text{model}}_j &=
+  c_0 (\delta_{j,0} - \frac{1}{2} \delta_{j,1} - \frac{1}{2} \delta_{j,N-1} )
+  - \\
+  &-c_1 \frac{\sin^2 \frac{\pi}{N}}{N}
+  e^{i \pi \nu N} \sin(\pi \nu N) \;\;
+  \frac{\cos[\pi(\nu - \frac{j}{N})]}
+       {\sin[\pi(\nu - \frac{j}{N})] \sin[\pi(\nu - \frac{j+1}{N})] \sin[\pi(\nu - \frac{j-1}{N})]}
+\end{align}
+Take the negative ratio of any two neighboring values at $j,j+1$ which are not from $\{0,1,N-1\}$, as $c_0$ is not known.
+\begin{eqnarray}
+  \label{r_frac}
+  R &:=&
+  - \frac{F^{\text{model}}_j}{F^{\text{model}}_{j+1}} =
+  - \frac{\cos[\pi(\nu - \frac{j}{N})]   \sin[\pi(\nu - \frac{j+2}{N})]}
+       {\cos[\pi(\nu - \frac{j+1}{N})] \sin[\pi(\nu - \frac{j-1}{N})]}
+  \label{eq_defR}
+\end{eqnarray}
+This value is thus real without taking the absolute value of the Fourier transform (as in [2]).
+Its sign is positive if $\frac{j-1}{N} < \nu < \frac{j+2}{N}$ otherwise negative
+(assuming $\nu$ to be somewhere around $\frac{j}{N}$ such that $\cos[\pi(\nu - \frac{j}{N})]$
+is still positive).
+
+Define for brevity
+\begin{eqnarray}
+  x &:=& \pi(\nu - \frac{j}{N})
+  \qquad
+  b:= \frac{\pi}{N}
+\end{eqnarray}
+such that we have (using $\sin a \cos b = \frac12 [\sin(a-b) + \sin(a+b)]$)
+\begin{eqnarray}
+  R &=&
+  - \frac{\cos[x] \sin[x-2b]}{\cos[x-b] \sin[x+b]}
+  =
+  - \frac{-\sin[2b] + \sin[2x-2b]}{\sin[2b] + \sin[2x]}
+  \\
+  &=&
+  \frac{-\sin 2x \cos 2b  + (1+\cos 2x) \sin 2b }
+       {\sin 2x  + \sin 2b}
+  \\
+  &=&
+  \frac{-\frac{\sin 2x}{\sin 2b} \cos 2b  + 1+\cos 2x}
+       {\frac{\sin 2x}{\sin 2b}+1}
+  =
+  \frac{-c y  + 1+\cos 2x}
+       {y+1}
+\end{eqnarray}
+where we defined
+\begin{eqnarray}
+  \label{y_def}
+  y &:=& \frac{\sin 2x}{\sin 2b} = \frac{\sin 2\pi(\nu - \frac{j}{N})}{\sin 2b}
+  \qquad
+  c:=\cos 2b = \cos \frac{2\pi}{N}
+\end{eqnarray}
+This gives
+\begin{eqnarray}
+  R &=&
+  \frac{-c y  + 1 + \sqrt{1-(1-c^2)y^2}}{y  + 1}
+  \label{eq_R}
+\end{eqnarray}
+and after rearrangement
+\begin{eqnarray}
+  y(R+c) + (R-1) &=&
+  \sqrt{1-(1-c^2)y^2}
+  \label{eq_Rsq}
+\end{eqnarray}
+leading after squaring to a quadratic equation in $y$ with two solutions
+\begin{eqnarray}
+  \label{eq_yofR}
+  y_\pm &=&
+  \frac{-(R+c)(R-1) \pm \sqrt{c^2(R+1)^2 - 2R(2c^2-c-1)}}
+       {R^2 + 1 + 2Rc}
+\end{eqnarray}
+This corresponds to Eq.(26) in [2] with $R=a/b$ and the positve sign before the square root.
+
+May it happen that the solutions are complex? No, this would happen for $R \approx -1$ only,
+which however is not possible according to Eq.~(\ref{eq_defR}) for $\frac jN$ close to $\nu$.
+
+Which of the two solutions has to be considered?
+The solution which gives a positive l.h.s.\ in
+Eq.~(\ref{eq_Rsq}) corresponding to the positively defined square root on the r.h.s., i.e.
+\begin{eqnarray}
+  \label{y_plus_minus}
+  0 &\leq& y_\pm (R+c) + (R-1)
+\end{eqnarray}
+This inequality can be evaluated by multiplying with the positive factor
+$R^2 + 1 + 2Rc = (R+c)^2 + s^2$
+\begin{align}
+  0 &\leq [y_\pm (R+c) + (R-1)] (R^2 + 1 + 2Rc)
+  =\\
+  &= \pm (R+c) \sqrt{c^2(R+1)^2 - 2R(2c^2-c-1)} + s^2(R-1)
+\end{align}
+Again using that $R \approx -c \approx -1$ does not happen and that the second term is small,
+the sign of $(R+c)$ decides about the correct solution,
+\begin{align}
+  y &= \left\{
+          \begin{array}{l}
+             y_+ \quad \text{for } R+c > 0
+             \\
+             y_- \quad \text{otherwise}
+          \end{array}
+    \right\}
+    =\\
+    &=
+  \frac{-(R+c)(R-1) + \tecxt\text{sign}(R+c) \sqrt{c^2(R+1)^2 - 2R(2c^2-c-1)}}
+       {R^2 + 1 + 2Rc}
+  \label{eq_ypm_decide}
+\end{align}
+
+Note: $R+c>0$ is the case if $\nu > \frac{j-1}{N}$, according to Eq.~(\ref{eq_defR})
+and $R+c<0$ is the case if $\nu < \frac{j-1}{N}$ (which applies if $\nu < \frac 1N$).
+
+We now get the frequency with $y$ from Eqs.~(\ref{y_def}) and
+(\ref{eq_ypm_decide})
+\begin{eqnarray}
+  \nu &=&  \frac{j}{N} + \frac{1}{2\pi}\arcsin\left(y \, \sin 2b \right)
+\end{eqnarray}
+
+The decision according to Eq.~(\ref{eq_ypm_decide})
+works perfectly for a signal of the type considered even for small $\nu < \frac{1}{N}$.
+\section{Integral approximation}
+NOTE: The following is the 'new' part.
+\\
+Analysis of the WBA shows, that the specific structure of the used weights may strongly influence the resulting convergence behavior.
+For example, using gaussian weights ($\alpha\gtrsim 140$ for $w_{0,N-1}\simeq 10^{-16}$)
+\begin{align}
+w^\tecxt\text{gauss}_t&=\frac{1}{C}\e^{-\alpha \kla\left( {\frac{t}{N}-\frac{1}{2}} \right)^2}
+\end{align}
+with the normalization constant
+\begin{align}
+C&=\sum_{t=0}^{N-1}\e^{-\alpha \kla\left( {\frac{t}{N}-\frac{1}{2}} \right)^2}\simeq N\sqrt{\frac{\pi}{\alpha}}
+\end{align}
+usually gives better results than the $C_c^\infty$-weights defined by
+\begin{align}
+w^{C_c^\infty}_t&=\frac{1}{\tilde{C}}\e^{-\klam\left[ {\frac{t}{N}\kla\left( {1-\frac{t}{N}} \right)} \right]^{-1}}.
+\end{align}
+This gives rise to the idea of also using gaussian weights for the Naff.
+While an explicit solution of the resulting summation is not possible for these weights, an integral approximation can be used.
+\subsection{Hanning weights}
+Consider in the following a slightly simpler model than above, i.e. only the coefficient $c_1$ is to be non-zero.
+We repeat the calculation of the Fourier coefficients with the Hanning-weights using this approximation.
+This allows us to compare the result of the 'exact Hanning-Naff' (EHN) to the 'approximated Hanning-Naff' (AHN).
+It will also demonstrate the approach used for the gaussian weights.
+\\
+The coefficients can be calculated by
+\begin{align}
+F_j&=\sum_{t=0}^{N-1}x_t^\tecxt\text{model}w_t\e^{-2\pi\I j\frac{t}{N}}=\\
+&=\frac{c_1}{N}\sum_{t=0}^{N-1}\kla\left( {1-\frac{1}{2}\e^{2\pi\I\frac{t}{N}}-\frac{1}{2}\e^{-2\pi\I \frac{t}{N}}} \right)\e^{2\pi\I \frac{t}{N}\kla\left( {\nu N - j} \right)}=\\
+&=\frac{c_1}{N}\sum_{l\in\{0,-1,+1\},\,\beta_l\in\{1,-\frac{1}{2},-\frac{1}{2}\}}\sum_{t=0}^{N-1}\e^{2\pi\I \frac{t}{N}\kla\left( {\nu N - j+l} \right)}\approx\\
+&\approx c_1\sum_{l\in\{0,-1,+1\},\,\beta_l\in\{1,-\frac{1}{2},-\frac{1}{2}\}}\beta_l\intx\int_{0}^{1}\e^{2\pi\I x (\nu N - j+\beta_l)}\,\mathrm{d}x=\\
+&=c_1\sum_{l\in\{0,-1,+1\},\,\beta_l\in\{1,-\frac{1}{2},-\frac{1}{2}\}}\beta_l\frac{\e^{2\pi\I (\nu N-j+l)}-1}{2\pi\I (\nu N-j+l)}=\\
+&=\frac{c_1}{2\pi\I}\kla\left( {\e^{2\pi\I \nu N}-1} \right)\sum_{l\in\{0,-1,+1\},\,\beta_l\in\{1,-\frac{1}{2},-\frac{1}{2}\}}\klam\left[ {\frac{1}{\nu N-j}-\frac{1}{2}\frac{1}{\nu N -j+1}-\frac{1}{2}\frac{1}{\nu N-j-1}} \right].
+\end{align}
+Note that 
+\begin{align}
+\frac{1}{a}-\frac{1}{2}\frac{1}{a+1}-\frac{1}{2}\frac{1}{a-1}&=\frac{1}{a}-\frac{a}{(a+1)(a-1)}=-\frac{1}{a(a+1)(a-1)}.
+\end{align}
+Inserting this into the above with $a=\nu kN-j$ gives
+\begin{align}
+F_j&=\frac{c_1}{2\pi\I}\kla\left( {\e^{2\pi\I \nu N}-1} \right)\frac{-1}{(\nu N-j)(\nu N-j+1)(\nu N-j-1)}.
+\end{align}
+We are again interested in the ratio of consecutive Fourier coefficients
+\begin{align}
+R&=\frac{F_j}{F_{j+1}}\approx\frac{(\nu N-(j+1))(\nu N-(j+1)+1)(\nu N-(j+1)-1)}{(\nu N-j)(\nu N-j+1)(\nu N-j-1)}=\frac{\nu N-j-2}{\nu N -j +1}.
+\end{align}
+Solving for $\nu$ leads to
+\begin{align}
+R(\nu N -j +1)&=\nu N-j-2\\
+\nu N (R-1)&=R(j-1)-j-2\\
+\nu&=\frac{j}{N}-\frac{1}{N}\frac{2+R}{R-1}. \label{eqn:ApproxHanningNaff}
+\end{align}
+Figure \ref{figure:Naff-hann-comp} shows that the approximation is, from a practical standpoint, completely equivalent to the exact solution.
+In fact, due to a certain ambiguity about $\nu$ vs. $1-\nu$, the more simple approximation may even be for choice in certain cases.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/Naff_hann_comp.png}
+\caption{Comparison of the exact Hanning Naff (EHN) and the approximated one (AHN).
+In each case, the convergence behavior to the frequency computed using the respective formula is shown.
+Note that a correction is needed for the EHN, since sometimes the detected frequency is not $\nu$ but rather $1-\nu$.
+Interestingly, this is not required at all for the AHN.}
+\label{figure:Naff-hann-comp}
+\end{figure}
+If anything, this result gives hope that a similar solution can be found for gaussian weights, for which an exact and explicit solution is not attainable.
+\newpage
+\subsection{Gaussian weights}
+Transforming the relevant sum over $t$ into an integral over $x\in[0,1]$ will only be of any help, if we can approximate the integral by expanding this interval to $\mathbb{R}$.
+This approximation requires $\alpha$ to be large enough, such that this error vanishes within the machine precision. 
+%(TODO: check if smaller $\alpha$ really give worse results. Since we are mostly just interested in the ratio $R$, errors may cancel out.)
+\\
+We start by again computing the Fourier coefficients
+\begin{align}
+F_j&=\sum_{t=0}^{N-1}x_t^\tecxt\text{model}w_t\e^{-2\pi\I j\frac{t}{N}}=\\
+&=\frac{c_1}{C}\sum_{t=0}^{N-1}\e^{-\alpha\kla\left( {\frac{t}{N}-\frac{1}{2}} \right)^2}\e^{2\pi\I \frac{t}{N}\kla\left( {\nu N - j} \right)}\approx\\
+&\approx\frac{c_1N}{C}\intx\int_{0}^{1}\e^{-\alpha\kla\left( {x-\frac{1}{2}} \right)^2}\e^{2\pi\I x\kla\left( {\nu N - j} \right)}\,\mathrm{d}x=\\
+&=\frac{c_1N}{C}\e^{\pi\I (\nu N-j)}\intx\int_{-1/2}^{1/2}\e^{-\alpha x^2}\e^{2\pi\I x\kla\left( {\nu N - j} \right)}\,\mathrm{d}x\approx\\
+&\approx\frac{c_1N}{C}\e^{\pi\I (\nu N-j)}\intr\int_{\mathbb{R}^{ }}\e^{-\alpha x^2}\e^{2\pi\I x\kla\left( {\nu N - j} \right)}\,\mathrm{d}^{ }x\approx\\
+&\approx c_1\e^{\pi\I (\nu N-j)}\e^{\frac{\left[2\pi\I(\nu N-j)\right]^2}{4\alpha}}=c_1\e^{\pi\I (\nu N-j)}\e^{-\frac{\pi^2}{\alpha}(\nu N-j)^2}. \label{eqn:Fj-gauss}
+\end{align}
+The ratio of consecutive coefficients then becomes
+\begin{align}
+R&=\left\vert\frac{F_j}{F_{j+1}}\right\vert=\e^{\frac{\pi^2}{\alpha}\klam\left[ {(\nu N-(j+1))^2-(\nu N-j)^2} \right]}.
+\end{align}
+With $a=\nu N-j$ and $(a-1)^2-a^2=1-2a$ this can be reduced to
+\begin{align}
+\frac{\alpha}{\pi^2}\log R&=1-2(\nu N-j)\\
+\nu&=\frac{j}{N}+\frac{1}{2N}-\frac{\alpha}{2\pi^2N}\log R. \label{eqn:ApproxGaussNaff}
+\end{align}
+This result will also be referred to as the 'approximated Gauss-Naff' (AGN).
+\\
+The following figures show a number of examples of the convergence of $\nu_N$ to the true frequency $\nu$.
+For most of them, the WBA with $C_c^\infty$-weights and gaussian weights is shown for comparison.
+Since the results of the two Hanning-Naff variants are practically identical, only the EHN is shown.
+At relevant sections, the linear slope is shown.
+Since the plots are logarithmic, this coincides with a power-law decay.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/Naff_variants.png}
+\caption{Comparison of Hanning-Naff and Gauss-Naff.}
+\label{figure:Naff-variants}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/Naff_WBA_variants.png}
+\caption{Comparison of Hanning-Naff, Gauss-Naff and both WBAs.}
+\label{figure:Naff-WBA-variants}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/Naff_WBA_variants2.png}
+\caption{Comparison of Hanning-Naff, Gauss-Naff and both WBAs.}
+\label{figure:Naff-WBA-variants2}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/Naff_WBA_variants3.png}
+\caption{Comparison of Hanning-Naff, Gauss-Naff and both WBAs.}
+\label{figure:Naff-WBA-variants3}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/Naff_WBA_variants4.png}
+\caption{Comparison of Hanning-Naff, Gauss-Naff and both WBAs.}
+\label{figure:Naff-WBA-variants4}
+\end{figure}
+\FloatBarrier
+\newpage
+\subsection{Nonzero offset of the signal}
+There remains the issue of assuming $c_0=0$.
+In the case of the standard map, the offset of the center island may be known by the used convention of the map.
+However, it is also possible to solve this issue for arbitrary offsets.
+The same derivation that lead to eqn. (\ref{eqn:Fj-gauss}) can be repeated for the case of $c_0\neq 0$.
+The $c_0$-contribution to $F_j$ is therefor given by
+\begin{align}
+F_j^{(0)}&\approx\frac{c_0N}{C}\intx\int_{0}^{1}\e^{-\alpha\kla\left( {x-\frac{1}{2}} \right)^2}\e^{-2\pi\I xj}\,\mathrm{d}x\approx\\
+&\approx\dots\approx c_0\e^{-\pi\I j}\e^{-\frac{\pi^2}{\alpha}j^2}. \label{eqn:Fj-c0-corretion}
+\end{align}
+All that is needed to apply the previous result (\ref{eqn:ApproxGaussNaff}) is to transform the Fourier coefficients according to
+\begin{align}
+F_j&\longrightarrow F_j-F_j^{(0)}. \label{eqn:Fj-gauss-transform}
+\end{align}
+Figure \ref{figure:Naff-offset-comp} shows how this transformation gives the same result as subtracting the 'correct' offset of $c_0=\frac{1}{2}$ for an oscillatory signal of the standard map.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/Naff_offset_comp.png}
+\caption{Comparison of 'manually' subtracting the correct offset of $c_0=\frac{1}{2}$ from the original signal vs. applying the transformation from equation (\ref{eqn:Fj-gauss-transform}).
+Note how the two become practically identical around $N\gtrsim 128$.}
+\label{figure:Naff-offset-comp}
+\end{figure}
+Also note that the value of $c_0$ can be efficiently  approximated by
+\begin{align}
+c_0&\approx\sqrt{\frac{\alpha}{\pi}}F_0. \label{eqn:c0-gauss-approx}
+\end{align}
+A similar formula can also be used for the other coefficients $c_k$, corresponding to the $k$-th 'strongest' frequency $\nu_k$ in the signal, leading to
+\begin{align}
+c_k&\approx\sqrt{\frac{\alpha}{\pi}}F_j\e^{-\I\pi (\nu N-j)}\e^{\frac{\pi^2}{\alpha}\kla\left( {\nu N - j} \right)^2}. \label{eqn:ck-gauss-approx}
+\end{align}
+Here $j\in \mathbb{N}$ has to be chosen such that $F_j$ is a local maximum of the Fourier coefficients.
+\newpage
+Given below is the Python code for computing eqn. (\ref{eqn:ApproxGaussNaff}) for an arbitrary signal.
+In case the offset of the input signal is known beforehand, the transformation of Fourier-coefficients from (\ref{eqn:Fj-gauss-transform}) is optional and subject to the bool \texttt{Offset}.
+Since the correction terms are proportional to $\e^{-\frac{\pi^2}{\alpha}j^2}$, for $\alpha\simeq 140$ already $j\gtrsim 23$ gives a contribution below $10^{-16}$.
+Hence $J=30$ as the maximal $j$ is a reasonable cutoff.
+\begin{minted}[frame=lines, bgcolor=bg, fontsize=\footnotesize, linenos]{python}
+def _remove_peak(fft, ind, nu, N, alpha=140, J=30):
+    """Remove a gaussian peak from a FFT at a given frequency"""
+    ampl = fft[ind]
+    phase = nu * N - ind
+    for j in range(-J+1, J, 1):
+        corr_exp = -np.pi**2 / alpha * (j**2 - 2 * phase * j)
+        fft[ind+j] -= ampl * np.exp(corr_exp)
+        
+def naffnd_gauss(z, n_freq=1, alpha=140, J=30, 
+                 ReturnCoeff=False, Offset=False):
+    """
+    NaffND with gaussian weights.
+    Computes the first 'n_freq' fundamental frequencies of the complex-valued
+        input signal 'z', as well as their respective complex amplitudes.
+    Parameters:
+        n_freq == number of frequenices to be computed until max(fft) < 1e-15
+                  (iterative process is aborted if the fft becomes 'flat')
+        alpha == gaussian weights given by exp(-alpha * (t / N - 0.5)**2)
+                 where t = 0,...,N-1 with 'N' being the signal length
+                 (alpha = 140 leads to weights being about 1e-16 at t = 0)
+        J == for the '2*J - 1' points closest to the relevant peak in the fft,
+             the respective fft-value is subtracted based on an approximate
+             analytical formula
+             (J = 23 would be enough for machine precision at the outer parts)
+        ReturnCoeff == whether to return the computed frequency amplitudes
+        Offset == whether to compute, return and adjust a signal offset
+    """
+    N = z.shape[0]
+    t = np.arange(N)    # t = 0,...,N-1
+    weights = np.exp(-alpha * (t / N - 0.5)**2)
+    fft = np.fft.fft(weights * z)   # need complex-valued fft for coeff.
+    abs_fft = np.abs(fft)           # only need absolute values for freqs.
+    
+    # frequencies and their respective amplitudes
+    nu_arr = np.zeros(n_freq + Offset)
+    c_arr = np.zeros(n_freq + Offset, dtype=np.complex128)     
+    
+    if J > N//2:
+        J = N//2
+    if Offset:    # compute constant offset and adjust fft spectrum
+        c_arr[n_freq] = np.sqrt(alpha / np.pi) * fft[0] / N    
+        _remove_peak(abs_fft, ind=0, nu=0.0, N=N, J=J)
+    
+    for i in range(n_freq):
+        ind = np.argmax(abs_fft)
+        if abs_fft[ind] < 1e-15:   
+            return nu_arr   # abort if fft-peak too small -> nu == 0
+        if ind == (N-1):   
+            ind -= 1    # avoid index error at 'abs_fft[ind + 1]'
+        elif abs_fft[ind - 1] > abs_fft[ind + 1] + 1e-8:   
+            ind -= 1    # 'ind' closer to true peak (1e-8 tolerance)
+            
+        # Ratio 'R' of largest neighboring fft-values to compute 'nu'
+        R = abs_fft[ind] / abs_fft[ind + 1]
+        nu = ind / N + 1 / (2*N) - alpha / (2 * np.pi**2 * N) * np.log(R)
+        nu_arr[i] = nu
+        
+        # compute the complex value of the frequency amplitude
+        phase = nu * N - ind
+        c = np.sqrt(alpha / np.pi) * fft[ind] / N * np.exp(-1j*np.pi * phase)
+        c_arr[i] = c * np.exp(np.pi**2 / alpha * phase**2)
+        
+        # remove the previous peak from the fft spectrum
+        _remove_peak(abs_fft, ind, nu, N, alpha=alpha, J=J)
+    if ReturnCoeff:
+        return nu_arr, c_arr
+    return nu_arr
+\end{minted}
+
+\subsection{Cosine weights}
+Consider weights defined by a sum of $K$ $\cos$-functions via
+\begin{align}
+w_t &\propto \sum_{k=0}^{K-1} a_k\cos \kla\left( {2\pi k \frac{t}{N}} \right),
+\end{align}
+for a set of coefficients $a_k\in\mathbb{R}$.
+Let the proportionality constant be $\frac{1}{C}$, such that the weights are normalized.
+Then the Fourier coefficients are
+\begin{align}
+F_j &= \sum_{t=0}^{N-1} c_1\e^{2\pi\i \nu t} w_t \e^{-2\pi\i j\frac{t}{N}} = \\
+&= \frac{c_1}{C} \sum_{k=0}^{K-1} \frac{a_k}{2} \sum_{t=0}^{N-1} \e^{2\pi\i\frac{t}{N}(\nu N - j)} \kla\left( {\e^{2\pi\i k \frac{t}{N}} + \e^{-2\pi\i k \frac{t}{N}}} \right) = \\
+&= \frac{c_1}{2C}\sum_{k=0}^{K-1} a_k \frac{1 - \e^{2\pi\i (\nu N - j + k)}}{1 - \e^{2\pi\i \frac{1}{N}(\nu N - j + k)}} + a_k\frac{1 - \e^{2\pi\i (\nu N - j - k)}}{1 - \e^{2\pi\i \frac{1}{N}(\nu N - j - k)}} = \\
+&= \frac{c_1}{4C} \kla\left( {1 - \e^{2\pi\i\nu N}} \right) \sum_{k=0}^{K-1} a_k \frac{\e^{-\pi\i \frac{1}{N}(\nu N - j + k)}}{\sin \klam\left[ {\pi \frac{1}{N}(\nu N - j + k)} \right] } + a_k \frac{\e^{-\pi\i \frac{1}{N}(\nu N - j - k)}}{\sin \klam\left[ {\pi \frac{1}{N}(\nu N - j - k)} \right] } = \\
+&= \frac{c_1}{4C} \kla\left( {1 - \e^{2\pi\i\nu N}} \right) \e^{-\pi\i \kla\left( { \nu - \frac{j}{N}} \right) }  \sum_{k=-K+1}^{K-1} a_{|k|} \frac{\e^{-\pi\i \frac{k}{N}}}{\sin \klam\left[ {\pi (\nu - \frac{j}{N} + \frac{k}{N})} \right] },
+\end{align}
+where the $k=0$-term should be counted twice. 
+The magnitude of the coefficients is
+\begin{align}
+|F_j(\nu)| &= \frac{c_1}{2C}\sin\kla\left( {\pi\nu N} \right) \left\vert \sum_{k=-K+1}^{K-1} a_{|k|} \frac{\e^{-\pi\i \frac{k}{N}}}{\sin \klam\left[ {\pi (\nu - \frac{j}{N} + \frac{k}{N})} \right] } \right\vert.
+\end{align}
+%Their derivative is
+%\begin{align}
+%|F_j(\nu)|' &= \pi N\cot (\pi\nu N) F_j +  \frac{c_1}{2C}\sin\kla\left( {\pi\nu N} \right) \left\vert \sum_{k=-K+1}^{K-1} a_{|k|} \frac{\e^{-\pi\i \frac{k}{N}}}{\cos \klam\left[ {\pi (\nu - \frac{j}{N} + \frac{k}{N})} \right] } \right\vert
+%\end{align}
+Their derivative is
+\begin{align}
+F_j'(\nu) &= -\pi\i F_j - \frac{2\pi\i N \e^{2\pi\i\nu N}}{1 - \e^{2\pi\i\nu N}}F_j - \frac{c_1}{4C} \dots \sum_{k=-K+1}^{K-1} a_{|k|} \pi \e^{-\pi\i\frac{k}{N}} \frac{\cos \klam\left[ {\pi (\nu - \frac{j}{N} + \frac{k}{N})} \right]}{\sin^2 \klam\left[ {\pi (\nu - \frac{j}{N} + \frac{k}{N})} \right]}.
+\end{align}
+The peak-frequency is the solution to the equation $|F_j'(\nu)| = 0$.
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

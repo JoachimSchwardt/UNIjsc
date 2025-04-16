@@ -1,0 +1,37 @@
+\chapter{Introduction}\label{chap:int}
+%\showthe\textwidth
+%\begin{figure}[!ht]
+%\includegraphics{figures/test.pdf}
+%\caption{Test image; check that font is identical and $x$ and $y$ match size of axis labels; check that image size is correctly configured to match linewidth}
+%\end{figure}
+%\FloatBarrier
+%Gogolin bosonization as change of basis in preface [\spage xiv]{Gogolin_1999}
+%new particles/interactions 1.5.2 BeyondSM_Allanach_2017
+The frontier of high-energy physics lies in the extension of known microscopic laws to ever higher energies, or even the discovery of entirely new particles and interactions \cite{BeyondSM_Allanach_2017,ATLAS_2024}.
+In the world of condensed matter the situation is quite different, for the underlying microscopic description of particles at the relatively low energies and temperatures is already well understood \cite{More_is_Different_Anderson_1972,Theory_of_Everything_Laughlin_2000,QMB_Coleman_2015}.
+Here, the challenge instead lies in the complexity that emerges as many particles are combined \cite{Emergence_Short_Coleman_2007,QMB_Coleman_2015}.\\
+In the context of many-body physics, the problem is that the number of degrees of freedom grows so rapidly with the number of constituents, that exact calculations for a macroscopic number of particles are inherently impossible \cite{Theory_of_Everything_Laughlin_2000}.
+Crucially, even the hypothetical knowledge of the positions and velocities of all particles, or the full quantum many-body wave-function, would contain an intractable amount information -- most of which essentially irrelevant for a proper description of the system \cite[\spage vii]{OpenQuantumSystems_Breuer_2007}.\\
+%Fortunately, it is not just complexity that arises from emergence; for example, a large volume of gas can be efficiently described by temperature and pressure, despite an exact microscopic description being infeasible \cite{QFT_Abrikosov_1975}.
+Fortunately, complex dynamics can also lead to the emergence of simpler structures; for example, a large volume of gas can be efficiently described by temperature and pressure, despite an exact microscopic description being infeasible \cite{QFT_Abrikosov_1975}.
+Therefore, the idea that the whole can be considered greater than the sum of its constituents\footnote{Although this should not be taken too literally. The word ``sum'' simply harbours more complexity than, say, the addition of integers may lead on. Perhaps the idea is better encapsulated by Anderson's quote of ``More is Different'' \cite{More_is_Different_Anderson_1972}.} \cite{Gogolin_1999}, does not necessarily imply that a description must be exceedingly complicated, in order to be useful \cite{QMB_Coleman_2015}.
+\\
+Numerous tools have been developed to tackle the quantum many-body problem, and here we briefly mention the few that play a role in this thesis.
+\acrlongpl{gf} can be used to probe how a system responds to a perturbation, and thus extract meaningful information without having to store the locations of $10^{23}$ particles \cite[\schap 6]{QMB_Inkson_1984}.
+Similarly, often the underlying model can be replaced by a simpler, effective field theory, that is valid in a certain parameter range \cite{RG_EFT_lowDim_Yanagisawa_2017,EFT_brauner2022snowmass}.
+In one dimensional systems, which we almost exclusively consider throughout, the prime example for such a theory is the \acrlong{ll} as a low-energy limit of interacting electrons \cite{Gogolin_1999,Giamarchi_2004}.\\
+Another example, more in the spirit of describing a gas via temperature, is that of using \acrlong{nh} physics to account for many effects that would otherwise require a more complicated microscopic theory \cite{ExceptTop_RevModPhys.93.015005}.
+Examples are dissipation through the coupling to an environment in open quantum systems, radiative decays or interaction-induced lifetimes of quasi-particles
+\cite{NH_Physics_review_Ashida_2020}.\\
+The last major concept relevant for our purposes is that of a \acrlong{rg}, although this idea is by no means limited to many-body physics \cite{RG_Theory_Fisher_1998,RG_Wilson_fRG_review_Dupuis_2021}. 
+One possible application is to simplify a model by removing degrees of freedom that are considered irrelevant, e.g. high-energy modes may not significantly impact the behaviour of a theory at low energies.
+The \acrlong{rg} provides a framework to implement this by systematically integrating out such modes \cite[\ssec II]{RG_Theory_Fisher_1998}.
+This procedure generically adjusts the model parameters, but may also allow one to neglect interactions, or give rise to new ones \cites[\schap 8]{AltlandSimons}{QFT_RG_OPE_Collins_1984}.
+\myparagraph{Outline}
+In \autoref{chap:back}, we properly introduce the analytical tools and background information required for the subsequent case study in \autoref{chap:ell}.
+%The thesis consists of two main parts.
+%In \autoref{chap:back} we expand on the analytical tools and background information introduced above.
+%There, we focus primarily on details required for the subsequent case study in \autoref{chap:ell}.
+In \autoref{chap:sum}, we summarize the results and provide an outlook.
+Many of the technical details are given in \autoref{chap:app} to stream-line the discussion in the main body of the text.\\
+We always use natural units with $\hbar=k_\text{B}=1$.

@@ -1,0 +1,198 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{07 Drehimpulsalgebra}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Drehimpulsoperator}
+Mit $\nabla=e_r\partial_r+e_\vartheta\frac{1}{r}\partial_\vartheta+e_\varphi\frac{1}{r\sin\vartheta}\partial_\varphi$ folgt:
+\begin{align*}
+L&=r\times p=re_r\times\frac{\hbar}{i}\nabla=\frac{\hbar}{i}\kla\left( {e_\varphi\partial_\vartheta - e_\vartheta\frac{1}{\sin\vartheta}\partial_\varphi } \right)=\frac{\hbar}{i}\begin{pmatrix}
+-\sin\varphi\partial_\vartheta - \cot\vartheta\cos\varphi\partial_\varphi \\ \cos\varphi\partial_\vartheta - \cot\vartheta\sin\varphi\partial_\varphi \\ \partial_\varphi
+\end{pmatrix}\\
+L^2&=-\hbar^2\kla\left( {e_\varphi\partial_\vartheta - e_\vartheta\frac{1}{\sin\vartheta}\partial_\varphi } \right)\cdot\kla\left( {e_\varphi\partial_\vartheta - e_\vartheta\frac{1}{\sin\vartheta}\partial_\varphi } \right)=-\hbar^2\kla\left( {\partial_\vartheta^2+\frac{\cos\vartheta}{\sin\vartheta}\partial_\vartheta+\frac{1}{\sin^2\vartheta}\partial_\varphi^2} \right) \\
+L_\pm &=L_x\pm iL_y=\hbar\kla\left( {i\sin\varphi\partial_\varphi + i\cos\varphi\cot\vartheta\partial_\varphi\pm \cos\varphi\partial_\vartheta \mp \sin\varphi\cot\vartheta\partial_\varphi} \right)= \\
+&=\hbar\kla\left( {\pm e^{\pm i\varphi}\partial_\vartheta +ie^{\pm i\varphi}\cot\vartheta\partial_\varphi} \right)=\hbar e^{\pm i\varphi}\kla\left( {i\cot\vartheta\partial_\varphi\pm\partial_\vartheta} \right) \\
+\nabla^2&=\kla\left( {e_r\partial_r+e_\vartheta\frac{1}{r}\partial_\vartheta+e_\varphi\frac{1}{r\sin\vartheta}\partial_\varphi} \right)\cdot\kla\left( {e_r\partial_r+e_\vartheta\frac{1}{r}\partial_\vartheta+e_\varphi\frac{1}{r\sin\vartheta}\partial_\varphi} \right)=\\
+&=\partial_r^2+\frac{1}{r^2}\partial_\vartheta^2+\frac{1}{r^2\sin^2\vartheta}\partial_\varphi^2+\frac{2}{r}\partial_r+\frac{\cos\vartheta}{r^2\sin\vartheta}\partial_\vartheta=\frac{1}{r^2}\partial_r\kla\left( {r^2\partial_r} \right)-\frac{1}{\hbar^2r^2}L^2
+\end{align*}
+\section{Kommutatoren}
+Es sei $|m\rangle$ ein Eigenzustand zu $L_z$, d.h. $L_z|m\rangle = m\hbar |m\rangle$ und $\langle m|L_z=\langle m|m\hbar$. Sei $(j\in\klammer\left\{ {x,y} \right\})$:
+\begin{align*}
+\bra\langle {L_j}\rangle &=\frac{\epsilon_{kzj}}{i\hbar}\langle \left[ {L_k,L_z} \right]\rangle=\frac{\epsilon_{kzj}}{i\hbar}\braket\langle {m} | {L_kL_z-L_zL_k} | {m}\rangle=\frac{\epsilon_{kzj}}{i\hbar}\braket\langle {m} | {L_k m\hbar - m\hbar L_k} | {m}\rangle=0
+\end{align*}
+Es ist $L_\pm L_\mp=L_x^2+L_y^2\pm i[L_y,L_x]=L^2-L_z^2\pm\hbar L_z$.
+\begin{align*}
+\bra\langle {L_x^2-L_y^2}\rangle&=\frac{1}{i\hbar}\bra\langle {L_x[L_y,L_z]+[L_x,L_z]L_y}\rangle=\frac{1}{i\hbar}\bra\langle {[L_xL_y,L_z]}\rangle=\\
+&=\frac{1}{i\hbar}\braket\langle {m} | {L_xL_ym\hbar-m\hbar L_xL_y} | {m}\rangle=0
+\end{align*}
+Aus $\bra\langle {L_x^2}\rangle=\bra\langle {L_y^2}\rangle$ folgt:
+\begin{align*}
+\bra\langle {L_x^2}\rangle&=\bra\langle {L^2}\rangle-\bra\langle {L_z^2}\rangle-\bra\langle {L_y^2}\rangle=\hbar^2j(j+1)-\hbar^2m^2-\bra\langle {L_x^2}\rangle\ \ \Rightarrow\ \ \bra\langle {L_x^2}\rangle=\frac{\hbar^2}{2}\kla\left( {j(j+1)-m^2} \right)
+\end{align*} 
+\section{Unschärferelation}
+Es gilt:
+\begin{align*}
+\Delta L_j^2&=\bra\langle {(L_j-\bra\langle {L_j}\rangle)^2}\rangle=\bra\langle {L_j^2}\rangle=\frac{\hbar^2}{2}\kla\left( {j(j+1)-m^2} \right)\\
+\Delta L_x\Delta L_y&=\frac{\hbar^2}{2}\kla\left( {j(j+1)-m^2} \right)\ge\frac{\hbar^2}{2}\ \ \ \ (\text{minimal für }m=\pm j)
+\end{align*}
+Sei $e=e_x\cos\alpha +e_y\cos\beta +e_z\cos\gamma$:
+\begin{align*}
+\bra\langle {e\cdot L}\rangle&=\bra\langle \cos\gamma L_z\rangle=m\hbar\cos\gamma \\
+(\Delta e\cdot L)^2&=\bra\langle {(e\cdot L)^2}\rangle-\bra\langle {e\cdot L}\rangle^2=(\cos^2\alpha+\cos^2\beta)\bra\langle {L_x^2}\rangle+\cos^2\gamma\bra\langle {L_z^2}\rangle-m^2\hbar^2\cos^2\gamma= \\
+&=\frac{\hbar^2}{2}(\cos^2\alpha+\cos^2\beta)\kla\left( {j(j+1)-m^2} \right)
+\end{align*}
+\section{Zweidimensionaler \textsc{Hilbert}-Raum}
+Matrixdarstellung:
+\begin{align*}
+\sigma_x&=\begin{pmatrix}
+0&1\\ 1&0
+\end{pmatrix}=\sigma_x^\dagger &\sigma_y&=\begin{pmatrix}
+0&-i\\ i&0
+\end{pmatrix}=\sigma_y^\dagger &\sigma_z &=\begin{pmatrix}
+1&0\\ 0&-1
+\end{pmatrix}=\sigma_z^\dagger
+\end{align*}
+Es gilt für das charakteristische Polynom:
+\begin{align*}
+\chi_{\sigma_j}(\lambda)&=\lambda^2-\lambda\mathrm{tr\,}\sigma_j+\det\sigma_j=\lambda^2-1\ \ \Rightarrow\ \ \lambda=\pm 1
+\end{align*}
+Die Eigenwerte sind also für alle drei Matrizen gleich. Die Eigenvektoren berechnen sich wie folgt:
+\begin{align*}
+\sigma_xv_x&=\pm v_x\ \ \Rightarrow\ \ \left\{\begin{matrix}
+0x + 1y = \pm x \\ 1x + 0y = \pm y
+\end{matrix}\right.\ \ \Rightarrow\ \ v_x=\begin{pmatrix}
+1 \\ \pm 1
+\end{pmatrix} \\
+\sigma_yv_y&=\pm v_y\ \ \Rightarrow\ \ \left\{\begin{matrix}
+0x - iy = \pm x \\ ix + 0y = \pm y
+\end{matrix}\right.\ \ \Rightarrow\ \ v_y=\begin{pmatrix}
+1 \\ \pm i
+\end{pmatrix} \\
+\sigma_zv_z&=\pm v_z\ \ \Rightarrow\ \ \left\{\begin{matrix}
+1x + 0y = \pm x \\ 0x - 1y = \pm y
+\end{matrix}\right.\ \ \Rightarrow\ \ v_z=\frac{1}{2}\begin{pmatrix}
+1\pm 1 \\  1\mp 1
+\end{pmatrix}
+\end{align*}
+Mehr im Sinne der Dirac-Schreibweise und der Struktur der Quantenmechanik ist allerdings folgender Lösungsweg über $\sigma_j\Ket| {\lambda_j}\rangle =\lambda_j\Ket| {\lambda_j}\rangle $:
+\begin{align*}
+\braket\langle {n} | {\sigma_x} | {m}\rangle\brak\langle {m}| {\lambda_x}\rangle&=\lambda_x\brak\langle {n}| {\lambda_x}\rangle\\
+\Rightarrow\ \ \brak\langle {-}| {\lambda_x}\rangle&=\lambda_x\brak\langle {+}| {\lambda_x}\rangle\tecxt\text{ \ und \ }\brak\langle {+}| {\lambda_x}\rangle=\lambda_x\brak\langle {-}| {\lambda_x}\rangle\\
+\Rightarrow\ \ \lambda_x&=\pm 1\ \ \Rightarrow\ \ \Ket| {\lambda_x^\pm}\rangle = \frac{1}{\sqrt{2}}\kla\left( {\Ket| {+}\rangle \pm\Ket| {-}\rangle } \right)\\
+\braket\langle {n} | {\sigma_y} | {m}\rangle\brak\langle {m}| {\lambda_y}\rangle&=\lambda_y\brak\langle {n}| {\lambda_y}\rangle\\
+\Rightarrow\ \ -i\brak\langle {-}| {\lambda_y}\rangle&=\lambda_y\brak\langle {+}| {\lambda_y}\rangle\tecxt\text{ \ und \ }i\brak\langle {+}| {\lambda_y}\rangle=\lambda_y\brak\langle {-}| {\lambda_y}\rangle\\
+\Rightarrow\ \ \lambda_y&=\pm 1\ \ \Rightarrow\ \ \Ket| {\lambda_y^\pm}\rangle = \frac{1}{\sqrt{2}}\kla\left( {\Ket| {+}\rangle \pm i\Ket| {-}\rangle } \right)\\
+\braket\langle {n} | {\sigma_z} | {m}\rangle\brak\langle {m}| {\lambda_z}\rangle&=\lambda_z\brak\langle {n}| {\lambda_z}\rangle\\
+\Rightarrow\ \ \brak\langle {+}| {\lambda_z}\rangle&=\lambda_z\brak\langle {+}| {\lambda_z}\rangle\tecxt\text{ \ und \ }\brak\langle {-}| {\lambda_z}\rangle=\lambda_z\brak\langle {-}| {\lambda_z}\rangle\\
+\Rightarrow\ \ \lambda_z&=\pm 1\ \ \Rightarrow\ \ \Ket| {\lambda_z^\pm}\rangle = \Ket | {\pm} \rangle
+\end{align*}
+Man kann die Paul-Matrizen auch in anderen Basen darstellen. Berechne hierzu folgende Terme (Summen-Konvention beachten):
+\begin{align*}
+\sigma_j^q&=\braket\langle {\lambda_{jk}^p} | {\sigma_j^p} | {\lambda_{jl}^p}\rangle=\brak\langle {\lambda_{jk}^q}| {n}\rangle\braket\langle {n} | {\sigma_j^p} | {m}\rangle\brak\langle {m}| {\lambda_{jl}^q}\rangle\\
+\sigma_x^x&=\frac{1}{\sqrt{2}}\begin{pmatrix}
+1 & 1 \\ 1 & -1
+\end{pmatrix}^\dagger \begin{pmatrix}
+0 & 1 \\ 1 & 0
+\end{pmatrix}\frac{1}{\sqrt{2}}\begin{pmatrix}
+1 & 1 \\ 1 & -1
+\end{pmatrix}= \begin{pmatrix}
+1 & 0 \\ 0 & -1
+\end{pmatrix}=\sigma_z^z\\
+\sigma_y^x&=\frac{1}{\sqrt{2}}\begin{pmatrix}
+1 & 1 \\ 1 & -1
+\end{pmatrix}^\dagger \begin{pmatrix}
+0 & -i \\ i & 0
+\end{pmatrix}\frac{1}{\sqrt{2}}\begin{pmatrix}
+1 & 1 \\ 1 & -1
+\end{pmatrix}= \begin{pmatrix}
+0 & i \\ -i & 0
+\end{pmatrix}=-\sigma_y^z\\
+\sigma_z^x&=\frac{1}{\sqrt{2}}\begin{pmatrix}
+1 & 1 \\ 1 & -1
+\end{pmatrix}^\dagger \begin{pmatrix}
+1 & 0 \\ 0 & -1
+\end{pmatrix}\frac{1}{\sqrt{2}}\begin{pmatrix}
+1 & 1 \\ 1 & -1
+\end{pmatrix}= \begin{pmatrix}
+0 & 1 \\ 1 & 0
+\end{pmatrix}=\sigma_x^z\\
+\sigma_x^y&=\frac{1}{\sqrt{2}}\begin{pmatrix}
+1 & 1 \\ i & -i
+\end{pmatrix}^\dagger \begin{pmatrix}
+0 & 1 \\ 1 & 0
+\end{pmatrix}\frac{1}{\sqrt{2}}\begin{pmatrix}
+1 & 1 \\ i & -i
+\end{pmatrix}= \begin{pmatrix}
+0 & -i \\ i & 0
+\end{pmatrix}=\sigma_y^z\\
+\sigma_y^y&=\frac{1}{\sqrt{2}}\begin{pmatrix}
+1 & 1 \\ i & -i
+\end{pmatrix}^\dagger \begin{pmatrix}
+0 & -i \\ i & 0
+\end{pmatrix}\frac{1}{\sqrt{2}}\begin{pmatrix}
+1 & 1 \\ i & -i
+\end{pmatrix}= \begin{pmatrix}
+1 & 0 \\ 0 & -1
+\end{pmatrix}=\sigma_z^z\\
+\sigma_z^y&=\frac{1}{\sqrt{2}}\begin{pmatrix}
+1 & 1 \\ i & -i
+\end{pmatrix}^\dagger \begin{pmatrix}
+1 & 0 \\ 0 & -1
+\end{pmatrix}\frac{1}{\sqrt{2}}\begin{pmatrix}
+1 & 1 \\ i & -i
+\end{pmatrix}= \begin{pmatrix}
+0 & 1 \\ 1 & 0
+\end{pmatrix}=\sigma_x^z
+\end{align*}
+Es gilt $\sigma_j^2=I$. Betrachte außerdem $\sigma_i\sigma_j$:
+\begin{align*}
+\sigma_x\sigma_y&=\begin{pmatrix}
+i & 0 \\ 0 & -i
+\end{pmatrix}=i\sigma_z &\sigma_y\sigma_x&=\begin{pmatrix}
+-i & 0 \\ 0 & i
+\end{pmatrix}=-i\sigma_z \\
+\sigma_y\sigma_z&=\begin{pmatrix}
+0 & i \\ i & 0
+\end{pmatrix}=i\sigma_x &\sigma_z\sigma_y&=\begin{pmatrix}
+0 & -i \\ -i & 0
+\end{pmatrix}=-i\sigma_x \\
+\sigma_z\sigma_x&=\begin{pmatrix}
+0 & 1 \\ -1 & 0
+\end{pmatrix}=i\sigma_y &\sigma_x\sigma_z&=\begin{pmatrix}
+0 & -1 \\ 1 & 0
+\end{pmatrix}=-i\sigma_y
+\end{align*}
+Zusammengefasst gilt also:
+\begin{align*}
+\sigma_i\sigma_j&=\delta_{ij}I + i\epsilon_{ijk}\sigma_k
+\end{align*}
+Daraus kann man die Kommutator- und Antikommutatorrelation herleiten:
+\begin{align*}
+[\sigma_i,\sigma_j]&=\delta_{ij}I+i\epsilon_{ijk}\sigma_k-\delta_{ji}I-i\epsilon_{jik}\sigma_k=2i\epsilon_{ijk}\sigma_k \\
+\klammer\left\{ {\sigma_i,\sigma_j} \right\}&=\delta_{ij}I+i\epsilon_{ijk}\sigma_k+\delta_{ji}I+i\epsilon_{jik}\sigma_k=2\delta_{ij}I
+\end{align*}
+\end{document}

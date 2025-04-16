@@ -1,0 +1,98 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{06 Zustandsdichte}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 6.1: Zustandsdichte der Phononen in einer 1D-Kette}
+Gegeben ist die bereits bekannte Dispersionsrelation $\omega(q)=\omega_\tecxt\text{max}\left\vert\sin\frac{qa}{2}\right\vert$. Für die Zustandsdichte gilt allgemein:
+\begin{align*}
+D(\omega)&=\frac{V}{N}\intr\oint_{\omega=\tecxt\text{const}}\frac{1}{|\omega'(q)|}\,\mathrm{d}^{n-1}q
+\end{align*} 
+In einer Dimension, also $n=1$, gilt dann mit $\frac{qa}{2}=\arcsin\frac{\omega}{\omega_\tecxt\text{max}}$ und der atomaren Dichte $\frac{N}{V}=\frac{1}{a}$:
+\begin{align*}
+D(\omega)&=a\cdot\frac{2}{\frac{a}{2}\omega_\tecxt\text{max}\left\vert\cos\frac{qa}{2}\right\vert}\Big\vert_{q(\omega)}=\frac{4}{\omega_\tecxt\text{max}\cos\arcsin\frac{\omega}{\omega_\tecxt\text{max}}}=\frac{4}{\sqrt{\omega_\tecxt\text{max}^2-\omega^2}}
+\end{align*}
+Es gilt mit $L=Na$:
+\begin{align*}
+D(\omega)&=2Z_1(\omega)\frac{\tecxt\text{d}q(\omega)}{\tecxt\text{d}\omega}=\frac{L}{\pi}\frac{\tecxt\text{d}q}{\tecxt\text{d}\omega}=\frac{2L}{\pi a}\frac{1}{\sqrt{\omega_\tecxt\text{max}^2-\omega^2}}
+\end{align*}
+Diese Dichte ist auch wieder normiert:
+\begin{align*}
+\intx\int_{0}^{\omega_\tecxt\text{max}}D(\omega)\,\mathrm{d}\omega = \frac{2L}{\pi a}\intx\int_{0}^{1}\frac{1}{\sqrt{1-x^2}}\,\mathrm{d}x=\frac{2L}{\pi a}\frac{\pi}{2}=N
+\end{align*}
+Debye: Im Grenzwert $q\rightarrow 0$ ist $\omega(q)\simeq \omega_\tecxt\text{max}\frac{a}{2}\cdot q=:v_sq$ mit der Schallgeschwindigkeit $v_s=\frac{\omega_\tecxt\text{max}a}{2}$. Dann lautet die Zustandsdichte:
+\begin{align*}
+D(\omega)&=\frac{L}{\pi}\frac{\tecxt\text{d}q(\omega)}{\tecxt\text{d}\omega}=\frac{L}{v_s\pi}
+\end{align*}
+Die Bedingung der Normierung liefert dann die Debye-Frequenz:
+\begin{align*}
+N&\overset{!}{=}\intx\int_{0}^{\omega_\tecxt\text{D}}D(\omega)\,\mathrm{d}\omega = \frac{L\omega_\tecxt\text{D}}{v_s\pi}=\frac{2N\omega_\tecxt\text{D}}{\omega_\tecxt\text{max}\pi}&\Rightarrow &&\omega_\tecxt\text{D}&=\frac{\pi}{2}\omega_\tecxt\text{max}
+\end{align*}
+\section*{Aufgabe 6.2: Singularität in der Zustandsdichte}
+Gegeben ist eine Dispersionrelation $\omega(q)=\omega_0-Aq^2$ für kleine $q$. Mit der obigen Formel kann man dann die Zustandsdichte berechnen. Es gilt $q(\omega)=\sqrt{\frac{1}{A}(\omega_0-\omega)}$:
+\begin{align*}
+D(\omega)&=\frac{V}{N}\oint\frac{1}{2Aq}\, q^2\sin\theta_q\mathrm{d}\theta_q\mathrm{d}\phi_q=\frac{V}{N}\cdot \frac{2\pi}{A}\cdot q(\omega)=\frac{2\pi V}{N\sqrt{A^3}}\sqrt{\omega_0-\omega}\Theta(\omega_0-\omega)
+\end{align*}
+Es gilt mit $q(\omega)=\sqrt{\frac{1}{A}(\omega_0-\omega)}$:
+\begin{align*}
+D(\omega)\tecxt\text{d}\omega&=Z_3(q)\tecxt\text{d}^3q=\frac{V}{(2\pi)^3}\tecxt\text{d}^3q=\frac{V}{(2\pi)^3}4\pi q^2\tecxt\text{d}q\\
+D(\omega)&=\frac{V}{2\pi^2}\frac{\omega_0-\omega}{A}\frac{1/2}{\sqrt{A(\omega_0-\omega)}}=\frac{V}{4\pi^2A^{3/2}}\sqrt{\omega_0-\omega}
+\end{align*}
+Betrachte die Normierung:
+\begin{align*}
+\intx\int_{0}^{\omega_0}D(\omega)\,\mathrm{d}\omega &=\frac{V}{4\pi^2A^{3/2}}\frac{2}{3}(\omega_0-\omega)^{3/2}\Big\vert^{\omega_0}_0=\frac{V}{6\pi^2}\kla\left( {\frac{\omega_0}{A}} \right)^{3/2}\overset{!}{=}N\\
+\Rightarrow\ \ \ D(\omega)&=\frac{3N}{2\omega_0}\sqrt{1-\frac{\omega}{\omega_0}}
+\end{align*}
+\section*{Aufgabe 6.3: Kohn-Anomalie}
+Sei $C_p=A_1\frac{\sin Qpa}{p}$. Dann gilt:
+\begin{align*}
+\omega^2&=\frac{2}{M}\sum_{p>0}C_p(1-\cos qpa)=:F(q=0)-F(q)\\
+F(q)&=\frac{2A_1}{M}\sum_{p>0}\frac{\sin Qpa}{p}\cos qpa=:\frac{A_1Qa}{M}\sum_{p>0}c_p\cos qpa
+\end{align*}
+Gesucht ist also eine Funktion mit den Fourier-Koeffizienten $c_p=2\frac{\sin Qpa}{Qpa}$. Betrachte $f(x)=\Theta(a-|x|)$:
+\begin{align*}
+c_p'&=\frac{1}{a}\intx\int_{-a}^{a}f(x)\cos Qpx \,\mathrm{d}x=2\intx\int_{0}^{1}\cos yQpa \,\mathrm{d}y=2\frac{\sin Qpa}{Qpa}=c_p
+\end{align*}
+Also ist $\omega^2(q)$ gerade mit der Fourier-Reihe eines Rechteck-Signals verbunden:
+\begin{align*}
+\omega^2&=
+\end{align*}
+\section*{Aufgabe 6.4: Lichtstreuung an Phononen}
+Maximaler Impulsübertrag bei Rückstreuung, also $\theta=\pi$. Energie- und Impulserhaltung lauten:
+\begin{align*}
+\omega&=\omega'+\omega_p\\
+\vec{q}&=\vec{q}'+\vec{q}_s+\vec{Q}
+\end{align*}
+Der Impulsübertrag $\vec{Q}$ an das Gitter soll verschwinden. Mit dem gegebenen Winkel ist $\vec{q}'=-\alpha\vec{q}$ und wir können dann auch nur die Beträge der Impulse betrachten, wobei mit der Brechzahl $n$ die Frequenz $\omega=\frac{c}{n} q$ für die Photonen eingesetzt werden kann:
+\begin{align*}
+\frac{\omega-(-\alpha\omega)}{c/n}&=q_s=\frac{\omega_s}{v_s}
+\end{align*}
+Da die Energie des Photons viel größer als die des Phonons ist, können wir $\alpha\approx 1$ annehmen. Dann gilt für die maximale Frequenz mit $n=1.54$, $v_s=6000\,\frac{\tecxt\text{m}}{\tecxt\text{s}}$ und $\lambda=694\,$nm:
+\begin{align*}
+f_s=\frac{\omega_s}{2\pi}=\frac{2nv_s}{c}\frac{\omega}{2\pi}=\frac{2nv_s}{\lambda}=26.6\,\tecxt\text{GHz}
+\end{align*}
+\end{document}

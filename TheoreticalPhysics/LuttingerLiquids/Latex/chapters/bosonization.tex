@@ -1,0 +1,461 @@
+\chapter{Theoretical Background}\label{chap:back}
+%In this chapter we introduce, in order, the concept of bosonization, the Matsubara formalism, non-hermitian topology and the perturbative \acrlong{rg}.
+In this chapter, we introduce the relevant analytical tools and concepts.
+Bosonization is discussed in \autoref{chap:bos}, and the Matsubara formalism for the computation of \acrlong{gf}s at finite temperatures in \autoref{chap:gf}.
+A brief introduction to \acrlong{nh} topology is given in \autoref{chap:ep}, and two different approaches to the perturbative \acrlong{rg} are introduced in \autoref{chap:rg}.
+While occasionally remarks beyond the content of standard references are made, this part primarily aims to provide a reasonably self-contained body of necessary background information.
+\section{Bosonization}\label{chap:bos}
+At its core, bosonization describes the procedure of re-expressing fermionic operators in terms of bosonic ones \cites[\ssec II]{Bosonization_FiniteT_Bowen_2001}[\ssec 3.I]{Gogolin_1999}, which is essentially an unusual and highly non-trivial change of basis \cites[\spage 34]{Giamarchi_2004}.
+The primary goal of this section is to describe the method itself, for which this formal point of view is adequate.
+\subsection{Breakdown of Fermi Liquid theory}\label{sec:bos:introduction}
+The main motivation for bosonization is the breakdown of Fermi Liquid theory in one dimensional systems \cite{Giamarchi_2004,FermiLiquid_LL_review_Voit_1995}.
+In higher dimensions, Fermi Liquid theory very successfully manages to describe interacting electrons as approximately free quasi-particles with a finite lifetime near the Fermi energy \cite{QMB_Mahan_2000,FermiLiquid_review_Neilson_1996,FermiLiquid_LL_review_Voit_1995}.
+Since these consist of an electron and density fluctuations, they are also of fermionic nature, and, according to \cite{FermiLiquid_review_Neilson_1996,Giamarchi_2004}, Landau first demonstrated that in $d=3$ dimensions their lifetime scales as $\tau \sim E(k)^{-2}$.
+An accessible and detailed derivation of this is given in \cite{FermiLiquid_Vignale_2022}, which also shows that in two dimensions the relation is only slightly modified by logarithmic corrections.
+This scaling is important, because it guarantees that as we approach the Fermi level, $\frac{1}{\tau}$ becomes much smaller than the energy $E(k)$, and thus quasi-particles are well defined \cite{Giamarchi_2004,FermiLiquid_LL_review_Voit_1995}.
+Consequently, Fermi Liquid theory is a good description of the low energy limit, even for strong interactions \cites[\ssec 1.1]{Giamarchi_2004}[\ssec 6.2]{QMB_Coleman_2015}.
+\\
+In one dimension, however, this fails and the \trspace{} picture provides an intuitive explanation.
+As soon as an interaction is turned on, any particle propagation causes a collective excitation since it is no longer possible to ``go around'' other particles.
+But if individual motion is impossible, then the notion of (almost) free quasi-particles can not be an accurate model.
+More formally, one can show that in one dimension the susceptibility measuring the linear response to an external potential diverges as $T\rightarrow 0$, suggesting that the ground state is very different from the non-interacting case \cite[\ssec 1.2]{Giamarchi_2004}.
+Without giving a detailed account of the derivation, note that a crucial observation is that the so-called \emph{nesting condition} $\epsilon(k+q) = -\epsilon(k)$ is, for $d>1$, generally only satisfied at isolated points.
+For $d=1$, the Fermi surface only consists of two points at $k=\pm \kf$, and for $q=2\kf$ the nesting condition is satisfied for an entire interval of momenta within which a linear approximation\footnote{At least assuming inversion symmetry, otherwise the dispersion need not be symmetric. However, note that this is not a requirement for bosonization.} of the dispersion is valid \cite[\spage 8]{Giamarchi_2004}.\\
+It should be noted that it is also possible to obtain useful results using perturbation theory \cite[\spage 11]{FermiLiquid_LL_review_Voit_1995}.
+In particular, historically the first solution was entirely in terms of fermions \cite{Parquet_Dzyaloshinskii_1974}.
+Nevertheless, bosonization provides a rather elegant solution to the problem of interacting electrons in one dimension and leads to the \gls{ll} as a generic low-energy theory in place of the Fermi Liquid.
+The concept of the \gls{ll} has proven useful for the quantum impurity problem \cite{QImpurity_review_Furusaki_2005,QImpurity_LL_Rylands_2016}, quantum Hall edge states \cite{QHallEdgeStates_LL_Wen_1990} and, especially in recent years, the helical \gls{ll} has gained a lot of interest \cite{Helical_ChargeSpinDuality_nonequilibrium_Liu_2011,Helical_Edge_PhononBackscat_Budich_2012,Helical_RashbaImp_RG_Crepin_2012,Helical_RashbaNanowires_LowElectronDensity_Schmidt_2016,Helical_RashbaNanowires_Magnetic_Pedder_2016,Helical_Rashba_SpinOrbit_QSH_Stroem_2010,Helical_SyntheticQWire_Japaridze_2013}. % claim for impurity and QHES in BosonReferm p.4
+One of the predicted signatures, a re-entrant conductance feature within the helical phase, has even been directly observed in experiment \cite{Helical_Experiment_Nanowire_Heedt_2017}.
+Finally, the ``claim to fame'' of bosonization is that often interactions can be taken into account exactly.
+This is because some -- but, alas, not all -- products of four fermionic creation and annihilation operators end up being mapped to an expression that is merely quadratic in the new degrees of freedom \cite{Bosonization_Schulz_1995,Giamarchi_2004}.
+\subsection{Bosonization Identity}\label{sec:bos:bosonization_identity}
+There exists a plethora of introductions to bosonization.
+Even within the standard approach \cite{Giamarchi_2004,Gogolin_1999,Fradkin_2013,QMB_Fabrizio_2022,Bosonization_TLL_Schonhammer_1997,Bosonization_GF_LL_Meden_1999,Bosonization_Rao_2001,Bosonization_LowE_1d_fluids_Haldane_1981} the construction varies quite a bit, and famously ``there are as many different notations as there are authors'' \cite[\spage 394]{Giamarchi_2004}.
+Some derivations also involve the \acrlong{rg} \cite{Bosonization_Shankar_1994,Bosonization_Schulz_1995} or are even based on Conformal Field Theory \cite{Bosonization_Senechal_2004}.
+In this section, we derive the bosonization identity for an arbitrary number of fermionic fields following the comparatively rigorous approach of \cite{Bosonization_DelftSchoeller_1998}.
+For our purposes the case of only two fermions would suffice, see e.g. \cite{Giamarchi_2004}.
+But the generalization actually \emph{simplifies} the derivation a bit by providing a clearer separation between details that belong to the procedure itself, and details that originate from the model specifics.\\
+The starting point is to assume that we are given a set of fermionic operators $c_{k,\ell}$ that satisfy the canonical anti-commutation relations
+\begin{align}
+\klc[\big]{c_{k,\ell}, c_{k',\ell'}^\dagger} &= \delta_{\ell,\ell'} \delta_{k,k'}\quad\text{and}\quad \klc[\big]{c_{k,\ell}, c_{k',\ell'}} = 0. \label{eqn:bos:ckell_canonical_comm}
+\end{align}
+At this stage, $\ell$ should be viewed as nothing more than a label distinguishing $M$ different species $\ell=1,\dots,M$.
+An essential property of these operators is that, besides the momenta being discrete, we also require them to be unbounded\footnote{This is a subtle but crucial point. For a bounded spectrum one of the key steps of bosonization is not possible, see \autoref{eqn:bos:C_q_op_remnants_def}.}.
+For a system size $L$ we assume that the momenta are given by
+\begin{align*}
+k &= \frac{2\pi}{L} n_k\quad\text{for}\ n_k\in\mathbb{Z}.
+\end{align*}
+This is rather peculiar, as in the case of a lattice model there would always exist some maximal momentum of the order of $\frac{1}{a}$, or equivalently some maximal $n_k$ of the order of the number of lattice sites $N$ \cite[\spage 8]{Bosonization_Rao_2001}.
+For now we tentatively accept that we may add these infinitely many additional momenta to our model without affecting the physics in the low-energy limit \cite{FermiLiquid_LL_review_Voit_1995}, but should anticipate \gls{uv} divergences.\\
+%Note that thus far we have not assumed anything about the dispersion relation of the system $\epsilon(k)$, although we implicitly assume the existence of a ground state.
+For convenience of notation let $\intx{ }{ }{ }{x} \equiv \intx{-L/2}{L/2}{ }{x}$ and $\sum_k \equiv \sum_{n_k\in\mathbb{Z}}$.
+We define field operators
+\begin{align}
+\psi_\ell(x) &= \frac{1}{\sqrt{L}} \sum_k \powe{\i kx} c_{k,\ell} \label{eqn:bos:psi_ell_from_c_k_ell}
+\end{align}
+where $\intx{ }{ }{\powe{\i kx}}{x}=L\delta_{k,0}$ implies the inverse relation
+\begin{align}
+c_{k,\ell} &= \frac{1}{\sqrt{L}} \intx{ }{ }{\powe{-\i kx} \psi_\ell(x)}{x}. \label{eqn:bos:c_k_ell_from_psi_ell}
+\end{align}
+Using \autoref{eqn:bos:ckell_canonical_comm} and \autoref{eqn:bos:psi_ell_from_c_k_ell}, the anti-commutation relations for the field operators become\footnote{Since $f(x) = \sum_{n\in\mathbb{Z}} \powe{\i nx}$ is $2\pi$-periodic it can be interpreted as a Fourier series with coefficients $c_n=1$. Due to $c_n = \frac{1}{2\pi} \intx{p}{p+2\pi}{\powe{-\i nx} f(x)}{x}$ for any $p\in\mathbb{R}$ we must have $f(x) = 2\pi \sum_{m\in\mathbb{Z}} \delta(x - 2\pi m)$, see \cite[\spages 30--32]{GelfandShilov_1964} for details.} % Deitmar and Echterhoff "Principles of Harmonic Analysis" Thm. 3.6.3. OR I. M. Gel’fand, G. E. Shilov, Generalized Functions, Vol. 1, Academic Press, New York 1964 p. 331 (OR p.31, (2.4.2))
+\begin{align*}
+\klc*{\psi_\ell(x), \psi_{\ell'}^\dagger(x')} &= \delta_{\ell,\ell'} \frac{1}{L} \sum_{n_k\in\mathbb{Z}} \powe{\i \frac{2\pi}{L} n_k (x-x')} = \delta_{\ell,\ell'} \sum_{m\in\mathbb{Z}} \delta\kla*{x-x'-mL}.
+\end{align*}% = \frac{1}{L} \sum_{k,k'} \powe{\i kx} \powe{-\i k'x'} \klc*{c_{k,\ell},c_{k',\ell'}^\dagger}
+This serves as a periodic generalization of -- and simplifies to -- the usual result in the case of $x,x'\in \klb*{-\frac{L}{2},\frac{L}{2}}$ \cite[\spage 10]{Bosonization_DelftSchoeller_1998}.
+\myparagraph{Vacuum state}
+Before we begin with the proper construction of bosonization, we have to think about the notion of a ground state in our system.
+A rather natural definition is given by the properties
+\begin{align*}
+c_{k>0,\ell} \Ket{\textbf{0}}_0 &=0,\quad\text{and}\quad c_{k\le 0,\ell}^\dagger \Ket{\textbf{0}}_0 = 0.
+\end{align*}
+One can think of this as the Fermi sea where every state up to and including $k=0$ is occupied for all labels $\ell$, and all higher momentum states are empty \cite{Bosonization_DelftSchoeller_1998}.
+Although we refer to this as the ground state, note that it is actually not necessarily the state of lowest energy.
+However, it is the reference point with respect to which we measure everything else.
+In principle this choice is somewhat arbitrary due to the unbounded spectrum; we could just as well choose the state $c_{0,1} \Ket{\textbf{0}}_0$ containing one fewer fermion with label $\ell=1$ and momentum $k=0$.
+More generally, there exist infinitely many $\textbf{N}$-particle ground states that we define by adding (or removing) the respective number of fermions of each label contained in the vector $\textbf{N}=(N_1,\dots,N_M)$ to (or from) $\Ket{\textbf{0}}_0$.
+To disambiguate the phase, we specify an order in the same way as \cite{Bosonization_DelftSchoeller_1998}.
+Identifying $c_{n_k,\ell} \equiv c_{k,\ell}$ for convenience, we define
+\begin{align*}
+\Ket{\textbf{N}}_0 &= (C_1)^{N_1} \dots (C_M)^{N_M} \Ket{\textbf{0}}_0\quad\text{with} \quad (C_\ell)^{N_\ell} = \begin{cases} c_{N_\ell,\ell}^\dagger \dots c_{1,\ell}^\dagger & \text{for}\ N_\ell>0,\\
+1 & \text{for}\ N_\ell = 0,\\ c_{N_\ell+1,\ell}\dots c_{0,\ell} & \text{for}\ N_\ell < 0. \end{cases}
+\end{align*}
+As an illustrative example, this translates to $\Ket{(0,3,-2)}_0 = c_{3,2}^\dagger c_{2,2}^\dagger c_{1,2}^\dagger c_{-1,3} c_{0,3} \Ket{(0,0,0)}_0$.\\
+%The essence of bosonization can then be expressed as the following claim: any state created by the fermionic $c_{k,\ell}$ acting on the Fermi sea $\Ket{\textbf{0}}_0$ can also be obtained by a combination of particle-hole excitations and raising or lowering operators that change the total number of fermions.\\
+%More formally, the goal is to show that the space of states can be reorganized as a direct sum $\bigoplus_\textbf{N} \mathcal{H}_\textbf{N}$ where $\mathcal{H}_\textbf{N}$ denotes the subspace containing a fixed number of particles of each label corresponding to the vector $\textbf{N}$.\\
+%Within the Hilbert space $\mathcal{H}_\textbf{N}$ of a fixed number of particles $\textbf{N}$ for the respective labels all excitations must preserve the total number of particles and must therefore be of bosonic nature, i.e. come in the form of particle-hole excitations.
+Let us now consider the density operator in \trspace{},
+$\rho_\ell(x) = \varnormord{\psi_\ell^\dagger(x) \psi_\ell(x)}$, where the notation $\varnormord{A} \equiv A - \bra*{A}_0$ serves as a regularization with respect to the Fermi sea $\Ket{\textbf{0}}_0$.
+The Fourier components of this operator take the form of particle hole excitations, because
+\begin{align*}
+\rho_{q,\ell} &= \intx{ }{ }{\powe{-\i qx}\rho_\ell(x)}{x} = \frac{1}{L} \sum_{k,k'} \intx{ }{ }{ \powe{-\i qx} \powe{-\i kx} \powe{\i k'x} \varnormord{c_{k,\ell}^\dagger c_{k',\ell}}}{x} = \sum_k \varnormord{c_{k,\ell}^\dagger c_{k+q,\ell}}.
+\end{align*}
+Note that the regularization is only necessary for $q=0$, since otherwise $\bra[\big]{c_{k+q,\ell}^\dagger c_{k,\ell}}_0 = 0$ by construction. 
+This case corresponds to the number operator
+\begin{align*}
+N_\ell &= \rho_{q=0,\ell} = \sum_k \varnormord{c_{k,\ell}^\dagger c_{k,\ell}}
+\end{align*}
+counting the number of fermions with label $\ell$ relative to the Fermi sea.
+Somewhat unusually, here the eigenvalues $\mathcal{N}_\ell$ can also be negative, which is a direct consequence of $c_{k<0,\ell} \Ket{\textbf{0}}_0 \neq 0$ \cite{Bosonization_DelftSchoeller_1998}.
+The number operator admits the usual commutation relations
+\begin{align*}
+\klb*{N_\ell, c_{k,\ell'}} &= \delta_{\ell,\ell'} \klb*{c_{k,\ell}^\dagger c_{k,\ell}, c_{k,\ell}} = -\delta_{\ell,\ell'} c_{k,\ell}\quad \text{and} \quad \klb*{N_\ell, c_{k,\ell'}^\dagger} = \delta_{\ell,\ell'} c_{k,\ell}^\dagger.
+\end{align*}
+\vspace*{-1em}
+\myparagraph{Bosonic operators}
+To analyse the commutation relations of the $\rho_{q,\ell}$ for $q\neq 0$, note that due to $\rho_{q,\ell}^\dagger = \rho_{-q,\ell}$ we only need to consider
+\begin{align*}
+\rho_{q,\ell} \rho_{q',\ell'} &= \sum_{k,k'}c_{k,\ell}^\dagger c_{k+q,\ell} c_{k',\ell'}^\dagger c_{k'+q',\ell'} = \sum_{k,k'}c_{k,\ell}^\dagger \klc*{\delta_{\ell,\ell'} \delta_{k+q,k'} - c_{k',\ell'}^\dagger c_{k+q,\ell} } c_{k'+q',\ell'}\\
+&= -\sum_{k,k'} c_{k',\ell'}^\dagger c_{k,\ell}^\dagger c_{k'+q',\ell'} c_{k+q,\ell} + \delta_{\ell,\ell'} \sum_k c_{k,\ell}^\dagger c_{k+q+q',\ell}\\
+&= \rho_{q',\ell'}\rho_{q,\ell} + \delta_{\ell,\ell'} \sum_k c_{k,\ell}^\dagger c_{k+q+q',\ell} - \delta_{\ell,\ell'} \sum_k c_{k-q',\ell}^\dagger c_{k+q,\ell}.
+\end{align*}
+At this point, one can split the operators in the summation into their regularized version and the expectation value.
+This only makes a difference for $q'=-q$, so we restrict ourselves to that case.
+Now consider for a moment a bounded spectrum, i.e. $n_k=n_\text{min}, \dots, 0, \dots, n_\text{max}$.
+Then the commutator becomes \cites[\ssec 2.1]{Giamarchi_2004}{Bosonization_DelftSchoeller_1998}
+\begin{align*}
+\klb*{\rho_{q,\ell},\rho_{-q,\ell}} &= \sum_{n_{k}=n_\text{min}}^{n_\text{max}} \klb*{\varnormord{c_{k,\ell}^\dagger c_{k,\ell}} + \bra*{c_{k,\ell}^\dagger c_{k,\ell}}_0 - \varnormord{c_{k+q,\ell}^\dagger c_{k+q,\ell}} - \bra*{c_{k+q,\ell}^\dagger c_{k+q,\ell}}_0}\\
+&= C_{q} + \sum_{n_{k}=n_\text{min}}^{0} - \sum_{n_{k}=n_\text{min}}^{-n_q} = C_{q} + n_q
+\end{align*}
+where the remaining operator components are absorbed in
+\begin{align*}
+C_{q} &= \sum_{n_{k}=n_\text{min}}^{n_\text{max}} \varnormord{c_{k,\ell}^\dagger c_{k,\ell}} - \sum_{n_{k}=n_\text{min}}^{n_\text{max}} \varnormord{c_{k+q,\ell}^\dagger c_{k+q,\ell}}. \numberthis \label{eqn:bos:C_q_op_remnants_def}
+\end{align*}
+Since these operators are regularized, we may perform an index shift $k\rightarrow k-q$ in the second summation \cite[\spages 32--33]{Giamarchi_2004}.
+However, unless $n_\text{min}=n_\text{max}\rightarrow\infty$, there is only partial cancellation and the commutation relations of the $\rho_{q,\ell}$ remain operator valued and thus too complicated to proceed.
+For an unbounded spectrum, the index shift instead makes the two series identical, giving $C_q = 0$ and therefore
+\begin{align*}
+\klb*{\rho_{q,\ell}, \rho_{q',\ell'}} &= \delta_{\ell,\ell'} \delta_{q,-q'} n_q. %\label{eqn:bos:rho_qell_commutator}
+\end{align*}
+Now we are finally in a position to define, for $q>0$, the set of bosonic operators
+\begin{align}
+b_{q,\ell} &= \frac{-\i}{\sqrt{n_q}} \rho_{q,\ell} = \frac{-\i}{\sqrt{n_q}} \sum_k c_{k-q,\ell}^\dagger c_{k,\ell} \label{eqn:bos:bq_ell_def}
+\end{align}
+and $b_{q,\ell}^\dagger \equiv \kla[\big]{b_{q,\ell}}^\dagger$ \cite{Bosonization_DelftSchoeller_1998}.
+These operators then fulfil the canonical commutation relations\footnote{The second relation only holds, because by definition $q,q'>0$, and thus $\delta_{q,-q'}$ vanishes.}
+\begin{align*}
+\klb[\big]{b_{q,\ell}, b_{q',\ell'}^\dagger} &= \frac{1}{\sqrt{n_q n_{q'}}} \klb[\big]{\rho_{q,\ell}, \rho_{-q',\ell'}} = \delta_{\ell,\ell'} \delta_{q,q'} \quad \text{and} \quad \klb[\big]{b_{q,\ell}, b_{q',\ell'}} = 0.
+\end{align*}
+The $\textbf{N}$-particle ground state defined above is compatible with the notion of a ground state implied by the particle-hole excitations, since $b_{q,\ell} \Ket{\textbf{N}}_0 = 0$.
+To understand why this is the case, we need to consider how $b_{q,\ell}$ acts on an arbitrary state. 
+The label $\ell$ does not play a role here, so we drop it and also only focus on a single species for notational convenience.
+For $q>0$, the operator $c_{k-q}^\dagger c_{k}$ attempts to shift a fermion with momentum $k$ to the lower momentum $k-q$.
+If $k$ is not occupied or $k-q$ already is occupied, then the state is destroyed.
+Since in $\Ket{N}_0$ all momenta up to $n_N$ are filled without gaps, the contributions to $b_q\Ket{N}_0$ can only come from $n_k \le n_N$.
+But we can not move these fermions to lower states, because they are already occupied, formally $c_{k-q}^\dagger \Ket{N}_0 = 0$.
+Thus, $c_{k-q}^\dagger c_{k}$ destroys $\Ket{N}_0$ for any $k$, and it follows that $b_q\Ket{N}_0=0$.
+\myparagraph{Operator identity}
+Now that we have a proper ground state for every subspace, we can define the excited states in a very natural way via
+\begin{align}
+\Ket{\textbf{N},\klc{\textbf{m}_q}} &= \prod_\ell \prod_{q>0} \frac{1}{\sqrt{m_{\ell,q}}} \kla[\big]{b_q^\dagger}^{m_{\ell,q}} \Ket{\textbf{N}}_0
+\end{align}
+where $\klc{\textbf{m}}_q$ is a sequence of vectors $\textbf{m}_q = (m_{1,q}, \dots, m_{M,q}) \in \mathbb{N}_0^M$ for every $q>0$.
+There is no need to specify a certain order here, because the bosonic operators commute.
+The set of all these states forms the basis of the Hilbert space $\mathcal{H}_\textbf{N}$ \cite{Bosonization_DelftSchoeller_1998}.\\
+The last ingredient we need is a way to switch from one subspace to another.
+This is made possible by defining Klein factors $\eta_\ell$, which remove a fermion with label $\ell$, and the respective counterpart $\eta_\ell^\dagger$.
+They are assumed to commute with the bosonic operators \cite[\ssec 4.F]{Bosonization_DelftSchoeller_1998},
+\begin{align*}
+\klb[\big]{\eta_\ell, b_{q,\ell'}} &= 0 = \klb[\big]{\eta_\ell, b_{q,\ell'}^\dagger},
+\end{align*}
+and the removal or addition of fermions is defined via
+\begin{align*}
+\eta_\ell \Ket{\textbf{N}}_0 &= T_\ell \Ket{(N_1, \dots, N_\ell - 1, \dots, N_M)}_0,\\
+\eta_\ell^\dagger \Ket{\textbf{N}}_0 &= T_\ell \Ket{(N_1, \dots, N_\ell + 1, \dots, N_M)}_0.
+\end{align*}
+Here $T_\ell = (-1)^{N_1} \dots (-1)^{N_{\ell-1}}$ is a phase factor that reflects the fermionic nature of the Klein factors.
+Consequently the order matters, and for $\ell\neq \ell'$ one finds $\eta_\ell \eta_{\ell'} \Ket{\textbf{N}}_0 = - \eta_{\ell'} \eta_\ell \Ket{\textbf{N}}_0$.
+More explicit representations are also possible, see  e.g. \cites[\sapp B]{Bosonization_TLL_Schonhammer_1997}{Bosonization_DelftSchoeller_1998}, but for our purposes the above is sufficient.\\
+Since the Klein factors commute with the bosons, we only need to consider the action on the $\textbf{N}$-particle ground states.
+It is then a slightly tedious but elementary task to show that $\eta_\ell\eta_\ell^\dagger = \eta_\ell^\dagger\eta_\ell = 1$, as well as\footnote{The same can be found in \cite{Bosonization_DelftSchoeller_1998}, but without derivation, so we want to at least sketch the procedure.
+As a simple illustrative example note that for $\ell < \ell'$ applying $\eta_\ell \eta_{\ell'}$ gives $T_\ell T_{\ell'} = +1$ while for $\ell > \ell'$ we instead find $T_\ell T_{\ell'} = -1$; therefore $\klc*{\eta_\ell, \eta_{\ell'}} = 0$ for $\ell\neq \ell'$. 
+The other relations follow in a similar fashion.}
+\begin{align*}
+\klc[\big]{\eta_\ell, \eta_{\ell'}^\dagger} &= 2\delta_{\ell,\ell'}, \quad \klc[\big]{\eta_\ell, \eta_{\ell'}} = 2\delta_{\ell,\ell'} \eta_\ell^2 \quad \text{and} \quad \klb[\big]{N_\ell, \eta_{\ell'}} = -\delta_{\ell,\ell'} \eta_\ell .
+\end{align*}
+With this, we are ready to define the bosonic field operators and derive the bosonization identity.
+Let $\varphi_\ell\eplus \equiv \kla[\big]{\varphi_\ell\eminus}^\dagger$ where
+\begin{align}
+\varphi_\ell\eminus(x) &= -\sum_{q>0} \frac{1}{\sqrt{n_q}} \powe{-\alpha \frac{q}{2}} \powe{\i qx} b_{q,\ell} \label{eqn:bos:varphi_ell_minus_def}
+\end{align}
+and also define the hermitian combination $\varphi_\ell\equiv \varphi_\ell\eplus + \varphi_\ell\eminus$.
+Here, $\alpha$ is a regularization necessary to avoid \gls{uv} divergences and can be thought of as generating a finite bandwidth $\Lambda= \frac{1}{\alpha}$.
+From a physical point of view, the introduction of a short-distance cut-off to artificially limit the bandwidth in this way should have a negligible impact on the low-energy limit.
+Recall that we expect to encounter an issue like this due to the artificial extension of the spectrum; for a lattice model the bandwidth is $\Lambda = \frac{\pi}{a}$, but generally bosonization is only valid in a smaller region of \tpspace{} due to the linearization.
+Thus, usually $\alpha>a$, and in such a realistic setting it is then neither necessary nor useful to try and set $\alpha\rightarrow 0$ at some point.
+There is a caveat to this line of reasoning though, because in the correlation functions, $\alpha$ really has to be a small quantity in order to satisfy certain fundamental requirements, see the discussion in \autoref{sec:ell:gf:preliminaries}.\\
+Going back to the Fourier components of the density operator, we now find
+\begin{align*}
+\rho_\ell(x) &= \frac{1}{L} \sum_{q\neq 0} \powe{\i qx} \rho_{q,\ell} = \frac{1}{L} \sum_{q> 0} \powe{\i qx} \i\sqrt{n_q} b_{q,\ell} + \hc + \frac{1}{L} \rho_{q=0,\ell}\\
+&= \frac{\partial_x}{2\pi} \sum_{q>0} \frac{1}{\sqrt{n_q}} \powe{\i qx} b_{q,\ell} + \hc + \frac{1}{L} N_\ell = - \frac{1}{2\pi} \partial_x \varphi_\ell(x) + \frac{1}{L} N_\ell \numberthis \label{eqn:bos:density operator boson from definition}
+\end{align*}
+where the last equality is only correct in the limit $\alpha\rightarrow 0$.
+Using the definition of the $b_{q,\ell}$ in \autoref{eqn:bos:bq_ell_def}, we can compute\footnote{$\klb*{AB,C}=A\klc*{B,C} - \klc*{A,C}B$}
+\begin{align*}
+\klb*{b_{q,\ell}, \psi_{\ell'}(x)} &= \frac{-\i}{\sqrt{n_q}} \frac{1}{\sqrt{L}} \sum_{k,k'} \powe{\i k'x}\klb*{c_{k-q,\ell}^\dagger c_{k,\ell}, c_{k',\ell'}} = \delta_{\ell,\ell'} \frac{\i}{\sqrt{n_q}} \frac{1}{\sqrt{L}} \sum_{k} \powe{\i (k-q) x} c_{k,\ell}\\
+%&= \delta_{\ell,\ell'}\frac{-\i}{\sqrt{n_q}} \powe{\i qx} \psi_\ell(x) \\
+&= \delta_{\ell,\ell'} a_{q,\ell}(x)\psi_\ell(x)
+\end{align*}
+where $a_{q,\ell}(x) = \frac{\i}{\sqrt{n_q}} \powe{-\i qx}$.
+Since $b_{q,\ell} \Ket{\textbf{N}}_0 = 0$, we thus find that $\psi_\ell(x) \Ket{\textbf{N}}_0$ must be a coherent state because
+\begin{align*}
+b_{q,\ell} \psi_\ell(x) \Ket{\textbf{N}}_0 &= \klb*{b_{q,\ell}, \psi_\ell(x)} \Ket{\textbf{N}}_0 = a_{q,\ell}(x) \psi_\ell(x) \Ket{\textbf{N}}_0,
+\end{align*}
+and can therefore be written as\footnote{$\klb*{A, \powe{B}} = C \powe{B}$ for $C=\klb*{A,B}\in\mathbb{C}$ implies $\psi_\ell \sim \powe{B}$ with $\klb*{b_{q,\ell}, B} = a_{q,\ell}(x)$}
+\begin{align*}
+\psi_\ell(x) \Ket{\textbf{N}}_0 &= w_\ell(x) \powe{\sum_{q> 0} a_{q,\ell}(x) b_{q,\ell}^\dagger} \eta_\ell \Ket{\textbf{N}}_0 = w_\ell(x) \powe{-\i \varphi_\ell\eplus(x)} \eta_\ell \Ket{\textbf{N}}_0.
+\end{align*}
+%This is already a remarkable result, but let us delay its interpretation until having obtained the final identity.
+Due to $b_q\Ket{N_+,N_-}_0=0$, we can rewrite this in a way that is more symmetric -- and with the power of hindsight more useful -- as a preliminary operator identity
+\begin{align*}
+\tilde{\psi}_\ell(x) &= \eta_\ell w_\ell(x) \normord{\powe{-\i\varphi_\ell(x)}}
+\end{align*}
+for which $\tilde{\psi}_\ell \equiv \psi_\ell$ when acting on any ground state $\Ket{N_+,N_-}_0$ \cite[\spage 19]{Bosonization_DelftSchoeller_1998}.
+The factor $w_\ell(x)$ still has to be determined, but let us first discuss another subtlety:
+Above, the notation $\normord{(\dots)}$ refers to normal-ordering with respect to the bosonic operators in the sense of putting all $b_{q,\ell}^\dagger$ to the left of an expression, e.g. $\normord{b_{q,\ell} b_{q,\ell}^\dagger b_{q,\ell} b_{q,\ell}^\dagger} = \kla{b_{q,\ell}^\dagger}^2 b_{q,\ell}^2$.
+Note that despite the claim to the contrary in \cite[\spage 11]{Bosonization_DelftSchoeller_1998}, this is generally \emph{not} equivalent to the regularization $\varnormord{(\dots)}$ that is also sometimes referred to as normal-ordering.
+For this specific example one would instead get $\varnormord{b_{q,\ell} b_{q,\ell}^\dagger b_{q,\ell} b_{q,\ell}^\dagger} = \kla{b_{q,\ell}^\dagger}^2 b_{q,\ell}^2 + 3b_{q,\ell}^\dagger b_{q,\ell}$.
+The only non-trivial case where there is no difference is that of a bilinear expression, see also \cite[\spage 95]{Cardy_1996}.\\
+We can determine the normalization $w_\ell(x)$ by evaluating ${}_0\brc[\big]{\textbf{N}}{\eta_\ell^\dagger \psi_\ell(x)}{\textbf{N}}_0$ in two different ways \cite[\spage 20]{Bosonization_DelftSchoeller_1998}.
+First, from the definition we have
+\begin{align*}
+\frac{1}{\sqrt{L}} \sum_k \powe{\i kx} {}_0\brc*{(N_1,\dots,N_\ell-1,\dots,N_M}{T_\ell c_{k,\ell}}{\textbf{N}}_0 &= \frac{1}{\sqrt{L}} \powe{\i k^\ast x}
+\end{align*}
+where $k^\ast$ is the momentum of the highest occupied state, i.e. $k^\ast = \frac{2\pi}{L} N_\ell$.
+For every other $k$ the annihilation operator either destroys the state, or produces one that is orthogonal to ${}_0\Bra{\textbf{N}}\eta_\ell$.
+Second, inserting our preliminary operator identity gives
+\begin{align*}
+{}_0\brc[\big]{\textbf{N}}{ \eta_\ell^\dagger \eta_\ell w_\ell(x) \powe{-\i\varphi_\ell\eplus(x)} \powe{-\i\varphi_\ell\eminus(x)}}{\textbf{N}}_0 &= {}_0\brc[\big]{\textbf{N}}{ w_\ell(x) \powe{-\i\varphi_\ell\eplus(x)} }{\textbf{N}}_0.
+\end{align*}
+Assuming that $\Ket{\textbf{N}}_0$ is an eigenstate of $w_\ell$, we can then pull out its eigenvalue and act with the remaining exponential operator to the left.
+This leaves just the eigenvalue of $w_\ell$ and our assumption is therefore immediately verified as we find $w_\ell(x) = \frac{1}{\sqrt{L}} \powe{\i \frac{2\pi}{L} N_\ell x}$.\\
+It remains to be shown that the operator identity also holds when applied to an arbitrary state $\Ket{\textbf{N},\klc*{\textbf{m}_q}}$.
+Before we prove that this is indeed the case, note that
+\begin{align*}
+\psi_\ell(x) b_{q,\ell'}^\dagger &= b_{q,\ell'}^\dagger \psi_\ell(x) + \klb*{\psi_\ell(x), b_{q,\ell'}^\dagger} = \kla*{b_{q,\ell'}^\dagger - \delta_{\ell,\ell'} a_{q,\ell}^\ast(x)} \psi_\ell(x)
+\end{align*}
+which can be readily generalized to hold for arbitrary powers of $b_q^\dagger$ and consequently any function that admits a series representation.
+Here, we merely need that
+\begin{align*}
+\psi_\ell(x) \Ket{\textbf{N},\klc{\textbf{m}_q}} &= \psi_\ell(x) \prod_{\ell'} \prod_{q> 0} \frac{1}{\sqrt{m_{q,\ell'}!}} \kla*{b_{q,\ell'}^\dagger}^{m_{q,\ell'}} \Ket{\textbf{N}}_0 \\
+&= \klb[\bigg]{\prod_{\ell'} \prod_{q> 0} \frac{1}{\sqrt{m_{q,\ell'}!}} \kla*{b_{q,\ell'}^\dagger - \delta_{\ell,\ell'} a_{q,\ell}^\ast(x)}^{m_{q,\ell'}}} \psi_\ell(x) \Ket{\textbf{N}}_0.
+\end{align*}
+Since we already know that $\psi_\ell(x) \Ket{\textbf{N}}_0 =\tilde{\psi}_\ell(x) \Ket{\textbf{N}}_0$, we can rewrite this as
+\begin{align*}
+\tilde{\psi}_\ell(x) \powe{\i\varphi_\ell\eminus(x)} \klb[\bigg]{\prod_{\ell'} \prod_{q> 0} \frac{1}{\sqrt{m_{q,\ell'}!}} \kla*{b_{q,\ell'}^\dagger - \delta_{\ell,\ell'} a_{q,\ell}^\ast(x)}^{m_{q,\ell'}}} \powe{-\i\varphi_\ell\eminus(x)} \Ket{\textbf{N}}_0.
+\end{align*}
+Repeatedly inserting the identity\footnote{$\powe{A}B\powe{-A} = B + \klb*{A,B} + \frac{1}{2} \klb*{A, \klb*{A,B}} + \dots$, see \cite[\spage 48]{Bosonization_DelftSchoeller_1998}}
+%\begin{align}
+%\powe{\i\varphi_\ell\eminus(x)} \kla*{b_{q,\ell'}^\dagger - \delta_{\ell,\ell'} a_{q,\ell}^\ast(x)} \powe{-\i\varphi_\ell\eminus(x)} &= \kla*{b_{q,\ell'}^\dagger - \delta_{\ell,\ell'} a_{q,\ell}^\ast(x)} + \klb*{\i\varphi_\ell\eminus(x), b_{q,\ell'}^\dagger} = b_{q,\ell'}^\dagger
+%\end{align}
+\begin{align*}
+\powe{\i\varphi_\ell\eminus(x)} \kla*{b_{q,\ell}^\dagger - a_{q,\ell}^\ast(x)} \powe{-\i\varphi_\ell\eminus(x)} &= \kla*{b_{q,\ell}^\dagger - a_{q,\ell}^\ast(x)} + \klb*{\i\varphi_\ell\eminus(x), b_{q,\ell}^\dagger} = b_{q,\ell}^\dagger
+\end{align*}
+then allows us to simplify the result to
+\begin{align*}
+\psi_\ell(x) \Ket{\textbf{N},\klc*{\textbf{m}_q}} &= \tilde{\psi}_\ell(x) \prod_{\ell'} \prod_{q> 0} \frac{1}{\sqrt{m_{q,\ell'}!}} \kla*{b_{q,\ell'}^\dagger}^{m_{q,\ell'}} \Ket{\textbf{N}}_0 = \tilde{\psi}_\ell(x) \Ket{\textbf{N}, \klc*{\textbf{m}_q}}.
+\end{align*}
+This concludes the proof that the operator identity $\tilde{\psi}_\ell \equiv \psi_\ell$ is indeed valid on the entire space of states, and the relation
+\begin{align}
+\psi_\ell(x) &= \frac{\eta_\ell}{\sqrt{L}} \powe{\i \frac{2\pi}{L} N_\ell x} \normord{\powe{-\i\varphi_\ell(x)}} \label{eqn:bos:bosonization identity}
+\end{align}
+is referred to as the \emph{bosonization identity} \cite{Giamarchi_2004,FermiLiquid_LL_review_Voit_1995,Bosonization_DelftSchoeller_1998}.
+Exponentials of bosonic fields such as $\powe{m\varphi_\ell(x)}$ are known as \emph{vertex operators} \cite[\ssec 9]{Bosonization_DelftSchoeller_1998}.\\
+The derivation is actually not quite complete, because we have only shown the identity to be valid on all the states $\Ket{\textbf{N}, \klc*{\textbf{m}_q}}$.
+What we have not proven, is that the collection of these states is sufficient to cover the Hilbert space spanned by the fermionic operators.
+The key insight is that this combinatoric problem must be independent of the specific form of the Hamiltonian.
+Therefore, it suffices to show that the partition function calculated in the fermionic basis matches the bosonic one for any -- conveniently chosen -- sample system.
+An accessible proof can be found in \cites[\sapp B]{Giamarchi_2004}[\sapp B]{Bosonization_DelftSchoeller_1998}, but it is still somewhat lengthy.%\footnote{And the Giamarchi concedes that it does not add much to the physics \cite[p.35]{Giamarchi_2004}.}.
+\subsection{Application to common terms}\label{sec:bos:common_terms}
+In this section, we apply the bosonization identity, \autoref{eqn:bos:bosonization identity}, to common types of terms.
+Note that such terms also appear in the treatment of our model in \autoref{chap:ell}, although with some additional complications.
+One of the main tricks used repeatedly is the special case of the Baker-Campbell-Hausdorff relation
+\begin{align}
+\powe{A} \powe{B} &= \powe{A+B} \powe{\frac{1}{2}\klb*{A,B}} \label{eqn:bos:baker_campbell}
+\end{align}
+valid if $C=\klb*{A,B}$ commutes with $A$ and $B$ \cite[\spage 48]{Bosonization_DelftSchoeller_1998}.
+Applying the formula twice also yields the useful identity $\powe{A} \powe{B} = \powe{B}\powe{A} \powe{\klb*{A,B}}$.
+In our case, $C$ is always a simple $\mathbb{C}$-number, so this requirement is satisfied.
+More explicitly, using $\sum_{n\ge 1} \frac{1}{n} \powe{-nx} = - \log\kla*{1 - \powe{-x}}$ we find
+\begin{align*}
+\klb*{\varphi_\ell\eplus(x), \varphi_{\ell'}\eminus(x')} &=  \sum_{q,q'>0} \frac{1}{\sqrt{n_qn_{q'}}} \powe{-\alpha \frac{q+q'}{2}} \powe{-\i qx} \powe{\i q'x'} \klb*{b_{q,\ell}^\dagger, b_{q',\ell'}}\\
+&= -\delta_{\ell,\ell'} \sum_{q>0} \frac{1}{n_q} \powe{-\alpha q} \powe{-\i q(x-x')} = \delta_{\ell,\ell'} \log\klb*{1 - \powe{-\frac{2\pi}{L} \kla*{\alpha + \i (x-x')}}}. \numberthis \label{eqn:bos:commutator_varphi_varphi_exact}
+\end{align*}
+In the thermodynamic limit, this commutator asymptotically behaves as
+\begin{align}
+\klb*{\varphi_\ell\eplus(x), \varphi_{\ell'}\eminus(x')} &\overset{L\rightarrow\infty}{\sim} \delta_{\ell,\ell'} \log\klb*{\frac{2\pi}{L} \kla*{\alpha + \i (x-x')}}. \label{eqn:bos:commutator_varphi_varphi_tdl}
+\end{align}
+Let us start with the density operator, but include an offset $\epsilon$ in one of the field operators.
+This so-called \emph{point-splitting} \cite[\sapp G]{Bosonization_DelftSchoeller_1998} avoids divergences and yields
+\begin{align*}
+\psi_\ell^\dagger(x) \psi_\ell(x+\epsilon) &= \normord{\powe{\i\varphi_\ell(x)}} \powe{-\i\frac{2\pi}{L} N_\ell x} \frac{\eta_\ell^\dagger \eta_\ell}{L} \powe{\i\frac{2\pi}{L} N_\ell (x+\epsilon)} \normord{\powe{-\i\varphi_\ell(x+\epsilon)}} \\
+&= \frac{1}{L} \powe{\i\frac{2\pi}{L} N_\ell \epsilon} \powe{\i\varphi_\ell\eplus(x)} \powe{\i\varphi_\ell\eminus(x)} \powe{-\i\varphi_\ell\eplus(x+\epsilon)} \powe{-\i\varphi_\ell\eminus(x+\epsilon)} \\
+&= \frac{1}{L} \powe{\i\frac{2\pi}{L} N_\ell \epsilon} \normord{\powe{\i\varphi_\ell(x)} \powe{-\i\varphi_\ell(x+\epsilon)}} \powe{\klb*{\i \varphi_\ell\eminus(x), -\i\varphi_\ell\eplus(x+\epsilon)}} \\
+%&= \frac{1}{L} \powe{\i\frac{2\pi}{L} N_\ell \epsilon} \normord{\powe{-\i \sum_{n\ge 1} \epsilon^n \frac{1}{n!} \partial_x^n \varphi_\ell(x)}} \klb*{1 - \powe{-\frac{2\pi}{L} \i\epsilon}}^{-1}\\
+&= \frac{1}{2\pi\i\epsilon} \frac{1}{1 - \frac{\pi\i\epsilon}{L} + \dots} \normord{\klb*{1 - \i\epsilon\partial_x\varphi_\ell(x) + \mathcal{O}\kla*{\epsilon^2}}} \klb[\Big]{1 + \i\frac{2\pi}{L} N_\ell \epsilon}. \numberthis \label{eqn:bos:psi dagger psi epsilon}
+\end{align*}
+The regularization included in the definition of the density operator takes care of the divergent constant, and in the limit we find
+\begin{align*}
+\rho_\ell(x) &= \lim_{\epsilon\rightarrow 0} \varnormord{\psi_\ell^\dagger(x) \psi_\ell(x+\epsilon)} = \lim_{\epsilon\rightarrow 0} \frac{1}{2\pi\i\epsilon} \varnormord{\klb*{1 + \i\frac{2\pi}{L} N_\ell \epsilon - \i\epsilon\partial_x\varphi_\ell(x)}}, %\\
+%&= -\frac{1}{2\pi}\partial_x\varphi_\ell(x) + \frac{1}{L} N_\ell \numberthis \label{eqn:bos:density operator from boson identity}
+\end{align*}
+which is identical to \autoref{eqn:bos:density operator boson from definition}.
+We can also expand to a higher order in $\epsilon$ to get
+\begin{align*}
+\psi_\ell^\dagger(x) \psi_\ell(x+\epsilon) &= \frac{1}{2\pi\i\epsilon} \frac{1}{1 - \frac{\pi\i\epsilon}{L} - \frac{2\pi^2\epsilon^2}{3L^2}} \normord{\powe{2\pi\i \epsilon \rho_\ell - \i \frac{1}{2!} \epsilon^2 \partial_x^2\varphi_\ell - \i \frac{1}{3!} \epsilon^3 \partial_x^3\varphi_\ell + \dots}}\\
+&= \frac{1}{2\pi\i\epsilon} \klb*{1 + \frac{\pi\i\epsilon}{L} - \frac{\pi^2\epsilon^2}{3L^2}} \normord{\klb*{1 + 2\pi\i \epsilon \rho_\ell - \i \frac{1}{2!} \epsilon^2 \partial_x^2\varphi_\ell - \frac{(2\pi)^2}{2!} \epsilon^2 \rho_\ell^2}} + \mathcal{O}\kla*{\epsilon^2}
+%&= \frac{1}{2\pi\i\epsilon} \normord{\klb*{1 + 2\pi\i \epsilon \rho_\ell - \i \frac{1}{2!} \epsilon^2 \partial_x^2\varphi_\ell - \frac{(2\pi)^2}{2!} \epsilon^2 \rho_\ell^2 +  + \frac{\pi\i\epsilon}{L} - \frac{2\pi^2\epsilon^2}{L} \rho_\ell - \frac{\pi^2\epsilon^2}{3L^2}}}
+\end{align*}
+and differentiating with respect to $\epsilon$ then yields
+\begin{align*}
+\psi_\ell^\dagger(x) \partial_\epsilon \psi_\ell(x+\epsilon) &= \frac{-1}{2\pi\i\epsilon^2} + \frac{1}{2\pi\i} \normord{\klb*{-\i \frac{1}{2} \partial_x^2\varphi_\ell - 2\pi^2 \rho_\ell^2 - \frac{2\pi^2}{L}\rho_\ell - \frac{\pi^2}{3L^2}}} + \mathcal{O}(\epsilon).
+\end{align*}
+Taking the regularized limit finally gives
+\begin{align}
+\varnormord{\psi_\ell^\dagger(x) \partial_x \psi_\ell(x)} = -\frac{1}{4\pi} \partial_x^2 \varphi_\ell + \pi\i \normord{\rho_\ell \kla*{\rho_\ell + \frac{1}{L}}}. \label{eqn:bos:psi_ell_partial_psi_ell_regular}
+\end{align}
+Note that the additional $\frac{1}{L}$ originates from using the exact commutation relation in \autoref{eqn:bos:commutator_varphi_varphi_exact} instead of its asymptotic form in \autoref{eqn:bos:commutator_varphi_varphi_tdl} and is therefore easy to miss.
+This result is equivalent to the Hamiltonian derived in \cite[\ssec 7]{Bosonization_DelftSchoeller_1998} via a very different approach.\\
+The commutation relations for distinct species are trivial, so the only other interesting bilinear is comparatively straightforward to bosonize, since for $\ell\neq \ell'$,
+\begin{align*}
+\psi_\ell^\dagger(x) \psi_{\ell'}(x') &= \normord{\powe{\i\varphi_\ell(x)}} \powe{-\i\frac{2\pi}{L} N_\ell x} \frac{\eta_\ell^\dagger \eta_{\ell'}}{L} \powe{\i \frac{2\pi}{L} N_{\ell'} x'} \normord{\powe{-\i\varphi_{\ell'}(x')}}\\
+&= \frac{\eta_\ell^\dagger \eta_{\ell'}}{L} \powe{\i \frac{2\pi}{L} \klb*{N_{\ell'}x' - \kla*{N_\ell + 1}x}} \normord{\powe{\i\varphi_\ell(x) - \i\varphi_{\ell'}(x')}}. \numberthis \label{eqn:bos:psi ell dagger psi ellp neq ell}
+\end{align*}
+Higher order expressions are not too useful in this general form and are evaluated individually when we bosonize our model.
+\myparagraph{Example: Spinless fermions}
+We may now finally reap the benefits for our efforts in the previous section:
+Let us demonstrate how bosonization can map fermionic interactions to quadratic terms by means of a concrete example.
+For simplicity, consider the typical case of a tight-binding lattice model with hopping amplitude $t$ and lattice spacing $a$.
+%Then the dispersion is $\epsilon(k) = -2t\cos(ka)$, and at half-filling the Fermi momentum is $\kf = \frac{\pi}{2a}$.
+Then the dispersion is $\epsilon(k) = -2t\cos(ka)$, and for a generic Fermi momentum $\kf$, we can identify two branches by linearizing near the Fermi level (i.e. around $k=\pm \kf$).
+%Linearizing near the Fermi level, i.e. around $k=\pm \kf$, we can identify two branches.
+Due to the positive and negative Fermi velocity the particles are respectively referred to as right- and left-movers, and we denote them with the labels $\ell=\R,\L$ \cite{Bosonization_DelftSchoeller_1998,Giamarchi_2004}.
+A fermionic field operator can then be written as
+\begin{align*}
+\psi(x) &= \frac{1}{\sqrt{L}} \sum_k \powe{\i kx} c_k \approx \frac{1}{\sqrt{L}} \sum_{|k-\kf|<\Lambda} \powe{\i kx} c_k + \frac{1}{\sqrt{L}}\sum_{|k+\kf|<\Lambda} \powe{\i kx} c_k
+\end{align*}
+where $\Lambda$ is the bandwidth.
+Each of these sums corresponds to a field operator subject to \autoref{eqn:bos:bosonization identity}, and thus $\psi(x) \approx \powe{\i \kf x} \psi_\R(x) + \powe{-\i \kf x} \psi_\L(x)$ \cite{Bosonization_Miranda_2003}.
+The bosonization identities read $\psi_\ell(x) = \frac{\eta_\ell}{\sqrt{L}} \normord{\powe{-\i\varphi_\ell(x)}}$ and it is customary to also introduce the fields $\varphi_\ell = \ell \phi - \theta$ \cite{Giamarchi_2004}.\\
+Via \autoref{eqn:bos:psi_ell_partial_psi_ell_regular} and in the thermodynamic limit, the free Hamiltonian becomes \cite{QImpurity_review_Furusaki_2005}
+\begin{align*}
+H_0 &\approx \sum_\ell \sum_k c_k^\dagger \vf(\ell k - \kf) c_k = \sum_\ell \vf \int\pi \normord{\rho_\ell^2} = \frac{\vf}{2\pi} \int \normord{\klb*{\kla*{\partial_x\theta}^2 + \kla*{\partial_x\phi}^2}}.
+\end{align*}%\sum_k \epsilon(k) c_k^\dagger c_k \approx \sum_\ell \sum_k c_k^\dagger (\ell k - \kf) c_k = \sum_\ell \intx{ }{ }{\varnormord{\psi_\ell(x)^\dagger (-\i\ell\partial_x) \psi(x)}}{x}
+For spinless fermions, a generic interaction takes the form \cite[\ssec 2.2]{Giamarchi_2004}
+\begin{align*}
+H_\tint &= \int V(x-x')\rho(x)\rho(x') = \frac{1}{2L} \sum_{q,k,k'} V(q) c_{k+q}^\dagger c_{k'-q}^\dagger c_{k'} c_{k}.
+\end{align*}
+Within the low-energy limit, we are only interested in contributions where all particles start and end near the Fermi surface.
+In the spinless case, this leads to $q\ll \kf$ and thus we can approximate the interaction as $H_\tint \approx \frac{V_0}{2L} \sum_{k,k'} n_k n_{k'}$ where $V_0 = V(q\approx 0)$.
+If both particles are on the same branch, i.e. $kk'>0$, this yields terms proportional to $\rho_\ell(x) \rho_\ell(x')$.
+For a sufficiently local interaction we have $x'\approx x$.
+In terms of the bosonic fields this gives\footnote{For $\ell=\L$ the dispersion is decreasing, which leads to extra minus signs; see \autoref{sec:ell:bos:model_boson} for details.}
+\begin{align*}
+\sum_\ell \rho_\ell(x) \rho_\ell(x') &\approx \sum_\ell \frac{-\ell}{2\pi} \partial_x\varphi_\ell \frac{-\ell}{2\pi} \partial_x\varphi_\ell = \frac{1}{2\pi^2} \klb*{\kla*{\partial_x\phi}^2 + \kla*{\partial_x\theta}^2},
+\end{align*}
+and adding the above to $H_0$ merely renormalizes the Fermi velocity.
+The other case is that the interaction couples two particles on separate branches, i.e. $kk'<0$, which results in forward scattering since the particles stay on their branch \cite[\spage 17]{Giamarchi_2004}.
+We then get contributions of the form $\rho_\ell(x) \rho_{-\ell}(x')$, and combining both types of interaction results in
+\begin{align*}
+H_\tint &\approx V_0 \sum_{\ell,\ell'} \int \rho_\ell(x) \rho_{\ell'}(x') \approx \frac{V_0}{\pi^2} \int \kla*{\partial_x\phi(x)}^2.
+\end{align*}
+Consequently, the full Hamiltonian is still quadratic in the bosonic fields, and thus remains solvable.
+Note that, although very basic, this example is not purely academic; variations of it are ubiquitous in research on \glspl{ll}.
+% e.g. \cite{FermiLiquid_LL_review_Voit_1995,Bosonization_AndersonLocal_Giamarchi_1988,Helical_Edge_PhononBackscat_Budich_2012,Helical_RashbaImp_RG_Crepin_2012,Bosonization_SSH_Giamarchi_2023,Bosonization_DelftSchoeller_1998,Helical_SyntheticQWire_Japaridze_2013,Helical_Rashba_SpinOrbit_QSH_Stroem_2010}.
+A possible application is to study disorder by amending this model with an impurity term, e.g. \cite{QImpurity_review_Furusaki_2005,QImpurity_LL_Rylands_2016,Helical_Rashba_SpinOrbit_QSH_Stroem_2010,Helical_RashbaImp_RG_Crepin_2012}.
+Let us also mention that often one includes spin, which leads to additional backscattering processes, and it is then no longer possible to exactly diagonalize the Hamiltonian \cite[\spage 39]{Giamarchi_2004}.
+\subsection{Correlation functions}\label{sec:bos:correlators}
+In this section, we compute the correlation functions of a \gls{ll} at finite temperature.
+Exact expressions for finite $L$ exist, but are rather unwieldy, see \cite{LL_FiniteT_FiniteL_Properties_Mattson_1997}.
+With the thermodynamic limit in mind, we only keep contributions in the leading order of $\frac{1}{L}$.\\
+Let us consider only a single species and hence drop the label $\ell$ for notational convenience.
+Via \autoref{eqn:bos:psi_ell_partial_psi_ell_regular} a linear dispersion with velocity $v$ gives the Hamiltonian
+\begin{align}
+H &= \sum_k vk\varnormord{c_{k}^\dagger c_k} = v\intx{ }{ }{\varnormord{\psi^\dagger(x) (-\i \partial_x) \psi(x)}}{x} = \frac{v}{4\pi} \intx{ }{ }{\normord{\kla*{\partial_x\varphi(x)}^2}}{x}. \label{eqn:bos:Hamilton vk varnorm nk as 4pi norm dx varphi sqr}
+\end{align}
+At this point, a few remarks about the hierarchy of length scales is in order.
+Our general setting is that of a lattice model at finite temperature.
+The lattice spacing $a$ generates a bandwidth of order $\frac{1}{a}$ and in order to apply bosonization we add infinitely many momenta, which is valid so long as we only care about the low-energy properties of the theory.
+Since the dispersion relation of any specific lattice model is generically not linear, there exists an additional bandwidth $\Lambda$ that restricts the momenta to a sufficiently small range in which a linearization is possible.
+This also means that we are a priori limited to small temperatures in the sense that $v\Lambda \gg T$.
+Finally, the infinitely many high-lying momenta can lead to \gls{uv} divergences in expressions that are not normal-ordered \cite[\ssec 5]{Bosonization_DelftSchoeller_1998}. %also Giamarchi (somewhere)
+In practise it is often more convenient to work with such expressions though, so one usually introduces the additional artificial regularization $\alpha$ as in \autoref{eqn:bos:varphi_ell_minus_def}.\\
+%Assuming that $\alpha\ll a$ this introduces an irrelevant error for the regime we care about and leads to the hierarchy $\frac{1}{\alpha}\gg \frac{1}{a} \gg \Lambda \gg \frac{T}{v}$.
+%All of these conditions are somewhat qualitative, so we can already at this stage expect that obtaining quantitative results may be difficult.
+As long as the slight ambiguities about the exact values of artificial parameters such as $\alpha$ or $\Lambda$ only lead to a simple change, e.g. a global prefactor, this does not present a major problem and still allows us to extract the correct physics (although quantitative predictions may be difficult). % REF
+\myparagraph{Fundamental Correlator}
+With $\varphi = \varphi\eplus + \varphi\eminus$ and $\varphi\eminus$ from \autoref{eqn:bos:varphi_ell_minus_def}, the Hamiltonian can be rewritten as $H\simeq\sum_{q>0} q b_q^\dagger b_q$ for $\alpha\rightarrow 0$ \cite{Bosonization_DelftSchoeller_1998}.
+Since this is a simple harmonic oscillator, the imaginary time evolution with $\tau=\i t$ is governed by
+\begin{align*}
+\i\partial_t b_q &= -\partial_\tau b_q = \klb*{b_q,H} = vqb_q
+\end{align*}
+and consequently $b_q(\tau) = b_q \powe{-vq\tau}$.
+Similarly $b_q^\dagger(\tau) = b_q^\dagger \powe{vq\tau}$, and writing $y=v\tau - \i x$ gives
+\begin{align}
+\varphi(y) &= -\sum_{q>0} \frac{\powe{-\alpha q/2}}{\sqrt{n_q}} \kla*{\powe{-qy} b_q + \powe{qy} b_q^\dagger}. \label{eqn:bos:varphi_ell_of_yalpha}
+\end{align}%= -\sum_{q>0} \frac{\powe{-\alpha q/2}}{\sqrt{n_q}}  \kla*{\powe{\i qx} b_q \powe{-vq\tau} + \powe{-\i qx} b_q^\dagger \powe{vq\tau}}
+Computing correlators can then be done directly on the operator level and we define
+\begin{align*}
+\tilde{\Phi}(y) &= \bra*{\varphi(y) \varphi(0)} = \sum_{q,q'>0} \frac{1}{\sqrt{n_qn_{q'}}} \powe{-\alpha \frac{q+q'}{2}} \bra*{\kla*{\powe{-qy} b_q + \powe{qy} b_q^\dagger} \kla*{b_{q'} + b_{q'}^\dagger}}\\
+&= \sum_{q>0} \frac{1}{n_q} \powe{-\alpha q} \klb*{\powe{-qy}\bra[\big]{b_q b_q^\dagger} + \powe{qy}\bra[\big]{b_q^\dagger b_q}}= \sum_{q>0} \frac{1}{n_q} \powe{-\alpha q} \klb*{\frac{2\cosh(qy)}{\powe{\beta vq} - 1} + \powe{-qy}}.
+\end{align*}
+Expanding the hyperbolic cosine and the Bose function yields the same modified geometric series as in \autoref{eqn:bos:commutator_varphi_varphi_exact}, and thus
+\begin{align*}
+\tilde{\Phi}(y) &= \sum_{n_q\ge 1} \frac{1}{n_q} \powe{- \frac{2\pi}{L} n_q(\alpha + y)} + \sum_{s=\pm 1} \sum_{m\ge 1} \sum_{n_q\ge 1} \frac{1}{n_q} \powe{-\frac{2\pi}{L} n_q (\alpha + \beta vm + sy)}\\
+&= -\log\klb*{1 - \powe{-\frac{2\pi}{L}(\alpha + y)}} - \sum_{s=\pm 1} \sum_{m\ge 1} \log\klb*{1 - \powe{-\frac{2\pi}{L} (\alpha + \beta vm + sy)}}.
+\end{align*}
+In the thermodynamic limit this result is plagued by an \gls{ir} divergence, so we instead consider the regularized expression
+\begin{align*}
+\Phi(y) &= \tilde{\Phi}(y) - \tilde{\Phi}(0) \overset{L\rightarrow\infty}{\sim} -\log\klb*{ \frac{\alpha + y}{\alpha} } - \sum_{s=\pm 1} \sum_{m\ge 1} \log\klb*{\frac{\alpha + \beta vm + sy}{\alpha + \beta vm}}\\
+&= -\log\klb*{1 + \frac{y}{\alpha}} - \sum_{m\ge 1} \log \klb*{1 - \kla[\Big]{\frac{y}{\alpha + \beta vm}}^2}.
+\end{align*}
+Utilizing the product representation of the Gamma function one can readily verify that $\prod_{m\ge 1} \kla*{1 - \frac{x^2}{(a+m)^2}} = \frac{\Gamma(1+a)^2}{\Gamma(1+a+x)\Gamma(1+a-x)}$, and we thus obtain
+\begin{align}
+\Phi(y) &\overset{L\rightarrow\infty}{\sim} \log\klb*{\Gamma\kla[\Big]{1 + \frac{\alpha + y}{\beta v}} \Gamma\kla[\Big]{1 + \frac{\alpha - y}{\beta v}}} - \log\klb*{\Gamma\kla[\Big]{1 + \frac{\alpha}{\beta v}}^2 \kla*{1 + \frac{y}{\alpha}}}. \label{eqn:bos:correlator_Phi_z_alpha_exact}
+\end{align}
+For $\alpha\ll y$, and due to $\Gamma(1+x)\Gamma(1-x) = \pi x \csc(\pi x)$, we also find the approximation
+\begin{align}
+\Phi(z) &\approx \log\klb*{\frac{\pi\alpha}{\beta v} \csc\kla{z}} \label{eqn:bos:correlator_Phi_z_alpha_log_approx}
+\end{align}
+where $z = \frac{\pi y}{\beta v} = \frac{\pi}{\beta v} \kla*{v \tau - \i x}$ is dimensionless.
+This is the form we always use, and there are four arguments for doing so.
+First, one can argue that with \acrlongpl{ft} in mind the approximation should have a negligible impact for $k \ll \frac{1}{\alpha}$.
+Even though we integrate over the full space, including small $x$ and $\tau$, the error made on short scales should only be visible for sufficiently large momenta.
+Second, taking a more practical point of view, \autoref{eqn:bos:correlator_Phi_z_alpha_exact} makes the analytic calculation of the \acrlong{gf} in \tpspace{} intractable\footnote{And, as may be evident from the extensive \sappl, even then the calculation is rather brutal.}.
+%For the sake of making progress without immediately resorting to numerical integration we are thus forced to make some approximation.
+Third, and this may be the most important point, the single-particle \acrlong{gf} calculated in \autoref{sec:ell:gf:interacting_LL} is \emph{not anti-periodic}\footnote{Although it remains unclear exactly where the anti-periodicity breaks. Including the dampening $\powe{-\alpha q}$ in the Hamiltonian and evaluating the series numerically does not remedy the issue; this seems to be an even more subtle problem.} if one uses \autoref{eqn:bos:correlator_Phi_z_alpha_exact}.
+%FOOTNOTE: numeric correlator calculation for exact alpha
+%from mpmath import *
+%beta=1.2341;v=0.551;L=1000;x=0.441;tau=0.412;alpha=1e-1
+%def myfunc(n):
+%    q = 2*pi/L*n; damp = exp(-alpha*q)
+%    return 1/n * damp * (2*(cosh(q*v*damp*tau-1j*q*x) - 1) / (exp(beta*v*q*damp) - 1) + exp(1j*q*x - q*v*damp*tau)-1)
+%resn = nsum(myfunc, [1, inf], maxterms=10**4, tol=1e-6, verbose=True, method="r")
+%resa = log(pi*alpha/beta/v / sin(pi/beta/v * (v*tau - 1j*x)))
+%eresn = exp(resn);eresa = exp(resa)
+%print(eresn, eresa)
+As discussed in \autoref{sec:gf:interaction_imaginary_time}, this anti-periodicity is a very general statement and thus, despite the mathematical inconsistency, \autoref{eqn:bos:correlator_Phi_z_alpha_log_approx} must be the physically correct result.
+Finally, except for a vague mention of a result in terms of Gamma functions in \cite[\spage 22]{Bosonization_FiniteT_Bowen_2001}, the literature gives a relation akin to the approximate form, e.g. \cites[\sapp C]{Giamarchi_2004}[\ssec 6.7]{Fradkin_2013}[\ssec 3]{Bosonization_Rao_2001}[\ssec 8]{Bosonization_DelftSchoeller_1998} and \autoref{table:ell:gf:gf_literature}.
+\myparagraph{Debye-Waller relation}
+Later we seek to calculate correlation functions for the fermions, and due to the structure of the bosonization identity this requires expectation values of the form $\bra*{\powe{\varphi(z_1)} \dots \powe{\varphi(z_N)}}$.
+One can solve this directly via path integrals \cite[\sapp C]{Giamarchi_2004}, but generalizing the problem leads to a more elegant approach.\\
+Consider arbitrary linear combinations $C_j$ of bosonic operators, e.g. our $b_q$ from bosonization.
+By construction their commutators are $\mathbb{C}$-valued and repeatedly applying the Baker-Campbell-Hausdorff formula gives
+\begin{align*}
+\prod_j \powe{C_j} &= \powe{C_1 + C_2} \powe{\frac{1}{2}\klb*{C_1, C_2}} \powe{C_3} \powe{C_4} \dots = \powe{\sum_j C_j} \powe{\frac{1}{2} \sum_{j<k} \klb*{C_j,C_k}}.
+\end{align*}
+The tool enabling the computation of expectation values for such complicated objects is the Debye-Waller relation
+\begin{align}
+\bra[\big]{\powe{C}} &= \powe{\frac{1}{2} \bra*{C^2}} \label{eqn:bos:debye_waller}
+\end{align}
+which holds for linear combinations $C$ of bosonic operators and, importantly, when averaging with respect to a quadratic Hamiltonian.
+Two approaches for proving this result can be found in \cite[\sapp C, J]{Bosonization_DelftSchoeller_1998} and yet another in Mermin's ``one sentence proof'' \cite{DebyeWaller_1sent_Mermin_1966}.\\
+By construction $\klb{C_j,C_k} = \bra{\klb{C_j,C_k}} = \bra{C_jC_k} - \bra{C_kC_j}$, and thus
+\begin{align}
+\bra[\Big]{\prod_j \powe{C_j}} &= \powe{\frac{1}{2} \bra[\big]{\kla[\big]{\sum_j C_j}^2}} \powe{\frac{1}{2} \sum_{j<k} \klb*{C_j, C_k}} = \powe{\frac{1}{2} \sum_j \bra{C_j^2}} \powe{\sum_{j<k} \bra{C_jC_k}}. \label{eqn:bos:expval_prod_powe_Cj}
+\end{align}
+For $C_j=\i A_j \varphi(z_j)$, and utilizing translational invariance, this then simplifies to
+\begin{align*}
+\bra[\Big]{\prod_j \powe{\i A_j \varphi(z_j)}} &= \powe{-\sum_{j<k} A_jA_k \Phi(z_j-z_k)} \powe{-\frac{1}{2} A^2 \tilde{\Phi}(0)} \numberthis\label{eqn:bos:expval_prod_powe_iAj_varphi}
+\end{align*}%= \powe{-\frac{1}{2} \sum_j A_j^2\bra*{\varphi(0)^2}} \powe{-\sum_{j<k} A_jA_k \bra*{\varphi(z_j-z_k) \varphi(0)}}\\
+where $A=\sum_jA_j$.
+In the thermodynamic limit we have $\tilde{\Phi}(0)\rightarrow \infty$, and therefore the expectation value is only non-zero if the \emph{neutrality condition} $A=0$ is satisfied \cites[\sapp C]{Giamarchi_2004}[\sapp K]{Bosonization_DelftSchoeller_1998}.

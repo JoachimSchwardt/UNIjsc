@@ -1,0 +1,290 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{xcolor, colortbl}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{03 Geodesics and curvature}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{General Relativity}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+
+\section{Geodesics on a sphere}
+For a sphere of radius $R$ we have $\tecxt\text{d}t^2 = R^2\tecxt\text{d}\Omega^2 = R^2 \kla\left( \tecxt\text{d}\theta^2 + \sin^2\theta \tecxt\text{d}\phi^2 \right)$.
+Thus the metric is given by
+\begin{align}
+(g_{ab}) &= R^2 \begin{pmatrix}
+1 & 0 \\ 0 & \sin^2\theta
+\end{pmatrix}.
+\end{align}
+The Christoffel symbols are given by
+\begin{align}
+\Gamma^\theta_{ab} &= \frac{1}{2}g^{\theta c} \kla\left( g_{ca,b} + g_{cb,a} - g_{ab,c} \right) = \frac{1}{2R^2}\kla\left( g_{\theta a,\theta} \delta_{b\theta} + g_{\theta b,\theta} \delta_{a\theta} - g_{ab,\theta} \right) = \\
+&= \frac{1}{2R^2} (-g_{\phi\phi,\theta}\delta_{a\phi} \delta_{b\phi}) = -\frac{1}{2}\delta_{a\phi} \delta_{b\phi}\partial_\theta \sin^2\theta = -\delta_{a\phi} \delta_{b\phi}\sin\theta\cos\theta ,\\
+\Gamma^\phi_{ab} &= \frac{1}{2}g^{\phi c} \kla\left( g_{ca,b} + g_{cb,a} - g_{ab,c} \right) = \frac{1}{2R^2 \sin^2\theta}\kla\left( g_{\phi a,\theta} \delta_{b\theta} + g_{\phi b,\theta} \delta_{a\theta} - g_{ab,\phi} \right) = \\
+&= \frac{1}{2R^2 \sin^2\theta} (g_{\phi\phi,\theta} \delta_{b\theta}\delta_{a\phi} + g_{\phi\phi,\theta} \delta_{a\theta} \delta_{b\phi}) = \cot\theta \kla\left( \delta_{b\theta} \delta_{a\phi} + \delta_{a\theta} \delta_{b\phi} \right).
+\end{align}
+Thus we find $\Gamma^\theta_{\phi\phi} = -\sin\theta\cos\theta$ and $\Gamma^\phi_{\theta\phi} = \cot\theta$.
+\\
+The Lagrangian is 
+\begin{align}
+L &= g_{ab}\dot{x}^a \dot{x}^b = R^2\kla\left( \dot{\theta}^2 + \sin^2\theta \dot{\phi}^2 \right).
+\end{align}
+The Euler-Lagrange equations are
+\begin{align}
+0 &= \frac{\tecxt\text{d}}{\tecxt\text{d}t}\frac{\partial L}{\partial \dot{\theta}} - \frac{\partial L}{\partial \theta} = \frac{\tecxt\text{d}}{\tecxt\text{d}t} \kla\left( 2R^2\dot{\theta} \right) - 2R^2\sin\theta\cos\theta\dot{\phi}^2 = \\
+&= 2R^2\kla\left( \ddot{\theta} - \sin\theta\cos\theta\dot{\phi}^2 \right),\\
+0 &= \frac{\tecxt\text{d}}{\tecxt\text{d}t}\frac{\partial L}{\partial \dot{\phi}} - \frac{\partial L}{\partial \phi} = \frac{\tecxt\text{d}}{\tecxt\text{d}t} \kla\left( 2R^2\sin^2\theta \dot{\phi} \right) = \\
+&= 2R^2\sin^2\theta\kla\left( \ddot{\phi} + \frac{2\sin\theta\cos\theta}{\sin^2\theta} \dot{\theta}\dot{\phi} \right).
+\end{align}
+We can now read off the Christoffel symbols $\Gamma^\theta_{\phi\phi} = -\sin\theta\cos\theta$ and $\Gamma^\phi_{\theta\phi} = \cot\theta$, which is identical to the previous result.
+\\
+Now we can also figure out the motion on a sphere by solving the geodesics equation.
+Here we have
+\begin{align}
+0 &= \ddot{\theta} + \Gamma^\theta_{\phi\phi}\dot{\phi}^2 = \ddot{\theta} - \sin\theta\cos\theta \dot{\phi}^2,\label{eqn:ddot theta} \\
+0 &= \ddot{\phi} + 2\Gamma^\phi_{\theta\phi} \dot{\theta}\dot{\phi} = \ddot{\phi} + 2\cot\theta\dot{\theta}\dot{\phi}. \label{eqn:ddot phi}
+\end{align}
+\autoref{eqn:ddot phi} can be rewritten to
+\begin{align}
+\frac{\ddot{\phi}}{\dot{\phi}} &= -2\cot\theta\dot{\theta},\\
+\Rightarrow\ \ \ \frac{\tecxt\text{d}}{\tecxt\text{d}t} \log\dot{\phi} &= -2\frac{\tecxt\text{d}}{\tecxt\text{d}t} \log \sin\theta,\\
+\Rightarrow\ \ \ \dot{\phi} &= \exp\kla\left( -2\log\sin\theta + \tecxt\text{const} \right) = \frac{a}{\sin^2\theta},
+\end{align}
+where $a = \dot{\phi}_0 \sin^2\theta_0$ is determined by the initial conditions (this result is also obvious when considering the Euler-Lagrange equation, since $\phi$ is cyclic).
+We may use this in \autoref{eqn:ddot theta} to get
+\begin{align}
+\ddot{\theta} \dot{\theta} &= \sin\theta\cos\theta \frac{a^2}{\sin^4\theta} \dot{\theta},\\
+\Rightarrow\ \ \ \frac{\tecxt\text{d}}{\tecxt\text{d}t} \frac{\dot{\theta}^2}{2} &= \frac{\tecxt\text{d}}{\tecxt\text{d}t} \kla\left( -\frac{a^2}{2\sin^2\theta} \right),\\
+\Rightarrow\ \ \ \dot{\theta} &= \sqrt{b^2 - \frac{a^2}{\sin^2\theta}},
+\end{align}
+where $b^2 = \dot{\theta}_0^2 + \dot{\phi}_0^2 \sin^2\theta_0$ is also determined by the initial conditions.
+This equation is equivalent to
+\begin{align}
+bt + c &= \intx\int_{ }^{ } \frac{b\sin\theta}{\sqrt{b^2 \sin^2\theta - a^2}}\, \mathrm{d}\theta =: I(\theta).
+\end{align}
+We solve this integral by substituting $z = R\cos\theta$, which yields
+\begin{align}
+I(\theta) &= \intx\int_{ }^{ } \frac{Rb\,\tecxt\text{d}z}{\sqrt{b^2 - a^2 - b^2R^2z^2}} = \frac{Rb}{\sqrt{b^2 - a^2}} \intx\int_{ }^{ } \frac{\tecxt\text{d}z}{\sqrt{1 - \kla\left( \frac{bRz}{\sqrt{b^2 - a^2}} \right)^2}} = \\
+&= \intx\int_{ }^{ } \frac{ \mathrm{d}z'}{\sqrt{1 - z'^2}} = \arcsin z' = \arcsin \frac{Rbz}{\sqrt{b^2 - a^2}}.
+\end{align}
+Thus the full solution is given by
+\begin{align}
+R\cos\theta(t) &= z(t) = R\sqrt{1 - \frac{a^2}{b^2}} \sin(bt +  c).
+\end{align}
+We may choose our coordinates such that $\phi_0 = 0 = \phi_{\tecxt\text{end}}$ and $\theta_0=0$ corresponds to our starting position.
+We may also choose $\dot{\phi}_0 = 0$ due to the symmetry of the angle $\phi$ at the start and at the end.
+Then $a\equiv 0$ and we find the very simple trajectory
+\begin{align}
+z(t) &= R\sin (bt + c) \equiv R\cos (\dot{\theta}_0 t).
+\end{align}
+This is equivalent to $\theta(t) = \dot{\theta}_0 t$ where $\phi \equiv\tecxt\text{const}$.
+Thus the geodesics on a sphere between two points $A$ and $B$ are always given by the intersection of the surface of the sphere and the plane containing the origin $O$ as well as the points $A$ and $B$.
+
+\section{Christoffel symbols and Ricci-scalar for special 4D coordinates}
+We are given the space-time interval $\tecxt\text{d}t^2 = f(r) \tecxt\text{d}r^2 + r^2\tecxt\text{d}\Omega^2 + h(r)\tecxt\text{d}\tau^2$ for spherical 4D coordinates.
+Then the Lagrangian is given by
+\begin{align}
+L &= g_{\mu\nu}\dot{x}^\mu \dot{x}^\nu = f\dot{r}^2 + r^2\dot{\theta}^2 + r^2\sin^2\theta \dot{\phi}^2 + h\dot{\tau}^2.
+\end{align}
+The Euler-Lagrange equations are
+\begin{align}
+0 &= \frac{\tecxt\text{d}}{\tecxt\text{d}t} \frac{\partial L}{\partial \dot{r}} - \frac{\partial L}{\partial r} = \frac{\tecxt\text{d}}{\tecxt\text{d}t} \kla\left( 2f\dot{r} \right) - f'\dot{r}^2 - 2r\dot{\theta}^2 - 2r\sin^2\theta \dot{\phi}^2 - h'\dot{\tau}^2 = \\
+&= 2f\kla\left( \ddot{r} + \frac{f'\dot{r}^2}{2f} - \frac{r}{f}\dot{\theta}^2 - \frac{r\sin^2\theta}{f} \dot{\phi}^2 - \frac{h'}{2f} \dot{\tau}^2 \right),\\
+0 &= \frac{\tecxt\text{d}}{\tecxt\text{d}t} \frac{\partial L}{\partial \dot{\theta}} - \frac{\partial L}{\partial \theta} =  \frac{\tecxt\text{d}}{\tecxt\text{d}t} \kla\left( 2r^2\dot{\theta} \right) - 2r^2\sin\theta\cos\theta \dot{\phi}^2 = \\
+&= 2r^2 \kla\left( \ddot{\theta} + \frac{2}{r}\dot{r}\dot{\theta} - \sin\theta\cos\theta \dot{\phi}^2 \right),\\
+0 &= \frac{\tecxt\text{d}}{\tecxt\text{d}t} \frac{\partial L}{\partial \dot{\phi}} - \frac{\partial L}{\partial \phi} =  \frac{\tecxt\text{d}}{\tecxt\text{d}t} \kla\left( 2r^2\sin^2\theta \dot{\phi} \right) =  2r^2\sin^2\theta \kla\left( \ddot{\phi} + \frac{2}{r}\dot{r}\dot{\phi} + \frac{2\sin\theta\cos\theta}{\sin^2\theta} \dot{\theta}\dot{\phi} \right),\\
+0 &= \frac{\tecxt\text{d}}{\tecxt\text{d}t} \frac{\partial L}{\partial \dot{\tau}} - \frac{\partial L}{\partial \tau} = \frac{\tecxt\text{d}}{\tecxt\text{d}t} \kla\left( 2h\dot{\tau} \right) = 2h\kla\left( \ddot{\tau} + \frac{h'}{h} \dot{r}\dot{\tau} \right) .
+\end{align}
+Thus we can read of all non-zero Christoffel symbols
+\begin{align}
+\Gamma^r_{rr} &= \frac{f'}{2f}, &&& \Gamma^r_{\theta\theta} &= -\frac{r}{f}, &&& \Gamma^r_{\phi\phi} &= -\frac{r\sin^2\theta}{f}, &&& \Gamma^r_{\tau\tau} &= -\frac{h'}{2f}, \\
+\Gamma^\theta_{r\theta} &= \frac{1}{r}, &&& \Gamma^\theta_{\phi\phi} &= -\sin\theta\cos\theta,\\
+\Gamma^\phi_{r\phi} &= \frac{1}{r}, &&& \Gamma^\phi_{\theta\phi} &= \cot\theta,\\
+\Gamma^\tau_{r\tau} &= \frac{h'}{2h}.
+\end{align}
+In order to compute the Ricci-scalar, we need the following components of the curvature tensor.
+The general formula is $R^\rho_{\ \mu\lambda\nu} = \partial_\lambda \Gamma^\rho_{\mu\nu} - \partial_\nu \Gamma^\rho_{\mu\lambda} + \Gamma^\sigma_{\mu\nu} \Gamma^\rho_{\sigma\lambda} - \Gamma^\sigma_{\mu\lambda} \Gamma^\rho_{\sigma\nu}$.
+For a diagonal metric, we may also write $R_{\rho\mu\lambda\nu} = g_{\rho\sigma} R^\sigma_{\ \mu\lambda\nu} \equiv g_{\rho\rho} R^\rho_{\ \mu\lambda\nu}$
+\begin{align}
+R_{r\theta r\theta} &= g_{rr} R^r_{\ \theta r\theta} = f \kla\left( \partial_r \Gamma^r_{\theta\theta} - \partial_\theta \Gamma^r_{\theta r} + \Gamma^\sigma_{\theta\theta}\Gamma^r_{\sigma r} - \Gamma^\sigma_{\theta r} \Gamma^r_{\sigma\theta} \right) = \\
+&= f\kla\left( -\frac{1}{f} + \frac{rf'}{f^2} + \frac{-r}{f} \frac{f'}{2f} - \frac{1}{r} \frac{-r}{f} \right) = \frac{rf'}{f} - \frac{rf'}{2f} = \frac{rf'}{2f},\\
+R_{r\phi r\phi} &= g_{rr} R^r_{\ \phi r\phi} = f \kla\left( \partial_r \Gamma^r_{\phi\phi} - \partial_\phi \Gamma^r_{\phi r} + \Gamma^\sigma_{\phi\phi}\Gamma^r_{\sigma r} - \Gamma^\sigma_{\phi r} \Gamma^r_{\sigma\phi} \right) = \\
+&= f \kla\left( -\frac{\sin^2\theta}{f} + \frac{rf'\sin^2\theta}{f^2} + \frac{-r\sin^2\theta}{f}\frac{f'}{2f} - \frac{1}{r} \frac{-r\sin^2\theta}{f} \right) = \sin^2\theta R_{r\theta r\theta},\\
+R_{r\tau r\tau} &= g_{rr} R^r_{\ \tau r\tau} = f \kla\left( \partial_r \Gamma^r_{\tau\tau} - \partial_\tau \Gamma^r_{\tau r} + \Gamma^\sigma_{\tau\tau}\Gamma^r_{\sigma r} - \Gamma^\sigma_{\tau r} \Gamma^r_{\sigma\tau} \right) = \\
+&= f \kla\left( \frac{-h''}{2f} + \frac{h'f'}{2f^2} + \frac{-h'}{2f} \frac{f'}{2f} - \frac{h'}{2h} \frac{-h'}{2f} \right) = \frac{h'f'}{4f} - \frac{h''}{2} + \frac{(h')^2}{4h},\\
+R_{\theta\phi \theta\phi} &= g_{\theta\theta} R^\theta_{\ \phi \theta\phi} = r^2 \kla\left( \partial_\theta \Gamma^\theta_{\phi\phi} - \partial_\phi \Gamma^\theta_{\phi \theta} + \Gamma^\sigma_{\phi\phi}\Gamma^\theta_{\sigma \theta} - \Gamma^\sigma_{\phi \theta} \Gamma^\theta_{\sigma\phi} \right) = \\
+&= r^2 \kla\left( \sin^2\theta - \cos^2\theta + \frac{-r\sin^2\theta}{f} \frac{1}{r} - \cot\theta (-\sin\theta\cos\theta) \right) = \\
+&= r^2\sin^2\theta \kla\left( 1 - \frac{1}{f} \right),\\
+R_{\theta\tau \theta\tau} &= g_{\theta\theta} R^\theta_{\ \tau \theta\tau} = r^2 \kla\left( \partial_\theta \Gamma^\theta_{\tau\tau} - \partial_\tau \Gamma^\theta_{\tau \theta} + \Gamma^\sigma_{\tau\tau}\Gamma^\theta_{\sigma \theta} - \Gamma^\sigma_{\tau \theta} \Gamma^\theta_{\sigma\tau} \right) = \\
+&= r^2 \kla\left( \frac{-h'}{2f} \frac{1}{r} \right) = -\frac{rh'}{2f},\\
+R_{\phi\tau \phi\tau} &= g_{\phi\phi} R^\phi_{\ \tau \phi\tau} = r^2\sin^2\theta \kla\left( \partial_\phi \Gamma^\phi_{\tau\tau} - \partial_\tau \Gamma^\phi_{\tau \phi} + \Gamma^\sigma_{\tau\tau}\Gamma^\phi_{\sigma \phi} - \Gamma^\sigma_{\tau \phi} \Gamma^\phi_{\sigma\tau} \right) = \\
+&= r^2\sin^2\theta \kla\left( \frac{-h'}{2f} \frac{1}{r} \right) = \sin^2\theta R_{\theta\tau \theta\tau}.
+\end{align}
+In order to compute the Ricci-scalar from these components, we make use of an identity valid for diagonal metrics
+\begin{align}
+R &= g^{\mu\nu} R_{\mu\nu} = g^{\mu\nu} g^{\rho\sigma} R_{\sigma\mu \rho\nu} \equiv \sum_{\mu\rho} g^{\mu\mu} g^{\rho\rho} R_{\rho\mu\rho\mu} = 2\sum_{\mu > \rho} g^{\mu\mu} g^{\rho\rho} R_{\rho\mu\rho\mu}.
+\end{align}
+Thus we have
+\begin{align*}
+R &= \frac{2}{f} \kla\left( \frac{1}{r^2} R_{r\theta r\theta} + \frac{1}{r^2\sin^2\theta} R_{r\phi r\phi} + \frac{1}{h} R_{r\tau r\tau} \right) + \\
+&\hspace{0.5cm} + \frac{2}{r^2} \kla\left( \frac{1}{r^2\sin^2\theta} R_{\theta\phi \theta\phi} + \frac{1}{h} R_{\theta\tau \theta\tau} \right) + \frac{2}{r^2\sin^2\theta} \frac{1}{h} R_{\phi\tau \phi\tau} = \numberthis  \\
+&= \frac{1}{r^2}\frac{rf'}{f^2} + \frac{\sin^2\theta}{r^2\sin^2\theta} \frac{rf'}{f^2} + \frac{1}{fh} \kla\left( \frac{h'f'}{2f} - h'' + \frac{(h')^2}{2h} \right) + \\
+&\hspace{0.5cm} + \frac{2}{r^2} \kla\left( 1 - \frac{1}{f} \right) + \frac{2}{r^2h} \frac{-rh'}{2f} + \frac{1}{rh} \frac{-h'}{f} =  \numberthis \\
+&= \frac{2f'}{rf^2} + \frac{f'h'}{2f^2h} - \frac{h''}{fh} + \frac{(h')^2}{2fh^2} + \frac{2}{r^2} \kla\left( 1 - \frac{1}{f} \right) - \frac{2h'}{rfh}. \numberthis 
+\end{align*}
+
+\section{Curvature of an ellipsoid}
+Consider an ellipsoid parametrized by 
+\begin{align}
+\vec{r} &= R\begin{pmatrix}
+\cos\phi\sin\theta \\ \sin\phi\sin\theta \\ \alpha\cos\theta
+\end{pmatrix}
+\end{align}
+with $R,\alpha = \tecxt\text{const}$.
+The line element is then given by
+\begin{align}
+\tecxt\text{d}\vec{r} &= R\begin{pmatrix}
+-\sin\phi\sin\theta \tecxt\text{d}\phi + \cos\phi\cos\theta \tecxt\text{d}\theta \\ 
+\cos\phi\sin\theta \tecxt\text{d}\phi + \sin\phi\cos\theta \tecxt\text{d}\theta \\
+-\alpha \sin\theta \tecxt\text{d}\theta
+\end{pmatrix},
+\end{align}
+which squares to 
+\begin{align}
+(\tecxt\text{d}\vec{r})^2 &= R^2 \kla\left( \sin^2\theta \tecxt\text{d}\phi^2 + \cos^2\theta \tecxt\text{d}\theta^2 + \alpha^2\sin^2\theta \tecxt\text{d}\theta^2 \right) = \\
+&= R^2 \kla\left( \klam\left[ 1  + (\alpha^2 - 1)\sin^2\theta \right] \tecxt\text{d}\theta^2 + \sin^2\theta \tecxt\text{d}\phi^2 \right)•
+\end{align}
+The metric results in
+\begin{align}
+(g_{ab}) &= R^2 \begin{pmatrix}
+1 + (\alpha^2 - 1)\sin^2\theta & 0 \\ 0 & \sin^2\theta
+\end{pmatrix}.
+\end{align}
+Let $\beta := \alpha^2 - 1$.
+Then the Lagrangian is
+\begin{align}
+L &= g_{ab} \dot{x}^a \dot{x}^b = R^2 \kla\left( [1 + \beta \sin^2\theta] \dot{\theta}^2 + \sin^2\theta\dot{\phi}^2 \right).
+\end{align}
+The Euler-Lagrange equations become
+\begin{align}
+0 &= \frac{\tecxt\text{d}}{\tecxt\text{d}t} \frac{\partial L }{\partial \dot{\theta}} - \frac{\partial L}{\partial \theta} \propto \\
+&\propto \frac{\tecxt\text{d}}{\tecxt\text{d}t} \kla\left( 2[1 + \beta \sin^2\theta] \dot{\theta} \right) - 2\beta \sin\theta\cos\theta \dot{\theta}^2 - 2\sin\theta\cos\theta \dot{\phi}^2 = \\
+&= 2[1 + \beta \sin^2\theta] \ddot{\theta} + 2\beta \sin\theta\cos\theta \dot{\theta}^2 - 2\sin\theta\cos\theta \dot{\phi}^2,\\
+0 &= \frac{\tecxt\text{d}}{\tecxt\text{d}t} \frac{\partial L }{\partial \dot{\phi}} - \frac{\partial L}{\partial \phi} \propto \\
+&\propto \frac{\tecxt\text{d}}{\tecxt\text{d}t} \kla\left( 2\sin^2\theta \dot{\phi} \right) = 2\sin^2\theta \ddot{\phi} + 4\sin\theta \cos\theta \dot{\theta} \dot{\phi}.
+\end{align}
+Thus the Christoffel symbols are
+\begin{align}
+\Gamma^\theta_{\theta\theta} &= \frac{\beta \sin\theta\cos\theta}{1 + \beta \sin^2\theta}, &&& \Gamma^\theta_{\phi\phi} &= -\frac{\sin\theta \cos\theta}{1 + \beta \sin^2\theta},\\
+\Gamma^\phi_{\theta\phi} &= \cot\theta.
+\end{align}
+The curvature tensor in two dimensions only has one independent component
+\begin{align*}
+R_{\theta\phi\theta\phi} &= g_{\theta \sigma} R^\sigma_{\ \phi\theta \phi} = g_{\theta\theta} \kla\left( \partial_\theta \Gamma^\theta_{\phi\phi} - \partial_\phi \Gamma^\theta_{\phi\theta} + \Gamma^\sigma_{\phi\phi} \Gamma^\theta_{\sigma\theta} - \Gamma^\sigma_{\phi\theta} \Gamma^\theta_{\sigma\phi} \right) = \numberthis \\
+&= R^2 [1 + \beta\sin^2\theta] \kla\bigg( \frac{\sin^2\theta - \cos^2\theta}{1 + \beta\sin^2\theta} + \frac{2\beta\sin^2\theta\cos^2\theta }{(1 + \beta\sin^2\theta)^2} + \\
+&\hspace{3.5cm} + \frac{-\sin\theta\cos\theta}{ 1 + \beta\sin^2\theta } \frac{\beta\sin\theta\cos\theta }{1 + \beta\sin^2\theta} - \cot\theta \frac{-\sin\theta\cos\theta }{1 + \beta\sin^2\theta} \bigg) = \numberthis \\ 
+&= R^2\sin^2\theta + R^2\frac{\beta \sin^2\theta\cos^2\theta }{1 + \beta\sin^2\theta} = R^2\sin^2\theta \kla\left( 1 + \frac{\beta\cos^2\theta}{1 + \beta\sin^2\theta} \right) = \\
+&= R^2\sin^2\theta \frac{1 + \beta}{1 + \beta\sin^2\theta}.
+\end{align*}
+Note that the components of the Riemann tensor then become
+\begin{align}
+R^\theta_{\ \phi\theta\phi} &= -R^\theta_{\ \phi\phi\theta} = g^{\theta\theta} R_{\theta\phi \theta\phi} = \sin^2\theta \frac{1 + \beta}{(1 + \beta\sin^2\theta)^2},\\
+R^\phi_{\ \theta\phi\theta} &= -R^\phi_{\ \theta\theta\phi} = g^{\phi\phi} R_{\theta\phi\theta\phi} = \frac{1 + \beta}{1 + \beta\sin^2\theta}.
+\end{align}
+The components of the Ricci-tensor are then given by
+\begin{align}
+R_{\theta\theta} &= R^\sigma_{\ \theta\sigma\theta} = \frac{1 + \beta}{1 + \beta\sin^2\theta},\\
+R_{\phi\phi} &= R^\sigma_{\ \phi\sigma\phi} = \sin^2\theta \frac{1 + \beta}{(1 + \beta\sin^2\theta)^2}.
+\end{align}
+Then the Ricci-scalar can be computed
+\begin{align}
+R &= g^{ab}R_{ab} = g^{\theta\theta} R_{\theta\theta} + g^{\phi\phi} R_{\phi\phi} = \\
+&=  \frac{2}{R^2}\frac{1 + \beta}{(1 + \beta\sin^2\theta)^2} = \frac{2}{R^2} \frac{\alpha^2}{\klam\left[ 1 + (\alpha^2 - 1)\sin^2\theta \right]^2}.
+\end{align}
+
+%\section{Curvature of a sphere}
+%The Christoffel symbols are
+%\begin{align}
+%\Gamma^\theta_{\phi\phi} &= -\sin\theta \cos\theta,\\
+%\Gamma^\phi_{\theta\phi} &= \cot\theta.
+%\end{align}
+%The curvature tensor in two dimensions only has one independent component
+%\begin{align}
+%R_{\theta\phi\theta\phi} &= g_{\theta \sigma} R^\sigma_{\ \phi\theta \phi} = g_{\theta\theta} \kla\left( \partial_\theta \Gamma^\theta_{\phi\phi} - \partial_\phi \Gamma^\theta_{\phi\theta} + \Gamma^\sigma_{\phi\phi} \Gamma^\theta_{\sigma\theta} - \Gamma^\sigma_{\phi\theta} \Gamma^\theta_{\sigma\phi} \right) = \\
+%&= R^2 \kla\left( \sin^2\theta - \cos^2\theta  - \cot\theta (-\sin\theta\cos\theta)  \right) = R^2\sin^2\theta
+%\end{align}
+%Note that the components of the Riemann tensor then become
+%\begin{align}
+%R^\theta_{\ \phi\theta\phi} &= -R^\theta_{\ \phi\phi\theta} = g^{\theta\theta} R_{\theta\phi \theta\phi} = \sin^2\theta,\\
+%R^\phi_{\ \theta\phi\theta} &= -R^\phi_{\ \theta\theta\phi} = g^{\phi\phi} R_{\theta\phi\theta\phi} = 1.
+%\end{align}
+%The components of the Ricci-tensor are then given by
+%\begin{align}
+%R_{\theta\theta} &= R^\sigma_{\ \theta\sigma\theta} = 1,\\
+%R_{\phi\phi} &= R^\sigma_{\ \phi\sigma\phi} = \sin^2\theta.
+%\end{align}
+%Then the Ricci-scalar can be computed
+%\begin{align}
+%R &= g^{ab}R_{ab} = g^{\theta\theta} R_{\theta\theta} + g^{\phi\phi} R_{\phi\phi} =  \frac{2}{R^2}.
+%\end{align}
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

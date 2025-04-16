@@ -1,0 +1,219 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{myscrarticle}
+
+\newcommand*{\titel}{Solution to the Hydrogen Atom}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Relativistic Quantum Theory}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Dirac Equation}
+The Dirac equation with coupling to the electromagnetic field is
+\begin{align}
+\kla*{\i\slashed{D} - m}\psi &= 0.
+\end{align}
+Using $\i D_\mu = \i \partial_\mu - qA_\mu$ this can be written as
+\begin{align}
+0 &= \kla*{\i\gamma^0\partial_t + \gamma^0 q\phi + \i\gamma^j\partial_j - q\gamma^j A_j - m}\psi.
+\end{align}
+We are interested in a stationary eigenvalue problem without magnetic fields for which
+\begin{align}
+\i\partial_t \psi &= \kla*{m\gamma^0 - \i\gamma^0\gamma^j \partial_j - q\phi}\psi = E\psi.
+\end{align}
+In the Dirac representation we have
+\begin{align}
+\gamma^0 &= \begin{pmatrix}
+\mathbbm{1}_2 & 0 \\ 0 & -\mathbbm{1}_2
+\end{pmatrix} \quad\text{and}\quad \gamma^j = \begin{pmatrix}
+0 & \sigma^j \\ -\sigma^j & 0
+\end{pmatrix}
+\end{align}
+where the Pauli matrices are
+\begin{align}
+\sigma^1 &= \begin{pmatrix}
+0 & 1 \\ 1 & 0
+\end{pmatrix}, \quad \sigma^2 = \begin{pmatrix}
+0 & -\i \\ \i & 0
+\end{pmatrix}\quad \text{and} \quad \sigma^3 = \begin{pmatrix}
+1 & 0 \\ 0 & -1
+\end{pmatrix}.
+\end{align}
+Expressing the 4-spinor as $\psi = (\psi_A, \psi_B)^T$ yields the system of equations
+\begin{align}
+0 &= \begin{pmatrix}
+E-m + q\phi & \i\bm{\sigma}\cdot\nabla \\ \i\bm{\sigma}\cdot\nabla & E + m + q\phi
+\end{pmatrix} \begin{pmatrix}
+\psi_A \\ \psi_B
+\end{pmatrix}.
+\end{align}
+Inserting the second equation into the first gives
+\begin{align}
+0 &= \kla*{E-m+q\phi}\psi_A + \i\bm{\sigma}\cdot\nabla \frac{-1}{E+m+q\phi} \i\bm{\sigma}\cdot\nabla \psi_A.
+\end{align}
+At this point it is helpful to consider the term
+\begin{align}
+\kla*{\bm{\sigma}\cdot\nabla} \kla*{\bm{\sigma}\cdot\nabla} &= \sigma_j\partial_j\sigma_k\partial_k = \partial_j\partial_k \kla*{\delta_{jk} + \i \epsilon_{jkl} \sigma_l} = \nabla^2 + \i \bm{\sigma} \cdot \kla*{\nabla \times \nabla} \equiv \nabla^2.
+\end{align}
+The other contribution from the product rule contains
+\begin{align}
+\nabla \frac{-1}{E+m+q\phi} &= \frac{1}{\kla*{E+m+q\phi}^2} q\nabla\phi.
+\end{align}
+Combining both our equation becomes
+\begin{align}
+0 &= \kla*{E-m+q\phi}\psi_A + \frac{\nabla^2\psi_A}{E+m+q\phi} - \frac{\bm{\sigma}\cdot q\nabla\phi}{\kla*{E+m+q\phi}^2} \bm{\sigma} \cdot \nabla\psi_A.
+\end{align}
+Similar to the previous Pauli matrix product we find
+\begin{align}
+(\bm{\sigma} \cdot \nabla\phi) (\bm{\sigma} \cdot \nabla) &= \sigma_j(\partial_j \phi) \sigma_k \partial_k = \delta_{jk} (\partial_j\phi)\partial_k + \i \epsilon_{jkl} \sigma_l (\partial_j\phi) \partial_k = (\nabla \phi) \cdot \nabla + \i \bm{\sigma} \cdot \kla[\big]{(\nabla\phi) \times \nabla}.
+\end{align}
+Inserting gives
+\begin{align}
+0 &= \kla*{E-m+q\varphi}\psi_A + \frac{\nabla^2\psi_A}{E+m+q\varphi} - q \frac{(\nabla\varphi) \cdot \nabla + \i \bm{\sigma} \cdot \kla[\big]{(\nabla\varphi) \times \nabla} }{\kla*{E+m+q\varphi}^2} \psi_A.
+\end{align}
+The last term mixes the components of $\psi_A = (\psi_a, \psi_b)^T$ since
+\begin{align}
+\bm{\sigma} \cdot \kla[\big]{(\nabla\varphi) \times \nabla} \psi_A &= \begin{pmatrix}
+\klb*{(\partial_x\varphi) \partial_y - (\partial_y\varphi) \partial_x} \psi_a + \klb*{(\partial_y\varphi) \partial_z - (\partial_z\varphi) \partial_y - \i (\partial_z\varphi) \partial_x + \i (\partial_x \varphi) \partial_z} \psi_b \\
+\klb*{(\partial_y\varphi) \partial_z - (\partial_z\varphi) \partial_y + \i (\partial_z\varphi) \partial_x - \i (\partial_x \varphi) \partial_z} \psi_a -\klb*{(\partial_x\varphi) \partial_y - (\partial_y\varphi) \partial_x} \psi_b
+\end{pmatrix}.
+\end{align}
+However, we are not interested in a general solution in the mathematical sense and may just assume $\psi_b \equiv 0$ as this does solve the second equation.
+Then we end up with 
+\begin{align}
+0 &= (E-m+q\phi) \psi_a + \frac{\nabla^2\psi_a}{E+m+q\phi} - \frac{q (\nabla\phi) \cdot \nabla \psi_a}{(E+m+q\phi)^2} - \i q ...
+\end{align}
+((Can't actually do that unfortunately xD))
+\section{Radial symmetric potentials}
+Assuming $\varphi=\varphi(r)$ we find
+\begin{align}
+(\nabla\varphi) \times \nabla &= \textbf{e}_r \varphi' \times \kla*{\textbf{e}_r \partial_r + \textbf{e}_\theta \frac{1}{r} \partial_\theta + \textbf{e}_\phi \frac{1}{r\sin\theta} \partial_\phi } = \frac{\varphi'}{r} \kla*{\textbf{e}_\phi \partial_\theta - \frac{1}{\sin\theta} \textbf{e}_\theta \partial_\phi}
+\end{align}
+and consequently
+\begin{align}
+\bm{\sigma} \cdot \kla[\big]{(\nabla\phi) \times \nabla}\psi_A &= \frac{\varphi'}{r} \begin{pmatrix}
+\partial_\phi \psi_a + \klb*{-\sin\phi\partial_\theta - \cos\phi \cot\theta \partial_\phi - \i\cos\phi \partial_\theta + \i\sin\phi \cot\theta\partial_\phi}\psi_b \\ \klb*{-\sin\phi\partial_\theta - \cos\phi \cot\theta \partial_\phi + \i\cos\phi \partial_\theta - \i\sin\phi \cot\theta\partial_\phi}\psi_a -\partial_\phi\psi_b
+\end{pmatrix} = \\
+&= \frac{\varphi'}{r} \begin{pmatrix}
+\partial_\phi \psi_a - \powe{-\i\phi} \klb*{\i \partial_\theta + \cot\theta\partial_\phi}\psi_b \\ \powe{\i\phi} \klb*{\i\partial_\theta - \cot\theta\partial_\phi}\psi_a - \partial_\phi\psi_b
+\end{pmatrix}.
+\end{align}
+Thus we find
+\begin{align}
+0 &= \klb*{(E-m+q\varphi) + \frac{\nabla^2}{E+m+q\varphi} -q \varphi' \partial_r } \begin{pmatrix}
+\psi_a \\ \psi_b
+\end{pmatrix} - \i q\frac{\varphi'}{r} \begin{pmatrix}
+\partial_\phi \psi_a - \powe{-\i\phi} \klb*{\i \partial_\theta + \cot\theta\partial_\phi}\psi_b \\ \powe{\i\phi} \klb*{\i\partial_\theta - \cot\theta\partial_\phi}\psi_a - \partial_\phi\psi_b
+\end{pmatrix}.
+\end{align}
+Note that $\nabla^2 = \frac{1}{r} \partial_r^2 r - \frac{1}{r^2} \hat{L}^2$ where $\hat{L}^2 \psi_{a,b} = l(l+1) \psi_{a,b}$.
+Additionally $\partial_\phi \psi_{a,b} = \i m_{a,b} \psi_{a,b}$
+\begin{align}
+0 &= \klb*{(E-m+q\varphi) + \frac{\frac{1}{r}\partial_r^2 r - \frac{l(l+1)}{r^2}}{E+m+q\varphi} -q \varphi' \partial_r } \begin{pmatrix}
+\psi_a \\ \psi_b
+\end{pmatrix} + q\frac{\varphi'}{r} \begin{pmatrix}
+m_a \psi_a + \powe{-\i\phi} \klb*{\partial_\theta - m_b\cot\theta}\psi_b \\ \powe{\i\phi} \klb*{\partial_\theta - m_a \cot\theta}\psi_a - m_b\psi_b
+\end{pmatrix}.
+\end{align}
+\section{Coordinate transformation}
+Consider the operator $\bm{\gamma} \cdot \nabla$ acting on a spinor $\psi$
+\begin{align}
+\bm{\gamma} \cdot \nabla\psi(\textbf{r}) &= \kla*{\gamma_x \partial_x + \gamma_y\partial_y + \gamma_z \partial_z} \psi(\textbf{r}) \equiv \kla*{\gamma_r\partial_r + \gamma_\theta \frac{1}{r} \partial_\theta + \gamma_\phi \frac{1}{r\sin\theta} \partial_\phi}\psi(\textbf{r}).
+\end{align}
+Note that for $\textbf{x} = (x,y,z)^T$ and $\textbf{y} = (r,\theta,\phi)^T$ we have
+\begin{align}
+\kla*{\frac{\partial x^j}{\partial y^k}}_{jk} &= \begin{pmatrix}
+\sin\theta\cos\phi & \sin\theta\sin\phi & \cos\theta \\
+r\cos\theta\cos\phi & r\cos\theta\sin\phi & -r\sin\theta \\
+-r\sin\theta\sin\phi & r\sin\theta\cos\phi & 0
+\end{pmatrix}.
+\end{align}
+Using the chain rule we find
+\begin{align}
+\gamma_r\partial_r \psi &= \gamma_r \kla*{\frac{\partial x}{\partial r} \partial_x + \dots}\psi.
+\end{align}
+Comparing coefficients thus gives
+\begin{align}
+\gamma_x &= \gamma_r \frac{\partial x}{\partial r} + \gamma_\theta \frac{\partial x}{\partial \theta} + \gamma_\phi \frac{\partial x}{\partial \phi} ,\\
+\gamma_y &= \gamma_r \frac{\partial y}{\partial r} + \gamma_\theta \frac{\partial y}{\partial \theta} + \gamma_\phi \frac{\partial y}{\partial \phi} ,\\
+\gamma_z &= \gamma_r \frac{\partial z}{\partial r} + \gamma_\theta \frac{\partial z}{\partial \theta} + \gamma_\phi \frac{\partial z}{\partial \phi} .
+\end{align}
+In general this may be written as
+\begin{align}
+\bm{\gamma} &= J \bm{\gamma}'
+\end{align}
+where $\textbf{x} \rightarrow \textbf{x}'$ with $J_{jk} = \frac{\partial x^j}{\partial x'^k}$.
+Back to the special case of spherical coordinates we find
+\begin{align}
+\begin{pmatrix}
+\gamma_r \\ \gamma_\theta \\ \gamma_\phi
+\end{pmatrix} &= J^{-1} \bm{\gamma} = \begin{pmatrix}
+\sin\theta\cos\phi & \sin\theta\sin\phi & \cos\theta \\
+\frac{1}{r}\cos\theta\cos\phi & \frac{1}{r}\cos\theta\sin\phi & -\frac{1}{r} \sin\theta \\
+-\frac{1}{r\sin\theta} \sin\phi & \frac{1}{r\sin\theta} \cos\phi & 0
+\end{pmatrix} \begin{pmatrix}
+\gamma_x \\ \gamma_y \\ \gamma_z
+\end{pmatrix} = \\
+&= \begin{pmatrix}
+\gamma_x \sin\theta\cos\phi + \gamma_y \sin\theta\sin\phi + \gamma_z \cos\theta \\
+\frac{1}{r} \kla*{\gamma_x\cos\theta\cos\phi + \gamma_y \cos\theta\sin\phi - \gamma_z \sin\theta} \\
+\frac{1}{r\sin\theta} \kla*{-\gamma_x \sin\phi + \gamma_y \cos\phi}
+\end{pmatrix}.
+\end{align}
+Explicitly the transformed matrices are
+\begin{align}
+\gamma^0\gamma_r &= \tau_x \otimes \begin{pmatrix}
+\cos\theta & \sin\theta\cos\phi - \i \sin\theta \sin\phi \\ \sin\theta\cos\phi + \i \sin\theta \sin\phi & -\cos\theta
+\end{pmatrix} = \tau_x \otimes \begin{pmatrix}
+\cos\theta & \sin\theta\powe{-\i\phi} \\ \sin\theta\powe{\i\phi} & -\cos\theta
+\end{pmatrix},\\
+\gamma^0\gamma_\theta &= \tau_x \otimes \begin{pmatrix}
+-\sin\theta & \cos\theta \powe{-\i\phi} \\ \cos\theta \powe{\i\phi} & \sin\theta
+\end{pmatrix},\\
+\gamma^0\gamma_\phi &= \tau_x \otimes \begin{pmatrix}
+0 & -\sin\phi - \i \cos\phi \\ -\sin\phi + \i\cos\phi & 0
+\end{pmatrix} = \tau_x \otimes \begin{pmatrix}
+0 & -\i \powe{-\i\phi} \\ \i\powe{\i\phi} & 0
+\end{pmatrix}.
+\end{align}
+The eigenvalue problem then becomes
+\begin{align}
+E\psi &= \kla*{m\gamma^0 - \i \gamma^0 \bm{\gamma} \cdot \nabla - q\varphi} \psi.
+\end{align}
+Breaking down the outer matrix structure we find
+\begin{align}
+0 &= \begin{pmatrix}
+m - q\varphi - E & -\i\bm{\sigma} \cdot \nabla \\ -\i\bm{\sigma} \cdot \nabla & -m - q\varphi - E
+\end{pmatrix} \begin{pmatrix}
+\psi_A \\ \psi_B
+\end{pmatrix}.
+\end{align}
+Solving for the $\psi_B$ spinor and inserting into the remaining equation yields
+\begin{align}
+0 &= \kla*{E-m+q\varphi} \psi_A + \i \bm{\sigma} \cdot \nabla \frac{-1}{E+m+q\varphi} \i\bm{\sigma}\cdot\nabla \psi_A.
+\end{align}
+Restricting to radially symmetric potentials allows us to simplify this to
+\begin{align}
+0 &= \kla*{E-m+q\varphi} \psi_A + \frac{1}{E+m+q\varphi} (\bm{\sigma} \cdot \nabla) (\bm{\sigma}\cdot\nabla) \psi_A + \i\sigma_r \frac{q\varphi'}{(E+m+q\varphi)^2} \i\bm{\sigma}\cdot\nabla \psi_A = \\
+&= \klb*{\kla*{E-m+q\varphi} + \frac{1}{E+m+q\varphi} \nabla^2} \psi_A + \i\sigma_r \frac{q\varphi'}{(E+m+q\varphi)^2} \i\bm{\sigma}\cdot\nabla \psi_A
+\end{align}
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

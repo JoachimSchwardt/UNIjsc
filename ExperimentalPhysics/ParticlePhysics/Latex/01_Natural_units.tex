@@ -1,0 +1,115 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{01 Natural units}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Task 1.1: Natural units in particle physics}
+\subsection*{a)}
+Completed table:
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c}
+Quantity&[kg,m,s]&[$\hbar,c,$GeV]&$\hbar=c=1$ \\ \hline
+Energy&kg\,m${}^2$s${}^{-2}$&GeV&GeV \\ \hline
+Momentum&kg\,ms${}^{-1}$&GeV\,$c^{-1}$&GeV \\ \hline
+Mass&kg&GeV\,$c^{-2}$&GeV \\ \hline
+Time&s&$\hbar$\,(GeV)${}^{-1}$&GeV${}^{-1}$ \\ \hline
+Length&m&$\hbar c$\,(GeV)${}^{-1}$&GeV${}^{-1}$ \\ \hline
+Area&m${}^2$&$\hbar^2 c^2$\,(GeV)${}^{-2}$&GeV${}^{-2}$
+\end{tabular}
+\caption{Comparisson of some quantities in different unit systems}
+\label{Comparisson of some quantities in different unit systems}
+\end{table}
+\subsection*{b)}
+The lifetime of a Higgs boson in SI-units is about
+\begin{align*}
+\tau &\approx\frac{1}{5\,\tecxt\text{MeV}}=\frac{\hbar}{5e\cdot 10^6\,\tecxt\text{V}}\approx 1.3\cdot 10^{-22}\,\tecxt\text{s}\numberthis\label{Lifetime of a higgs boson}
+\end{align*}
+Given that $1\,b=10^{-28}\,\tecxt\text{m}^2$ (one barn), the cross-section at LEP in natural units is
+\begin{align*}
+\sigma(e^+e^-\rightarrow Z) &\approx 40\,\tecxt\text{nb}=4\cdot 10^{-36}\,\tecxt\text{m}^2=\kla\left( {\frac{2e}{\hbar c}\cdot 10^{-18}} \right)^2=10^{-4}\,\frac{1}{\tecxt\text{GeV}}\numberthis\label{Cross section at LEP}
+\end{align*}
+The Bohr radius can be expressed in natural units using the fine structure constant $\alpha=\frac{e^2}{4\pi\epsilon_0\hbar c}\approx\frac{1}{137}$:
+\begin{align*}
+a_0&=\frac{4\pi\epsilon_0\hbar^2}{m_ee^2}=\frac{\hbar}{\alpha m_ec}\kom\overset{\substack{{\hbar=c=1} \\ |}}{=}\frac{1}{\alpha m_e}=268\frac{1}{\tecxt\text{MeV}}\numberthis\label{Bohr radius in natural units}
+\end{align*}
+\section*{Task 1.2: High-energy accelerators}
+\subsection*{a)}Following the definition of $\sqrt{s}=13\,$TeV as the center-of-mass energy, can caluclate the necessary energy:
+\begin{align*}
+(\sqrt{s})^2&:=\kla\left( {\sum_ip_i} \right)^2=\begin{pmatrix}
+E+m \\ \vec{p}+\vec{0}
+\end{pmatrix}^2=(E+m)^2-\vec{p}^2\kom\overset{\substack{{\vec{p}^2=E^2-m^2} \\ |}}{=} 2mE+2m^2\\
+&\Rightarrow\ \ E=\frac{(\sqrt{s})^2}{2m}-m=90.1\,\tecxt\text{PeV}\numberthis\label{Energy for asymmetric pp collision}
+\end{align*}
+This result acn also be obtained by starting with the four-momentum $p=p_1+p_2$ in the laboratory frame. Since one proton is said to be at rest, we have $p_1=\begin{pmatrix} E&\vec{p} \end{pmatrix} $ and $p_2=\begin{pmatrix} m&\vec{0} \end{pmatrix}$. Now, the dot-product $p\cdot p$ is an invariant and must therefor have the same value in every inertial refernce frame. If we consider the center-of-momentum frame, we have $\vec{p}_2=-\vec{p}_1$, and therefor $p'=\begin{pmatrix} \sqrt{s}&\vec{0} \end{pmatrix}$, where $\sqrt{s}$ is once again the total energy yield. Using the noted invariance, we get the following equation:
+\begin{align*}
+p\cdot p&=p'\cdot p'\ \ \Rightarrow\ \ 2mE+2m^2=(\sqrt{s})^2
+\end{align*}
+With this, the derivation of (\ref{Energy for asymmetric pp collision}) becomes clear.
+\subsection*{b)}Gives is a circular electron-positron collider with a circumference of $L=27$\,km, an energy of $\sqrt{s}=91$\,GeV per particle and $n=5\cdot 10^{11}$ particles per package, where there are four such packages on either side of the loop at any time. This allows us to first compete the average number of collisions per second, assuming that they never miss. At these energies, an electron moves at $\frac{v}{c}\simeq\sqrt{1-\frac{m_e^2c^4}{E^2}}\approx 1$. With a beam profile of $\sigma_x\approx 250\,\mu$m and $\sigma_y\approx 4\,\mu$m (characteristic lengths of the corresponding Gauss-distributions in $x$- and $y$-direction), the luminosity is then calculated to be:
+\begin{align*}
+\mathcal{L}&=4\cdot n^2\cdot f\cdot\frac{1}{4\pi\cdot\sigma_x\sigma_y}=8.85\cdot 10^{35}\,\frac{1}{\tecxt\text{m}^2\tecxt\text{s}}\numberthis\label{Collisons per second at LEP}
+\end{align*}
+Here, the frequency is given by $f=c/L$. At these energies, the cross-section is $\sigma(e^+e^-\rightarrow Z)\approx 40\,$nb. Therefor, in $t=24\,$h there were about
+\begin{align*}
+N&=\mathcal{L}\cdot t\cdot\sigma=3.1\cdot 10^5\ \ \tecxt\text{Z-bosons created}\numberthis\label{Z bosons at LEP per day}
+\end{align*}
+\section*{Task 1.3: Bethe-Weizsäcker mass formula}
+The mass formula is given by several constants, whose numerical values are listed below. Note that there are multiple different sets of such values that lead to similar results:
+\begin{align*}
+M(A,X)&=Nm_n+Z(m_p+m_e)+a_vA+a_sA^{2/3}+a_c\frac{Z^2}{A^{1/3}}+a_a\frac{(N-Z)^2}{4A}+\frac{\delta }{A^{1/2}}\numberthis\label{Bethe mass formula}\\
+a_v&=-15.67\,\frac{\tecxt\text{MeV}}{c^2}\\
+a_s&=17.23\,\frac{\tecxt\text{MeV}}{c^2}\\
+a_c&=0.714\,\frac{\tecxt\text{MeV}}{c^2}\\
+a_a&=93.15\,\frac{\tecxt\text{MeV}}{c^2}\\
+\delta &=11.2\,\frac{\tecxt\text{MeV}}{c^2}\cdot\left\{\begin{matrix}
++1 & \tecxt\text{odd }Z\ \tecxt\text{and odd }N \\ 0 & \tecxt\text{odd }A  \\ -1 & \tecxt\text{even }Z\ \tecxt\text{and even }N
+\end{matrix}\right.\\
+\end{align*}
+For the process $(A,Z)\rightarrow (\frac{1}{3}A,\frac{1}{3}Z)+(\frac{2}{3}A,\frac{2}{3}Z)$ for a ${}_{90}^{234}$Th nucleus ($A=234$, $Z=90$) we get the following Q-value. Note that only the latter four terms of (\ref{Bethe mass formula}) contribute here:
+\begin{align*}
+Q&=\left(M(234,90)-M(78,30)-M(156,60)\right)\cdot c^2=152.5\,\tecxt\text{MeV}
+\end{align*}
+Denote the kinetic energies as $E_1,E_2$ and the momenta as $p_1,p_2$. Then we have the (non-relativistic) set of equations
+\begin{align*}
+Q&=E_1+E_2=\frac{m_1}{2}v_1^2+\frac{m_2}{2}v_2^2&m_1v_1&=m_2v_2\\
+&\Rightarrow\ \ 2m_1Q=(m_1+m_2)m_2v_2^2\\
+&\Rightarrow\ \ E_2=\frac{m_1Q}{m_1+m_2}=101.7\frac{\tecxt\text{MeV}}{c^2}&E_1&=\frac{m_2Q}{m_1+m_2}=50.8\frac{\tecxt\text{MeV}}{c^2}\\
+&\Rightarrow\ \ p_{1,2}=\sqrt{\frac{2m_1m_2Q}{m_1+m_2}}=3.84\,\frac{\tecxt\text{MeV}}{c}
+\end{align*}
+\section*{Task 1.4: Nuclear binding energy and tritium decay}
+Due to charge conservation, the tritium-helium decay must produce an electron. To conserve the lepton number, there must be an electron anti-neutrino aswell:
+\begin{align*}
+{}^3_1\tecxt\text{H}\rightarrow{}^3_2\tecxt\text{He}^{1+}+e^-+\overline{\nu}_e\numberthis\label{Tritium helium decay reaction}
+\end{align*}
+Assuming the neutrino to be mass-less, we can estimate the Q-value of this reaction using the given binding energies of $E_B(^3_1\tecxt\text{H})=8.482$\,MeV and $E_B(^3_2\tecxt\text{He})=7.718$\,MeV:
+\begin{align*}
+Q&\simeq (m_p+2m_n)c^2-E_B(^3_1\tecxt\text{H})-(2m_p+m_n+m_e)c^2+E_B(^3_2\tecxt\text{He})=18.33\,\tecxt\text{keV}\numberthis\label{Q value of tritium decay}
+\end{align*}
+This energy is carried away as the kinetic energy of electron and neutrino, aswell as the neutrino mass. Used by KATRIN to determine said mass.
+
+\end{document}

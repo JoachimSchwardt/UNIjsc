@@ -1,0 +1,123 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{06 Zustandssummen}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 6.1: Zustandssummen}
+Mit $Z=\sum_je^{-\beta E_j}$ gilt
+\begin{align*}
+\bra\langle {E}\rangle&=\frac{1}{Z}\sum_jE_je^{-\beta E_j}=\frac{1}{Z}(-\partial_\beta)Z=-\partial_\beta\log Z
+\end{align*}
+Mit $\beta=\frac{1}{k_BT}$ gilt dann
+\begin{align*}
+\partial_\beta&=\frac{\partial}{\partial\beta}=k_B\frac{\partial}{-\frac{1}{T^2}\partial T}=-k_BT^2\partial_T,
+\end{align*}
+woraus $U=\bra\langle {E}\rangle=k_BT^2\partial_T\log Z$ folgt. Daraus kann man den Zusammenhang
+\begin{align*}
+S&=k_B\partial_T(T\log Z)=k_B\log Z+k_BT\partial_T\log Z=k_B\log Z+\frac{U}{T}
+\end{align*}
+ableiten. Oder man geht mit $p_j=\frac{1}{Z}e^{-\beta E_j}$ von der ursprünglichen Definition der Entropie aus:
+\begin{align*}
+S&=-k_B\sum_jp_j\log p_j=-k_B\sum_jp_j\kla\left( {-\log Z-\beta E_j} \right)=\frac{\bra\langle {E}\rangle}{T}+k_B\log Z
+\end{align*}
+Mit der Definition $F:=U-TS$ folgt dann auch wieder $F=-k_BT\log Z$, was konsistent mit $S=-\partial_TF$ ist. Mit der Ableitungsregel zeigt man auch
+\begin{align*}
+C_V&:=\partial_TU=\partial_T\kla\left( {k_BT^2\partial_T\frac{-F}{k_BT}} \right)=\partial_T\kla\left( {F-T\partial_TF} \right)=-\partial_T^2F
+\end{align*}
+Für die Zustandssumme des Produktsystems $\Sigma_1,\Sigma_2$ mit $U_{j1},U_{k2}$ gilt:
+\begin{align*}
+Z&=\sum_{jk}e^{-\beta (U_{j1}+U_{k2})}=\sum_je^{-\beta U_{j1}}\sum_ke^{-\beta U_{k2}}=Z_1\cdot Z_2
+\end{align*}
+Eleganter ist es, den Zusammenhang $S=S_1+S_2$ mit $S=\partial_T(k_BT\log Z)$ auszunutzen:
+\begin{align*}
+\partial_T(k_BT\log Z)&\overset{!}{=}\partial_T(k_BT\log Z_1)+\partial_T(k_BT\log Z_2)=\partial_T(k_BT\log Z_1Z_2)
+\end{align*}
+Für das Produkt von $N$ Systeme gilt dann $Z=\prod_jZ_j$ bzw. $\log Z=\sum_j\log Z_j$. Sind die Zustandssummen alle in der gleichen Größenordnung, so skaliert die freie Energie wie eine extensive Größe. Das ist auf den Zusammenhang
+\begin{align*}
+F&=-k_BT\log Z\sim -k_BTN\log Z_1\sim N
+\end{align*}
+zurückzuführen.
+\section*{Aufgabe 6.2: Zustandssummen}
+Die kinetische Energie der Teilchen ist $E_j=\frac{m}{2}v_j^2$. Der Boltzmann-Faktor ist $\frac{1}{Z}$ mit $Z=\sum_j\exp\kla\left( {-\frac{m}{2k_BT}v_j^2} \right)$. Die Zustandsdichte kann mit einer Gauss-Verteilung genähert werden:
+\begin{align*}
+\rho(\vec{v})&=Ce^{-\frac{\frac{m}{2}\vec{v}^2}{k_BT}}=\kla\left( {\frac{m}{2\pi k_BT}} \right)^{3/2}e^{-\frac{m\vec{v}^2}{2k_BT}}
+\end{align*}
+Daran kann man die Zustandssumme zu $Z=(2\pi k_BT/m)^{3/2}$ ablesen. Der Mittelwert einer Größe kann nun über $\bra\langle {X}\rangle=\intr\int_{\mathbb{R}^{3}}{x\rho(x)}\,\mathrm{d}^{3}x$ berechnet werden. Für die kinetische Energie in $x$-Richtung gilt
+\begin{align*}
+\bra\langle {(E_\tecxt\text{kin})_x}\rangle&=\intr\int_{\mathbb{R}^{3}}{\frac{m}{2}v_x^2\rho(\vec{v})}\,\mathrm{d}^{3}v=\sqrt{\frac{m^3}{2\pi k_BT}}\intx\int_{0}^{\infty}v_x^2e^{-\frac{mv_x^2}{2k_BT}}\,\mathrm{d}v_x=\\
+&=\sqrt{\frac{m^3}{2\pi k_BT}}\intx\int_{0}^{\infty}\frac{2k_BTu}{m}e^{-u}\,\frac{k_BT\mathrm{d}u}{\sqrt{2mk_BTu}}=\frac{k_BT}{\sqrt{\pi}}\Gamma\kla\left( {\frac{3}{2}} \right)=\frac{k_BT}{2}
+\end{align*}
+Einfacher ist $\bra\langle {v_x^2}\rangle=\sigma^2-\bra\langle {v_x}\rangle^2=\sigma^2=\frac{k_BT}{m}$. Daraus folgt dann direkt $\bra\langle {\frac{m}{2}v_x^2}\rangle=\frac{k_BT}{2}$. Da die Richtungen unabhängig sind, folgt für die mittlere kinetische Energie einfach $\bra\langle {E_\tecxt\text{kin}}\rangle=\frac{3}{2}k_BT$. Die mittlere Geschwindigkeit ist $\bra\langle {\vec{v}}\rangle=0$, da die Teilchen keine bevorzugte Bewegungsrichtung haben. Dies sieht man auch im Integral aufgrund der Punktsymmetrie. Die mittlere absolute Geschwindigkeit ist hingegen gegeben durch
+\begin{align*}
+\bra\langle {|\vec{v}|}\rangle&=\intr\int_{\mathbb{R}^{3}}{|\vec{v}|\rho(\vec{v})}\,\mathrm{d}^{3}v=4\pi\kla\left( {\frac{m}{2\pi k_BT}} \right)^{3/2}\intx\int_{0}^{\infty}v^3e^{-\frac{mv^2}{2k_BT}}\,\mathrm{d}v=\\
+&=4\pi\kla\left( {\frac{m}{2\pi k_BT}} \right)^{3/2}\intx\int_{0}^{\infty}\frac{2k_BTu}{m}e^{-u}\,\frac{k_BT\mathrm{d}u}{m}=\sqrt{\frac{16\pi^2m^3\cdot 4k_B^4T^4}{8\pi^3k_B^3T^3m^4}}\Gamma(2)=\sqrt{\frac{8k_BT}{\pi m}}
+\end{align*}
+Da wir hier einen Mittelwert berechnen, sollte die Verteilung der absoluten Geschwindigkeiten $\rho(|\vec{v}|)=4\pi (2\pi k_BT/m)^{-3/2}\cdot v^2\exp\kla\left( {-\frac{mv^2}{2k_BT}} \right)$ sein.\\
+Wir müssen nur die $x$-Komponente betrachten, weil nur die Bewegung in Richtung der Fläche relevant ist, welche wir beliebig ausrichten können.\\
+Sei $\Delta A$ ein kleines Flächenelement an der Wand des Volumens $V$ und $\Delta t$ ein kleiner Zeitschritt, in welchem der Anteil $\frac{\Delta N}{N}$ der Teilchen auftreffen. Dieses Verhältnis sollte umgekehrt proportional zum Volumen $\frac{1}{V}$ und der Größe der Fläche $\Delta A$ sein. Der letzte Faktor ist dann durch die in $\Delta t$ zurückgelegte Strecke $x(t+\Delta t)-x(t)\approx\Delta tv_x$ gegeben. Damit folgt
+\begin{align*}
+\frac{\Delta N}{N}&=\frac{1}{V}\cdot\Delta A\cdot\Delta t v_x
+\end{align*}
+Der Impulsübertrag ist $\Delta p=2mv_x$ pro Teilchen. Der gesamte Druck ist dann durch das Integral des Impulsübertrages pro Fläche und Zeit über alle positiven Geschwindigkeiten $v_x$ gegeben:
+\begin{align*}
+p&=\intx\int_{0}^{\infty}\frac{2mv_x\cdot\Delta N}{\Delta A\Delta t}\rho(v_x)\,\mathrm{d}v_x=\frac{N}{V}\intx\int_{\mathbb{R}}mv_x^2\rho(v_x)\,\mathrm{d}v_x=\frac{N}{V}\cdot 2(E_\tecxt\text{kin})_x=\frac{Nk_BT}{V}
+\end{align*} 
+\section*{Aufgabe 6.3: Gleichverteilungssatz}
+Sei $H=\frac{p^2}{2m}+\frac{m}{2}\omega^2q^2$. Dann ist die Zustandssumme gegeben durch:
+\begin{align*}
+Z&=\intr\int_{\mathbb{R}^{2}}{e^{-\beta H}}\,\mathrm{d}^{}q\mathrm{d}p=\sqrt{\frac{2m\pi}{\beta}}\cdot\sqrt{\frac{2\pi}{m\omega^2\beta}}=\frac{2\pi}{\omega\beta}
+\end{align*}
+Die Zustandsdichte ist damit $\rho=\frac{1}{Z}e^{-\beta H}=\frac{\omega\beta}{2\pi}e^{-\beta H}$. Die Energie des gesamten Systems ist dabei gegeben durch 
+\begin{align*}
+\bra\langle {E}\rangle&=-\partial_\beta\log Z=\partial_\beta\log\beta=\frac{1}{\beta}=k_BT
+\end{align*}
+Man kann das System auch als das Produkt von zwei Subsystemen mit $Z_1=\sqrt{\frac{2m\pi}{\beta}}$ und $\rho(p)=\frac{1}{Z_1}e^{-\frac{\beta p^2}{2m}}$ für den kinetischen Anteil, sowie $Z_2=\sqrt{\frac{2\pi}{m\omega^2\beta}}$ und $\rho(q)=\frac{1}{Z_2}e^{-\frac{\beta m\omega^2q^2}{2}}$ für den potentiellen Anteil auffassen. Dann folgt 
+\begin{align*}
+\bra\langle {E_\tecxt\text{kin}}\rangle&=\bra\langle {E_1}\rangle=-\partial_\beta\log Z_1=\frac{1}{2\beta}=\frac{k_BT}{2}\\
+\bra\langle {E_\tecxt\text{pot}}\rangle&=\bra\langle {E_2}\rangle=-\partial_\beta\log Z_2=\frac{1}{2\beta}=\frac{k_BT}{2}
+\end{align*}
+In einem allgemeinen System gilt mit der Zustandssumme $Z=\int e^{-\beta H}$ des gesamten Systems der Zusammenhang:  
+\begin{align*}
+\bra\langle {q_1\partial_{q_1}H}\rangle&=\frac{1}{Z}\intr\int_{\mathbb{R}^{2N}}{q_1(\partial_{q_1}H)e^{-\beta H}}\,\mathrm{d}^{N}q\mathrm{d}^Np=-\frac{1}{\beta Z}\intr\int_{\mathbb{R}^{2N}}{q_1\partial_{q_1}e^{-\beta H}}\,\mathrm{d}^{N}q\mathrm{d}^Np\kom\overset{\substack{{\tecxt\text{Part.Int.}} \\ |}}{=}\\
+&=\frac{1}{\beta Z}\intr\int_{\mathbb{R}^{2N}}{e^{-\beta H}}\,\mathrm{d}^{N}q\mathrm{d}^Np=\frac{1}{\beta Z}\cdot Z=k_BT
+\end{align*}
+Das Verschwinden des Randterms ist dabei auf die Bedingung $q_1e^{-\beta H(q,p)}\big\vert_\mathbb{R}=0$ zurückzuführen.\\
+In einem Potential der Form $H_i=mgz_i$ gilt für die mittlere Höhe eines Teilchens $\bra\langle {z_i}\rangle$ dann:
+\begin{align*}
+\bra\langle {z_i}\rangle&=\frac{\bra\langle {mgz_i}\rangle}{mg}=\frac{z_i\partial_{z_i}H_i}{mg}=\frac{k_BT}{mg}
+\end{align*}
+Aus der barometrischen Höhenformel $\rho(z)=\frac{mg}{k_BT}\exp\kla\left( {-\frac{mgz}{k_BT}} \right)$ folgt der Erwartungswert zu
+\begin{align*}
+\bra\langle {z}\rangle&=\intx\int_{0}^{\infty}z\rho(z)\,\mathrm{d}z\kom\overset{\substack{{u\,:=\,\frac{mg}{k_BT}z} \\ |}}{=}\frac{mg}{k_BT}\intx\int_{0}^{\infty}\frac{k_BTu}{mg} e^{-u}\,\frac{k_BT\mathrm{d}u}{mg}=\frac{k_BT}{mg},
+\end{align*}
+was konsistent mit dem vorigen Ergebnis ist.\\
+Wir können ein Teilchen eines einatomigen Gases mit jeweils genau drei Orts- und Impulskomponenten beschreiben. Ohne Wechselwirkungen sind allerdings nur die Impulskomponenten relevant. Jede liefert dabei den Beitrag $\frac{k_BT}{2}$ zur mittleren Gesamtenergie, es ergibt sich also $\bra\langle {E}\rangle=\frac{3}{2}k_BT$. Die innere Energie ist also $U=\frac{3}{2}Nk_BT$. Damit ist die Wärmekapazität gegeben durch:
+\begin{align*}
+C_V&=\partial_TU=\frac{3}{2}k_BN
+\end{align*}
+Für ein zweiatomiges Gas brauchen wir sechs Impulse, einer ist allerdings durch den festen Abstand festgelegt. Es ergibt sich $\bra\langle {E}\rangle=\frac{f}{2}k_BT$, wobei $f=5$ die Anzahl der Freiheitsgrade ist.
+\end{document}

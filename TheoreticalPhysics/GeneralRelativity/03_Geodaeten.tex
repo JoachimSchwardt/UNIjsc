@@ -1,0 +1,80 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[landscape=true]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{03 Christoffel Symbole}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 6: Bewegung auf der Kugeloberfläche}
+\subsection*{a)}Die Metrik ist gegeben durch $(g_{ab})=R^2\tecxt\text{diag\,}(1,\,\sin^2\theta)$. Damit ist ihre Inverse einfach $(g^{ab})=(g^{-1}_{ab})=\frac{1}{R^2}\tecxt\text{diag\,}(1,\,\csc^2\theta)$. Da die Nebendiagonalen in beiden Fällen verschwinden, vereinfacht sich die Berechnung, da die Summe über den Index $c$ jeweils nur einen Beitrag liefert. Zudem ist $g_{22,1}=2\sin\theta\cos\theta$ die einzige nicht-verschwindende Ableitung der Metrik:
+\begin{align}
+\Gamma^1_{ab}&=\frac{1}{2}g^{11}\kla\left( {\cancelto{0}{g_{a1,b}}+\cancelto{0}{g_{b1,a}}-g_{ab,1}} \right)=-\frac{\partial_1g_{ab}}{2R^2}=\begin{pmatrix}
+0&0 \\ 0&-\sin\theta\cos\theta
+\end{pmatrix}\\
+\Gamma^2_{ab}&=\frac{1}{2}g^{22}\kla\left( {g_{a2,b}+g_{b2,a}-\cancelto{0}{g_{ab,2}}} \right)=\frac{\partial_bg_{a2}+\partial_ag_{b2}}{2R^2\sin^2\theta}=\begin{pmatrix}
+0&\cot\theta \\ \cot\theta & 0
+\end{pmatrix}
+\end{align}
+\subsection*{b)}Die kinetische Energie ist gegeben durch $T=\frac{m}{2}(R^2\dot{\theta}^2+R^2\sin^2\theta\dot{\phi}^2)$. Damit kann man die Christoffel-Symbole aus den Euler-Lagrange-Gleichungen gemäß $\ddot{x}^c+\Gamma^c_{ab}\dot{x}^a\dot{x}^b=0$ ablesen:
+\begin{align}
+0&=\frac{\tecxt\text{d}}{\tecxt\text{d}t}\frac{\partial T}{\partial\dot{\theta}}-\frac{\partial T}{\partial \theta}\propto \ddot{\theta}-\sin\theta\cos\theta\dot{\phi}^2&\Rightarrow&&\Gamma^1_{22}&=-\sin\theta\cos\theta\\
+0&=\frac{\tecxt\text{d}}{\tecxt\text{d}t}\frac{\partial T}{\partial\dot{\phi}}-\frac{\partial T}{\partial \phi}\propto \ddot{\phi}\sin^2\theta+2\sin\theta\cos\theta\dot{\theta}\dot{\phi}&\Rightarrow&&\Gamma^2_{12}&=\cot\theta
+\end{align}
+\subsection*{c)}Die Geodäten-Gleichungen sind gerade durch $\ddot{x}^c+\Gamma^c_{ab}\dot{x}^a\dot{x}^b=0$ gegeben. Es seien $a$ und $b^2$ nicht-negativ:
+\begin{align*}
+\frac{\ddot{\phi}}{\dot{\phi}}&=-2\cot\theta\dot{\theta}&\Rightarrow&&\frac{\tecxt\text{d}}{\tecxt\text{d}t}\log\dot{\phi}&=\frac{\tecxt\text{d}}{\tecxt\text{d}t}(-2\log\sin\theta)&\kom\overset{\substack{{\intx\int_{ }^{ }\,\mathrm{d}t} \\ |}}{\Longrightarrow} &&\dot{\phi}&=\frac{a}{\sin^2\theta}\numberthis\label{phi ddot}\\
+\ddot{\theta}&=\sin\theta\cos\theta\dot{\phi}^2&\Rightarrow &&\ddot{\theta}\dot{\theta}&=a^2\frac{\cos\theta}{\sin^3\theta}\dot{\theta}&\kom\overset{\substack{{\intx\int_{ }^{ }\,\mathrm{d}t} \\ |}}{\Longrightarrow} &&\dot{\theta}^2&=-\frac{a^2}{\sin^2\theta}+b^2\numberthis\label{theta ddot}
+\end{align*}
+Das effektive Potential ist also $V_\tecxt\text{eff}(\theta)\propto c-\csc^2\theta$. Aus (\ref{theta ddot}) kann man noch $\theta(t)$ bestimmen. Substituiere dazu $z(t)=R\cos\theta(t)$. Damit ist $\dot{z}=-R\sin\theta\dot{\theta}$, woraus $\dot{\theta}=\frac{-\dot{z}}{R\sin\theta}$ folgt:
+\begin{align*}
+\frac{\dot{z}^2}{R^2-z^2}&=b^2-\frac{a^2R^2}{R^2-z^2}&\Rightarrow &&\dot{z}&=\sqrt{R^2(b^2-a^2)-b^2z^2}&\kom\overset{\substack{{\intx\int_{ }^{ }\,\mathrm{d}t} \\ |}}{\Longrightarrow} && Rt\sqrt{(b^2-a^2)}+d&=I(z)\numberthis\label{Integral von z}
+\end{align*}
+Dabei ist $\alpha^2:=\frac{b^2}{R^2(b^2-a^2)}$ und das Integral $I(z)$ ergibt sich zu
+\begin{align*}
+I(z)&=\intx\int_{ }^{ }\frac{1}{\sqrt{1-\alpha^2z^2}}\,\mathrm{d}z\kom\overset{\substack{{\alpha z\,:=\,\sin u} \\ |}}{=}\intx\int_{ }^{ }\frac{\frac{1}{\alpha}\cos u}{\cos u}\,\mathrm{d}u=\frac{u}{\alpha}=\frac{1}{\alpha}\arcsin(\alpha z)\numberthis\label{Integral von z 2}
+\end{align*}
+Aus (\ref{Integral von z}) und (\ref{Integral von z 2}) folgt dann letztendlich:
+\begin{align*}
+z(t)&=\frac{1}{\alpha}\sin\kla\left( {\alpha Rt\sqrt{b^2-a^2}+\alpha d} \right)=R\sqrt{1-\frac{a^2}{b^2}}\sin\kla\left( {bt+d'} \right)\numberthis\label{z von t}
+\end{align*}
+Für $\dot{\phi}=0$, also $\phi=\tecxt\text{const.}$ und $a=0$, hat die Bahnkurve die Form $z(t)=R\sin(bt+d)$. Das entspricht gerade einem 'Stück Längengrad'. Alle Geodäten mit $\phi=\tecxt\text{const.}$ liegen also in einer Ebene, die den Mittelpunkt ($O$) der Kugel enthält. Aufgrund der Symmetrie müssen dann aber alle Geodäten in genau solchen Ebenen liegen, denn wir können für zwei beliebige Start- und Endpunkte ($A$ und $B$) die $z$-Achse so wählen, dass beide Punkte die gleiche $\phi$-Koordinate haben. Die Geodäten entsprechen also gerade dem Schnitt der Kugeloberfläche mit der Ebene, die durch die Punkte $A,B,O$ festgelegt ist.\\
+Wenn man diese Symmetrie früher erkennt, kann man bereits aus $\ddot{\theta}\propto a^2=0$ ablesen, dass die Lösungen die Form $\theta(t)=at+b$ haben.\newpage
+\section*{Aufgabe 7: Spezielle Koordinaten in 4D}
+Die kinetische Energie ist gegeben durch $T=\frac{m}{2}\kla\left( {f(r)\dot{r}^2+r^2\dot{\theta}^2+r^2\sin^2\theta\dot{\phi}^2+g(r)\dot{\tau}^2} \right)$. Die $r$-Ableitungen sind etwas umständlicher:
+\begin{align*}
+\frac{\tecxt\text{d}}{\tecxt\text{d}t}\frac{\partial T}{\partial\dot{r}}&=m \ddot{r}f(r)+mf'(r)\dot{r}\dot{r}\\
+\frac{\partial T}{\partial r}&=\frac{m}{2}\klam\left[ {f'(r)\dot{r}^2+2r\dot{\theta}^2+2r\sin^2\theta\dot{\phi}^2+g'(r)\dot{\tau}^2} \right] 
+\end{align*}
+Damit erhält man nun wie in Aufgabe 6b) wieder die Christoffel-Symbole:
+\begin{align*}
+0&=\frac{\tecxt\text{d}}{\tecxt\text{d}t}\frac{\partial T}{\partial\dot{r}}-\frac{\partial T}{\partial r}\propto \ddot{r}f(r)+\frac{1}{2}f'(r)\dot{r}^2-r\dot{\theta}^2-r\sin^2\theta\dot{\phi}^2-\frac{1}{2}g'(r)\dot{\tau}^2&\Rightarrow &&& \left\{\begin{matrix}
+\Gamma^1_{11}=\frac{f'(r)}{2f(r)},\ & \Gamma^1_{22}=-\frac{r}{f(r)}\\
+\Gamma^1_{33}=-\frac{r\sin^2\theta}{f(r)},\ & \Gamma^1_{44}=-\frac{g'(r)}{2f(r)}
+\end{matrix}\right. \\
+0&=\frac{\tecxt\text{d}}{\tecxt\text{d}t}\frac{\partial T}{\partial\dot{\theta}}-\frac{\partial T}{\partial \theta}\propto \ddot{\theta}r^2+2r\dot{r}\dot{\theta}-r^2\sin\theta\cos\theta\dot{\phi}^2&\Rightarrow &&&\Gamma^2_{12}=\frac{1}{r},\ \ \Gamma^2_{33}=-\sin\theta\cos\theta\\
+0&=\frac{\tecxt\text{d}}{\tecxt\text{d}t}\frac{\partial T}{\partial\dot{\phi}}-\frac{\partial T}{\partial \phi}\propto \ddot{\phi}r^2\sin^2\theta+2r^2\sin\theta\cos\theta\dot{\theta}\dot{\phi}+2r\sin^2\theta\dot{r}\dot{\phi}&\Rightarrow &&&\Gamma^3_{13}=\frac{1}{r},\ \ \Gamma^3_{23}=\cot\theta\\
+0&=\frac{\tecxt\text{d}}{\tecxt\text{d}t}\frac{\partial T}{\partial\dot{\tau}}-\frac{\partial T}{\partial \tau}\propto \ddot{\tau}g(r)+g'(r)\dot{r}\dot{\tau}&\Rightarrow &&&\Gamma^4_{14}=\frac{g'(r)}{2g(r)}
+\end{align*}
+\end{document}

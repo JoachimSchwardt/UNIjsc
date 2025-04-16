@@ -1,0 +1,496 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[ngerman]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Bandstrukturen in verschiedenen Modellen}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Theoretische Festkörperphysik}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Quadratisches Gitter}
+%%%% BRILLOUIN ZONE CONSTRUTION !!!!! 
+%%%% https://www.doitpoms.ac.uk/tlplib/brillouin_zones/zone_construction.php
+Gegeben ist ein quadratisches Gitter mit der Gitterkonstanten $a$.
+Für ein freies Elektron gilt dann
+\begin{align}
+\epsilon_n(\textbf{k}) &= \frac{\hbar^2}{2m} \kla\left( \textbf{k} - \textbf{G} \right)^2 = \frac{\hbar^2}{2m} \klam\left[ \kla\left( k_x - \frac{2\pi}{a} n_x \right)^2 + \kla\left( k_y - \frac{2\pi}{a}n_y \right)^2 \right].
+\end{align}
+%Die erste Brillouin-Zone besteht hier aus allen $\textbf{k}$ mit $|k_{x,y}| \le \frac{\pi}{a}$.
+%Insbesondere gilt in der ``Ecke'' also
+%\begin{align}
+%\epsilon_n \kla\left( \frac{\pi}{a}, \frac{\pi}{a} \right) &= \frac{\hbar^2}{2m} \frac{\pi^2}{a^2} \klam\left[ \kla\left( 1 - 2n_x \right)^2 + \kla\left( 1 - 2n_y \right)^2 \right] =  \\
+%&= 2 \frac{\hbar^2\pi^2}{2ma^2} \klam\left[ 1 + 2(n_x^2+n_y^2) - 2(n_x+n_y) \right]
+%\end{align}
+%und im Mittelpunkt einer Seitenlinie der ersten Brillouin-Zone gilt
+%\begin{align}
+%\epsilon_n \kla\left( \frac{\pi}{a}, 0 \right) &= \frac{\hbar^2\pi^2}{2ma^2} \klam\left[ (1 - 2n_x)^2 + (2n_y)^2 \right] = \\
+%&= \frac{\hbar^2\pi^2}{2ma^2} \klam\left[ 1 - 4n_x + 4n_x^2 + 4n_y^2 \right].
+%\end{align}
+%Für das erste Band ist $n_x=n_y=0$, womit also $\epsilon_0\kla\left( \frac{\pi}{a},\frac{\pi}{a} \right) = 2 \epsilon_0 \kla\left( \frac{\pi}{a}, 0 \right)$.
+Wir betrachten hier das ausgedehnte Zonenschema, es gibt also effektiv nur ein Band, was dafür allerdings nicht in $\textbf{k}$ begrenzt ist.
+Die erste Brillouin-Zone besteht hier aus allen $\textbf{k}$ mit $|k_{x,y}| \le \frac{\pi}{a}$.
+Insbesondere gilt in der ``Ecke'' also
+\begin{align}
+\epsilon \kla\left( \frac{\pi}{a}, \frac{\pi}{a} \right) &= \frac{\hbar^2}{2m} \klam\left[ \kla\left( \frac{\pi}{a} \right)^2 + \kla\left( \frac{\pi}{a} \right)^2 \right] = \frac{\hbar^2\pi^2}{ma^2}
+\end{align}
+und im Mittelpunkt einer Seitenlinie der ersten Brillouin-Zone gilt
+\begin{align}
+\epsilon \kla\left( \frac{\pi}{a}, 0 \right) &= \frac{\hbar^2}{2m} \left[ \kla\left( \frac{\pi}{a} \right)^2 + 0 \right] = \\
+&= \frac{\hbar^2\pi^2}{2ma^2}.
+\end{align}
+Also gilt $\epsilon_0\kla\left( \frac{\pi}{a},\frac{\pi}{a} \right) = 2 \epsilon_0 \kla\left( \frac{\pi}{a}, 0 \right)$.
+\def\bw{blue!50!white}
+\def\ow{orange!80!white}
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}[scale=2]   
+    \pgfmathsetmacro{\r}{0.03}
+    \pgfmathsetmacro{\xmin}{-2}
+    \pgfmathsetmacro{\xmax}{2}
+    \pgfmathsetmacro{\ymin}{-2}
+    \pgfmathsetmacro{\ymax}{2}
+
+    % 1. BZ
+    \filldraw[fill=blue!25!white, draw=black] (-0.5,-0.5) --++ (1,0) --++ (0,1) --++ (-1,0) -- cycle;
+    \foreach \v in {-0.5,0.5}{
+        \draw[\bw, thick] (\v,\ymin) -- (\v,\ymax);
+        \draw[\bw, thick] (\xmin,\v) -- (\xmax,\v);
+    }
+    \foreach \x in {-1,1}{
+        \draw[\bw, -latex, very thick] (0,0) to (\x,0);
+        \draw[\bw, -latex, very thick] (0,0) to (0,\x);
+    }
+    
+    % Gitter
+    \foreach \x in {\xmin,...,\xmax}{
+        \foreach \y in {\ymin,...,\ymax}{
+            \draw[fill] (\x,\y) circle (\r);
+            
+        }
+    }
+\end{tikzpicture}
+\caption{Konstruktion der ersten Brillouin-Zone}
+\label{figure:tikz first bz}
+\end{figure}
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}[scale=2]   
+    \pgfmathsetmacro{\r}{0.03}
+    \pgfmathsetmacro{\xmin}{-2}
+    \pgfmathsetmacro{\xmax}{2}
+    \pgfmathsetmacro{\ymin}{-2}
+    \pgfmathsetmacro{\ymax}{2}
+
+    % 2. BZ
+    \filldraw[fill=orange!40!white, draw=black] (-1,0) --++ (1,1) --++ (1,-1) --++ (-1,-1) -- cycle;
+    
+    % 1. BZ
+    \filldraw[fill=blue!25!white, draw=black] (-0.5,-0.5) --++ (1,0) --++ (0,1) --++ (-1,0) -- cycle;
+    \foreach \x in {-0.5,0.5}{
+        \foreach \y in {-0.5,0.5}{
+            \draw[\ow, thick] (\x,\y) --+ (-45*\x*\y*4:2cm);
+            \draw[\ow, thick] (\x,\y) --+ (135*\x*\y*4:2cm);
+        }
+    }
+    \foreach \v in {-0.5,0.5}{
+        \draw[\bw, thick] (\v,\ymin) -- (\v,\ymax);
+        \draw[\bw, thick] (\xmin,\v) -- (\xmax,\v);
+    }
+    \foreach \x in {-1,1}{
+        \foreach \y in {-1,1}{
+            \draw[\ow, -latex, very thick] (0,0) to (\x,\y);
+        }
+    }
+    
+        
+    % Gitter
+    \foreach \x in {\xmin,...,\xmax}{
+        \foreach \y in {\ymin,...,\ymax}{
+            \draw[fill] (\x,\y) circle (\r);
+            
+        }
+    }
+\end{tikzpicture}
+\caption{Konstruktion der zweiten Brillouin-Zone}
+\label{figure:tikz second bz}
+\end{figure}
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}[scale=2]   
+    \pgfmathsetmacro{\r}{0.03}
+    \pgfmathsetmacro{\xmin}{-2}
+    \pgfmathsetmacro{\xmax}{2}
+    \pgfmathsetmacro{\ymin}{-2}
+    \pgfmathsetmacro{\ymax}{2}
+    \def\gw{green!50!white}
+
+    % 3. BZ
+    \filldraw[fill=green!25!white, draw=black] (-1,0.5) --++ (0.5,0)  --++ (0,0.5) --++ (1,0) --++ (0,-0.5) --++ (0.5,0) --++ (0,-1) --++ (-0.5,0) --++ (0,-0.5) --++ (-1,0) --++ (0,0.5) --++ (-0.5,0) --++ (0,1) -- cycle;
+
+    % 2. BZ
+    \filldraw[fill=orange!40!white, draw=black] (-1,0) --++ (1,1) --++ (1,-1) --++ (-1,-1) -- cycle;
+    
+    % 1. BZ
+    \filldraw[fill=blue!25!white, draw=black] (-0.5,-0.5) --++ (1,0) --++ (0,1) --++ (-1,0) -- cycle;
+%    \foreach \x/\y in {1/0.5,1/-0.5,-1/-0.5,-1/0.5}{
+%        \draw[\gw, thick] (\x,\y) --+ (90+26.565*\x*\y*2:2cm);
+%        \draw[\gw, thick] (\x,\y) --+ (-90+26.565*\x*\y*2:2cm);
+%%        \draw[\gw, thick] (\x,\y) --+ (*\x*\y*2:2cm);
+%    }
+%    \foreach \x/\y in {2/1,1/2,-1/2,-2/1}{
+%        \draw[\gw, -latex, very thick] (0,0) to (\x,\y);
+%        \draw[\gw, -latex, very thick] (0,0) to (\x,-\y);
+%    }
+    \foreach \v in {-2,2}{
+        \draw[\gw, -latex, very thick] (0,0) to (0,\v);
+        \draw[\gw, -latex, very thick] (0,0) to (\v,0);
+    }
+    \foreach \v in {-0.5,0.5}{
+        \draw[\bw, thick] (\v,\ymin) -- (\v,\ymax);
+        \draw[\bw, thick] (\xmin,\v) -- (\xmax,\v);
+    }
+    \foreach \x in {-0.5,0.5}{
+        \foreach \y in {-0.5,0.5}{
+            \draw[\ow, thick] (\x,\y) --+ (-45*\x*\y*4:2cm);
+            \draw[\ow, thick] (\x,\y) --+ (135*\x*\y*4:2cm);
+        }
+    }
+    \foreach \v in {-1,1}{
+        \draw[\gw, thick] (\v,0.9*\ymin) -- (\v,0.9*\ymax);
+        \draw[\gw, thick] (0.9*\xmin,\v) -- (0.9*\xmax,\v);
+    }
+    
+    
+    % Gitter
+    \foreach \x in {\xmin,...,\xmax}{
+        \foreach \y in {\ymin,...,\ymax}{
+            \draw[fill] (\x,\y) circle (\r);
+            
+        }
+    }
+\end{tikzpicture}
+\caption{Konstruktion der dritten Brillouin-Zone}
+\label{figure:tikz third bz}
+\end{figure}
+\\
+Die Zustandsdichte ist gegeben durch
+\begin{align}
+n(\epsilon) &= \frac{1}{a^2} \sum_{\sigma \textbf{k}} \delta \kla\left( \epsilon - \epsilon_{\sigma}(\textbf{k}) \right) \simeq  \frac{2}{(2\pi)^2} \intr\int_{\mathbb{R}^{2}} \delta \kla\left( \epsilon - \frac{\hbar^2}{2m} \textbf{k}^2 \right) \, \mathrm{d}^{2}k = \\
+&=  \frac{2\cdot 2\pi}{(2\pi)^2} \intx\int_{0}^{\infty} \delta\kla\left( \epsilon - u \right) \frac{m}{\hbar^2} \, \mathrm{d}u = \frac{m}{\pi\hbar^2}.
+\end{align}
+Die Fermi-Energie ist implizit gegeben durch
+\begin{align}
+\intx\int_{\epsilon_\tecxt\text{min}}^{\epsilon_F} n(\epsilon)\, \mathrm{d}\epsilon &= \frac{N_\tecxt\text{el}}{N} = z_\tecxt\text{el},
+\end{align}
+wobei $z_\tecxt\text{el}$ die Anzahl an Elektronen pro Elementarzelle ist.
+Mit dem gegebenen Wert von $z_\tecxt\text{el} = 2.3\,a^{-2}$ erhalten wir hier
+\begin{align}
+\epsilon_F &= \frac{\pi\hbar^2z_\tecxt\text{el}}{m} \simeq \SI{5.5e-19}{}a^{-2}.
+\end{align}
+Um die Dispersion entlang $k_x$ zu skizzieren setzen wir zunächst $k_y=0$ ein
+\begin{align}
+\epsilon_n(\textbf{k}) &= \frac{\hbar^2}{2m} \klam\left[ \kla\left( k_x - \frac{2\pi}{a}n_x \right)^2 + \frac{4\pi^2}{a^2}n_y^2 \right].
+\end{align}
+Um die Fermi-Energie in Relation zu setzen, betrachten wir dieses Ergebnis am Rand der ersten Brillouin-Zone.
+Dort gilt
+\begin{align}
+\epsilon_n &= \frac{\hbar^2\pi^2}{2ma^2} \klam\left[ \kla\left( 1 - 2n_x \right)^2 + 4n_y^2 \right] \simeq \SI{3.8e-19}{}a^{-2} \klam\left[ \kla\left( 1 - 2n_x \right)^2 + 4n_y^2 \right].
+\end{align}
+Im Intervall $k_x \in \klam\left[ 0, \frac{\pi}{a} \right]$ ergibt sich dann für die ersten drei Bänder \autoref{fig:band kx 2d empty}.
+\begin{figure}[!ht]
+\centering
+\includegraphics{band_kx_2d_empty_fermi.pdf}
+\caption{Bandstruktur entlang $k_x$ für die ersten drei Bänder im reduzierten Zonenschema.}
+\label{fig:band kx 2d empty}
+\end{figure} 
+Im ausgedehnten Zonenschema ergibt sich einfach die Parabel ausgehend von $n=(0,0)$.
+Bei $T=0$ sind alle Zustände bis zur Fermi-Energie besetzt.
+Daraus ergibt sich dann die Bedingung
+\begin{align}
+\epsilon_F &\overset{!}{\ge } \epsilon(\textbf{k}) = \frac{\hbar^2}{2m} \textbf{k}^2,
+\end{align}
+und somit der Fermi-Impuls 
+\begin{align}
+k_F &= \sqrt{\frac{2m\epsilon_F}{\hbar^2}} = \sqrt{2\pi z_\tecxt\text{el}} = \frac{2\pi}{a} \sqrt{\frac{a^2z_\tecxt\text{el}}{2\pi}} \simeq \frac{2\pi}{a} \cdot 0.6.
+\end{align}
+Eine Skizze der Fermi-Fläche für die gegebenen Parameter findet sich in \autoref{fig:tikz fermi surface}.\footnote{Eine schöne Simulation für variable $z_\tecxt\text{el}$ gibt es unter \url{http://lampx.tugraz.at/~hadley/ss2/fermisurface/2d_fermisurface/2dsquare.php}}
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}[scale=2]   
+    \pgfmathsetmacro{\r}{0.03}
+    \pgfmathsetmacro{\zel}{0.605}
+    \pgfmathsetmacro{\xmin}{-2}
+    \pgfmathsetmacro{\xmax}{2}
+    \pgfmathsetmacro{\ymin}{-2}
+    \pgfmathsetmacro{\ymax}{2}
+    
+    % 3. BZ
+    \filldraw[fill=green!15!white, draw=black] (-1,0.5) --++ (0.5,0)  --++ (0,0.5) --++ (1,0) --++ (0,-0.5) --++ (0.5,0) --++ (0,-1) --++ (-0.5,0) --++ (0,-0.5) --++ (-1,0) --++ (0,0.5) --++ (-0.5,0) --++ (0,1) -- cycle;
+
+    % 2. BZ
+    \filldraw[fill=orange!25!white, draw=black] (-1,0) --++ (1,1) --++ (1,-1) --++ (-1,-1) -- cycle;
+    
+    % 1. BZ
+    \filldraw[fill=blue!15!white, draw=black] (-0.5,-0.5) --++ (1,0) --++ (0,1) --++ (-1,0) -- cycle;
+    
+    \draw[black, ultra thick, -latex] (0,0) -- (\zel, 0);
+    \node[above] at (0.5*\zel, 0) {$k_F$};
+    \draw[black, ultra thick] (0,0) circle(\zel);    
+    
+    % Gitter
+    \foreach \x in {\xmin,...,\xmax}{
+        \foreach \y in {\ymin,...,\ymax}{
+            \draw[fill] (\x,\y) circle (\r);
+            
+        }
+    }
+\end{tikzpicture}
+\caption{Fermi-Fläche (bzw. Fermi-Ring) für eine Elektronendichte von $z_\tecxt\text{el} = 2.3\,a^{-2}$.}
+\label{fig:tikz fermi surface}
+\end{figure}
+Für ein hinreichend schwaches periodisches Potential kann die Fermi-Energie zumindest in nullter Ordnung noch als konstant angesehen werden.
+Insofern führt die vermiedene Kreuzung am Rand der ersten Brillouin-Zone dann dazu, dass ein größerer Teil des ersten Bandes bei $T=0$ besetzt ist. 
+In der Skizze würde das dann einer ``Quadratur des Fermi-Kreises'' entsprechen.
+\newpage
+\section{Eindimensionales Gitter}
+Gegen ist ein eindimensionales Gitter mit dem periodischen Potential
+\begin{align}
+V(x) &= V_0 \cos\kla\left( \frac{2\pi x}{a} \right),
+\end{align}
+wobei $a$ die Gitterkonstante ist.
+In nullter Ordnung ($V\rightarrow 0$) sind die Energien durch
+\begin{align}
+\epsilon^{(0)} (k) &= \frac{\hbar^2}{2m} \kla\left( k - G \right)^2 \equiv \epsilon_G^{(0)}(k)
+\end{align}
+gegeben.
+Wir berechnen zunächst die Fourier-Koeffizienten des Potentials.
+Dabei haben die reziproken Gittervektoren die Struktur $G=\frac{2\pi}{a}n$ für $n\neq n_0\in\mathbb{Z}$.
+Es gilt
+\begin{align}
+V_{G} &= \frac{1}{a}\intx\int_{-a/2}^{a/2} V(x) \e^{-\i Gx}  \, \mathrm{d}x = \frac{V_0}{2a} \intx\int_{-a/2}^{a/2} \kla\left( \e^{\i \kla\left( \frac{2\pi}{a} - G \right)x} + \e^{-\i \kla\left( \frac{2\pi}{a} + G \right)x} \right) \, \mathrm{d}x = \\
+&= \frac{V_0}{2a} \intx\int_{-a/2}^{a/2} \kla\left( \e^{\i\frac{2\pi x}{a}(1-n)} + \e^{-\i\frac{2\pi x}{a}(1+n)} \right) \, \mathrm{d}x = \\
+&= \frac{V_0}{4\pi} \intx\int_{-\pi}^{\pi} \kla\left( \e^{\i x(1-n)} + \e^{-\i x(1+n)} \right) \, \mathrm{d}x = \frac{V_0}{2} \delta_{|n|,1}
+\end{align}
+(Im Nachhinein ist das Ergebnis offensichtlich, da die genutzte Darstellung $V(x) \propto \e^{\i \frac{2\pi}{a} x} + \e^{-\i \frac{2\pi}{a} x}$ natürlich bereits der Fouriertransformation entspricht.)
+\\
+Ohne Bandentartung lautet die Energie in erster Ordnung dann näherungsweise
+\begin{align}
+\epsilon_{G_0}(k) &\approx \epsilon_{G_0}^{(0)}(k) + \sum_{G\neq G_0} \frac{|V_{G-G_0}|^2}{\epsilon_{G_0}^{(0)}(k) - \epsilon_{G}^{(0)}(k)} = \\
+&= \frac{\hbar^2 \kla\left( k - \frac{2\pi}{a}n_0 \right)^2}{2m} + \frac{2m}{\hbar^2} \sum_{n\neq n_0} \frac{\frac{V_0^2}{4} \delta_{|n-n_0|,1}}{\left( k - \frac{2\pi}{a}n_0 \right)^2 - \left( k - \frac{2\pi}{a}n \right)^2} = \\
+&= \frac{\hbar^2 \kla\left( k - \frac{2\pi}{a}n_0 \right)^2}{2m} + \frac{2m}{\hbar^2} \frac{V_0^2}{4} \frac{a^2}{(2\pi)^2} \sum_{|\Delta n| = 1} \frac{1}{2\Delta n\left( \frac{ka}{2\pi} - n_0 \right) - (\Delta n)^2} = \\
+&= \frac{4\pi^2\hbar^2 \kla\left( \frac{ka}{2\pi} - n_0 \right)^2}{2ma^2} + \frac{2ma^2V_0^2}{16\pi^2\hbar^2} \klam\left[ \frac{1}{2\kla\left( \frac{ka}{2\pi} - n_0 \right) - 1} - \frac{1}{2\kla\left( \frac{ka}{2\pi} - n_0 \right) + 1} \right] = \\
+&= \frac{4\pi^2\hbar^2 \kla\left( \frac{ka}{2\pi} - n_0 \right)^2}{2ma^2} + \frac{2ma^2V_0^2}{16\pi^2\hbar^2} \frac{2}{4\kla\left( \frac{ka}{2\pi} - n_0 \right)^2 - 1}.
+\end{align}
+Da die Summe hier nur zwei Terme enthält, kann die Gleichung auch in der ``besseren'' Näherung noch gelöst werden.
+Dabei ergibt sich eine kubische Gleichung, die allerdings ohne etliche Abkürzungen kaum noch aufzuschreiben ist.
+Insbesondere ist diese Lösung trotzdem nicht exakt, da wir nur die erste Ordnung der Störungsrechnung betrachten.
+%Es gilt
+%\begin{align}
+%\epsilon_{G_0}(k) &= \epsilon_{G_0}^{(0)}(k) + \sum_{G\neq G_0} \frac{|V_{G-G_0}|^2}{\epsilon_{G_0}(k) - \epsilon_{G}^{(0)}(k)} = \\
+%&= \epsilon_{G_0}^{(0)}(k) +  \sum_{n\neq n_0} \frac{\frac{V_0^2}{4} \delta_{|n-n_0|,1}}{\epsilon_{G_0}(k) - \epsilon_{G}^{(0)}(k)} = \\
+%&= \epsilon_{G_0}^{(0)}(k) +  \frac{V_0^2}{4} \left[ \frac{1}{\epsilon_{G_0}(k) - \epsilon_{G_0+\Delta G}^{(0)}(k)} + \frac{1}{\epsilon_{G_0}(k) - \epsilon_{G_0 - \Delta G}^{(0)}(k)} \right].
+%\end{align}
+%Das ist äquivalent zu einer kubischen Gleichung in $\epsilon_{n_0} \equiv \epsilon_{G_0}(k)$ der Form
+%\begin{align}
+%\kla\left( \epsilon_{n_0} - \epsilon_{n_0}^{(0)} \right) \kla\left( \epsilon_{n_0} - \epsilon_{n_0+1}^{(0)} \right) \kla\left( \epsilon_{n_0} - \epsilon_{n_0-1}^{(0)} \right) &= \frac{V_0^2}{4}\kla\left( \epsilon_{n_0} - \epsilon_{n_0-1}^{(0)} \right) + \frac{V_0^2}{4} \kla\left( \epsilon_{n_0} - \epsilon_{n_0+1}^{(0)} \right).
+%\end{align}
+%Schreibe $\epsilon := \epsilon_{n_0}$, $e_{k} := \epsilon_{n_0 + k}^{(0)}$ und $\frac{V_0^2}{4} := v$.
+%Dann gilt
+%\begin{align}
+%0 &= \epsilon^3 - \epsilon^2 \kla\left( e_{-1} + e_0 + e_1 \right) + \epsilon \kla\left( e_0e_1 + e_1e_{-1} + e_{-1}e_0 - 2v \right) - e_{-1}e_0e_1 + ve_{-1} + ve_1\equiv\\
+%&\equiv \epsilon^3 + b\epsilon^2 + c\epsilon + d.
+%\end{align}
+%Setze $x := \epsilon + \frac{b}{3}$, $p := c - \frac{b^2}{3}$ und $q := d - \frac{cb}{3} + \frac{2b^3}{27}$. 
+%Dann gilt
+%\begin{align}
+%0 &= x^3 -bx^2 + \frac{b^2x}{3} - \kla\left( \frac{b}{3} \right)^3 + bx^2 - \frac{2b^2x}{3} + \frac{b^3}{9} + cx - \frac{cb}{3} + d = \\
+%&= x^3 + px + q.
+%\end{align}
+%Die Lösung hat die Form
+%\begin{align}
+%\epsilon &= - \frac{b}{3} + \sqrt[3]{-\frac{q}{2} + \sqrt{\frac{q^2}{4} + \frac{p^3}{27}}} + \sqrt[3]{-\frac{q}{2} - \sqrt{\frac{q^2}{4} + \frac{p^3}{27}}}
+%\end{align}
+
+\section{Attraktives Kronig-Penney-Modell}
+Gegen ist das eindimensionale periodische Potential
+\begin{align}
+V(x) &= -v_0\sum_{l\in\mathbb{Z}} \delta(x-la)
+\end{align}
+mit der Gitterkonstanten $a$.
+Das ``atomare'' Problem ist dementsprechend
+\begin{align}
+E\phi(x) &= -\frac{\hbar^2}{2m}\phi''(x) - v_0\delta(x).
+\end{align}
+Wir integrieren über ein kleines Intervall $(-\epsilon,\epsilon)$ und finden dann im Grenzwert $\epsilon\rightarrow 0$ die Bedingung
+\begin{align}
+0 &= -\frac{\hbar^2}{2m}\phi'(x) \Big\vert_{-\epsilon}^\epsilon - v_0,\\
+\Rightarrow\ \ \ \phi'(\epsilon) &= \phi'(-\epsilon) - 2\kappa,
+\end{align}
+wobei $\kappa := \frac{mv_0}{\hbar^2}$.
+Für $x\neq 0$ entspricht obiges Problem der freien Schrödingergleichung.
+Wir suchen allerdings gebundene Zustände.
+Anstatt ebener Wellen setzen wir daher in den beiden Bereichen einen exponentiellen Verlauf ein.
+Insbesondere sollte die Lösung symmetrisch in $x$ sein, womit sich der Ansatz auf
+\begin{align}
+\phi(x) &= A\e^{-k|x|}
+\end{align} 
+reduziert.
+Einsetzen liefert zunächst $E = -\frac{\hbar^2k^2}{2m}$.
+Die Ableitung ist $\phi'(x) = -k \frac{x}{|x|}  A\e^{-k|x|}$.
+Also muss gelten
+\begin{align}
+-k\frac{\epsilon}{|\epsilon|} A\e^{-k|\epsilon|} &= -k\frac{-\epsilon}{|-\epsilon|} A\e^{-k|-\epsilon|} - 2\kappa &\Rightarrow && k &= \kappa.
+\end{align}
+Es existiert also genau ein gebundener Zustand 
+\begin{align}
+\phi(x) &= \sqrt{\kappa}\e^{-\kappa|x|}
+\end{align}
+mit Energie $E=-\frac{\hbar^2\kappa^2}{2m} = -\frac{mv_0^2}{2\hbar^2}$.
+Insbesondere gibt es also auch nur ein Energieband.
+Das Überlappintegral lautet für $R=na\ge 0$
+\begin{align}
+S(R) &= \int_{\mathbb{R}^{ }} \phi(x-R)\phi(x) \, \mathrm{d}^{ }x = \kappa \int_{\mathbb{R}^{ }} \e^{-\kappa \left\vert x - \frac{na}{2} \right\vert - \kappa \left\vert x + \frac{na}{2} \right\vert} \, \mathrm{d}^{ }x = \\
+&= 2\kappa \int_{0}^{na/2} \e^{-\kappa \kla\left( x + \frac{na}{2} + \frac{na}{2} - x \right)}\, \mathrm{d}x + 2\kappa\intx\int_{na/2}^{\infty} \e^{-\kappa \kla\left( x + \frac{na}{2} + x - \frac{na}{2} \right)}\, \mathrm{d}x = \\
+&= n\kappa a\e^{-n\kappa a} + 2\kappa \frac{\e^{-2\kappa x}}{-2\kappa}\bigg\vert_{na/2}^\infty = (n\kappa a+1)\e^{-n\kappa a}.
+\end{align}
+Aufgrund der Symmetrie gilt zudem $S(R) = S(|R|)$.
+Wir definieren 
+\begin{align}
+\Delta V_n(x) &:= -v_0\sum_{l\neq n} \delta(x - la),
+\end{align}
+was dem Gesamtpotential ohne den Beitrag beim $n$-ten Gitterplatz entspricht.
+Das Coulomb-Integral ist dann
+\begin{align}
+\alpha &= -\intr\int_{\mathbb{R}^{ }} \phi(x)^2\Delta_0(x) \, \mathrm{d}^{ }x = v_0\sum_{l\neq 0} \kappa \intr\int_{\mathbb{R}^{ }} \e^{-2\kappa |x|} \delta(x - la) \, \mathrm{d}^{ }x = \\
+&= 2v_0\kappa \sum_{l \ge 1} \e^{-2l\kappa a}.
+\end{align}
+Die verbleibenden Überlappintegrale sind
+\begin{align}
+\beta(R) &= -\intr\int_{\mathbb{R}^{ }} \phi(x-R)\phi(x) V_A(x-R) \, \mathrm{d}^{ }x = v_0\kappa\intr\int_{\mathbb{R}^{ }} \e^{-\kappa |x-na|-\kappa |x|} \delta(x - na) \, \mathrm{d}x = \\
+&= v_0\kappa \e^{-|n|\kappa a}.
+\end{align}
+Damit lautet die Gesamtenergie dann
+\begin{align}
+\epsilon(k) &= E - \frac{\alpha + \sum_{R\neq 0} \e^{-\i kR} \beta(R)}{1 + \sum_{R\neq 0} \e^{-\i kR} S(R)} = \\
+&= -\frac{\hbar^2\kappa^2}{2m} - \frac{2v_0\kappa \sum_{n\ge 1}\e^{-2n\kappa a} + \sum_{n\ge 1} 2v_0 \cos(n\kappa a) \kappa \e^{-n\kappa a}}{1 + \sum_{n\ge 1} 2(n\kappa a+1) \cos(n\kappa a) \e^{-n\kappa a}} .%= \\
+%&= -\frac{\hbar^2\kappa^2}{2m} - 2v_0\kappa \frac{\frac{1}{\e^{2\kappa a} - 1} +  }{1}
+\end{align}
+Die geometrischen Reihen können prinzipiell alle berechnet werden, allerdings ist das insbesondere für die Reihe im Nenner recht aufwendig.
+%Hier haben wir verschiedene geometrische Reihen verwendet
+%\begin{align}
+%\sum_{n\ge 1} \cos (nx)\e^{-nx} &= \tecxt\text{Re\,} \sum_{n\ge 1} \e^{(\i-1)nx} = \tecxt\text{Re\,} \frac{1}{\e^{(1-\i) x} - 1} = \\
+%&= \tecxt\text{Re\,} \frac{1}{\e^x\cos x - 1 - \i\e^x \sin x} = \frac{\e^x\cos x - 1}{1 + \e^{2x} - 2\e^x \cos(x)}
+%\end{align}
+In Ordnung $\e^{-\kappa a}$ vereinfacht sich das Ergebnis zu
+\begin{align}
+\epsilon(k) &\simeq -\frac{\hbar^2\kappa^2}{2m} - 2v_0\kappa \cos(\kappa a) \e^{-\kappa a} \left( 1 - 2[\kappa a+1] \cos(\kappa a) \e^{-\kappa a} \right) \simeq \\
+&\simeq -\frac{\hbar^2\kappa^2}{2m} - 2v_0\kappa \cos(\kappa a)\e^{-\kappa a}.
+\end{align}
+
+%\begin{align}
+%V_{G} &= \frac{1}{a}\intx\int_{-a/2}^{a/2} V(x) \e^{-\i Gx}  \, \mathrm{d}x = 2V_0 \intx\int_{0}^{a/2} \cos\kla\left( \frac{2\pi x}{a} \right) \cos (Gx)\, \mathrm{d}x = \\
+%&= 
+%\end{align}
+
+\section{Orthorhombisches Gitter}
+Gegeben ist das Ergebnis einer vereinfachten Tight-Binding-Näherung für ein einfach orthorhombisches Gitter
+\begin{align}
+\epsilon (\textbf{k}) &= E_0 - 2\klam\left[ t_a\cos (k_xa) + t_b\cos(k_yb) + t_c\cos(k_zc) \right],
+\end{align}
+wobei $a$, $b$ und $c$ die Abmessungen der Einheitszelle darstellen.
+Der Vektor der Gruppengeschwindigkeit ist definiert als
+\begin{align}
+\textbf{v}(\textbf{k}) &= \frac{1}{\hbar} \frac{\partial \epsilon}{\partial \textbf{k}} = \frac{2}{\hbar} \begin{pmatrix}
+at_a \sin(k_xa) \\ bt_b \sin(k_yb) \\ ct_c \sin(k_zc)
+\end{pmatrix}.
+\end{align}
+Der inverse Tensor der effektiven Masse hat die Komponenten
+\begin{align}
+\kla\left( \frac{1}{m^\ast} \right)_{jl} &= \frac{1}{\hbar^2} \frac{\partial^2\epsilon}{\partial k_j\partial k_l} = \\
+&= \frac{2}{\hbar^2} \frac{\partial}{\partial k_j} \klam\left[ at_a \sin(k_xa) \delta_{lx} + bt_b \sin(k_yb) \delta_{ly} + ct_c \sin(k_zc) \delta_{lz} \right] = \\
+&= \frac{2}{\hbar^2} \klam\left[ a^2t_a\cos (k_xa) \delta_{jx}\delta_{lx} + b^2t_b\cos(k_yb) \delta_{jy}\delta_{ly} + c^2t_c\cos(k_zc) \delta_{jz}\delta_{lz} \right].
+\end{align}
+Der Tensor ist also diagonal.
+Explizit lautet er
+\begin{align}
+\frac{1}{m^\ast} &= \frac{2}{\hbar^2} \begin{pmatrix}
+a^2t_a\cos (k_xa) & 0 & 0\\
+0& b^2t_b\cos(k_yb) &0 \\
+0&0& c^2t_c\cos(k_zc)
+\end{pmatrix}.
+\end{align}
+In der Nähe des $\Gamma$-Punktes gilt $\cos(k_ja_j) \sim 1 - \frac{1}{2} (k_ja_j)^2$, wobei $a_1\equiv a$, $a_2\equiv b$ und $a_3\equiv c$.
+Dann vereinfacht sich der Tensor zu
+\begin{align}
+\kla\left( \frac{1}{m^\ast} \right)_{jl} &\sim \frac{2}{\hbar^2} \delta_{jl} a_j^2t_j\kla\left( 1 - \frac{1}{2}a_j^2k_j^2 \right).
+\end{align}
+Die effektive Masse hängt hier also sehr direkt mit den drei Raumrichtungen zusammen.
+Für $\textbf{k}\rightarrow 0$ gilt insbesondere $m^\ast_{jj} \sim \frac{\hbar^2}{2a_j^2t_j}$.
+\\
+Im Bandminimum muss gelten $\textbf{v} = 0$.
+Das ist hier äquivalent zu $\textbf{k} = 0$, das Minimum entspricht also dem $\Gamma$-Punkt.
+Die elektronische Zustandsdichte ist gegeben durch
+\begin{align}
+n(\epsilon) &= \intr\int_{\mathbb{R}^{3}} \delta\kla\left( \epsilon - \epsilon(\textbf{k}) \right) \, \mathrm{d}^{3}k = \\
+&= \frac{1}{abc} \intr\int_{\mathbb{R}^{3}} \delta\kla\left( \epsilon - E_0 + 2t_a\cos(k_x) + 2t_b\cos(k_y) + 2t_c\cos(k_z) \right) \, \mathrm{d}^{3}k \sim\\
+&\sim \frac{1}{abc} \intr\int_{\mathbb{R}^{3}} \delta\kla\left( \epsilon - E_0 + 2(t_a+t_b+t_c) - \textbf{k}^2 \right) \, \mathrm{d}^{3}k = \\
+&= \frac{4\pi}{abc} \intx\int_{0}^{\infty} \delta\kla\left( \epsilon - E_0 + 2(t_a+t_b+t_c) - u \right) \, u \frac{\tecxt\text{d}k}{\tecxt\text{d}u} \mathrm{d}u = \\
+&= \frac{2\pi}{abc} \sqrt{\epsilon - E_0 + 2(t_a+t_b+t_c)}.
+\end{align}
+
+\end{document}

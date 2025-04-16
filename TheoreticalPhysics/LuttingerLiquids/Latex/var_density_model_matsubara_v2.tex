@@ -1,0 +1,445 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{ll_scrarticle}
+
+\newcommand*{\titel}{Linear two-atomic chain}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+%\subject{SUBJECT}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Bosonization}
+As before the model is described by $H=H_0+H_\Text{int}$ where
+\begin{align}
+H_0 &= \sum_{\kappa=\A,\B} \sum_k \vf k \varnormord{c_{\kappa,k}^\dagger c_{-\kappa,k}},\\
+H_\Text{int} &= \sum_{\kappa=\A,\B} \sum_{j=0}^{N-1} U_\kappa n_{\kappa,j} n_{\kappa,j+1}.
+\end{align}
+The free part can be diagonalized by $c_{\kappa} = \frac{1}{\sqrt{2}} \kla*{c_{\R} + \kappa c_{\L}}$.
+This basis rotation yields
+\begin{align}
+H_0 &= \sum_{\ell=\R,\L} \sum_k \vf k \frac{1}{2} \varnormord{\kla*{c_{\R,k}^\dagger + \kappa c_{\L,k}^\dagger} \kla*{c_{\R,k} - \kappa c_{\L,k}}} = \sum_{\ell=\R,\L} \sum_k \ell\vf k\varnormord{c_{\ell,k}^\dagger c_{\ell,k}}.
+\end{align}
+The density operator becomes $n_{\kappa} = \frac{1}{2} \kla*{c_{\R}^\dagger + \kappa c_{\L}^\dagger} \kla*{c_{\R} + \kappa c_{\L}} = \frac{1}{2} \sum_\ell \kla*{n_{\ell} + \kappa c_{\ell}^\dagger c_{-\ell}}$.
+Inserting into the interaction yields
+\begin{align}
+H_\Text{int} &= \frac{1}{4} \sum_{\kappa=\A,\B} \sum_{j=0}^{N-1} U_\kappa \sum_{\ell,\ell'} \kla*{n_{\ell,j} + \kappa c_{\ell,j}^\dagger c_{-\ell,j}} \kla*{n_{\ell',j+1} + \kappa c_{\ell',j+1}^\dagger c_{-\ell',j+1}} = H_+ + H_-
+\end{align}
+where introducing $U_\pm = \frac{1}{2} \kla*{U_\A \pm U_\B}$ gives
+\begin{align}
+H_+ &= \frac{U_+}{2} \sum_{\ell,\ell'} \sum_{j=0}^{N-1} \kla*{n_{\ell,j} n_{\ell',j+1} + c_{\ell,j}^\dagger c_{-\ell,j} c_{\ell',j+1}^\dagger c_{-\ell',j+1}},\\
+H_- &= \frac{U_-}{2} \sum_{\ell,\ell'} \sum_{j=0}^{N-1} \kla*{n_{\ell,j} c_{\ell',j+1}^\dagger c_{-\ell',j+1} + c_{\ell,j}^\dagger c_{-\ell,j} n_{\ell',j+1}}.
+\end{align}
+Going to a continuum theory via $c_j\rightarrow \sqrt{a}\psi(x)$ where $a$ is the lattice spacing and gives
+\begin{align}
+H_\pm &= \frac{U_\pm a}{2} \intr{\sum_{\ell,\ell'} \kla*{\mathcal{H}_{\pm,\ell,\ell'}^\Text{I} + \mathcal{H}_{\pm,\ell,\ell'}^\Text{II}}}{x}
+\end{align}
+where we defined the Hamilton densities
+\begin{align}
+\mathcal{H}_{+,\ell,\ell'}^\Text{I} &= \psi_{\ell}^\dagger(x) \psi_{\ell}(x) \psi_{\ell'}^\dagger(x+a) \psi_{\ell'}(x+a),\\
+\mathcal{H}_{+,\ell,\ell'}^\Text{II} &= \psi_{\ell}^\dagger(x) \psi_{-\ell}(x) \psi_{\ell'}^\dagger(x+a) \psi_{-\ell'}(x+a),\\
+\mathcal{H}_{-,\ell,\ell'}^\Text{I} &= \psi_{\ell}^\dagger(x) \psi_{\ell}(x) \psi_{\ell'}^\dagger(x+a) \psi_{-\ell'}(x+a),\\
+\mathcal{H}_{-,\ell,\ell'}^\Text{II} &= \psi_{\ell}^\dagger(x) \psi_{-\ell}(x) \psi_{\ell'}^\dagger(x+a) \psi_{\ell'}(x+a).
+\end{align}
+The Fourier components relate to the real-space operators via the transform
+\begin{align}
+c_k &= \frac{1}{\sqrt{L}} \intr{\powe{-\i kx} \psi(x)}{x}
+\end{align}
+which, in the thermodynamic limit $L\rightarrow\infty$ and using partial integration, allows us to rewrite the Hamiltonian as
+\begin{align}
+H_0 &= \sum_{\ell,k} \ell \vf k  \frac{1}{L}\intr{\intr{\powe{\i kx} \powe{-\i kx'} \varnormord{\psi_\ell^\dagger(x) \psi_\ell(x')}}{x'} }{x} = \sum_\ell \ell\vf \intr{ \varnormord{\psi_\ell^\dagger(x) (-\i\partial_x) \psi_\ell(x)} }{x}.
+\end{align}
+The bosonization identity we will use is $\psi_\ell(x) = \frac{\eta_\ell}{\sqrt{L}} \normord{\powe{-\i\varphi_\ell(x)}}$.
+Here $\eta_\ell$ obey the Majorana algebra and will for convenience be represented by $\eta_\R = \sigma_x$ and $\eta_\L = \sigma_z$.
+The bosonic fields may be split into a part containing creation and a part containing annihilation operators via $\varphi_\ell = \varphi_\ell^{(+)} + \varphi_\ell^{(-)}$.
+These satisfy the commutation relations
+\begin{align}
+\klb*{\varphi_\ell^{(+)}(x), \varphi_{\ell'}^{(-)}(x')} &= \lim_{\alpha\rightarrow 0^+} \delta_{\ell,\ell'} \log\klb*{\frac{2\pi}{L} \kla*{\alpha + \i\ell(x-x')}}.
+\end{align}
+\subsection{Free Hamiltonian}
+To bosonize the free Hamiltonian we consider the point-splitting
+\begin{align}
+\psi_\ell^\dagger(x) \psi_\ell(x+\epsilon) &= \frac{1}{L} \normord{\powe{\i\varphi_\ell(x)}} \normord{\powe{-\i\varphi_\ell(x+\epsilon)}} = \frac{1}{L} \normord{\powe{-\i\varphi_\ell(x+\epsilon) + \i\varphi_\ell(x)}} \powe{\klb*{\i\varphi_\ell^{(-)}(x), -\i\varphi_\ell^{(+)}(x+\epsilon)}} \\
+&= \frac{1}{L} \normord{\powe{-\i\sum_{n\ge 1} \frac{1}{n!} \epsilon^n \partial_x^n\varphi_\ell(x)}} \frac{L}{2\pi\i\ell \epsilon} \\
+&= \frac{-\i\ell}{2\pi\epsilon} \normord{\klb*{1 -\i \epsilon \partial_x\varphi_\ell - \i \frac{\epsilon^2}{2} \partial_x^2\varphi_\ell - \frac{\epsilon^2}{2} \kla*{\partial_x\varphi_\ell}^2 + \dots} }.
+\end{align}
+Removing the divergent constant by subtracting the ground-state expectation value then yields
+\begin{align}
+\lim_{\epsilon\rightarrow 0} \varnormord{\psi_\ell^\dagger(x) \psi_\ell(x+\epsilon)} &= \frac{-\ell}{2\pi} \partial_x\varphi_\ell(x),\\
+\lim_{\epsilon\rightarrow 0} \varnormord{\psi_\ell^\dagger(x)\partial_\epsilon \psi_\ell(x+\epsilon)} &= \frac{\i\ell}{4\pi} \klb*{\i \partial_x^2\varphi_\ell + \normord{\kla*{\partial_x\varphi_\ell}^2} }.
+\end{align}
+Inserting into the Hamiltonian and assuming that the fields vanish at infinity we obtain the well-known expression for a clean Luttinger liquid
+\begin{align}
+H_0 &= \frac{\vf}{4\pi} \intr{\sum_\ell \normord{ \kla*{\partial_x\varphi_\ell}^2 }}{x} = \frac{\vf}{2\pi} \intr{ \normord{ \klb*{\kla*{\partial_x\phi}^2 + \kla*{\partial_x\theta}^2} }}{x}
+\end{align}
+where we introduced the fields $\varphi_\ell\equiv \ell\phi - \theta$.
+\subsection{Interaction}
+We have already demonstrated that the terms $\psi_\ell^\dagger\psi_\ell$ become derivatives of the chiral fields.
+There is no normal-ordering built into the interaction, but note that summing on $\ell$ also cancels the divergent constant since
+\begin{align}
+\sum_\ell \psi_\ell^\dagger(x) \psi_\ell(x) &= \lim_{\epsilon\rightarrow 0} \sum_\ell \klb*{\frac{-\i\ell}{2\pi\epsilon} - \frac{\ell}{2\pi}\partial_x\varphi_\ell(x)} = \frac{-1}{\pi}\partial_x\phi(x).
+\end{align}
+The other type of term appearing in $H_\Text{int}$ is of the form
+\begin{align}
+\psi_\ell^\dagger(x)\psi_{-\ell}(x) &= \frac{\eta_\ell \eta_{-\ell}}{L} \normord{\powe{\i\varphi_\ell(x)}} \normord{\powe{-\i\varphi_{-\ell}(x)}} = \frac{\eta_\ell \eta_{-\ell}}{L} \normord{\powe{2\i\ell\phi(x)}}
+\end{align}
+and is evidently much less difficult to bosonize due to the fact that $\varphi_\ell$ commutes for distinct species.
+%In order to avoid mistakes with normal-ordering one should be careful not to naively insert these ``identities'' into more complicated expressions.
+%To understand what can go wrong, consider the first Hamilton density\footnote{For brevity, limits that arise from point-splitting such as $\lim_{\epsilon\rightarrow 0}$ are implied}
+%\begin{align}
+%\mathcal{H}_{+,\ell,\ell'}^\Text{I} &= \psi_{\ell}^\dagger(x) \psi_{\ell}(x+\epsilon) \psi_{\ell'}^\dagger(x+a) \psi_{\ell'}(x+a+\epsilon)\\
+%&= \frac{1}{L^2} \normord{\powe{\i\varphi_\ell(x)}} \normord{\powe{-\i\varphi_\ell(x+\epsilon)}} \normord{\powe{\i\varphi_{\ell'}(x+a)}} \normord{\powe{-\i\varphi_{\ell'}(x+a+\epsilon)}}\\
+%&= \frac{1}{L^2} \normord{\powe{\i\varphi_\ell(x)-\i\varphi_\ell(x+\epsilon)}} \normord{\powe{\i\varphi_{\ell'}(x+a)-\i\varphi_{\ell'}(x+a+\epsilon)}} \powe{\klb*{\i\varphi_{\ell}^{(-)}(0), -\i \varphi_{\ell}^{(+)}(\epsilon)}} \powe{\klb*{\i \varphi_{\ell'}^{(-)}(0), -\i \varphi_{\ell'}^{(+)}(\epsilon)}}\\
+%&= \frac{1}{2\pi\i\ell\epsilon} \frac{1}{2\pi\i\ell'\epsilon} \normord{\powe{\i\varphi_\ell(x)-\i\varphi_\ell(x+\epsilon) + \i\varphi_{\ell'}(x+a)-\i\varphi_{\ell'}(x+a+\epsilon)}} \powe{\klb*{\i\varphi_\ell^{(-)}(0)-\i\varphi_\ell^{(-)}(\epsilon), \i\varphi_{\ell'}^{(+)}(a)-\i\varphi_{\ell'}^{(+)}(a+\epsilon)}}\\
+%&= \frac{-\ell\ell'}{4\pi^2\epsilon^2} \normord{\powe{\i\varphi_\ell(x)-\i\varphi_\ell(x+\epsilon) + \i\varphi_{\ell'}(x+a)-\i\varphi_{\ell'}(x+a+\epsilon)}}  \klb*{\frac{\i\ell a}{\i\ell (a-\epsilon)} \frac{\i\ell a}{\i\ell (a+\epsilon)}}^{\delta_{\ell,\ell'}}\\
+%&= \frac{-\ell\ell'}{4\pi^2\epsilon^2} \normord{\powe{-\i\epsilon\partial_x\varphi_\ell(x)-\i\frac{\epsilon^2}{2} \partial_x^2\varphi_\ell(x) -\i\epsilon \partial_x \varphi_{\ell'}(x+a)-\i\frac{\epsilon^2}{2} \partial_x^2 \varphi_{\ell'}(x+a) }}
+%\end{align}
+%Since we integrate over the density we may drop all total derivatives.
+%Taylor expanding then yields
+%\begin{align}
+%\mathcal{H}_{+,\ell,\ell'}^\Text{I} &= \frac{-\ell\ell'}{4\pi^2\epsilon^2} \normord{\klb*{1 - \frac{\epsilon^2}{2} \kla*{\partial_x\varphi_\ell(x)}^2 - \frac{\epsilon^2}{2} \kla*{\partial_x\varphi_{\ell'}(x+a)}^2 - \frac{\epsilon^2}{2} \partial_x\varphi_\ell(x) \partial_x \varphi_{\ell'}(x+a)}}.
+%\end{align}
+%Summing on $\ell$ and $\ell'$ removes the divergent constant and leaves us with
+%\begin{align}
+%\sum_{\ell,\ell'} \mathcal{H}_{+,\ell,\ell'}^\Text{I} &= \frac{1}{8\pi^2} \sum_{\ell,\ell'} \normord{\partial_x \phi(x) \partial_x\phi(x+a)} \simeq \frac{1}{2\pi^2} \normord{\kla*{\partial_x\phi}^2}.
+%\end{align}
+%The naive method looks correct up to a factor of two because
+%\begin{align}
+%\sum_{\ell,\ell'} \psi_{\ell}^\dagger(x) \psi_{\ell}(x+\epsilon) \psi_{\ell'}^\dagger(x+a) \psi_{\ell'}(x+a+\epsilon) &= \frac{-1}{\pi} \partial_x \phi(x) \frac{-1}{\pi} \partial_x\phi(x+a).
+%\end{align}
+%Both calculations are perfectly valid, but the naive result is not normal-ordered, and to avoid mistakes one should  generally take the safer route.\\
+The first Hamiltonian density is rather straightforward to bosonize and yields
+\begin{align}
+\sum_{\ell,\ell'} \psi_{\ell}^\dagger(x) \psi_{\ell}(x+\epsilon) \psi_{\ell'}^\dagger(x+a) \psi_{\ell'}(x+a+\epsilon) &= \frac{-1}{\pi} \partial_x \phi(x) \frac{-1}{\pi} \partial_x\phi(x+a) \simeq \frac{1}{\pi^2} \normord{\kla*{\partial_x\phi}^2}.
+\end{align}
+In the last step we assumed that $a$ is small and dropped a constant by introducing the normal-ordering.
+The second density becomes
+\begin{align}
+\mathcal{H}_{+,\ell,\ell'}^\Text{II} &= \psi_{\ell}^\dagger(x) \psi_{-\ell}(x) \psi_{\ell'}^\dagger(x+a) \psi_{-\ell'}(x+a)\\
+&= \frac{\eta_\ell\eta_{-\ell} \eta_{\ell'}\eta_{-\ell'}}{L^2} \normord{\powe{\i\varphi_\ell(x) - \i\varphi_{-\ell}(x)}} \normord{\powe{\i\varphi_{\ell'}(x+a) - \i\varphi_{-\ell'}(x+a)}}\\
+&= \frac{-\ell\ell'}{L^2} \normord{\powe{\i\varphi_\ell(x) - \i\varphi_{-\ell}(x) + \i\varphi_\ell(x+a) - \i\varphi_{-\ell}(x+a)}} \powe{\ell\ell' \klb*{\i \varphi_{\ell}^{(-)}(0), \i \varphi_{\ell}^{(+)}(a)}} \powe{\ell\ell' \klb*{-\i \varphi_{-\ell}^{(-)}(0), -\i \varphi_{-\ell}^{(+)}(a)}}\\
+&= \frac{-\ell\ell'}{L^2} \klb*{\frac{2\pi\i\ell a}{L} \frac{-2\i\pi\ell a}{L}}^{\ell\ell'} \normord{\powe{2\i\ell\phi(x) + 2\i\ell'\phi(x+a)}}.
+\end{align}
+At this point we should consider two separate cases.
+For $\ell=\ell'$ we find
+\begin{align}
+\mathcal{H}_{+,\ell,\ell}^\Text{II} &= \frac{-4\pi^2a^2}{L^4} \normord{\powe{2\i\ell\phi(x) + 2\i\ell'\phi(x+a)}} \simeq \frac{-4\pi^2a^2}{L^4} \normord{\powe{4\i\ell\phi(x)}}.
+\end{align}
+This term is negligible due to the prefactor of $\frac{1}{L^4}$.
+For $\ell=-\ell'$ we instead find
+\begin{align}
+\mathcal{H}_{+,\ell,-\ell}^\Text{II} &= \frac{1}{4\pi^2a^2} \normord{\powe{2\i\ell\phi(x) - 2\i\ell\phi(x+a)}} \simeq \frac{1}{4\pi^2a^2} \normord{\powe{-2\i\ell a\partial_x\phi(x) - \i\ell a^2\partial_x^2\phi(x)}}\\
+&\simeq \frac{1}{4\pi^2a^2} \normord{\klb*{1 - 2\i\ell a\partial_x\phi(x) - \i\ell a^2\partial_x^2\phi(x) - \frac{1}{2} (2\i a)^2\kla*{\partial_x\phi(x)}^2 }} \simeq \frac{1}{2\pi^2} \normord{\kla*{\partial_x\phi}^2}
+\end{align}
+up to constants and total derivatives.
+%The second density should be considered in two separate cases.
+%For $\ell=\ell'$ we find
+%\begin{align}
+%\mathcal{H}_{+,\ell,\ell}^\Text{II} &= \psi_{\ell}^\dagger(x) \psi_{-\ell}(x) \psi_{\ell}^\dagger(x+a) \psi_{-\ell}(x+a)\\
+%&= \frac{\eta_\ell\eta_{-\ell} \eta_\ell\eta_{-\ell}}{L^2} \normord{\powe{\i\varphi_\ell(x) - \i\varphi_{-\ell}(x)}} \normord{\powe{\i\varphi_\ell(x+a) - \i\varphi_{-\ell}(x+a)}}\\
+%&= \frac{-1}{L^2} \normord{\powe{\i\varphi_\ell(x) - \i\varphi_{-\ell}(x) + \i\varphi_\ell(x+a) - \i\varphi_{-\ell}(x+a)}} \powe{\klb*{\i \varphi_{\ell}^{(-)}(0), \i \varphi_{\ell}^{(+)}(a)}} \powe{\klb*{-\i \varphi_{-\ell}^{(-)}(0), -\i \varphi_{-\ell}^{(+)}(a)}}\\
+%&= \frac{-1}{L^2} \frac{2\pi\i\ell a}{L} \frac{-2\i\pi\ell a}{L} \normord{\powe{2\i\ell\phi(x) + 2\i\ell\phi(x+a)}}\\
+%&\simeq \frac{-4\pi^2a^2}{L^4} \normord{\powe{4\i\ell\phi(x)}}.
+%\end{align}
+%Due to the prefactor of $\frac{1}{L^4}$ this term is negligible.
+%For $\ell=-\ell'$ we instead find
+%\begin{align}
+%\mathcal{H}_{+,\ell,-\ell}^\Text{II} &= \psi_{\ell}^\dagger(x) \psi_{-\ell}(x) \psi_{-\ell}^\dagger(x+a) \psi_{\ell}(x+a)\\
+%&= \frac{\eta_\ell\eta_{-\ell} \eta_{-\ell}\eta_\ell}{L^2} \normord{\powe{\i\varphi_\ell(x) - \i\varphi_{-\ell}(x)}} \normord{\powe{\i\varphi_{-\ell}(x+a) - \i\varphi_{\ell}(x+a)}}\\
+%&= \frac{1}{L^2} \normord{\powe{\i\varphi_\ell(x) - \i\varphi_{-\ell}(x) + \i\varphi_{-\ell}(x+a) - \i\varphi_{\ell}(x+a)}} \powe{\klb*{\i \varphi_{\ell}^{(-)}(0), -\i \varphi_{\ell}^{(+)}(a)}} \powe{\klb*{-\i \varphi_{-\ell}^{(-)}(0), \i \varphi_{-\ell}^{(+)}(a)}}\\
+%&\simeq \frac{1}{2\pi\i\ell a} \frac{1}{-2\pi\i\ell a} \normord{\powe{-\i a\partial_x \varphi_\ell(x) - \i\frac{a^2}{2} \partial_x^2 \varphi_\ell(x) + \i a\partial_x \varphi_{-\ell}(x) + \i \frac{a^2}{2} \partial_x \varphi_{-\ell}(x)}}.
+%\end{align}
+%Up to a constant and total derivatives -- which we will once again ignore -- this can be simplified to
+%\begin{align}
+%\sum_\ell \mathcal{H}_{+,\ell,-\ell}^\Text{II} &\simeq \frac{1}{4\pi^2a^2} \sum_\ell \normord{\klb*{-\frac{a^2}{2} \kla*{\partial_x\varphi_\ell}^2 - \frac{a^2}{2} \kla*{\partial_x\varphi_{-\ell}}^2 + \frac{a^2}{2} \partial_x\varphi_\ell \partial_x \varphi_{-\ell}}}\\
+%&= \frac{-1}{8\pi^2} \sum_\ell \normord{\klb*{ \kla*{\partial_x\phi}^2 + \kla*{\partial_x\theta}^2 - \kla*{\ell\partial_x\phi - \partial_x\theta} \kla*{-\ell\partial_x\phi - \partial_x\theta} }} = \frac{-1}{2\pi^2} \normord{\kla*{\partial_x\phi}^2}.
+%\end{align}
+The first $U_-$-part becomes
+\begin{align}
+\sum_{\ell,\ell'} \mathcal{H}_{-,\ell,\ell'} &= \sum_{\ell'} \frac{\eta_{\ell'} \eta_{-\ell'}}{L} \normord{\powe{2\i\ell'\phi(x+a)}}\frac{-1}{\pi} \partial_x\phi(x).
+\end{align}
+Under the integral we may now shift the argument of the fields by $a$.
+Combining with the second part then yields
+\begin{align}
+H_- &= \frac{U_-}{2} \sum_\ell \frac{ -\eta_\ell \eta_{-\ell}}{2\pi^2\alpha} \intr{  \powe{2\i\ell\phi(x)} \klb*{\partial_x\phi(x-a) + \partial_x\phi(x+a)} }{x}.
+\end{align}
+\subsection{Final model}
+Except for neglecting the sine-Gordon term $\sim\cos(4\phi)$ we arrive at a low-energy theory described by $H=H_0 + gH_\Text{int}$ where
+\begin{align}
+H_0 &= \frac{u}{2\pi} \intr{\klb*{K \kla*{\partial_x\theta}^2 + \frac{1}{K} \kla*{\partial_x\phi}^2}}{x},\\
+H_\Text{int} &= g\frac{u}{2\pi\alpha} \sum_\ell \eta_\ell \eta_{-\ell} \intr{\powe{2\i\ell\phi(x)} \klb*{\partial_x\phi(x+a) + \partial_x\phi(x-a)}}{x}
+\end{align}
+with the dimensionless coupling constant $g = \frac{-U_-a}{2\pi u}$, the renormalized Fermi velocity $u = \frac{\vf}{K}$ and the Luttinger parameter $K = \kla*{1 + \frac{2U_+ a}{\pi\vf}}^{-1/2}$.
+\section{Green's function}
+Before we dive into the calculations let us introduce the notation
+\begin{align}
+\bra*{\zabx{A_1&A_2&A_3&\dots}{B_1&B_2&B_3&\dots}{z_1&z_2&z_3&\dots}}_0 &= \bra[\bigg]{\prod_j \powe{\i A_j\phi(z_j) + \i B_j\theta(z_j)}}_0.
+\end{align}
+We can rewrite this expression as
+\begin{align}
+\bra*{\abx{A}{B}{Z}}_0 &= \prod_{j<k} \powe{\frac{1}{2}\klb*{KA_jA_k + \frac{1}{K}B_jB_k + \abs*{s_{jk}}}F_1(z_j-z_k)} \powe{-\frac{1}{2}|s_{jk}| F\kla*{z_{-\sgn(s_{jk}),j} - z_{-\sgn(s_{jk}), k}}}
+\end{align}
+where $s_{jk} = A_jB_k+A_kB_j$ and the two functions are
+\begin{align}
+F(z_\ell) &= \log\klb*{\frac{\beta u}{\pi\alpha}} + \log\klb*{\sin(z_\ell)},\\
+F_1(z) &= \frac{1}{2} \klb*{F(z_+) + F(z_-)}
+\end{align}
+with the coordinates $z_\pm = \frac{\pi\tau}{\beta} \pm \i \frac{\pi x}{\beta u}$ and the tuple $z=(z_+,z_-)$.
+\subsection{Zeroth order}
+The Matsubara Green's function is given by
+\begin{align}
+G_{0,\ell,\ell'}^\M(z) &= -\mathcal{T} \bra*{\psi_\ell(z) \psi_{\ell'}^\dagger(0)}_0 = -\frac{1}{2\pi a} \bra*{\zabx{-\ell & \ell'}{1 & -1}{z & 0}}_0\\
+&= \frac{-\delta_{\ell,\ell'}}{2\pi a} \powe{\frac{1}{2}\klb*{-K - \frac{1}{K} + 2}F_1(z)} \powe{-F\kla*{z_{-\ell}}} = \frac{-\delta_{\ell,\ell'}}{2\beta u} \kla*{\frac{\pi\alpha}{\beta u}}^M \csc(z_{-\ell})^{1 + \frac{M}{2}} \csc(z_\ell)^\frac{M}{2}
+\end{align}
+where $M=\frac{1}{2} \klb*{K + \frac{1}{K} - 2} \ge 0$.
+At this point we give the Fourier integrals
+\begin{align}
+J_0(k,\i\omega_n^\F; b) &= \intx{0}{\beta}{\intr{\powe{\i \omega_n^\F\tau - \i kx} \csc(z_+)^{1+b} \csc(z_-)^b}{x} }{\tau}\\
+&= -\i\sin(\pi b) \frac{u\beta^2}{\pi^2} I_0\kla*{\beta\frac{\i\omega_n^\F + uk}{2\pi}, b} I_0\kla*{\beta\frac{\i\omega_n^\F - uk}{2\pi}, b+1},\\
+L_0(k,\i\omega_n^\B; b) &= \intx{0}{\beta}{\intr{\powe{\i \omega_n^\B \tau - \i kx} \csc(z_+)^{b} \csc(z_-)^b}{x} }{\tau}\\
+&= \sin(\pi b) \frac{u\beta^2}{\pi^2} I_0\kla*{\beta\frac{\i\omega_n^\B + uk}{2\pi}, b} I_0\kla*{\beta\frac{\i\omega_n^\B - uk}{2\pi}, b}
+\end{align}
+where $I_0(z,b) = \frac{2^{b-1}}{\pi} \Gamma(1-b) \Gamma\kla*{\frac{b+\i z}{2}} \Gamma\kla*{\frac{b-\i z}{2}} \sin\kla*{\frac{\pi b}{2} + \frac{\pi\i z}{2}}$.
+%#beta csc b+1,b
+%def i_0(z, b):
+%    return (2**(b-1) * special.gamma(b/2+1j*z/2) * special.gamma(b/2-1j*z/2)* np.sin(np.pi*b/2 + 1j*z*np.pi/2) * special.gamma(1-b) / np.pi)
+%def j_0(k, i_omega_n, beta=1.1, b=0.5, u=1.0):
+%    return (-1j * u * beta**2 / np.pi**2 * np.sin(np.pi*b) * i_0(beta * (i_omega_n - u*k) / (2*np.pi), b+1) * i_0(beta * (i_omega_n + u*k) / (2*np.pi), b) )
+%def l_0(k, i_omega_n, beta=1.1, b=0.5, u=1.0):
+%    return (u * beta**2 / np.pi**2 * np.sin(np.pi*b) * i_0(beta * (i_omega_n - u*k) / (2*np.pi), b) * i_0(beta * (i_omega_n + u*k) / (2*np.pi), b) )
+%beta=2.4; u=1.3
+%n=2; om = 1j*(2*n+1)*np.pi/beta; k=0.83; b=0.1; L=10
+%print(c_quad(lambda tau: np.exp(om*tau) * c_quad(lambda x: np.exp(-1j*k*x) / np.sin(np.pi/(beta*u)*(tau*u+1j*x))**(b+1) / np.sin(np.pi/(beta*u)*(tau*u-1j*x))**b, -L, L)[0], 0, beta))
+%print(j_0(k,om,beta,b,u))
+%om = 1j*(2*n)*np.pi/beta
+%print(c_quad(lambda tau: np.exp(om*tau) * c_quad(lambda x: np.exp(-1j*k*x) / np.sin(np.pi/(beta*u)*(tau*u+1j*x))**b / np.sin(np.pi/(beta*u)*(tau*u-1j*x))**b, -L, L)[0], 0, beta))
+%print(l_0(k,om,beta,b,u))
+Note that up to prefactors $J_0$ already corresponds to the Fourier transform of the free Green's function.
+\subsection{First order}
+Using the replacement
+\begin{align}
+\partial_x\phi(x+a) &= \lim_{\epsilon\rightarrow a} \partial_\epsilon \lim_{J\rightarrow 0} (-\i\partial_J) \powe{\i J\phi(x+\epsilon)}
+\end{align}
+allows us to evaluate the first part of the interaction to\footnote{$\tilde{z}' = z' + \epsilon$}
+\begin{align}
+G_{1,\ell,\ell'}^\M(z) &= \frac{1}{(2\pi a)^2} \lim_{\epsilon\rightarrow a} \partial_\epsilon (-\i\partial_J) \int \sum_s \eta_\ell \eta_s \eta_{-s} \eta_{\ell'} \bra*{\powe{-\i\varphi_\ell(z)} \powe{2\i s\phi(z')} \powe{\i J\phi(z'+\epsilon)} \powe{\i\varphi_{\ell'}(0)}}_0\,\d z'\\
+&= \frac{\delta_{\ell,-\ell'}}{(2\pi a)^2} \lim_{\epsilon\rightarrow a} \partial_\epsilon (-\i\partial_J) \int \bra*{\zabx{-\ell & 2\ell & J & -\ell}{1 & 0 & 0 & -1}{z & z' & \tilde{z}' & 0}}_0\,\d z'\\
+&= \frac{\delta_{\ell,-\ell'}}{(2\pi a)^2} \lim_{\epsilon\rightarrow a} \partial_\epsilon (-\i\partial_J) \bsplit{&\powe{(1-K) F_1(z-z') -F\kla[\big]{z_{-\ell} - z_{-\ell}'}} \powe{(1-K) F_1(z-z')-F\kla*{z_{\ell}'}} \powe{-NF_1(z)} \powe{-\ell JF_1(\epsilon)}\\
+&\times \powe{\frac{1}{2}\klb*{-\ell JK + J}F_1(z-\tilde{z}')} \powe{-\frac{1}{2}J F\kla*{z_{-} - \tilde{z}_{-}'}} \powe{\frac{1}{2}\klb*{-\ell JK + J}F_1(\tilde{z}')} \powe{-\frac{1}{2}J F\kla*{\tilde{z}_{+}'}}}\\
+&= \frac{\ell\i \delta_{\ell,-\ell'}}{2(2\pi a)^2} \int \bsplit{&\powe{(1-K) F_1(z-z') -F\kla[\big]{z_{-\ell} - z_{-\ell}'}} \powe{(1-K) F_1(z-z')-F\kla*{z_{\ell}'}} \powe{-NF_1(z)}\\
+&\times \partial_{\tilde{x}'} \klb*{\kla*{ K-\ell}F_1(z-\tilde{z}')+\ell F\kla*{z_{-} - \tilde{z}_{-}'}+\kla*{ K -\ell}F_1(\tilde{z}')+\ell F\kla*{\tilde{z}_{+}'}}\,\d z'}
+\end{align}
+where $N=\frac{1}{2} \klb*{\frac{1}{K} - K}$.
+The time-ordering would in principle require us to split the $\tau'$-integration into an interval from $0$ to $\tau$ and one from $\tau$ to $\beta$.
+On the second interval the integrand would pick up an additional minus sign from the reordered Klein factors and we have to replace $z-z'$ by $z'-z$.
+Since the latter amounts to another minus sign, the integrand remains the same.
+Lastly, the term containing the derivatives changes from $\sim F(z_\ell - \tilde{z}_\ell')$ to $\sim F(\tilde{z}_\ell' - z_\ell)$.
+From the definition of the functions we see that corresponds to adding $\pm\pi\i$, and this constant vanishes upon differentiation.
+Thus we can recombine simply recombine the two integrations into the one given above.\\
+In order to obtain the full correction we now need to replace $\epsilon=\pm a$ and add up both terms.
+This is also why we ignored the term $F'(\epsilon)$ that drops out in this process due to the anti-symmetry of $F'$.
+Note that the term containing the derivatives would lead to a total derivative upon setting $a=0$.
+To leading order we should therefore expand in $a$ giving
+\begin{align}
+G_{1,\ell,\ell'}^\M(z) &= \ell\i \frac{\delta_{\ell,-\ell'}}{(2\pi)^2} \int \bsplit{&\powe{(1-K) F_1(z-z') -F\kla[\big]{z_{-\ell} - z_{-\ell}'}} \powe{(1-K) F_1(z-z')-F\kla*{z_{\ell}'}} \powe{-NF_1(z)}\\
+&\times \partial_{x'}^3 \klb*{\kla*{ K-\ell}F_1(z-z')+\ell F\kla*{z_{-} - z_{-}'}+\kla*{ K -\ell}F_1(z')+\ell F\kla*{z_{+}'}}\,\d z'}
+\end{align}
+The term containing the derivatives may be rewritten as
+\begin{align}
+\sum_{s=\pm 1} &\partial_{x'}^3 \klb*{ \kla*{\frac{K+s\ell}{2}} \log\klb*{\sin\kla*{z_{-s} - z_{-s}'}} + \kla*{\frac{K+s\ell}{2}} \log\klb*{\sin\kla*{z_s'}}}\\
+&=\sum_{s=\pm 1} \frac{K+s\ell}{2} \partial_{x'}^2 \klb*{ \frac{\pi \i s}{\beta u} \cot\kla*{z_{-s} - z_{-s}'} + \frac{\pi \i s}{\beta u} \cot\kla*{z_s'}}\\
+&= -\sum_{s=\pm 1} \i \ell s \kla*{K+s} \frac{\pi^3}{\beta^3 u^3} \klb*{ \cot\kla*{z_{-\ell s} - z_{-\ell s}'} \csc\kla*{z_{-\ell s} - z_{-\ell s}'}^2 + \cot\kla*{z_{\ell s}'} \csc\kla*{z_{\ell s}'}^2}.
+\end{align}
+The full first order Green's function thus becomes
+\begin{align}
+G_{1,\ell,-\ell}^\M(z) &= C_1\powe{-NF_1(z)} \int \bsplit{& \sum_{s=\pm 1} \kla*{sK+1} \csc\kla*{z_{-\ell}'}^{\frac{K-1}{2}} \csc\kla*{z_{\ell}'}^{\frac{K+1}{2}}\\
+&\times \csc\kla*{z_{-\ell} - z_{-\ell}'}^{\frac{K+1}{2}} \csc\kla*{z_{\ell} - z_{\ell}'}^{\frac{K-1}{2}} \\
+&\times \klb[\Big]{ \cot\kla*{z_{-\ell s} - z_{-\ell s}'} \csc\kla*{z_{-\ell s} - z_{-\ell s}'}^2 + \cot\kla*{z_{\ell s}'} \csc\kla*{z_{\ell s}'}^2}\,\d z'.}
+\end{align}
+where $C_1 = \frac{1}{4\pi^2} \kla*{\frac{\pi a}{\beta u}}^{N+2K} \frac{\pi^3}{\beta^3 u^3}$.
+This result is somewhat easier to obtain by expanding the field within the interaction Hamiltonian itself.
+The disadvantage of this approach is that it is less apparent why the term $F'(a)$ should vanish.\\
+The Fourier transform can be simplified by inserting a resolution of unity via
+\begin{align}
+G_{1,\ell,-\ell}^\M &= C_1 \int \bsplit{& \powe{\i (2n+1)(\tau+\tau') - \i k(x+x')} \powe{-NF_1(z'')} \csc\kla*{z_{-\ell}}^{\frac{K+1}{2}} \csc\kla*{z_{\ell}}^{\frac{K-1}{2}} \\
+&\times \csc\kla*{z_{-\ell}'}^{\frac{K-1}{2}} \csc\kla*{z_{\ell}'}^{\frac{K+1}{2}} \delta(\tau''-\tau-\tau') \delta(x''-x-x')\\
+&\times \sum_{s=\pm 1} \kla*{sK+1} \klb[\Big]{ \cot\kla*{z_{-\ell s}}\csc\kla*{z_{-\ell s}}^2 + \cot\kla*{z_{\ell s}'} \csc\kla*{z_{\ell s}'}^2 }\,\d z'' \,\d z'\,\d z'}\\
+&= \frac{C_1}{2\pi\beta} \int \bsplit{& \sum_{s=\pm 1} \sum_{m\in\mathbb{Z}} \kla*{sK+1} \powe{\i \omega_{m}^\B \tau'' -\i k'x''} \powe{-NF_1(z'')}\\
+&\times \klb[\bigg]{\powe{\i \omega_{n-m}^\F \tau' -\i (k-k') x'}  \csc\kla*{z_{-\ell}'}^{\frac{K-1}{2}} \csc\kla*{z_{\ell}'}^{\frac{K+1}{2}}\\
+&\qquad\times \powe{\i \omega_{n-m}^\F \tau -\i (k-k') x} \csc\kla*{z_{-\ell}}^{\frac{K+1}{2}} \csc\kla*{z_{\ell}}^{\frac{K-1}{2}} \cot\kla*{z_{-\ell s}} \csc\kla*{z_{-\ell s}}^2\\
+&\quad + \powe{\i \omega_{n-m}^\F \tau' -\i (k-k') x'}  \csc\kla*{z_{-\ell}'}^{\frac{K-1}{2}} \csc\kla*{z_{\ell}'}^{\frac{K+1}{2}}\\
+&\quad\quad\times \powe{\i \omega_{n-m}^\F \tau -\i (k-k') x} \csc\kla*{z_{-\ell}}^{\frac{K+1}{2}} \csc\kla*{z_{\ell}}^{\frac{K-1}{2}} \cot\kla*{z_{\ell s}'} \csc\kla*{z_{\ell s}'}^2} \,\d (z,z',z'')\,\d k' }\\
+&= \frac{C_1}{2\pi\beta} \bsplit{\intr{& \sum_{s=\pm 1} \sum_{m\in\mathbb{Z}} (sK+1) L_0\kla*{k',\i \omega_m^\B; \frac{N}{2}} \\
+&\times \klb[\bigg]{ J_0\kla*{\ell(k-k'), \i \omega_{n-m}^\F; \frac{K-1}{2}}  J_1\kla*{-\ell(k-k'), \i \omega_{n-m}^\F; \frac{K-1}{2}, s}\\
+&\qquad + J_1\kla*{\ell(k-k'), \i \omega_{n-m}^\F; \frac{K-1}{2}, s} J_0\kla*{-\ell(k-k'), \i \omega_{n-m}^\F; \frac{K-1}{2}}} }{k'}}
+\end{align}
+where we introduced the functions
+\begin{align}
+J_1(k,\i\omega_n^\F;b,s) &= \intx{0}{\beta}{\intr{\powe{\i\omega_n^\F\tau - \i kx} \csc\kla*{z_+}^{1+b} \csc\kla*{z_-}^b \csc\kla*{z_s}^2 \cot\kla*{z_s} }{x} }{\tau}.
+\end{align}
+The problem is thus reduced to that of finding an -- exact or at least approximate -- analytic expression for $J_1$.
+It is best to rewrite the function as $J_{1,s}$ where
+\begin{align}
+J_{1,+}(k,\i\omega_n^\F; b) &= \intx{0}{\beta}{\intr{\powe{\i \omega_n^\F\tau - \i kx} \csc\kla*{z_+}^{3+b} \csc\kla*{z_-}^{b} \cot\kla*{z_+} }{x} }{\tau}\\
+&= -\frac{1}{3+b} \frac{\beta}{\pi} \intx{0}{\beta}{\intr{\powe{\i \omega_n^\F\tau - \i kx} \csc\kla*{z_-}^{b} \partial_\tau \csc\kla*{z_+}^{3+b} }{x} }{\tau},\\
+J_{1,-}(k,\i\omega_n^\F; b) &= \intx{0}{\beta}{\intr{\powe{\i \omega_n^\F\tau - \i kx} \csc\kla*{z_+}^{1+b} \csc\kla*{z_-}^{2+b} \cot\kla*{z_-} }{x} }{\tau}\\
+&= -\frac{1}{2+b} \frac{\beta}{\pi} \intx{0}{\beta}{\intr{\powe{\i \omega_n^\F\tau - \i kx} \csc\kla*{z_+}^{1+b} \partial_\tau \csc\kla*{z_-}^{2+b} }{x} }{\tau}.
+\end{align}
+Expressed in terms of these functions we now find
+\begin{align}
+G_{1,\ell,-\ell}^\M(k,\i\omega_n^\F) &= \frac{C_1}{2\pi\beta} \sum_{s,s'} (sK+1) \bsplit{\intr{ &\sum_{m\in\mathbb{Z}}  L_0\kla*{k', \i \omega_m^\B; \frac{N}{2}} J_0\kla*{s'(k-k'), \i \omega_{n-m}^\F; \frac{K-1}{2}}\\
+&\times J_{1,s}\kla*{-s'(k-k'), \i \omega_{n-m}^\F; \frac{K-1}{2}} }{k'}.}
+\end{align}
+%%It is best to rewrite the function as $J_{1,s}$ where
+%%\begin{align}
+%%J_{1,+}(k,\i\omega_n^\F; b) &= \intx{0}{\pi}{\intr{\powe{\i (2n+1)\tau - \i kx} \csc\kla*{\tau + \i x}^{1+b} \csc\kla*{\tau - \i x}^{b} \cot\kla*{\tau + \i x} }{x} }{\tau}\\
+%%&= -\frac{1}{1+b} \intx{0}{\pi}{\intr{\powe{\i (2n+1)\tau - \i kx} \csc\kla*{\tau - \i x}^{b} \partial_\tau \csc\kla*{\tau + \i x}^{1+b} }{x} }{\tau},\\
+%%J_{1,-}(k,\i\omega_n^\F; b) &= \intx{0}{\pi}{\intr{\powe{\i (2n+1)\tau - \i kx} \csc\kla*{\tau + \i x}^{1+b} \csc\kla*{\tau - \i x}^{b} \cot\kla*{\tau - \i x} }{x} }{\tau}\\
+%%&= -\frac{1}{b} \intx{0}{\pi}{\intr{\powe{\i (2n+1)\tau - \i kx} \csc\kla*{\tau + \i x}^{1+b} \partial_\tau \csc\kla*{\tau - \i x}^{b} }{x} }{\tau}.
+%%\end{align}
+%%Partial integration on $\tau$ and rewriting the derivative $\partial_\tau$ as $\pm\i\partial_x$ followed by partial integration on $x$ allows us to derive the two relations
+%%\begin{align}
+%%(1+b)J_{1,+} + bJ_{1,-} &= \i\omega_n^\F J_0,\qquad (1+b)J_{1,+} - bJ_{1,-} = -k J_0.
+%%\end{align}
+%%Rearranging then yields the exact solutions $J_{1,+} = \frac{\i\omega_n^\F - k}{2(1+b)} J_0$ and $J_{1,-} = \frac{\i\omega_n^\F + k}{2b} J_0$.
+%%%n=2; om = 1j*(2*n+1); k=0.43; K=0.9; b=(K-1)/2; L=10
+%%%print(c_quad(lambda tau: np.exp(1j*(2*n+1)*tau) * c_quad(lambda x: np.exp(-1j*k*x) / np.sin(tau+1j*x)**(1+b) / np.sin(tau-1j*x)**b/np.tan(tau-1j*x), -L, L)[0], 0, np.pi))
+%%%print(c_quad(lambda tau: np.exp(1j*(2*n+1)*tau) * c_quad(lambda x: np.exp(-1j*k*x) / np.sin(tau+1j*x)**(1+b) / np.sin(tau-1j*x)**b/np.tan(tau+1j*x), -L, L)[0], 0, np.pi))
+%%%j_0(k,om,np.pi,b) * (om-k)/2 / (1+b), j_0(k,om,np.pi,b) * (om+k)/2 / (b)
+Exactly evaluating $J_{1,-}$ is surprisingly simple.
+Integration by parts and replacing $\partial_\tau$ by $\pm\i\partial_x$ gives
+\begin{align}
+J_{1,-} &= \frac{\i\omega_n^\F}{2+b} \frac{\beta}{\pi} J_0\kla*{-k,\i\omega_n^\F; 1+b} + \frac{1}{2+b} \frac{\beta}{\pi} \intx{0}{\beta}{\intr{\powe{\i\omega_n^\F\tau - \i kx} \csc(z_-)^{2+b} \partial_\tau \csc(z_+)^{1+b}}{x} }{\tau}\\
+&= \frac{\i\omega_n^\F}{2+b} \frac{\beta}{\pi} J_0\kla*{-k,\i\omega_n^\F; 1+b} + \frac{-\i u}{2+b} \frac{\beta}{\pi} \intx{0}{\beta}{\intr{\powe{\i\omega_n^\F\tau - \i kx} \csc(z_-)^{2+b} \partial_x \csc(z_+)^{1+b}}{x} }{\tau}\\
+&= \frac{\i\omega_n^\F + uk}{2+b} \frac{\beta}{\pi} J_0\kla*{-k,\i\omega_n^\F; 1+b} + \frac{\i u}{2+b} \frac{\beta}{\pi} \intx{0}{\beta}{\intr{\powe{\i\omega_n^\F\tau - \i kx} \csc(z_+)^{1+b} \partial_x \csc(z_-)^{2+b}}{x} }{\tau}.
+\end{align}
+The remaining integral is once again $J_{1,-}$ which then yields $J_{1,-}(k,\i\omega_n^\F;b) = \frac{\i\omega_n^\F + uk}{2(2+b)} \frac{\beta}{\pi} J_0(-k,\i\omega_n^\F; 1+b)$.
+%Via similar manipulations we may show that
+%\begin{align}
+%J_{1,+} &= \frac{\i\omega_n^\F - k}{3+b} \intx{0}{\pi}{\intr{\powe{\i\omega_n^\F \tau - \i kx} \csc(\tau - \i x)^b \csc(\tau + \i x)^{3+b}}{x} }{\tau}.
+%\end{align}
+%We may once again make use of our knowledge of $J_0$ to solve this by rewriting as
+%\begin{align}
+%J_{1,+} &= \frac{\i\omega_n^\F - k}{3+b} \intx{0}{\pi}{\intr{\powe{\i\omega_n^\F \tau - \i kx} \sin(\tau - \i x)^2 \csc(\tau - \i x)^{2+b} \csc(\tau + \i x)^{3+b}}{x} }{\tau}\\ 
+%&= \frac{\i\omega_n^\F - k}{3+b} \intx{0}{\pi}{\intr{\powe{\i\omega_n^\F \tau - \i kx} \frac{2 - \powe{2\i\tau + 2x} - \powe{-2\i\tau - 2x}}{4} \csc(\tau - \i x)^{2+b} \csc(\tau + \i x)^{3+b}}{x} }{\tau}\\
+%&=  \frac{\i\omega_n^\F - k}{3+b} \frac{1}{4}\klb*{2J_0\kla*{k,\i\omega_n^\F; 2+b} - J_0\kla*{k-2, \i\omega_n^\F + 2\i; 2+b} - J_0\kla*{k+2, \i\omega_n^\F - 2\i; 2+b} }.
+%\end{align}
+Computing $J_{1,+}$ is significantly more challenging.
+However, assuming that the exponent $b$ is small, we may neglect the corresponding cosecant factor.
+This restricts our approximation to $K$ being somewhat close to unity, but within this limit the integral becomes quite doable.
+As shown before it gives
+\begin{align}
+J_{1,+}(k,\i\omega_n^\F;b) &\approx -\frac{1}{3+b}  \frac{\beta}{\pi} \intx{0}{\beta}{\intr{\powe{\i \omega_n^\F \tau - \i kx} \partial_\tau \csc(z_+)^{3+b}}{x} }{\tau}\\
+%&= \frac{k}{3+b} \frac{\beta}{\pi} \intx{0}{\beta}{\powe{\i \omega_n^\F \tau} \frac{2^{b+3}}{\Gamma(b+3)} \abs*{\Gamma\kla*{\frac{b+3}{2}+\i \frac{\beta uk}{2\pi}}}^2 \powe{k\kla*{\tau - \frac{\pi}{2}}}  }{\tau}\\
+&= \frac{uk}{3+b} \frac{u\beta^2}{\pi^2} \frac{2^{b+3}}{\Gamma(b+3)} \abs*{\Gamma\kla*{\frac{b+3}{2}+\i \frac{\beta uk}{2\pi}}}^2 \frac{\cosh\kla*{\frac{\beta u k}{2}}}{\i\omega_n^\F + uk}.
+\end{align}
+%#J1+
+%n=2; u=1.0; beta=2.4; om = 1j*(2*n+1)*np.pi/beta; k=0.43; K=0.9; b=(K-1)/2; L=10; alpha=1e-3
+%print(c_quad(lambda tau: np.exp(om*tau) * c_quad(lambda x: np.exp(-1j*k*x) / np.sin(np.pi/beta/u * (u*tau+1j*x))**(3+b) / np.tan(np.pi/beta/u * (u*tau+1j*x)), -L, L)[0], 0, beta))
+%print(beta**2/np.pi**2 * u*k * 2**(b+3)/special.gamma(b+4) * np.cosh(beta*u*k/2) / (om + u*k) * np.abs(special.gamma((b+3+1j*beta*u*k/np.pi)/2))**2)
+%\begin{align}
+%J_{1,+}(-k) &= \intx{0}{\pi}{\intr{\powe{\i \omega_n^\F\tau - \i kx} \csc\kla*{\tau - \i x}^{3+b} \csc\kla*{\tau + \i x}^{b} \cot\kla*{\tau - \i x} }{x} }{\tau}\\
+%&= \intx{0}{\pi}{\intr{\powe{\i \omega_n^\F\tau - \i kx} \csc\kla*{\tau - \i x}^{3+b} \csc\kla*{\tau + \i x}^{2+b} \cot\kla*{\tau - \i x} \sin\kla*{\tau + \i x}^2 }{x} }{\tau}\\
+%&= \intx{0}{\pi}{\intr{\powe{\i \omega_n^\F\tau - \i kx} \csc\kla*{\tau - \i x}^{3+b} \csc\kla*{\tau + \i x}^{2+b} \cot\kla*{\tau - \i x} \frac{2 - \powe{2\i\tau - 2x} - \powe{-2\i\tau + 2x}}{4} }{x} }{\tau}\\
+%&= \frac{1}{4} \klb*{2J_{1,-}\kla*{k,\i\omega_n^\F; 1+b} - J_{1,-}\kla*{k+2,\i\omega_n^\F+2\i; 1+b} - J_{1,-}\kla*{k-2,\i\omega_n^\F-2\i; 1+b}}.
+%\end{align}
+\section{Effective Hamiltonian}
+The effective Hamiltonian is given by
+\begin{align}
+H_\Text{eff}(k,\omega) &= \omega\sigma_0 - \kla*{G^\R(k,\omega)}^{-1}
+\end{align}
+where $\sigma_0$ is the identity matrix.
+Since $H_\Text{eff}\in\mathbb{C}^{2\times 2}$ we can decompose it into 
+\begin{align}
+H_\Text{eff}(k,\omega) &= d_0(k,\omega) \sigma_0 + \textbf{d}(k,\omega) \cdot \bm{\sigma}
+\end{align}
+where $\bm{\sigma} = (\sigma_x, \sigma_y, \sigma_z)^T$ and $\textbf{d} = (d_x,d_y,d_z)^T$.
+The eigenvalues are given by
+\begin{align}
+E_\pm(k,\omega) &= d_0 \pm \sqrt{\textbf{d}\cdot \textbf{d}}.
+\end{align}
+One should be careful not to simplify the square-root to $|\textbf{d}|$ since the components are generally complex in our setting.
+Writing $\textbf{d}=\textbf{d}_\r + \i \textbf{d}_\i$ instead yields
+\begin{align}
+E_\pm(k,\omega) &= d_0 \pm \sqrt{\textbf{d}_\r^2 - \textbf{d}_\i^2 + 2\i \textbf{d}_\r \cdot \textbf{d}_\i}.
+\end{align}
+Exceptional points are found at non-trivial solutions to the two equations
+\begin{align}
+\textbf{d}_\r^2 - \textbf{d}_\i^2 &= 0, \label{eqn:dr2 minus di2}\\
+\textbf{d}_\r \cdot \textbf{d}_\i &= 0. \label{eqn:dr cdot di}
+\end{align}
+The numerical solution can be visualized as contour plots, see \autoref{fig:ep_order1} for an example.
+\begin{figure}[!ht]
+\centering
+%\includegraphics{figures/ep_density_beta0.1_a0.01_vf0.2_Ua100.0_Ub-95.0_order1.pdf}
+%\includegraphics{figures/ep_density_beta0.1_a0.05_vf0.2_Ua2.0_Ub-1.0_order1.pdf}
+%\includegraphics{figures/ep_density_beta0.05_a0.005_vf0.05_Ua1.9_Ub-1.1_order1.pdf}
+\includegraphics{figures/ep_density_beta0.05_a0.005_vf0.05_Ua1.5_Ub-1.3_order1.pdf}
+\caption{Contour plot of \autoref{eqn:dr2 minus di2} and \autoref{eqn:dr cdot di} to first order with $a=0.005$, $\vf=0.05$, $\beta=0.05$, $U_\A=1.5$ and $U_\B=-1.3$.
+This leads to $g\approx -0.022$ and $K\approx 0.997$, well within the realm of parameters where we can expect decent results.}
+\label{fig:ep_order1}
+\end{figure}
+For the same set of parameters we may visualize the complex eigenvalues $E_\pm$.
+In the static limit $\omega=0$ we find a pair of exceptional points for small momenta $k$ as is visualized in \autoref{fig:complex_E_omega0_order1}.
+\begin{figure}[!ht]
+\centering
+%\includegraphics{figures/complex_E_density_beta0.1_a0.01_vf0.2_Ua100.0_Ub-95.0_omega0_order1.pdf}
+%\includegraphics{figures/complex_E_density_beta0.1_a0.05_vf0.2_Ua2.0_Ub-1.0_omega0_order1.pdf}
+%\includegraphics{figures/complex_E_density_beta0.05_a0.005_vf0.05_Ua1.9_Ub-1.1_omega0_order1.pdf}
+\includegraphics{figures/complex_E_density_beta0.05_a0.005_vf0.05_Ua1.5_Ub-1.3_omega0_order1.pdf}
+\caption{Complex energy eigenvalues $E_\pm$ of the effective Hamiltonian $H_\Text{eff}$ to first order for $a=0.005$, $\vf=0.05$, $\beta=0.05$, $U_\A=1.5$ and $U_\B=-1.3$.
+The frequency is fixed to $\omega=0$ corresponding to the exceptional points in \autoref{fig:ep_order1}.}
+\label{fig:complex_E_omega0_order1}
+\end{figure}
+%%% PLOT CODE ::
+%beta=0.1; vf=0.2; ua=2.0; ub=-1; u_minus=(ua-ub)/2; u_plus=(ua+ub)/2
+%alpha=5e-2; kwm = 0.005; wm=0.001
+%K = 1/np.sqrt(1 + u_plus*alpha/(2*np.pi*vf)); u=vf/K; g=-u_minus*alpha/(2*np.pi*u)
+%k_vals = np.linspace(-kwm, kwm, 613)
+%omega_vals = np.array([0.0])
+%green = green_perturbative(k_vals, omega_vals, beta, K, u, g, order=1, model="density var", alpha=alpha)
+%hamilton = green_toolkit.hamilton_from_green(omega_vals, green)
+%energies = np.array([green_toolkit.eigenvalues_2x2(hamilton[i,0]) 
+%                     for i in range(k_vals.size)])
+%energies = green_toolkit.convert_to_contiguous_arrays(energies.T[0], energies.T[1])
+%fig, ax = plt.subplots()
+%plot_complex(ax, k_vals, energies)
+%ax.set_xlabel(r"$k$")
+%ax.set_ylabel(r"$E_\pm$")
+%ax.set_xlim(k_vals[0], k_vals[-1])
+%mpl_special.embed_labels(fig, ax)
+%print(energies[0].imag.max() - energies[1].imag.min(), energies[0][0], g, K)
+%k_vals = np.linspace(-kwm, kwm, 201)
+%omega_vals = np.linspace(-wm, wm, 180)
+%green = green_perturbative(k_vals, omega_vals, beta, K, u, g, order=1, model="density var", alpha=alpha)
+%hamilton = green_toolkit.hamilton_from_green(omega_vals, green)
+%fig, ax = plt.subplots()
+%ax.set_xlabel(r"$k$")
+%ax.set_ylabel(r"$\omega$")
+%ep_contour_plot(ax, hamilton, k_vals, omega_vals)
+%eqn1, eqn2 = green_toolkit.hamilton_2x2_ep_eqn(hamilton)
+%phase = np.sqrt(eqn1 + 2j*eqn2)
+%arg = np.arctan2(phase.imag, phase.real)
+%img = ax.imshow(arg.T, cmap="RdBu", aspect="auto", extent=[-kwm, kwm, -wm, wm], origin="lower", vmin=-np.pi/2, vmax=np.pi/2, alpha=0.85)
+%cbar = fig.colorbar(img, ax=ax, label=r"$\arg(\Delta E)$")
+%mpl_special.format_ticklabels(cbar.ax, which="y")
+%mpl_special.embed_labels(fig, [ax, cbar.ax])
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

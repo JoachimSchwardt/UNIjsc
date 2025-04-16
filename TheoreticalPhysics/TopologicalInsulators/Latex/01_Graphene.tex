@@ -1,0 +1,386 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{01 Tight-binding models and winding numbers}
+\newcommand*{\autor}{Joachim Schwardt and Christian Pössel}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Topological Insulators and Superconductors}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Problem 1.1: Tight binding model for graphene}
+Denote the atom type with $\alpha\in\{A,B\}$ and enumerate all unit cells with the vectors $\vec{m}$.
+Let $\vec{\delta}\in\left\{ a(-1,0)^\top, \frac{a}{2}(1,\sqrt{3})^\top, \frac{a}{2}(1,-\sqrt{3}) \right\}$.
+Then we can express the tight-binding Hamiltonian for graphene as a sum over all unit cells, i.e.
+\begin{align}
+H&=-t\sum_{\vec{m}}\sum_{\vec{\delta}}\oper | \vec{m}+\vec{\delta},B \rangle\langle \vec{m},A |+\oper | \vec{m},A \rangle\langle \vec{m}+\vec{\delta},B |.
+\end{align}
+Use the momentum states
+\begin{align}
+\Ket | \vec{m} \rangle&=\frac{1}{\sqrt{N}}\sum_{\vec{k}}\e^{\i\vec{k}\cdot\vec{m}}\Ket | \vec{k} \rangle
+\end{align}
+where $N$ is the number of atoms to rewrite the Hamiltonian as
+\begin{align}
+H&=\frac{-t}{N}\sum_{\vec{k},\vec{k}',\vec{m},\vec{\delta}}\e^{\i\vec{k}\cdot\vec{\delta}}\e^{\i\vec{m}\cdot(\vec{k}-\vec{k}')}\oper | \vec{k} \rangle\langle \vec{k}' |\otimes\oper | B \rangle\langle A |+\tecxt\text{h.c.}=\\
+&=-t\sum_{\vec{k},\vec{\delta}}\e^{\i\vec{k}\cdot\vec{\delta}}\oper | \vec{k},B \rangle\langle \vec{k},A |+\tecxt\text{h.c.}
+\end{align}
+To determine the energy bands, we need to diagonalize this Hamiltonian.
+Start by letting $\vec{\alpha}=(\Ket | A \rangle,\Ket | B \rangle)^\top$ and
+\begin{align}
+h(\vec{k})&:=-t\begin{pmatrix}
+0&\epsilon(\vec{k}) \\ \epsilon(\vec{k})^\ast & 0
+\end{pmatrix}&&\tecxt\text{with}& \epsilon(\vec{k})&:=\sum_{\vec{\delta}}\e^{\i\vec{k}\cdot\vec{\delta}}.
+\end{align}
+This allows to write
+\begin{align}
+H&=\sum_{\vec{k}}\vec{\alpha}^\dagger h(\vec{k})\vec{\alpha}.
+\end{align}
+We are interested in the eigenvalues of $h(\vec{k})$. 
+Due to the simple form of the matrix $h$, they are trivially obtained as
+\begin{align}
+E(\vec{k})&=t\pm\sqrt{\epsilon(\vec{k})\epsilon(\vec{k})^\ast} \equiv \pm t\left\vert\epsilon(\vec{k})\right\vert.
+\end{align}
+For a more explicit answer, we carry out the sum over $\vec{\delta}$ to get
+\begin{align}
+\left\vert\epsilon(\vec{k})\right\vert&=\bigg\vert\sum_{\vec{\delta}}\e^{\i\vec{k}\cdot\vec{\delta}}\bigg\vert = \left\vert\e^{-\i ak_x} + \e^{\i \frac{a}{2} (k_x+\sqrt{3}k_y)} + \e^{\i \frac{a}{2} (k_x-\sqrt{3}k_y)}\right\vert=\\
+&=\Big\vert 1+\e^{\i\frac{3a}{2}k_x}\cdot 2\cos\kla\Big( \frac{a\sqrt{3}}{2}k_y \Big) \Big\vert=\\
+&=\sqrt{ 1+4\cos^2\kla\Big( \frac{a\sqrt{3}}{2}k_y \Big)+4\cos\kla\Big( \frac{3a}{2}k_x \Big)\cos\kla\Big( \frac{a\sqrt{3}}{2}k_y \Big) }.
+\end{align}
+Thus the energy bands are given by
+\begin{align}
+E(\vec{k})&=\pm t\sqrt{ 1+4\cos^2\kla\Big( \frac{a\sqrt{3}}{2}k_y \Big)+4\cos\kla\Big( \frac{3a}{2}k_x \Big)\cos\kla\Big( \frac{a\sqrt{3}}{2}k_y \Big) }.
+\end{align}
+To find the values of $\vec{k}$ for which the energy dispersion vanishes, we have to solve
+\begin{align}
+0&\overset{!}{=}\frac{\partial E}{\partial\vec{k}}=\frac{1}{2E}\begin{pmatrix}
+-4\frac{3a}{2}\sin\kla\Big( \frac{3a}{2}k_x \Big)\cos\kla\Big( \frac{a\sqrt{3}}{2}k_y \Big) \\ 
+-4\frac{a\sqrt{3}}{2}\cos\kla\Big( \frac{3a}{2}k_x \Big)\sin\kla\Big( \frac{a\sqrt{3}}{2}k_y \Big)-8\frac{a\sqrt{3}}{2}\cos\Big(\frac{a\sqrt{3}}{2}k_y\Big)\sin\Big(\frac{a\sqrt{3}}{2}k_y\Big)
+\end{pmatrix}.
+\end{align}
+Simplifying yields the set of equations
+\begin{align}
+0&=\sin\kla\Big( \frac{3a}{2}k_x \Big)\cos\kla\Big( \frac{a\sqrt{3}}{2}k_y \Big),\\
+0&=\cos\kla\Big( \frac{3a}{2}k_x \Big)+2\cos\kla\Big( \frac{a\sqrt{3}}{2}k_y \Big).
+\end{align}
+We find that the solutions are given by the two corners of the first Brillouin zone
+\begin{align}
+\vec{K}&=\frac{2\pi}{3a}\kla\left( 1,\frac{1}{\sqrt{3}} \right)&&\tecxt\text{and}&\vec{K}'&=\frac{2\pi}{3a}\kla\left( 1,-\frac{1}{\sqrt{3}} \right).
+\end{align}
+Now let $\vec{q}:=\vec{k}-\vec{K}$ (and analogously $\vec{q}\,'$) be the deviation of the momentum from the zero crossing.
+Then we can approximate the energy band by expanding in first order of $\vec{q}$.
+Note that $2\cos(x+\pi/3)\simeq 1-\sqrt{3}x$ for $x\ll 1$, which leads to
+%\begin{align}
+%E(\vec{q})&=\pm t\sqrt{1 + 4\cos^2\Big(\frac{a\sqrt{3}}{2}q_y + \frac{\pi}{3}\Big) + 4\cos\Big(\frac{3a}{2}q_x+\pi\Big)\cos\Big(\frac{a\sqrt{3}}{2}q_y + \frac{\pi}{3}\Big)}\simeq\\
+%&\simeq\pm t\sqrt{1 + \kla\left( 1-\sqrt{3}\frac{a\sqrt{3}}{2}q_y \right)^2 - \kla\left( 2 - \frac{9a^2}{4}q_x^2 \right)\kla\left( 2-\sqrt{3}\frac{3a^2}{4}q_y^2 \right)}=\\
+%&=\pm t\sqrt{6+\frac{9a^2}{4}q_y^2-3aq_y + \frac{9a^2}{2}q_x^2 + \sqrt{3}a^2q_y^2 + \mathcal{O}(q_j^4)}\\
+%&\simeq \pm t\sqrt{1 + 4\kla\left( 1-\frac{3a^2}{4}q_y^2 \right) + 4\kla\left( 1-\frac{9a^2}{4}\frac{q_x^2}{2}-\frac{3a^2}{4}\frac{q_y^2}{2} \right) + \mathcal{O}(q_j^4)}=\\
+%&=\pm 3t\sqrt{1-\frac{a^2}{2}\kla\left( q_x^2+q_y^2 \right)}\simeq\pm 3t\kla\left( 1+\klam\left[ \frac{a|\vec{q}|}{2} \right]^2 \right)+\mathcal{O}(q_j^4).
+%\end{align}
+%In the last line we used $\sqrt{1-x}\simeq 1-\frac{x}{2}$.
+\begin{align}
+\left\vert\epsilon(\vec{q})\right\vert&=\bigg\vert\sum_{\vec{\delta}}\e^{\i(\vec{q}+\vec{K})\cdot\vec{\delta}}\bigg\vert = \left\vert\e^{-\i aq_x}\e^{-\pi\i \frac{2}{3}}   + \e^{\i \frac{a}{2} (q_x+\sqrt{3}q_y)}\e^{\pi\i \frac{2}{3}} + \e^{\i \frac{a}{2} (q_x-\sqrt{3}q_y)}\right\vert=\\
+&=\Big\vert \e^{-\pi\i \frac{2}{3}}+\e^{\i\frac{3a}{2}q_x}\e^{\pi\i \frac{1}{3}}\cdot 2\cos\kla\Big( \frac{a\sqrt{3}}{2}q_y + \frac{\pi}{3} \Big) \Big\vert=\\
+&=\Big\vert 1-\kla\left( 1 + \i\frac{3a}{2}q_x \right)\Big( 1-\sqrt{3} \frac{a\sqrt{3}}{2}q_y \Big) + \mathcal{O}(q_j^2) \Big\vert=\\
+&=\frac{3a}{2}\left\vert q_y-\i q_x \right\vert + \mathcal{O}(q_j^2)\simeq \frac{v_\tecxt\text{F}}{t}\left\vert\vec{q}\right\vert.
+\end{align}
+Here we define the Fermi velocity $v_\tecxt\text{F}:=\frac{3at}{2}$ (in natural units, $\hbar=1)$.
+With this approximation, the energy band becomes
+\begin{align}
+E(\vec{q})&\simeq\pm v_\tecxt\text{F}\left\vert\vec{q}\right\vert.
+\end{align}
+\newpage
+\section*{Problem 1.2: SSH model with arbitrary winding number}
+In the lecture we discussed the simple SSH model, where there is hopping only between adjacent unit cells.
+There we found the winding number to be either 0 or 1.
+In particular, we arrived at a $\vec{d}$-vector of the form
+\begin{align}
+\vec{d}&=\begin{pmatrix}
+t_1+t_2\cos k \\ t_2\sin k
+\end{pmatrix}.
+\end{align}
+For $t_2>t_1$ this results in a winding number of $\nu=1$.
+This is most readily observed from drawing $\vec{d}(k)$ for $k\in[-\pi,\pi]$.
+\\
+Now we want to find a SSH model, which yields an arbitrary integer winding number $n\in\mathbb{N}$.
+The naive way to do this, would be to simply generalize the above result as
+\begin{align}
+\vec{d}&=\begin{pmatrix}
+t_1+t_2\cos nk \\ t_2\sin nk
+\end{pmatrix}.
+\end{align}
+However, while this works, it is needlessly restrictive. 
+We will find this to be a special case, of a more general model with winding number $\nu=n$.
+Consider now the case, where there is hopping between $A$ and $B$ atoms in a closed chain containing $N$ unit cells, and there are hopping amplitudes $t_0,\dots,t_n\in\mathbb{R}$, which describe the transitions to any cell at most $n$ cells away.
+The Hamiltonian then becomes
+\begin{align}
+H&=\sum_{j=0}^n t_j\sum_{m=1}^{N}\oper | m+j,A \rangle\langle m,B |+\tecxt\text{h.c.}
+\end{align}
+Introducing momentum states via
+\begin{align}
+\Ket | m \rangle&=\frac{1}{\sqrt{N}}\sum_k\e^{-\i km}\Ket | k \rangle
+\end{align}
+allows us to rewrite this Hamiltonian as
+\begin{align}
+H&=\sum_{j=0}^n t_j\sum_{m=1}^{N}\frac{1}{N}\sum_{k,k'}\oper \e^{-\i k(m+j)}\e^{\i k'm}| k,A \rangle\langle k,B |+\tecxt\text{h.c.}=\\
+&=\sum_k\sum_{j=0}^n t_j\oper \e^{-\i kj}| k \rangle\langle k |\otimes\oper | A \rangle\langle B |+\tecxt\text{h.c.}
+\end{align}
+This leads to 
+\begin{align}
+H_k&:=\braket\langle k | H | k \rangle=\sum_{j=0}^n\e^{-\i kj}\oper | A \rangle\langle B |+\tecxt\text{h.c.}\equiv\sum_{j=0}^n \begin{pmatrix}
+0&t_j\e^{-\i kj} \\ t_j\e^{\i kj} & 0
+\end{pmatrix}.
+\end{align}
+We may now again define $H_k=:\vec{d}\cdot\vec{\tau}$, which gives
+\begin{align}
+d_x&=\sum_{j=0}^nt_j\cos kj&&\tecxt\text{and}&d_y&=\sum_{j=0}^nt_j\sin kj.
+\end{align}
+For general sets of hopping amplitudes $t_j$, the trajectory of $\vec{d}(k)$ may be arbitrarily complicated, such that computing $\nu$ is very difficult.
+However, assuming the condition
+\begin{align}
+t_n&\overset{!}{>}\sum_{j=0}^{n-1}t_j, \label{eqn:condition sum over amplitudes}
+\end{align}
+it becomes clear, that the winding number is exactly $\nu=n$.
+Essentially, the $t_n$ component is so large, that all the other amplitudes can no longer interfere with the general rotation of $\vec{d}(k)$ around the origin.
+%The proof is very simple and follows directly form the fact that $|x-y|\ge ||x|-|y||$. 
+%Notice that
+%\begin{align}
+%\left\vert\vec{d}\right\vert&=\left\vert\sum_{j=0}^n t_j\e^{\i kj}\right\vert \ge \left\vert t_n-
+%\end{align}
+\\
+If we set $n=1$, we find that the condition \eqref{eqn:condition sum over amplitudes} is equivalent to the condition $t_2>t_1$ for a winding number of $\nu=1$ found in the lecture.
+As a last remark, \eqref{eqn:condition sum over amplitudes} is of course not a necessary condition, merely a sufficient one. 
+There will certainly be examples, especially for large $n$, where the inequality is violated, while still preserving the winding number.
+\newpage
+\section*{Problem 1.3: SSH model with complex hopping amplitudes}
+We are given three hopping amplitudes $t_j=|t_j|\e^{\i\phi_j}$.
+Let $a_m:= \hat{c}_{m,A}$ and $b_m:=\hat{c}_{m,B}$ be the annihilation operators at the $m$ unit.
+The SSH Hamiltonian for this case is 
+\begin{align}
+H&=t_1\sum_m b^\dagger_m a_m+\tecxt\text{h.c.} + t_2\sum_m a^\dagger _{m+1}b_m+\tecxt\text{h.c.}+t_3\sum_m a^\dagger_m b_{m+1}+\tecxt\text{h.c.}
+\end{align}
+As usual, express the states in the momentum basis
+\begin{align}
+\Ket | m \rangle&=\frac{1}{\sqrt{N}}\sum_k\e^{\i km}\Ket | k \rangle
+\end{align}
+to rewrite the Hamiltonian as 
+\begin{align}
+H&=\dots=t_1\sum_k b_k^\dagger a_k+\tecxt\text{h.c.} + t_2\sum_k \e^{\i k}a_k^\dagger b_k+\tecxt\text{h.c.}+t_3\sum_k\e^{-\i k}a_k^\dagger b_k+\tecxt\text{h.c.}
+\end{align}
+Define $\alpha:=(a_k,b_k)^\top$ and
+\begin{align}
+h(k)&:=\begin{pmatrix}
+0 & t_1+t_2\e^{\i k}+t_3\e^{-\i k} \\ 
+t_1^\ast + t_2^\ast\e^{-\i k}+t_3^\ast\e^{\i k} & 0
+\end{pmatrix}.
+\end{align}
+Now we can write the Hamiltonian as
+\begin{align}
+H&=\sum_k\alpha^\dagger h(k)\alpha.
+\end{align}
+The eigenvalues of $h(k)$ are simply given by
+\begin{align}
+E(k)&=\pm\left\vert t_1+t_2\e^{\i k}+t_3\e^{-\i k} \right\vert=\\
+&=\pm\sqrt{|t_1|^2+|t_2|^2+|t_3|^2+t_1t_2^\ast\e^{-\i k}+t_1t_3^\ast\e^{\i k} + t_2t_3^\ast\e^{2\i k} + \tecxt\text{h.c.}}
+\end{align}
+% + t_2t_1^\ast\e^{\i k} + t_3t_1^\ast\e^{-\i k} + t_3t_2^\ast\e^{-2\i k}
+However, here we are more interested in the winding number.
+For this, rewrite
+\begin{align}
+\epsilon(k):=t_1+t_2\e^{\i k}+t_3\e^{-\i k}&=|t_1|\cos(\phi_1) + |t_2|\cos(\phi_2+k) + |t_3|\cos(\phi_3-k)+\\
+&+\i\kla\left( |t_1|\sin(\phi_1) + |t_2|\sin(\phi_2+k) + |t_3|\sin(\phi_3-k) \right),
+\end{align}
+and notice that
+\begin{align}
+h(k)&=\tau_x\tecxt\text{Re\,}\epsilon(k)-\tau_y\tecxt\text{Im\,}\epsilon(k),
+\end{align}
+where 
+\begin{align}
+\tau_x&=\begin{pmatrix}
+0&1\\1&0
+\end{pmatrix}&&\tecxt\text{and}&\tau_y&=\begin{pmatrix}
+0&-\i\\ \i&0
+\end{pmatrix}
+\end{align}
+are the Pauli-matrices. 
+With the definition $h=:\vec{d}\cdot\vec{\tau}$ we then obtain the vector $\vec{d}$ with the non-zero components
+\begin{align}
+d_x&=\tecxt\text{Re\,}\epsilon=|t_1|\cos(\phi_1) + |t_2|\cos(\phi_2+k) + |t_3|\cos(\phi_3-k)\\
+d_y&=\tecxt\text{Im\,}\epsilon=|t_1|\sin(\phi_1) + |t_2|\sin(\phi_2+k) + |t_3|\sin(\phi_3-k).
+\end{align}
+Normalizing yields
+\begin{align}
+\vec{n}&:=\frac{\vec{d}}{|\vec{d}|}=\frac{1}{\sqrt{d_x^2+d_y^2}}\begin{pmatrix}
+d_x\\ d_y \\ 0
+\end{pmatrix}.
+\end{align}
+The winding number is defined as
+\begin{align}
+\nu&:=\frac{1}{2\pi}\intx\int_{-\pi}^{\pi}\left\vert\vec{n}\times\frac{\tecxt\text{d}\vec{n}}{\tecxt\text{d}k}\right\vert\, \mathrm{d}k.
+\end{align}
+It is beneficial to introduce a function $\phi(k)$ defined implicitly via
+\begin{align}
+\vec{n}&=:\begin{pmatrix}
+\cos(\phi) \\ \sin(\phi) \\ 0
+\end{pmatrix}&&\Rightarrow&\phi(k)&=\arccos\kla\left( \frac{d_x}{\sqrt{d_x^2+d_y^2}} \right).
+\end{align}
+Then the integral simply becomes
+\begin{align}
+\nu&=\frac{1}{2\pi}\intx\int_{-\pi}^{\pi}\frac{\tecxt\text{d}\phi(k)}{\tecxt\text{d}k}\, \mathrm{d}k.
+\end{align}
+Note that the derivative may be discontinuous. 
+%However, the set of these points will have measure zero. 
+%Thus we have to split the integral region into all the intervals, on which we can safely integrate the derivative.
+%Let $k_s$ for $s=1,\dots,S-1$ be the set of points, where $\frac{\tecxt\text{d}\phi(k)}{\tecxt\text{d}k}$ is undefined. 
+%Further let $k_0:=-\pi$ and $k_S:=\pi$ to obtain a more compact formula.
+%Then the winding number can be computed via
+%\begin{align}
+%\nu&=\frac{1}{2\pi}\sum_{s=0}^{S-1}\phi(k_{s+1}-0)-\phi(k_s+0).
+%\end{align}
+%Here the notation is defined via the limiting process
+%\begin{align}
+%f(x\pm 0)&:=\lim_{\epsilon\rightarrow 0}f(x\pm\epsilon).
+%\end{align}
+%The singularities can be found by considering the equation
+%\begin{align}
+%1&\overset{!}{=}\frac{d_x}{\sqrt{d_x^2+d_y^2}}&&\Rightarrow&d_y&\overset{!}{=}0.
+%\end{align}
+%In this case, we therefore have to solve
+%\begin{align}
+%0&=|t_1|\sin(\phi_1) + |t_2|\sin(\phi_2+k_s) + |t_3|\sin(\phi_3-k_s).
+%\end{align}
+%In general, this is rather difficult. 
+\\
+Let us consider a special case.
+We want to find an example, where the winding number changes solely due to a change of one of the phases.
+Let $|t_1|=|t_2|=1$, $|t_3|=\beta\ll 1$, $\phi_2=\phi_3=0$ and $\phi_1=\alpha$.
+Then we find
+\begin{align}
+d_x&=\cos(\alpha) + \cos(k) + \beta\cos(k)\\
+d_y&=\sin(\alpha) + \sin(k) - \beta\sin(k).
+\end{align}
+Another way to approach the winding number is to consider the trajectory of $\vec{d}(k)$.
+It is sufficient to compute all values of $k$, for which either component is zero.
+Therefore we need to solve
+\begin{align}
+0&=d_y=\sin\alpha + (1-\beta)\sin k,
+\end{align}
+which simply leads to 
+\begin{align}
+k&=\arcsin\kla\left( \frac{\sin\alpha}{1-\beta} \right)&&\tecxt\text{and}&k&=\pi - \arcsin\kla\left( \frac{\sin\alpha}{1-\beta} \right),
+\end{align}
+as well as 
+\begin{align}
+0&=d_x=\cos\alpha + (1+\beta)\cos k,
+\end{align}
+which simply leads to 
+\begin{align}
+k&=\pm\arccos\kla\left( -\frac{\cos\alpha}{1+\beta} \right).
+\end{align}
+In total we find four points, which have the coordinates
+\begin{align}
+\kla\left( 0, \sin\alpha \pm(1-\beta)\sqrt{1-\frac{\cos^2\alpha}{(1+\beta)^2}} \right)&&\tecxt\text{and}&&\kla\left( \cos\alpha \pm (1+\beta)\sqrt{1-\frac{\sin^2\alpha}{(1-\beta)^2}}, 0 \right).
+\end{align}
+The limiting case corresponds to one of these points being equal to $(0,0)$. 
+This gives us the condition for a non-zero winding number as
+\begin{align}
+\sin\alpha&\overset{!}{<}(1-\beta)\sqrt{1-\frac{\cos^2\alpha}{(1+\beta)^2}}\\
+\Leftrightarrow\ \ \ 1&\overset{!}{>}\frac{\sin^2\alpha}{(1-\beta)^2}+\frac{\cos^2\alpha}{(1+\beta)^2}\\
+\Leftrightarrow\ \ \ 1&\overset{!}{>}\frac{1}{(1+\beta)^2} + \kla\left( \frac{1}{(1-\beta)^2} - \frac{1}{(1+\beta)^2} \right)\sin^2\alpha\\
+\Leftrightarrow\ \ \ (1+\beta)^2-1&\overset{!}{>}\frac{(1+\beta)^2-(1-\beta)^2}{(1-\beta)^2}\sin^2\alpha=\frac{4\beta}{(1-\beta)^2}\sin^2\alpha\\
+\Leftrightarrow\ \ \ \sin^2\alpha&\overset{!}{<}(1-\beta)^2\kla\left( \frac{\beta}{4}+\frac{1}{2} \right).
+\end{align}
+Therefore the critical value of $\alpha$ is
+\begin{align}
+\alpha_c&=\arcsin\kla\left( (1-\beta)\sqrt{\frac{1}{2}+\frac{\beta}{4}} \right).
+\end{align}
+In the special case of $\beta=0.1$ this value works out to be $\alpha_c\approx 0.71$.
+%We find
+%\begin{align}
+%\phi(k)&=\arccos\kla\left( \klam\left[ 1+\frac{d_y^2}{d_x^2} \right]^{-1/2} \right)\\
+%\phi'(k)&=\frac{\cos(\phi)^3}{\sqrt{1-\cos(\phi)^2}}\kla\left( \frac{d_x}{d_y^2}(-(1+\beta)\sin k)-\frac{d_x^2}{d_y^3}(1-\beta)\cos k \right).
+%\end{align}
+%To determine the winding numbers we first compute
+%\begin{align}
+%\phi(\pm\pi)&=\arccos\kla\left( \frac{\cos\alpha-(1+\beta)}{\sqrt{1+(1+\beta)^2-2(1+\beta)\cos\alpha}} \right)\\
+%\phi(k_s\pm 0)&=\arccos\kla\left( \frac{\cos\alpha + (1+\beta)\sqrt{1-\frac{\sin^2\alpha}{(1-\beta)^2}}}{|d_x|} \right)
+%\end{align}
+%Inserting into our formula for the winding number yields
+%\begin{align}
+%\nu&=\frac{1}{2\pi}\kla\left( \arccos \right)•
+%\end{align}
+
+
+Figure \ref{figure:dvector} shows a family of $\vec{d}$-curves with fixed amplitudes $|t_j|$ and $\phi_{2,3}$, but variable $\phi_1\in \klammer\left\{ 0,\frac{\pi}{6}, \alpha_c,\frac{\pi}{3},\frac{\pi}{2} \right\}$.
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=\linewidth]{01_WindingNumber_dvector_v2.png}
+\caption{Components of $\vec{d}(k)$ for $k\in[-\pi,\pi)$. Only $\phi_1$ is changed.}
+\label{figure:dvector}
+\end{figure}\\
+Figure \ref{figure:phi} shows how the angle $\phi(k)$ behaves for the same parameters. 
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=\linewidth]{01_WindingNumber_phi_v2.png}
+\caption{Function $\phi(k)$ for $k\in[-\pi,\pi)$. }
+\label{figure:phi}
+\end{figure}
+
+%Let us now consider the special case of $t:=|t_1|=|t_2|=|t_3|$, which leads to
+%\begin{align}
+%\phi(k)&=\arccos\kla\left( \frac{\cos(\phi_1)+\cos(\phi_2+k)+\cos(\phi_3-k)}{\sqrt{3 + 2\cos (\phi_1-\phi_2-k) + 2\cos (\phi_1-\phi_3+k) + 2\cos (\phi_2-\phi_3+2k)}} \right)
+%\end{align}
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

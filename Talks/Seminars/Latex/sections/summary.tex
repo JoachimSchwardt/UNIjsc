@@ -1,0 +1,24 @@
+\begin{frame}{Summary}  
+    \begin{itemize}
+        \item[\bpt] Khintchine's theorem: \qquad $F_n(a_nx + b_n) \rightarrow G(x)$
+        \pause\item[\bpt] max-stable property of $G$:\qquad $G(x) = \left[ G(A_k x + B_k) \right]^k$
+        \pause\item[\bpt] functional equation:\qquad $G(x) = \left[ G(a(s) x + b(s)) \right]^s$
+%        \begin{itemize}
+%            \pause\item[(I):] $a(s) \equiv 1$ 
+%            \begin{itemize}
+%                \pause\item[] Gumball, $G(x) = \exp \kla\left( \e^{-z} \right)$
+%            \end{itemize}
+%            \pause\item[(II):] $a(s) = \e^{rs}$ 
+%            \begin{itemize}
+%                \pause\item[$r>0$:] Weibull, $G(x) = \exp \kla\left( -(-z)^\alpha \right)$
+%                \pause\item[$r<0$:] Fr\'echet, $G(x) = \exp \kla\left( -z^{-\alpha} \right)$
+%            \end{itemize}
+%        \end{itemize}
+    \end{itemize} 
+    \pause\,\\ 
+    Extremal Types Theorem
+    \begin{align*}
+        \left[ F(a_n x + b_n) \right]^n &\longrightarrow G(x) = \begin{cases} \e^{-\e^{-x}}, & \color{white} x>0 \color{tudbase} \hspace{2cm} (\text{Gumbel}) \\ \e^{-x^{-\alpha}}, & x> 0 \hspace{2cm} (\text{Frech\'et}) \\ \e^{-(-x)^\alpha}, & x < 0 \hspace{2cm} (\text{Weibull}) \end{cases}
+    \end{align*}
+    \qquad $\Rightarrow$ \qquad  c.d.f. of $\tilde{M}_n := \frac{M_n - b_n}{a_n}$ is an extremal type
+\end{frame}

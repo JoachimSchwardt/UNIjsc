@@ -1,0 +1,66 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{11 Eichinvarianz und Higgs-Boson}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 11.1: Lokale Eichinvarianz}
+Die Dirac-Gleichung ist $(i\gamma^\mu\partial_\mu - m)\psi=0$. Sie ist trivialerweise invariant unter einer globalen Transformation $\psi\rightarrow\psi':=e^{i\theta}\psi$ mit $\theta=\tecxt\text{const}$:
+\begin{align*}
+(i\gamma^\mu\partial_\mu - m)\psi'&=(i\gamma^\mu\partial_\mu - m)e^{i\theta}\psi=e^{i\theta}(i\gamma^\mu\partial_\mu - m)\psi=0
+\end{align*}
+Für eine lokale Transformation $\psi\rightarrow\psi':=e^{iq\chi(x)}\psi$ gilt das nicht mehr:
+\begin{align*}
+(i\gamma^\mu\partial_\mu - m)\psi'&=e^{iq\chi}(i\gamma^\mu\partial_\mu - m)\psi + \psi (i\gamma^\mu\partial_\mu ) e^{iq\chi}=-q\psi'\gamma^\mu\partial_\mu\chi\neq 0
+\end{align*}
+Führt man noch die minimale Substitution $\partial_\mu\rightarrow D_\mu :=\partial_\mu +iqA_\mu$, so kann die Invarianz wiederhergestellt werden. Dazu muss noch angenommen werden, dass für $A_\mu$ die Transformation $A_\mu\rightarrow A_\mu'=A_\mu - \partial_\mu\chi$ gilt:
+\begin{align*}
+D_\mu'\psi'&=(\partial_\mu +iqA_\mu')e^{iq\chi}\psi=\\
+&=e^{iq\chi}\partial_\mu\psi + \psi\partial_\mu e^{iq\chi} + iq(A_\mu - \partial_\mu\chi)e^{iq\chi}\psi=\\
+&=e^{iq\chi}\kla\left( {\partial_\mu +iqA_\mu } \right)\psi +\psi e^{iq\chi}\partial_\mu (iq\chi ) - iqe^{iq\chi}\psi\partial_\mu\chi=\\
+&=e^{iq\chi}D_\mu\psi
+\end{align*}
+Daraus folgt direkt die Invarianz der Dirac-Gleichung:
+\begin{align*}
+(i\gamma^\mu D_\mu' - m)\psi'&=e^{iq\chi}(i\gamma^\mu D_\mu - m)\psi=0
+\end{align*}
+\section*{Aufgabe 11.2: Elektroschwache Parameter}
+Es gelten folgende Formeln, wobei $\alpha_\tecxt\text{QED}\simeq\frac{1}{137}$:
+\begin{align*}
+m_W&=\frac{1}{2}vg_W=80.4\,\tecxt\text{GeV}\numberthis\label{mW}\\
+m_Z&=\frac{1}{2}v\sqrt{g_W^2+g'^2}=91.2\,\tecxt\text{GeV}\numberthis\label{mZ}\\
+\cos\theta_W&=\frac{g_W}{\sqrt{g_W^2+g'^2}}\numberthis\label{cos thetaW}\\
+e&=g'\cos\theta_W=\sqrt{4\pi\alpha_\tecxt\text{QED}}\numberthis\label{alpha}
+\end{align*}
+Daraus lassen sich die elektroschwachen Parameter bestimmen:
+\begin{align*}
+\frac{(\ref{mW})}{(\ref{mZ})}&&:&&\frac{m_W}{m_Z}&=\cos\theta_W&\Rightarrow &&\theta_W&=\arccos\frac{m_W}{m_Z}=28.17\,\degree\\
+(\ref{cos thetaW})\,\tecxt\text{in\,}(\ref{alpha})&&:&&g'&=\frac{\sqrt{4\pi\alpha_\tecxt\text{QED}}}{\cos\theta_W}&\Rightarrow &&g'&=\sqrt{4\pi\alpha_\tecxt\text{QED}}\frac{m_Z}{m_W}=0.344\\
+(\ref{mZ})^2-(\ref{mW})^2&&:&&\frac{1}{4}v^2g'^2&=m_Z^2-m_W^2&\Rightarrow &&v&=\frac{2}{g'}\sqrt{m_Z^2-m_W^2}=250.6\,\tecxt\text{GeV}\\
+(\ref{mW})&&:&&g_W&=\frac{2m_W}{v}&\Rightarrow &&g_W&=\frac{g'm_W}{\sqrt{m_Z^2-m_W^2}}=0.642
+\end{align*}
+
+\end{document}

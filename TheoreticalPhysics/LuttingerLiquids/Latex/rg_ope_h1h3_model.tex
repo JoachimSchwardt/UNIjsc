@@ -1,0 +1,490 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{ll_scrarticle}
+
+\newcommand*{\titel}{Operator Product Expansion}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{General Theory}
+%Here we present the OPE-based RG following Fradkin.
+%The only difference in the approach is in the rescaling of variables to more closely match the structure of the momentum shell renormalization scheme.
+%The most important question we have to address is why we can change the scheme that way.
+%Here the intuition will be that the rescaling will actually leave most types of operators invariant making the change purely artificial.
+%The reason why we have to rescale at all is that the most peculiar operator contains a term $\nabla\phi(x+a)$ where $a$ is the cut-off.
+%Now changing $a\rightarrow a'= \frac{a}{s}$ with $s=\powe{\d l} = 1 + \d l$ will require $x'=\frac{x}{s}$ to keep the structure of the argument invariant.
+%Usually there is not such an explicit cut-off dependence in the operators themselves -- in our case $a$ is the lattice spacing so the dependence here is not all that surprising -- and thus there would generally be no reason or necessity to adjust the variables.\\
+%There are two main goals here; first, we want to demonstrate how a conceptually different RG approach gives results that only differ in specific quantitative details.
+%Second, the one-loop corrections in the MSR have turned out to be somewhat difficult to understand so we want to try out a different scheme.\\
+%In this section we will now set up the general theory behind the OPE and show how it is connected to the RG.
+The main problem with the momentum shell renormalization is the appearance of non-local operators which is somewhat difficult to remedy and may sensitively depend on the specific implementation of the RG.
+This may only be a quantitative problem and one may therefore still be able to obtain qualitatively reliable result.
+It will be rather instructive to see how a different RG procedure gives rise to results that are similar in some and distinct in other aspects.
+On the one hand the similarities will serve as further justification for that part of the analysis -- if two different ideas lead to the same or similar physics we should be on the right track.
+The difference on the other hand will highlight what the RG (at least in our approach) can \emph{not} do, at least not in an unambiguous way with respect to dependence on the RG scheme.\\
+In this section we want to present the RG approach based on the Operator Product Expansion (OPE) following Fradkin \TODO{[ref book and lecture notes; slight differences between each]}.
+There are a several ways one can interpret and use this RG approach.
+The fundamental starting point here will always be to introduce some notion of a short-distance cut-off that regulates the UV divergences.
+In the spirit of a continuum limit one may then take this cut-off to be the lattice spacing $a$ and consider what happens when $a\rightarrow 0$ by means of successive integrations.
+Conceptually this is precisely what we want, given that our model originates from a microscopic lattice model.
+The problem however is that this procedure simply does not work for terms of the form $\phi(x+a)$ because a change in $a$ necessitates a change in the coordinates $x$.
+While this change is a core ingredient of the momentum shell renormalization it leads to structural inconsistencies in this real space approach.
+The reason is that integrations will be restricted to $|x_1-x_2|>a$ and integrating over a small shell near $a$ will then correspond to a change in $a$ leading to a change in the couplings.
+After this integration the structure will look like $|x_1-x_2|>a'$ with the new cut-off $a'$ and now defining new coordinates $x'=sx$ would undo the change of the cut-off in the integration region -- but this is not allowed for the new effective action must be written entirely in terms of ``primed'' variables and couplings!
+Note that this does not imply that the RG can generally not be used for a continuum limit.
+After all, it is only due to the peculiar form $\phi(x+a)$ that, in our specific case, does not allow for a sensible expansion in $a$ that the rescaling of $x$ becomes necessary.
+In any other scenario this idea is perfectly reasonable.\\
+A different interpretation of the RG is to introduce some artificial short-distance cut-off $\alpha$ (in bosonization this is also often done in order to write down expression that are not normal-ordered) and to then see what happens as $\alpha$ is increased.
+The only issue here is that in the end the flow equations will require some initial and final condition.
+The latter is a problem that also exists in the continuum limit and the momentum shell approach.
+The idea here is to identify some minimal bandwidth, e.g. thermal fluctuations $\Lambda_\text{thermal} = \frac{1}{\beta v}$ with some typical velocity $v$ and the inverse temperature $\beta=\frac{1}{T}$, and to let the RG flow until the bandwidth matches this.\\
+The initial condition however is a unique problem for the $\alpha$-approach.
+In the momentum shell RG we of course simply use the initial bandwidth of the system, e.g. given by $\frac{\pi}{a}$ or similar, and in the continuum limit we naturally start with the original lattice spacing.
+The latter suggests that a rather natural choice could be $\alpha_\text{initial} = a$ and this is indeed what we will use.
+First, this will bring the RG in line with the results from the momentum shell approach and second we simply do not really have a better alternative (crucially, $\alpha_\text{initial} = 0$ does not work because this would require an infinite RG time).
+\subsection{Perturbative Renormalization Group and OPE}
+With the previous discussion in mind let us now consider a set of operators $\mathcal{O}$ that are functions of some real scalar field $\phi$ in $D$-dimensional space-time (later we will use $D=2$).
+Then the scaling dimension $\Delta_{\mathcal{O}}$ of an operator is defined by the asymptotic relation
+\begin{align}
+\bra*{\mathcal{O}(x_1) \mathcal{O}(x_2)} \overset{x\rightarrow 0}{\sim} \frac{C_{\mathcal{O}}^2}{|x_1-x_2|^{2\Delta_{\mathcal{O}}}}
+\end{align}
+where $C_\mathcal{O}$ is some normalization of the operator.
+We can then define a general action via
+\begin{align}
+S[\phi] &= S_0[\phi] + \sum_j g_j \alpha^{\Delta_{j} - D} \int \mathcal{O}_j(x)\,\d^Dx
+\end{align}
+where $g_j$ are by construction dimensionless couplings and $S_0$ is an action corresponding to a fixed point (e.g. a kinetic term $(\nabla\phi)^2$).
+The partition function can then be written as
+\begin{align}
+Z &= \tr \klb*{\powe{S[\phi]}} = \tr \klb*{\powe{-S_0[\phi]} \powe{\sum_j g_j \alpha^{\Delta_{j} - D} \int \mathcal{O}_j(x)\,\d^Dx}}
+\end{align}
+where the trace runs over all configurations and may for example be given by a path integral.
+Defining the expectation value $\bra*{\mathcal{O}} = \frac{1}{Z_0} \tr \klb*{ \powe{S_0} \mathcal{O}}$ with respect to the fixed point action $S_0$ allows us to formally rewrite this as
+\begin{align}
+\frac{Z}{Z_0} &=1 + \sum_j \frac{g_j}{\alpha^{D-\Delta_{\mathcal{O}_j}}} \int \bra*{\mathcal{O}_j(x)}\,\d^Dx + \frac{1}{2} \sum_{j,k} \frac{g_j g_k}{\alpha^{2D-\Delta_{\mathcal{O}_j}-\Delta_{\mathcal{O}_k}}} \int \bra*{\mathcal{O}_j(x_1) \mathcal{O}_k(x_2)}\,\d^Dx_1\,\d^Dx_2 + \dots 
+\end{align}
+where $Z_0=\tr \powe{S_0}$ and we expanded the exponential containing the perturbations to the action $S_0$.\\
+All of the equations here contain the short-distance cut-off $\alpha$ we alluded to in the introduction -- but how does it enter into the calculation?
+The answer to this is that we restrict all of the integrations in the series expansion such that $|x_j - x_k| > \alpha$ for any combination of coordinates.
+The idea behind trying to \emph{increase} $\alpha$ rather than decreasing it in the spirit of a continuum limit is that of course-graining.
+Essentially, a way to obtain a low-energy theory is to integrate out the behaviour at small scales since this leaves only long wavelengths corresponding to low energies.
+By increasing $\alpha$ we thus obtain a theory where only large distances are relevant.
+As mentioned before this flow has to stop, in our case this will be determined by the size of thermal fluctuations putting a lower bound on the bandwidth, but it also has to start somewhere.
+For the lack of a better alternative we will choose the lattice spacing $a$, but note that this does not imply that any explicit $a$-dependence of the operators $\mathcal{O}_j$ will change under the RG (this is precisely the problem we try to avoid, see the introduction).\\
+To implement this idea we now write $\alpha'=s\alpha$ where $s=\powe{\d l} = 1 + \d l$ describes an infinitesimal change and try to adjust the couplings $g_j$ such that the new theory looks structurally identical.
+This essentially leads to a change in the couplings due to the prefactors and the bounds of the integration.
+The former is readily described by the so-called \emph{tree-level} term
+\begin{align}
+g_j'^{(0)} &= g_j \kla*{\frac{\alpha'}{\alpha}}^{D-\Delta_{j}} = g_j + (D-\Delta_{j}) g_j \d l
+\end{align}
+of the beta function $\textbf{g}'=\beta(\textbf{g}) = g'^{(0)} + g'^{(1)} + \dots$.
+The latter is significantly more difficult to compute and corresponds to all the \emph{loop-corrections}.
+If it was possible to calculate all of these we could presumably use the same technique to just solve the full problem right away, thus the more reasonable goal is to try and calculate the result to some low order.
+The linear term does not have two coordinates so there is no $\alpha$-dependence in the bound of the integration.
+For the second order terms we instead have
+\begin{align}
+\int_{|x_1-x_2|>\alpha} &= \int_{|x_1-x_2|>\alpha'} - \int_{\alpha' > |x_1-x_2| > \alpha}.
+\end{align}
+In order to analyse the interesting second part of this integral we need to understand how operators behaves as their arguments get close since we only integrate over a thin region where $|x_1-x_2|\approx \alpha$.
+\subsection{Operator Product Expansion}
+We have already defined the scaling dimension of an operator.
+The OPE is a very general result that states that
+\begin{align}
+\mathcal{O}_j(x_1) \mathcal{O}_k(x_2) &\overset{x_1\rightarrow x_2}{\sim} \sum_m \frac{C_{j,k,m}}{|x_1-x_2|^{\Delta_{j} + \Delta_{k} - \Delta_{m}}} \mathcal{O}_m\kla*{\frac{x_1+x_2}{2}}
+\end{align}
+where the $C$'s are the so-called \emph{structure coefficients} of the OPE.
+One should be somewhat careful with this identity in the sense that there are a few implicit assumptions behind this asymptotic limit.
+It is generally only valid inside an expectation value and it may generate operators not previously contained in the set we started with; this is the sense in which one usually assumes the $\mathcal{O}_j$ to be complete, i.e. all of their OPE's do not lead to any new terms.
+The former is more of a mathematical subtlety that is presumably safe to ignore outside special cases while the latter is potentially a problem for the RG as this may generate entire families of operators that quickly make any high order calculation completely infeasible.
+An argument that is somewhat symptomatic of RG is therefore to use the tree-level scaling as a justification for throwing away highly irrelevant terms that appear in this way without looking at their contributions at higher orders.\\
+With the OPE the integral over the shell is now straight-forward and we obtain
+\begin{align}
+\int_{\alpha' > |x_1-x_2| > \alpha} \bra*{\mathcal{O}_j(x_1) \mathcal{O}_k(x_2)}\,\d^Dx_1\,\d^Dx_2 &= \alpha^D S_D \d l\int \sum_m \frac{C_{j,k,m}}{\alpha^{\Delta_{j} + \Delta_{k} - \Delta_{m}}} \bra*{\mathcal{O}_m(x)} \,\d^Dx \label{eqn:1loop shell integral OPE}
+\end{align}
+where $S_D = \frac{2\pi^{D/2}}{\Gamma(D/2)}$ is the $D$-dimensional surface area of a hypersphere and we identified $x_1=x$ as well as $x_2=x_1+\Delta x$ with $|\Delta x| \approx \alpha$.
+Evidently the result leads to a correction of the linear part of the expansion of the partition function and therefore to a correction of the beta function.
+Recovering the prefactors we find
+\begin{align}
+g_m'^{(1)} &= \frac{1}{2} \alpha^D S_D \d l \sum_{j,k} \alpha^{D-\Delta_{m}} \frac{g_jg_k}{\alpha^{2D - \Delta_{j} - \Delta_{k}}} \frac{C_{j,k,m}}{\alpha^{\Delta_{j} + \Delta_{k} - \Delta_{m}}} = \frac{1}{2} S_D \d l \sum_{j,k} C_{j,k,m} g_jg_k.
+\end{align}
+To this one-loop level we thus obtain a structurally identical action where the new couplings are
+\begin{align}
+\frac{\d g_j}{\d l} &= (D - \Delta_j)g_j + \frac{1}{2} S_D \sum_{k,m} C_{k,m,j} g_k g_m.\label{eqn:beta function 1loop}
+\end{align}
+Thus all one has to do to this level is to identify the scaling dimensions of all operators in the theory and then compute the structure coefficients of the OPE.\\
+Let us finish with a rather subtle but important point.
+While the set of operators only contains the perturbations, the OPE may also involve terms contained in $S_0$.
+By construction the scaling dimension of anything contained in $S_0$ must always be given by $\Delta=D$ because otherwise $S_0$ would not correspond to a fixed point.
+For a simple example say that $\mathcal{O}_0$ is the operator describing $S_0$.
+Under the RG there can now be a change of $g_0$ due to a feedback of the OPE of the form $C_{j,k,0}$.
+Note however, that even if $C_{0,0,0} \neq 0$ this would \emph{not} appear in beta function!
+This may be somewhat confusing so let us elaborate on this point.
+The original summation in the expansion of the partition function only contains the perturbations, thus $j,k,m,\dots\neq 0$.
+The OPE however can also produce an $m=0$-term and thus the sum in \autoref{eqn:1loop shell integral OPE} generally runs over more indices.
+The sums in the beta function in \autoref{eqn:beta function 1loop} once again come from the expansion though, so they \emph{are} restricted to $j,k\neq 0$.
+\section{H1H3 Model}
+The H1H3 model is given by the Hamiltonian $H=H_0+H_1+H_3$ where
+\begin{align}
+H_0 &= \frac{v}{2\pi} \intx{ }{ }{\klb*{K\kla*{\partial_x\theta(x)}^2 + \frac{1}{K} \kla*{\partial_x\phi(x)}^2}}{x},\\
+H_1 &= \frac{vg_1}{\alpha} \sum_{s_a=\pm 1} \intx{ }{ }{\sin\kla*{2\phi(x)} \partial_x\phi(x+s_aa)}{x},\\
+H_3 &= \frac{vg_3}{\alpha^2} \intx{ }{ }{\cos\kla*{4\phi(x)}}{x}.
+\end{align}
+The integrations are restricted to $[-L/2, L/2]$ and $a$ is a lattice spacing.
+We work in $(1+1)$ dimensions and the field conjugate momentum $\Pi = \frac{1}{\pi} \partial_x \theta$ leads to $\partial_x\theta = \frac{\i}{Kv} \partial_\tau\phi$ where $\tau=\i t$ is the imaginary time.
+The action formulation is thus $S=S_0 + S_1 + S_3$ where
+\begin{align}
+S_0 &= -\intx{0}{\beta}{\klb*{\Pi \i\partial_\tau\phi - H_0} }{\tau} = \frac{1}{2\pi K} \intx{0}{\beta}{\intx{ }{ }{\klb*{\frac{1}{v} \kla*{\partial_\tau \phi}^2 + v \kla*{\partial_x \phi}^2}}{x}}{\tau}
+\end{align}
+and $S_j = \intx{0}{\beta}{H_j}{\tau}$ for $j\in\klc*{1,3}$.
+It is more convenient to express everything in terms of the euclidean coordinates $r = (x,y)$ with $y=v\tau$ which leads to
+\begin{align}
+S_0 &= \frac{1}{2\pi K} \int \kla*{\nabla\phi}^2 \,\d^2r,\\
+S_1 &= \frac{g_1}{\alpha} \sum_{s_a=\pm 1} \int \sin \kla*{2 \phi} \partial_x \phi(x+s_aa,y) \,\d^2r,\\
+S_3 &= \frac{g_3}{\alpha^2} \int \cos\kla*{4\phi}\,\d^2r
+\end{align}
+where $g_1,g_3,K$ are dimensionless and $\kla*{\nabla\phi}^2 = \kla*{\partial_x\phi}^2 + \kla*{\partial_y\phi}^2$.
+Keep in mind that $\phi$ is a real bosonic scalar field given by a linear combination of bosonic operators $b_q$ and can therefore be split into two parts $\phi^{(\pm)}$ containing creation and annihilation operators respectively.
+Their commutator satisfies
+\begin{align}
+\klb*{\phi^{(+)}(r), \phi^{(-)}(0)} &= \frac{K}{2} \log\klb*{\frac{2\pi}{L} \sqrt{\alpha^2 + r^2}}
+\end{align}
+and the fundamental correlation function is asymptotically given by
+\begin{align}
+\Phi(r) &= \bra*{\klb*{\phi(r) - \phi(0)}^2} = -2 \bra*{\kla*{\phi(r) - \phi(0)} \phi(0)} \overset{r\rightarrow 0}{\sim} \frac{K}{2} \log\kla*{\frac{r^2 + \alpha^2}{\alpha^2}}.
+\end{align}
+We also give the general formula for products of vertex operators
+\begin{align}
+\bra*{\prod \powe{\i A_j\phi(r_j)}} &= \powe{-\frac{1}{2} \sum A_j A_k \bra*{\phi(r_j-r_k) \phi(0)}} = \powe{-\frac{1}{2} \kla*{\sum A_j}^2 \bra*{\phi(0)^2}} \powe{\frac{1}{2} \sum_{j<k} A_jA_k \Phi(r_j-r_k)}.
+\end{align}
+Formally $\bra*{\phi(0)^2}=\infty$ for an infinite system giving rise to the neutrality condition $\sum_j A_j =0$.
+We will see that minor violations of this condition via source terms can be dealt with by delaying the thermodynamic limit.\\
+To simplify the notion for the OPE we now define
+\begin{align}
+V_n(r) &= \kla*{\frac{2\pi}{L}}^{\Delta^V_n} \normord{\powe{\i n\phi(r)}} = \frac{1}{\alpha^{\Delta^V_n}} \powe{\i n\phi(r)},\\
+W_n(r) &= \kla*{\frac{2\pi}{L}}^{\Delta^V_n} \sum_{s_a=\pm 1} \normord{\powe{\i n\phi(r)}} \partial_x\phi(x+s_aa,y) = \kla*{\frac{2\pi}{L}}^{\Delta^V_n} \sum_{s_a=\pm 1} \normord{\powe{\i n\phi(r)} \partial_x\phi(x+s_aa,y)}
+\end{align}
+for $n\neq 0$ and also $V_0 = \normord{\kla*{\nabla\phi}^2}$ as well as $W_0 = \sum_{s_a=\pm 1} \partial_x\phi(x+s_aa,y)$.
+The scaling dimension of the pure vertex operators satisfy $\Delta_{-n} = \Delta_n$ and can therefore be readily calculated via point-splitting where $|\epsilon|\gg \alpha, a$ leads to
+\begin{align}
+\bra*{V_n(r) V_{-n}(r+\epsilon)} &= \frac{1}{\alpha^{2\Delta^V_n}} \powe{\frac{1}{2} n(-n) \Phi(\epsilon)} \sim \frac{1}{\alpha^{2\Delta^V_n}} \kla*{\frac{\alpha}{\epsilon}}^{\frac{K}{2}n^2}
+\end{align}
+where we can identify $\Delta^V_n = \frac{K}{4}n^2$.
+For the modified vertex operators the calculation is a bit more cumbersome.
+We make use of the replacement
+\begin{align}
+W_n(r) &= \frac{1}{\alpha^{\Delta^V_n}} \sum_{x_1=x\pm a} \partial_{x_1} (-\i) \partial_J \powe{\i n\phi(r)} \powe{\i J \phi(r_1)}
+\end{align}
+where the limit $J\rightarrow 0$ is implied and $r_1 \equiv(x_1,y)$.
+Then the expectation value can be calculated via\footnote{$\partial_{J_1} \partial_{J_2} \powe{J_1J_2Z + J_1X + J_2Y} = Z + XY$ for $J_{1,2}\rightarrow 0$}
+\begin{align}
+\bra*{W_n(r) W_{-n}(r+\epsilon)} &= \sum_{r_1,r_2} (-1) \partial_{x_1} \partial_{x_2} \partial_{J_1} \partial_{J_2} \frac{1}{\alpha^{2\Delta^V_n}} \bra*{\powe{\i n\phi(r)} \powe{\i J_1\phi(r_1)} \powe{-\i n\phi(r+\epsilon)} \powe{\i J_2 \phi(r_2+\epsilon)}}\\
+&= \sum c\partial^4 \powe{\frac{1}{2} \klb*{-n^2 \Phi(\epsilon) + J_1J_2 \Phi(r_1-r_2-\epsilon) + J_1n \Phi(r-r_1) - J_1n \Phi(r_1-r-\epsilon) + J_2n \Phi(r-r_2-\epsilon) - J_2n \Phi(r-r_2)}}\\
+&= \sum c\partial^2 \powe{-\frac{n^2}{2} \Phi(\epsilon)} \klb*{\frac{1}{2} \Phi(r_{1,2}-\epsilon) + \frac{n^2}{4} \kla*{\Phi(r_{0,1}) - \Phi(r_{1,0}-\epsilon)} \kla*{\Phi(r_{0,2}-\epsilon) - \Phi(r_{0,2})}}\\
+&= \sum c \powe{-\frac{n^2}{2}\Phi(\epsilon)} \klb*{\frac{1}{4} \frac{K}{\epsilon^2} + \frac{n^2K^2}{16} \kla*{\frac{1}{r_1-r} - \frac{1}{-\epsilon}} \kla*{\frac{1}{r_2-r+\epsilon} - \frac{1}{r_2-r}}}\\
+&= \sum_{s_a,s_a'} c \powe{-\frac{n^2}{2} \Phi(\epsilon)} \klb*{\frac{1}{4} \frac{K}{\epsilon^2} + \frac{K^2n^2}{16} \kla*{\frac{1}{\epsilon} + \frac{s_a}{a}} \kla*{\frac{1}{\epsilon} - \frac{s_a'}{a}}}\\
+&= -K\sum_{s_a,s_a'} \frac{1}{\epsilon^{2\Delta^V_n}} \frac{1+\Delta^V_n}{\epsilon^2}.
+\end{align}
+We find $\Delta^W_n = \Delta^V_n + 1 = \frac{K}{4}n^2 + 1$ which is perfectly consistent with the additional derivative and naive ``power counting''.\\
+As a warm-up for calculating the structure coefficients of the OPE consider the expression
+\begin{align}
+\normord{\phi(0)^2} \normord{\phi(\epsilon)^2} &= \klb*{\phi_+^2 + \phi_-^2 + 2\phi_+\phi_-} \klb*{\phi_+^2 + \phi_-^2 + 2\phi_+\phi_-}_\epsilon \\
+& = \bsplit{&\phi_+^4 + \phi_-^4 + 4\phi_+\phi_- \phi_+ \phi_- + \phi_+^2 \phi_-^2 + \phi_-^2 \phi_+^2 \\
+&+ 2\phi_+^2 \phi_+\phi_- + 2\phi_-^2\phi_+\phi_- + 2\phi_+\phi_- \phi_+^2 + 2\phi_+\phi_- \phi_-^2}\\
+&= \bsplit{&\phi_+^4 + \phi_-^4 + 4\phi_+^3\phi_- + 2\phi_+ \klb*{\phi_-,\phi_+^2} + 4\phi_+\phi_-^3 \\
+&+ 2\klb*{\phi_-^2,\phi_+}\phi_- + 6\phi_+^2\phi_-^2 + 4\phi_+ \klb*{\phi_-,\phi_+} \phi_- + \klb*{\phi_-^2,\phi_+^2}}\\
+&= \normord{\phi^4} + 4(-C)\phi_+^2  + 4 (-C)\phi_-^2 + 4(-C) \phi_+ \phi_- + \phi_- \klb*{\phi_-,\phi_+^2} + \klb*{\phi_-,\phi_+^2} \phi_-\\
+&= \normord{\phi^4} - 4C \normord{\phi^2} + 4C\phi_+\phi_- - 2C \phi_-\phi_+ - 2C\phi_+\phi_-\\
+&= \normord{\phi^4} - 4C\normord{\phi^2} - 2C^2
+\end{align}
+where $C=\klb*{\phi_+(\epsilon), \phi_-(0)} = \frac{K}{2} \log \klb*{\frac{2\pi \epsilon}{L}}$.
+Differentiating then yields
+\begin{align}
+\normord{\kla*{\nabla\phi(r)}^2} \normord{\kla*{\nabla\phi(r+\epsilon)}^2} &= \normord{\kla*{\nabla\phi(r)}^4} + \frac{-2K}{\epsilon^2} \normord{\kla*{\nabla\phi(r)}^2} - \frac{K^2}{2\epsilon^4}
+\end{align}
+from which we can read off the structure coefficient $C_{0,0,0}^{V,V,V} = -2K$ and the scaling dimension $\Delta^V_0 = 2$.
+For the pure vertex operators we have
+\begin{align}
+V_n(r) V_m(r+\epsilon) &= \powe{\i n\phi^{(+)}(r)}\powe{\i n\phi^{(-)}(r)} \powe{\i m\phi^{(+)}(r+\epsilon)} \powe{\i m\phi^{(-)}(r+\epsilon)} \\
+&= \normord{\powe{\i n\phi(r) + \i m\phi(r+\epsilon)}} \powe{\klb*{\i n \phi^{(-)}(r), \i m\phi^{(+)}(r+\epsilon)}} = \normord{\powe{\i n\phi(r) + \i m\phi(r+\epsilon)}} \kla*{\frac{2\pi\epsilon}{L}}^{\frac{K}{2}nm}.
+\end{align}
+For $m=-n$ we have to be a bit careful with the exponent
+\begin{align}
+V_n(r) V_{-n}(r+\epsilon) &= \normord{\powe{-\i n\epsilon\nabla\phi(r) - \i n \frac{1}{2} \epsilon^2\nabla^2\phi(r)}} \kla*{\frac{L}{2\pi\epsilon}}^{2\Delta^V_n}\\
+&= \kla*{\frac{L}{2\pi\epsilon}}^{2\Delta^V_n} \normord{\klb*{1 - \i n\epsilon\nabla\phi - \i n\frac{1}{2} \epsilon^2\nabla^2\phi - \frac{\epsilon^2n^2}{2} \kla*{\nabla\phi}^2 + \dots}}
+\end{align}
+where the dots represent higher order terms.
+The relevant structure coefficient here is $C^{V,V,V}_{n,-n,0} = -\frac{1}{2}n^2$.
+The other contributions are constants or total derivatives, both of which do not play a role in the action so they can be safely ignored, or higher order terms with scaling dimensions $\Delta > 2$.
+For $m\neq -n$ the analysis is rather straightforward as
+\begin{align}
+V_n(r) V_m(r+\epsilon) &= \normord{\powe{\i (n+m)\phi(r)}} \kla*{\frac{L}{2\pi\epsilon}}^{-\frac{K}{2}nm} = \kla*{\frac{L}{2\pi \epsilon}}^{\Delta^V_n + \Delta^V_m - \Delta^V_{n+m}} V_{n+m}
+\end{align}
+immediately yields $C^{V,V,V}_{n,m,n+m} = 1$.
+The OPE for the modified vertex operators is a bit more complicated and we start by considering
+\begin{align}
+W_n(r) W_m(r+\epsilon) &= -\sum_{r_1,r_2} \partial_{x_1} \partial_{x_2} \partial_{J_1} \partial_{J_2} \normord{\powe{\i n\phi(r)} \powe{\i J_1\phi(r_1)}} \normord{\powe{\i m\phi(r+\epsilon)} \powe{\i J_2\phi(r_2+\epsilon)}}\\
+&= -\sum \partial^4 \normord{(\dots)} \powe{\klb*{m\phi^{(+)}(r+\epsilon) + J_2\phi^{(+)}(r_2+\epsilon), n\phi^{(-)}(r) + J_1\phi^{(-)}(r_1)}}\\
+&= -\sum \partial^4 \bsplit{:&\powe{\i n\phi(r) +\i m\phi(r+\epsilon) + \i J_1\phi(r_1) + \i J_2\phi(r_2+\epsilon) + \frac{Knm}{2} \log\klb*{\frac{2\pi\epsilon}{L}} }\\
+&\times \powe{J_1J_2 \frac{K}{2} \log\klb*{\frac{2\pi}{L} |r_2+\epsilon-r_1|} + \frac{K}{2} J_1 m \log\klb*{\frac{2\pi}{L} |r+\epsilon-r_1|} + \frac{K}{2} J_2 n \log\klb*{\frac{2\pi}{L} |r_2+\epsilon-r|}}:}\\
+&= -\sum \partial^2 \bsplit{&\normord{\powe{\i n\phi(r) + \i m\phi(r+\epsilon)}} \kla*{\frac{L}{2\pi\epsilon}}^{-\frac{Knm}{2}} \klb[\bigg]{\frac{K}{2} \log \abs*{r_2+\epsilon - r_1}\\
+& + \kla*{\i\phi(r_1) + \frac{Km}{2} \log\abs*{r+\epsilon-r_1}} \kla*{\i \phi(r_2) + \frac{Kn}{2} \log\abs*{r_2+\epsilon-r}} }}\\
+&= -\normord{\powe{\i n\phi(r) + \i m\phi(r+\epsilon)}} \kla*{\frac{L}{2\pi\epsilon}}^{-\frac{Knm}{2}} \klb*{\frac{2K}{\epsilon^2} + \kla*{\i W_0 - \frac{Km}{\epsilon}} \kla*{\i W_0 + \frac{Kn}{\epsilon}}}.
+\end{align}
+Here we can read off $C^{W,W,V}_{n,m,n+m} = K^2nm - 2K$ and $C^{W,W,W}_{n,m,n+m} = \i K(m-n)$ (\QnA{complex structure coefficients do not really seem to make sense; the couplings should remain real (right?). For us this does not matter since this coefficient will not appear anyway. Still mildly concerning}).
+There is also a higher order contribution $\sim V_{n+m} W_0^2$ but it contains an additional derivative and will therefore be ignored.
+For $m=-n$ we once again have to be a bit more careful and expand the exponent to arrive at
+\begin{align}
+W_n(r) W_{-n}(r+\epsilon) &= - \normord{\powe{-\i n\epsilon\nabla\phi}} \kla*{\frac{L}{2\pi\epsilon}}^{2\Delta^V_n} \klb*{\frac{2K}{\epsilon^2} - W_0^2 + \frac{K^2n^2}{\epsilon^2} + \frac{2\i Kn}{\epsilon} W_0}\\
+&\approx -\kla*{\frac{L}{2\pi\epsilon}}^{2\Delta^V_n} \klb*{1 - \i n\epsilon \nabla\phi - \frac{n^2\epsilon^2}{2} \kla*{\nabla\phi}^2} \klb*{\frac{2K+K^2n^2}{\epsilon^2} + \frac{2\i Kn}{\epsilon} 2\nabla \phi - 4\kla*{\nabla\phi}^2}
+\end{align}
+where we have now dropped the lattice spacing $a$ in $W_0$ since there is no longer the problem of it becoming a total derivative (\QnA{bit careless with the derivatives, the left is a proper expansion with vector-valued derivatives and $\epsilon$'s while the $W_0$-terms only contain $\partial_x$. Probably makes little difference at this level of rigour}).
+We can read off the relevant coefficient $C^{W,W,V}_{n,-n,0} = \frac{Kn^2}{2} (2+Kn^2) - 4n^2 + 4$.
+\subsection{RG flow}
+Out model consists of the operators $W_{\pm 2}$ and $V_{\pm 4}$ with couplings $g_1$ and $g_3$ respectively.
+The RG flow at the 1-loop level is therefore given by
+\begin{align}
+\frac{\d g_1}{\d l} &= \kla*{2 - \Delta_2^W}g_1 = \kla*{1-K}g_1,\\
+\frac{\d g_3}{\d l} &= \kla*{2 - \Delta_4^V}g_3 + \pi C^{W,W,V}_{2,2,4} g_1^2 = \kla*{2 - 4K} g_3 + \pi \kla*{4K-2} K g_1^2,\\
+\frac{\d}{\d l} \frac{1}{K} &= \pi 2C^{V,V,V}_{4,-4,0} g_3^2 + \pi 2C^{W,W,V}_{2,-2,0} g_1^2 = -16 \pi g_3^2 + 4\pi\klb*{4K^2+2K - 6} g_1^2.
+\end{align}
+\subsection{More careful analysis}
+The action is
+\begin{align}
+S_0 &= \frac{1}{2\pi K} \int  \kla*{\nabla\phi}^2\,\d^2r,\\
+S_1 &= \frac{1}{\alpha} \sum_{s_a,\ell=\pm 1} \tilde{g}_{1,\ell} \int \powe{\i 2\ell \phi} \partial_x\phi(r+s_aa)\,\d^2r,\\
+S_3 &= \frac{1}{\alpha^2} \sum_{\ell=\pm 1} \tilde{g}_{3,\ell} \int \powe{\i 4\ell\phi}\,\d^2r
+\end{align}
+where $\tilde{g}_{1,\ell} = -\frac{U_-a}{4\pi^2 v} \ell \eta_\R \eta_\L$ and $\tilde{g}_3=-\frac{U_+a}{4\pi^2 v}$.\\
+We define the vertex operators
+\begin{align}
+V_n(r) &= \frac{1}{\alpha^{\Delta^V_n}} \powe{\i n\phi(r)} = \kla*{\frac{2\pi}{L}}^{\Delta^V_n} \normord{\powe{\i n\phi(r)}}.
+\end{align}
+The prefactor is defined in a way that ensures normalization of the asymptotic behaviour of the expectation value
+\begin{align}
+\bra*{V_n(r) V_m(r+\epsilon)} &= \frac{1}{\alpha^{\Delta^V_n + \Delta^V_m}} \delta_{n,-m} \powe{\frac{1}{2} nm \Phi(\epsilon)} \simeq \delta_{n,-m} \frac{1}{\alpha^{2\Delta^V_n}} \kla*{\frac{\epsilon}{\alpha}}^{\frac{K}{2}nm} = \frac{\delta_{n,-m}}{\epsilon^{2\Delta^V_n}}
+\end{align}
+where the scaling dimension is $\Delta^V_n=\frac{K}{4}n^2$ and $\epsilon\gg\alpha$.
+We also need to consider the operators
+\begin{align}
+\sum_{s_a,s_a'} &\bra*{\powe{\i n\phi(r)} \partial_x\phi(r+s_aa) \powe{\i m\phi(r+\epsilon)} \partial_x\phi(r+s_a'a+\epsilon)}\\
+&= \sum \partial^2 \bra*{\powe{\i n\phi(r_1)}\powe{\i J_1\phi(r_2)}\powe{\i m\phi(r_3)}\powe{\i J_2\phi(r_4)}}\\
+&= \sum \partial^2 \powe{\frac{1}{2} \klb*{nJ_1 \Phi_{12} + nm \Phi_{13} + nJ_2 \Phi_{14} + J_1m\Phi_{23} + J_1J_2 \Phi_{24} + mJ_2 \Phi_{34}}} \delta_{n,-m}\\
+&= -\sum \powe{\frac{1}{2} nm \Phi_{13}} \partial_x^2 \klb*{\frac{1}{2}\Phi_{24} +  \frac{1}{4}\kla*{n\Phi_{12} + m\Phi_{23}} \kla*{m\Phi_{34} + n\Phi_{14}}}\\
+&= -\frac{K}{4} \powe{-\frac{1}{2}n^2 \Phi(\epsilon)} \sum \partial_x^2 \klb*{2\log |r_2-r_4| + Kn^2 \kla*{\log |r_1-r_2| - \log |r_2-r_3|} \kla*{\log|r_1-r_4| - \log|r_3-r_4|}}\\
+&= -\frac{K}{4} \powe{-\frac{1}{2}n^2 \Phi(\epsilon)} \sum \partial_x^2 \bsplit{\klb[\Big]{2\log \sqrt{(x_2-x_4)^2 + \epsilon_y^2} + &Kn^2 \kla*{\log |x_2-x_1| - \log \sqrt{(x_2-x_3)^2 + \epsilon_y^2}} \\
+&\times \kla*{\log|x_4-x_3| - \log \sqrt{(x_4-x_1)^2 + \epsilon_y^2}}}}\\
+&= -\frac{K}{4} \powe{-\frac{1}{2}n^2 \Phi(\epsilon)} \sum \bsplit{\klb[\bigg]{ &\frac{-2}{\epsilon_y^2 + (x_2-x_4)^2} + \frac{4(x_2 - x_4)^2}{\kla*{\epsilon_y^2 + (x_2 - x_4)^2}^2} \\
+& + Kn^2 \kla*{\frac{1}{x_2-x_1} -\frac{x_2-x_3}{(x_2-x_3)^2 + \epsilon_y^2}} \kla*{\frac{x_4-x_1}{(x_4-x_1)^2 + \epsilon_y^2} - \frac{1}{x_4-x_3}}}}\\
+&= -\frac{K}{4} \powe{-\frac{1}{2}n^2 \Phi(\epsilon)} \klb*{\frac{-8}{\epsilon^2} + \frac{16\epsilon_x^2}{\epsilon^4} + Kn^2 \frac{2\epsilon_x}{\epsilon^2} \frac{2\epsilon_x}{\epsilon^2}} \\
+&= K \kla*{\frac{\alpha}{\epsilon}}^{\frac{K}{2}n^2} \frac{2\epsilon_y^2 - (2+Kn^2)\epsilon_x^2}{\epsilon^4}.
+\end{align}
+%n,x1,x2,x3,x4,y1,y2,y3,y4,J1,J2,a,alpha,epsx,epsy,eps,L,K=sy.symbols("n x_1 x_2 x_3 x_4 y_1 y_2 y_3 y_4 J_1 J_2 a alpha epsilon_x epsilon_y epsilon L K", real=True)
+%#eps = sy.sqrt(epsx**2+epsy**2)
+%def Phi(x,y):
+%    return K/2 * sy.log((x**2+y**2)/alpha**2) # +1 in arg left out
+%def expval(A, x, y):
+%    prefactor = sy.exp(-1/2 * sum(A)**2 * L)
+%    res = 1
+%    for j in range(len(A)-1):
+%        for k in range(j+1,len(A)):
+%            res *= sy.exp(1/2 * A[j] * A[k] * Phi(x[j] - x[k], y[j] - y[k]))
+%    return prefactor * res
+%expr = expval([n,J1,-n,J2], [x1,x2,x3,x4], [y1,y2,y3,y4])
+%expr = -expr.diff(J1).diff(J2).subs(J1,0).subs(J2,0).simplify().diff(x2).diff(x4)
+%expr = expr.limit(L,sy.oo).subs(y3,y1+epsy).subs(y4,y1+epsy).subs(y2,y1)
+%s,sp=sy.symbols("s s'")
+%expr = expr.subs(x3,x1+epsx).subs(x2,x1+s*a).subs(x4,x1+epsx+sp*a)
+%res = 0
+%for sv in [+1,-1]:
+%    for spv in [+1,-1]:     
+%        res += expr.subs(s,sv).subs(sp,spv)
+%res = res.limit(a,0).simplify()     # full result
+%sy.log(sy.sqrt(epsy**2+(x2 - x4)**2) ).diff(x2).diff(x4).subs(x2, x1+s*a).subs(x4, x1+epsx+sp*a).simplify()    # log 2 derivatives
+\QnA{A few permutations become possible now. We might turn the RG into a 1-dimensional problem by either only regulating the $x$-spacing or only regulating the $y$-spacing. This means we would set $\epsilon_y=0$ or $\epsilon_x=0$ respectively and we would have $S_{D=1}=2$ rather than $S_{D=2}=2\pi$. Alternatively we need to think about some convention in ambiguous cases like this; do we set $\epsilon_x^2=\epsilon_y^2$ as this would be correct on average? Does seem a bit arbitrary though}\\
+Recall that in the derivation of the RG flow equations we assumed that the integration over the angles simplified to just the surface area of the $D$-hypersphere.
+Due to the structure of this expectation value it is now apparent that this assumption is simply not always correct and that the proper generalization instead involves averaging over all of the angular variables.
+In our case this means we parametrize $\epsilon_x = \epsilon \cos\vartheta$ as well as $\epsilon_y=\epsilon\sin\vartheta$ and then integrate the expectation value to get
+\begin{align}
+\frac{1}{2\pi} \intx{0}{2\pi}{ K \kla*{\frac{\alpha}{\epsilon}}^{\frac{K}{2}n^2} \frac{1}{\epsilon^2} \klb*{2\sin(\vartheta)^2 - \kla*{2+Kn^2} \cos(\vartheta)^2} }{\vartheta} &= -\frac{K^2n^2}{2} \alpha^{\frac{K}{2}n^2} \frac{1}{\epsilon^{\Delta^W_n}}
+\end{align}
+where the scaling dimension $\Delta^W_n = \frac{K}{4}n^2+1$ is consistent with naive power counting and we thus define the operators
+\begin{align}
+W_n(r) &= \frac{\sqrt{2}}{Kn \alpha^{\Delta^W_n-1}} \sum_{s_a=\pm 1} \powe{\i n\phi(r)} \partial_x\phi(r+s_aa).
+\end{align}
+The representation of the model from the point of view of Fradkin's RG is therefore
+\begin{align}
+S &= S_0 + \sum_j g_j \alpha^{\Delta_j-D} \int \mathcal{O}_j(x) \,\d^Dx
+\end{align}
+where in the zeroth iteration (meaning we do not yet include terms generated during the RG flow) we have the contributions $V_{\pm 4}(r)$ with $g_{3, \pm 1} = \tilde{g}_{3,+ 1}$ and $W_{\pm 2}(r)$ with $g_{1,\pm 1} = \tilde{g}_{1,+1} K \sqrt{2} $.
+Note that we write $X_0(r) = \kla*{\partial_x\phi(r)}^2$ and $Y_0(r) = \kla*{\partial_y\phi(r)}^2$ such that $S_0 \sim \int (X_0 + Y_0)$.
+This splitting will become important later as there is some asymmetry in the structure coefficients of the OPE.
+\subsection{Structure Coefficients}
+Let us start with the easiest OPE in our setting to get a feel for the calculation, i.e. 
+\begin{align}
+V_n(r) V_m(r+\epsilon) &= \kla*{\frac{2\pi}{L}}^{\Delta^V_n} \powe{\i n\phi^{(+)}(r)} \powe{\i n\phi^{(-)}(r)} \kla*{\frac{2\pi}{L}}^{\Delta^V_m} \powe{\i m\phi^{(+)}(r+\epsilon)} \powe{\i m\phi^{(-)}(r+\epsilon)}\\
+&= \kla*{\frac{2\pi}{L}}^{\frac{K}{4}(n^2+m^2)} \normord{\powe{\i n\phi(r) + \i m\phi(r+\epsilon)}} \powe{\klb*{\i n\phi^{(-)}(r), \i m\phi^{(+)}(r+\epsilon)}} \\
+&= \kla*{\frac{2\pi}{L}}^{\Delta^V_{n+m} - \frac{K}{2}nm} \normord{\powe{\i n\phi(r) + \i m\phi(r+\epsilon)}} \kla*{\frac{2\pi\epsilon}{L}}^{\frac{K}{2}nm}\\
+&= V_{n+m}(r) \epsilon^{\frac{K}{2}nm} = V_{n+m}(r) \frac{1}{\epsilon^{\Delta^V_{n} + \Delta^V_{m} - \Delta^V_{n+m}}}.
+\end{align}
+For $n\neq -m$ this calculation is fine and we therefore find $C^{V,V,V}_{n,m,n+m}=1$.
+In that special case we have to be a bit more careful however because
+\begin{align}
+\normord{\powe{\i n\phi(r) - \i n\phi(r+\epsilon)}} &\simeq \normord{\powe{-\i n\epsilon\cdot\nabla\phi - \i n \frac{1}{2} \kla*{\epsilon\cdot\nabla}^2\phi}} \simeq 1 - \i n \epsilon\cdot \nabla\phi - \i n \frac{1}{2} \kla*{\epsilon\cdot \nabla}^2\phi - \frac{n^2}{2} \kla*{\epsilon\cdot \nabla\phi}^2.
+\end{align}
+Up to some constants and total derivative terms we find the relevant contribution $-\frac{n^2}{2} \kla*{\epsilon_x \partial_x\phi + \epsilon_y\partial_y\phi}^2$ that is once again dependent on the RG scheme.
+%There is no simple way to deal with mixed derivatives in the free action -- other than to redefine the fields which leads to changes everywhere else -- and we therefore want to try and avoid these.
+%This already locks us into the two one-dimensional choices unless we want to make the ``averaging'' argument in which we can set $\epsilon_x^2=\epsilon_y^2$ while $\epsilon_x,\epsilon_y=0$.
+%This ``symmetrized'' approach is probably a fair trade-off between acknowledging the two-dimensional nature of the problem while simultaneously realizing that mathematical accuracy has to be sacrificed for the sake of obtaining a useful result.
+%Either way, without making a choice we can only note the generically $C^{V,V,0}_{n,-n,0} \propto - \frac{n^2}{2} $.\\
+As above we integrate over the parametrization to get $- \frac{1}{4}n^2 \kla*{X_0 + Y_0}$ and thus $C^{V,V,X}_{n,-n,0} = -\frac{1}{4} n^2 = C^{V,V,Y}_{n,-n,0}$.
+It should not come as a surprise that the ambiguity we encountered even for the simple vertex operators is also present for the more complicated $W$-operators.\\
+Let us now consider their OPE, i.e.
+\begin{align}
+W_n(r) W_m(r+\epsilon) &= \frac{2}{K^2nm} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \sum_{s_a,s_a'} \normord{\powe{\i n\phi(r)} \partial_x\phi(r+s_aa)} \normord{\powe{\i m\phi(r+\epsilon)} \partial_x\phi(r+\epsilon+s_a'a)}\\
+&= \frac{-2}{K^2nm} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \sum \partial^2 \normord{\powe{\i n\phi(r_1)} \powe{\i J_1\phi(r_2)}} \normord{\powe{\i m\phi(r_3)} \powe{\i J_2\phi(r_4)}}\\
+&= \frac{-2}{K^2nm} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \sum \bsplit{&\partial^2 \normord{\powe{\i n\phi(r_1)} \powe{\i J_1\phi(r_2)} \powe{\i m\phi(r_3)} \powe{\i J_2\phi(r_4)}} \\
+&\times \powe{\klb*{\i n\phi^{(-)}(r_1) + \i J_1 \phi^{(-)}(r_2),\, \i m\phi^{(+)}(r_3) + \i J_2 \phi^{(+)}(r_4)}}}\\
+&= \frac{-2}{K^2nm} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \sum \bsplit{&\partial^2 \normord{\powe{\i n\phi(r_1)} \powe{\i J_1\phi(r_2)} \powe{\i m\phi(r_3)} \powe{\i J_2\phi(r_4)}} \\
+&\times \powe{\klb*{m\phi^{(+)}(r_3) + J_2 \phi^{(+)}(r_4),\, n\phi^{(-)}(r_1) + J_1 \phi^{(-)}(r_2)}}}\\
+&= \frac{-2}{K^2nm} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \sum \bsplit{&\partial^2 \normord{\powe{\i n\phi(r_1)} \powe{\i J_1\phi(r_2)} \powe{\i m\phi(r_3)} \powe{\i J_2\phi(r_4)}} \\
+&\times \powe{\frac{K}{2} nm \log \klb*{\frac{2\pi}{L} r_{13}} + \frac{K}{2} J_1J_2 \log \klb*{\frac{2\pi}{L} r_{24}} + \frac{K}{2} nJ_2 \log \klb*{\frac{2\pi}{L} r_{14}} + \frac{K}{2} mJ_1 \log \klb*{\frac{2\pi}{L} r_{23}} }}\\
+&= \bsplit{&\frac{-2}{K^2nm} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \kla*{\frac{2\pi\epsilon}{L}}^{\frac{K}{2}nm} \sum \normord{\powe{\i n\phi(r_1) + \i m\phi(r_3)}} \\
+&\times \partial_x^2 \klb*{\frac{K}{2} \log |r_{24}| + \kla*{\i \phi(r_2) + \frac{K}{2} m\log |r_{23}|} \kla*{\i \phi(r_4) + \frac{K}{2} n\log |r_{14}|}} }\\
+&= \bsplit{&\frac{-2}{K^2nm} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \kla*{\frac{2\pi\epsilon}{L}}^{\frac{K}{2}nm} \sum \normord{\powe{\i n\phi(r_1) + \i m\phi(r_3)}} \\
+&\times \klb*{\frac{K}{2} \frac{\epsilon_x^2-\epsilon_y^2}{\epsilon^4} + \kla*{\i \partial_x\phi(r+s_aa) + \frac{K}{2} m \frac{-\epsilon_x}{\epsilon^2}} \kla*{\i \partial_x\phi(r+\epsilon + s_a'a) + \frac{K}{2} n \frac{\epsilon_x}{\epsilon^2}}} }\\
+&= \bsplit{&\frac{-2}{K^2nm} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \kla*{\frac{2\pi\epsilon}{L}}^{\frac{K}{2}nm} \normord{\powe{\i n\phi(r_1) + \i m\phi(r_3)}} \\
+&\times \klb*{2K \frac{\epsilon_x^2-\epsilon_y^2}{\epsilon^4} - P_0(r)P_0(r+\epsilon) - K^2nm \frac{\epsilon_x^2}{\epsilon^4} + \i Kn P_0(r) \frac{\epsilon_x}{\epsilon^2} - \i Km P_0(r+\epsilon) \frac{\epsilon_x}{\epsilon^2} }}
+\end{align}
+%sy.log(sy.sqrt(epsy**2+(x2 - x4)**2) ).diff(x2).diff(x4).subs(x2, x1+s*a).subs(x4, x1+epsx+sp*a).simplify()
+where we defined $P_0(r) = \sum_{s_a=\pm 1} \partial_x\phi(r+s_aa)$.
+For $n\neq -m$ we can approximate the result as
+\begin{align}
+\dots &= \bsplit{&\frac{-2}{K^2nm} \kla*{\frac{2\pi}{L}}^{\Delta^V_{n+m}} \frac{1}{\epsilon^{\Delta^V_{n} + \Delta^V_{m} - \Delta^V_{n+m}}} \normord{\powe{\i (n+m)\phi(r)}} \\
+&\times \klb*{2K \frac{\epsilon_x^2-\epsilon_y^2}{\epsilon^4} - P_0(r)^2 - K^2nm \frac{\epsilon_x^2}{\epsilon^4} + \i K(n-m) P_0(r) \frac{\epsilon_x}{\epsilon^2} }}\\
+&\approx \frac{2}{Knm} \frac{(K nm -2)\epsilon_x^2 + 2 \epsilon_y^2}{\epsilon^2} \frac{1}{\epsilon^{\Delta^W_{n} + \Delta^W_{m} - \Delta^V_{n+m}}} V_{n+m}(r) + \i K (m-n) \frac{C_{n+m}^W}{C_n^WC_m^W} \frac{\epsilon_x}{\epsilon} W_{n+m}(r).
+\end{align}
+Here we dropped the higher order term $V_{n+m}P_0^2$ that corresponds to a combination of a second order derivative and a vertex operator.
+%The remaining structure coefficients $C^{W,W,V}_{n,m,n+m} = K\frac{(K nm -2)\epsilon_x^2 + 2 \epsilon_y^2}{C_n^WC_m^W \epsilon^2}$ and $C^{W,W,W}_{n,m,n+m} = \i K(m-n) \frac{C_{n+m}^W}{C_n^WC_m^W} \frac{\epsilon_x}{\epsilon}$ are again heavily dependent on the RG scheme.
+After once again averaging over the orientations the only remaining structure coefficients are $C^{W,W,V}_{n,m,n+m} = 1$.\\
+For $n=-m$ we have to once again be more careful and write
+\begin{align}
+\dots &\simeq \frac{2}{K^2n^2} \frac{1}{\epsilon^{\frac{K}{2}n^2}} \normord{\powe{- \i n\epsilon\cdot \nabla \phi - \i \frac{1}{2} n\kla*{\epsilon\cdot\nabla }^2\phi}} \klb*{2K \frac{\epsilon_x^2-\epsilon_y^2}{\epsilon^4} - P_0(r)^2 + K^2n^2 \frac{\epsilon_x^2}{\epsilon^4} + \i 2Kn P_0(r) \frac{\epsilon_x}{\epsilon^2} }\\
+&\simeq \frac{-2}{K^2n^2} \frac{1}{\epsilon^{2\Delta^W_n - 2}} \klb*{1 - \i n\epsilon\cdot \nabla \phi - \i \frac{1}{2} n\kla*{\epsilon\cdot\nabla }^2\phi - \frac{n^2}{2} \kla*{\epsilon\cdot \nabla\phi}^2} \klb*{P_0^2 - K \frac{(2 + Kn^2)\epsilon_x^2-2\epsilon_y^2}{\epsilon^4} - 2\i Kn P_0 \frac{\epsilon_x}{\epsilon^2}}\\
+&= \frac{-2}{K^2n^2} \frac{1}{\epsilon^{2\Delta^W_n - 2}} \klb*{P_0^2 + \frac{Kn^2}{2} \frac{(2+Kn^2)\epsilon_x^2 - 2\epsilon_y^2}{\epsilon^4} \kla*{\epsilon\cdot\nabla\phi}^2 - 2Kn^2 \frac{\epsilon_x}{\epsilon^2} P_0 \epsilon\cdot \nabla\phi}
+\end{align}
+where we dropped constants, total derivatives and higher order terms.
+Dropping the lattice spacing in $P_0$ to simplify it to $2X_0$ yields
+\begin{align}
+\dots &\simeq \frac{-2}{K^2n^2} \frac{1}{\epsilon^{2\Delta^W_n - 2}} \klb*{4 X_0^2 + \frac{Kn^2}{2} \frac{(2+Kn^2)\epsilon_x^2 - 2\epsilon_y^2}{\epsilon^4} \kla*{\epsilon_x X_0 + \epsilon_y Y_0}^2 - 2Kn^2 \frac{\epsilon_x}{\epsilon^2} 2X_0 \kla*{\epsilon_x X_0 + \epsilon_y Y_0}}.
+\end{align}
+%and dropping the mixed terms (\QnA{which, as a reminder, drop out in all three ``reasonable'' [i.e. useful] RG schemes]}) gives
+%\begin{align}
+%\dots &= \frac{1}{(C_n^W)^2} \frac{1}{\epsilon^{2\Delta^W_n - 2}} \klb*{4 X_0^2 + \frac{Kn^2}{2} \frac{(2+Kn^2)\epsilon_x^2 - 2\epsilon_y^2}{\epsilon^4} \kla*{\epsilon_x^2 X_0^2 + \epsilon_y^2 Y_0^2} - 4Kn^2 \frac{\epsilon_x^2}{\epsilon^2} X_0^2}
+%\end{align}
+%where we may now read off $C^{W,W,X}_{n,-n,0} = \frac{1}{(C_n^W)^2}  4\kla*{1 - Kn^2 \frac{\epsilon_x^2}{\epsilon^2}} + \frac{Kn^2\epsilon_x^2}{2\epsilon^2}$ and $C^{W,W,Y}_{n,-n,0} = \frac{Kn^2\epsilon_y^2}{2\epsilon^2}$.
+Using $\bra*{\epsilon_x^4}_\vartheta = \frac{3\epsilon^2}{8} = \bra*{\epsilon_y^4}_\vartheta$, $\bra*{\epsilon_x^2\epsilon_y^2}_\vartheta = \frac{\epsilon^2}{8}$ and that any odd terms average out to zero yields
+\begin{align}
+\dots &= \frac{-2}{K^2n^2} \frac{1}{\epsilon^{2\Delta^W_n - 2}} \klb*{4 X_0^2 + \frac{Kn^2}{2} \frac{\bra*{\kla*{(2+Kn^2)\epsilon_x^2 - 2\epsilon_y^2} \kla*{\epsilon_x^2 X_0^2 + \epsilon_y^2 Y_0^2}}_\vartheta}{\epsilon^4}  - 2Kn^2 X_0^2}\\
+&= \frac{-2}{K^2n^2} \frac{1}{\epsilon^{2\Delta^W_n - 2}} \klb*{2(2-Kn^2) X_0^2 + \frac{Kn^2}{2} \kla*{\frac{3}{8} (2+Kn^2)X_0^2 - 2Y_0^2 \frac{3}{8} - 2 \frac{1}{8} X_0^2 + \frac{1}{8} (2+Kn^2) Y_0^2}}\\
+&= \frac{-2}{K^2n^2} \frac{1}{\epsilon^{2\Delta^W_n - 2}} \klb*{X_0^2 \kla*{4-2Kn^2 + \frac{3Kn^2}{16} (2+Kn^2) - \frac{Kn^2}{8}} + Y_0^2 \kla*{-\frac{3Kn^2}{8} + \frac{Kn^2}{16}(2+Kn^2)}}\\
+&= \frac{-2}{K^2n^2} \frac{1}{\epsilon^{2\Delta^W_n - 2}} \klb*{X_0^2 \kla*{4 - \frac{7}{4}Kn^2 + \frac{3}{16} K^2n^4} + Y_0^2 \kla*{-\frac{1}{4}Kn^2 + \frac{1}{16}K^2n^4}}\\
+&= \frac{1}{\epsilon^{2\Delta^W_n - 2}} \klb*{X_0^2 \kla*{\frac{-8}{K^2n^2} + \frac{7}{2K} - \frac{3}{8} n^2} + Y_0^2 \kla*{\frac{1}{2K} - \frac{1}{8}n^2}}.
+\end{align}
+Here may then read off the coefficients $C^{W,W,X}_{n,-n,0} = \frac{-8}{K^2n^2} + \frac{7}{2K} - \frac{3}{8} n^2$ and $C^{W,W,Y}_{n,-n,0} = \frac{1}{2K} - \frac{1}{8}n^2$.
+This result may look somewhat arbitrary at first, but note that we may factorize them as
+\begin{align}
+C^{W,W,X}_{n,-n,0} &= - \frac{Kn^2-4}{8K} \frac{3Kn^2 - 16}{Kn^2} \qquad\text{and} \qquad C^{W,W,Y}_{n,-n,0} = - \frac{Kn^2-4}{8K}.
+\end{align}
+Evidently the coefficients vanish for $K=1$ and $n=2$ which will turn out to correspond to the fact that without the $H_3$-perturbation the RG flow does not generate a non-trivial $K$.\\
+Lastly we need to compute the OPE
+\begin{align}
+W_n(r) V_m(r+\epsilon) &= \frac{\sqrt{2}}{Kn} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \sum_{s_a} \normord{\powe{\i n\phi(r)} \partial_x\phi(r+s_aa)} \normord{\powe{\i m\phi(r+\epsilon)}}\\
+&= \frac{-\i \sqrt{2}}{Kn} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \sum \partial \normord{\powe{\i n\phi(r_1)} \powe{\i J\phi(r_2)}} \normord{\powe{\i m\phi(r_3)}}\\
+&= \frac{-\i \sqrt{2}}{Kn} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \sum \partial \normord{\powe{\i n\phi(r_1)} \powe{\i J\phi(r_2)} \powe{\i m\phi(r_3)}} \powe{\klb*{\i n\phi^{(-)}(r_1) + \i J \phi^{(-)}(r_2), \i m\phi^{(+)}(r_3)}}\\
+&= \frac{-\i \sqrt{2}}{Kn} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \sum \partial \normord{\powe{\i n\phi(r_1)} \powe{\i J\phi(r_2)} \powe{\i m\phi(r_3)}} \powe{ \frac{K}{2}nm \log\klb*{\frac{2\pi}{L}r_{13}} + \frac{K}{2}mJ \log \klb*{\frac{2\pi}{L} r_{23}} }\\
+&= \frac{-\i \sqrt{2}}{Kn} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \kla*{\frac{2\pi\epsilon}{L}}^{\frac{K}{2}nm} \sum \partial_{x_2} \normord{\powe{\i n\phi(r_1)+\i m\phi(r_3)}} \klb*{\frac{Km}{2} \log \klb*{\frac{2\pi}{L} r_{23}} + \i \phi(r_2)} \\
+&= \frac{-\i \sqrt{2}}{Kn} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \kla*{\frac{2\pi\epsilon}{L}}^{\frac{K}{2}nm} \sum \normord{\powe{\i n\phi(r_1)+\i m\phi(r_3)}} \klb*{ \frac{Km}{2} \frac{s_aa - \epsilon_x}{(s_aa - \epsilon_x)^2 + \epsilon_y^2} + \i \partial_x\phi(r + s_aa)}\\
+&\simeq \frac{-\i \sqrt{2}}{Kn} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \kla*{\frac{2\pi\epsilon}{L}}^{\frac{K}{2}nm} \normord{\powe{\i n\phi(r_1)+\i m\phi(r_3)}} \klb*{ \frac{Km}{2} \frac{-2\epsilon_x}{\epsilon^2} + \i \partial_x \phi(r + s_aa)}
+\end{align}
+which upon averaging yields $\frac{\sqrt{2}}{Kn} \kla*{\frac{2\pi}{L}}^{\Delta_{n+m}^V} \epsilon^{-\frac{K}{2}nm} \normord{\powe{\i (n+m)\phi}} P_0 = \frac{n+m}{n} \epsilon^{\Delta^V_n + \Delta^W_m - \Delta^W_{n+m}}  W_{n+m}$ and thus the structure coefficient $C^{W,V,W}_{n,m,n+m} = \frac{n+m}{n}$.
+The other permutation is
+\begin{align}
+V_n(r) W_m(r+\epsilon) &= \frac{\sqrt{2}}{Km} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \sum_{s_a} \normord{\powe{\i m\phi(r)} } \normord{\powe{\i m\phi(r+\epsilon)}\partial_x\phi(r+s_aa+\epsilon)}\\
+&= \frac{-\i \sqrt{2}}{Km} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \sum \partial \normord{\powe{\i n\phi(r_1)}} \normord{ \powe{\i J\phi(r_2)} \powe{\i m\phi(r_3)}}\\
+&= \frac{-\i \sqrt{2}}{Km} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \sum \partial \normord{\powe{\i n\phi(r_1)} \powe{\i J\phi(r_2)} \powe{\i m\phi(r_3)}} \powe{\klb*{\i n\phi^{(-)}(r_1), \i J \phi^{(+)}(r_2) + \i m\phi^{(+)}(r_3)}}\\
+&= \frac{-\i \sqrt{2}}{Km} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \sum \partial \normord{\powe{\i n\phi(r_1)} \powe{\i J\phi(r_2)} \powe{\i m\phi(r_3)}} \powe{ \frac{K}{2}nm \log\klb*{\frac{2\pi}{L}r_{13}} + \frac{K}{2}nJ \log \klb*{\frac{2\pi}{L} r_{12}} }\\
+&= \frac{-\i \sqrt{2}}{Km} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \kla*{\frac{2\pi\epsilon}{L}}^{\frac{K}{2}nm} \sum \partial_{x_2} \normord{\powe{\i n\phi(r_1)+\i m\phi(r_3)}}  \klb*{\frac{Kn}{2} \log \klb*{\frac{2\pi}{L} r_{12}} + \i\phi(r_2)}\\
+&= \frac{-\i \sqrt{2}}{Km} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \kla*{\frac{2\pi\epsilon}{L}}^{\frac{K}{2}nm} \sum \normord{\powe{\i n\phi(r_1)+\i m\phi(r_3)}} \klb*{ \frac{Kn}{2} \frac{s_aa + \epsilon_x}{(s_aa + \epsilon_x)^2 + \epsilon_y^2} + \i \partial_x\phi(r+s_aa+\epsilon)}\\
+&\simeq \frac{-\i \sqrt{2}}{Km} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \kla*{\frac{2\pi\epsilon}{L}}^{\frac{K}{2}nm} \normord{\powe{\i n\phi(r_1)+\i m\phi(r_3)}} \klb*{ \frac{Kn}{2} \frac{2\epsilon_x}{\epsilon^2} + \i\partial_x\phi(r+s_aa+\epsilon)}
+\end{align}
+which yields $\frac{\sqrt{2}}{Km} \kla*{\frac{2\pi}{L}}^{\Delta_{n+m}^V} \epsilon^{-\frac{K}{2}nm} \normord{\powe{\i (n+m)\phi}} P_0 = \frac{n+m}{m} \epsilon^{\Delta^V_n + \Delta^W_m - \Delta^W_{n+m}}  W_{n+m}$ and thus the structure coefficient $C^{V,W,W}_{n,m,n+m} = \frac{n+m}{m}$.
+The case of $n=-m$ is also interesting but we will not consider it as there are no corresponding terms in our RG.\\
+Within the ``averaging assumption'' and the other approximations we made this now leaves us with the structure coefficients
+\begin{align}
+C^{V,V,V}_{n,m,n+m} &= 1,\\
+C^{V,V,X}_{n,-n,0} &= - \frac{1}{4}n^2,\\
+C^{V,V,Y}_{n,-n,0} &= - \frac{1}{4}n^2,\\
+C^{W,W,V}_{n,m,n+m} &= 1,\\
+C^{W,W,X}_{n,-n,0} &= - \frac{Kn^2-4}{8K} \frac{3Kn^2 - 16}{Kn^2},\\
+C^{W,W,Y}_{n,-n,0} &= - \frac{Kn^2-4}{8K},\\
+C^{W,V,W}_{n,m,n+m} &= \frac{n+m}{n},\\
+C^{V,W,W}_{n,m,n+m} &= \frac{n+m}{m}.
+\end{align}
+In our case the relevant ones are $C^{V,V,X}_{4,-4,0} = -4$, $C^{V,V,Y}_{4,-4,0} = -4$, $C^{W,W,X}_{2,-2,0} = \frac{4 - 4K}{8K} \frac{12K - 16}{4K} = \frac{1 - K}{2K} \frac{3K - 4}{K}$, $C^{W,W,Y}_{2,-2,0} = \frac{1 - K}{2K}$, $C^{W,W,V}_{2,2,4} = 1$, $C^{W,V,W}_{2,-4,-2} = -1$, $C^{W,V,W}_{-2,4,2} = -1$, $C^{V,W,W}_{4,-2,2} = -1$ and $C^{V,W,W}_{-4,2,-2} = -1$.\\
+Let us now think about the flow equation for the $K$ and $v$ parameters.
+The free action can be written as
+\begin{align}
+S_0 &= \frac{1}{2\pi K} \int \klb*{ v \kla*{\partial_x\phi}^2 + \frac{1}{v} \kla*{\partial_\tau\phi}^2}\,\d x\d \tau.
+\end{align}
+This then yields
+\begin{align}
+\frac{\d}{\d l} \frac{v}{2\pi K} &= \pi 2vC^{V,V,X}_{4,-4,0} g_{3,+1} g_{3,-1} + \pi 2vC^{W,W,X}_{2,-2,0} g_{1,+1} g_{1,-1} = -8\pi v g_3^2 + 2\pi v \frac{1-K}{2K} \frac{3K-4}{K} g_1^2,\\
+\frac{\d}{\d l} \frac{1}{2\pi Kv} &= \pi 2 \frac{1}{v}C^{V,V,Y}_{4,-4,0} g_{3,+1} g_{3,-1} + \pi 2\frac{1}{v} C^{W,W,Y}_{2,-2,0} g_{1,+1} g_{1,-1} = -8\pi \frac{1}{v} g_3^2 + 2\pi \frac{1}{v} \frac{1-K}{2K} g_1^2,\\
+\frac{\d}{\d l} g_{1,+1} &= (1-K) g_{1,+1} -\pi 2g_{3,+1} g_{1,-1},\\
+\frac{\d}{\d l} g_{1,-1} &= (1-K) g_{1,-1} -\pi 2g_{3,-1} g_{1,+1},\\
+\frac{\d}{\d l} g_{3,+1} &= (2-4K) g_{3,+1} + \pi g_{1,+1}^2,\\
+\frac{\d}{\d l} g_{3,-1} &= (2-4K) g_{3,-1} + \pi g_{1,-1}^2.
+\end{align}
+Defining $K_1 = \frac{v}{K}$ and $K_2 = \frac{1}{Kv}$ satisfying $K = \frac{1}{\sqrt{K_1K_2}}$ and $v = \sqrt{\frac{K_1}{K_2}}$ we can rewrite this as
+\begin{align}
+\frac{\d}{\d l} K_1 &= -16\pi^2 \sqrt{\frac{K_1}{K_2}} g_3^2 + 2\pi^2 \sqrt{\frac{K_1}{K_2}} \kla*{\sqrt{K_1K_2} - 1} \kla*{3\sqrt{K_1K_2} - 4} g_1^2,\\
+\frac{\d}{\d l} K_2 &= -16\pi^2 \sqrt{\frac{K_2}{K_1}} g_3^2 + 2\pi^2 \sqrt{\frac{K_2}{K_1}} \kla*{\sqrt{K_1K_2} - 1} g_1^2,\\
+\frac{\d}{\d l} g_1 &= \kla*{1 - \frac{1}{\sqrt{K_1K_2}}} g_1 - 2\pi g_1 g_3,\\
+\frac{\d}{\d l} g_3 &= \kla*{2 - \frac{4}{\sqrt{K_1K_2}}} g_3 + \pi g_1^2.
+\end{align}
+%#RG flow
+%u_a = 1.5; u_b = -1.1; u_plus = (u_a + u_b)/2; u_minus = (u_a - u_b)/2
+%vf = 0.5
+%alpha0 = 1/vf    # > a=1
+%u_plus+=1
+%K0 = 1/np.sqrt(1 + 2*u_plus/np.pi/vf * alpha0 / (alpha0 + 1))    # include alpha(l)?
+%v0 = vf/K0
+%w = np.pi; beta=10
+%l_max = np.log(w * beta*v0/np.pi/alpha0)
+%if l_max <= 0:
+%    raise ValueError
+%l_vals = np.linspace(0, l_max, 300)
+%c10 = -u_minus / (4*np.pi**2*v0); c30 = -u_plus / (4*np.pi**2*v0)
+%K10 = v0/K0; K20 = 1/(v0*K0)
+%couplings, l_vals = get_rg_flow(rg_beta_h1h3_var, [c10, c30, K10, K20], l_vals)
+%c1, c3, K1, K2 = couplings.T
+%K = 1 / np.sqrt(K1 * K2); v = np.sqrt(K1 / K2)
+%plot_rg_flow(np.abs(np.array([c1, c3, K, v]).T), l_vals, ["$g_1$", "$g_3$", "$K$", "$v$"])
+%print(f"K={K[-1]:.3f},v={v[-1]:.3f},g1={c1[-1]:.4f},g3={c3[-1]:.4f}")
+
+\end{document}

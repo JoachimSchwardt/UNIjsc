@@ -1,0 +1,248 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb, slashed}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{dsfont}
+
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\def\I{\text{i}}
+\def\e{\text{e}}
+
+\newcommand*{\titel}{12 Scattering on central potentials}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+\subject{Quantum theory 2}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+%def convert_latex(string, dictionary=None):
+%    if type(dictionary) == type(None):
+%        dictionary = {0: {"old" : "align*", "new" : "align"}}
+%    for i in range(len(dictionary)):
+%        old_string = dictionary[i]["old"]
+%        new_string = dictionary[i]["new"]
+%        string = string.replace(old_string, new_string)
+%    return string
+\section{Questions}
+Assume that $\e^{\I\delta_l}\sin\delta_l\in\mathbb{R}$. 
+Then we would find $\sin^2\delta_l=0$ for all $l$, which would yield $\delta_l\equiv 0$.
+\\
+Also recall the optical theorem.
+Since $\sigma\propto \tecxt\text{Im\,}f(0)$, the scattering amplitude must have a non-zero imaginary part.
+\\
+The ground state wave function of an electron in the hydrogen atom is
+\begin{align}
+\psi_{100}&=\frac{1}{\sqrt{\pi}a_0^{3/2}}\e^{-r/a_0}.
+\end{align}
+The \textsc{Born} approximation is valid for small scattering potentials and small incident energies.
+\\
+Also recall the criterion from exercise 11.5.
+\section{Scattering on central potential}
+Elastic scattering on the central potential
+\begin{align}
+V(r)&=\frac{c}{r^2}
+\end{align}
+with $c> 0$.
+Inserting into the equations for $u_l$ gives
+\begin{align}
+\frac{u_l''(r)}{u_l(r)}+k^2&=2mV(r)+\frac{l(l+1)}{r^2}=\frac{l(l+1)+2mc}{r^2}\equiv\frac{\lambda (\lambda +1)}{r^2}.
+\end{align}
+Solving for $\lambda$ first yields the exact expression
+\begin{align}
+0&=\lambda^2+\lambda-l^2-l-2mc&\Rightarrow &&\lambda&=-\frac{1}{2}\pm\sqrt{\frac{1}{4}+l^2+l+2mc}.
+\end{align}
+We assume $2mc\ll l(l+1)$.
+The given asymptotic forms should become equal, so we consider 
+\begin{align}
+\sin\kla\left( {kr-\frac{\pi l}{2}+\delta_l} \right)\e^{\I\delta_l}&\simeq\sin\kla\left( {kr-\frac{\pi\lambda}{2}} \right).
+\end{align}
+FIXME: why does that $\e^{\I\delta_l}$ even show up here?!?!?
+\\
+Since the right hand side of this (near) equality is real, we find that the imaginary part of the complex phase $\e^{\I\delta_l}$ should be small, i.e.
+\begin{align}
+\sin\delta_l&\overset{!}{\simeq}0.
+\end{align}
+This means, that we can assume $\delta_l\simeq 0$, which allows us to find the approximate solution
+\begin{align}
+\delta_l&\approx\frac{\pi}{2}\kla\left( {l-\lambda} \right)=\frac{\pi}{2}\klam\left[ {\kla\left( {l+\frac{1}{2}} \right)\mp\sqrt{\kla\left( {l+\frac{1}{2}} \right)^2+2mc}} \right].
+\end{align}
+This expression is only small for the negative branch, thus we ignore the positive one.
+Making use of the assumption $2mc\ll l(l+1)$ then allows the simplification
+\begin{align}
+\delta_l&\approx\frac{\pi}{2}\kla\left( {l+\frac{1}{2}} \right)\klam\left[ {1-\sqrt{1+\frac{2mc}{\kla\left( {l+\frac{1}{2}} \right)^2}}} \right]\approx-\frac{\pi}{2}\frac{mc}{l+\frac{1}{2}}=-\frac{\pi mc}{2l+1}.
+\end{align}
+This allows us to find an approximate solution for the scattering amplitude $f$ as
+\begin{align}
+f(\theta)&=\sum_{l\ge 0}\frac{2l+1}{k}\e^{\I\delta_l}\sin\delta_lP_l(\cos\theta)\approx\sum_{l\ge 0}\frac{2l+1}{k}\delta_lP_l(\cos\theta)\approx\\
+&\approx\sum_{l\ge 0}\frac{\pi mc}{k}P_l(\cos\theta)=\frac{\pi mc}{2k\sin\theta/2}.
+\end{align}
+\newpage
+\section{Electron scattering on hydrogen}
+Consider the scattering of an electron on a hydrogen atom in the ground state within \textsc{Born} approximation.
+\\
+\subsection{First approach - explicit potential}
+We first compute the electrostatic potential of the hydrogen atom, first for a general (radial) charge distribution $\rho=\rho(r)$.
+Due to the radial symmetry, we can also assume the resulting potential to be radially symmetric. 
+This allows to set $\theta=0$ in the second step of the following derivation for the potential from the electron-electron interaction (the electron-proton term will be computed later!)
+\begin{align}
+V_e&=e\phi=\alpha\intr\int_{\mathbb{R}^{3}}{\frac{\rho (r')}{|x-x'|}}\,\mathrm{d}^{3}x'=\\
+&=2\pi\alpha\intx\int_{0}^{\infty}r'^2\rho(r')\int_0^\pi\frac{\sin\theta'}{\sqrt{r^2+r'^2-2rr'\cos(\theta-\theta')}}\,\mathrm{d}\theta'\mathrm{d}r'=\\
+&=2\pi\alpha\intx\int_{0}^{\infty}r'^2\rho(r')\frac{2}{2rr'}\sqrt{r^2+r'^2-2rr'\cos\theta'}\bigg\vert_0^\pi\,\mathrm{d}r'=\\
+&=2\pi\alpha\intx\int_0^\infty r'\rho(r')\frac{1}{r}\klam\left[ {r+r'-|r-r'|} \right]\,\mathrm{d}r'=\\
+&=4\pi\alpha\klam\left[ {\intx\int_{r}^{\infty}r'\rho(r')\,\mathrm{d}r'+\frac{1}{r}\intx\int_{0}^{r}r'^2\rho(r')\,\mathrm{d}r'} \right].
+\end{align}
+For the ground state we have the distribution $\rho=|\psi_{100}|^2=\frac{1}{\pi a_0^3}\e^{-2r/a_0}$, which gives
+\begin{align}
+V_e &=\frac{4\alpha}{a_0^3}\klam\left[ \intx\int_{r}^{\infty}x\e^{-2x/a_0}\,\mathrm{d}x+\frac{1}{r}\intx\int_{0}^{r}x^2\e^{-2x/a_0}\,\mathrm{d}x \right]=\\
+&=\frac{4\alpha}{a_0^3}\klam\left[ r\frac{a_0}{2}\e^{-2r/a_0}+\frac{a_0^2}{4}\e^{-2r/a_0}+\frac{1}{r}\kla\left( -x^2\frac{a_0}{2}\e^{-2x/a_0}-2x\frac{a_0^2}{4}\e^{-2x/a_0}-2\frac{a_0^3}{8}\e^{-2x/a_0} \right)\bigg\vert_0^r \right]=\\
+&=\alpha\klam\left[ {\e^{-2r/a_0}\kla\left( \frac{2r}{a_0^2}+\frac{1}{a_0}-\frac{2r}{a_0^2}-\frac{2}{a_0}-\frac{1}{r} \right)+\frac{1}{r}} \right]=\\
+&=\frac{\alpha}{r}-\alpha\kla\left( {\frac{1}{r}+\frac{1}{a_0}} \right)\e^{-2r/a_0}.
+\end{align}
+Since we also have to respect the potential of the proton, we find $V_\tecxt\text{total}= V_e-\frac{\alpha}{r}$, which finally yields the scattering potential
+\begin{align}
+V&=-\alpha\kla\left( {\frac{1}{r}+\frac{1}{a_0}} \right)\e^{-2r/a_0}.
+\end{align}
+In first \textsc{Born} approximation we have
+\begin{align}
+f^{(1)}(\theta)&=-\frac{m}{2\pi}\mathcal{F}[V](q).
+\end{align}
+FIXME: INCOMPLETE! The following only considers the term $\sim\frac{1}{r}$, not the one $\sim\frac{1}{a_0}$.
+SKIP to the next subsection for a different approach...
+\\
+Since the potential is proportional to the \textsc{Yukawa} potential, we can evaluate the \textsc{Fourier} transformation to
+\begin{align}
+\tilde{V}&=4\pi\alpha\tilde{Y}=-\frac{4\pi\alpha}{q^2+M^2},
+\end{align}
+where $M=\frac{2}{a_0}$.
+Note that 
+\begin{align}
+q^2&=(k-k')^2=k^2+k'^2-2kk'\cos\theta\kom\overset{\substack{{|k|=|k'|} \\ |}}{=}2k^2(1-\cos\theta)=4k^2\sin^2\frac{\theta}{2}.
+\end{align}
+Inserting yields the scattering amplitude
+\begin{align}
+f^{(1)}(\theta)&=\frac{2m\alpha}{q^2+(2/a_0)^2}=\frac{2m\alpha}{4k^2\sin^2\frac{\theta}{2}+(2/a_0)^2}=\frac{m\alpha a_0^2}{2}\frac{1}{1+k^2a_0^2\sin^2\frac{\theta}{2}}.
+\end{align}
+With $x:=ka_0$ and $c:=\frac{m\alpha a_0^2}{2}$ the differential cross section becomes
+\begin{align}
+\frac{\tecxt\text{d}\sigma^{(1)}}{\tecxt\text{d}\Omega}&=\left\vert f^{(1)}\right\vert^2=\kla\left( {\frac{c}{1+x^2\sin^2\frac{\theta}{2}}} \right)^2.
+\end{align}
+The total cross section is then given by
+\begin{align}
+\sigma^{(1)}&=\intx\int_{0}^{\pi}\frac{\tecxt\text{d}\sigma^{(1)}}{\tecxt\text{d}\Omega}\,2\pi\sin\theta\mathrm{d}\theta=\\
+&=2\pi c^2\intx\int_{0}^{\pi}\frac{2\sin\frac{\theta}{2}\cos\frac{\theta}{2}}{\kla\left( {1+x^2\sin^2\frac{\theta}{2}} \right)^2}\,\mathrm{d}\theta=\\
+&=2\pi c^2\frac{1}{1+x^2\sin^2\frac{\theta}{2}}\frac{-2}{x^2}\bigg\vert_0^\pi=\\
+&=\frac{4\pi c^2}{x^2}\kla\left( {\frac{1}{1+x^2}-1} \right)=\overset{(???)}{-}\frac{4\pi c^2}{1+x^2}\equiv \frac{\pi \alpha^2m^2a_0^4}{1+k^2a_0^2}.
+\end{align}
+\subsection{Second approach - \textsc{Fourier} transformation}
+A more elegant approach is to directly compute the scattering amplitude by making use of the \textsc{Fourier} transformation of the \textsc{Coulomb} potential.
+Note that
+\begin{align}
+\nabla^2\frac{-1}{4\pi r}&=\delta (x)&\Rightarrow && (\I q)^2\mathcal{F}\klam\left[ {\frac{-1}{4\pi r}} \right](q)&=1.
+\end{align}
+This can be rewritten to give
+\begin{align}
+\mathcal{F}\klam\left[ {\frac{1}{r}} \right]&=\frac{4\pi}{q^2},
+\end{align}
+and therefor
+\begin{align}
+\frac{1}{r}&=4\pi\intr\int_{\mathbb{R}^{3}}\frac{1}{q^2}\e^{\I q\cdot x}\,\frac{\mathrm{d}^{3}q}{(2\pi)^3}.
+\end{align}
+We want to compute the scattering amplitude in first \textsc{Born} approximation.
+Assume a general charge distribution $\rho=\rho(x)$, which yields the electrostatic potential with respect to an electron
+\begin{align}
+V&=-e\phi=-\beta\intr\int_{\mathbb{R}^{3}}{\frac{\rho(x')}{|x-x'|}}\,\mathrm{d}^{3}x'.
+\end{align}
+Here we defined $\beta:=\frac{e}{4\pi\epsilon_0}\equiv\frac{\alpha}{e}$.
+Inserting this into the expression for the scattering amplitude gives
+\begin{align}
+f^{(1)}&=-\frac{m}{2\pi}\intr\int_{\mathbb{R}^{3}}\e^{-\I q\cdot x}\intr\int_{\mathbb{R}^{3}}\frac{-\beta\rho (x')}{|x-x'|}\,\mathrm{d}^{3}x'\,\mathrm{d}^{3}x=\\
+&=\frac{m\beta}{2\pi}\intr\int_{\mathbb{R}^{3}}\e^{-\I q\cdot x}\intr\int_{\mathbb{R}^{3}}\rho (x')4\pi\intr\int_{\mathbb{R}^{3}}\frac{1}{q'^2}\e^{\I q'\cdot (x-x')}\,\frac{\mathrm{d}^{3}q'}{(2\pi)^3}\,\mathrm{d}^{3}x'\,\mathrm{d}^{3}x=\\
+&=2m\beta\intr\int_{\mathbb{R}^{3}}\rho(x')\e^{-\I q\cdot x'}\intr\int_{\mathbb{R}^{3}}\frac{1}{q'^2}\underbrace{\intr\int_{\mathbb{R}^{3}}\e^{\I (q'-q)\cdot x}\,\frac{\mathrm{d}^{3}x}{(2\pi)^3}}_{=\delta (q'-q)}\,\mathrm{d}^{3}q'\,\mathrm{d}^{3}x'=\\
+&=\frac{2m\beta}{q^2}\intr\int_{\mathbb{R}^{3}}{\rho(x')\e^{-\I q\cdot x'}}\,\mathrm{d}^{3}x'\equiv\frac{2m\alpha}{eq^2}\mathcal{F}[\rho](q).
+\end{align}
+Thus the scattering amplitude is simply proportional to the \textsc{Fourier} transformation of the charge distribution.
+For the hydrogen atom this is given by
+\begin{align}
+\rho&=\rho(r)=e\delta (r)-e|\psi_{100}(r)|^2=e\delta (r)-\frac{e}{\pi a_0^3}\e^{-2r/a_0}.
+\end{align}
+Its \textsc{Fourier} transformation can be readily computed by defining $b:=-\frac{2}{a_0}$, leading to
+\begin{align}
+\frac{1}{e}\mathcal{F}[\rho](q)&=1-\frac{2\pi}{\pi a_0^3}\intx\int_{0}^{\infty}\intx\int_{0}^{\pi}\e^{br}\e^{-\I qr\cos\theta}\,r^2\sin\theta\mathrm{d}\theta\mathrm{d}r=\\
+&=1-\frac{2}{a_0^3}\intx\int_{0}^{\infty}r^2\e^{br}\frac{1}{\I qr}\e^{\I qrt}\bigg\vert_{-1}^1\,\mathrm{d}r=\\
+&=1-\frac{2}{\I qa_0^3}\partial_b\intx\int_{0}^{\infty}\e^{br+\I qr}-\e^{br-\I qr}\,\mathrm{d}r=\\
+&=1-\frac{2}{\I qa_0^3}\partial_b\klam\left[ {\frac{-1}{b+\I q}-\frac{-1}{b-\I q}} \right]=\\
+&=1-\frac{2}{\I qa_0^3}\klam\left[ {\frac{1}{(b+\I q)^2}-\frac{1}{(b-\I q)^2}} \right]=\\
+&=1-\frac{2}{\I qa_0^3}\frac{(b-\I q)^2-(b+\I q)^2}{(b^2+q^2)^2}=\\
+&=1+\frac{2}{\I qa_0^3}\frac{4\I qb}{(b^2+q^2)^2}=1+\frac{8b/a_0^3}{(b^2+q^2)^2}.
+\end{align}
+Inserting everything back into the original expression finally leads to the scattering amplitude
+\begin{align}
+f^{(1)}&=\frac{2m\alpha}{q^2}\klam\left[ {1-\frac{16}{(4+q^2a_0^2)^2}} \right]=\frac{2m\alpha}{q^2}\frac{q^4a_0^4+8q^2a_0^2}{(4+q^2a_0^2)^2}.
+\end{align}
+With $x:=a_0q$ and $a_0=\frac{1}{m\alpha}$ the differential cross section then becomes
+\begin{align}
+\frac{\tecxt\text{d}\sigma^{(1)}}{\tecxt\text{d}\Omega}&=\left\vert f^{(1)}\right\vert^2=\frac{4m^2\alpha^2}{q^4}\frac{q^4a_0^4(8+q^2a_0^2)^2}{(4+q^2a_0^2)^4}\\
+&=4a_0^2\frac{(8+x^2)^2}{(4+x^2)^4}.
+\end{align}
+Note that $q^2=4k^2\sin^2\frac{\theta}{2}$, which means that 
+\begin{align}
+x^2&=4a_0^2k^2\sin^2\frac{\theta}{2}=2a_0^2k^2(1-\cos\theta).
+\end{align}
+This is necessary to compute the total cross section, given by the integral over $t:=-\cos\theta$
+\begin{align}
+\sigma^{(1)}&=\intx\int_{-1}^{1}\frac{\tecxt\text{d}\sigma^{(1)}}{\tecxt\text{d}\Omega}(t)\,2\pi\mathrm{d}t=\\
+&=8\pi a_0^2\intx\int_{-1}^{1}\frac{\klam\left[ {8+4a_0^2k^2(1-t)} \right]^2}{\klam\left[ {4+4a_0^2k^2(1-t)} \right]^4}\,\mathrm{d}t=\\
+&=\pi a_0^2\intx\int_{0}^{1}\frac{\klam\left[ {2+a_0^2k^2(1-t)} \right]^2}{\klam\left[ {1+a_0^2k^2(1-t)} \right]^4}\,\mathrm{d}t.\label{eqn:tIntegralForSigma1}
+\end{align}
+Here it becomes helpful to define $c:=a_0^2k^2$, $v:=1+c$ and $w:=2+c$, which allows us to rewrite the integral from equation (\ref{eqn:tIntegralForSigma1}) as
+\begin{align}
+I&:=\intx\int_{0}^{1}\frac{\klam\left[ {w-ct} \right]^2}{\klam\left[ {v-ct} \right]^4}\,\mathrm{d}t\kom\overset{\substack{{u\,:= v-ct} \\ |}}{=}\\
+&=\intx\int_{v}^{v-c}\frac{\klam\left[ {w-v+u} \right]^2}{u^4}\,\frac{\mathrm{d}u}{-c}=\\
+&=-\frac{1}{c}\intx\int_{1+c}^{1}\frac{1+2u+u^2}{u^4}\,\mathrm{d}u=\\
+&=\frac{1}{c}\klam\left[ {\frac{1}{3u^3}+\frac{1}{u^2}+\frac{1}{u}} \right]_{1+c}^{1}=\\
+&=\frac{1}{c}\klam\left[ {\frac{7}{3}-\frac{1+3(1+c)+3(1+c)^2}{3(1+c)^3}} \right]=\\
+&=\frac{1}{3c}\frac{7(1+c)^3-1-3(1+c)-3(1+c)^2}{(1+c)^3}=\\
+&=\frac{1}{3c}\frac{12c+18c^2+7c^3}{(1+c)^3}=\frac{4+6c+\frac{7}{3}c^2}{(1+c)^3}.
+\end{align}
+Thus the final result is
+\begin{align}
+\sigma^{(1)}&=\pi a_0^2\frac{4+6a_0^2k^2+\frac{7}{3}a_0^4k^4}{(1+a_0^2k^2)^3}.
+\end{align}
+The result is proportional to the classical cross section $A=\pi a_0^2$ of a hydrogen atom.
+\end{document}

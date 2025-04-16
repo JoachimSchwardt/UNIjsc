@@ -1,0 +1,340 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[ngerman]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+%\pagestyle{scrheadings}  % Stil für die Seite setzen
+%\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+%\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{02 Das Verfahren konjugierter Gradienten}
+\newcommand*{\autor}{Joachim Schwardt und Julian Fleck}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Numerik II - Aufgaben}
+\title{\titel}
+%\author{\autor}
+\author{\begin{tabular}{l|l}
+Joachim Schwardt & 4768711 \\ 
+Julian Fleck & 4759587\\ 
+\end{tabular}}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Aufgabe 1}
+Gegeben sind
+\begin{align}
+A &:= \begin{pmatrix}
+1 & 2 & 1 \\ 2 & 5 & 2 \\ 1 & 2 & 2
+\end{pmatrix}&&\tecxt\text{und} & b &= \begin{pmatrix}
+1 \\ 1 \\ 1 
+\end{pmatrix}.
+\end{align}
+Offensichtlich ist $A^\top = A$.
+Um zu zeigen, dass $A$ positiv definit ist, betrachten wir die Hauptminoren
+\begin{align}
+A_1 &= \begin{pmatrix}
+1
+\end{pmatrix}&&\tecxt\text{mit} & \det A_1 &= 1 > 0,\\
+A_2 &= \begin{pmatrix}
+1 & 2 \\ 2 & 5
+\end{pmatrix}&&\tecxt\text{mit} & \det A_2 &= 5-4=1 > 0,\\
+A_3 &= \begin{pmatrix}
+1 & 2 & 1 \\ 2 & 5 & 2 \\ 1 & 2 & 2
+\end{pmatrix}&&\tecxt\text{mit} & \det A_3 &= 10 + 4 + 4 - 5 - 4 - 8 = 1 > 0.
+\end{align}
+Nach dem Hauptminorenkriterium ist $A$ also positiv definit, da alle $\det A_{1,2,3} > 0$ sind.
+\\
+Gegeben ist der Startvektor $x^0 = (1,0,0)^\top$.
+Der erste Iterationsschritt des CG-Verfahrens lautet dann
+\begin{align}
+r_0 &= b - Ax_0 = \begin{pmatrix}
+1 \\ 1 \\ 1
+\end{pmatrix} - \begin{pmatrix}
+1 \\ 2 \\ 1
+\end{pmatrix} = \begin{pmatrix}
+0 \\ -1 \\ 0
+\end{pmatrix},\\
+d_0 &= r_0,\\
+Ad_0 &= \begin{pmatrix}
+-2 \\ -5 \\ -2
+\end{pmatrix},\\
+\alpha_0 &= \frac{r_0^\top r_0}{d_0^\top Ad_0} = \frac{1}{5},\\
+x_1 &= x_0 + \alpha_0d_0 = \begin{pmatrix}
+1 \\ -\frac{1}{5} \\ 0
+\end{pmatrix}.
+\end{align}
+Der zweite Schritt lautet
+\begin{align}
+r_1 &= b - Ax_1 = r_0 - \alpha_0Ad_0 = \begin{pmatrix}
+0 \\ -1 \\ 0
+\end{pmatrix} - \frac{1}{5}\begin{pmatrix}
+-2 \\ -5 \\ -2
+\end{pmatrix} = \frac{1}{5}\begin{pmatrix}
+2 \\ 0 \\ 2
+\end{pmatrix},\\
+\beta_1 &= \frac{r_1^\top r_1}{r_0^\top r_0} = \frac{\frac{4}{25} + \frac{4}{25}}{1} = \frac{8}{25},\\
+d_1 &= r_1 + \beta_1d_0 = \frac{1}{5}\begin{pmatrix}
+2 \\ 0 \\ 2
+\end{pmatrix} + \frac{8}{25}\begin{pmatrix}
+0 \\ -1 \\ 0
+\end{pmatrix} = \frac{1}{25}\begin{pmatrix}
+10 \\ -8 \\ 10
+\end{pmatrix},\\
+Ad_1 &= \frac{1}{25}\begin{pmatrix}
+1 & 2 & 1 \\ 2 & 5 & 2 \\ 1 & 2 & 2
+\end{pmatrix} \begin{pmatrix}
+10 \\ -8 \\ 10
+\end{pmatrix} = \frac{1}{25} \begin{pmatrix}
+4 \\ 0 \\ 14
+\end{pmatrix},\\
+\alpha_1 &= \frac{r_1^\top r_1}{d_1^\top Ad_1} = \frac{\frac{8}{25}}{\frac{1}{25^2}(40 + 140)} = \frac{200}{180} = \frac{10}{9},\\
+x_2 &= x_1 + \alpha_1d_1 = \begin{pmatrix}
+1 \\ -\frac{1}{5} \\ 0
+\end{pmatrix} + \frac{10}{9}\frac{1}{25} \begin{pmatrix}
+10 \\ -8 \\ 10
+\end{pmatrix} = \\
+&= \frac{1}{45}\begin{pmatrix}
+45 \\ -9 \\ 0
+\end{pmatrix} + \frac{2}{45}\begin{pmatrix}
+10 \\ -8 \\ 10
+\end{pmatrix} = \frac{1}{45}\begin{pmatrix}
+65 \\ -25 \\ 20
+\end{pmatrix} = \frac{1}{9}\begin{pmatrix}
+13 \\ -5 \\ 4
+\end{pmatrix}.
+\end{align}
+Der dritte Schritt lautet
+\begin{align}
+r_2 &= b - Ax_2 = r_1 - \alpha_1Ad_1 = \frac{1}{5}\begin{pmatrix}
+2 \\ 0 \\ 2
+\end{pmatrix} - \frac{10}{9}\frac{1}{25} \begin{pmatrix}
+4 \\ 0 \\ 14
+\end{pmatrix} = \\
+&= \frac{1}{45}\begin{pmatrix}
+10 \\ 0 \\ -10
+\end{pmatrix} = \frac{1}{9}\begin{pmatrix}
+2 \\ 0 \\ -2
+\end{pmatrix},\\
+\beta_2 &= \frac{r_2^\top r_2}{r_1^\top r_1} = \frac{\frac{4}{81} + \frac{4}{81}}{\frac{8}{25}} = \frac{25}{81},\\
+d_2 &= r_2 + \beta_2d_1 = \frac{1}{9}\begin{pmatrix}
+2 \\ 0 \\ -2
+\end{pmatrix} + \frac{25}{81} \frac{1}{25}\begin{pmatrix}
+10 \\ -8 \\ 10
+\end{pmatrix} = \frac{1}{81}\begin{pmatrix}
+28 \\ -8 \\ -8
+\end{pmatrix},\\
+Ad_2 &= \frac{1}{81}\begin{pmatrix}
+1 & 2 & 1 \\ 2 & 5 & 2 \\ 1 & 2 & 2
+\end{pmatrix} \begin{pmatrix}
+28 \\ -8 \\ -8
+\end{pmatrix} = \frac{1}{81} \begin{pmatrix}
+4 \\ 0 \\ -4
+\end{pmatrix},\\
+\alpha_2 &= \frac{r_2^\top r_2}{d_2^\top Ad_2} = \frac{\frac{8}{81}}{\frac{4}{81^2}(28 + 8)} = \frac{81}{18} = \frac{9}{2},\\
+x_3 &= x_2 + \alpha_2d_2 = \frac{1}{9}\begin{pmatrix}
+13 \\ -5 \\ 4
+\end{pmatrix} + \frac{9}{2} \frac{1}{81} \begin{pmatrix}
+28 \\ -8 \\ -8
+\end{pmatrix} = \frac{1}{18}\begin{pmatrix}
+26 + 28 \\ -10 - 8 \\ 8 - 8
+\end{pmatrix} = \begin{pmatrix}
+3 \\ -1 \\ 0
+\end{pmatrix}.
+\end{align}
+Da $Ax_3 = (3-2, 6-5, 3-2)^\top = b$, ist $x^3=x^\ast$ die Lösung des Gleichungssystems. 
+Das Verfahren bricht ab, weil dementsprechend $r^3 = 0$.
+
+%import numpy as np
+%
+%A = np.array([[1,2,1],[2,5,2],[1,2,2]])
+%b = np.array([1,1,1])
+%x0 = np.array([1,0,0])
+
+%def cg(A, b, x0=0, N=4):
+%    r0 = b - A @ x0
+%    d = r0
+%    r = r0
+%    for i in range(N):
+%        Ad = A @ d
+%        alpha = (r @ r) / (d @ Ad)
+%        x0 = x0 + alpha * d
+%        r = r0 - alpha * Ad
+%        beta = (r @ r) / (r0 @ r0)
+%        d = r + beta * d
+%        print(f"{Ad = } \n{alpha = } \n{x0 = } \n{r = } \n{beta = } \n{d = } \n{r0 = }\n\n")
+%        r0 = r
+%    return x0
+
+%Berechnung des nullten Residuums $r_0 = b - Ax_{start}$
+%Dies ergibt: $[\frac{0}{1} , \frac{-1}{1} , \frac{0}{1}]$
+%Dieser Vektor wird auch als erste Suchrichtung verwendet.
+%
+%Mit der Suchrichtung wird die neue Schrittweite $\alpha_0 = \frac{r_0^Tr_0}{d^T_0Ad_0^T} = \frac{1}{5}$
+%Damit ergibt sich die neue iterierte Lösung des Gleichungssystems $x_1 = x_0 + \alpha_0 d_0 = [\frac{1}{1} , \frac{0}{1} , \frac{0}{1}] + \frac{1}{5} \cdot [\frac{0}{1} , \frac{-1}{1} , \frac{0}{1}] = [\frac{1}{1} , \frac{-1}{5} , \frac{0}{1}]$
+%Nun kann das neue Residuum $r_1 = b - A x_1 = [\frac{2}{5} , \frac{0}{1} , \frac{2}{5}]$ errechnet werden.
+%Aus dem neuen Residuum wird nun das Gram-Schmidt-Verfahren durchgeführt um die neue Suchrichtung zu bestimmen.
+%Die neue Suchrichtung $d_1 = r_1 + \beta_{(1)} d_0$ ergibt sich mit $\beta_{(1)} = \frac{8}{25}$ zu $d_1 = [\frac{2}{5} , \frac{-8}{25} , \frac{2}{5}]$
+%
+%
+%Mit der Suchrichtung wird die neue Schrittweite $\alpha_1 = \frac{r_1^Tr_1}{d^T_1Ad_1^T} = \frac{10}{9}$
+%Damit ergibt sich die neue iterierte Lösung des Gleichungssystems $x_2 = x_1 + \alpha_1 d_1 = [\frac{1}{1} , \frac{-1}{5} , \frac{0}{1}] + \frac{10}{9} \cdot [\frac{2}{5} , \frac{-8}{25} , \frac{2}{5}] = [\frac{13}{9} , \frac{-5}{9} , \frac{4}{9}]$
+%Nun kann das neue Residuum $r_2 = b - A x_2 = [\frac{2}{9} , \frac{0}{1} , \frac{-2}{9}]$ errechnet werden.
+%Aus dem neuen Residuum wird nun das Gram-Schmidt-Verfahren durchgeführt um die neue Suchrichtung zu bestimmen.
+%Die neue Suchrichtung $d_2 = r_2 + \beta_{(2)} d_1$ ergibt sich mit $\beta_{(2)} = \frac{25}{81}$ zu $d_2 = [\frac{28}{81} , \frac{-8}{81} , \frac{-8}{81}]$
+%
+%
+%Mit der Suchrichtung wird die neue Schrittweite $\alpha_2 = \frac{r_2^Tr_2}{d^T_2Ad_2^T} = \frac{9}{2}$
+%Damit ergibt sich die neue iterierte Lösung des Gleichungssystems $x_3 = x_2 + \alpha_2 d_2 = [\frac{13}{9} , \frac{-5}{9} , \frac{4}{9}] + \frac{9}{2} \cdot [\frac{28}{81} , \frac{-8}{81} , \frac{-8}{81}] = [\frac{3}{1} , \frac{-1}{1} , \frac{0}{1}]$
+%Nun kann das neue Residuum $r_3 = b - A x_3 = [\frac{0}{1} , \frac{0}{1} , \frac{0}{1}]$ errechnet werden.
+%Aus dem neuen Residuum wird nun das Gram-Schmidt-Verfahren durchgeführt um die neue Suchrichtung zu bestimmen.
+%Die neue Suchrichtung $d_3 = r_3 + \beta_{(3)} d_2$ ergibt sich mit $\beta_{(3)} = \frac{0}{1}$ zu $d_3 = [\frac{0}{1} , \frac{0}{1} , \frac{0}{1}]$
+%
+%
+%Das neue Residuum und die neue Suchrichtung sind der Nullvektor, somit bricht das Verfahren ab und wir haben die Lösung des Gleichungssystems $x^* = [\frac{3}{1} , \frac{-1}{1} , \frac{0}{1}]$.
+
+
+\newpage
+\section*{Aufgabe 2}
+Sei $A\in\mathbb{R}^{n\times n}$ symmetrisch und positiv definit.
+Gegeben ist das lineare Gleichungssystem $Ax=b$, wobei $b=c_1v_1 + c_2v_2$ und $v_{1,2}$ Eigenvektoren von $A$ zum Eigenwert $\lambda_{1,2}$ sind.
+Insbesondere sind die Eigenvektoren orthonormal, also $v_j^\top v_k = \delta_{jk}$.
+Zu zeigen ist, dass das CG-Verfahren nach zwei Iterationsschritten abbricht.
+Definiere dazu die Residuen $r_k := b- Ax_k$, wobei aufgrund des Startwertes $x_0 = 0$ einfach $r_0 = b$ ist.
+Für $c_1=c_2=0$ wäre $b=0$ und die Lösung damit trivialerweise bereits gleich dem Startpunkt.
+Sei im Folgenden also mindestens ein Koeffizient $c_{1,2} \neq 0$.
+Der erste Iterationsschritt lautet dann
+\begin{align}
+d_0 &= r_0 = b,\\
+\alpha_0 &= \frac{r_0^\top r_0}{d_0^\top Ad_0} = \frac{b^\top b}{b^\top Ab} = \frac{c_1^2 + c_2^2}{c_1^2\lambda_1 + c_2^2\lambda_2},\\
+x_1 &= x_0 + \alpha_0 d_0 = \frac{c_1^2 + c_2^2}{c_1^2\lambda_1 + c_2^2\lambda_2}(c_1v_1 + c_2v_2),\\
+r_1 &= b - Ax_1 = (c_1v_1 + c_2v_2) - \frac{c_1^2 + c_2^2}{c_1^2\lambda_1 + c_2^2\lambda_2}(c_1\lambda_1 v_1 + c_2\lambda_2 v_2) = \\
+&= c_1v_1 \kla\left( 1 - \frac{c_1^2\lambda_1 + c_2^2\lambda_1}{c_1^2\lambda_1 + c_2^2\lambda_2} \right) + c_2v_2 \kla\left( 1 - \frac{c_1^2\lambda_2 + c_2^2\lambda_2}{c_1^2\lambda_1 + c_2^2\lambda_2} \right) =\\
+&= c_1v_1 \frac{c_2^2(\lambda_2 - \lambda_1)}{c_1^2\lambda_1 + c_2^2\lambda_2} + c_2v_2 \frac{c_1^2(\lambda_1 - \lambda_2)}{c_1^2\lambda_1 + c_2^2\lambda_2},
+\end{align}
+wobei das Residuum noch zu 
+\begin{align}
+r_1 &= \frac{c_1c_2 (\lambda_2 - \lambda_1)}{c_1^2\lambda_1 + c_2^2\lambda_2}\kla\left( c_2v_1 - c_1v_2 \right)
+\end{align}
+vereinfacht werden kann.
+Für $\lambda_1 = \lambda_2$ oder $c_1=0$ oder $c_2 = 0$ ist $r_1=0$, womit wir bereits fertig wären.
+Sei also im Folgenden $\lambda_1\neq \lambda_2$ und $c_{1,2}\neq 0$.
+\\
+Explizit den zweiten Iterationsschritt durchzuführen hat sich als eine enorm aufwendige Aufgabe erwiesen, weshalb wir hier einen anderen Ansatz wählen.
+Aus der Vorlesung ist bekannt, dass die Residuen die Relation
+\begin{align}
+r_j^\top r_k &= 0
+\end{align}
+für alle $k<j$ erfüllen (also orthogonal sind).
+Das CG-Verfahren wird auch in allen weiteren Schritten immer nur Vektoren liefern, die Linearkombinationen der $v_{1,2}$ sind.
+Daher können wir zunächst $r_2 =: \gamma_1c_1v_1 + \gamma_2c_2v_2$ für zwei Parameter $\gamma_{1,2}$ definieren.
+Die Orthogonalitätsrelationen liefern dann
+\begin{align}
+r_2^\top r_1 &= \kla\left( \gamma_1c_1v_1 + \gamma_2c_2v_2 \right)^\top  \frac{c_1c_2 (\lambda_2 - \lambda_1)}{c_1^2\lambda_1 + c_2^2\lambda_2} \kla\left( c_2v_1 - c_1v_2 \right) = \\
+&= \frac{c_1^2c_2^2 (\lambda_2 - \lambda_1)}{c_1^2\lambda_1 + c_2^2\lambda_2}\kla\left( \gamma_1 - \gamma_2 \right) \overset{!}{=} 0, \label{eqn:r2 r1 orthogonal}\\
+r_2^\top r_0 &= \kla\left( \gamma_1c_1v_1 + \gamma_2c_2v_2 \right)^\top  \kla\left( c_1v_1+c_2v_2 \right) = \\
+&= \gamma_1c_1^2 + \gamma_2c_2^2 \overset{!}{=} 0. \label{eqn:r2 r0 orthogonal}
+\end{align}
+Da $c_{1,2}\neq 0 $ folgt aus \autoref{eqn:r2 r1 orthogonal} zunächst $\gamma_1=\gamma_2$.
+Eingesetzt in \autoref{eqn:r2 r0 orthogonal} folgt daraus $\gamma_1=0$ und somit $r_2 = 0$.
+
+\newpage
+\section*{Aufgabe 3}
+Sei $A\in\mathbb{R}^{n\times n}$ und $r\in\mathbb{R}^n$. 
+Dann ist der $k$-te \textsc{Krylov}-Raum zu $r$ und $A$ für $k\ge 0$ definiert durch
+\begin{align}
+\mathcal{D}_k(r, A) &:= \tecxt\text{span\,}\klammer\left\{ r, Ar, \dots, A^{k-1}r \right\}.
+\end{align}
+Sei $A$ zusätzlich regulär, $b\in\mathbb{R}^n$ und $x^\ast = A^{-1}b$.
+Für $x_k\in\mathbb{R}^n$ definiere $r_k := b-Ax_k$, wobei insbesondere $r_0\neq 0$ gefordert sei.
+Definiere noch $e_k := x^\ast - x_k$, woraus $Ae_k = b - Ax_k = r_k$ folgt.
+\\
+Angenommen es gilt $\mathcal{D}_{k+1}(r_0, A) = \mathcal{D}_k(r_0, A)$ für ein $k\in\mathbb{N}$.
+Dann folgt aus $A^kr_0 \in \mathcal{D}_k(r_0, A)$ insbesondere, dass es $c_0,\dots,c_{k-1}\in\mathbb{R}$ gibt mit
+\begin{align}
+A^k r_0 &= \sum_{j=0}^{k-1} c_jA^jr_0 = \sum_{j=0}^{k-1} c_jA^{j+1}e_0. \label{eqn:Ak r0 Linearkombination}
+\end{align}
+Wir wollen diese Gleichung so umformen, dass wir eine Darstellung für $e_0$ erhalten.
+Für $c_0\neq 0 $ gilt dabei einfach
+\begin{align}
+c_0Ae_0 &= A^kr_0 - \sum_{j=1}^{k-1}c_jA^{j+1}e_0,\\
+\Rightarrow\ \ \ e_0 &= \frac{1}{c_0}\kla\left( A^{k-1}r_0 - \sum_{j=1}^{k-1}c_jA^{j-1}r_0 \right).
+\end{align}
+Da dieser Ausdruck eine Linearkombination der $r_0, Ar_0, \dots, A^{k-1}r_0$ ist, folgt $e_0 \in \mathcal{D}_k(r_0, A)$, was äquivalent zu $x^\ast \in x^0 + \mathcal{D}_k(r_0, A)$ ist.
+\\
+Für $c_0 = 0$ können wir \autoref{eqn:Ak r0 Linearkombination} auch nach $e_0$ umstellen.
+Wir nehmen noch an, dass die ersten $q$ Koeffizienten gleich Null sind, also $c_0 = \dots = c_{q-1} = 0$ für $q\in\{1,\dots,k-1\}$.
+Dann gilt
+\begin{align}
+A^kr_0 &= \sum_{j=q}^{k-1}c_jA^{j+1}e_0 = c_qA^{q+1}e_0 + \sum_{j=q+1}^{k-1}c_jA^jr_0,\\
+\Rightarrow\ \ \ e_0 &= \frac{1}{c_q}\kla\left( A^{k-q-1}r_0 - \sum_{j=q+1}^{k-1}c_jA^{j-q-1}r_0 \right),
+\end{align}
+was ebenfalls eine Linearkombination in $\mathcal{D}_k(r_0, A)$ ist.
+\\
+Angenommen es gilt $e_0 \in \mathcal{D}_k(r_0, A)$.
+Dann gibt es $c_0,\dots,c_{k-1}\in\mathbb{R}$, sodass
+\begin{align}
+e_0 &= \sum_{j=0}^{k-1}c_jA^jr_0. \label{eqn:e0 als Linearkombination von Aj r0}
+\end{align}
+Für $c_{k-1} \neq 0$ führt das Multiplizieren mit $A$ dann zu 
+\begin{align}
+r_0 &= Ae_0 = \sum_{j=0}^{k-1}c_jA^{j+1}r_0 = \sum_{j=1}^{k}c_{j-1} A^jr_0,\\
+A^kr_0 &= \frac{1}{c_{k-1}}\kla\left( r_0 - \sum_{j=1}^{k-1}c_{j-1}A^jr_0 \right).
+\end{align}
+Das ist eine Linearkombination der $r_0, \dots, A^{k-1}r_0$, womit $A^kr_0 \in \mathcal{D}_k(r_0, A)$.
+Insbesondere gilt dann $\mathcal{D}_{k+1}(r_0, A) = \mathcal{D}_k(r_0, A)$, da der neue Eintrag linear abhängig von den anderen Vektoren ist.
+\\
+Für $c_{k-1} = 0$ führen wir wieder $q\in\{1,\dots,k-1\}$ ein, wobei diesmal $c_{k-1} = \dots = c_{k-q} = 0$ sei.
+Dann können wir \autoref{eqn:e0 als Linearkombination von Aj r0} durch Multiplizieren mit $A^{q+1}$ wieder nach $A^kr_0$ umstellen, da
+\begin{align}
+A^{q+1}e_0 &= \sum_{j=0}^{k-q-1}c_jA^{j+q+1}r_0 = c_{k-q-1}A^kr_0 + \sum_{j=0}^{k-q-2}c_jA^{j+q+1}r_0,\\
+\Rightarrow\ \ \ A^kr_0 &= \frac{1}{c_{k-q-1}} \kla\left( A^{q-1}r_0 - \sum_{j=0}^{k-q-2}c_jA^{j+q+1}r_0 \right),
+\end{align}
+was ebenfalls eine Linearkombination in $\mathcal{D}_k(r_0, A)$ ist.
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

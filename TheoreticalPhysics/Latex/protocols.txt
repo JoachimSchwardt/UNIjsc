@@ -1,0 +1,1068 @@
+7279, Timm
+
+Masterthemen: Pfadintegralformalismus, BEC, SSB
+
+Pfadintegrale machen wir später, vorher kommen noch ein paar Grundlagen.
+
+Alte Quantentheorie
+
+- Was war der erste Versuch einer Quantentheorie?
+
+Bohrsche Postulate
+
+- Welche Probleme gab es dabei?
+
+ohne Erklärung, nur Energiedifferenzen -> keine Aussage über Grundzustand
+
+- Angenommen, die Elektronen auf den Bahnen sind Wellen. Warum sind die diskreten Bahnenergien physikalisch sinnvoll?
+
+Wellen haben eine Wellenlänge. Die Länge der periodischen Bahnen
+
+muss ein Vielfaches der Wellenlänge sein. -> diskreter Bahnradius
+
+- Welche Erweiterung gab es dann?
+
+Bohr-Sommerfeld, kurze Herleitung der Phasenraumquantisierung
+
+- Was war hier nun immernoch problematisch?
+
+nicht für aperiodische Prozesse, Streuprozesse etc.
+
+Schrödinger:
+
+- Welche erste Gleichung hat Schrödinger aufgeschrieben?
+
+Klein-Gordon-Gleichung
+
+- Warum hat er sie verworfen?
+
+zweite Ableitung nach der Zeit
+
+- Dann hat er also die Schrödinger-Gleichung aufgestellt. Wie beschreibt man die Zeitentwicklung der Wellenfunktionen?
+
+Zeitentwicklungsoperator, für zeitunabhängigen Hamiltonian hingeschrieben
+
+- Welche Eigenschaft hat der Zeitentwicklungsoperator und wie kann man das sehen?
+
+unitär, U^daggerU=1
+
+- Okay, aber wenn da ein Operator im Exponenten steht muss ja e^Ae^B nicht zwangläufig e^(A+B) sein. Was braucht man?
+
+[A, B] = 0, also [H, H] = 0 im zeitunabhängigen Fall
+
+- Dann nehmen wir mal einen endlichen Potentialtopf. Wie sieht hier das Spektrum aus?
+
+E<0: unbeschränkte, nicht-physikalische Lösungen
+
+0<E<V0: diskretes Energiespektrum
+
+E>V0: kontinuierlich, 2-fach entartet
+
+- Wie lässt sich die Entartung physikalisch erklären?
+
+mathematisch: 6 Parameter (jeweils Vorfaktoren für nach rechts/links laufende Welle für alle drei Bereiche) - 4 Randbedingungen = 2 freie Parameter
+
+physikalisch: Eine von links einlaufende Welle und eine von rechts einlaufende Welle sind zwei voneinander unabhängige Lösungen.
+
+QT2
+
+- Dann hatten wir vorhin schon die Klein-Gordon-Gleichung angesprochen. Welche Probleme gab es da?
+
+Dispersionsrelation aufgezeichnet, Zerstrahlungskatastrophe erklärt.
+
+Kontinuitätsgleichung aufgeschrieben. rho enthält Zeitableitung. Weil KGG 2.Ordnung in Zeit ist, ist die erste Ableitung eine Randbedingung.
+
+=> rho kann negativ gewählt werden
+
+- Was wäre das Problem daran einfach die negativen Fälle zu ignorieren?
+
+Man ignoriert den unteren Ast der Dispersionsrelation - also eine physikalische Lösung. (Er erzählt noch weiter: Wenn man an ein Wärmebad koppelt landet man ja meistens irgendwann auch in der negativen Lösung. Also sollte man sie nicht einfach so weglassen.)
+
+- Woran sieht man das negative rho in der Lösung?
+
+Ansatz für Psi hingeschrieben, nach etwas hin- und her bin ich dann auch darauf gekommen, dass omega dann ja auch negativ ist.
+
+- Und wie kann man das Problem des negativen rhos jetzt lösen?
+
+Vielteilchentheorie
+
+Vielteichentheorie
+
+- Was muss man bei Bosonen beachten?
+
+Symmetrie, kurz über Vertauschung motiviert,
+
+Symmetrisierung der Basis aus Produktzuständen durch Permanente als Summe über Permutationen aufgeschrieben
+
+- Was ist nun der Unterschied zur Determinante?
+
+sgn(p)
+
+- Warum lassen sich Determinanten auch bei großen Matrizen gut berechnen?
+
+???
+
+- Was macht man denn bei hermiteschen Matrizen?
+
+Diagonalisierung
+
+- Wie berechnet man dann die Determinante?
+
+Produkt der Hauptdiagonalelemente
+
+- Warum bleibt die Determinante beim Diagonalisieren erhalten?
+
+Diagonalisierung über unitäre Matrizen, deren Determinante bringt einen Faktor 1.
+
+- Also Determinanten berechnen sich gut, die Permanente aber nicht. Also was tun wir?
+
+Besetzungszahldarstellung, kurz Eigenwertgleichungen für n, b, b^dagger hingeschrieben.
+
+- Was gilt noch?
+
+n=b^dagger*b, [b, b^dagger]=1
+
+- Wir haben nun ein Boson. Wie sieht der Hamiltonian dazu aus?
+
+H=summe_ij e_ij b^dagger_i*b_j
+
+- Sie haben es sogar in der nicht-diagonalen Form aufgeschrieben. Beides ist richtig. Schreiben Sie auch die mittlere Besetzungszahl von Bosonen dazu.
+
+Bose-Einstein-Verteilung aufgeschrieben.
+
+- Was ist das mu?
+
+Das chemische Potential
+
+- Warum haben Sie das mit dazugeschrieben?
+
+Teilchenzahlerhaltung <= gleiche Anzahl an Erzeugern und Vernichtern, mu=0 wäre keine Teilchenzahlerhaltung (wie bspw. bei Photonen)
+
+- Wenn wir schon über Bosonen reden. Sie hatten als Masterthema auch BEC genannt. Für welche Bosonen hat man das experimentell untersucht?
+
+Hier hatte ich komplettes Blackout. Am Ende wollte er nur atomare Gase bzw. genauer Helium hören.
+
+Statistik
+
+- Was benutzt man um das System im Nichtgleichgewichtzustand zu beschreiben?
+
+Dichteoperator, Eigenschaften genannt und Interpretation der Einträge als Wahrscheinlichkeiten
+
+- Wie sieht die Zeitentwicklung davon aus?
+
+Von-Neumann-Gleichung
+
+- Wann ist der Dichteoperator konstant?
+
+im GGW, [H, rho]=0
+
+- Wann noch?
+
+nach etwas hin und her: Wenn rho ein reiner Zustand ist und dieser ein Eigenzustand von H ist.
+
+Master
+
+Eines ihrer Themen war SSB. Was ist das?
+
+- konstant unter Symmetrieoperation, unterhalb kritischer Temperatur: Ausrichtung in ausgezeichnete Richtung
+
+- Welche Beispiele gibt es?
+
+Magnetisierung beim Ferromagneten, Grundzustandsbesetzung bei BEC
+
+- Welche Symmetrie wird bei BEC gebrochen?
+
+makroskopische Besetzung des Grundzustands => Alle Zustände haben bestimmtes Phasenverhältnis, weil im gleichen Zustand => Phasensymmetrie
+
+- Ich weiß nicht wieviel Sie in ihren Vorlesungen zu kritischen Exponenten hatten. Können Sie dazu etwas erzählen?
+
+beschreibt Verhalten in der Nähe von kritischen Punkten, laut Landau-Theorie: Ordnungsparameter ~ (1 - T/Tc)^(1/2)
+
+- k=1/2 ist oft der Fall. Gibt es auch Fälle, wo es auch nicht so ist?
+
+Habe zunächst über Spezialfälle bei BEC geredet.
+
+- Wie sieht es denn bei BEC allgemein aus?
+
+<N0>/<N> = 1 - (T/Tc)^a
+
+- Jetzt machen wir eine Entwicklung in Nähe der kritischen Temperatur.
+
+T ~ Tc + dT, T^a ~ Tc^a + aTc^(a-1)dT + O(dT^2)
+
+=> <N0>/<N> = (Tc^a - T^a) / Tc^a
+
+~ -a*dT/Tc = a (1 - T/Tc) => es ist bei BEC immer linear!
+
+
+7095, Timm
+
+Einstieg: Alte QT
+
+    Was war der erste Ansatz einer Quantentheorie
+    Bohrsche Postulate.
+
+    Gabs davon noch eine Weiterentwicklung?
+    Bohr-Sommerfeld. Erklaert.
+
+    Warum ist das keine zufriedenstellende Theorie?
+    Nur periodische Bahnen und so weiter.
+
+    Wann gibt es denn keine periodischen Bahnen?
+    Chaos. System nicht integrabel.
+
+
+Schroedinger, QT 1
+
+    Woher kommt die schroedinger Gleichung?
+    Zuerst erzaelte ich was von Hamilton Jacobi Theorie und den
+    Wirkungsstrahlen, aber im endeffekt kahmen wir auf die ebene Welle mit
+    der korrekten Dispersionsrelation.
+
+    Welche Gleichung schrieb Schroedinger zuerst auf?
+    Klein Gordon, hatte aber probleme mit der Warscheinlichkeitsinterpretation.
+
+    Potential \(c|x|\)
+
+        Wie sieht das Spektrum aus?
+        Unterhalb null ist nix. Dann diskret und nicht entartet.
+
+        Was kann man sonst noch uber die Loesungen sagen?
+        Paritaet und Knotensatz…
+
+        Wie wuerden sie das Loesen?
+        Keine Stoerungstheorie da keine "kleine" stoerung. Ungestoerte WF
+        haben komplett anderen charakter… Desswegen Ritz.
+
+        Ritz erklaeren…
+
+        Wie waehlt man die Ansaetze fuer Ritz?
+        Paritaet richtig und asymptotische Wellengleichung…
+
+        Wie bekommt man den naechst-hoeheren zustand?
+        Orthogonaler ansatz mit richtiger paritaet. Man braucht also garkeine
+        Lagrange Parameter wie ich zunaechst sagte.
+
+
+
+Streutheorie
+
+    Wie sieht der Ansatz fuer die Streuwellenfunktion aus?
+    Asympot. Ansatz mit Streufaktor…
+
+    Warum 1/r in Kugelwelle?
+    Konstanter warsch. Fluss…
+
+    Warscheinlichkeitserhaltung -> wozu fuehr das?
+    Optisches Theorem aus Interferrenzstrom. Siehe auch Streuung an Kugel.
+
+    Warum nur Vorwaertsrichtung?
+    Da nur da perfekte Interferenz mit einlaufender Welle moegl. (Da hab'sch ein wenig geeiert ;P)
+
+    Wie sieht das bei Coulomb Streuung aus?
+    Grosse Reichweite, WQ Divergiert?
+
+    Was passiert mit dem Ansatz?
+    Gilt nicht mehr?
+
+    Ja, aber was passiert mit dem Exponenten in der e-fkt?
+    Wusste ich leider nichtmehr, was ich auch so sagte :) -> Im endeffekt
+    logarithmischer faktor in Exponent, sowohl einlaufend als auch auslaufend.
+
+
+Thermostat
+
+    Wie ist in der phaeno-Thermodynamik die Temparatur definiert?
+    Postulat 0. Hauptsatz…
+
+    Und woher kommts in der Statistik
+    Kanonisches ensemble -> lagr. param oder Kanonisch mit zwei untersystemen.
+
+    Wie lautet das Fundamentalpostulat?
+    You know it :).
+
+    Wie sieht die Dichtematrix im kanon. Ensemble aus?
+    Aufgeschrieben
+
+    Kann man den auch allg. als exp funktion schreiben?
+    Nach einigem geeier darauf gekommen dass der op. Positiv ist und
+    desswegen ja… bring nur nicht viel.
+
+    Was ist die Bewegungsgleichung des Dichteop?
+    Von-Neumann Gleichung hingeschrieben. Vorzeichen anders herum als bei Heisenberg…
+
+    Was macht man wenn das system offen ist?
+    Lindblad Gleichung als Markovsche Naeherung. Aus dunkler errinerung die Gleichung skizziert ;P.
+
+
+Relativistische QT
+
+    Warum funktioniert Klein-Gordon nicht so gut?
+    Die Sache mit der negativen Warscheinlichkeitsdichte Skizziert.
+
+    Was kann man dann machen?
+    Dirak Gleichung mit Matrizen erklaert.
+
+    Was bedeuten die Freiheitsgrade?
+    Spin, Teilchen/Antiteilchen.
+
+    Wo liegt auch hier wieder ein Problem?
+    Negative Energien.
+
+    Und weiter?
+    Ist eigentlich keine Einteilchenengleichung.
+
+    Wie zeigt sich der Spin im nichtrel. Limes?
+    Pauli Geichung. Spin hat interaktion mit Magnetfeld. Lande faktor…
+
+
+Pfadintegral
+
+    Was rechnet man damit aus?
+    You know it :). Hab auch noch erzaehlt welche Anwendungen das
+    Pfadintegral hat (Symmetrien, Lagrange, Feld).
+
+    Wie leitet man das her?
+    Herleitung Skizziert. Betont, warum man normalordnen kann.
+
+
+6692, Timm
+
+Einstieg: Sie haben folgendes Potential: eine unendlich hohe wand bei x=0 und für x<0 einen halben harmonischen Oszillator (so dass das Minimum auch bei x=0 ist). Welche Zustände gibt es da?
+
+--> vergleich mit Zuständen bei ganzem HO, hier nur jeder zweite Zustand möglich wegen zusätzlicher RB psi(x=0)=0.
+
+Wenn Sie einen ganzen harmonischen Oszillator haben, der im Grundzustand ist und dann in der Mitte so eine Wand einfügen, was passiert dann?
+
+--> Hier wusste ich überhaupt nicht worauf er hinaus wollte, habe irgendwas erzählt, dass man wahrscheinlich dem System Energie zuführen muss, um die Wand einzufügen, weil es ja aus dem GZ vom HO in den GZ des halben HO übergehen muss und der ja für den HO der 1. angeregte Zustand ist und deswegen wahrscheinlich energetisch höher liegt, das war aber nicht so recht das worauf er hinaus wollte.
+
+Er hat dann gefragt, wie sich das denn zeitentwickelt, wenn ich im halben HO bin.
+
+--> hab halt zeitentwicklung mit U erklärt.
+
+Er meinte dazu, wie ich das denn jetzt aber praktisch machen würde, weil mein Hilbertraum ja unenedlich dimensional ist und ich das ja sonst praktisch gar nicht auswerten kann.
+
+--> wusste hier recht lange nicht, worauf er hinaus will, habe halt gesagt, dass ich praktisch dann explizit das gegebene Potential einsetzen würde in H. Das war aber nur die halbe Wahrheit. Letztendlich wollte er darauf hinaus, dass ich ja mit dem GZ vom HO quasi eine Anfangsbedingung für meine Wellenfunktion habe und jede Wellenfunktion als Superposition von Eigenzuständen (dann von dem halben HO) darstellen kann und von denen weiß ich ja wie die sich zeitentwickeln (eben mit den zugehörigen Eigenenergien).
+
+Ok, dann gehen wir mal zur relativistik über, auf welche Teilcheneigenschaft muss man da achten?
+
+--> Spin, erzählt dass es Dirac-Glg für S=1/2 und KGG für S=0 gibt, für höheren Spin braucht man dann halt komplizierter Varianten, die i.W. aber auch auf den beiden Glg. basieren.
+
+Schreiben Sie mal die Dirac-Gleichung auf.
+
+--> aufgeschrieben, erklärt, was die alphas und betas sind und wie man auf die Antikommutator-Relationen kommt (nach Korrespondenzprinzip soll wieder relativistische Energie-Impuls-Beziehung gelten, man weiß dass das für die KGG gilt, also versuchen in KGG umzuformen, so Antikommutator-Relationen erhalten)
+
+Wofür stehen die 4 Komponenten im Spinor?
+
+--> 2 versch. Energieeigenwerte und 2 Möglichkeiten für die Helizität, habe für ruhendes Teilchen noch die Herleitung aufgeschrieben, das phi EZ zu positivem Energieeigenwert ist und chi zu negativem Energieeigenwert.
+
+Zu den Helizitätseigenzuständen wollte er noch mal genauer haben wie man darauf jetzt kommt, dass es überhaupt eine Spin gibt.
+
+--> [H, L] =! 0, komisch weil Rotationssymmetrisch und nach Noether-Theorem sollte Drehimpulserhaltung gelten, aber [H,L+ (h_bar/4i) alpha x alpha] = 0, Zustazterm als Eigendrehimpuls S deuten, S erfüllt tatsächlich Drehimpuls-kommutator-Relationen macht also Sinn
+
+Wo sieht man das im nicht-realtivistischen Granzfall denn noch, dass das sich hier wie ein Spin verhält?
+
+--> Pauli-Glg aus Dirac-Glg mit Kopplung an Feld herleiten im nichtrel. Grenzfall, man bekommt einen Term B*sigma, also Term, so man sieht, dass Spin an B-Feld koppelt, man kommt über Vergleich der Vorfaktoren mit allgemeiner Beziehung mu = g*mu_b*L aif Landé-Faktor g = 2.
+
+Welches Teilchen beschreibt die Dirac-Gleichung denn unter anderem, das jetzt auch gerade in der Presse war?
+
+--> Myon, wo man gerade Lande-Faktor gemessen hat.
+
+Wissen Sie, was man da untersucht hat mit dem Experiment?
+
+--> Lande-Faktor ist Verhältnis aus Drehimpuls und magnetischem Moment und abhängig von Wechselwirkung des Myons. Man kann g genau ausrechnen, unter der Annahmen, dass das Standardmodell gilt. Das Experiment stimmt nicht mit Berechnung überein, es muss also noch zusätzliche Wechselwirkung geben, Standardmodell kann so noch nicht stimmen.
+
+Ok kommen wir mal zur Statistik. Wie ist denn die phänomenologische Entropie?
+
+--> wird maximal im Ggw, 2. Hauptsatz erzählt und Gleichung dS >= delQ/T.
+
+Gilt denn die Gleichung so denn immer?
+
+--> Nur wenn die ausgetauschte Wärmemenge positiv ist. Er meinte dazu noch, dass dS eben auch für irreversible Prozesse negativ sein kann, wenn das System gekühlt wird, Gleichung gilt also nur im abgeschlossenem System.
+
+Was sind das für unterschiedliche d's vor S und Q?
+
+--> Vollständiges und unvollständiges Differential, vollständiges Differential heißt, dass Integral über geschlossenen Weg Null wird.
+
+Wie kann man das ausnutzen, dass das bei dem Q kein volständiges Differential ist?
+
+--> Hab hier einen Moment gebraucht, meinte erst die Wärme ist dann wegabhängig, man kann also z.B. seinen weg so wählen, dass man möglichst wenig Wärme austauscht, wenn man das will. Er meinte dann, dass man ja aber auch manchmal gerade besonders viel Wärme austauschen will und wo man das denn macht?. Bin dann darauf gekommen, dass man Kreisprozesse konstruieren kann, in denen netto Wärme ausgetauscht wird und man so Wärmekraftmaschinen konstruieren kann.
+
+Ok zurück zur Entropie, wie ist die denn in der Statistik definiert?
+
+--> Def. von Entropie mit Dichteoperator aufgeschrieben und in Eigenbasis. Habe noch gesagt, dass dann die Maximierung der Entropie in einem abgeschlossenem System äquivalent zum Fundamentalpostulat ist, dass alle Zustände gleichwahrscheinlich sind --> Wirklich all? --> nein, nur erreichbare, die mit Makrozustand verträglich sind, gilt nur im Mikrokanonischen Ensemble.
+
+Warum kann man Dichte operator so in der Eigenbasis darstellen?
+
+--> ist hermitesch, also VON aus Eiegenzuständen?
+
+Welche Eigenschaften hat rho noch?
+
+--> Sp(rho)=1, Sp(rho^2)=1 genau dann, wenn reiner Zustand, hat reelle eigenwerte --> Warum muss die Spur 1 sein? --> weil das die Summe über die Wahrscheinlichkeiten für die einzelnen Zustände ist und die insgesamt 1 sein muss.
+
+Und welche Eigenschaft noch? Wenn sie daran denken, dass das Wahrscheinlichkeiten darstellen soll?
+
+--> positiv semidefinit
+
+Wie sieht denn Rho für ein kanonisches Ensemble aus?
+
+--> allg rho aufgeschrieben, für kanonisches Ensemble mit Nebenbedingung, dass Energieerwartungswert fix ist.
+
+Schreiben Sie mal die Zustandssumme für ein Zwei-Niveau-System auf.
+
+--> Z = 1+exp(-beta*epsilon)
+
+Welche thermodynamische Größe können Sie aus der kanonischen Zustandssumme am einfachsten ableiten?
+
+--> Habe erst gesagt dass = -d/d(beta) ln(Z), er wollte aber auf F = -kTln(z) raus
+
+Ok, dann nochmal zur Supraleitung, welche Effekte beobachten wir da?
+
+--> Widerstandsloser Stromfluss und Meißner-Ochsenfeld-Effekt?
+
+Was ist der Unterschied vom Meißner-Ochsenfeld-Effekt zum verhalten eines idealen Leiters?
+
+--> bei idealem Leiter im B-Feld der gekühlt wird, ist danach immer noch B-Feld, im Supraleiter nicht, da wird B-Feld immer komplett rausgedrängt
+
+Wie funktioniert das physikalisch?
+
+--> Es entstehen Abschrimströme, so dass ein entgegengesetztes Magnetfeld entsteht und B insgesamt 0 wird.
+
+Was passiert mit den Elektronen im Supraleiter?
+
+--> Cooperpaar-Bildung durch schwache attraktive Wechselwirkung über Austausch von Phononen und kollektiven Anregungen.
+
+Wie sieht der Grundzustand da aus?
+
+--> phi = podukt über k von (v_k + u_k c+(k, spin up) c+(-k, spin down)) |0> , besonderheit, dass das kein Eigenzustand zum Teilchenzahloperator ist sondern Überlagerung aus Zuständen unterschiedlicher Teilchen zahl, weil immer ein Cooperpaar gemeinsam erzeugt wird.
+
+Sie haben ja da schon aufgeschrieben, dass der Impuls immer entgegengesetzt ist bei den Elektronen im Cooper-paar, warum ist das so?
+
+--> k auf schale um Fermi-impuls herum, Impulserhaltung, Skizze warum dann für gesamtimpuls = 0 der größte Wirkungsquerschnitt entsteht (ist im Ibach-Lüth: "Festkörperphysik" gut erklärt)
+
+Wann ist das denn nicht so, dass ich genau entgegengesetzten Impuls habe?
+
+--> habe hier sehr lange gebraucht um zu wissen, worauf er hinaus will und meinte erst wenn ein Strom fließt, dann ist das nicht so. Das stimmte auch, war aber nicht was er hören wollte. Bin dann irgendwann darauf gekommen dass das passiert, wenn es ein äußeres B-Feld gibt. Er wollte dann genauer wissen, wie das dann die Dispersionsrelation beeinflusst. Habe da erst irgendwas von Lorentz-Kraft erzählt, aber die ändert die Gesamtenergie nicht. Nachdem er mir den Tipp gegeben hat, dass wir da bei der Dirac-Gleichung schon mal drüber gesprochen haben, bin ich denn darauf gekommen, dass es um die Kopplung von dem Spin ans Magnetfeld geht und die Energie dann wie beim Zeeman-Effekt aufspaltet. Da ja in einem Cooperpaar ein e- Spin up hat und das andere Spin down, nimmt also die Energie für das eine zu und das andere ab, deswegen haben die beiden Elektronen dann eine andere Dispersionsrelation und die beiden e- in einem Cooperpaar nicht mehr genau entgegengesetzten Impuls. Timm meinte dazu noch, dass man das wenn man in Dresden wohnt wissen sollte, weil hier am Max-Planck-Institut dazu geforscht wird. Im allgemeinen ist das aber schwierig, weil man dazu sehr große Magnetfelder braucht und die dann auch den Supraleiter kaputt machen.
+
+
+6571, Vojta
+
+!!! 
+Statistische Physik/Thermo: Schwabl "Statistische Mechanik" , Nolting "TP6" , Skript Vojta , Skript Schmidt, Huang "Statistical Mechanics"
+QT1: Timm Skript, Shankar "Principles of Quantum Mechanics" , Nolting "TP5/1"
+QT2: Timm Skript, Nolting "TP5/2"
+Ich habe mich auf drei Masterthemen vorbereitet:
+Pfadintegrale: Skript Vojta, Shankar "Principles of Quantum Mechanics", Rosenfelder "Pfadintegrale in der Quantenmechanik", Feynman&Hibbs "Quantum Mechanics and Path Integrals"
+BEC, Suprafluide: Skript Vojta, Pethick "BEC in Dilute Gases", Skript Timm "Theory of Superconductivity" , Uni Essen Skript zur BEC, Muramatsu "Fortgeschrittene Quantentheorie"
+Supraleitung: Skript Timm "Theory of Superconductivity", Skript Vojta, diverse Skripte zu BCS Theorie 
+!!!
+
+Schrödingergleichung in Lieblingsform hinschreiben
+
+Welche Größe ist erhalten? ( \Rho)
+Kontinuitätsgleichung dafür ?
+Wie sieht die Stromdichte aus?
+Wie löst man die Schrödingergleichung bei zeitunabhängigen H ?
+
+Es gibt ja noch die Diracgleichung, die genauso wie SG aussieht. Aber was ist dort H ?
+Das beschreibt ja einen vierkomponentigen Diracspinor. Warum?
+Wie hängt das mit dem Spin zusammen?
+Wo geht der Spin ein ? (\alpha)
+
+Hamiltonian für Oszillator mit kleiner Störung der Form x^4 aufschreiben
+Wie sieht das Spektrum aus ?(Wusste ich überhaupt nicht wie man rangeht und dementsprechend haben wir das Schritt für Schritt durchexerziert. Ich hab dann allgemeine Form aufgeschrieben wie man Energiekorrekturen berechnet)
+Wie löst man Hamiltonian ohne Störung mithilfe bosonischer Operatoren?
+Störoperator mithilfe bosonischer Operatoren aufschreiben. ( Das gnaze durchexerziert, um dann zu sehen dass das Spektrum nicht mehr äquidistant ist)
+
+System aus N nichtwechselwirkenden Spins im Magnetfeld in einem Wärmebad. Wie macht man da Thermodynamik?
+Wie bestimmt man Entropie, Wärmekapazität?
+Zustandssumme konkret ausrechnen
+Zusammenhang mit thermodynamischen Potential?
+Wie ergibt sich S aus F ?
+Wie ergibt sich C aus F ?
+Wie sieht S(T) aus ? ( Er wollte darauf hinaus, dass S einen endlichen Wert von N ln(2) annimmt)
+
+Durfte mir dann eins der folgenden Masterthemen aussuchen: Pfadintegrale, BEC, Supraleitung ? (Hab BEC genommen)
+Was ist BEC ?
+Warum gibt es kritische Temperatur?
+Welche Bedingungen für Existenz von BEC?
+Worin manisfestiert sich, dass es in 1,2D nicht existiert?
+Was passiert wenn man kleine repulsive WW hinzuschaltet?
+Dispersion der Anregungen anzeichnen
+Goldstonetheorem
+Welche Symmetrie wird gebrochen und warum?
+
+Wurde dann gefragt ob ich was mit VdW-Gasen anfangen kann. (Er meinte ist nicht so schlimm, weil das nicht in jeder Statistik VL drankommt, dementsprechend hab ich gesagt nein)
+Sind dann zu Streuung übergegangen:
+Wie bestimmt man die Wellenfunktion bei Streuung an einem lokalen Potential?
+Lippmann-Schwinger-Gleichung ?
+Was ist G_o+ ?
+Wie löst man das ?
+Bornsche Näherung ?
+Und in Ortsdarstellung ? Wie sieht das Matrixelement aus?
+Kugelwellen?
+
+
+6534, Timm
+
+Masterthemen: BEC, SSB, Variation und Wirkung
+
+Intro:
+In einem ihrer Masterthemen geht es ja um Bosonen. Welches Experiment konnte denn nicht klassisch erklärt werden und hat einen besonderen Bezug zu Bosonen? --> Schwarzer Strahler
+Erläutern Sie doch mal, was man da beobachtet --> spektrale Energiedichte gezeichnet. Wien gut für große Energien, Rayleigh gut für kleine Energien, aber Zerstrahlungskatastrophe. Gleichverteilungssatz erwähnt und erwähnt, wie Planck angenommen hat die HO in den Wänden seien quantisiert. Dann Besetzungszahl hingeschrieben. Formeln immer nur mit den relevanten Proportionalitäten genannt.
+Woher kommt das v^2 (bevor das hv von Planck drin steht)? --> kurz Herleitung skizziert (glaube das war nicht unbedingt gefragt). Energiedichte ist die Ableitung deswegen nur noch v^2.
+Was ist denn wirklich gequantelt? --> Photonenfeld?
+Woher bekommt man die Besetzungszahl? Gerne auch schon in moderner Formulierung (Bosonen). --> Man muss die Zustandssumme berechnen ( im GK Ensemble leichter als im kanonischen. Musste das dann aber nicht rechnen)
+Warum haben wir hier kein chemisches Potential? --> Teilchenzahlerhaltung gilt nicht für Photonen
+
+Q1:
+Malen Sie mal ein Potential das links eine unendlich hohe Wand hat, dann einen Topf und rechts eine endliche Stufe und erklären Sie das Spektrum. --> Topf diskrete Energien (gibt nicht notwendigerweise einen gebundenen ZS). Darüber einfach entartetes Spektrum.
+Warum einfach entartet? Physik: Teilchen kann nur von einer Richtung einlaufen. Mathe: SGL in zweiter Ableitung vom Ort, hier eine RB.
+Was braucht man hier noch, wenn man das System lösen will? --> Anschlussbedingungen hingeschrieben.
+Wie interpretiert man denn die Anschlussbedingung von psi' am endlichen Sprung? --> wusste nicht genau was gemeint war und wollte dazu ansetzen zu zeigen warum die Ableitung bei endlichen Sprüngen stetig ist (Integration der SGL in Epsilonumgebung über Sprungstelle), wurde dann aber unterbrochen.
+Was bedeutet denn die Stetigkeit von psi' bei dem endlichen Potentialsprung? --> Wahrscheinlichkeitsstromdichte stetig
+Wie würden Sie denn bei einem cx^4 Potential lösen? --> Ritz erklären. Ungleichung für obere Schranke hingeschrieben. geratene WF müssen Symmetrie des Pot haben und schneller als selbiges abfallen
+Welchen Ansatz würden sie wählen? --> exp(ax^4). mit Lösung von HO exp(ax^2) motiviert. Noch erwähnt, dass man auch exp(ax^b) wählen kann und dann über a und b variiert. (Anmerkung von Timm, dass man dann wohl Betrag x schreiben würde)
+Ja, aber wenn man jetzt nicht über zwei Parameter variieren will, wie bekommt man dann auf die richtige Potenz von x? --> Potential im Grenzwert für große x betrachten, Dann kann die GZ-Energie vernachlässigt und das Problem analytisch gelöst werden.
+
+Relativistik
+Was muss man denn für die relativistische Beschreibung eines Teilchens wissen? --> Spin
+Nehmen wir mal Spin 0. Welche Gleichung bekommen wir da? --> KGG hingeschrieben (kovariant) und kurz erklärt wie man darauf kommt. (Korrespondenzprinzip, rel. Energie-Impuls-Beziehung wie im Q2-Skript)
+Was sind die Probleme dieser Gleichung? --> schwer zu verstehen, warum sie in 2. Ordnung der Zeit sein muss. Dispersionsrelation gemalt und erklärt warum es ein Problem ist, dass diese nach unten nicht beschränkt ist (bei Kopplung an Teilchenbad stürzt das System in immer tiefere Zustände (Minimierung der Energie)). Können außerdem keine erhaltene Wahrscheinlichkeitsdichte formulieren. Dafür Kontinuitätsgleichung aufgeschrieben und aus KGG rausgeholt wie die viererstromdichte aussieht. 0. Komponente ist rho und da KGG in 2. Ordnung der Zeit ist können wir psi, und psi' beliebig wählen und so auch rho beliebig wählen.
+Wie könnte man das nun interpretieren? Teilchenzahl nicht erhalten. Aber inkonsistent mit Einteilchenbild
+
+Vielteilchentheorie
+Wie lösen wir das Problem nun? --> Vielteilchentheorie
+Was muss denn da für die Wellenfunktion von Bosonen gelten? --> symmetrisch
+was wäre den das Gegenstück und warum haben wir nur die beiden optionen? P |zstd> einmal ändert nicht den zustand sondern gibt nur vorfaktor.P^2 |zst> gibt dann wieder den ursprünglichen Zstd. demnach EW +-1. Erklärt warum das nur in 3D funktioniert (dachte ich zumindest. Timm führt dann aus ihm wurde neulich erzählt P wisse ja eigentlich nichts von der Dimension und daher müsse es auch in 2D nur Bosonen und Fermion geben. Das Problem sei also subtiler als er bisher vermutet hatte.)
+Wie macht man das nun für Bosonen? --> Symmetrisierung mit Permanente aufgeschrieben. Kurz erklärt was das ist.
+Wie kann man die Permanente denn nun ausrechnen? Habe kurz erwähnt dass man eine Determinante ja diagonalisieren würde, ich aber nicht sicher bin ob man so etwas mit der Permanente auch machen kann. Geht nicht. Das ganze ist ein Dilemma, man muss einfach aufsummieren und das ist extrem rechenaufwändig und demnach nicht praktikabel
+Wie kann man das also eleganter erklären? --> Zweite Quantisierung. Erzeuger und Vernichter erklärt, Kommutatorrelationen aufgeschrieben.
+Wie sieht denn ein Hamilton nun aus? --> WW freien Term hingeschrieben und erklärt dass die Darstellung anschaulich ist.
+Wie löst man das jetzt? --> ich wollte erst sagen dass das für bel komplizierte hamiltonians wieder genähert werden muss. war hier aber nicht gefragt. hab die Antwort vergessen
+Wieso treten die b+,b immer paarweise auf? --> Teilchenzahlerhaltung
+Schon, aber die könnte uns ja auch egal sein. --> Hier musste ich im Endeffekt passen. Unser Hamilton wird dann nicht hermitesch und ist damit kein sinnvoller Hamilton mehr.
+Wie könnte man denn nun mit linearen Termen einen hermiteschen Hamilton konstruieren? --> Auch hier bin ich nicht drauf gekommen. b_dagger + b wäre per Konstruktion hermitesch. Sowas geht
+
+TS
+Okay, wir haben oben schon ein bisschen TD angeschnitten. Aber wie wird denn in der TD die Temperatur eingeführt? --> 0.HS
+und in der Statistik? Als Lagrange-Parameter im großkanonischen Ensemble. Das sollte ich etwas ausführen. Ich habe dann das Entropiefunktional s[rho]=-k Sp(rho ln rho) - y_1(Sp(rho)-1) - y_2(sp(rho H)-E) hingeschrieben. Das hat nicht so viel anklang gefunden und ich sollte erklären wie die genutzen Ergebnisse des mikrokanonischen Ensembles genutzt werden können. Hier habe ich völlig den Durchblick verloren und wir sind dann weiter gegangen
+
+Master
+Was ist denn das Phänomen bei BEC? --> makroskopisch viele Teilchen eines id Bosegases im Grundzustand unterhalb einer kritischen Temperatur T_c
+Malen sie die Verteilung von N_o/N auf --> did it
+Okay, jetzt haben wir ja schon ein bisschen BEC gemacht. Dem Verlauf nach könnte man ja vermuten, dass hier ein PÜ stattfindet. Welche Symmetrie ist hier denn gebrochen? --> hab mich mit Timm von Hinweis zu Hinweis gehangelt und bin im Endeffekt nicht so richtig drauf gekommen. Wenn man sich die Permanente anschaut, lässt sich sehen, dass nun alle Zeilen gleich sind. Phasensymmetrie ist gebrochen. 
+
+
+5838, Timm
+
+Masterthemen: Pfadintegrale, Bose-Einstein-Kondensation, Kritische Phänomene
+Alte Quantentheorie
+
+    Was war der erste Versuch die Quantentheorie zu beschreiben? -> Bohrsche Postulate
+    Was ist da das Problem? -> Aus den Postulaten folgt kein Grundzustand, Ad-hoc Charakter,
+    keine Beschreibung aperiodischer Bahnen (Streuung) möglich
+    Was war der erste Lösungsversuch? -> Erweiterung durch Bohr-Sommerfeld, Herleitung der
+    Phasenraumquantisierung angerissen, erklärt dass man am geschlossenen Kurvenintegral
+    erkennen kann dass auch hier nur periodische Bahnen beschrieben werden
+    Fallen Ihnen außer Streubahnen auch noch andere Bahnen ein, die nicht beschrieben
+    werden können? -> wusste nicht genau worauf er hinauswollte, generell nichtgebundene
+    Bahnen hat zwar gestimmt aber die sind in „Streubahnen“ inbegriffen, er wollte darauf
+    hinaus dass nur eine bestimmte Anzahl an Problemen analytisch lösbar sind (Harmonischer
+    Oszillator, Wasserstoffatom etc.)
+
+
+Neue Quantentheorie
+
+    Wie sieht das Spektrum in einem eindimensionalen Potentialtopf aus? -> (Habe einen Topf
+    mit V(x) = -V für x-Bereich, 0 sonst gezeichnet) Für E<(-V) keins, -V<E<0 diskret, E>0
+    kontinuierlich und zweifach entartet
+    Warum ist das Spektrum für positive Energien zweifach entartet? -> Physikalischer Grund:
+    weil von links und rechts ein Teilchen einlaufen kann (k, -k), die Wellenfunktionen dazu sind
+    linear unabhängig und die allgemeine Lösung ist eine Superposition mit frei wählbaren
+    Koeffizienten
+    Wie könnte man den Grundzustand hier denn herausfinden, ohne die SGL zu nehmen? ->
+    Meine erste Idee war Ritz aber darauf wollte er nicht hinaus, danach kam ich auf die
+    Unschärferelation
+    Wie macht man das mit der Unschärferelation? -> Dx*Dp=h/2, dann Breite des Topfes als Dx
+    = L, nach Dp umstellen, mit E = T + V auf die Grundzustandsenergie
+    Ritz’sches Variationsverfahren
+
+    Wenn man sich jetzt stattdessen V(x)=cx^4 anguckt, was macht man dann? -> Nicht
+    analytisch lösbar, deswegen Ritz, hab angefangen zu erzählen: ist Variationsverfahren, was
+    beinhaltet das, habe direkt die Testfunktion exp(-ax^4) geraten
+    Wie kommen sie denn auf ihre Testfunktion? -> Muss schneller abfallen als Potential damit
+    Integrierbarkeit gegeben ist, exponentiell fällt schneller ab als Potenzreihe, muss
+    Symmetrieeigenschaften einhalten (darum gerade Potenz), Knotensatz muss erfüllt sein
+    (Grundzustand, darum kein Knoten)
+    Aber wie kommen sie gerade auf x^4? -> x^2 ist Lösung zum HO
+    Wie kann man denn den genauen Exponenten herausfinden? -> musste hier passen, er hat
+    angedeutet dass man einen neuen Parameter dazunehmen kann, d.h. alternativer Ansatz:
+    exp(-ax^b) -> da hab ich dann übernommen und erwähnt dass man dann auch nach b
+    minimiert
+
+
+Quantentheorie 2
+
+    Was muss man denn über ein Teilchen wissen, bevor man es relativistisch beschreiben
+    kann? -> den Spin, weil unterschiedliche Spins durch unterschiedliche Gleichungen
+    beschrieben werden
+
+    Wie sieht denn die Gleichung für spin 1/2 aus? -> Dirac-Gleichung (alpha-beta-Schreibweise)
+    hingeschrieben, erklärt wo der Ansatz herkam (selbe Ordnung zeit/ort, für erste Ordnung
+    gesagt dass solche Koeffizienten existieren), erzählt dass man (ihdt + H)(ihdt – H) = KGG
+    fordert um rel. Energie-Impuls-Beziehung zu gewährleisten und man daher auf die
+    Vertauschungsrelationen zu alpha/beta kommt, Dimensionen-Argumente durchgeführt,
+    Dirac-Schreibweise
+
+    Sie haben ja schon erwähnt dass die Pauli-Matrizen allein nicht gehen, in welchem Fall
+    ginge das denn? -> wusste nicht worauf er hinaus wollte, habe im 2D+1 Raum geraten,
+    meinte er nicht, er hat mich dazu geführt dass man ja eine der Matrizen eliminieren kann,
+    stand kurz auf dem Schlauch, kam dann darauf dass für m=0 der Term mit der Beta-Matrix
+    wegfällt
+
+    Inwiefern geht die Dirac-Gleichung denn über die relativistische Beschreibung hinaus? ->
+    häh? Inwiefern erfüllt Dirac denn die Energie-Impuls-Beziehung? -> weil man das mit der
+    Erhaltung der KGG fordert - Gilt das denn immer? -> Nein, aus der Dirac-Gleichung allein
+    kommt das nicht, deswegen muss man es extra fordern, d.h. mit der Dirac-Gleichung können
+    auch Systeme beschrieben werden, die die relativistische Energie-Impuls-Beziehung nicht
+    erfüllen (mind-blow mitten in der Prüfung)
+
+Streutheorie
+
+    Im nichtrelativistischen Fall mit schnell abfallendem Potential, wie sieht da die
+    Wellenfunktion weit entfernt vom Streuzentrum aus? -> Psi = Psi0 + PsiS = exp(iKR) +
+    (exp(ikr)/r)*f(theta, phi) (hier K,R Vektoren, k,r Beträge)
+    Wieso nimmt man als eingehende Welle eine ebene Welle? -> Teilchen ist ja Wellenpaket,
+    aber schnell abfallendes Potential heißt streuzentrum klein gegenüber der Ausdehnung des
+    Wellenpaketes, d.h. für große r als ebene Welle annäherbar
+    Wieso braucht man denn als streuwelle eine kugelwelle/r? -> Habe mit SGL argumentiert:
+    Lösung muss für große r die freie SGL erfüllen weil das Potential verschwindet, für exp(ikr)/r
+    stimmt das
+    Gibt es dafür auch eine weniger theoretische Argumentation? -> Bin darauf gekommen,
+    dass mit dem 1/r Faktor der Teilchenstrom die richtige Abhängigkeit hat, nämlich 1/r^2 und
+    die muss er haben damit der Strom durch eine Kugelfläche ~r^2 konstant sein kann
+    Wenn man sich jetzt die Teilchenströme ansieht, könnte man sich ja überlegen: Die
+    eingehende Welle ist eine ebene Welle, d.h. der Teilchenstrom durch eine Kugel
+    verschwindet, aber der Teilchenstrom der Streuwelle trägt positiv zum Gesamtstrom bei,
+    heißt das der Teilchenstrom ist nicht erhalten? -> Nein, man muss beachten dass der Streu-
+    Teilchenstrom auch in Vorwärtsrichtung geht (= Richtung der eingehenden Welle) und da
+    kommt es zu Interferenz mit der eingehenden Welle, d.h. hinzu kommt der Interferenz-Strom
+    und der kompensiert gerade den Streu-Strom
+    Was erhält man daraus? -> Optisches Theorem, Beziehung zwischen gesamte Streuung und
+    Vorwärtsstreuung
+
+Thermodynamik
+
+    Es gibt ja sowohl in der TD als auch Statistik die Entropie, wo kommt die denn in der TD
+    her? -> durch den 2. Hauptsatz postuliert
+    Wie lautet der 2. Hauptsatz? -> 2. Hauptsatz, dS = del Qrev / T
+    Wieso haben sie dort denn zwei unterschiedliche d geschrieben? -> dS ist vollständiges
+    Differential, weil S eine Zustandsgröße und daher wegunabhängig ist, während Q
+    Prozessgröße und daher vom weg abhängig
+
+    Was ist denn die Relation die so ein vollständiges Differential erhalten muss? -> Wusste
+    erst nicht worauf er hinaus will, hab die integralform vom 2. HS hingeschrieben und er hat
+    mich dann dazu geführt dass für ein vollständiges Differential ein linienintegral über eine
+    geschlossene Kurve verschwinden muss (dS = 0 für Kreisprozess)
+    Wo kommt die Entropie in der Statistik her? -> Definition über rho
+    Wieso ist die nicht äquivalent zur Formulierung in der Thermodynamik? -> weil in der TD
+    nur Gleichgewichtszustände beschrieben werden, während rho alle möglichen Zustände
+    beschreiben kann, inklusive gemischte zustände d.h. nicht GGW
+    Wenn man sich ein abgeschlossenes System anschaut, wie sieht rho dann aus? ->
+    Mikrokanonisches Ensemble, im GGW haben dann alle Zustände dieselbe Energie, rho ist
+    diagonal, hier die Delta-Form hingeschrieben und erklärt dass die Spur die Anzahl solcher
+    Zustände ist, Fundamentalpostulat: alle Zustände gleich wahrscheinlich
+    Also rho ist diagonal, ist das immer der Fall? -> kommt auf die Basis an
+    In welcher Basis ist rho hier diagonal? -> Eigenbasis, aber das ist trivial, Eigenbasis von rho =
+    Eigenbasis des Hamilton Operators
+
+
+Pfadintegrale
+
+    Wir haben ja schon über eine Formulierung der QT gesprochen, was ist denn eine weitere?
+    -> Pfadintegrale
+    Was will man da denn generell beschreiben und fangen sie einfach mal an zu erzählen was
+    das bedeutet -> Übergangsamplitude, Doppelspalt-Vorstellung, habe erst die
+    Übergangsamplitude als Doppelsumme über zwei Doppelspalte hingeschrieben, unendliche
+    viele Löcher macht Summen zu Integralen, unendliche viele Spalte machen unendliche viele
+    Integrale = Pfadintegral mit A[x(t)] im Argument, A[x(t)] = exp(iS[x(t)]/h) wobei S[x(t)] die
+    Wirkung
+    Wie ist die Wirkung denn definiert? -> die klassische Wirkung, d.h. Zeitintegral über
+    Lagrange-Funktion
+    Wie kommt man darauf? -> Herleitung erklärt, d.h. mit Skalarprodukt angefangen,
+    Zeitentwicklung eingesetzt, wegen VONS der p-Zustände kann man Integral über p einfügen,
+    dann Hamiltonian ausführen (hier die untere Frage) , Hamiltonian = T+V ersetzen und zu
+    Gaußintegral, komme am Ende auf Lagrange und Multiplikation über unendlich viele
+    Wegschritte sorgt für Integral über Lagrange
+    Wieso kann man hier den Hamiltonian denn einfach so anwenden? -> man macht eine
+    Taylor-Entwicklung der exp-Funktion, dann wichtig: Normalordnung der p-x-Operatoren,
+    bedeutet p steht immer links, x immer rechts, bedeutet p wirkt auf p zustand und x auf xn
+    zustand angewendet
+    Jetzt sind in dem Integral ja neben den klassischen Pfaden auch andere, wieso? -> wusste
+    nicht genau worauf er hinauswollte, habe kurz erklärt wie das Korrespondenzprinzip erfüllt
+    ist
+    Das meinte ich nicht, welche Pfade außer den klassischen sind denn noch dabei? -> habe
+    hier wieder laut überlegt, Tunnelwahrscheinlichkeiten erwähnt, d.h. generell einfach dass
+    manche Pfade klassisch verboten sind hier aber trotzdem eingehen
+    Genau, wie sehen die klassisch verbotenen pfade denn aus? -> zerstückelte Pfade mit
+    diskreten Punkten, können also gar keine klassischen Pfade sein
+    Wenn man willkürlich einen Pfad aus dem Integral auswählt, wie wahrscheinlich ist es
+    denn, dass man so einen klassisch verbotenen erwischt? -> nahezu 1
+
+
+5796, Timm
+
+Welche Masterthemen haben Sie gewählt?
+- BEC, Pfadintegrale, kritische Phänomene
+
+Zunächst eine Standardfrage: Es gibt so Experimente, die sich klassisch nicht erklären lassen. Eines davon ist für eines ihrer Masterthemen besonders interessant. Welches ist das?
+- Hohlraumstrahlung
+Erzählen Sie doch bitte einmal etwas darüber!
+- Hab dann erklärt, dass sich stehende Wellen ausbilden und das Reighley-Jeans Gesetz aufgeschrieben.
+Wie kommt die Abhängigkeit von kT zustande?
+- Gleichverteilungsgesetz, hab das dann ein bisschen erklärt
+Und wie sieht das dann aus?
+- Hab den Graphen mit der Ultraviolettkatastrophe gemalt und hab dann noch Wien und Planck erklärt.
+Wie ist Planck darauf gekommen?
+- Da hab ich dann das ganze von der falschen Seite aufgerollt ausgehend von Bose- Einstein. Er meinte dann trocken, dass Planck aber schon viel früher darauf gekommen ist, als Bose und Einstein. Dann ist mir wieder eingefallen, dass er von quantisierten Oszillatoren in den Wänden ausgegangen ist.
+Und wie ist es wirklich?
+- Die Feldmoden sind quantisiert
+
+Gut dann gehen wir jetzt mal zur QM über. Wie löst man dort Probleme im Allgemeinen?
+- Schrödingergleichung hingeschrieben
+Wie geht man jetzt vor, wenn man Zustände zu beliebigen Zeiten erhalten möchte?
+- Hab dann den Zeitentwicklungsoperator vorgestellt, aber das wollte er wohl gar nicht hören. Allgemein war ich an dieser Stelle sehr verwirrt, worauf er hinaus wollte. Schließlich bin ich unter seiner Führung dann auf den Seperationsansatz gekommen.
+
+Dann nun ein konkreteres Problem, malen Sie mal bitte eine Potentialstufe an die Tafel. Wie sieht hier das Spektrum aus?
+- Für 0V zweifach
+Und wie kommt es dazu?
+- Hab dann gemeint, dass die SGL ja von zweiter Ordnung im Ort ist und daher zwei RB nötig wären. Er meinte dann, es gehe ihm nur um die Physik. War dann wieder verwirrt und kam dann darauf, dass ja ein Strahl von links und ein Strahl von rechts unabhängig von einander einlaufen könne.
+Und wie gehen Sie jetzt weiter vor?
+- Ansätze hingeschrieben, erklärt, dass man dann auf die EW kommt und über die Ströme die Koeffizienten herleiten kann.
+Was fehlt noch?
+- Die Anschlussbedingungen, hab sie dann hingeschrieben.
+
+Betrachten wir das ganze einmal relativistisch. Was muss man da beachten?
+- Ob es Fermionen oder Bosonen sind
+Nehmen wir mal Fermionen. Was machen Sie?
+- Dirac Gleichung sowohl in nicht explizit kovarianter Form als auch in explizit kovarianter Form aufgeschrieben. Hab dann erklärt, wie man auf die Eigenschaften der Matrizen kommt. Dann sind wir wieder auf das Thema Potentialstufe zurückgekommen. Also habe ich die Energieeigenwerte angeschrieben und das Klein-Paradoxon erklärt.
+Und wo tritt so etwas auch auf?
+- Halbleiter
+Irgendwo kam dann noch die Frage nach der minimalen Kopplung ans Eichfeld bei Dirac und der eichkovarianten Ableitung, weiß nicht mehr genau an welcher Stelle...
+Was ist die Problematik der Dirac-Gleichung?
+- Da hatte ich einen kurzen Black-out, war mir sicher dass ich das wusste, bin aber einfach nicht mehr draufgekommen. Er hat gemeint, dass es im Prinzip schon an der Tafel steht. Dann ist mir die Zerstrahlungskatastrophe wieder eingefallen aufgrund der nach unten unbeschränkten Energie.
+Wie hat man versucht das Problem zu lösen?
+- Durch Besetzung der unteren Energiezustände
+Wo war jetzt noch das Problem?
+- Dass man damit annehmen musste, dass eine so große Menge an massiven, geladenen Teilchen keine Auswirkungen hätte auf die Umgebung
+Und wie konnte man das dann lösen?
+- Über die Vielteilchentheorie. Mit Erzeugern und Vernichtern.
+Genau, da brauchen wir jetzt nicht weiter draufeinzugehen.
+
+Dann machen wir jetzt mal ein wenig Thermodynamik und Statistik. Wie ist in der phänomenologischen Theorie die Entropie eingeführt.
+- Hab dann den zweiten HS erklärt.
+Und was genau ist eine solche Annahme?
+- Ein Postulat
+Wie die Entropie in der Statistik definiert?
+- S = -k Sp(rho ln rho) und hab dann gemeint, dass dies gleich der td. Entropie ist für den maximierenden Dichteoperator.
+Und nun etwas expliziter für abgeschlossene Systeme? Welches Ensemble ist das?
+- Mikrokanonisch, S = k ln Omega wobei Omega die Zahl der Mikrozustände mit entsprechender Energie ist.
+Stellen Sie jetzt bitte einmal einen Zusammenhang zwischen dem allgemeinen und dem mikrokanonischen Ausdruck her
+- Hab also den zugehörigen Dichteoperator aufgeschrieben.
+Welche Eigenschaften hat der Dichteoperator?
+- Eigenschaften aufgezählt
+Wie sieht er aus, wenn es sich um einen reinen Zustand handelt?
+- Hier stand ich wirklich komplett auf dem Schlauch, habe einige Hinweise gebraucht bis ich auf die entsprechende Formel gekommen bin.
+
+Dann machen wir jetzt noch ein bisschen Master. Was ist das Phänomen der BEC?
+- makroskopische Besetzung des Grundzustandes bei tiefen Temperaturen.
+Können Sie bitte einmal zeigen, wie dann die Besetzungszahl des Grundzustandes aussieht?
+- Hab die Formel z/(1-z) hergeleitet, aber das wollte er gar nicht wissen, er wollte den Graphen N0/N über T haben, den hab ich dann aufgemalt.
+Und wie kommt man jetzt auf die Kondensation?
+- Habe das Teilchenintegral aufgeschrieben und gemeint, dass wir alle außer dem Grundzustand betrachten. Dann habe ich grob hergeleitet in d-Dimensionen für freie Teilchen (D(E) = c*(E)^(d/2-1)) wie man auf N = gd/2 Gamma(d/2) (kT)^(d/2) kommt. Dann Teilchenabschätzung mit der Zetafunktion und erläutert, dass die Zeta-fkt z(d/2) für d kleiner gleich 2 divergiert und für d größer 2 konvergiert, was dazu führt dass die Teilchenzahl für T gegen Null gegen Null geht und wegen Teilchenzahlerhaltung also alle Teilchen im Grundzustand, den wir gesondert betrachtet haben, sein müssen.
+Weshalb können wir den Grundzustand gesondert betrachten?
+- Weil wenn man für epsilon 0 einsetzt das Integral für d größer 2 verschwindet, also der Grundzustand da nicht mit reinzählt.
+Dann wollte er wissen ob wir hatten, was passiert, wenn die Teilchen nun miteinander wechselwirken. Das wusste ich nicht, war aber nicht schlimm. Er ist dann noch auf Systeme eingegangen, bei denen BEC schon festgestellt wurde. Unter anderem ging darum, dass man stark verdünnte Gase nehmen kann usw. Aber der Teil war wohl für die Benotung nicht mehr wirklich relevant.
+
+
+5745, Timm
+
+genannte Masterthemen: Pfadintegral, Friedmanngleichungen/Kosmologie, Spontane Symmetriebrechung
+
+alte QT:
+
+Was war der erste Versuch einer Quantentheorie?
+
+Wie sah die Erweiterung dessen aus?
+
+moderne QT:
+
+Wie beschreibt man in der QT Zustände?
+
+Wie beschreibt man Observablen?
+
+Was bringt die Hermitizität der Operatoren?
+
+Was passiert bei einer Messung?
+
+Quantensysteme in 1D:
+
+endliches 1D-Kastenpotential: zeichnen und Spektrum erklären
+
+Was bedeutet die Entartung für die Lösung?
+
+Wie geht man bei der Lösung vor?
+
+Wie bestimmt man den Transmissionskoeffizienten?
+
+Streutheorie:
+
+Wie sieht die Wellenfunktion aus?
+
+Warum muss bei der auslaufenden Kugelwelle 1/r stehen?
+
+[eine Frage, deren Antwort das Optische Theorem und die destruktive Interferenz war]
+
+Thermodynamik:
+
+Wie lautet der erste Hauptsatz?
+
+Wo liegt der Unterschied der geraden und der geschwungenen d in den Differentialen?
+
+In welcher Art von Gerät macht man sich das zunutze?
+
+Warum benutzt man oft andere Größen wie die Freie Energie?
+
+Spontane Symmetriebrechung:
+
+Was ist das?
+
+Woran macht man die Symmetrie des Gleichgewichtszustands fest?
+
+[Ferromagnetismus] Wie sieht der Gleichgewichtszustand für hohe Temperaturen aus? Wie hängt für niedrige Temperaturen m von T ab?
+
+Was sind kritische Exponenten?
+
+
+5731, Vojta
+
+Stern-Gerlach Experiment
+
+-dabei gings am Anfang grundsätzlich darum was Zustand und Messung bedeutet und was das fürs SG experiment bedeutet
+-hintereinanderausführung vom SG Experiment
+-Was ist der Erwartungswert <Ŝx>? (=0 wenn magnetfeld senkrecht zum Strahl da hälfte nach +x und hälfte nach -x abgelenkt wird)
+-...
+
+
+BEC
+
+-was ist das
+-woran kann mans sehen dass System kondensiert ist (hab mit / Funktion geantwortet was, dachte er will auf irgendwelche Eigenschaften vom BEC hinaus, aber hat gepasst)
+-warum gibt es Tc und was passiert da? Was passiert da mit chemischem Potential? (mu wird bei Tc = 0)
+- mu von T diagramm zeichnen (konnte ich nicht)
+-Bose einstein verteilung formel und diagramm und wie man damit bec erklären kann
+- für welche systeme ist bec möglich (hab gesagt dass es bei alkali Atomen möglich ist aber darauf wollte er nicht hinaus, hat mich dann gefragt obs auch für Systeme in 2D geht, hab gesagt da ist der koeffizient bei vertauschung in der wellenfunktion lambda nicht mehr eins, richtige antwort hatte nichts damit zu tun)
+
+
+Spontane Symmetriebrechung (hab ich als Masterthema genannt in der Hoffnung dass es nicht dran kommt)
+
+-was sind Symmetrien
+-wie kann man das mathematisch beschreiben
+wusste keinen anfang und er hatte angeboten zum nächsten thema zu gehen
+
+
+Pfadintegralformalismus
+
+-was ist das
+-wie kommt man in formel für propagator U = mit normalem zeitentwicklungsoperator Û zum Pfadintegral
+-wie ist das mit Zustandssumme verknüpt
+
+
+5664, Timme
+
+Welche drei Konzepte sind Ihrer Meinung nach besonders bedeutend in der Theoretischen Physik?
+
+
+    Spontane Symmetriebrechung, Pfadintegralformalismus der Quantenmechanik und Eichtheorien
+
+
+
+Eichtheorien
+
+Warum sind Eichtheorien so bedeutend?
+
+
+    Eichtheorien sind deswegen so bedeutend, weil sich u.a. die bekannten Wechselwirkungen durch Eichtheorien beschreiben lassen.
+
+
+Was ist eine Eichsymmetrie? Was muss man sich darunter vorstellen?
+
+
+    Man kann physikalische Größen (z.B. Felder) bezüglich bestimmter innerer Koordinatensysteme definieren. Manchmal ist eine Beschreibung in verschiedenen KS möglich. Der Übergang von einem dieser KS zu einem anderen entspricht dann einer Eichtransformation. Dabei ändert sich physikalisch nichts am Zustand des Systems, sondern nur unsere Beschreibung. Daher spricht man von Eichsymmetrie.
+
+
+Was ist denn bei einer Eichsymmetrie anders als z.B. bei einer Rotationssymmetrie eines klassisches Systems?
+
+
+    In einem der Fälle handelt es sich um eine Transformation der äußeren Korrdinaten, beim anderen werden innere Koordinaten transformiert.
+
+
+Und was ist der Unterschied zwischen einem inneren und einem äußeren Koordinatensystem?
+
+
+    An dieser Stelle merkte ich, dass mir der Unterschied nicht so klar war, dass ich vernünftig darauf antworten konnte.
+
+
+
+Pfadintegral-Formalismus
+
+Wie funktioniert denn der Pfadintegral-Formalismus?
+
+
+    Im Pfadintegral-Formalismus werden quantenmechanische Systeme mit Hilfe von Übergangsamplituden beschrieben. Ich schrieb die Formel für die Übergangsamplitude auf, erklärte die Elemente und fasste nochmal zusammen: man erhält also die Übergangsamplitude, indem man über alle denkbaren Pfade integriert und jeden von ihnen mit einem Phasenfaktor gewichtet, der von der zugehörigen Wirkung abhängt.
+
+
+Wenn im Pfadintegral-Formalismus bestimmte Pfade auftauchen, steht das dann nicht im Widerspruch zur Heisenbergschen Unschärferelation?
+
+
+    Nein, da man ja nicht nur einen Pfad betrachtet, sondern alle denkbaren Pfade einen Beitrag zum Pfadintegral liefern, was die Unschärfe zum Ausdruck bringt.
+
+
+
+Spontane Symmetriebrechung
+
+Was passiert bei Spontaner Symmetriebrechung?
+
+
+    Physikalische System können gewisse Symmetrien aufweisen. Das ist dann daran erkennbar, dass z.B. die Lagrange-Funktion oder der Hamilton-Operator des Systems unter der entsprechenden Symmetrietransformation invariant bleibt.
+
+
+Wie sieht denn eine solche Symmetrie aus? Ein Beispiel wäre vielleicht nicht schlecht ...
+
+
+    Als Beispiel wählte ich ein klassisches Teilchen im äußeren Potential, das spiegelsymmetrisch ist. Ich schrieb die zugehörige Langrange-Funktion auf und sagte, dass sie sich unter der Transformation x -> -x nicht ändert, die damit offensichtlich eine Symmetrietransformation ist.
+
+
+Ein Beispiel für ein solches Potential wäre ja das Potential eines harmonischen Oszillators. Wie sieht das aus?
+
+
+    Ich schrieb einen allgemeinen Ausdruck für das Potential auf (V(x) = kx^2) und skizzierte es.
+
+
+Was sagt uns dieses Potential?
+
+
+    Bei dieser Frage war mir unklar, was ich sagen sollte. Prof. Timme stellte noch weitere Fragen, mit denen ich immer noch wenig anfangen konnte. Dann bat er mich, die Bewegungsgleichung aufzustellen. Das tat ich daraufhin mit Hilfe der Euler-Lagrange-Gleichung.
+
+
+Welcher Größe aus der Newtonschen Mechanik entspricht der Term in der Bewegungsgleichung, der die Ortableitung des Potentials enthält?
+
+
+    Dieser Term entspricht der Kraft.
+
+
+Was heißt das in Zusammenhang mit der Form des Potentials?
+
+
+    Die Kraft ist immer in Richtung des Potentialminimums ausgerichtet. Dadurch kommt eine Oszillationsbewegung zustande.
+
+
+Irgendwie haben wir uns jetzt weit vom eigentlichen Thema entfernt, kehren wir mal zurück. Wann ist eine Symmetrie dann spontan gebrochen?
+
+
+    Dazu muss man den Grundzustand des Systems betrachten. Wenn dieser die Symmetrie des Systems selbst nicht erfüllt, spricht man von einer spontan gebrochenen Symmetrie. Betrachtet man nur lokale Fluktuationen um den Grundzustand, so ist die Symmetrie nicht offensichtlich. Das habe ich mit Hilfe von Beispiel-Potentialen für Systeme illustriert. Mit dieser Antwort schien Prof. Timme aber nicht zu 100 % zufrieden zu sein.
+
+
+Wir betrachten mal einen ferromagnetischen Festkörper, der durch das Ising-Modell beschrieben wird. Wie sieht hier die Spontane Symmetriebrechung aus?
+
+
+    Die spontane Symmetriebrechung tritt bei einer gewissen kritischen Temperatur auf. Oberhalb dieser Temperatur ist die mittlere kinetische Energie pro Teilchen größer als die Wechselwirkungsenergie der Spins. Die thermischen Fluktuation verhindern daher, dass sich die Spins aneinander ausrichten können. Unterhalb der kritischen Temperatur wird die Wechselwirkung dominant, deswegen richten sich die Spins aneinander aus und zeigen bevorzugt in eine Richtung.
+
+
+Welche Magnetisierung liegt also vor, wenn wir uns oberhalb der kritischen Temperatur befinden?
+
+
+    Dort ist die Magnetisierung näherungsweise null.
+
+
+Wie sieht das unterhalb der kritischen Temperatur aus?
+
+
+    Die Spins richten sich aneinander aus und zeigen fast alle in eine Richtung. Es liegt also eine von null verschiedene Magnetisierung vor.
+
+
+Angenommen, wir haben ein System aus 1 000 000 Spins unterhalb der kritischen Temperatur. 980 000 zeigen in die eine Richtung, 20 000 in die andere. Wie wahrscheinlich ist im Vergleich dazu ein Zustand, bei dem ein Spin seine Ausrichtung ändert hat?
+
+
+    An dieser Stelle habe ich kurz allgemein etwas zur kanonischen Zustandssumme und zu den Wahrscheinlichkeiten für Zustände im kanonischen Ensemble erzählt. Daraus habe ich dann abgeleitet, dass sich die Wahrscheinlichkeiten der beiden genannten Zustände um den Faktor e^(-dE/kT) unterscheiden, wobei dE der Energiedifferenz beider Zustände entspricht. Den Wert dieser Energiedifferenz erhält man aus dem Ising-Modell. Ändert ein Spin seine Ausrichtung, dann ist die Differenz nur sehr gering. Dementsprechend sind die Wahrscheinlichkeiten beinahe gleich.
+
+
+Wie sieht die Wahrscheinlichkeitsverteilung dafür aus, bestimmte Werte für die Magnetisierung zu erhalten, wenn eine endliche Zahl von Spins vorliegt?
+
+
+    Die Wahrscheinlichkeitsverteilung hat zwei Maxima bei den relativen Magnetisierungen M/M_max = -1 und M/M_max = +1 und fällt in Richtung M/M_max = 0 ab.
+
+
+Wie verändert sich diese Verteilung bei steigender Zahl von Spins? Wie sieht es im thermodynamischen Limes aus?
+
+
+    Die Wahrscheinlichkeitsdichte ist an den Maxima höher, in Richtung M/M_max = 0 fällt die Verteilung steiler ab. Das liegt daran, dass es dem System bei steigender Spin-Zahl zunehmend Energie kostet, wenn ein Spin im Vergleich zur mittleren Spinausrichtung entgegengesetzt ausgerichtet ist. Im thermodynamischen Limes geht die Wahrscheinlichkeitsdichte in Deltafunktionen an den beiden Maxima über, dazwischen ist sie null.
+
+
+Wie hoch ist dann die Wahrscheinlichkeit, bei unendlich vielen Spins z.B. von M/M_max = -1 zu M/M_max = +1 zu gelangen?
+
+
+    Null, da die Wahrscheinlichkeit für Zustände dazwischen null ist.
+
+
+
+Es folgten noch einige weitere Fragen zur Spontanen Symmetriebrechung im Fall von wechselwirkenden Spins, z.B. wie sich das System für einen der möglichen Grundzustände entscheidet.
+
+Wie bestimmt man Wahrscheinlichkeitsverteilungen bzw. Zustandssummen allgemein in mikrokanonischen, kanonischen und großkanonischen Ensembles?
+
+
+    Diese Größen lassen sich aus dem Dichteoperator ableiten. Den Dichteoperator bestimmt man durch Maximierung der Entropie unter den Nebenbedingungen, die für das jeweilige Enseble vorliegen.
+
+
+Wodurch ist ein kanonisches Ensemble charakterisiert? Was ist der Unterschied zum mikrokanonischen Ensemble?
+
+
+    Ein Kanonisches Ensemble enthält thermodynamische Systeme, die an ein Wärmebad, aber nicht an ein Teilchenbad gekoppelt sind. D.h. die Teilchenzahl ist konstant und die mittlere Energie wird durch die Kopplung an das Wärmebad festgelegt. Bei einem mikrokanonischen Ensemble liegt weder die Kopplung an ein Wärmebad noch an ein Teilchenbad vor. Energie und Teilchenzahl sind also konstant.
+
+
+
+Zusatzfragen zur Bose-Einstein-Kondensation:
+
+Was ist Bose-Einstein-Kondensation?
+
+
+    Bose-Einstein-Kondensation ist ein Phänomen, dass in Systemen von Bosonen bei niedrigen Temperaturen auftritt. Dabei wird ein quantenmechanischer Zustand mit einer makroskopischen Zahl von Teilchen besetzt.
+
+
+Was bestimmt die Bose-Einstein-Kondensation?
+
+
+    Zuerst vermutete ich, dass er nach Bedingungen fragt, unter denen Bose-Einstein-Kondensation auftritt. Das wollte er allerdings nicht hören. Anschließend sagte ich, dass es sich um einen Phasenübergang ohne spontane Symmetriebrechung handelt. Daraufhin meinte er, das sei nicht falsch, aber auch damit war er nicht zufrieden.
+
+
+Treten die Bosonen denn miteinander in Wechselwirkung?
+
+
+    Nein, das ist bei der Bose-Einstein-Kondensation nicht nötig.
+
+
+Genau, das ist das Fazinierende an Bose-Einstein-Kondensation: es tritt ein Phasenübergang auf, obwohl die Bosonen nicht wechselwirken.
+
+
+
+
+
+
+
+
+
+
+
+
+

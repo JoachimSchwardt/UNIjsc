@@ -1,0 +1,342 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Prime Number Theorem}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Analytic Number Theory}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+
+\section{The prime density function}
+Consider the quantity $n!$ for $n\in\mathbb{N}$ and let $p$ be a prime number.
+Note that every $p$-th factor of $n!$ is divisible by $p$ once, every $p^2$-th factor is divisible by $p$ twice, and in general every $p^k$-th factor of $n!$ is divisible by $p^k$.
+Thus, the number of times $p$ appears in $n!$, which we will call $N_p(n!)$, is given by
+\begin{align}
+N_p(n!) = \sum_{j\ge 1, jp^1\le n}1 + \sum_{j\ge 1, jp^2\le n}2 + \dots = \sum_{k \ge 1} \sum_{j \ge k, jp^k \le n} k \equiv \sum_{k\ge 1} N_{p,k}(n!). \label{eqn:exact prime factor formula}
+\end{align}
+Note that $N_{p,k}(n!)$ effectively counts the number of times the factor $p^k$ fits in $n$, which can be written as
+\begin{align}
+N_{p,k}(n!) &= \left\lfloor \frac{n}{p^k} \right\rfloor.
+\end{align}
+Thus \autoref{eqn:exact prime factor formula} simplifies to
+\begin{align}
+N_p(n!) &= \sum_{k \ge 1} \left\lfloor \frac{n}{p^k} \right\rfloor.  \label{eqn:exact prime factor of n factorial}
+\end{align}
+\autoref{table:exact prime factor example 30fac} illustrates how this formula works for the specific example of $n=30$.
+%\begin{table}[!ht]
+%\centering
+%\begin{tabular}{|*{5}{c|}} \hline
+%$p$ & 2 & 3 & 5 & 7 \\ \hline
+%$N_{p,1}$ & 5 & 3 & 2 & 1 \\ \hline
+%$N_{p,2}$ & 2 & 1 & 0 & 0 \\ \hline
+%$N_{p,3}$ & 1 & 0 & 0 & 0 \\ \hline
+%$N_{p,k\ge 4}$ & 0 & 0 & 0 & 0 \\ \hline
+%$N_p$ & 8 & 4 & 2 & 1 \\ \hline
+%\end{tabular}
+%\caption{Prime factorization of $10!$ illustrating \autoref{eqn:exact prime factor formula}.}
+%\label{table:exact prime factor example}
+%\end{table}
+%\begin{table}[!ht]
+%\centering
+%\begin{tabular}{|*{5}{c|}} \hline
+%$p$ & 2 & 3 & 5 & 7 \\ \hline
+%$N_{p,1}$ & 5 & 3 & 2 & 1 \\ \hline
+%$N_{p,2}$ & 2 & 1 & 0 & 0 \\ \hline
+%$N_{p,3}$ & 1 & 0 & 0 & 0 \\ \hline
+%$N_{p,k\ge 4}$ & 0 & 0 & 0 & 0 \\ \hline
+%$N_p$ & 8 & 4 & 2 & 1 \\ \hline
+%\end{tabular}
+%\begin{tabular}{|*{5}{c|}}\hline
+%$p$ & $N_{p,1}$ & $N_{p,2}$ & $N_{p,3}$ & $N_p$ \\ \hline
+%2 & 5 & 2 & 1 & 8 \\ \hline
+%3 & 3 & 1 & 0 & 4 \\ \hline
+%5 & 2 & 0 & 0 & 2 \\ \hline
+%7 & 1 & 0 & 0 & 1 \\ \hline
+%\end{tabular}
+%\caption{Prime factorization of $10!$ illustrating \autoref{eqn:exact prime factor formula}.}
+%\label{table:exact prime factor example 10fac}
+%\end{table}
+\begin{table}[!ht]
+\centering
+\begin{tabular}{|*{6}{c|}}\hline
+$p$ & $N_{p,1}$ & $N_{p,2}$ & $N_{p,3}$ & $N_{p,4}$ & $N_p$ \\ \hline
+2 & 15 & 7 & 3 & 1 & 26 \\ \hline
+3 & 10 & 3 & 1 & 0 & 14 \\ \hline
+5 & 6 & 1 & 0 & 0 & 7 \\ \hline
+7 & 4 & 0 & 0 & 0 & 4 \\ \hline
+11 & 2 & 0 & 0 & 0 & 2 \\ \hline
+13 & 2 & 0 & 0 & 0 & 2 \\ \hline
+17 & 1 & 0 & 0 & 0 & 1 \\ \hline
+19 & 1 & 0 & 0 & 0 & 1 \\ \hline
+23 & 1 & 0 & 0 & 0 & 1 \\ \hline
+29 & 1 & 0 & 0 & 0 & 1 \\ \hline
+\end{tabular}
+\caption{Prime factorization of $30!$ illustrating \autoref{eqn:exact prime factor of n factorial}.}
+\label{table:exact prime factor example 30fac}
+\end{table}
+The floor function is connected to the fractional part via $\lfloor x \rfloor = x - \{ x \}$, which we may use to rewrite the counting function as
+\begin{align}
+N_p(n!) &= \sum_{k \ge 1} \frac{n}{p^k} - \sum_{k\ge 1} \left\{ \frac{n}{p^k} \right\} = \frac{n}{p - 1} - \sum_{k\ge 1} \left\{ \frac{n}{p^k} \right\}.
+\end{align}
+%Using this equation, we can rewrite the factorial as a product over the primes
+%\begin{align}
+%%n! &= \prod_p p^{N_p(n!)} = \prod_p \prod_{k\ge 1} p^{\left\lfloor \frac{n}{p^k} \right\rfloor}.
+%n! &= \prod_p p^{N_p(n!)} = \prod_p p^{\frac{n}{p-1}} \prod_{k\ge 1} p^{-\left\{ \frac{n}{p^k} \right\}}.
+%\end{align}
+%We take the logarithm to convert products into sums, leading to
+%\begin{align}
+%\log n! &= \sum_p \klam\left[ \frac{n}{p-1}\log p - \sum_{k\ge 1} \klammer\left\{ \frac{n}{p^k} \right\} \log p \right] = \\
+%&= \sum_p \log p \klam\left[ \frac{n}{p-1} - \sum_{k\ge 1} \klammer\left\{ \frac{n}{p^k} \right\} \right].
+%\end{align}
+Using this equation, we can rewrite the factorial as a product over the primes
+\begin{align}
+n! &= \prod_p p^{N_p(n!)}.
+\end{align}
+We take the logarithm to convert products into sums, leading to
+\begin{align}
+\log n! &= \sum_p N_p(n!) \log p = \sum_{p\le n} \log p \klam\left[ \frac{n}{p-1} - \sum_{k\ge 1} \klammer\left\{ \frac{n}{p^k} \right\} \right].
+\end{align}
+Now let us turn to a different approximation for $n!$ using the integral
+\begin{align}
+n! &= \intx\int_{0}^{\infty}x^n \e^{-x}\, \mathrm{d}x = \intx\int_{0}^{\infty} \e^{-x + n\log x}\, \mathrm{d}x.
+\end{align}
+The function $-x + n\log x$ has a minimum at $x = n$.
+Expanding around this point gives
+\begin{align}
+-x + n\log x &\sim -n + n\log n - \frac{1}{2n} \kla\left( x - n \right)^2
+\end{align}
+This leads to the approximation
+\begin{align}
+n! &\sim \intx\int_{0}^{\infty} \e^{-n + n\log n} \e^{-\frac{1}{2n} (x-n)^2} \, \mathrm{d}x \kom\overset{\substack{{z\, := \, \frac{x - n}{\sqrt{n}}} \\ |}}{=} \e^{-n + n\log n} \intx\int_{-\sqrt{n}}^{\infty} \e^{-\frac{1}{2}z^2} \, \sqrt{n}\mathrm{d}z.
+\end{align}
+We can compute the upper part of the integral analytically, but need to make further approximations for the lower part.
+%In a rather drastic attempt, we will simply use the midpoint rule with a single support point at $x=-\frac{1}{2n}$, giving
+%\begin{align}
+%\intx\int_{-\frac{1}{n}}^{0} \e^{-\frac{n}{2}x^2} \, \mathrm{d}x &\sim \e^{-\frac{1}{8n^3}}
+%\end{align}
+Since we are interested in the behaviour for large $n$, we consider the small deviation from a gaussian integral
+\begin{align}
+\epsilon_n &:= \intx\int_{-\infty}^{-\sqrt{n}} \e^{-\frac{1}{2}x^2} \, \mathrm{d}x \kom\overset{\substack{{z\, :=\, \e^{-\frac{1}{2}x^2}} \\ |}}{=} \intx\int_{0}^{\e^{-\frac{n}{2}}} z \, \frac{\mathrm{d}z}{z \sqrt{-2\log z}}.
+\end{align}
+Expanding around the upper bound yields
+\begin{align}
+\epsilon_n &\sim \intx\int_{0}^{\e^{-\frac{n}{2}}} \frac{1}{\sqrt{n}} - \frac{1}{2\sqrt{n}^3} \frac{-2}{\e^{-\frac{n}{2}}} \kla\left( z - \e^{-\frac{n}{2}} \right) \, \mathrm{d}z = \frac{\e^{-\frac{n}{2}}}{\sqrt{n}} - \frac{\e^{-\frac{n}{2}}}{2\sqrt{n^3}} .
+\end{align}
+Collecting all the terms, we arrive at
+\begin{align}
+n! &\sim \e^{-n + n\log n} \klam\left[ \sqrt{2\pi n} - \epsilon_n \right] \sim \e^{-n + n\log n} \klam\left[ \sqrt{2\pi n} - \frac{\e^{-\frac{n}{2}}}{\sqrt{n}} \right].
+\end{align}
+Taking the logarithm of this expression gives
+\begin{align}
+\log n! &\sim -n + n\log n + \log \kla\left( \sqrt{2\pi n} - \frac{1}{\sqrt{n}} \e^{-\frac{n}{2}} \right) \sim \\
+&\sim n\log n - n + \frac{\log n}{2}.
+\end{align}
+Comparing to our previous result, we find
+\begin{align}
+\sum_{p\le x} \log p \klam\left[ \frac{x}{p-1} - \sum_{k\ge 1} \klammer\left\{ \frac{x}{p^k} \right\} \right] &\sim x\log x - x + \frac{\log x}{2},\\
+\Rightarrow\ \ \ \sum_{p\le x} \log p \klam\left[ \frac{1}{p-1} - \sum_{k\ge 1} \frac{1}{x} \klammer\left\{ \frac{x}{p^k} \right\} \right] &\sim \log x - 1 + \frac{\log x}{2x}.
+\end{align}
+Consider some expression of the form
+\begin{align}
+F(x) &:= \sum_{p\le x} f(p).
+\end{align}
+Differentiating this with respect to $x$ is not possible, since this is a step-function.
+However, for small $\Delta x<1$, the difference
+\begin{align}
+F(x+\Delta x) - F(x)  &= \sum_{p-x\le \Delta x} f(p) = \begin{cases} f(x) & x\ \tecxt\text{prime},\\ 0 \end{cases}
+\end{align}
+gives us a notion of ``local change''.
+Note that this function encapsulates the prime density $\delta(x)$, in the sense that this difference amounts to $f(x)$ for the fraction of numbers near $x$ that are prime.
+Instead of the step function, we may therefore approximate the ``derivative'' as $\delta(x)f(x)$.
+In this way, we arrive at
+\begin{align}
+\delta(x) \frac{\log x}{x-1} &\sim \frac{1}{x}
+\end{align}
+where we now neglected the correction from the fractional part and the correction to the analytic approximation of $\log x!$.
+Thus the density of primes is given by
+\begin{align}
+\delta (x) &\sim \frac{1 - \frac{1}{x}}{\log x} .
+\end{align}
+The prime counting function can therefore be approximated by the integral
+\begin{align}
+\pi(x) &\sim \intx\int_{2}^{x+1} \delta(x) \, \mathrm{d}x \sim \intx\int_{2}^{x+1} \frac{1-\frac{1}{t}}{\log t} \, \mathrm{d}t.
+\end{align}
+Numerical analysis shows that the correction $-\frac{1}{t}$ can safely be neglected, as it does not contribute to the relative error for large $x$.
+\\
+Let us try to improve this estimate by inspecting the fractional error term
+\begin{align}
+\epsilon(x) &:= \sum_{p\le x} \log p \sum_{k\ge 1} \klammer\left\{ \frac{x}{p^k} \right\}.
+\end{align}
+%For $x \gg p^k$, the expression $\klammer\left\{ \frac{x}{p^k} \right\}$ can be very roughly interpreted as random noise.
+%Let $\epsilon \ll 1$.
+%Then $\frac{x}{(\epsilon x)^2} < 1$ for $x > \frac{1}{\epsilon^2}$ which allows us to write
+%\begin{align}
+%\sum_{p\le x} \sum_{k\ge 1} \klammer\left\{ \frac{x}{p^k} \right\} &= \sum_{\epsilon x< p \le x} \sum_{k\ge 1} \klammer\left\{ \frac{x}{p^k} \right\} + \sum_{p\le \epsilon x} \sum_{k\ge 1} \klammer\left\{ \frac{x}{p^k} \right\} = \\
+%&= \sum_{\epsilon x< p \le x} \klammer\left\{ \frac{x}{p} \right\} + \sum_{\epsilon x< p \le x} \sum_{k\ge 2} \frac{x}{p^k} + \sum_{p\le \epsilon x} \klammer\left\{ \frac{x}{p} \right\} + \sum_{p\le \epsilon x} \sum_{k\ge 2} \klammer\left\{ \frac{x}{p^k} \right\}.
+%\end{align}
+%Note that the first and third part may be combined and roughly approximated as $\pi(x) \bra\langle \klammer\left\{ \frac{x}{p} \right\} \rangle$, where the expectation value of the fractional part is about $\frac{1}{2}$.
+%This leads to
+%\begin{align}
+%\dots &\approx \frac{\pi(x)}{2} + x\sum_{\epsilon x<p\le x} \frac{1}{p^2} \frac{1}{1 - \frac{1}{p}} + \sum_{p\le \epsilon x} \sum_{k\ge 2} \klammer\left\{ \frac{x}{p^k} \right\}.
+%\end{align}
+%For very small $\epsilon$, we may simplify this expression to
+%\begin{align}
+%\sum_{p\le x} \sum_{k\ge 1} \klammer\left\{ \frac{x}{p^k} \right\} &\approx \frac{\pi(x)}{2} + x\sum_{p\le x} \frac{1}{p(p-1)}.
+%\end{align}
+For $x \gg p^k$, the expression $\klammer\left\{ \frac{x}{p^k} \right\}$ can be very roughly interpreted as random noise.
+%Let $\epsilon \ll 1$.
+%Then $\frac{x}{(\epsilon x)^2} < 1$ for $x > \frac{1}{\epsilon^2}$.
+%For $p > \epsilon x$ we may then write
+%\begin{align}
+%\sum_{k\ge 1} \klammer\left\{ \frac{x}{p^k} \right\} &= \klammer\left\{ \frac{x}{p} \right\} + \sum_{k\ge 2} \frac{x}{p^k}.
+%\end{align}
+%Note that on average the first part is just going to be about $\frac{1}{2}$.
+%This leads to
+%\begin{align}
+%\sum_{k\ge 1} \klammer\left\{ \frac{x}{p^k} \right\} &\approx \frac{1}{2} + \frac{x}{p(p-1)}.
+%\end{align}
+%Inserting into our previous identity, we now get
+%\begin{align}
+%\sum_{p\le x} \log p \klam\left[ \frac{1}{p-1} - \frac{1}{2x} - \frac{1}{p(p-1)} \right] &\approx \log x - 1 + \frac{\log x}{2x}.
+%\end{align}
+%Note that within the approximation $\delta(x) \approx \frac{1}{\log x}$, we may use an integral to evaluate $\sum_{p\le x} \log p \approx x$.
+%Thus the left hand side may be rewritten as
+%\begin{align}
+%-\frac{1}{2} + \sum_{p\le x} \frac{\log p}{p} &\approx \log x - 1.
+%\end{align}
+%This leads to $\delta(x) \approx \frac{1}{\log x}$, which we already found before, but now the correction term disappeared.
+Note that
+\begin{align}
+\sum_{k\ge 1} \klammer\left\{ \frac{x}{p^k} \right\} &= \sum_{k = 1}^{\kappa-1} \klammer\left\{ \frac{x}{p^k} \right\} + \sum_{k\ge \kappa} \frac{x}{p^k},
+\end{align}
+where $\kappa$ is chosen to satisfy the condition $\frac{x}{p^\kappa} < 1$.
+This can be rewritten as $\kappa > \frac{\log x}{\log p}$.
+For the majority of primes, this cut-off will be as small as $\kappa=2$.
+More precisely, the condition is $p > \sqrt{x}$.
+Thus we find
+\begin{align}
+\epsilon(x) &= \sum_{p\le \sqrt{x}} \log p \sum_{k\ge 1} \klammer\left\{ \frac{x}{p^k} \right\} + \sum_{\sqrt{x} < p \le x} \log p \klam\left[ \klammer\left\{ \frac{x}{p} \right\} + \sum_{k\ge 2} \frac{x}{p^k} \right] = \\
+&= \sum_{p\le \sqrt{x}} \log p \klam\left[ \sum_{k=1}^{\kappa-1} \klammer\left\{ \frac{x}{p^k} \right\} + \frac{x}{p^{\kappa-1}(p-1)} \right] + \sum_{\sqrt{x} < p \le x} \log p\klam\left[ \klammer\left\{ \frac{x}{p} \right\} + \frac{x}{p(p-1)} \right].
+\end{align}
+So far we have not approximated anything.
+The sum containing $\klammer\left\{ \frac{x}{p} \right\}$ approaches some constant numerical value slightly below $\frac{1}{2}$\footnote{For $x=10^8$ we find $\sum_{\sqrt{x} < p \le x} \log p\klammer\left\{ \frac{x}{p} \right\} = 0.4226...$ and $\sum_{p \le x} \log p \klammer\left\{ \frac{x}{p} \right\} = 0.4227...$. 
+This is consistent with $\gamma - 1$, where $\gamma = 0.577...$ is the Euler-Mascheroni constant.%http://www.ebyte.it/library/educards/constants/MathConstants.html
+}.
+Since it is not too far off, and the term will have order $\frac{1}{x}$, we will continue with the rough approximation of $\frac{1}{2}$ regardless.
+Similarly, the first fractional term is many orders of magnitude smaller than the one we just discussed, and will therefore simply be ignored.
+It turns out that the geometrical part of this sum is even smaller still, so we are left with
+\begin{align}
+\epsilon(x) &\approx \frac{1}{2} + x \sum_{\sqrt{x} < p \le x} \frac{\log p}{p(p-1)}.
+\end{align}
+NEW ATTEMPT:
+\\
+We know that
+\begin{align}
+\log x! &= \sum_{p\le x} \log p\klam\left[ \sum_{k\ge 1} \frac{x}{p^k} - \sum_{k\ge 1} \left\{ \frac{x}{p^k} \right\} \right] = \\
+&= \sum_{\sqrt{x} < p\le x} \log p\klam\left[ \frac{x}{p} - \left\{ \frac{x}{p} \right\} \right] + \sum_{p\le \sqrt{x}} \log p\klam\left[ \frac{x}{p-1} - \sum_{k\ge 1} \left\{ \frac{x}{p^k} \right\} \right]. %= \\
+%&= \sum_{\sqrt{x} < p \le x} \log p \left\lfloor \frac{x}{p} \right\rfloor
+\end{align}
+The first fractional expression appears to converge to $(\gamma-1) x$, although we do not see how to provide a proof of this claim.
+Similarly, the second fractional expression appears to converge to $-\sqrt{x}$ with very little error.
+Since these are just correction terms, we will continue with their approximate forms.
+Then we find
+\begin{align}
+\log x! &\approx (\gamma - 1)x - \sqrt{x} + x\sum_{\sqrt{x} < p\le x} \frac{\log p}{p} + x\sum_{p\le \sqrt{x}} \frac{\log p}{p-1}.
+\end{align}
+Note that the square root term is negligible compared to the rest and that one can not approximate the $-1$ in the denominator of the last term, as that introduces a relatively large error.
+However, we may introduce this factor in the other summation, since it only contributes of the order of $\sqrt{x}$ in that case.
+This leaves us with
+\begin{align}
+\log x! &\approx (\gamma-1) x + x \sum_{p\le x} \frac{\log p}{p-1}.
+\end{align}
+We may implicitly define the prime density function $\delta(x)$ via
+\begin{align}
+\sum_{p\le x} f(p) &\overset{!}{\sim} \intx\int_{2}^{x+1} \delta(t) f(t)\, \mathrm{d}t.
+\end{align}
+Doing so allows us to rewrite the previous equation as
+\begin{align}
+x\log x - x &\sim (\gamma-1) x + x \intx\int_{2}^{x+1}\delta(t) \frac{\log t}{t-1}\, \mathrm{d}t,\\
+\Rightarrow\ \ \ \log x &\sim \gamma + \intx\int_{2}^{x+1} \delta(t) \frac{\log t}{t-1}\, \mathrm{d}t.
+\end{align}
+There appears to be a mystery constant $\alpha \approx 0.833...$ such that
+\begin{align}
+\delta(x) &\approx \frac{1 - \frac{\alpha}{x}}{\log x}.
+\end{align}
+
+
+
+%Define
+%\begin{align}
+%E(x) &= \sum_{p\le x} e(p,x)
+%\end{align}
+%and note that
+%\begin{align}
+%E(x+\Delta x) - E(x) &= \sum_{p\le x+\Delta x} e(p,x+\Delta x) - \sum_{p\le x} e(p,x) \sim \\
+%&\sim \sum_{p-x\le \Delta x} e(p,x) + \Delta x\sum_{p\le x+\Delta x} \partial_xe(p,x)\sim \\
+%&\sim \Delta x\delta(x) e(x,x) + \Delta x\sum_{p\le x}\partial_x e(p, x).
+%\end{align}
+
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

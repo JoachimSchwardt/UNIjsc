@@ -1,0 +1,139 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+
+\begin{document}
+
+\title{06 Hermitesche Operatoren}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Potentialbarriere}
+Sei $V(x)=V\Theta (a/2-|x-a/2|)$, $0\le E<V$ die Energie des Teilchens und $k^2=2mE/\hbar^2$, $\kappa^2=2m(V-E)/\hbar^2$.
+\subsection*{a)}
+Für $x<0$ ergibt die Schrödinger-Gleichung:
+\begin{align*}
+0&=\phi''+k^2\phi\ \ \Rightarrow\ \ \phi(x)=e^{ikx}+re^{-ikx}
+\end{align*}
+Setze nun für $x\ge 0$:
+\begin{align*}
+\phi(x)&=\left\{\begin{matrix}
+Ae^{-\kappa x}+Be^{\kappa x} & x\in [0,a] \\
+te^{ik(x-a)} & x> a
+\end{matrix}\right.
+\end{align*}
+Aus der Stetigkeit von $\phi$ bei $x=0$ und $x=a$ folgt dann für $A$ und $B$:
+\begin{align*}
+1+r&=A+B\ \ \ \ \mathrm{und}\ \ \ \ t=Ae^{-\kappa a}+Be^{\kappa a}\approx A(1+\kappa a) + B(1-\kappa a) \\
+&\Rightarrow\ \ \begin{pmatrix}
+1+r \\ t
+\end{pmatrix}\approx\begin{pmatrix}
+1 & 1 \\
+1+\kappa a & 1-\kappa a
+\end{pmatrix}\begin{pmatrix}
+A \\ B
+\end{pmatrix}\\ 
+\begin{pmatrix}
+A \\ B
+\end{pmatrix} &\approx-\frac{1}{2\kappa a}\begin{pmatrix}
+1-\kappa a & -1 \\ 
+-1-\kappa a & 1
+\end{pmatrix}\begin{pmatrix}
+1+r \\ t
+\end{pmatrix}=\frac{1}{2\kappa a}\begin{pmatrix}
+(\kappa a-1)(1+r)+t \\ (1+\kappa a)(1+r)-t
+\end{pmatrix}
+\end{align*}
+Aus der Stetigkeit von $\phi'$ bei $x=0$ und $x=a$ lassen sich $r$ und $t$ berechnen:
+\begin{align*}
+ik (1&-r)=\kappa (B-A)=\frac{1}{2a}\kla\left( {2+2r-2t} \right)\\
+&\Rightarrow\ \ t=1+r+ika(r-1)\numberthis\label{t1} \\
+ikt&\approx\kappa\kla\left( {B(1+\kappa a)-A(1-\kappa a)} \right)=\kappa (B-A)+\kappa^2a(B+A)=ik(1-r)+\kappa^2a(1+r) \\
+&\Rightarrow\ \ t=1-r+\frac{\kappa^2a}{ik}(1+r)\numberthis\label{t2} \\
+(\ref{t1})&\overset{!}{=}(\ref{t2})\Rightarrow\ \ 2r=ika\kla\left( {1-r-\frac{\kappa^2}{k^2}(1+r)} \right)\\ 
+r&=\frac{ika\kla\left( {1-\kappa^2/k^2} \right)}{2+ika\kla\left( {1+\kappa^2/k^2} \right)}=\frac{k^2-\kappa^2}{\frac{2k^2}{ika}+k^2+\kappa^2}=\frac{2E-V}{\frac{2E}{ika}+V}=\frac{2E-V}{\sqrt{V^2+\frac{4E^2}{k^2a^2}}}e^{i\arctan\frac{2E}{ka}}\numberthis\label{r}\\
+t&\overset{(\ref{t1})}{=}1+\frac{2E-V}{\frac{2E}{ika}+V}+ika\kla\left( {\frac{2E-V}{\frac{2E}{ika}+V}-1} \right)=\frac{\cancel{2E}+\frac{2E}{ika}+ika\kla\left( {2E-2V-\cancel{\frac{2E}{ika}}} \right)}{\frac{2E}{ika}+V}= \\
+&=\frac{2ka(E-V)-\frac{2E}{ka}}{\sqrt{V^2+\frac{4E^2}{k^2a^2}}}e^{i\kla\left( {\frac{\pi}{2}+\arctan\frac{2E}{ka}} \right)} \numberthis\label{t}
+\end{align*}
+Für das Verhältnis aus Transmissions- zu Reflexionswahrscheinlichkeit folgt mit (\ref{r}) und (\ref{t}):
+\begin{align*}
+\frac{T}{R}&=\frac{|t|^2}{|r|^2}\approx\frac{\kla\left( {2ka(E-V)-\frac{2E}{ka}} \right)^2}{V^2+\frac{4E^2}{k^2a^2}}\cdot\frac{V^2+\frac{4E^2}{k^2a^2}}{\kla\left( {2E-V} \right)^2}=\kla\left( {\frac{2ka(E-V)-\frac{2E}{ka}}{2E-V}} \right)^2\numberthis\label{T/R}
+\end{align*}
+Für $E=V/2$ wird $r\approx 0$. Der Strahl wird also fast vollständig transmittiert (Reihenentwicklung müsste hier für höhere Ordnungen betrachtet werden).\\
+Für $E\approx V$ und $ka \gg 1$ wird der Strahl fast vollständig reflektiert:
+\begin{align*}
+\frac{T}{R}&\approx \kla\left( {\frac{-\frac{2E}{ka}}{E}} \right)^2=\frac{4}{k^2a^2}
+\end{align*}
+\section{\textsc{Hermite}sche Operatoren}
+Ein Operator $A$ heißt hermitesch, wenn $\brak\langle {\phi}| {A\psi}\rangle=\brak\langle {A\phi}| {\psi}\rangle$. Insbesondere also dann, wenn $A=A^\dagger$.
+\begin{align*}
+\brak\langle {\phi}| {r\psi}\rangle&=\intr\int_{\mathbb{R}^{3}}{\phi^\ast r\psi}\,\mathrm{d}^{3}r=\intr\int_{\mathbb{R}^{3}}{(r\phi)^\ast\psi}\,\mathrm{d}^{3}r=\brak\langle {r\phi}| {\psi}\rangle \\
+\brak\langle {\phi}| {\nabla\psi}\rangle&=\intr\int_{\mathbb{R}^{3}}{\phi^\ast\nabla\psi}\,\mathrm{d}^{3}r\overset{\mathrm{PI}}{=}-\intr\int_{\mathbb{R}^{3}}{(\nabla\phi)^\ast\psi}\,\mathrm{d}^{3}r=-\brak\langle {\nabla\phi}| {\psi}\rangle\ \ \Rightarrow\ \ \mathrm{nicht\  \textsc{Hermite}sch} \\
+\brak\langle {\phi}| {p\psi}\rangle&=\intr\int_{\mathbb{R}^{3}}{\phi^\ast \frac{\hbar}{i}\nabla\psi}\,\mathrm{d}^{3}r\overset{\mathrm{PI}}{=}-\frac{\hbar}{i}\intr\int_{\mathbb{R}^{3}}{(\nabla\phi)^\ast\psi}\,\mathrm{d}^{3}r=\brak\langle {p\phi}| {\psi}\rangle \\
+\brak\langle {\phi}| {H\psi}\rangle&=\frac{1}{2m}\brak\langle {\phi}| {p^2\psi}\rangle+\brak\langle {\phi}| {V(r)\psi}\rangle=\frac{1}{2m}\brak\langle {p\phi}| {p\psi}\rangle+\brak\langle {V(r)\phi}| {\psi}\rangle=\brak\langle {H\phi}| {\psi}\rangle \\
+\brak\langle {\phi}| {l\psi}\rangle&=\epsilon_{ijk}\brak\langle {\phi}| {x_ip_j\psi}\rangle=\epsilon_{ijk}\brak\langle {\phi}| {p_jx_i\psi}\rangle=\epsilon_{ijk}\brak\langle {p_j\phi}| {x_i\psi}\rangle=\epsilon_{ijk}\brak\langle {x_ip_j\phi}| {\psi}\rangle=\brak\langle {l\phi}| {\psi}\rangle
+\end{align*}
+\section{Kommutatorrelationen}
+Seien $A,B,C$ lineare Operatoren. Dann gilt:
+\begin{align*}
+\klam\left[ {A,BC} \right]&=ABC-BCA=BAC-BCA+ABC-BAC=\underline{B\klam\left[ {A,C} \right]+\klam\left[ {A,B} \right]C} \numberthis\label{[A,BC]}\\
+\klam\left[ {AB,C} \right]&=-\klam\left[ {C,AB} \right]=-A\klam\left[ {C,B} \right]-\klam\left[ {C,A} \right]B=\underline{A\klam\left[ {B,C} \right]+\klam\left[ {A,C} \right]B} \numberthis\label{[AB,C]} \\
+\klam\left[ {A,\klam\left[ {B,C} \right]} \right]&=\klam\left[ {A,BC-CB} \right]=B\klam\left[ {A,C} \right]+\klam\left[ {A,B} \right]C-C\klam\left[ {A,B} \right]-\klam\left[ {A,C} \right]B= \\
+&=\klam\left[ {B,\klam\left[ {A,C} \right]} \right]+\klam\left[ {\klam\left[ {A,B} \right], C} \right]=-[B,[C,A]]-[C,[A,B]] \numberthis\label{[A,[B,C]]} \\
+(\ref{[A,[B,C]]})\ \ &\Rightarrow\ \ \underline{[A,[B,C]]+[B,[C,A]]+[C,[A,B]]=0}
+\end{align*}
+\section{Paritätsoperator}
+Der Paritätsoperator $P\phi(x):=\phi(-x)$ ist \textsc{Hermite}sch:
+\begin{align*}
+\brak\langle {\phi}| {P\psi}\rangle&=\int \phi^\ast(x)\psi(-x)\,\mathrm{d}x\kom\overset{\substack{{x\,=\,-y} \\ |}}{=}\intx\int_{-\infty}^{\infty}\phi^\ast(-y)\psi(y)\,-\mathrm{d}y=\brak\langle {P\phi}| {\psi}\rangle
+\end{align*}
+Sei $\phi_+(-x)=\phi_+(x)$ und $\phi_-(-x)=-\phi_-(x)$:
+\begin{align*}
+P\phi_+(x)&=\phi_+(-x)=\phi_+(x) \numberthis\label{P phi +}\\
+P\phi_-(x)&=\phi_-(-x)=-\phi_-(x) \numberthis\label{P phi -}
+\end{align*}
+Alle symmetrischen Funktionen sind also Eigenfunktionen zu $P$ mit dem Eigenwert $\pm 1$. \\
+Eine beliebige Funktion kann zudem in einen geraden und ungeraden Teil zerlegt werden:
+\begin{align*}
+\phi(x)=\underbrace{\frac{\phi(x)+\phi(-x)}{2}}_{\phi_+}+\underbrace{\frac{\phi(x)-\phi(-x)}{2}}_{\phi_-} \numberthis\label{phi in phi +-}
+\end{align*}
+Die Definition von $P$ ist damit zu (\ref{P phi +}) und (\ref{P phi -}) äquivalent:
+\begin{align*}
+P\phi(x)&=P\phi_+(x)+P\phi_-(x)=\phi_+(x)-\phi_-(x)=\frac{\phi(-x)+\phi(-x)}{2}=\phi(-x)
+\end{align*}
+Sei ein \textsc{Hamilton}-Operator mit $V(-x)=V(x)$ gegeben:
+\begin{align*}
+E\phi(\pm x)&=H(\pm x)\phi(\pm x)=\frac{p^2}{2m}\phi(\pm x)+V(x)\phi(\pm x)=H(x)\phi(\pm x) \numberthis\label{H phi +-}
+\end{align*}
+Es sind also $\phi(\pm x)$ zwei Eigenfunktionen von $H(x)$ zum selben Eigenwert $E$. Damit gilt auch für ein $\alpha\in\mathbb{C}$:
+\begin{align*}
+\phi(+x)&=\alpha\phi(-x)\kom\overset{\substack{{x\,\rightarrow\, -x} \\ |}}{\ \ \Rightarrow\ \ }\phi(-x)=\alpha\phi(+x) \\
+&\Rightarrow\ \ \phi(x)=\alpha^2\phi(x)\ \ \Rightarrow\ \ \alpha =\pm 1
+\end{align*}
+Damit sind also alle Eigenfunktionen symmetrisch:
+\begin{align*}
+\phi(-x)&=\pm \phi(x)
+\end{align*}
+Außerdem bleibt die Wahrscheinlichkeitsdichte invariant unter Anwendung des Paritätsoperators:
+\begin{align*}
+|P\phi(x)|^2&=|\phi(-x)|^2=|\pm\phi(x)|^2=|\phi(x)|^2
+\end{align*}
+
+
+\end{document}

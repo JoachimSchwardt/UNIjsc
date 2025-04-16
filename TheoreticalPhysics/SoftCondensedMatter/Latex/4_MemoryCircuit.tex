@@ -1,0 +1,162 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{4 Memory circuit}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Soft Condensed Matter}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+We consider a one component system where the droplet material (A) converts the solvent material (W) into additional droplet material at a rate of $\alpha$ exclusively inside the (assumed spherical) droplet of radius $R$, i.e.
+\begin{align}
+\dot{\phi}_A &= D\nabla^2\phi + \Theta (R - |\textbf{x}|) \alpha \phi_W.
+\end{align}
+Since we only have one component, we may as well write $\phi_W = 1 - \phi_A$ and abbreviate with $\phi\equiv \phi_A$.
+It is useful to introduce two variables $\phi_\pm$ for the concentration inside and outside the droplet respectively.
+Due to the spherical symmetry, we have $\nabla^2 \equiv \frac{1}{r^2}\partial_r r^2\partial_r = \frac{1}{r} \partial_r^2 r$.
+First let $r<R$.
+Then the diffusion equation reads
+\begin{align}
+\dot{\phi}_- &= \frac{D}{r}\partial_r^2(r\phi_-) + \alpha (1 - \phi_-).
+\end{align}
+Assuming $\dot{\phi}_- \simeq 0$, this equation simplifies to an ODE of the form
+\begin{align}
+(r\phi_-)'' - \frac{\alpha}{D}(r\phi_-) &= -\frac{\alpha}{D}r.
+\end{align} 
+We can solve this equation with the ansatz $r\phi_-(r) = A\e^{\lambda r} + B\e^{-\lambda r} + Cr$.
+Inserting yields
+\begin{align}
+\lambda^2 (r\phi_- - Cr) - \frac{\alpha}{D}(r\phi_-) &= -\frac{\alpha}{D}r.
+\end{align}
+Thus  $\lambda^2 = \frac{\alpha}{D}$ and $C=\frac{\alpha}{D\lambda^2}= 1$, which gives
+\begin{align}
+\phi_-(r) &= \frac{A}{r}\e^{\lambda r} + \frac{B}{r}\e^{-\lambda r} + 1
+\end{align}
+The current density is 
+\begin{align}
+j_-(r) &= -\textbf{e}_r\cdot D\nabla \phi_-(r) = -D\phi_-'(r) = \\
+&= -DA\e^{\lambda r} \kla\left( -\frac{1}{r^2} + \frac{\lambda}{r} \right) - DB\e^{-\lambda r} \kla\left( -\frac{1}{r^2} - \frac{\lambda}{r} \right) = \\
+&= \frac{D}{r^2} \klam\left[ A\e^{\lambda r} \kla\left( 1 - \lambda r \right) + B\e^{-\lambda r} \kla\left( 1 + \lambda r \right) \right].
+\end{align}
+We have the boundary condition $j_-(0) = 0$, since no current can flow ``into'' our ``out of'' the origin.
+This leads to the condition $B=-A$, which allows us to rewrite the density and the current as
+\begin{align}
+\phi_-(r) &= 1 - (1 - \phi_-(R)) \frac{\lambda R}{\sinh(\lambda R)} \frac{\sinh(\lambda r)}{\lambda r},\\
+j_-(r) &= D\lambda (1 - \phi_-(R)) \frac{\lambda R}{\sinh(\lambda R)} \klam\left[ \frac{\cosh(\lambda r)}{\lambda r} - \frac{\sinh(\lambda r)}{(\lambda r)^2} \right].
+\end{align}
+The second part of the calculation is significantly easier, since we have the typical diffusion equation
+\begin{align}
+\dot{\phi}_+ &\simeq 0 \simeq \frac{D}{r}\partial_r^2(r\phi_+),
+\end{align}
+with the solution $\phi_+ = \frac{A}{r} + B$.
+We assume that the far-away concentration is zero, thus $B=0$.
+Then we simply have
+\begin{align}
+\phi_+(r) &= \frac{R}{r}\phi_+(R),\\
+j_+(r) &= -D\phi_+'(r) = \frac{DR}{r^2}\phi_+(R).
+\end{align}
+Here we also assumed the diffusion constant to be the same in both regions, which may not be a good approximation.
+Assuming that $\phi_-(R) \gg \phi_+(R)$, the rate of change of the radius of the droplet can be approximated by
+\begin{align}
+\dot{R} &\simeq \frac{j_-(R) - j_+(R)}{\phi_-(R)} = \\
+&= \frac{1}{\phi_-(R)} \klam\left[ D\lambda (1-\phi_-(R)) \kla\left( \coth(\lambda R) - \frac{1}{\lambda R} \right) - \frac{D}{R}\phi_+(R) \right].
+\end{align}
+If diffusion is fast, we may assume that $\lambda R = \sqrt{\frac{\alpha}{D}} R \ll 1$ and expand this expression.
+Note that 
+\begin{align}
+\coth (x) - \frac{1}{x} &\sim \frac{1 + \frac{x^2}{2} + \frac{x^4}{24}}{x + \frac{x^3}{6} + \frac{x^5}{120}} - \frac{1}{x} \sim \\
+&\sim \frac{1}{x} \klam\left[ \kla\left( 1 + \frac{x^2}{2} + \frac{x^4}{24} \right) \kla\left( 1 - \frac{x^2}{6} - \frac{x^4}{120} + \frac{x^4}{36} \right) - 1 \right] \sim \\
+&\sim \frac{1}{x} \klam\left[ \frac{x^2}{3} + \frac{x^4}{24} - \frac{x^4}{12} + \frac{7x^4}{360} \right] = \frac{x}{3} - \frac{x^3}{45}.
+\end{align}
+Inserting into the above yields
+\begin{align}
+\dot{R} &\simeq \frac{1}{\phi_-(R)} \klam\left[ D\lambda(1-\phi_-(R)) \kla\left( \frac{\lambda R}{3} - \frac{(\lambda R)^3}{45} \right) - \frac{D}{R}\phi_+(R) \right].
+\end{align}
+In order to find the stationary radii satisfying $\dot{R} = 0$ we need to assume a structure for the concentration at the interface $\phi_\pm(R)$
+\footnote{I have a feeling this is where I am missing a piece of the puzzle. 
+Maybe there is a different way of computing these concentrations that is independent of the diffusion equation...}.
+To ensure that we can write down the solution in closed form, we will simply assume $\phi_\pm \approx \tecxt\text{const}$ at the interface (which seems like a very bad approximation).
+Then we find
+\begin{align}
+0 &\approx \frac{1}{45} (1 - \phi_-) \kla\left( 15 (\lambda R)^2 - (\lambda R)^4 \right) - \phi_+,\\
+\Rightarrow\ \ \ 0 &\approx (\lambda R)^4 - 15 (\lambda R)^2 + \frac{45\phi_+}{1 - \phi_-},\\
+\Rightarrow\ \ \ (\lambda R)^2 &\approx \frac{15}{2} \pm \sqrt{\frac{225}{4} - \frac{45\phi_+}{1 - \phi_-}} = \frac{15}{2} \klam\left[ 1 \pm \sqrt{1 - \frac{4}{5} \frac{\phi_+}{1 - \phi_-}} \right].
+\end{align}
+Since $\phi_+\ll 1$, we can expand the root into
+\begin{align}
+(\lambda R)^2 &\approx \frac{15}{2} \klam\left[ 1 \pm 1 \mp \frac{2\phi_+}{5(1 - \phi_-)} \right].
+\end{align}
+To the leading order in $\phi_-$, this gives $(\lambda R_1)^2 \approx 15$ and $(\lambda R_2)^2 \approx \frac{3\phi_+}{1-\phi_-}$.
+The first root is way outside the validity of our Taylor expansion from before, since $\lambda R \gg 1$.
+The second root may be a more useful solution.
+\\
+To check for stability, we take the second derivative of $\dot{R}$ with respect to $\lambda R$.
+In the approximate form, we then find
+\begin{align}
+\frac{\tecxt\text{d}^2\dot{R}}{\tecxt\text{d}(\lambda R)^2} &\approx \frac{D(1-\phi_-)}{45R\phi_-} \klam\left[ 30 - 12(\lambda R)^2 \right].
+\end{align}
+For the smaller radius, this becomes
+\begin{align}
+\dots &\approx \frac{2D(1-\phi_-)}{15} \klam\left[ 5 - \frac{6\phi_+}{1 - \phi_-} \right],
+\end{align}
+which should be greater than zero, and thus correspond to a stable radius.
+\\
+Unfortunately I do not see how this would relate to storing memory, which is most likely a testament to how incorrect this ``solution'' is...
+
+
+\end{document}

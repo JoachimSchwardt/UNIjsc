@@ -1,0 +1,123 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{Newtonian problems with four or less point-masses}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Collision time of a two-body system}
+Let $m_1,m_2$ be two masses seperated by a distance $a$ and only under the influence of gravity. For an initial velocity of zero, one can caluclate the collision time $T$. Define the total mass of the system as $M:=m_1+m_2$. First consider the differential equations for both particles:
+\begin{align*}
+m_1\ddot{\vec{r}}_1&=-Gm_1m_2\frac{\vec{r}_1-\vec{r}_2}{|\vec{r}_1-\vec{r}_2|^3}&\tecxt\text{and}&&m_2\ddot{\vec{r}}_2&=-Gm_1m_2\frac{\vec{r}_2-\vec{r}_1}{|\vec{r}_1-\vec{r}_2|^3}\numberthis\label{r1r2 gravity equation}
+\end{align*}
+Note that the center of mass described by $M\vec{R}_s:=m_1\vec{r}_1+m_2\vec{r}_2$ then has an acceleration of zero. This is found by adding the two equations in (\ref{r1r2 gravity equation}). Hence, we can set $\vec{R}_s\equiv 0$. \\
+Define $\vec{r}_{12}:=\vec{r}_{1}-\vec{r}_{2}$ and consider its acceleration:
+\begin{align*}
+\ddot{\vec{r}}_{12}:=-GM\frac{\vec{r}_{12}}{|\vec{r}_{12}|^3}\numberthis\label{r12 vector gravity}
+\end{align*}
+Since we can define our coordinate system in such a way that the two masses lie on the $x$-axis, we can simplify the general vector-valued equation (\ref{r12 vector gravity}) to a scalar form. Let $r:=|\vec{r}_{12}|$:
+\begin{align*}
+\ddot{r}&=-\frac{GM}{r^2}\ \ \kom\overset{\substack{{\cdot\ \dot{r}} \\ |}}{\Rightarrow}\ \ \frac{1}{2}\partial_t(\dot{r})^2=\partial_t\frac{GM}{r}\ \ \Rightarrow\ \ \dot{r}=\pm\sqrt{\frac{2GM}{r}+\tecxt\text{const.}}\numberthis\label{r dot of r}
+\end{align*}
+We assumed that $\dot{r}(t=0)=0$, which means that the constant must be $c=-\frac{2GM}{a}$. One can now use seperation of variables to solve (\ref{r dot of r}):
+\begin{align*}
+\pm\sqrt{\frac{2GM}{a}}t+k&=\int\frac{\tecxt\text{d}r}{\sqrt{\frac{a}{r}-1}}\kom\overset{\substack{{u=\sqrt{\frac{a}{r}-1}} \\ |}}{=}\int\frac{1}{u}\frac{-2au}{(u^2+1)^2}\,\tecxt\text{d}u\kom\overset{\substack{{u=\tan z} \\ |}}{=}\\
+&=-2a\int\cos^2z\,\tecxt\text{d}z=-a\kla\left( {z+\frac{\sin 2z}{2}} \right)=-a\kla\left( {\arctan u+\frac{u}{u^2+1}} \right)=\\
+&=-r\sqrt{\frac{a}{r}-1}-a\arctan\sqrt{\frac{a}{r}-1}\numberthis\label{r of t implicit}
+\end{align*}
+There is no easy way of solving this implicit equation for $r(t)$ to get the full time-dependance of the system. We can, however, get some information out of (\ref{r of t implicit}). Plugging in $t=0$ with $r(t=0)=a$ gives $k=0$. The collision time is equivalent to the condition $r(t=T)=0$:
+\begin{align*}
+T&=\pm\sqrt{\frac{a}{2GM}}\frac{-a\pi}{2}=+\sqrt{\frac{a^3\pi^2}{8GM}}\numberthis\label{T collision time}
+\end{align*}
+A much shorter solution makes use of \textsc{Kepler}'s third law. You just need to realize that the straight line can be interpreted as an extreme ellipse. The collision time then becomes a quarter of the time for a full orbit:
+\begin{align*}
+\frac{T_\text{orbit}^2}{a^3}&=\frac{4\pi^2}{GM}\ \ \Rightarrow\ \ T=\frac{T_\tecxt\text{orbit}}{4}=\sqrt{\frac{a^3\pi^2}{4GM}}\tecxt\text{wrong result ??}
+\end{align*} 
+
+\section{Four-body problems}
+Using gravity as the only interior force acting on a system of $N\le 4$ point masses as described by \textsc{Newton}ian mechanics yields the following coupled system of non-linear ordinary differential equations:
+\begin{align*}
+\ddot{\vec{r}}_k&=\frac{1}{m_k}\sum_{j\neq k}\vec{F}_{kj}=-\sum_{j\neq k}Gm_j\frac{\vec{r}_k-\vec{r}_j}{|\vec{r}_k-\vec{r}_j|^3}\numberthis\label{rk ddot general}
+\end{align*}
+\subsection{Equilateral systems}
+Are there systems with $|\vec{r}_k-\vec{r}_j|=:a\equiv\tecxt\text{const.} $, maybe given additional external forces and/or finetuned initial conditions?\\
+With $M:=\sum m_j$ and $M\vec{R}_s:=\sum m_j\vec{r}_j$, (\ref{rk ddot general}) can be rewritten as follows:
+\begin{align*}
+\ddot{\vec{r}}_k&=\frac{G}{a^3}\sum_{j\neq k}m_j\vec{r}_j-\frac{G}{a^3}\sum_{j\neq k}m_j\vec{r}_k=-\frac{GM}{a^3}\kla\left( {\vec{r}_k-\vec{R}_s} \right)\numberthis\label{rk ddot equilateral}
+\end{align*}
+Now consider the effect of a centripetal force on the center of mass $\vec{R}_s$. Note that $\vec{F}_c=m\vec{\omega}\times(\vec{r}\times\vec{\omega})$ and insert this into (\ref{rk ddot equilateral}):
+\begin{align*}
+\ddot{\vec{r}}_k&=\vec{\omega}\times(\vec{r}_k\times\vec{\omega})-\frac{GM}{a^3}\kla\left( {\vec{r}_k-\vec{R}_s} \right)\numberthis\label{rk ddot equilateral centripetal}
+\end{align*}
+Rotate the coordinate system such that $\vec{\omega}=\omega e_z$ and consider $\sum m_k(3)_k$:
+\begin{align*}
+M\ddot{\vec{R}}_s&=\vec{\omega}\times(M\vec{R}_s\times\vec{\omega})=M\omega^2e_z\times (y_se_x-x_se_y)=M\omega^2(x_se_x+y_se_y)
+\end{align*}
+This leads to the general solutions $x_s(t)=A_+e^{\omega t}+A_-e^{-\omega t}$, $y_s(t)=B_+e^{\omega t}+B_-e^{-\omega t}$ and $z_s(t)=Ct+D$. Since the center of mass is uniformly moving along a fixed line in the $z$-direction, we can set $C=D=0$ by a \textsc{Gallilean} transformation. \\
+Now (\ref{rk ddot equilateral centripetal}) can be rewritten using $\omega_0:=\frac{GM}{a^3}$ and $\Omega^2:=\frac{GM}{a^3}-\omega^2$:
+\begin{align*}
+\ddot{\vec{r}}_k+\Omega^2\vec{r}_k&=\omega_0^2\vec{R}_s-\omega^2z_ke_z\numberthis\label{rk ddot inhomogenious system}
+\end{align*}
+This system can now be solved for each coordinate individually. Consider first the $z_k$-component:
+\begin{align*}
+\ddot{z}_k+\omega_0^2z_k&=0\ \ \Rightarrow\ \ z_k(t)=z_{k0}\cos(\omega_0t)+\frac{v_{z,k0}}{\omega_0}\sin(\omega_0t)
+\end{align*}
+The other two components are identitical except for initial conditions (which is not to be neglected!). The homogenious solution is:
+\begin{align*}
+\ddot{x}_k+\Omega^2x_k&=0\ \ \Rightarrow\ \ x_h(t)=x_{k0}\cos(\Omega t)+\frac{v_{x,k0}}{\Omega}\sin(\Omega t)
+\end{align*}
+For a particular solution to the inhomogenious equation apply the ansatz $x_p(t)=x_{p0}e^{\lambda t}$:
+\begin{align*}
+\lambda^2+\Omega^2&=\omega_0^2\frac{A_\pm}{x_{p0}} e^{(\pm\omega-\lambda) t}\ \ \Rightarrow\ \ \lambda=\pm\omega\ \ \Rightarrow\ \ x_{p0}= A_\pm\ \ \Rightarrow\ \ x_p\equiv x_s
+\end{align*}
+To summarize, we have $z_s\equiv 0$ and $\vec{r}_k=(\tecxt\text{oscillatory term})+\vec{R}_s$, which allows us to set $\vec{R}_s\equiv 0$. Therefor, we now know that the $\vec{\omega}$-vector has to be located at the center of mass. Alternatively we get the same system, only that all constituents are moving away from the origin with the exact same exponential behaviour. In that case, we can still set $\vec{R}_s\perp\vec{\omega}$.\\
+Now we have 6 free parameters for each mass ($\vec{r}_{k0}, \vec{v}_{k0}$) and the one parameter $\omega$ we want to solve for. The only conditions left are the ones we already assumed with $a=|\vec{r}_k-\vec{r}_j|$:
+\begin{align*}
+a^2\overset{!}{=}|\vec{r}_k-\vec{r}_j|^2&=\klam\left[ {(x_{k0}-x_{j0})\cos\Omega t+\frac{v_{x,k0}-v_{x,j0}}{\Omega}\sin\Omega t} \right]^2+\dots +\\
+&\ \ \ +\klam\left[ {(z_{k0}-z_{j0})\cos\omega_0 t+\frac{v_{z,k0}-v_{z,j0}}{\omega_0}\sin\omega_0 t} \right]^2\numberthis\label{equilateral condition}
+\end{align*}
+Plugging $t_n=\frac{2\pi n}{\Omega}$ into (\ref{equilateral condition}) gives us for $n=0$, that the distances of all masses ot one another have to be the same. In this three-dimensional framework, at most 4 masses are possible, forming the shape of a tetrahedron. For the other values of $n$ we get the following conditions:
+\begin{align*}
+a^2&=x_{kj0}^2+y_{kj0}^2+\klam\left[ {z_{kj0}\cos\frac{2\pi n\omega_0}{\Omega}+\frac{v_{z,kj0}}{\omega_0}\sin\frac{2\pi n\omega_0}{\Omega}} \right]^2\\
+0&=\kla\left( {\frac{v_{z,kj0}^2}{\omega_0^2}-z_{kj0}^2} \right)\sin^2\frac{2\pi n\omega_0}{\Omega}+\frac{2z_{kj0}v_{z,kj0}}{\omega_0}\cos\frac{2\pi n\omega_0}{\Omega}\sin\frac{2\pi n\omega_0}{\Omega}\numberthis\label{equilateral condition tn}
+\end{align*}
+For some constants $\alpha,\beta,\lambda$, equation (\ref{equilateral condition tn}) is equivalent to the following condition (for all $n\in\mathbb{N}$):
+\begin{align*}
+0&=\alpha\sin\lambda n+\beta\cos\lambda n\ \ \Rightarrow\ \ \left\{\begin{matrix}
+\alpha=0,&\beta=0\\ \beta=0,&\lambda=k\pi
+\end{matrix}\right.
+\end{align*}
+In either case we have $\beta=0$ and therefor $z_{kj0}v_{z,kj0}=0$.
+\subsection{First case}
+The first case $\alpha=0$ leads to $v_{z,kj0}=\omega_0z_{kj0}$ and thus to $v_{z,kj0}=z_{kj0}=0$. For this first case, we then get $z_{k0}=v_{z,k0}=0$, since the previous statement must be true for all pairs $j\neq k$. This solution describes either an equilaterial triangle in the $xy$-plane (or perpendicular to $\vec{\omega}$ in general) or only a configuration of two masses. With these restraints we can once again look at (\ref{equilateral condition}) to find further insights:
+\begin{align*}
+0&=\klam\left[ {x_{kj0}\cos\Omega t+\frac{v_{x,kj0}}{\Omega}\sin\Omega t} \right]^2+\klam\left[ {y_{kj0}\cos\Omega t+\frac{v_{y,kj0}}{\Omega}\sin\Omega t} \right]^2-x_{kj0}^2-y_{kj0}^2=\\
+&=\kla\left( {\frac{v_{x,kj0}^2+v_{y,kj0}^2}{\Omega^2}-x_{kj0}^2-y_{kj0}^2} \right)\sin^2\Omega t+\frac{2x_{kj0}v_{x,kj0}+2y_{kj0}v_{y,kj0}}{\Omega}\cos\Omega t\sin\Omega t
+\end{align*}
+This condition needs to hold for all values of $t\ge 0$, which leads to $\beta=0$ ($x_{kj0}v_{x,kj0}=-y_{kj0}v_{y,kj0}$) and $\Omega=0$ or $\alpha=0$ ($v_{x,kj0}^2+v_{y,kj0}^2=\Omega^2(x_{kj0}^2+y_{kj0}^2)$).
+\subsubsection{$\alpha=0$}
+This subcase leads to $v_{x,kj0}^2=\Omega^2y_{kj0}^2$ and $v_{y,kj0}^2=\Omega^2x_{kj0}^2$ 
+
+\end{document}

@@ -1,0 +1,77 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{11 Mehrelektronenatome}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 31: Mehrelektronenatom im einfachsten Ein-Teilchen-Bild}
+\subsection*{a)}
+Betrachte das Coulomb-Potential gemäß der gegebenen Vereinfachung als $V(r)=-\frac{Z_\tecxt\text{eff}e}{4\pi\epsilon_0r}$. Je nach Zustand ist jeweils $n=2$ oder $n=3$ einzusetzen. Es ist $\alpha=\frac{e^2}{4\pi\epsilon_0\hbar c}$:
+\begin{align*}
+E_n&\approx -E_R\cdot\frac{Z_\tecxt\text{eff}^2}{n^2}=-\alpha^2\frac{Z_\tecxt\text{eff}^2m_ec^2}{2\cdot n^2}\ \ \Rightarrow\ \ Z_\tecxt\text{eff}\approx\sqrt{\frac{-2n^2E_1}{m_ec^2\alpha^2}}\\
+&\Rightarrow\ \ Z_\tecxt\text{eff,Li}\approx\underline{1,26}\\
+&\Rightarrow\ \ Z_\tecxt\text{eff,Na}\approx\underline{1,84}
+\end{align*}
+Wir benötigen den Radialteil der Wellenfunktion für $l=0$ und $n=2$ bzw. $n=3$ um das Maximum der jeweiligen Aufenthaltswahrscheinlichkeitsdichte zu bestimmen:
+\begin{align*}
+R_{n0}&=\kla\left( {\frac{Z_\tecxt\text{eff}}{a_0}} \right)^{3/2}\frac{2}{n!\sqrt{n^5}}e^{-\frac{Z_\tecxt\text{eff}r}{na_0}}\sum_{k=0}^{n-1}(-1)^{k+1}\frac{n!^2}{k!(k+1)!(n-k-1)!}\kla\left( {\frac{2Z_\tecxt\text{eff}r}{na_0}} \right)^k\\
+R_{20}^\tecxt\text{Li}&=\kla\left( {\frac{Z_\tecxt\text{eff,Li}}{a_0}} \right)^{3/2}\frac{1}{\sqrt{32}}e^{-\frac{Z_\tecxt\text{eff,Li}r}{2a_0}}\klam\left[ {\frac{4Z_\tecxt\text{eff,Li}r}{2a_0}-4} \right]\\
+R_{30}^\tecxt\text{Na}&\propto e^{-\frac{Z_\tecxt\text{eff,Na}r}{3a_0}}\klam\left[ {\frac{4Z_\tecxt\text{eff,Na}^2r^2}{3a_0^2}-\frac{12Z_\tecxt\text{eff,Na}r}{a_0}+18} \right]\\
+0&\overset{!}{=}\partial_x e^{-x}\kla\left( {x-1} \right)=e^{-x}\kla\left( {2-x} \right)\ \ \Rightarrow\ \ r=\frac{4a_0}{Z_\tecxt\text{eff,Li}}\approx\underline{3,18\,a_0}\\
+0&\overset{!}{=}\partial_x e^{-x}\kla\left( {2x^2-6x+3} \right)=-2e^{-x}\kla\left( {x^2-5x+\frac{9}{2}} \right)\ \ \Rightarrow\ \ r=\frac{3a_0(5+\sqrt{7})}{2Z_\tecxt\text{eff,Na}}\approx\underline{6,22\,a_0}
+\end{align*}
+Vergleich mit den Metall-Radien ergibt $r^\tecxt\text{Li}=0,168\,\tecxt\text{nm}>0,152\,\tecxt\text{nm}=r^\tecxt\text{Metall}$ und $r^\tecxt\text{Na}=0,329\,\tecxt\text{nm}>0,186\,\tecxt\text{nm}=r^\tecxt\text{Metall}$.
+\subsection*{b)}
+Bei Ytterbium ist $n=4$ zu verwenden. Das Ergebnis entspricht etwa $r^\tecxt\text{Yb}=0,196\,\tecxt\text{nm}>0,194\,\tecxt\text{nm}=r^\tecxt\text{Metall}$:
+\begin{align*}
+Z_\tecxt\text{eff,Yb}&\approx\sqrt{\frac{-2\cdot 16E}{m_ec^2\alpha^2}}=\underline{3,24}\\
+R_{n,n-1}&\propto r^{n-1}e^{-\frac{Zr}{na_0}} \\
+R_{43}^\tecxt\text{Yb}&\propto r^3e^{-\frac{Z_\tecxt\text{eff,Yb}r}{4a_0}}\\
+0&\overset{!}{=}\partial_x x^3e^{-x}\ \ \Rightarrow\ \ x^3\overset{!}{=}\partial_x x^3\ \ \Rightarrow\ \ r=\frac{4a_0\cdot 3}{Z_\tecxt\text{eff,Yb}}\approx\underline{3,71\,a_0}
+\end{align*}
+\subsection*{c)}
+Es fehlt im $4\tecxt\text{f}^{13}$ Zustand nur ein Elektron, also gilt $n=4$, $L=3$ und $S=\frac{1}{2}$:
+\begin{align*}
+2\vec{L}\cdot\vec{S}&=\vec{J}^2-\vec{L}^2-\vec{S}^2=J(J+1)-L(L+1)-S(S+1)=\left\{\begin{matrix}
+3,&J=L+\frac{1}{2}, &(4f_{7/2}^{13})\\ -4,&J=L-\frac{1}{2},&(4f_{5/2}^{13})
+\end{matrix}\right.\\
+\Delta E_\tecxt\text{LS}&=\frac{\alpha^2E_nZ^2}{nl(l+\frac{1}{2})(l+1)}\cdot\vec{L}\cdot\vec{S}=\frac{\alpha^2E_nZ^2}{2nl\kla\left( {l+\frac{1}{2}} \right)(l+1)}\kla\left( {J(J+1)-L(L+1)-S(S+1)} \right)\\
+&\Rightarrow\ \ \Delta E=\Delta E_{LS}^{7/2}-\Delta_{LS}^{5/2}=\underline{1,04\cdot 10^{-4}\,\tecxt\text{eV}}
+\end{align*} 
+Dieser Wert weicht stark von $1,2$\,eV ab. Da $\Delta E_{LS}\propto\partial_rV(r)$ ist, muss das Potential daher viel schneller als $\frac{1}{r}$ abfallen um einen größeren Einfluss zu haben. Das Coulombpotential ist hier also nicht mehr richtig.
+\section*{Aufgabe 32: Kaliumdampf}
+Die Aufspaltung entspricht einer Energiedifferenz von $\Delta E=hc\kla\left( {\frac{1}{\lambda_1}-\frac{1}{\lambda_2}} \right)=7,16\,$meV.
+\section*{Aufgabe 33: Fraunhofer-Linien und Zeeman-Effekt in Natrium}
+\subsection*{a)}
+Selbe Formel wie oben, $\Delta E=2,124\,$meV.
+\subsection*{b)}
+Die Energieverschiebung bei schwachen Magnetfeldern ist gegeben durch $\Delta E_Z=m_Jg_J\mu_BB$ mit $g_J=\frac{3}{2}+\frac{S(S+1)-L(L+1)}{2J(J+1)}$. Für die gegebenen Niveaus $3^2\tecxt\text{P}_{\frac{3}{2},\frac{1}{2}}$ gilt $n=3$, $S=\frac{1}{2}$, $L=1$, $J=\frac{3}{2},\frac{1}{3}$. Damit folgt für den Landé-Faktor $g_J=\frac{3}{2}-\frac{5}{8J(J+1)}=\frac{4}{3},\frac{2}{3}$. Die relevanten Niveaus sind $3^2\tecxt\text{P}_{3/2}^{m_J=-3/2}$ und $3^2\tecxt\text{P}_{1/2}^{m_J=1/2}$, da es sich hier jeweils um das niedrigste bzw. höchste Niveau handelt. Unter der Bedingung, dass diese zusammenfallen folgt dann für das Magnetfeld:
+\begin{align*}
+\Delta E&\overset{!}{=}|\Delta E_Z^{m_J=-3/2}|+|\Delta E_Z^{m_J=1/2}|=\mu_BB\kla\left( {\frac{3}{2}\cdot\frac{4}{3}+\frac{1}{2}\cdot\frac{2}{3}} \right)\ \ \Rightarrow\ \ B=\frac{3\Delta E}{7\mu_B}=\underline{15,8\,\tecxt\text{T}}
+\end{align*}
+
+
+\end{document}

@@ -1,0 +1,113 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{12 Dichteoperatoren}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Eigenschaften des Dichteoperators}
+Die Spur eines Operators wird über eine ONB $\phi_k$ definiert: $\tecxt\text{tr\,}A=\sum_k\braket\langle {\phi_k} | {A} | {\phi_k}\rangle$.\\ Man kann folgende Eigenschaften des Dichteoperators $\rho=\sum_jp_j\oper | {\psi_j} \rangle\langle {\psi_j} |$ zeigen, wobei $\sum_jp_j=1$ und $\psi_j$ eine normierte Basis ist:
+\begin{align*}
+\tecxt\text{tr\,}\rho&=\sum_{kj}\brak\langle {\phi_k}| {\psi_j}\rangle p_j\brak\langle {\psi_j}| {\phi_k}\rangle=\sum_{jk}p_j\sum_k|\brak\langle {\phi_k}| {\psi_j}\rangle|^2=\sum_jp_j\|\psi_j\|^2=\sum_jp_j=1\\
+\braket\langle {\phi} | {\rho} | {\phi}\rangle&=\sum_jp_j|\brak\langle {\phi}| {\psi_j}\rangle|^2\ge 0\ \ \ \ (\forall\phi)\\
+\rho_m\Ket | {\phi_m} \rangle&\overset{!}{=}\rho\Ket | {\phi_m} \rangle=\sum_jp_j\brak\langle {\psi_j}| {\phi_m}\rangle\Ket | {\psi_j} \rangle\\ 
+&\Rightarrow\ \ 0\le \rho_m=\sum_jp_j|\brak\langle {\psi_j}| {\phi_m}\rangle|^2\le\sum_j|\brak\langle {\psi_j}| {\phi_m}\rangle|^2\le 1\\
+\rho^2&=\sum_jp_j\Ket | {\psi_j} \rangle\brak\langle {\psi_j}| {\sum_kp_k\oper | {\psi_k} \rangle\langle {\psi_k} |}\rangle=\sum_{jk}p_jp_k\oper | {\psi_j} \rangle\langle {\psi_k} |\brak\langle {\psi_j}| {\psi_k}\rangle\overset{?}{=}\rho\\
+&\Rightarrow\ \ p_j^2=p_j\ \ \Rightarrow\ \ p_j=\delta_{jn}\ \ \ \ (\Leftrightarrow\ \tecxt\text{reiner Zustand})\\ 
+&\Rightarrow\ \ \rho^2=\sum_{jk}\delta_{jn}\delta_{kn}\oper | {\psi_j} \rangle\langle {\psi_k} |\brak\langle {\psi_j}| {\psi_k}\rangle=\oper | {\psi_n} \rangle\langle {\psi_n} |=\rho\\
+\tecxt\text{tr\,}\rho^2&=\sum_n\braket\langle {\phi_n} | {\rho^2} | {\phi_n}\rangle=\sum_n\braket\langle {\phi_n} | {\rho^\dagger\rho} | {\phi_n}\rangle=\sum_n\|\rho\Ket | {\phi_n} \rangle\|^2=\sum_{n}\|\sum_jp_j\brak\langle {\psi_j}| {\phi_n}\rangle\Ket | {\psi_j} \rangle\|^2\le\\
+&\le\sum_{jn}p_j^2|\brak\langle {\psi_j}| {\phi_n}\rangle|^2\|\Ket | {\psi_j} \rangle\|^2=\sum_jp_j^2<1
+\end{align*}
+\section{Spin $\frac{1}{2}$-Gemisch}
+Die Eigenvektoren zu $\sigma_z$ sind $\begin{pmatrix}0 \\ 1\end{pmatrix},\begin{pmatrix}1 \\ 0\end{pmatrix}\equiv\Ket | {\downarrow} \rangle,\Ket | {\uparrow} \rangle$. Mit ihnen lässt sich jeder Zustand im Spin $\frac{1}{2}$-System als $\Ket | {\psi} \rangle=\alpha\Ket | {\uparrow} \rangle+\beta\Ket | {\downarrow} \rangle$ darstellen. Jeder Dichteoperator muss die Bedingungen tr\,$\rho=1$ und $\rho^\dagger=\rho$ erfüllen. Sei also $a\in\klam\left[ {0,1} \right]$ und $b$ beliebig:
+\begin{align*}
+\rho&=\begin{pmatrix}
+a&b\\ b^\ast &1-a
+\end{pmatrix}\overset{!}{=}\frac{1}{2}\kla\left( {\mathbf{1}+\vec{n}\cdot\vec{\sigma}} \right)=\frac{1}{2}\begin{pmatrix}
+1+n_z&n_x-in_y \\ n_x+in_y&1-n_z
+\end{pmatrix}\\
+&\Rightarrow\ \ n_z=2a-1\ \ \ \ \tecxt\text{und }\ \ \ \ n_x=\tecxt\text{Re\,}b\ ,\ n_y=-\tecxt\text{Im\,}b
+\end{align*}
+Also kann jeder Dichteoperator als $\rho=\frac{1}{2}\kla\left( {\mathbf{1}+\vec{n}\cdot\vec{\sigma}} \right)$ dargestellt werden.\\
+Betrachte nun die Eigenwertgleichung $\rho\Ket | {\lambda_j} \rangle=\lambda_j\Ket | {\lambda_j} \rangle$ mit $\Ket | {\lambda_j} \rangle=\begin{pmatrix}
+\alpha_j\\ \beta_j
+\end{pmatrix}$:
+\begin{align*}
+\rho\Ket | {\lambda} \rangle&=\frac{1}{2}\begin{pmatrix}
+\alpha_j+n_x\beta_j -in_y\beta_j + n_z\alpha_j  \\  \beta_j+n_x\alpha_j +in_y\alpha_j -n_z\beta_j
+\end{pmatrix}\overset{!}{=}\lambda_j\begin{pmatrix}
+\alpha_j\\ \beta_j
+\end{pmatrix}\\
+&\Rightarrow\ \ \alpha_j=\frac{n_x-in_y}{2\lambda_j-1-n_z}\beta_j\ \ \ \ \tecxt\text{und }\ \ \ \ \beta_j=\frac{n_x+in_y}{2\lambda_j-1+n_z}\alpha_j\\
+&\Rightarrow\ \ n_x^2+n_y^2=\kla\left( {2\lambda_j-1} \right)^2-n_z^2\ \ \Rightarrow\ \ \lambda_j=\frac{1\pm |\vec{n}|}{2}\\
+&\Rightarrow\ \ \beta_j=\alpha_j\frac{n_x+in_y}{n_z\pm |n|}
+\end{align*}
+Definiere die Polarisation $\Pi$ mit $n\equiv |\vec{n}|$:
+\begin{align*}
+\Pi&:=\frac{\lambda_1-\lambda_2}{\lambda_1+\lambda_2}=\frac{1+ n-1+n}{1+n+1-n}=n
+\end{align*}
+Die Erwartungswerte der Spin-Matrix lassen sich über $\bra\langle {\sigma_j}\rangle=\tecxt\text{tr\,}\sigma_j\rho$ berechnen. Das Ergebnis ist $\bra\langle {\vec{\sigma}}\rangle=\vec{n}$. Beachte die Summen-Konvention und $\sigma_i\sigma_j=\delta_{ij}\mathbf{1}+i\epsilon_{ijk}\sigma_k$ mit tr\,$\sigma_i=0$:
+\begin{align*}
+\bra\langle {\sigma_i}\rangle&=\tecxt\text{tr\,}(\rho\sigma_i)=\frac{1}{2}\tecxt\text{tr\,}(\sigma_i+n_j\sigma_j\sigma_i)=\frac{1}{2}\tecxt\text{tr\,}(n_j\delta_{ji}\mathbf{1}+ i n_j\epsilon_{jik}\sigma_k)=n_i
+\end{align*}
+\section{Bell-Experiment}
+Die reduzierte Dichtematrix des Zustandes $\Ket | {\psi} \rangle=\frac{1}{\sqrt{2}}\kla\left( {\Ket | {+-} \rangle-\Ket | {-+} \rangle} \right)$ ist gegeben durch die Spur des Dichteoperators $\rho=\oper | {\psi} \rangle\langle {\psi} |$ mit $\Ket | {\psi} \rangle=\sum U_{ab}\Ket | {a} \rangle\otimes\Ket | {b} \rangle$ über den zweiten Spin:
+\begin{align*}
+U&=\frac{1}{\sqrt{2}}\begin{pmatrix}
+0 & 1 \\ -1 & 0
+\end{pmatrix}\ \ \Rightarrow\ \ \rho = \sum U_{ab}U_{a'b'}^\dagger\oper | {a} \rangle\langle {a'} |\otimes\oper | {b} \rangle\langle {b'} | \\
+\rho_A&=\tecxt\text{tr}_B\rho=\sum_{\tilde{b}}\braket\langle {\tilde{b}} | {\rho} | {\tilde{b}}\rangle=\sum U_{ab}U_{a'b'}^\dagger \oper | {a} \rangle\langle {a'} |\delta_{\tilde{b}b}\delta_{b'\tilde{b}}=\sum U_{ab}U_{a'b}^\dagger\oper | {a} \rangle\langle {a'} |=\\
+&=UU^\dagger=\frac{1}{2}\begin{pmatrix}
+1 &0\\ 0&1
+\end{pmatrix} =\frac{1}{2}\kla\left( {\oper | {+} \rangle\langle {+} |+\oper | {-} \rangle\langle {-} |} \right)
+\end{align*}
+Die Eigenwerte von $\rho_A$ sind $\lambda_{1,2}=\frac{1}{2}$. Die Entropie $S_N$ berechnet sich dann wie folgt:
+\begin{align*}
+S_N&=-\tecxt\text{tr\,}\rho_A\log\rho_A=-\sum_j\lambda_j\log\lambda_j=\log 2
+\end{align*}
+Betrachte den Zustand in der Basis $\klammer\left\{{\Ket | {++} \rangle,\Ket | {+-} \rangle,\Ket | {-+} \rangle,\Ket | {--} \rangle} \right\}$. Dann ist $\Ket | {\psi} \rangle=\frac{1}{\sqrt{2}}\kla\left( {0,1,-1,0} \right)^\top$. Somit folgt für $\rho$ und $\rho^2$:
+\begin{align*}
+\rho&=\oper | {\psi} \rangle\langle {\psi} |=\frac{1}{2}\begin{pmatrix}
+0&0&0&0\\ 0&1&-1&0 \\ 0&-1&1&0 \\ 0&0&0&0
+\end{pmatrix} = \rho^2\ \ \ \Rightarrow\ \ \ \tecxt\text{reiner Zustand}
+\end{align*}
+Beachte, dass $\Ket | {\psi} \rangle=\Ket | {sm} \rangle=\Ket | {00} \rangle$ ist. Wir benötigen Terme der Form $\sigma_i\otimes\sigma_j\Ket | {00} \rangle$:
+\begin{align*}
+\sigma_x\otimes\sigma_x\Ket | {00} \rangle&=\frac{1}{\sqrt{2}}\kla\left( {\Ket | {-+} \rangle-\Ket | {+-} \rangle} \right)=-\Ket | {00} \rangle\\
+\sigma_y\otimes\sigma_y\Ket | {00} \rangle&=\frac{1}{\sqrt{2}}\kla\left( {i(-i)\Ket | {-+} \rangle-(-i)i\Ket | {+-} \rangle} \right)=-\Ket | {00} \rangle\\
+\sigma_z\otimes\sigma_z\Ket | {00} \rangle&=\frac{1}{\sqrt{2}}\kla\left( {(-1)\Ket | {+-} \rangle-(-1)\Ket | {-+} \rangle} \right)=-\Ket | {00} \rangle\\
+\sigma_x\otimes\sigma_y\Ket | {00} \rangle&=\frac{1}{\sqrt{2}}\kla\left( {(-i)\Ket | {-+} \rangle-i\Ket | {+-} \rangle} \right)=-i\Ket | {10} \rangle
+\end{align*}
+Auch die anderen gemischten Terme liefern einen anderen Zustand als $\Ket | {00} \rangle$ und können somit vernachlässigt werden (wie gleich gezeigt wird). Der Erwartungswert berechnet sich dann wie folgt:
+\begin{align*}
+\bra\langle {\vec{a}\otimes\vec{b}}\rangle&=\braket\langle {\psi} | {\vec{a}\cdot\vec{\sigma}\otimes\vec{b}\cdot\vec{\sigma}} | {\psi}\rangle=\braket\langle {00} | {a_i b_j\sigma_i\otimes\sigma_j} | {00}\rangle\kom\overset{\substack{{\brak\langle {00}| {sm}\rangle=\delta_{0s}\delta_{0m}} \\ |}}{=}-\braket\langle {00} | {a_ib_i} | {00}\rangle=-\vec{a}\cdot\vec{b}
+\end{align*}
+Sei nun $\vec{a}\cdot\vec{b}=\cos\kla\left( {\alpha-\beta} \right)$ mit $\alpha-\beta=\alpha'-\beta'=\beta-\alpha'=\frac{\pi}{4}$ und $\alpha-\beta'=\frac{3\pi}{4}$:
+\begin{align*}
+|S(\vec{a},\vec{a}',\vec{b},\vec{b}')|&=|\bra\langle \vec{a}\otimes\vec{b}\rangle-\langle\vec{a}\otimes\vec{b}'\rangle|+|\langle\vec{a'}\otimes\vec{b'}\rangle-\langle\vec{a}'\otimes\vec{b}\rangle|=\\
+&=|\cos\kla\left( {\alpha-\beta'} \right)-\cos\kla\left( {\alpha-\beta} \right)|+|\cos\kla\left( {\alpha'-\beta} \right)-\cos\kla\left( {\alpha'-\beta'} \right)|=\sqrt{2}\le 2
+\end{align*}
+
+\end{document}

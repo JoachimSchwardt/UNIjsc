@@ -1,0 +1,65 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{02 Zerfälle und Relativität}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 2.1: $\beta$-Zerfall}
+\subsection*{a)}Die Massenzahl $A$ bleibt in $\beta$-Prozessen immer erhalten. 
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c}
+&Gesamtprozess&Nukleon-Reaktion\\ \hline
+$\beta^-$-Zerfall&${}_Z^AX\longrightarrow {}_{Z+1}^{A}Y+e^-+\overline{\nu}_e$&$n\longrightarrow p+e^-+\overline{\nu}_e$\\ \hline
+$\beta^+$-Zerfall&${}_Z^AX\longrightarrow {}_{Z-1}^{A}Y+e^++\nu_e$&$p\longrightarrow n+e^++\nu_e$\\ \hline
+$e^-$-Einfang&${}_Z^AX+e^-\longrightarrow {}_{Z-1}^{A}Y+\nu_e$&$p+e^-\longrightarrow n+\nu_e$
+\end{tabular}
+\caption{Auflistung der $\beta$-Zerfälle}
+\label{table:Auflistung beta Zerfaelle}
+\end{table}
+\subsection*{b)}
+\subsection*{c)}
+\subsection*{d)}
+\section*{Aufgabe 2.2: Schwellenproduktion von Antiprotonen}
+Seien $p_1=\binom{E/c}{\vec{p}}$ und $p_2=\binom{mc}{0}$ die Viererimpulse des bewegten und ruhenden Protons. Der Gesamtviererimpuls sei $p=p_1+p_2$. Nach der Streuung, gibt es ein Inertialsystem, in dem $p'=\binom{4mc}{0}$ ist. Das entspricht gerade den vier Ruhemassen, die an Energie mindestens vorhanden seien müssen. Da $p^2$ eine Invariante ist, können wir die Energie $E$ des bewegten Protons bestimmen. Zu beachten ist außerdem $(\vec{p})^2=\frac{E^2}{c^2}-m^2c^2$:
+\begin{align*}
+p^2&=p'^2\ \ \Rightarrow\ \ \kla\left( {\frac{E}{c}+mc} \right)^2-(\vec{p})^2=(4mc)^2\ \ \Rightarrow\ \ 2m^2c^2+2mE=16m^2c^2\\
+&\Rightarrow\ \ E=7mc^2\ \ \Rightarrow\ \ E_\tecxt\text{kin}=6mc^2
+\end{align*}
+Der Q-Wert dieser Reaktion ist also $Q=(7+1-4)mc^2=4mc^2$, was der Strahlenergie im Laborsystem entspricht.\\
+Mit $c=1$ sieht die Rechnung einfacher aus. Dann ist $p_1=\binom{E}{\vec{p}}$, $p_2=\binom{m}{0}$ und $p'=\binom{4m}{0}$. Außerdem gilt $(\vec{p})^2=E^2-m^2$:
+\begin{align*}
+p^2&=p'^2\ \ \Rightarrow\ \ (E+m)^2-(\vec{p})^2=(4m)^2\ \ \Rightarrow\ \ 2m^2+2mE=16m^2\ \ \Rightarrow\ \ E_\tecxt\text{kin}=6m
+\end{align*}
+\section*{Aufgabe 2.3: Flugstrecke relativistischer Myonen}
+Im Inertialsystem des Myons wird verkürzt sich die Länge, die man im Laborsystem messen würde, gemäß der Längenkontraktion um einen Faktor $\gamma=(1-\beta^2)^{-1/2}$. Es gilt also $L=\gamma L'=\gamma\tau v$, wobei $L=13000$\,m und $\tau=2.2\,\mu$s gegeben sind. Daraus lässt sich die Geschwindigkeit des Myons berechnen:
+\begin{align*}
+\frac{L^2}{c^2\tau^2}&=\gamma^2\beta^2=\frac{1}{1-\beta^2}-1\ \ \Rightarrow\ \ \beta=\sqrt{1-\frac{1}{1+\frac{L^2}{c^2\tau^2}}}=0.9987
+\end{align*}
+
+
+\end{document}

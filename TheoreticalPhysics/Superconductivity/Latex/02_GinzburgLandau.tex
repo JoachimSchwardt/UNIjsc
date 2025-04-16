@@ -1,0 +1,124 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{02 Time-dependent Ginzburg-Landau Equation}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Theory of Superconductivity}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+Consider the Lagrange density
+\begin{align}
+\mathcal{L} &= \i\hbar \psi^\ast \partial_t\psi - \alpha |\psi|^2 - \frac{\beta}{2} |\psi|^4 - \frac{\hbar^2}{2m^\ast} |\nabla\psi|^2.
+\end{align}
+The action is defined as $\mathcal{S} := \int \mathcal{L}(\psi, \partial_\mu\psi) \,\mathrm{d}^4x$.
+Assuming the variational principle $\delta\mathcal{S} = 0$ one finds the Euler-Lagrange equations for fields.
+We will derive these using $\psi \rightarrow \psi + \delta\psi$
+\begin{align}
+\mathcal{S} &\rightarrow \mathcal{S}' = \intx\int_{ }^{ } \mathcal{L}\kla\left( \psi + \delta\psi, \partial_\mu \psi + \partial_\mu \delta_\psi \right) \, \mathrm{d}^4x = \\
+&= \intx\int_{ }^{ } \mathcal{L} + \frac{\partial \mathcal{L}}{\partial \psi} \delta\psi + \frac{\partial \mathcal{L}}{\partial \partial_\mu \psi} \partial_\mu \delta\psi \, \mathrm{d}^4x + \mathcal{O}(\delta\psi)^2 = \\
+&= \mathcal{S} + \intx\int_{ }^{ } \klam\left[ \frac{\partial \mathcal{L}}{\partial \psi} - \partial_\mu \frac{\partial \mathcal{L}}{\partial \partial_\mu \psi}  \right] \delta\psi \, \mathrm{d}^4x + \klam\left[ \frac{\partial \mathcal{L}}{\partial \partial_\mu \psi} \delta\psi \right]_{t_i}^{t_f}.
+\end{align}
+We assume the variation $\delta\psi$ to vanish for the initial and final time, which removes the term leftover from partial integration.
+Then using $\mathcal{S}' - \mathcal{S} = 0$ we find
+\begin{align}
+\frac{\partial \mathcal{L}}{\partial \psi} &= \partial_\mu \frac{\partial \mathcal{L}}{\partial \partial_\mu \psi}.
+\end{align}
+In our particular case, for the variation with respect to $\psi^\ast$, this yields
+\begin{align}
+0 &= \partial_\mu \frac{\partial \mathcal{L}}{\partial \partial_\mu \psi^\ast} - \frac{\partial \mathcal{L}}{\partial \psi^\ast} = \\
+&= \nabla\cdot \kla\left( -\frac{\hbar^2}{2m^\ast} \nabla\psi \right) - \i\hbar\partial_t \psi + \alpha\psi + \beta|\psi|^2\psi,\\
+\Rightarrow\quad \i\hbar\partial_t\psi &= -\frac{\hbar^2}{2m^\ast} \nabla^2\psi + \alpha\psi + \beta|\psi|^2 \psi.
+\end{align}
+In the uniform case we may assume $\nabla\psi = 0$ and split of the equilibrium value using $\psi(t) = \sqrt{\frac{-\alpha}{\beta}} f(t)$.
+Then we find
+\begin{align}
+\i\hbar f'(t) &= \alpha f(t) - \alpha |f(t)|^2 f(t).
+\end{align}
+Introducing the time scale $\tau := \frac{\hbar}{-\alpha} > 0$ and expressing $f$ using modulus and phase via $f(t) = g(t) \e^{\i\phi(t)}$ gives
+\begin{align}
+\i\tau g' \e^{\i\phi} + \i\tau \i\phi' g\e^{\i\phi} &= -g\e^{\i\phi} + g^3\e^{\i\phi},\\
+\Rightarrow\quad \i\tau g' - \phi' g &= -g + g^3.
+\end{align}
+Since $g,\phi$ are real functions, the imaginary and real parts of this equation must vanish individually.
+The former gives $\i\tau g'(t) = 0$ and therefore tells us that $g = \tecxt\text{const}.$
+The latter leads to
+\begin{align}
+\phi'(t) g &= g \kla\left( 1 - g^2 \right).
+\end{align}
+Consider suddenly switching on superconducting pairing at $t=0$, i.e. $\psi(t=0) = 0$.
+This is equivalent to $g \equiv 0$ since $g$ is conserved, and thus $\psi \equiv 0$ is the only solution.
+\\
+Now consider a jump in the parameter $\alpha$, described by the initial condition $\psi(t=0) = \sqrt{\frac{-\tilde{\alpha}}{\beta}}$ with $\tilde{\alpha} < 0$.
+Then we find $g \equiv \sqrt{\frac{-\tilde{\alpha}}{\beta}}$ and may solve the equation for $\phi'$
+\begin{align}
+\phi(t) &= \phi(0) + \kla\left( 1 - g^2 \right) t = \kla\left( 1 + \frac{\tilde{\alpha}}{\beta} \right)t.
+\end{align}
+This gives
+\begin{align}
+\psi(t) &= \sqrt{\frac{-\tilde{\alpha}}{\beta}} \e^{\i \kla\left( 1 + \frac{\tilde{\alpha}}{\beta} \right) t},
+\end{align}
+which describes an oscillation of the complex phase with frequency $\nu := 1 + \frac{\tilde{\alpha}}{\beta}$.
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

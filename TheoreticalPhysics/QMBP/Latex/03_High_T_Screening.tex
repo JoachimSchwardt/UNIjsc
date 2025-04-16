@@ -1,0 +1,238 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\usepackage[compat=1.1.0]{tikz-feynman}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{3 Debye-Hückel screening of the Coulomb potential at high temperature}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Quantum Many-Body Physics}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+Consider the Hamiltonian of the interacting electron gas in three dimensions
+\begin{align}
+\hat{H} - \mu\hat{N} &= \sum_{\textbf{k}\sigma} \epsilon_\textbf{k} \hat{c}_{\textbf{k}\sigma}^\dagger \hat{c}_{\textbf{k}\sigma} + \frac{1}{2V} \sum_{\textbf{kk}' \sigma\sigma'} \sum_{\textbf{q} \neq 0} V_\textbf{q} \hat{c}_{\textbf{k} + \textbf{q}, \sigma}^\dagger \hat{c}_{\textbf{k}' - \textbf{q}, \sigma'}^\dagger \hat{c}_{\textbf{k}' \sigma'} \hat{c}_{\textbf{k}' \sigma'}
+\end{align}
+where $\epsilon_\textbf{k} = \frac{k^2}{2m} - \mu$, $\mu$ is the chemical potential and $V_\textbf{q} = \frac{1}{q^2}$.\\
+The lowest order polarization insertion in momentum frequency space is described by the diagram
+\begin{align}
+-\Pi &= \feynmandiagram [layered layout, small, horizontal=a to b, baseline={-0.5ex}] {
+    i [nudge=(0:5mm)] -- [small] a [dot] -- [fermion, half left, looseness=1.5, momentum={$k+q, \omega + \delta_n$}] b [dot] -- [fermion, half left, looseness=1.5, momentum={$q, \delta_n$}] a, 
+    b -- f [nudge=(180:5mm)];
+}; = \underbrace{(-1)^1}_{\tecxt\text{1 closed loop}} \sum_{n\in\mathbb{Z}} \sum_\sigma \intr\int_{\mathbb{R}^{3}} (-1) G_0^\tecxt\text{M}(\textbf{k} + \textbf{q}, \omega + \delta_n) (-1) G_0^\tecxt\text{M}(\textbf{q}, \delta_n) \, \frac{\mathrm{d}^{3}q}{(2\pi)^3}.
+\end{align}
+%\begin{align}
+%\i\Pi &= \feynmandiagram [layered layout, small, horizontal=a to b, baseline={-0.5ex}] {
+%    i [nudge=(0:5mm)] -- [small] a [dot] -- [fermion, half left, looseness=1.5, momentum={$k+q, \omega + \epsilon$}] b [dot] -- [fermion, half left, looseness=1.5, momentum={$q, \epsilon$}] a, 
+%    b -- f [nudge=(180:5mm)];
+%}; = \underbrace{(-1)^1}_{\tecxt\text{1 closed loop}} \sum_\sigma \intr\int_{\mathbb{R}^{4}} \i G_0^\tecxt\text{c}(\textbf{k} + \textbf{q}, \omega + \epsilon) \i G_0^\tecxt\text{c}(\textbf{q}, \epsilon) \, \frac{\mathrm{d}^{4}Q}{(2\pi)^4}.
+%\end{align}
+Since $G_0^\tecxt\text{M}(\textbf{k}, \omega) = \frac{1}{\i\omega - \epsilon_\textbf{k}}$ we find
+\begin{align}
+\Pi &= 2 \sum_n \int_{\mathbb{R}^{3}} \frac{1}{\i(\omega + \delta_n) - \epsilon_{\textbf{k} + \textbf{q}}} \frac{1}{\i\delta_n - \epsilon_{\textbf{q}} } \, \frac{\mathrm{d}^{3}q}{(2\pi)^3}.
+\end{align}
+%Since $G_0^\tecxt\text{c}(\textbf{k},\omega) = \frac{1}{\omega - \epsilon_\textbf{k} + \tecxt\text{sign\,} \epsilon_\textbf{k} \i 0^+} = \frac{1}{\omega - \epsilon_\textbf{k} (1 - \i 0^+)}$ we find
+%\begin{align}
+%\Pi &= \underbrace{2}_\text{spin} \frac{1}{2\pi\i} \intr\int_{\mathbb{R}^{3}} \intr\int_{\mathbb{R}^{ }} \frac{1}{\omega + \epsilon - \epsilon_{\textbf{k} + \textbf{q}} (1 - \i 0^+)} \frac{1}{\epsilon - \epsilon_{\textbf{q}} (1 - \i 0^+)} \, \mathrm{d}^{ }\epsilon \, \frac{\mathrm{d}^{3}q}{(2\pi)^3}.
+%\end{align}
+For Fermions we have
+\begin{align}
+\sum_n f(\i\omega_n) &= -\frac{\beta}{2} \sum_s \tanh\kla\left( \frac{\beta z_s}{2} \right) \tecxt\text{Res\,}\klammer\left\{ f(z_s) \right\}
+\end{align}
+where $z_s$ are the poles of $f$.
+In our case of $f(z) = \frac{1}{\i\omega + z - \epsilon_{\textbf{k} + \textbf{q}}} \frac{1}{z - \epsilon_\textbf{q}}$ this gives
+\begin{align}
+\sum_n f(\i\delta_n) &= -\frac{\beta}{2} \klam\left[ \frac{\tanh\kla\left( \frac{\beta [\epsilon_{\textbf{k} + \textbf{q}} - \i\omega]}{2} \right)}{\epsilon_{\textbf{k} + \textbf{q}} - \epsilon_\textbf{q} - \i\omega} + \frac{\tanh\kla\left( \frac{\beta \epsilon_\textbf{q}}{2} \right)}{\i\omega + \epsilon_\textbf{q} - \epsilon_{\textbf{k} + \textbf{q}}} \right] = \\
+&= -\frac{\beta}{2} \frac{1-2n_0(\textbf{q}) - 1 + 2n_0(\textbf{k} + \textbf{q})}{\i\omega - (\epsilon_{\textbf{k} + \textbf{q}} - \epsilon_\textbf{q})} = \\
+&= \beta \frac{n_0(\textbf{q}) - n_0(\textbf{k} + \textbf{q})}{\i\omega_n^\tecxt\text{B} - (\epsilon_{\textbf{k} + \textbf{q}} - \epsilon_\textbf{q})}.
+\end{align}
+Here we used
+\begin{align}
+\tanh(\frac{\beta}{2} \epsilon_\textbf{k}) &= \frac{1 - \e^{-\beta\epsilon_\textbf{k}}}{1 + \e^{-\beta\epsilon_\textbf{k}}} = 1 - \frac{2}{\e^{\beta\epsilon_\textbf{k}} + 1} = 1 - 2n_0(\textbf{k})
+\end{align}
+and the fact that for the bosonic Matsubara frequencies $\omega = \omega_n^\tecxt\text{B} = \frac{2n}{\beta}\pi$ we have\footnote{This only works for the bosonic frequencies, but did we not use the fermionic relation prior?}
+\begin{align}
+\tanh\kla\left( \frac{\beta \epsilon_\textbf{k}}{2} - \i\frac{\beta\omega_n^\tecxt\text{B}}{2} \right) &= \frac{1 - \e^{-\beta\epsilon_\textbf{k}} \e^{\i\beta\omega_n^\tecxt\text{B}}}{1 + \e^{-\beta\epsilon_\textbf{k}} \e^{\i\beta\omega_n^\tecxt\text{B}}} = \frac{1 - \e^{-\beta\epsilon_\textbf{k}}}{1 + \e^{-\beta\epsilon_\textbf{k}}} = \tanh\kla\left( \frac{\beta\epsilon_\textbf{k}}{2} \right).
+\end{align}
+Inserting into our expression for the polarization yields
+\begin{align}
+\Pi(\textbf{k}, \omega_n^\tecxt\text{B}) &= 2\beta\intr\int_{\mathbb{R}^{3}} \frac{n_0(\textbf{q}) - n_0(\textbf{k} + \textbf{q}) }{\i\omega - (\epsilon_{\textbf{k} + \textbf{q}} - \epsilon_\textbf{q}) } \, \frac{\mathrm{d}^{3}q}{(2\pi)^3}
+\end{align}
+where $n_0(\textbf{q}) = \kla\left( \e^{\beta\epsilon_\textbf{q}} + 1 \right)^{-1}$.
+NOTE: this is the expected result except for the additional factor of $\beta$. Also the derivation is a bit shady due to the footnote...\\
+This integral is significantly easier if one separates it into two terms $\Pi =: \Pi_+ - \Pi_-$
+\begin{align}
+\Pi(\textbf{k}, \omega) &= \frac{2}{(2\pi)^3} \intr\int_{\mathbb{R}^{3}} \frac{n_0(\textbf{q})}{\i\omega - (\epsilon_{\textbf{k} + \textbf{q}} - \epsilon_\textbf{q})} \, \mathrm{d}^{3}q - \frac{2}{(2\pi)^3} \intr\int_{\mathbb{R}^{3}} \frac{n_0(\textbf{q})}{\i\omega - (\epsilon_\textbf{q} - \epsilon_{\textbf{q} - \textbf{k}}) } \, \mathrm{d}^{3}q.
+\end{align}
+Both integrals can be expressed in one equation as\footnote{Note that $|\textbf{k} + \textbf{q}|^2 = k^2 + q^2 + 2kq \cos\theta$.}
+\begin{align}
+\Pi_\pm &= \frac{2}{(2\pi)^3} \intr\int_{\mathbb{R}^{3}} \frac{n_0(\textbf{q}) }{\i\omega \pm (\epsilon_\textbf{q} - \epsilon_{\textbf{q} \pm \textbf{k}})}  \, \mathrm{d}^{3}q  = \\
+&= \frac{4m}{(2\pi)^2} \intx\int_{0}^{\infty} n_0(q) \int_{-1}^{1} \frac{1}{\i 2m\omega \pm (-k^2 \mp 2kqu)}  \, \mathrm{d}u \, q^2\mathrm{d}q = \\
+&= \frac{4m}{(2\pi)^2} \intx\int_{0}^{\infty} n_0(q) \frac{1}{-2kq} \log\left\vert \frac{\i 2m\omega \mp k^2 - 2kq}{\i 2m\omega \mp k^2 + 2kq} \right\vert  \, q^2\mathrm{d}q = \\
+&= \frac{2m}{(2\pi)^2k} \intx\int_{0}^{\infty} qn_0(q) \log \left\vert \frac{\i 2m\omega \mp k^2 + 2kq}{\i 2m\omega \mp k^2 - 2kq} \right\vert \, \mathrm{d}q.
+\end{align}
+The polarization then becomes
+\begin{align}
+\Pi(\textbf{k},\omega) &= \frac{2m}{(2\pi)^2 k} \intx\int_{0}^{\infty} qn_0(q) \log \left\vert \frac{\i 2m\omega - k^2 + 2kq}{\i 2m\omega - k^2 - 2kq} \frac{\i 2m\omega + k^2 - 2kq}{\i 2m\omega + k^2 + 2kq} \right\vert \, \mathrm{d}q.
+\end{align}
+In the static limit $\omega = 0$ this expression simplifies to
+\begin{align}
+\Pi(\textbf{k},0) &= \frac{2m}{(2\pi)^2k} \intx\int_{0}^{\infty} qn_0(q) \log \left\vert \frac{-k^2 + 2kq}{-k^2 - 2kq} \frac{k^2 - 2kq}{k^2 + 2kq} \right\vert  \mathrm{d}q = \\
+&= \frac{4m}{(2\pi)^2k} \intx\int_{0}^{\infty} qn_0(q) \log \left\vert \frac{k - 2q}{k + 2q} \right\vert \, \mathrm{d}q.
+\end{align}
+Introducing the thermal wavelength $\lambda_\mathrm{th} := \sqrt{\frac{2\pi \beta}{m}}$ and substituting $x := \lambda_\mathrm{th} q$ yields
+\begin{align}
+\Pi(\textbf{k},0) &= \frac{4m}{(2\pi)^2k} \lambda_\mathrm{th}^{-2} \intx\int_{0}^{\infty} \frac{x}{\e^{\frac{x^2}{4\pi} - \mu} + 1} \log \left\vert \frac{k\lambda_\mathrm{th} - 2x}{k\lambda_\mathrm{th} + 2x} \right\vert \, \mathrm{d}x.
+\end{align}
+For high temperatures we may approximate $n_0(q) \sim \e^{\beta\mu} \e^{-\beta \frac{q^2}{2m}}$ which further simplifies the integral to
+\begin{align}
+\Pi(\textbf{k},0) &= \frac{-2\beta}{\pi k} \lambda_\mathrm{th}^{-4} \e^{\beta\mu} \intx\int_{0}^{\infty}x \e^{-\frac{x^2}{4\pi}} \left\vert \frac{k\lambda_\mathrm{th} + 2x}{k\lambda_\mathrm{th} - 2x} \right\vert \, \mathrm{d}x = \\
+&= -2\beta \lambda_\mathrm{th}^{-3} \e^{\beta\mu} \phi(k\lambda_\mathrm{th})
+\end{align}
+where we defined the special function
+\begin{align}
+\phi(y) &:= \frac{1}{\pi y} \intx\int_{0}^{\infty} x\e^{-\frac{x^2}{4\pi}} \log\left\vert \frac{y + 2x}{y - 2x} \right\vert \, \mathrm{d}x.
+\end{align}
+NOTE: This is \emph{almost} what was given on the exercise sheet, but $x$ and $y$ are somehow interchanged in the logarithm.\\
+In order to derive the long-wavelength effective interaction we need to expand $\phi(y)$ for $y\ll 1$.
+%This expansion is surprisingly challenging, and we will restrict ourselves to deriving the actual limit $y \rightarrow 0$ instead.
+Using the substitution $x =: \sqrt{-4\pi\log z}$ we find%\footnote{Note that $\frac{1}{y} \log \left\vert \frac{1+y}{1 - y} \right\vert = \frac{1}{y} \left[ y - \frac{y^2}{2} + \frac{y^3}{3} - \frac{y^4}{4} - \left( -y - \frac{y^2}{2} - \frac{y^3}{3} - \frac{y^4}{4} \right) + \mathcal{O}(y^4) \right] = 2 + \frac{2}{3} y^2 + \mathcal{O}(y^4)$.}
+\begin{align}
+\phi(y) &= \frac{1}{\pi y} \intx\int_{1}^{0} z \sqrt{-4\pi\log z} \log \left\vert \frac{y + 2\sqrt{-4\pi\log z}}{y - 2\sqrt{-4\pi\log z}} \right\vert \, \frac{-4\pi \frac{1}{z}}{2\sqrt{-4\pi\log z}} \mathrm{d}z = \\
+%%%%%&= \frac{2}{\pi y}\intx\int_{0}^{1} \log \left\vert \frac{y^2 - 16\pi\log z + 2y\sqrt{-4\pi \log z}}{y^2 + 16\pi\log z} \right\vert \, \mathrm{d}z
+&= \frac{2}{y} \intx\int_{0}^{1} \log \left\vert \frac{y + \sqrt{-16\pi\log z}}{y - \sqrt{-16\pi\log z}} \right\vert \, \mathrm{d}z.
+\end{align}
+%Using the limit
+%\begin{align}
+%\lim_{y \rightarrow 0} \frac{1}{y} \log \left\vert \frac{y + x}{y - x} \right\vert &= \lim_{t\rightarrow \infty} \log \left\vert \left( 1 + \frac{1/x}{t} \right)^t \left( 1 - \frac{1/x}{t} \right)^{-t} \right\vert = \log \left\vert \e^{1/x} \e^{-(-1/x)} \right\vert = \frac{2}{x}
+%\end{align}
+%with $x = \sqrt{-16\pi\log z}$ we may now show that
+%\begin{align}
+%\phi(0) &= 2\intx\int_{0}^{1} \frac{2}{\sqrt{-16\pi\log z}} \, \mathrm{d}z = \frac{1}{\sqrt{\pi}} \intx\int_{0}^{1} \frac{1}{\sqrt{-\log z}}\, \mathrm{d}z = \\
+%&= \frac{1}{\sqrt{\pi}} \intx\int_{0}^{\infty} \frac{1}{x} \, 2x\e^{-x^2} \mathrm{d}x = 1.
+%\end{align}
+For $y\ll 1$ and $t := \frac{1}{y} \gg 1$ we have
+\begin{align}
+\frac{1}{y} \log \left\vert \frac{y + x}{y - x} \right\vert &= \log \left\vert \left( 1 + \frac{1/x}{t} \right)^t \left( 1 - \frac{1/x}{t} \right)^{-t} \right\vert = \\
+&= \log \left\vert \e^{\frac{1}{x} \kla\left( 1 - \frac{1}{2xt} + \frac{1}{3x^2t^2} - \dots \right)} \e^{-\frac{1}{x} \left( -1 - \frac{1}{2xt} - \frac{1}{3x^2t^2} - \dots \right)} \right\vert = \\
+&= \frac{2}{x} + \frac{2}{3x^2t^2} + \frac{2}{5x^4t^4} + \dots = \frac{2}{x} \sum_{n\ge 0} \frac{1}{2n+1} \kla\left( \frac{y}{x} \right)^{2n}.
+\end{align}
+Using this we find
+\begin{align}
+\phi(y) &= 2 \intx\int_{0}^{1} \frac{2}{\sqrt{-16\pi\log z}} \sum_{n\ge 0} \frac{y^{2n}}{2n+1} \frac{1}{(-16\pi \log z)^{n}}  \, \mathrm{d}z = \\
+&= \frac{1}{\sqrt{\pi}} \sum_{n\ge 0} \frac{1}{2n+1} \kla\left( \frac{y^2}{16\pi} \right)^n \intx\int_{0}^{1} (-\log z)^{-n - \frac{1}{2}} \, \mathrm{d}z = \\
+&= \frac{1}{\sqrt{\pi}} \sum_{n\ge 0} \frac{1}{2n+1} \kla\left( \frac{y^2}{16\pi} \right)^n \intx\int_{0}^{\infty} x^{-n - \frac{1}{2}}  \,\e^{-x} \mathrm{d}x = \\
+&= \frac{1}{\sqrt{\pi}} \sum_{n\ge 0} \frac{1}{2n+1} \kla\left( \frac{y^2}{16\pi} \right)^n \Gamma\kla\left( -n + \frac{1}{2} \right).
+\end{align}
+Since $\Gamma(1 - z) = \frac{\pi}{\Gamma(z) \sin(\pi z)}$ one has
+\begin{align}
+ \Gamma\kla\left( \frac{1}{2} - n \right) &= \frac{\pi}{\Gamma\kla\left( n + \frac{1}{2} \right) \sin\kla\left( \pi n + \frac{\pi}{2} \right)} = (-1)^n \pi \frac{1}{\kla\left( n - \frac{1}{2} \right) \kla\left( n - \frac{3}{2} \right) \dots \frac{1}{2} \Gamma\kla\left( \frac{1}{2} \right)} = \\
+ &= \sqrt{\pi} (-1)^n \prod_{j = 1}^n \frac{1}{j - \frac{1}{2}} = \sqrt{\pi} (-1)^n \prod_{j = 1}^n \frac{2}{2j - 1} \frac{2j}{2j} = \sqrt{\pi} (-1)^n \frac{4^n n!}{(2n)!}.
+\end{align}
+Inserting we finally arrive at\footnote{The radius of convergence actually turns out to be infinite.}
+\begin{align}
+\phi(y) &= \sum_{n\ge 0} \frac{1}{2n+1} \frac{n!}{(2n)!} \kla\left( \frac{-y^2}{4\pi} \right)^n = 1 - \frac{y^2}{24\pi} + \frac{y^4}{960\pi^2} - \dots
+\end{align}
+%\begin{align}
+%\phi(y) &\sim \frac{1}{\pi} \intx\int_{0}^{\infty} x\e^{-\frac{x^2}{4\pi}} \frac{1}{2x} \klam\left[ 2 + \frac{2}{3} \kla\left( \frac{y}{2x} \right)^2 \right] \, \mathrm{d}x = \\
+%&= 
+%\end{align}
+%\begin{align}
+%\phi(y) &= \frac{1}{2\pi} \intx\int_{0}^{\infty} \e^{-\frac{x^2}{4\pi}} \frac{2x}{y} \log \left\vert \frac{1+\frac{y}{2x}}{1 - \frac{y}{2x}} \right\vert  \, \mathrm{d}x = \\
+%&= \frac{1}{2\pi} \intx\int_{0}^{y} \e^{-\frac{x^2}{4\pi}} \frac{2x}{y} \log \left\vert \frac{1+\frac{y}{2x}}{1 - \frac{y}{2x}} \right\vert  \, \mathrm{d}x + \frac{1}{2\pi} \intx\int_{y}^{\infty} \e^{-\frac{x^2}{4\pi}} \klam\left[ 2 + \frac{2}{3} \kla\left( \frac{y}{2x} \right)^2  + \mathcal{O}(y^4) \right]  \, \mathrm{d}x = \\
+%&= \frac{1}{2\pi} \intx\int_{0}^{y} \kla\left( \frac{2x}{y} \right)^2 \klam\left[ 2 + \frac{2}{3} \kla\left( \frac{2x}{y} \right)^2 \right] \, \mathrm{d}x + \frac{ \sqrt{4\pi^2}}{2\pi} + \frac{y^2}{12\pi} \intx\int_{y}^{\infty} \frac{1}{x^2} \e^{-\frac{x^2}{4\pi}} \, \mathrm{d}x = \\
+%&= \frac{1}{2\pi} \intx\int_{0}^{1} 4z^2 \klam\left[ 2 + \frac{8}{3}z^2 \right] \, y\mathrm{d}z + 1 + \frac{y^2}{12\pi} \intx\int_{0}^{\frac{1}{y}} \e^{-\frac{1}{4\pi z^2}} \, \mathrm{d}z = \\
+%&= 1 + \mathcal{O}(y).
+%\end{align}
+%\begin{align}
+%\phi(y) &= \frac{1}{2\pi} \intx\int_{0}^{\infty} \e^{-\frac{x^2}{4\pi}} \frac{2x}{y} \log \left\vert \frac{1+\frac{2x}{y}}{1 - \frac{2x}{y}} \right\vert  \, \mathrm{d}x = \\
+%&= \frac{y}{4\pi} \intx\int_{0}^{\infty} \e^{-\frac{y^2}{16\pi}z^2} z \log \left\vert \frac{1+z}{1 - z} \right\vert  \, \mathrm{d}z = \\
+%&= \frac{y}{4\pi} \sum_{n\ge 0} \frac{2}{2n+1} \intx\int_{0}^{\infty} \e^{-\frac{y^2}{16\pi}z^2} z^{2n + 2} \, \mathrm{d}z = \\
+%&= \frac{y}{4\pi} \sum_{n\ge 0} \frac{2}{2n + 1} \intx\int_{0}^{\infty} \e^{-t} \kla\left( \frac{16\pi}{y^2} t \right)^{n+1} \, \frac{\sqrt{16\pi}}{y} \frac{1}{2\sqrt{t}} \mathrm{d}t = \\
+%&= \frac{1}{\sqrt{\pi}} \sum_{n\ge 0} \frac{y^{-2n - 2}}{2n + 1} (16\pi)^{n+1} \intx\int_{0}^{\infty} \e^{-t} t^{n + \frac{1}{2}} \, \mathrm{d}t = \\
+%&= \frac{1}{\sqrt{\pi}} \sum_{n\ge 0} \frac{1}{2n+1} \kla\left( \frac{16\pi}{y^2} \right)^{n+1} \Gamma \kla\left( n + \frac{3}{2} \right).
+%\end{align}
+%\begin{align}
+%\phi(y) &= \frac{1}{2\pi} \intx\int_{0}^{\infty} \e^{-\frac{x^2}{4\pi}} \frac{2x}{y} \log \left\vert \frac{1+\frac{2x}{y}}{1 - \frac{2x}{y}} \right\vert \, \mathrm{d}x = \\
+%&= \frac{y}{4\pi} \intx\int_{0}^{\infty} \e^{-\frac{y^2}{16\pi}z^2} z \log \left\vert \frac{1+z}{1 - z} \right\vert \, \mathrm{d}z = \\
+%&= \frac{y}{4\pi} \sum_{n\ge 0} \frac{1}{n!} \kla\left( -\frac{y^2}{16\pi} \right)^n \intx\int_{0}^{\infty} z^{2n+1} \log \left\vert \frac{1+z}{1 - z} \right\vert \, \mathrm{d}z
+%\end{align}
+%\begin{align}
+%\phi(y) &= \frac{y}{4\pi} \intr\int_{0}^{\infty} \e^{-\frac{y^2}{16\pi}z^2} z \log \left\vert \frac{1+z}{1 - z} \right\vert \, \mathrm{d}z,\\
+%I_1 &= \frac{y}{4\pi} \intx\int_{0}^{y} \e^{-\frac{y^2}{16\pi}z^2} z \log \left\vert \frac{1+z}{1 - z} \right\vert \, \mathrm{d}z = \\
+%&= \frac{y}{4\pi} \sum_{n\ge 0} \frac{2}{2n+1} \intx\int_{0}^{y} \e^{-\frac{y^2}{16\pi}z^2} z^{2n} \, \mathrm{d}z = \\
+%&= \frac{y}{4\pi} \sum_{n\ge 0} \frac{2}{2n+1} y^{2n+1} \intx\int_{0}^{1} \e^{-\frac{y^4}{16\pi} x^2} x^{2n} \, \mathrm{d}x = \\
+%&\approx \frac{y}{4\pi} \sum_{n\ge 0} \frac{2}{2n+1} y^{2n+1} \intx\int_{0}^{1}x^{2n}\, \mathrm{d}x = \frac{y^2}{2\pi} \sum_{n\ge 0} \frac{y^{2n}}{(2n+1)^2},\\
+%I_2 &= \frac{y}{4\pi} \intx\int_{y}^{\infty} \e^{-\frac{y^2}{16\pi}z^2} z \log \left\vert \frac{1+z}{1 - z} \right\vert \, \mathrm{d}z = \\
+%&= \frac{1}{4\pi y} \intx\int_{y^2}^{\infty} \e^{-\frac{x^2}{16\pi}} x \log \left\vert \frac{y+x}{y - x} \right\vert \, \mathrm{d}x = 
+%\end{align}
+Using $\phi(0) = 1$ we find
+\begin{align}
+V^\tecxt\text{eff}(\textbf{k}) &= \frac{V(\textbf{k})}{1 - V(\textbf{k}) \Pi(\textbf{k},0) } \approx \frac{1}{k^2  + 2\beta \lambda_\mathrm{th}^{-3} \e^{\beta\mu} } =: \frac{1}{k^2 + k_\mathrm{DH}^2}
+\end{align}
+where $k_\mathrm{DH}^2 := 2\beta \lambda_\mathrm{th}^{-3} \e^{\beta\mu}$.
+As shown on the previous exercise sheet this corresponds to a Yukawa potential
+\begin{align}
+V^\tecxt\text{eff} (\textbf{r}) &= \frac{\e^{-k_\tecxt\text{DH}r}}{4\pi r}.
+\end{align}
+NOTE: The discrepancy in $k_\tecxt\text{DH}$ is a factor of 2, which comes from the interchanging of $x$ and $y$ in the definition of $\phi$ -- so at least this is not another mistake.
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

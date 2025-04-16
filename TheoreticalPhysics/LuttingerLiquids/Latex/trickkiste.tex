@@ -1,0 +1,77 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{ll_scrarticle}
+
+\newcommand*{\titel}{Trickkiste}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+%\subject{SUBJECT}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Functions}
+\subsection{Beta function}
+\begin{align}
+B(x,y) &= \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)} = B(y,x) = \\
+&= \intx{0}{1}{t^{x-1}(1-t)^{y-1}}{t} \kom{t = \frac{1}{1+u}} \\
+&= \intx{0}{\infty}{\frac{u^{y-1}}{(1+u)^{x+y}}}{u} = \intx{0}{\infty}{\frac{u^{x-1}}{(1+u)^{x+y}}}{u} \kom{u = \sinh^2(t)} \\
+&= 2\intx{0}{\infty}{\sinh^{2x-1}(t) \cosh^{1-2x-2y}(t)}{t} = \\
+&= 2\intx{0}{\frac{\pi}{2}}{\sin^{2x-1}(t) \cos^{2y-1}(t)}{t}.\\
+B(x,1-x-y) &= 2\intx{0}{\infty}{\sinh^{2x-1}(t)\cosh^{2y-1}(t)}{t}.
+\end{align}
+\section{Series}
+\subsection{Poisson}
+One can use the residue theorem to show that
+\begin{align}
+\sum_{n\in\mathbb{Z}} \powe{2\pi\i nx} &= \sum_{n\in\mathbb{Z}} \delta(x-n).
+\end{align}
+%\begin{align}
+%\sum_{n\in\mathbb{Z}}\intr{\powe{2\pi\i nx}}{x} &= \lim_{\epsilon\rightarrow 0^+} \intr{\sum_{n\in\mathbb{Z}} \powe{(2\pi\i x - \epsilon|x|)n}}{x} = \lim_{\epsilon\rightarrow 0^+} \intr{\klb*{1 + \frac{1}{\powe{\epsilon|x| - 2\pi\i x} - 1} + \hc}}{x} = \\
+%&= \lim_{\epsilon\rightarrow 0^+}
+%\end{align}
+This gives
+\begin{align}
+\sum_{n\in\mathbb{Z}} f(n) &= \sum_{n\in\mathbb{Z}} \intr{f(x) \powe{2\pi\i nx}}{x}.
+\end{align}
+\subsection{Geometric}
+\subsubsection{Dolcini H.83}
+Let $a\in(0,1)$ and $b>0$
+\begin{align}
+\sum_{n\in\mathbb{Z}} \frac{1}{\i} \frac{\powe{\i b\kla*{2\pi n - \i\log(a)}}}{2\pi n - \i\log(a)} &= \sum_{n\in\mathbb{Z}} \frac{a^b}{\i} \intr{ \frac{\powe{2\pi\i (b+n)x}}{2\pi x - \i\log(a)}}{x} = a^b \sum_{n\in\mathbb{Z}} \frac{1}{2\pi\i} \intr{\frac{\powe{\i (b - \lfloor b\rfloor +n)x}}{x - \i \log (a)}}{x} = \\
+&= a^b \sum_{n\ge 0} \powe{- ([b] + n) \log(a)} = a^{\lfloor b\rfloor} \frac{1}{1 - \frac{1}{a}} = - \frac{a^{\lfloor b\rfloor + 1}}{1 - a}.
+\end{align}
+\section{Products}
+\subsection{Gamma product}
+\begin{align}
+\Gamma(z) &= \intx{0}{\infty}{t^{z-1} \powe{-t}}{t} = \\
+&= \frac{1}{z} \prod_{n\ge 1} \frac{n}{n+z} \kla*{1 + \frac{1}{n}}^z = \\
+&= \frac{\powe{-\gamma z}}{z} \prod_{n\ge 1} \frac{n}{n+z} \powe{\frac{z}{n}}.
+\end{align}
+This also leads to
+\begin{align}
+\frac{\Gamma(x+\i y+1)}{\Gamma(x+1)} &= \prod_{n\ge 1} \frac{n+x}{n+x+\i y} \kla*{1 + \frac{1}{n}}^{\i y} = \lim_{N\rightarrow\infty} \powe{\i y \log(N+1)} \prod_{n\ge 1} \frac{n+x}{n+x+\i y}.
+\end{align}
+Multiplication by the complex conjugate yields a regular result (see e.g. Dolcini 20.5)
+\begin{align}
+\abs*{\frac{\Gamma(x+\i y + 1)}{\Gamma(x+1)}}^2 &= \prod_{n\ge 1} \frac{(n+x)^2}{(n+x)^2 + y^2}.
+\end{align}
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

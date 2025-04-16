@@ -1,0 +1,91 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\begin{document}
+
+\title{Spulen in Magnetfeldern}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Drehspule eines Galvanometers}
+Zunächst müssen die induzierte Spannung, der Strom und das Drehmoment berechnet werden. Für die Fläche der Spule gilt zudem $A=2Rl$:
+\begin{align*}
+U_{ind}&=-N\frac{d}{dt}\iint_A \vv{B}\cdot d\vv{A}=-NBA\frac{d}{dt}\cos(\varphi - \frac{\pi}{2})\simeq -NBA\dot{\varphi} \\
+I&=\frac{U}{R}=-\frac{NBA\dot{\varphi}}{R_i+R_a}\\
+\vv{M}&=2N\vv{r}\times\vv{F_L}=2NRIlB\sin(\varphi +\frac{\pi}{2})\simeq NBAI=-\frac{(NBA)^2}{R_i+R_a}\dot{\varphi}=:-\Gamma\dot{\varphi}\\
+&\Rightarrow\ \ \delta := \frac{\Gamma}{J}=\frac{(NBA^2)}{J(R_i+R_a)}\simeq 0.13\frac{1}{s}
+\end{align*}
+
+\section{Messung der Induktivität einer Spule}
+Mit $\vv{B}\bot\vv{A}$ und $\mu_r = 1+\chi$ gilt:
+\begin{align*}
+\Phi_0&=N\mu_0HA_s=L_0I\\
+\Phi&=N\mu_0H\left((1-\frac{l_p}{l_s})A_s+\frac{l_p}{l_s}(A_s-A_p+\mu_r A_p)\right)=N\mu_0H(A_s+\chi\frac{l_p}{l_s}A_p) = LI=\frac{L}{L_0}\Phi_0\\
+&\Rightarrow\ \ 1+\chi\frac{l_pA_p}{l_sA_s}=\frac{L}{L_0}\ \ \Rightarrow\ \ \chi=\frac{d_s^2l_s}{d_p^2l_p}(\frac{L}{L_0}-1)\simeq -0.65
+\end{align*}
+\section{Abschirmung eines äußeren Magnetfeldes}
+\subsection*{a)}
+Es gelten folgende Rechenregeln für elliptische Integrale:
+\begin{align*}
+\partial_xK(x)&=\frac{E(x)}{x(1-x^2)}-\frac{K(x)}{x} \\
+\partial_xE(x)&=\frac{E(x)}{x}-\frac{K(x)}{x} \\
+\frac{E(x)}{1-x^2}&=\Pi(x,x)=\int_0^{\pi/2}\frac{dt}{(1-x^2\sin^2(t))\sqrt{1-x^2\sin^2(t)}}
+\end{align*}
+Magnetfeld einer stromdurchflossenen Spule mit Biot-Savart:
+\begin{align*}
+\vv{H}(\vv{r})&=-\frac{I}{4\pi}\int\frac{(\vv{r}-\vv{r}')\times d\vv{r}'}{|\vv{r}-\vv{r}'|^3} = -\frac{I}{4\pi}\int_0^{2\pi} \frac{(r\vv{e_r}+z\vv{e_z}-R\vv{e_{r'}})\times Rd\phi\vv{e_{\phi}}}{(z^2+R^2+r^2-2rR\cos(\phi))^{3/2}}=\\
+&= -\frac{IR}{4\pi}\int_0^{2\pi} \frac{r\cos(\phi-\varphi)e_z-ze_{r'}-Re_z}{(z^2+R^2+r^2-2rR\cos(\phi))^{3/2}}d\phi \overset{\substack{2\cos^2(x)=1+\cos(2x)\\|}}{=} \\
+&=-\frac{IR}{4\pi}\int_0^{2\pi} \frac{-Re_z-z(\cos(\phi)e_x+\sin(\phi)e_y)+r\cos(\phi-\varphi)e_z}{(z^2+R^2+r^2+2rR-4rR\cos^2(\frac{\phi}{2}))^{3/2}}d\phi\overset{\substack{ \phi=2\psi \\|}}{=}\\
+&=\underbrace{\frac{IR}{\pi\sqrt{(r+R)^2+z^2}^3}}_{=:c}\int_0^{\pi} \frac{Re_z+z(\cos(2\psi)e_x+\sin(2\psi)e_y)-r\cos(2\psi-\cancelto{\mathrm{sym.}}{\varphi})e_z}{2\Big(1-\underbrace{\frac{4rR}{z^2+(R+r)^2}}_{=:k^2}\cos^2(\psi)\Big)^{3/2}}d\psi\overset{\substack{ t=\frac{\pi}{2}-\psi\\|}}{=}\\
+&=c\int_{-\pi/2}^{\pi/2}\frac{(R+r\cos(2t))e_z-z(\cos(2t)e_x+\cancel{\sin(2t)}e_y)}{2(1-k^2\sin^2(t))^{3/2}}dt\overset{\substack{ e_x\rightarrow e_r\ \mathrm{sym.}\\|}}{=} \\
+&=c\int_0^{\pi/2} \frac{(R+r\cos(2t))e_z-z\cos(2t)e_r}{\sqrt{1-k^2\sin^2(t)}^3}dt\overset{\substack{ 2\sin^2(x)=1-\cos(2x)\\|}}{=} \\  
+&=cR\Pi(k,k)e_z+\left(\frac{2cr}{k^2}e_z-\frac{2cz}{k^2}e_r\right)\int_0^{\pi/2}\frac{\frac{k^2}{2}-k^2\sin^2(t)}{\sqrt{1-k^2\sin^2(t)}^3}dt= \\
+&=cR\Pi(k,k)e_z+\frac{2c}{k^2}(re_z-ze_r)\left[(\frac{k^2}{2}-1)\Pi(k,k)+K(k)\right]= \\
+&=c\left[(R+r-\frac{2r}{k^2})\frac{E(k)}{(1-k^2)}+\frac{2r}{k^2}K(k)\right]e_z-cz\left[(1-\frac{2}{k^2})\frac{E(k)}{(1-k^2)}+\frac{2K(k)}{k^2}\right]e_r   \numberthis\label{Biot-Savart-Spule}
+\end{align*}
+Damit folgt für $\vv{H}=H_z+H_r$ mit $\alpha^2:=(r-R)^2+z^2$, $\beta^2:=(r+R)^2+z^2$ und $k^2=1-\frac{\alpha^2}{\beta^2}$:
+\begin{align*}
+H_z&=\frac{c}{2R}\bigg[(R^2-z^2-r^2)\frac{E(k)}{(1-k^2)}+((r+R)^2+z^2)K(k)\bigg]= \\
+&=\frac{IR}{2R\pi\beta^3}\left[(R^2-z^2-r^2)\frac{\beta^2}{\alpha^2}E(k)+\beta^2K(k)\right]=\underline{\frac{I}{2\pi\alpha^2\beta}\left[(R^2-z^2-r^2)E(k)+\alpha^2K(k)\right]} \\
+H_r&=\frac{cz}{2rR}\left[(R^2+z^2+r^2)\frac{\beta^2}{\alpha^2}E(k)-\beta^2K(k)\right]=\underline{\frac{Iz}{2\pi\alpha^2\beta r}\left[(R^2+z^2+r^2)E(k)-\alpha^2K(k)\right]}
+\end{align*}
+Superposition von entlang einer Achse der Länge $L$ gleichverteilten Feldern $\vv{A}(x, y)$ durch Approximation mit Integralen:
+\begin{align*}
+\vv{B}&=\sum \vv{A}(x, y)=\sum_{k=0}^N \vv{A}(x-\frac{k}{N} L, y)=\frac{N}{L}\sum_{k=0}^N \vv{A}(x-\frac{k}{N} L, y)(\frac{(k+1)L}{N}-\frac{kL}{N})\overset{\substack{x_k=kL/N \\|}}{=} \\
+&=\frac{N}{L}\sum_{k=0}^N \vv{A}(x-\frac{k}{N} L, y)(x_{k+1}-x_k)\simeq\frac{N}{L}\int_0^L \vv{A}(x-s, y)ds
+\end{align*}
+Damit folgt für das Magnetfeld einer Spule mit Länge $L$, Radius $R$ und Windungszahl $N$:
+\begin{align*}
+\vv{H}&\simeq\frac{N}{L}\int_0^L H_z(r, z-s)e_z+H_r(r, z-s)e_r\ ds
+\end{align*}
+Berechnung über das Vektorpotential $\vv{A}$:
+\begin{align*}
+\vv{A}(\vv{r})&=\frac{\mu_0}{4\pi}\iiint_V \frac{\vv{j}(\vv{R})}{|\vv{r}-\vv{R}|}dV=\frac{\mu_0}{4\pi}\iint_A j(\vv{R})dA\int_{\gamma}\frac{1}{|\vv{r}-\vv{R}|}d\vv{s}=\\
+&=\frac{\mu_0I\vv{e_{\varphi}}}{4\pi}\int_0^{2\pi}\frac{Rd\varphi}{\sqrt{r^2+R^2+z^2-2rR\cos(\varphi)}}\overset{\substack{2\cos^2(x)=1+\cos(2x)\\|}}{=}\\
+&=\frac{\mu_0IR\vv{e_{\varphi}}}{4\pi}\int_0^{2\pi}\frac{d\varphi}{\sqrt{(r+R)^2+z^2-4rR\cos^2(\frac{\varphi}{2})}}\overset{\substack{\varphi=2\psi\\|}}{=} \\
+&=\underbrace{\frac{\mu_0IR\vv{e_{\varphi}}}{\pi\sqrt{(r+R)^2+z^2}}}_{=:\vv{c}}\int_0^{\pi}\frac{d\psi}{2\sqrt{1-\frac{4rR}{(r+R)^2+z^2}\cos^2(\psi)}}\overset{\substack{\psi=\pi/2-\varphi\\|}}{=}\vv{c}\int_{-\pi/2}^{\pi/2}\frac{d\varphi}{2\sqrt{1-k^2\sin^2(\varphi)}}=\\
+&=\vv{c}\cdot K(k)\ \ \textrm{ mit }\ \ k^2=\frac{4rR}{(r+R)^2+z^2}\ \ \textrm{und }\ \ K(k)=\int_0^{\pi/2}\frac{dt}{\sqrt{1-k^2\sin^2(t)}}
+\end{align*}
+
+Über $\vv{B}=\textrm{rot}\ \vv{A}=\nabla\times\vv{A}$ kann daraus das Magnetfeld bestimmt werden.
+
+\subsection*{b)}
+\subsection*{c)}
+\subsection*{d)}
+
+\section{Erdmagnetfeld}
+Bezeichne $\Psi := \int U dt$ den Spannungsstoß mit $[\Psi]=Vs$. Die Spule wird jeweils um $180\degree$ gedreht, weshalb bei den Integralen einfach ein Faktor von $\cos(0)-\cos(\pi)=2$ dazukommt:
+\begin{align*}
+\Psi_{Horizontal} &= \int_{t_1}^{t_2} -\frac{d}{dt}\iint_A B_{Horizontal}\cos(\varphi(t))dA\ dt = -2NB_H\pi R^2\\
+\Psi_{Vertikal} &= \int_{t_1}^{t_2}-\frac{d}{dt}\iint_A B_{Vertikal}\cos(\varphi(t))dA\ dt = -2NB_V\pi R^2\\
+&\Rightarrow\ \ B=\frac{\sqrt{\Psi_H^2+\Psi_V^2}}{2N\pi R^2}\textrm{    und   }\alpha = \arctan(\frac{B_V}{B_H})=\arctan(\frac{\Psi_H}{\Psi_V})\simeq 66.4\degree
+\end{align*}
+
+\end{document}

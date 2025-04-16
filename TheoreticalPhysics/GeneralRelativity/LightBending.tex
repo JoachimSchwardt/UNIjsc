@@ -1,0 +1,263 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Gravitational effects on light}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{General Relativity}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Light bending within Newtonian mechanics}
+Before we discuss how the gravitational effects on light can be described in Newtonian mechanics, we want to reiterate the solution to the two-body problem.
+However, we will assume that the heavy object with mass $M$ does not move, and merely acts as a gravitational field for the projectile of mass $m$.
+This leads to the total energy
+\begin{align}
+E &= \frac{m}{2} \dot{\vec{r}}\,^2 - \frac{GMm}{|\vec{r}|}.
+\end{align}
+Here we have $\vec{r} = r\vec{e}_r + z\vec{e}_z$, where $r = \sqrt{x^2 + y^2}$ with $x = r\cos\phi$ and $y=r\sin\phi$ being the Cartesian coordinates.
+Note that the angular momentum is given by
+\begin{align}
+\vec{L} &= \vec{r} \times \vec{p} = m\kla\left( r\vec{e}_r + z\vec{e}_z \right) \times \kla\left( \dot{r}\vec{e}_r + r\dot{\phi}\vec{e}_\phi + \dot{z}\vec{e}_z \right) = \\
+&= mr^2\dot{\phi} \vec{e}_z - mr\dot{z}\vec{e}_\phi + mz\dot{r}\vec{e}_\phi - mz r\dot{\phi} \vec{e}_r.
+\end{align}
+Since there is no force acting along $\vec{e}_z$, we transform into a frame of reference in which $z \equiv 0$.
+Then the angular momentum simplifies to 
+\begin{align}
+\vec{L} &= mr^2\dot{\phi} \vec{e}_z \equiv L\vec{e}_z.
+\end{align}
+Inserting into the energy equation gives
+\begin{align}
+E &= \frac{m}{2} \kla\left(  \dot{r}^2 + r^2\dot{\phi}^2 \right) - \frac{GMm}{r} = \frac{m}{2} \dot{r}^2 + \frac{L^2}{2mr^2} - \frac{GMm}{r}.
+\end{align}
+We may now consider $r(\phi(t))$ instead of $r(t)$, leading to
+\begin{align}
+E &= \frac{m}{2} \kla\left( \frac{\tecxt\text{d}r(\phi)}{\tecxt\text{d}\phi} \dot{\phi} \right)^2 + \frac{L^2}{2mr^2} - \frac{GMm}{r} = \\
+&= \frac{L^2r'(\phi)^2}{2mr^4}  + \frac{L^2}{2mr^2} - \frac{GMm}{r}.
+\end{align}
+Introducing the new variable $u := \frac{1}{r}$ with $r' = -\frac{u'}{u^2}$ then results in
+\begin{align}
+E &= \frac{L^2u'(\phi)^2}{2m} + \frac{L^2 u(\phi)^2}{2m} - GMm u(\phi).
+\end{align}
+Differentiating and dividing by $\frac{L^2}{m u'(\phi)}$ gives
+\begin{align}
+u'' + u &= \frac{GMm^2}{L^2} =: \gamma. \label{eqn:newtonian trajectory general solution}
+\end{align}
+This equation has the general solution
+\begin{align}
+u(\phi) &= \gamma + A\sin\phi + B\cos\phi,
+\end{align}
+where we now need to relate the coefficients $A,B$ to the initial condition.
+The particular setup we want to investigate is sketched in \autoref{figure:sketch newtonian trajectory}.
+Note that the initial velocity is taken to be parallel to $\vec{e}_x$, and that the heavy object has a radius of $R$.
+\begin{figure}[!ht]
+    \centering
+    \begin{tikzpicture}[scale=1,cap=round]
+        \pgfmathsetmacro{\R}{1.0}
+        \pgfmathsetmacro{\r}{0.05}
+        \pgfmathsetmacro{\y}{1.4}
+        
+        \coordinate (o) at (0,0);
+        \coordinate (xmax) at (5,0);
+        \coordinate (xmin) at (-7,0);
+        \coordinate (ymax) at (0,3);
+        \coordinate (ymin) at (0,-1.5);
+        
+        \coordinate (r0) at (-6,\y);
+        \coordinate (r0right) at (-5,\y);
+        
+        \coordinate (r1) at (0,\y);
+        \coordinate (r2) at (\R,0.8*\y);
+        \coordinate (r3) at (4.8*\R,-0.4);
+        
+%        \node[anchor=north east] at (o) {$0$};
+        \node[anchor=north] at (xmax) {$x$};
+        \node[anchor=west] at (ymax) {$y$};
+        
+        \draw[fill, color=black!35!white] (o) circle (\R);
+        \draw (o) circle (\R);
+        \node[below=0.5cm, right] at (0,\R) {$R$};
+        \draw[color=black, -{Stealth[length=1.5mm,width=1.5mm]}] (o) to (0,\R);
+        \node[below=0.5cm, left] at (o) {$M$};
+        
+        \draw[fill] (r0) circle (\r);
+        \node[below] at (r0) {$m$};
+        \node[above] at (r0) {$\vec{r}_0$};
+        
+        \draw[color=black, thick=0.05cm, -{Stealth[length=1mm,width=1mm]}] (r0) .. controls (r1) and (r2)  .. (r3);
+        \draw[color=blue, thick=0.05cm, -{Stealth[length=1.5mm,width=1.5mm]}] (r0) to (r0right); 
+        \node[above, color=blue] at (r0right) {$\vec{v}_0$};      
+        
+        
+        \draw[color=black, -{Stealth[length=1.5mm,width=1.5mm]}] (xmin) to (xmax);
+        \draw[color=black, -{Stealth[length=1.5mm,width=1.5mm]}] (ymin) to (ymax);
+        
+        
+        
+%        \coordinate (A) at (0,0);
+%        \coordinate (B) at (1.5,1);
+%        \coordinate (C) at (0,1);
+%        \coordinate (D) at (1.5,0);
+%        \coordinate (M) at (0.75,0.5);
+%        
+%        \coordinate (CO) at (-0.25, -0.15);
+%        \coordinate (CT) at (-0.25, 1.25);
+%        \coordinate (CR) at (1.75, -0.15);
+%        \coordinate (CM) at (0.75, -0.15);
+%        
+%        \draw[color=blue, thick] (A) .. controls (M) ..  (D);
+%        \draw[color=blue, thick] (B) .. controls (M) ..  (C);
+%        \draw[dashed] (A) to (B);
+%        \draw[dashed] (C) to (D);
+%        
+%        \node[anchor=east] at (A) {$\ket{1}$};
+%        \node[anchor=west] at (B) {$\ket{1'}$};
+%        \node[anchor=east] at (C) {$\ket{2}$};
+%        \node[anchor=west] at (D) {$\ket{2'}$};
+%        
+%        
+%        \node[anchor=south,text=blue] at ($(M)+(0,0.2)$) {$\ket{\phi_2}$};
+%        \node[anchor=north,text=blue] at ($(M)-(0,0.2)$) {$\ket{\phi_1}$};
+%        
+%        \draw[color=black, -{Stealth[length=3mm,width=2mm]}] (CO) to (CT);
+%        \draw[color=black, -{Stealth[length=3mm,width=2mm]}] (CO) to (CR);
+%        
+%        \node[anchor=south] at (CT) {$V(z)$};
+%        \node[anchor=west] at (CR) {$z$};
+%        
+%        \draw[color=black] ($(CM)+(0,-0.025)$) to ($(CM)+(0,0.025)$);
+%        \node[anchor=north west] at (CM) {$z_c$};
+        
+    \end{tikzpicture}
+    \caption{Sketch of the trajectory of $m$ within the gravitational field of the sphere with mass $M$ and radius $R$.
+    Note that we assume the initial velocity to be $\vec{v}_0 = v_0\vec{e}_x$.}
+    \label{figure:sketch newtonian trajectory}
+\end{figure}\\
+Since we are dealing with a central potential, the angular momentum is conserved.
+Thus we may compute it at $t=0$, for which we will go back to the Cartesian representation.
+Then we find
+\begin{align}
+\vec{L} &= m\vec{r} \times \dot{\vec{r}} = m\kla\left( x\vec{e}_x + y\vec{e}_y \right) \times \kla\left( \dot{x}\vec{e}_x + \dot{y}\vec{e}_y \right) = m\kla\left( x\dot{y} - y\dot{x} \right)\vec{e}_z.
+\end{align}
+Since $\dot{y}(t=0) \overset{!}{=} 0$ and $\dot{x}(t=0) = v_0$, this simplifies to 
+\begin{align}
+L &= -my_0v_0.
+\end{align}
+From \autoref{eqn:newtonian trajectory general solution} we can also derive
+\begin{align}
+\frac{1}{x(t)} &= \frac{u(\phi(t))}{\cos\phi(t)} = B + A\tan\phi(t) + \gamma\sec\phi (t), \\
+\frac{1}{y(t)} &= \frac{u(\phi(t))}{\sin\phi(t)} = A + B\cot\phi(t) + \gamma\csc\phi(t).
+\end{align}
+Since $x_0 = -|x_0|$ and $y_0 > 0$, we find $\phi_0 = \pi - \arctan\left\vert \frac{y_0}{x_0} \right\vert$.
+Using $\frac{\tecxt\text{d}}{\tecxt\text{d}t} \frac{1}{x} = -\frac{\dot{x}}{x^2}$, we can express the initial velocities via
+%Then the above can be rewritten as
+%\begin{align}
+%\frac{1}{x_0} &= B - A\frac{y_0}{|x_0|} - \gamma \sqrt{1 + \frac{y_0^2}{x_0^2}},\\
+%\frac{1}{y_0} &= A - B\frac{|x_0|}{y_0} + \gamma \sqrt{1 + \frac{x_0^2}{y_0^2}}.
+%\end{align}
+\begin{align}
+\dot{x}(t=0) &= -x_0^2 \frac{\tecxt\text{d}}{\tecxt\text{d}t} \frac{1}{x(t)} = -x_0^2 \dot{\phi}(t) \sec^2\phi(t) \kla\left( A + \gamma\sin\phi(t) \right)  \Big\vert_{t=0}, \\
+\dot{y}(t=0) &= -y_0^2 \frac{\tecxt\text{d}}{\tecxt\text{d}t} \frac{1}{y(t)} = y_0^2 \dot{\phi}(t) \csc^2\phi(t) \kla\left( B + \gamma\cos\phi(t) \right)  \Big\vert_{t=0}.
+\end{align}
+Note that $\dot{\phi}(t=0) = \frac{L}{mr_0^2} = \frac{L}{m(x_0^2+y_0^2)}$.
+Then we can solve for the desired coefficients
+\begin{align}
+A &= -\gamma \sin\phi_0 - \frac{v_0}{x_0^2\sec^2\phi_0} \frac{m(x_0^2+y_0^2)}{L} = \\
+&= -\gamma \frac{1}{\sqrt{1 + \frac{x_0^2}{y_0^2}}} - \frac{v_0}{x_0^2 \kla\left( 1 + \frac{y_0^2}{x_0^2} \right)} \frac{m(x_0^2 + y_0^2)}{L} = \\
+&= -\frac{\gamma y_0}{r_0} - \frac{mv_0}{L},\\
+B &= -\gamma\cos\phi_0 = \frac{\gamma}{\sqrt{1 + \frac{y_0^2}{x_0^2}}} = \frac{\gamma |x_0|}{r_0}.
+\end{align}
+The solution for our particular setup can then be written as
+\begin{align}
+u(\phi) &= \gamma - \kla\left( \frac{\gamma y_0}{r_0} + \frac{mv_0}{L} \right) \sin\phi + \frac{\gamma |x_0|}{r_0} \cos\phi.
+\end{align}
+In this form we may now safely take the limit $x_0 \rightarrow -\infty$, which corresponds to the projectile $m$ entering the system as a quasi-free particle.
+Then we find
+\begin{align}
+u(\phi) &= \gamma - \frac{mv_0}{L}\sin\phi + \gamma \cos\phi = \\
+&= 2\gamma \cos^2\frac{\phi}{2} - 2\frac{mv_0}{L} \sin\frac{\phi}{2} \cos\frac{\phi}{2}.
+\end{align}
+To understand by how much the projectile is deflected, we need to figure out the difference between the incoming and outgoing angles $\phi_\tecxt\text{out} - \phi_\tecxt\text{in}$.
+However, without any influence we would expect this difference to amount to $180^\circ \equiv \pi$, so we define the deviation as
+\begin{align}
+\Delta \phi &:= \pi + \phi_\tecxt\text{in} - \phi_\tecxt\text{out} \equiv -\phi_\tecxt\text{out}\ \tecxt\text{mod}\ 2\pi.
+\end{align}
+Note that by ``outgoing'' we refer to $r(\phi) \rightarrow \infty$ as $\phi\rightarrow\phi_\tecxt\text{out}$.
+We can find this angle by solving $u(\phi) = 0$.
+This leads to
+\begin{align}
+\tan\frac{\phi}{2} &= \frac{\gamma L}{mv_0}.
+\end{align}
+Therefore we finally arrive at the result
+\begin{align}
+\Delta\phi &= -2\arctan \frac{\gamma L}{mv_0} = -2\arctan
+\frac{GMm}{Lv_0} = 2\arctan\frac{GM}{y_0v_0^2}. \label{eqn:newtonian trajectory deflection angle}
+\end{align}
+Notice that the projectile mass $m$ cancelled out.
+For $v_0\rightarrow c$ and $y_0 = R$ we then find
+\begin{align}
+\Delta\phi &= 2\arctan\frac{GM}{Rc^2} \simeq \frac{2GM}{Rc^2}.
+\end{align}
+The approximation is usually valid for stars.
+For the sun, we have $M=\SI{1.989e30}{kg}$ and $R=\SI{6.963e8}{m}$ giving $\Delta\phi = 0.875''$.
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,130 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{ll_scrarticle}
+
+\newcommand*{\titel}{Functional Determinants in QFT}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+%\subject{SUBJECT}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+
+%%% THIS IS ~FunctionalDeterminants_QFT_Dunne !!!
+
+\section{Introduction}
+Consider the source-less bosonic action
+\begin{align}
+S[\phi] &= \intx{ }{ }{\phi \kla*{-\square + V}\phi}{x}
+\end{align}
+with a scalar field $\phi$.
+Then the generating functional is defined as
+\begin{align}
+\mathcal{Z} &= \int \powe{-S[\phi]} \mathcal{D}\phi \equiv \mathcal{N} \sqrt{\frac{\pi}{\det \kla*{-\square + V}}}
+\end{align}
+where we defined the functional determinant by analogy to gauss integrals, up to some normalization constant $\mathcal{N}$.
+Expanding the action about the classical solution gives
+\begin{align}
+S[\phi] &= S[\phi_\text{cl}] + \intx{ }{ }{\phi(x) \frac{\delta S}{\delta \phi(x)} \Big\vert_{\phi = \phi_\text{cl}}}{x} + \frac{1}{2} \intx{ }{ }{\intx{ }{ }{\phi(x) \frac{\delta^2 S}{\delta\phi(x) \delta\phi(y)} \Big\vert_{\phi = \phi_\text{cl}}}{y}}{x} + \dots
+\end{align}
+and defining the second order derivative as $K(x,y)$ yields
+\begin{align}
+\mathcal{Z} &\approx \mathcal{N} \powe{-S[\phi_\text{cl}]} \sqrt{\frac{\pi}{\det K}}.
+\end{align}
+\section{$\zeta$-function Regularization}
+Consider an eigenvalue equation for some differential operator
+\begin{align}
+M\phi_n &= \lambda_n\phi_n.
+\end{align}
+Define the corresponding $\zeta$-function by
+\begin{align}
+\zeta(s) &= \tr\klc*{\frac{1}{M^s}} = \sum_n \frac{1}{\lambda_n^s}.
+\end{align}
+Then we find the relations
+\begin{align}
+\zeta'(s) &= -\sum_n \frac{\log(\lambda_n)}{\lambda_n^s},\\
+\zeta'(0) &= -\sum_n\log(\lambda_n) = -\log\kla*{\prod_n \lambda_n}
+\end{align}
+which allows us to define the functional determinant as $\det M = \powe{-\zeta'(0)}$.
+\section{Borel summation}
+Consider the alternating divergent series
+\begin{align}
+f(g) &= \sum_{n\ge 0} (-1)^n n! g^n.
+\end{align}
+Define a new series by representing $n!$ via the gamma function and interchange integration and summation
+\begin{align}
+\tilde{f}(g) &= \intx{0}{\infty}{ \sum_{n\ge 0} \powe{-t} t^n (-1)^n g^n }{t} = \frac{1}{g} \intx{0}{\infty}{\frac{\powe{-\frac{x}{g}}}{1 + x}}{x} \equiv \textsc{Borel}\text{-sum of }f(g).
+\end{align}
+More generally, we can compute the asymptotic series expansion
+\begin{align}
+f(g) \sim \sum_{n\ge 0} (-1)^n \Gamma\kla*{b n + c} g^n \equiv \frac{1}{b} \intx{0}{\infty}{ \frac{1}{x(1+x)} \kla*{\frac{x}{g}}^\frac{c}{b} \powe{-\kla*{\frac{x}{g}}^{1/b}} }{x}.
+\end{align}
+\section{The Gel'fand-Yaglom formalism}
+Assume that we do not know the explicit eigenvalues of the differential operator $M$, but instead are given some function satisfying $F(\lambda_n) = 0$ for all $n$.
+Then we can write
+\begin{align}
+\zeta(s) &= \frac{1}{2\pi\i} \oint_C \lambda^{-s} \frac{\d}{\d\lambda} \log F(\lambda) \,\d\lambda\\
+&= \frac{\sin(\pi s)}{\pi} \intx{0}{-\infty}{\lambda^{-s}\frac{\d}{\d\lambda} \log F(\lambda) }{\lambda}.
+\end{align}
+Then using the definition of the functional determinant we find
+\begin{align}
+\det M &= \powe{-\zeta'(0)} = \powe{-\log F(-\infty) + \log F(0)} = \frac{F(0)}{F(-\infty)}.
+\end{align}
+Usually one may assume $F(-\infty)$ to be independent of the details of the potential $V$ and thus
+\begin{align}
+\frac{\det M}{\det M_\text{free}} &= \frac{F(0)}{F_\text{free}(0)}.
+\end{align}
+\subsection{One-dimensional Schrödinger operators}
+Consider the operator $M=-\frac{\d^2}{\d x^2} + V(x)$ on the interval $x\in[0,1]$.
+Suppose that we want to solve the eigenvalue problem $M\phi_n = \lambda_n\phi_n$ with $\phi_n(0)=0=\phi_n(1)$ where $0<\lambda_1<\lambda_2<\dots$.
+Now let
+\begin{align}
+Mu_\lambda &= \lambda u_\lambda
+\end{align}
+with $u_\lambda(0) = 0$ and $u_\lambda'(0) = 1$.
+By definition we have $u_{\lambda_n}(1) = 0$ so we set $F(\lambda) = u_\lambda(1)$.
+Then we find
+\begin{align}
+\frac{\det M}{\det M_\text{free}} &= \frac{u_0(1)}{u_0^\text{free}(1)}.
+\end{align}
+The free problem is simple because
+\begin{align}
+{u_0^\text{free}}''(x) &= 0
+\end{align}
+has the immediate solution $u_0^\text{free}(x) = x$.
+\subsection{$1+1$-dimensional QFT}
+Consider the scalar Lagrangian
+\begin{align}
+\mathcal{L} &= \frac{1}{2} \partial_\mu\phi\partial^\mu\phi - U(\phi)
+\end{align}
+with the potential $U(\phi) =\frac{1}{g^2} \kla*{1 - \cos(g\phi)}$.
+We want to find a semi-classical solution and hence first consider the energy
+\begin{align}
+E &= \intx{ }{ }{\kla*{\frac{1}{2}\phi'^2 + U(\phi)}}{x}
+\end{align}
+that is minimised at $\phi' = \sqrt{2U}$.
+This differential equation can be integrated via
+\begin{align}
+ax+b &= \intx{ }{ }{\frac{\phi'(x)}{\sqrt{2U}}}{x} = \intx{ }{ }{\frac{g}{\sqrt{2 - 2\cos(g\phi)}}}{\phi} = \frac{g}{2} \intx{ }{ }{\csc\kla*{\frac{g}{2}\phi}}{\phi} = \log\tan \kla*{\frac{g}{4}\phi}.
+\end{align}
+Solving for the field yields $\phi(x) = \frac{4}{g} \arctan\kla*{\powe{a(x-x_0)}}$.
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

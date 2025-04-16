@@ -1,0 +1,243 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{1 Wick's Theorem}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Quantum Many-Body Physics}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Explicit calculation of correlation functions for free fermions}
+Consider the states $\Ket | \psi \rangle := \hat{f}_{N_p}^\dagger \dots \hat{f}_{1}^\dagger \Ket | 0 \rangle$ and $\Ket | \phi \rangle := \hat{d}_{N_p}^\dagger \dots \hat{d}_{1}^\dagger \Ket | 0 \rangle$ where $\hat{f}_{\alpha}^\dagger = \sum_{j=1}^N \psi_\alpha(j) \hat{c}_j^\dagger$ and $\hat{d}_{\alpha}^\dagger = \sum_{j=1}^N \phi_\alpha(j) \hat{c}_j^\dagger$.
+We want to show that $\brak\langle \phi | \psi \rangle = \det \mathbb{O}$ where $\mathbb{O}_{\alpha\beta} = \brak\langle \phi_\alpha | \psi_\beta \rangle$.
+First, we compute the anti-commutator 
+\begin{align}
+\klammer\left\{ \hat{d}_\alpha, \hat{f}_\beta^\dagger \right\} &= \sum_{jk} \phi_\alpha^\ast(j)\psi_\beta(k) \klammer\left\{ \hat{c}_j, \hat{c}_k^\dagger \right\} = \sum_j \phi_\alpha^\ast(j) \psi_\beta(j) = \brak\langle \phi_\alpha | \psi_\beta \rangle = \mathbb{O}_{\alpha\beta}. 
+\end{align}
+%For $N_p=1$ we then find
+%\begin{align}
+%\brak\langle \phi | \psi \rangle &= \braket\langle 0 | \hat{d}_1 \hat{f}_1^\dagger | 0 \rangle = \braket\langle 0 | \klammer\left\{ \hat{d}_1, \hat{f}_1^\dagger \right\} - \hat{f}_1^\dagger \hat{d}_1 | 0 \rangle = \brak\langle \phi_1 | \psi_1 \rangle = \det\mathbb{O}.
+%\end{align}
+%Assume that for $N_p=n_p-1$ 
+%\begin{align}
+%\braket\langle 0 | \prod_{\alpha' \neq \alpha} \hat{d}_{\alpha'} | • \rangle•
+%\end{align}
+Then we find
+\begin{align}
+\brak\langle \phi | \psi \rangle &= \braket\langle 0 | \hat{d}_{N_p}\dots \hat{d}_1 \hat{f}_1^\dagger \dots \hat{f}_{N_p}^\dagger | 0 \rangle = \\
+&= \langle 0 | \hat{d}_{N_p}\dots \hat{d}_2 \kla\left( \klammer\left\{ \hat{d}_1, \hat{f}_1^\dagger \right\} - \hat{f}_1^\dagger \hat{d}_1 \right) \hat{f}_2^\dagger \dots \hat{f}_{N_p}^\dagger | 0 \rangle = \\
+&= \sum_{\alpha} (-1)^{\alpha+1} \brak\langle \phi_1 | \psi_\alpha \rangle \braket\langle 0 | \hat{d}_{N_p} \dots \hat{d}_2 \hat{f}_1^\dagger \dots \hat{f}_{\alpha-1}^\dagger \hat{f}_{\alpha+1}^\dagger \dots \hat{f}_{N_p}^\dagger | 0 \rangle. \label{eqn:phi psi determinant step 1}
+\end{align}
+Now using induction we may assume that the remaining terms are all given by the determinant of the corresponding smaller matrices $\mathbb{O}^{(N_p-1)}_{(1,\alpha)}$ where the first row and $\alpha$-th column are removed.
+But then  \autoref{eqn:phi psi determinant step 1} is merely the Laplace expansion for the determinant of an $(N_p\times N_p)$-matrix and it follows that
+\begin{align}
+\brak\langle \phi | \psi \rangle &= \sum_{\alpha} (-1)^{\alpha+1} \brak\langle \phi_1 | \psi_\alpha \rangle \det \mathbb{O}^{(N_p-1)}_{(1,\alpha)} = \det \mathbb{O}^{(N_p)}.
+\end{align}
+Let $G_0(j,k) := \braket\langle \psi | \hat{c}_j^\dagger \hat{c}_k | \psi \rangle$.
+To simplify this expression note that $\klammer\left\{ \hat{c}_k, \hat{f}_\alpha^\dagger \right\} = \psi_\alpha(k)$ and consider
+\begin{align}
+\Ket | \psi_k \rangle &:= \hat{c}_k\Ket | \psi \rangle = \hat{c}_k \hat{f}_1^\dagger \dots \hat{f}_{N_p}^\dagger \Ket | 0 \rangle = \\
+&= \sum_{\alpha} (-1)^{\alpha + 1} \psi_\alpha(k) \hat{f}_1^\dagger \dots \hat{f}_{\alpha-1}^\dagger \hat{f}_{\alpha+1}^\dagger \dots \hat{f}_{N_p}^\dagger \Ket | 0 \rangle.
+\end{align}
+Note that $\klammer\left\{ \hat{f}_\alpha, \hat{f}_\beta^\dagger \right\} = \brak\langle \psi_\alpha | \psi_\beta \rangle = \delta_{\alpha\beta}$ which we can use to compute terms of the form
+\begin{align}
+\braket\langle 0 | &\hat{f}_{N_p} \dots \hat{f}_{\beta+1} \hat{f}_{\beta-1} \dots \hat{f}_1 \hat{f}_1^\dagger \dots \hat{f}_{\alpha-1}^\dagger \hat{f}_{\alpha+1}^\dagger \dots \hat{f}_{N_p}^\dagger | 0 \rangle = \\
+&= \langle 0 | \hat{f}_{N_p} \dots \hat{f}_{\beta+1} \hat{f}_{\beta-1} \dots \hat{f}_2 \kla\left( 1 - \hat{f}_1^\dagger \hat{f}_1 \right) \hat{f}_2^\dagger \dots \hat{f}_{\alpha-1}^\dagger \hat{f}_{\alpha+1}^\dagger \dots \hat{f}_{N_p}^\dagger | 0 \rangle = \\
+&= \langle 0 | \hat{f}_{N_p} \dots \hat{f}_{\beta+1} \hat{f}_{\beta-1} \dots \hat{f}_2 \hat{f}_2^\dagger \dots \hat{f}_{\alpha-1}^\dagger \hat{f}_{\alpha+1}^\dagger \dots \hat{f}_{N_p}^\dagger | 0 \rangle = \\
+&= \dots = \delta_{\alpha\beta}.
+\end{align}
+This result allows us to simplify the previous expression for $G_0$ to
+\begin{align}
+G_0(j,k) &= \brak\langle \psi_j | \psi_k \rangle = \\
+&= \sum_{\alpha\beta} (-1)^{\alpha+\beta} \psi_\alpha(k) \psi^\ast_\beta(j) \braket\langle 0 | \dots \hat{f}_{\beta+1} \hat{f}_{\beta-1} \dots \hat{f}_1 \hat{f}_1^\dagger \dots \hat{f}_{\alpha-1}^\dagger \hat{f}_{\alpha+1}^\dagger \dots | 0 \rangle = \\
+&= \sum_{\alpha\beta} (-1)^{\alpha+\beta} \psi_\alpha(k) \psi^\ast_\beta(j) \delta_{\alpha\beta} = \\
+&= \sum_{\alpha} \psi_\alpha(k) \psi^\ast_\alpha(j).
+\end{align}
+Similarly, consider a state of the form
+\begin{align}
+\hat{c}_j \Ket | \psi_k \rangle &= \sum_\alpha (-1)^\alpha \psi_\alpha(k) \hat{c}_j \hat{f}_1^\dagger \dots \hat{f}_{\alpha-1}^\dagger \hat{f}_{\alpha+1}^\dagger \dots \hat{f}_{N_p}^\dagger \Ket | 0 \rangle = \\
+&= \sum_{\alpha, \alpha'\neq \alpha} (-1)^{\alpha + \alpha'} \psi_\alpha(k) \psi_{\alpha'}(j) \hat{f}_1^\dagger \dots \hat{f}_{\alpha-1}^\dagger \hat{f}_{\alpha+1}^\dagger \dots \hat{f}_{\alpha' -1}^\dagger \hat{f}_{\alpha' +1}^\dagger \dots \hat{f}_{N_p}^\dagger \Ket | 0 \rangle.
+\end{align}
+We seek to compute terms of the form $\braket\langle \psi_k | \hat{c}_j^\dagger \hat{c}_j | \psi_k \rangle$.
+To do this, we need to evaluate the following expressions assuming $\alpha'\neq \alpha$ and $\beta'\neq \beta$
+\begin{align}
+\braket\langle 0 | &\hat{f}_{N_p} \dots \hat{f}_{\beta'+1} \hat{f}_{\beta'-1} \dots \hat{f}_{\beta+1} \hat{f}_{\beta-1} \dots \hat{f}_1 \hat{f}_1^\dagger \dots \hat{f}_{\alpha-1}^\dagger \hat{f}_{\alpha+1}^\dagger \dots \hat{f}_{\alpha' -1}^\dagger \hat{f}_{\alpha' +1}^\dagger \dots \hat{f}_{N_p}^\dagger | 0 \rangle = \\
+&= \braket\langle 0 | \hat{f}_{\beta'+1} \hat{f}_{\beta'-1} \hat{f}_{\beta+1} \hat{f}_{\beta-1} \hat{f}_{\alpha-1}^\dagger \hat{f}_{\alpha+1}^\dagger \hat{f}_{\alpha' -1}^\dagger \hat{f}_{\alpha' +1}^\dagger | 0 \rangle = \\
+&= \delta_{\alpha\beta} \braket\langle 0 | \hat{f}_{\beta'+1} \hat{f}_{\beta'-1} \hat{f}_{\alpha' -1}^\dagger \hat{f}_{\alpha' +1}^\dagger | 0 \rangle + (-1)^4 \delta_{\alpha \beta'} \braket\langle 0 | \hat{f}_{\beta+1} \hat{f}_{\beta-1} \hat{f}_{\alpha' -1}^\dagger \hat{f}_{\alpha' +1}^\dagger | 0 \rangle = \\
+&= \delta_{\alpha\beta} \delta_{\alpha'\beta'} + \delta_{\alpha\beta'} \delta_{\alpha'\beta}.
+%&= \braket\langle 0 | \hat{f}_{\beta'+1} \hat{f}_{\beta'-1} \hat{f}_{\beta+1} \hat{f}_{\beta-1} \hat{f}_{\alpha-1}^\dagger \hat{f}_{\alpha+1}^\dagger \hat{f}_{\alpha' -1}^\dagger \hat{f}_{\alpha' +1}^\dagger | 0 \rangle = \\
+%&= \delta_{\alpha\beta} \braket\langle 0 | \hat{f}_{\beta'+1} \hat{f}_{\beta'-1} \hat{f}_{\alpha' -1}^\dagger \hat{f}_{\alpha' +1}^\dagger | 0 \rangle = \delta_{\alpha\beta}\delta_{\alpha'\beta'}.
+\end{align}
+[NOTE: If the second term somehow had a minus sign we would later find the correct result. But the sign is most definitely positive, as the roles of $\beta$ and $\beta'$ are completely identical in this expression... There has to be a mistake somewhere around here.]\\
+Using this we find
+%\begin{align}
+%\langle \psi_k | \hat{c}_j^\dagger \hat{c}_j | \psi_k \rangle &= \sum_{\alpha,\beta,\alpha'\neq\alpha, \beta'\neq\beta} (-1)^{\alpha+\alpha' + \beta+\beta'} \psi_\alpha(k)\psi_{\alpha'}(j) \psi_\beta^\ast(k) \psi_{\beta'}^\ast(j) \delta_{\alpha\beta} \delta_{\alpha'\beta'} = \\
+%%&= \sum_{\alpha, \alpha'\neq \alpha} \psi_\alpha(k) \psi_{\alpha'}(j) \psi^\ast_{\alpha}(k) \psi^\ast_{\alpha'}(j) = \\
+%%&= \sum_\alpha \psi_\alpha (k) \psi_\alpha^\ast(k) \kla\left( G_0(j,j) - \psi_\alpha(j) \psi^\ast_\alpha(j) \right) = \\
+%%&= G_0(k,k) G_0(j,j) - \sum_\alpha \psi_\alpha(k) \psi_{\alpha}(j) \psi^\ast_{\alpha}(k) \psi^\ast_{\alpha}(j).
+%&= \sum_{\alpha\beta\alpha'\beta'} (\dots) - \sum_{\alpha\beta} (\dots) \Big\vert_{\alpha'=\alpha, \beta'=\beta} = \\
+%&= \sum_{\alpha\alpha'} \psi_\alpha(k)\psi_{\alpha'}(j) \psi_\alpha^\ast(k) \psi_{\alpha'}^\ast(j) - \sum_{\alpha\beta} \psi_\alpha(k)\psi_{\alpha}(j) \psi_\beta^\ast(k) \psi_{\beta}^\ast(j) \delta_{\alpha\beta}^2 = \\
+%&= G_0(k,k) G_0(j,j) - \sum_\alpha \psi_\alpha(k)\psi_{\alpha}(j) \psi_\alpha^\ast(k) \psi_{\alpha}^\ast(j).
+%\end{align}
+\begin{align}
+\langle \psi_k | & \hat{c}_j^\dagger \hat{c}_j | \psi_k \rangle = \\  &= \sum_{\alpha,\beta,\alpha'\neq\alpha, \beta'\neq\beta} (-1)^{\alpha+\alpha' + \beta+\beta'} \psi_\alpha(k)\psi_{\alpha'}(j) \psi_\beta^\ast(k) \psi_{\beta'}^\ast(j) \kla\left( \delta_{\alpha\beta} \delta_{\alpha'\beta'} + \delta_{\alpha\beta'} \delta_{\alpha'\beta} \right) = \\
+&= \sum_{\alpha, \alpha'\neq\alpha} \psi_\alpha(k)\psi_{\alpha'}(j) \psi_\alpha^\ast(k) \psi_{\alpha'}^\ast(j) + \sum_{\alpha, \alpha'\neq\alpha} \psi_\alpha(k)\psi_{\alpha'}(j) \psi_{\alpha'}^\ast(k) \psi_{\alpha}^\ast(j) = \\
+&= \sum_{\alpha\alpha'} \psi_\alpha(k) \psi_{\alpha'}(j) \kla\left( \psi_\alpha^\ast(k) \psi_{\alpha'}^\ast(j) + (j\leftrightarrow k) \right) - 2\sum_{\alpha} \psi_\alpha(k) \psi_{\alpha}(j)  \psi_\alpha^\ast(k) \psi_{\alpha}^\ast(j) = \\
+&= G_0(k,k)G_0(j,j) + G_0(k,j)G_0(j,k) - 2\sum_{\alpha} \psi_\alpha(k) \psi_{\alpha}(j)  \psi_\alpha^\ast(k) \psi_{\alpha}^\ast(j).
+\end{align}
+Now we may evaluate the expression
+\begin{align}
+\braket\langle \psi | \hat{n}_j\hat{n}_k | \psi \rangle &= \braket\langle \psi | \hat{c}_j^\dagger \kla\left( \delta_{jk} - \hat{c}_k^\dagger \hat{c}_j \right) \hat{c}_k | \psi \rangle = \\
+&= \delta_{jk} G_0(j,k) + \braket\langle \psi_k | \hat{c}_j^\dagger \hat{c}_j | \psi_k \rangle = \\
+&= \delta_{jk} G_0(j,k) + G_0(j,j)G_0(k,k) + G_0(j,k)G_0(k,j) - 2\sum_\alpha (\dots).
+\end{align}
+Let $\hat{H} := \sum_k\epsilon_k \hat{f}_k^\dagger \hat{f}_k$ with $\hat{f}_k^\dagger := \sum_j V_{jk} \hat{c}_j^\dagger$.
+Note that 
+\begin{align}
+\left[ \hat{f}_k^\dagger \hat{f}_k, \hat{f}_j^\dagger \right] = \hat{f}_k^\dagger \klammer\left\{ \hat{f}_k, \hat{f}_j^\dagger \right\} - \klammer\left\{ \hat{f}_k^\dagger, \hat{f}_j^\dagger \right\} \hat{f}_k = \delta_{jk} \hat{f}_k^\dagger
+\end{align}
+and thus using $\e^{\hat{A}} \hat{B} \e^{-\hat{A}} = \hat{B} + \klam\left[ \hat{A}, \hat{B} \right] + \frac{1}{2} \klam\left[ \hat{A}, \klam\left[ \hat{A}, \hat{B} \right] \right] + \dots$ yields
+\begin{align}
+\e^{-\beta\epsilon_k\hat{f}_k^\dagger \hat{f}_k} \hat{f}_j^\dagger \e^{\beta\epsilon_k\hat{f}_k^\dagger \hat{f}_k} &= \hat{f}_j^\dagger + \delta_{jk} \kla\left( (-\beta\epsilon_k) \hat{f}_k^\dagger + \frac{1}{2} (-\beta\epsilon_k)^2 \hat{f}_k^\dagger + \dots \right) = \\
+&= \delta_{jk} \e^{-\beta\epsilon_k} \hat{f}_k^\dagger + (1 - \delta_{jk}) \hat{f}_j^\dagger.
+\end{align}
+Similarly $\e^{-\beta\epsilon_k\hat{f}_k^\dagger \hat{f}_k} \hat{f}_j \e^{\beta\epsilon_k\hat{f}_k^\dagger \hat{f}_k} = \delta_{jk} \e^{\beta\epsilon_k} \hat{f}_k + (1 - \delta_{jk}) \hat{f}_j$.
+Let $\hat{\rho} := \frac{1}{Z} \e^{-\beta\hat{H}}$ and compute
+\begin{align}
+\bra\langle \hat{n}_j\hat{n}_k \rangle_\beta &:= \tecxt\text{tr} \kla\left( \hat{\rho} \hat{n}_j\hat{n}_k \right) = \tecxt\text{tr} \kla\left( \hat{\rho} \hat{c}_j^\dagger \klam\left[ \delta_{jk} - \hat{c}_k^\dagger \hat{c}_j \right] \hat{c}_k \right) = \delta_{jk} \bra\langle \hat{n}_j \rangle_\beta + \tecxt\text{tr} \kla\left( \hat{\rho} \hat{c}_k^\dagger \hat{n}_j \hat{c}_k \right).
+\end{align}
+Note that $\klam\left[ \hat{\nu}_j, \hat{\nu}_k \right] = 0$ where $\hat{\nu}_k := \hat{f}_k^\dagger \hat{f}_k$.
+This leads to the identity
+\begin{align}
+\hat{f}_j \e^{-\beta\hat{H}} &= \hat{f}_j \e^{-\beta\epsilon_1 \hat{\nu}_1} \dots \e^{-\beta\epsilon_k \hat{\nu}_k} \dots = \\
+&= \dots \e^{-\beta\epsilon_{j-1} \hat{\nu}_{j-1}} \hat{f}_j \e^{-\beta\epsilon_j \hat{\nu}_j} \dots = \\
+&= \e^{-\beta\epsilon_j} \e^{-\beta\hat{H}} \hat{f}_j.
+\end{align}
+Thus the trace is given by [NOTE: The trace probably looks more complicated than this, which is presumably why the results below are wrong]
+%\begin{align}
+%\tecxt\text{tr}\kla\left( \hat{\rho}\hat{A} \right) &= \sum_{\psi} \braket\langle \psi | \hat{\rho} \hat{A} | \psi \rangle = \frac{1}{Z} \sum_\psi \braket\langle 0 | \hat{f}_{N_p} \dots \hat{f}_1 \prod_k \e^{-\beta\epsilon_k \hat{\nu}_k} \hat{A} \hat{f}_1^\dagger \dots \hat{f}_{N_p}^\dagger | 0 \rangle = \\
+%&= \frac{1}{Z} \sum_\psi \e^{-\beta\sum_j\epsilon_j} \braket\langle 0 | \e^{-\beta\hat{H}} \hat{f}_{N_p} \dots \hat{f}_1 \hat{A} \hat{f}_1^\dagger \dots \hat{f}_{N_p}^\dagger | 0 \rangle = \\
+%&= \frac{1}{Z} \sum_\psi \e^{-\beta\sum_j\epsilon_j} \braket\langle 0 | \hat{f}_{N_p} \dots \hat{f}_1 \hat{A} \hat{f}_1^\dagger \dots \hat{f}_{N_p}^\dagger | 0 \rangle = \frac{\e^{-\beta\epsilon}}{Z} \tecxt\text{tr} \kla\left( \hat{A} \right).
+%\end{align}
+\begin{align}
+\tecxt\text{tr}\kla\left( \hat{\rho}\hat{A} \right) &= \sum_{k} \braket\langle 0 | \hat{f}_k \hat{\rho} \hat{A} \hat{f}_k^\dagger | 0 \rangle = \frac{1}{Z} \sum_k \braket\langle 0 | \hat{f}_k  \hat{f}_{N_p} \dots \hat{f}_1 \prod_k \e^{-\beta\epsilon_k \hat{\nu}_k} \hat{A} \hat{f}_{k}^\dagger | 0 \rangle = \\
+&= \frac{1}{Z} \sum_k \e^{-\beta\epsilon_k} \braket\langle 0 | \e^{-\beta\hat{H}} \hat{f}_k \hat{A} \hat{f}_k^\dagger | 0 \rangle = \\
+&= \frac{1}{Z} \sum_k \e^{-\beta\epsilon_k} \braket\langle 0 | \hat{f}_{k} \hat{A} \hat{f}_k^\dagger | 0 \rangle.
+\end{align}
+%Since we already calculated the terms $\braket\langle \psi | \hat{c}_k^\dagger \hat{n}_j \hat{c}_k | \psi \rangle = \bra\langle \hat{n}_j \rangle_\psi \bra\langle \hat{n}_k \rangle_\psi - \bra\langle \hat{c}_j^\dagger \hat{c}_k \rangle_\psi \bra\langle \hat{c}_k^\dagger \hat{c}_j \rangle_\psi$ before, the same steps may be taken to manipulate the expressions inside the trace to yield
+%\begin{align}
+%\tecxt\text{tr}\kla\left( \hat{\rho} \hat{c}_k^\dagger \hat{n}_j \hat{c}_k \right) &= \frac{\e^{-\beta\epsilon}}{Z} \tecxt\text{tr} \kla\left( \hat{c}_k^\dagger \hat{n}_j \hat{c}_k  \right) = \tecxt\text{tr} \kla\left( \hat{\rho} \hat{n}_j \right) \tecxt\text{tr} \kla\left( \hat{\rho} \hat{n}_k \right) - \tecxt\text{tr} \kla\left( \hat{\rho} \hat{c}_j^\dagger \hat{c}_k \right) \tecxt\text{tr} \kla\left( \hat{\rho} \hat{c}_k^\dagger \hat{c}_j \right).
+%\end{align}
+Using this we may calculate the trace 
+\begin{align}
+\tecxt\text{tr}\kla\left( \hat{\rho} \hat{c}_k^\dagger \hat{n}_j \hat{c}_k \right) &= \frac{1}{Z} \sum_l \e^{-\beta\epsilon_l} \braket\langle 0 | \hat{f}_l \hat{c}_k^\dagger \hat{n}_j \hat{c}_k \hat{f}_l^\dagger | 0 \rangle = \\
+&= \frac{1}{Z} \sum_l \e^{-\beta\epsilon_l} \braket\langle 0 | \kla\left(  V_{kl}^\ast - \hat{c}_k^\dagger \hat{f}_l \right) \hat{n}_j \kla\left( V_{kl} - \hat{f}_l^\dagger \hat{c}_k \right) | 0 \rangle = \\
+&= \frac{1}{Z} \sum_l \e^{-\beta\epsilon_l} |V_{kl}|^2 \braket\langle 0 | \hat{n}_j | 0 \rangle = 0 (???).
+\end{align}
+
+
+\section{Green's functions and linear response theory}
+Consider a system described by an unperturbed time-independent Hamiltonian $\hat{H}_0$ and let $\hat{G}_0^\tecxt\text{ret}(t,t') := -\i \Theta (t - t') \e^{-\i \hat{H}_0 (t-t')}$.
+Then we find
+\begin{align}
+\i\partial_t \hat{G}_0^\tecxt\text{ret} (t,t') &= \e^{-\i\hat{H}_0(t-t')} \delta(t-t')  - \i \hat{H}_0 \Theta(t-t') \e^{-\i\hat{H}_0(t-t')} = \delta(t-t') \e^{\hat{0}} + \hat{H}_0 \hat{G}_0^\tecxt\text{ret}(t,t')
+\end{align}
+and thus $\hat{G}_0^\tecxt\text{ret}$ satisfies the unperturbed Schrödinger equation in the sense that
+\begin{align}
+\kla\left( \i\partial_t - \hat{H}_0 \right) \hat{G}_0^\tecxt\text{ret}(t,t') &= \delta(t-t') \hat{I}.
+\end{align}
+Note that $\Ket | \psi_0(t) \rangle = \e^{-\i\hat{H}_0(t-t')} \Ket | \psi_0(t') \rangle$ and consider a perturbation of the form $\hat{H} = \hat{H}_0 + \hat{V}(t)$.
+Then to first order in $\hat{V}$ the state
+\begin{align}
+\Ket | \psi(t) \rangle &:= \Ket | \psi_0(t) \rangle + \intr\int_{\mathbb{R}^{ }} \hat{G}_0^\tecxt\text{ret}(t,t') \hat{V}(t') \Ket | \psi_0(t') \rangle \, \mathrm{d}^{ }t'
+\end{align}
+satisfies the differential equation $\kla\left( \i\partial_t - \hat{H}_0 - \hat{V}(t) \right) \Ket | \psi(t) \rangle = 0$, since
+\begin{align}
+\kla\left( \i\partial_t - \hat{H}_0 \right) \Ket | \psi(t) \rangle &= \kla\left( \i\partial_t - \hat{H}_0 \right) \Ket | \psi_0(t) \rangle + \intr\int_{\mathbb{R}^{ }} \delta(t-t') \hat{V}(t') \Ket | \psi_0(t') \rangle \, \mathrm{d}^{ }t' = \\
+&= \hat{V}(t) | \psi_0(t) \rangle = \hat{V}(t) \Ket | \psi(t) \rangle + \mathcal{O}\kla\left( \hat{V}^2 \right).
+\end{align}
+Furthermore, for $t\rightarrow -\infty$ we define $\Ket | \psi_0(t\rightarrow -\infty) \rangle =: \Ket | \psi_0 \rangle$ and find
+\begin{align}
+\Ket | \psi(t\rightarrow -\infty) \rangle &= \Ket | \psi_0 \rangle + \lim_{t\rightarrow -\infty} \int_{\mathbb{R}^{ }} (-\i)\Theta(t - t') \e^{-\i\hat{H}_0(t-t')} \hat{V}(t') \Ket | \psi_0(t') \rangle  \, \mathrm{d}^{ }t' = \\
+&= \Ket | \psi_0 \rangle - \i \lim_{t\rightarrow -\infty} \int_{-\infty}^t \e^{-\i\hat{H}_0(t-t')} \hat{V}(t') \Ket | \psi_0(t') \rangle  \, \mathrm{d}^{ }t' = \Ket | \psi_0 \rangle.
+\end{align}
+Write $\hat{V}(t) = F(t) \hat{B}$ and define $\delta \bra\langle \hat{A} \rangle(t) := \braket\langle \psi(t) | \hat{A} | \psi(t) \rangle - \braket\langle \psi_0(t) | \hat{A} | \psi_0(t) \rangle$.
+Note that
+\begin{align}
+\braket\langle \psi(t) | \hat{A} | \psi(t) \rangle &= \langle \psi_0(t) | \hat{A} | \psi_0(t) \rangle + \intr\int_{\mathbb{R}^{ }} \braket\langle \psi_0(t) | \hat{A} \hat{G}_0^\tecxt\text{ret}(t,t') \hat{V}(t') | \psi_0(t') \rangle  \, \mathrm{d}^{ }t' + \tecxt\text{h.c.} + \mathcal{O}\kla\left( \hat{V}^2 \right).
+\end{align}
+Thus, to first order, the deviation simplifies to
+\begin{align}
+\delta \bra\langle \hat{A} \rangle (t) &\simeq \intr\int_{\mathbb{R}^{ }} \braket\langle \psi_0(t) | \hat{A} \hat{G}_0^\tecxt\text{ret}(t,t') \hat{B} | \psi_0(t') \rangle F(t') \, \mathrm{d}^{ }t' + \tecxt\text{h.c.} =: \intr\int_{\mathbb{R}^{ }} F(t') G_{AB}^\tecxt\text{ret}(t,t') \, \mathrm{d}^{ }t'.
+\end{align}
+Here we introduced the two-time $AB$ retarded Green's function
+\begin{align}
+G_{AB}^\tecxt\text{ret}(t,t') &:= \braket\langle \psi_0(t) | \hat{A} \hat{G}_0^\tecxt\text{ret}(t,t') \hat{B} | \psi_0(t') \rangle + \tecxt\text{h.c.} = \\
+&= -\i \lim_{t_0 \rightarrow -\infty} \braket\langle \psi_0 | \e^{\i\hat{H}_0 (t - t_0)} \hat{A} \Theta(t-t') \e^{-\i \hat{H}_0(t - t')} \hat{B} \e^{-\i\hat{H}_0(t' - t_0)} | \psi_0 \rangle + \tecxt\text{h.c.} = \\
+&= -\i\Theta(t-t') \braket\langle \psi_0 | \hat{A}_I(t) \hat{B}_I(t') | \psi_0 \rangle + \tecxt\text{h.c.} = \\
+&= -\i\Theta (t-t') \braket\langle \psi_0 | \klam\left[ \hat{A}_I(t), \hat{B}_I(t') \right] | \psi_0 \rangle
+\end{align}
+where we defined $\hat{A}_I(t) := \lim_{t_0\rightarrow -\infty} \e^{\i\hat{H}_0 (t-t_0)} \hat{A} \e^{-\i\hat{H}_0(t-t_0)}$.
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

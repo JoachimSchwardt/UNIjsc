@@ -1,0 +1,460 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{05 Fields and Fluid Dynamics}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Theoretical Physics (Master)}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Problem 1: \normalfont\textit{\large{Equations of motion for fields}}}
+\subsection*{a)}
+Consider the two Lagrange densities
+\begin{align}
+\mathcal{L}_1(\phi, \dot{\phi}, \nabla\phi) &= \frac{\mu }{2} (\partial_t\phi)^2 - \frac{\kappa}{2}\kla\left( {\nabla\phi} \right)^2 - v(\phi),\\
+\mathcal{L}_2(\rho, \dot{\phi}, \nabla\phi) &= -\rho \klam\left[ {\partial_t\phi + \frac{1}{2}(\nabla\phi)^2 + a(\rho) } \right].
+\end{align}
+The Euler-Lagrange equations for $\mathcal{L}_1$ are
+\begin{align}
+0 &= \frac{\partial\mathcal{L}_1}{\partial\phi} - \frac{\partial}{\partial t} \frac{\partial \mathcal{L}_1}{\partial \dot{\phi}} - \nabla\cdot \frac{\partial \mathcal{L}_1}{\partial \nabla\phi} = -v'(\phi) - \mu\ddot{\phi} + \kappa\nabla^2\phi,\\
+\Rightarrow \ \ \ \square_{\mu/\kappa}\phi &= -\frac{v'(\phi)}{\kappa},
+\end{align}
+where $\square_a := \frac{1}{a^2}\partial_t^2 - \nabla^2$. 
+For $v'(\phi)$ this equation reduces to the Klein-Gordon equation, given that $a := \frac{\mu }{\kappa}$ is the speed of light $c$.
+Here $\phi$ is simply the wave-function, and the function $v(\phi)$ acts as a generally non-linear extension to the theory.
+\\
+The Euler-Lagrange equations for $\mathcal{L}_2$ are
+\begin{align}
+0 &= \frac{\partial\mathcal{L}_2}{\partial\rho} - \frac{\partial}{\partial t} \frac{\partial \mathcal{L}_2}{\partial \dot{\rho}} - \nabla\cdot \frac{\partial \mathcal{L}_2}{\partial \nabla\rho} = \frac{\mathcal{L}_2}{\rho} - \rho a'(\rho),\\
+0 &= \frac{\partial\mathcal{L}_2}{\partial\phi} - \frac{\partial}{\partial t} \frac{\partial \mathcal{L}_2}{\partial \dot{\phi}} - \nabla\cdot \frac{\partial \mathcal{L}_2}{\partial \nabla\phi} = \dot{\rho} + \nabla (\rho\nabla\phi),\\
+\Rightarrow \ \ \ 0&= \dot{\phi} + \frac{1}{2}(\nabla\phi)^2 + a(\rho) + \rho a'(\rho),\\
+\Rightarrow \ \ \ 0&= \dot{\rho} + \nabla (\rho\nabla\phi).
+\end{align}
+These equations are reminiscent of the Schrödinger equation after separation into real and imaginary parts.
+Here the wave-function takes the form $\psi = \sqrt{\rho}\e^{\i\phi}$, thus $\rho$ is the probability density and $\phi$ is the guiding field (see pilot wave theory).
+Here $a(\rho)$ encapsulates the potential.
+
+\subsection*{b)}
+The canonically conjugate field momentum for $\mathcal{L}_1$ is
+\begin{align}
+\pi_\phi &= \frac{\partial\mathcal{L}_1}{\partial \dot{\phi}} = \mu\dot{\phi}.
+\end{align}
+The Hamilton density is defined by
+\begin{align}
+\mathcal{H}_1 &= \pi_\phi\dot{\phi} - \mathcal{L}_1 = \\
+&= \frac{\mu }{2}\dot{\phi}^2 + \frac{\kappa}{2}(\nabla\phi)^2 + v(\phi) = \\
+&= \frac{\pi_\phi^2}{2\mu} + \frac{\kappa}{2}(\nabla\phi)^2 + v(\phi).
+\end{align}
+The canonically conjugate field momenta for $\mathcal{L}_2$ are
+\begin{align}
+\pi_\phi &= \frac{\partial\mathcal{L}_2}{\partial \dot{\phi}} = -\rho,\\
+%\pi_{\nabla\phi} &= \frac{\partial\mathcal{L}_2}{\partial \nabla\phi} = -\rho\nabla\phi,\\
+\pi_\rho &= \frac{\partial\mathcal{L}_2}{\partial \dot{\rho}} = 0.
+%\pi_{\nabla\rho} &= \frac{\partial\mathcal{L}_2}{\partial \nabla\rho} = 0.
+\end{align}
+The Hamilton density is defined by
+\begin{align}
+\mathcal{H}_2 &= \pi_\phi\dot{\phi} + \pi_\rho\dot{\rho} - \mathcal{L}_2 = \\
+&= \rho \klam\left[ {\frac{1}{2}(\nabla\phi)^2 +  a(\rho)} \right] = \\
+&= -\pi_\phi \klam\left[ {\frac{1}{2}(\nabla\phi)^2 +  a(-\pi_\phi)} \right].
+%&= \frac{\pi_{\nabla\rho}^2}{2\rho} +  \rho (\rho).
+\end{align}
+
+
+\subsection*{c)}
+Then the Hamilton equations for $\mathcal{H}_1$ are
+\begin{align}
+\dot{\phi} &= \frac{\delta\mathcal{H}_1}{\delta \pi_\phi } = \frac{\partial\mathcal{H}_1}{\partial \pi_\phi} - \partial_t \frac{\partial\mathcal{H}_1}{\partial \dot{\pi}_\phi} - \nabla \cdot  \frac{\partial\mathcal{H}_1}{\partial \nabla\pi_\phi} = \frac{\pi_\phi}{\mu},\\
+\dot{\pi}_\phi &= -\frac{\delta\mathcal{H}_1}{\delta \phi } = -\frac{\partial\mathcal{H}_1}{\partial \phi} + \partial_t \frac{\partial\mathcal{H}_1}{\partial \dot{\phi}} + \nabla \cdot  \frac{\partial\mathcal{H}_1}{\partial \nabla\phi} = -v'(\phi) + \kappa\nabla^2\phi.
+\end{align}
+By taking the partial time derivative of the first equation, we can eliminate $\pi_\phi$ and recover the Klein-Gordon equation found above.
+\\
+Note that for a proper analysis of $\mathcal{H}_2$ one has to consider the full formalism of singular systems and Dirac-brackets.
+Here we take a ``short-cut'' by not considering the $\rho$-coordinate in the equations of motions
+%Then the Hamilton equations for $\mathcal{H}_2$ are
+\begin{align}
+\dot{\phi} &= \frac{\delta\mathcal{H}_2}{\delta \pi_\phi } = \frac{\partial\mathcal{H}_2}{\partial \pi_\phi} - \partial_t \frac{\partial\mathcal{H}_2}{\partial \dot{\pi}_\phi} - \nabla  \cdot \frac{\partial\mathcal{H}_2}{\partial \nabla\pi_\phi} = \frac{\mathcal{H}_2}{\pi_\phi} + \pi_\phi a'(\pi_\phi),\\
+%\dot{\rho} &= \frac{\delta\mathcal{H}_2}{\delta \pi_\rho } = \frac{\partial\mathcal{H}_2}{\partial \pi_\rho} - \partial_t \frac{\partial\mathcal{H}_2}{\partial \dot{\pi}_\rho} - \nabla \cdot  \frac{\partial\mathcal{H}_2}{\partial \nabla\pi_\rho} = 0,\\
+\dot{\pi}_\phi &= -\frac{\delta\mathcal{H}_2}{\delta \phi } = -\frac{\partial\mathcal{H}_2}{\partial \phi} + \partial_t \frac{\partial\mathcal{H}_2}{\partial \dot{\phi}} + \nabla \cdot  \frac{\partial\mathcal{H}_2}{\partial \nabla\phi} = \nabla \cdot \kla\left( {\pi_\phi\nabla\phi } \right) .%,\\ 
+%\dot{\pi}_\rho &= -\frac{\delta\mathcal{H}_2}{\delta \phi } = -\frac{\partial\mathcal{H}_2}{\partial \rho} + \partial_t \frac{\partial\mathcal{H}_2}{\partial \dot{\rho}} + \nabla \cdot  \frac{\partial\mathcal{H}_2}{\partial \nabla\rho} = -\frac{1}{2}(\nabla\phi)^2 - a(\rho) - \rho a'(\rho).
+\end{align}
+Now reverting back to $\rho$ with $\pi_\phi = -\rho$, we indeed find the correct equation of motion. 
+
+\newpage
+\section*{Problem 2: \normalfont\textit{\large{Complex fields}}}
+Consider the Lagrange density for the Schrödinger field
+\begin{align}
+\mathcal{L} &= \i\Psi^\ast\dot{\Psi} - \frac{1}{2m} (\nabla\Psi^\ast) \cdot (\nabla\Psi) - V(\vec{r}) \Psi^\ast\Psi.
+\end{align}
+The equations of motion are given by
+\begin{align}
+0 &= \frac{\partial\mathcal{L}}{\partial\Psi} - \partial_t \frac{\partial\mathcal{L}}{\partial \dot{\Psi}} - \nabla \cdot \frac{\partial\mathcal{L}}{\partial \nabla\Psi} = -V\Psi^\ast - \i\dot{\Psi}^\ast + \frac{1}{2m}\nabla^2\Psi^\ast,\\
+0 &= \frac{\partial\mathcal{L}}{\partial\Psi^\ast} - \partial_t \frac{\partial\mathcal{L}}{\partial \dot{\Psi}^\ast} - \nabla \cdot \frac{\partial\mathcal{L}}{\partial \nabla\Psi^\ast} = \i\dot{\Psi} - V\Psi + \frac{1}{2m}\nabla^2\Psi.
+\end{align}
+Rearranging gives the Schrödinger equation and its complex conjugated version
+\begin{align}
+\i\dot{\Psi} &= -\frac{1}{2m}\nabla^2\Psi + V\Psi,\\
+-\i\dot{\Psi}^\ast &= -\frac{1}{2m}\nabla^2\Psi^\ast + V\Psi^\ast.
+\end{align}
+
+\subsection*{a)}
+In similar fashion we want to consider the real and imaginary part as independent fields, i.e. $\Psi = \Psi_R + \i\Psi_I$.
+In this formulation the Lagrange density becomes
+\begin{align}
+\mathcal{L} &=  \i (\Psi_R - \i\Psi_I) (\dot{\Psi}_R + \i \dot{\Psi}_I) - \frac{1}{2m} (\nabla\Psi_R - \i\nabla\Psi_I) \cdot (\nabla\Psi_R + \i\nabla\Psi_I) - V(\vec{r}) (\Psi_R^2 + \Psi_I^2) = \\
+&= \i (\Psi_R\dot{\Psi}_R + \Psi_I\dot{\Psi}_I) + \Psi_I\dot{\Psi}_R - \Psi_R\dot{\Psi}_I - \frac{1}{2m} \kla\left( {[\nabla\Psi_R]^2 + [\nabla\Psi_I]^2} \right) - V(\vec{r}) (\Psi_R^2 + \Psi_I^2).
+\end{align}
+The equations of motion are then given by
+\begin{align}
+0 &= \frac{\partial\mathcal{L}}{\partial\Psi_R} - \partial_t \frac{\partial\mathcal{L}}{\partial \dot{\Psi}_R} - \nabla \cdot \frac{\partial\mathcal{L}}{\partial \nabla\Psi_R} = \\
+&= \i\dot{\Psi}_R  - \dot{\Psi}_I - 2V\Psi_R - \i\dot{\Psi}_R - \dot{\Psi}_I + \frac{1}{m}\nabla^2\Psi_R,\\
+0 &= \frac{\partial\mathcal{L}}{\partial\Psi_I} - \partial_t \frac{\partial\mathcal{L}}{\partial \dot{\Psi}_I} - \nabla \cdot \frac{\partial\mathcal{L}}{\partial \nabla\Psi_I} = \\
+&= \i\dot{\Psi}_I + \dot{\Psi}_R - 2V\Psi_I - \i\dot{\Psi}_I + \dot{\Psi}_R + \frac{1}{m}\nabla^2\Psi_I.
+\end{align}
+Simplifying gives
+\begin{align}
+-\dot{\Psi}_I &= -\frac{1}{2m}\nabla^2\Psi_R + V\Psi_R,\\
+\dot{\Psi}_R &= -\frac{1}{2m}\nabla^2\Psi_I + V\Psi_I.
+\end{align}
+
+\subsection*{b)}
+We may also write $\Psi = \sqrt{\rho}\e^{\i S}$ and consider $\rho$ and $S$ as the independent fields.
+Note that
+\begin{align}
+\dot{\Psi} &= \frac{\dot{\rho}}{2\sqrt{\rho}} \e^{\i S} + \i\sqrt{\rho} \e^{\i S} \dot{S},\\
+\nabla\Psi &= \frac{\nabla\rho}{2\sqrt{\rho}} \e^{\i S} + \i\sqrt{\rho}\e^{\i S}\nabla S.
+\end{align}
+In this formulation the Lagrange density becomes
+\begin{align}
+\mathcal{L} &= \frac{\i}{2}\dot{\rho} - \rho\dot{S} - \frac{1}{2m}\kla\left( {\frac{[\nabla\rho]^2}{4\rho} + \rho [\nabla S]^2 } \right) - V(\vec{r})\rho.
+\end{align}
+The equations of motion are given by
+\begin{align}
+0 &= \frac{\partial\mathcal{L}}{\partial\rho} - \partial_t \frac{\partial\mathcal{L}}{\partial \dot{\rho}} - \nabla \cdot \frac{\partial\mathcal{L}}{\partial \nabla\rho} = \\
+&= -\dot{S} + \frac{[\nabla\rho]^2}{8m\rho^2} - \frac{[\nabla S]^2}{2m} - V + \frac{1}{4m}\nabla\cdot \frac{\nabla\rho}{\rho}  = \\
+&= -\dot{S} - \frac{[\nabla S]^2}{2m} - V + \frac{\nabla^2\rho}{4m\rho} - \frac{[\nabla\rho]^2}{8m\rho^2},\\
+0 &= \frac{\partial\mathcal{L}}{\partial S} - \partial_t \frac{\partial\mathcal{L}}{\partial \dot{S}} - \nabla \cdot \frac{\partial\mathcal{L}}{\partial \nabla S} = \\
+&= \dot{\rho} + \frac{1}{m} \nabla\cdot \kla\left( {\rho\nabla S} \right).
+\end{align}
+Simplifying with the identity $\frac{\nabla^2\sqrt{\rho}}{\sqrt{\rho}} = \frac{\nabla^2\rho}{2\rho} - \kla\left( \frac{\nabla\rho}{2\rho} \right)^2$ yields
+\begin{align}
+0 &= \dot{\rho} + \nabla\cdot \kla\left( {\rho \nabla S} \right),\\
+\dot{S} &= - \frac{[\nabla S]^2}{2m} - V + \frac{\nabla^2 \sqrt{\rho}}{2m \sqrt{\rho}} .
+\end{align}
+
+\subsection*{c)}
+Consider a different version of the above Lagrange density
+\begin{align}
+\mathcal{L} &= \frac{\i}{2}\kla\left( {\Psi^\ast\dot{\Psi} - \Psi\dot{\Psi}^\ast} \right) - \frac{1}{2m} (\nabla\Psi^\ast) \cdot (\nabla\Psi) - V(\vec{r}) \Psi^\ast\Psi.
+\end{align}
+The equations of motion are given by
+\begin{align}
+0 &= \frac{\partial\mathcal{L}}{\partial\Psi} - \partial_t \frac{\partial\mathcal{L}}{\partial \dot{\Psi}} - \nabla \cdot \frac{\partial\mathcal{L}}{\partial \nabla\Psi} = -\frac{\i}{2}\dot{\Psi}^\ast - V\Psi^\ast - \frac{\i}{2} \dot{\Psi}^\ast + \frac{1}{2m}\nabla^2\Psi^\ast,\\
+0 &= \frac{\partial\mathcal{L}}{\partial\Psi^\ast} - \partial_t \frac{\partial\mathcal{L}}{\partial \dot{\Psi}^\ast} - \nabla \cdot \frac{\partial\mathcal{L}}{\partial \nabla\Psi^\ast} = \frac{\i}{2} \dot{\Psi} + \frac{\i}{2}\dot{\Psi} - V\Psi + \frac{1}{2m}\nabla^2\Psi.
+\end{align}
+Rearranging again gives the Schrödinger equation and its complex conjugated version.
+This Lagrange density was found by noticing that $\mathcal{L} \rightarrow \mathcal{L}^\ast$ should not change the physics.
+However, the term $\i\Psi^\ast\dot{\Psi}$ becomes $-\i\Psi \dot{\Psi}^\ast$.
+Therefore we may take an average of both contributions in order to make the time derivatives enter symmetrically.
+
+\section*{Problem 3: \normalfont\textit{\large{Shear friction}}}
+Consider the friction force density
+\begin{align}
+\vec{f}_R &= \eta \nabla\times \kla\left( {\nabla\times \vec{v}} \right)
+\end{align}
+dominating in an incompressible fluid.
+For an unidirectional flow field $\vec{v} = v_x(z)\vec{e}_x$ we find
+\begin{align}
+\vec{f}_R &= \eta \nabla\times v_x'(z)\vec{e}_y = -\eta v_x''(z)\vec{e}_x.
+\end{align}
+The total friction force $\vec{F}_R$ acting on a sheet of fluid $\vec{A}=A\vec{e}_z$ is given by
+\begin{align}
+\vec{F}_R &= \intx\int_{ }^{ }\vec{f}_R\, \underbrace{\mathrm{d}x \tecxt\text{d}y}_{\rightarrow\, A} \tecxt\text{d}z = \intx\int_{z_1}^{z_2} A\vec{f}_R \,\mathrm{d}z = \eta A v_x'(z)\Big\vert_{z_1}^{z_2} \vec{e}_x.
+\end{align}
+Thus, the upper bound corresponds to a force $F_R = \eta A v_x'(z_2)$ acting on the neighboring volume at $z<z_2$, and the lower bound corresponds to a force $F_R = \eta A v_x'(z_1)$ acting on the neighboring volume at $z > z_1$.
+Now in the limit of $z_2\rightarrow z_1$ we find that each volume is acting with the same force in opposite directions, hence in general 
+\begin{align}
+F_R &= \eta A v_x'(z).
+\end{align}
+
+
+\newpage
+\section*{Problem 4: \normalfont\textit{\large{Pipe flow}}}
+The Navier-Stokes and continuity equations are
+\begin{align}
+\rho\kla\left( {\partial_t\vec{v} + [\vec{v}\cdot\nabla]\vec{v}} \right) &= -\nabla p - \rho\nabla V_\tecxt\text{ext} - \eta\nabla\times \kla\left( {\nabla\times\vec{v}} \right) + \xi \nabla (\nabla\cdot \vec{v}),\\
+0 &= \dot{\rho} + \nabla\cdot\kla\left( {\rho\vec{v}} \right).
+\end{align}
+For an incompressible fluid $\rho(\vec{r},t) \equiv \rho_0$ and in the stationary limit $\partial_t\vec{v} = 0$, the continuity equation becomes
+\begin{align}
+\nabla\cdot\vec{v} &= 0.
+\end{align}
+%Thus we may write $\vec{v} =: \nabla\times\vec{\omega}$.
+
+\subsection*{a)}
+Assuming constant pressure and a gravitational potential $V_\tecxt\text{ext} = gz$, the Navier-Stokes equation then becomes
+\begin{align}
+\rho_0 [\vec{v}\cdot\nabla]\vec{v} &= -\rho_0g\vec{e}_z + \eta \nabla^2\vec{v}.
+\end{align}
+Consider two infinitely large plates situated at $x=\pm\frac{D}{2}$.
+Then the boundary conditions are $\vec{v}\kla\left( {\pm\frac{D}{2},y,z} \right) \equiv 0$.
+Due to translational symmetry along the $y$- and $z$-axis, we can assume that $\vec{v} = \vec{v}(x)$.
+Furthermore, we may neglect any (constant) flow in the $y$-direction.
+The flow in $x$-direction is prohibited by the plates, hence $v_x \equiv 0$. 
+Therefore our ansatz becomes $\vec{v} = v(x)\vec{e}_z$, which leads to $\vec{v}\cdot\nabla = v(x)\partial_z$ and
+\begin{align}
+v''(x) &= \frac{\rho_0g}{\eta}.
+\end{align}
+The solution is in general a quadratic profile $v(x) = \frac{\rho_0g}{2\eta}x^2 + bx + c$.
+However, due to the symmetry along the $x$-axis we find $b=0$.
+Since $c\equiv v_0$, the boundary conditions both lead to
+\begin{align}
+0 &= \frac{\rho_0g}{2\eta} \kla\left( {\pm\frac{D}{2}} \right)^2  + v_0 &&\Rightarrow & v_0 &= -\frac{\rho_0gD^2}{8\eta}.
+\end{align}
+Thus the full solution may be written as
+\begin{align}
+\vec{v} &= -\frac{\rho_0gD^2}{8\eta} \kla\left( {1 - \frac{4x^2}{D^2}} \right) \vec{e}_z + v_{0y}\vec{e}_y.
+\end{align}
+
+\subsection*{b)}
+Similarly, for a height-dependent pressure profile $p(z)$ and neglecting gravity, we find
+\begin{align}
+\rho_0 [\vec{v}\cdot\nabla]\vec{v} &= -p'(z)\vec{e}_z + \eta \nabla^2\vec{v}.
+\end{align}
+Most of the above arguments are still valid, except for the translational symmetry along the $z$-axis.
+Thus we may again set $v_y = v_{y0} = \tecxt\text{const.}$ and $v_x \equiv 0$.
+The continuity equation then reads $\partial_zv_z = 0$, hence we again find $\vec{v} = v(x)\vec{e}_z + \tecxt\text{const.}$.
+Inserting leads to
+\begin{align}
+v''(x) &= \frac{p'(z)}{\eta},
+\end{align}
+i.e. only a linear pressure profile $p(z) = p_0 + \alpha z$  is possible.
+The solution may be written as
+\begin{align}
+\vec{v} &= -\frac{\alpha D^2}{8\eta} \kla\left( {1 - \frac{4x^2}{D^2}} \right) \vec{e}_z + v_{0y}\vec{e}_y.
+\end{align}
+Since the problem in both cases reduced to a linear equation, the superposition of the solutions will also solve the combined problem with pressure and gravity.
+The full solution is
+\begin{align}
+\vec{v} &= -(\rho_0g + \alpha)\frac{D^2}{8\eta} \kla\left( {1 - \frac{4x^2}{D^2}} \right) \vec{e}_z + v_{0y}\vec{e}_y,
+\end{align}
+where $p(z) = p_0 + \alpha z$.
+Note that $\alpha = -\frac{\Delta p}{L}$, where $\Delta p$ is the total pressure difference between $z=0$ and $z=L$.
+
+\subsection*{c)}
+Instead of the plates at $x=\pm\frac{D}{2}$ we now consider a pipe with diameter $D$.
+Due to the rotational symmetry, there will be no explicit $\phi$ dependence.
+Furthermore, any flow along the $r$-axis is prohibited for the same reasons listed above for flow along the $x$-axis.
+The velocity profile becomes $\vec{v}(r,\phi,z) = v_{0\phi}\vec{e}_\phi + v(r,z)\vec{e}_z$ and the continuity equation then reads 
+\begin{align}
+0 &= \kla\left( {\vec{e}_r\partial_r + \frac{1}{r}\vec{e}_\phi\partial_\phi + \vec{e}_z\partial_z} \right) \kla\left( {v_{0\phi}\vec{e}_\phi + v(r,z)\vec{e}_z} \right) = \\
+&= \partial_zv(r,z) + v_{0\phi} \vec{e}_\phi\cdot \partial_\phi \vec{e}_\phi = \partial_zv(r,z).
+\end{align}
+Thus we once again find no $z$-dependence of the velocity profile.
+Note that 
+\begin{align}
+\vec{v}\cdot\nabla  &= \kla\left( {v_{0\phi}\vec{e}_\phi + v(r,z)\vec{e}_z} \right) \kla\left( {\vec{e}_r\partial_r + \frac{1}{r}\vec{e}_\phi\partial_\phi + \vec{e}_z\partial_z} \right) = v(r)\partial_z + \frac{1}{r}v_{0\phi}\partial_\phi,
+\end{align}
+which leads to $[\vec{v}\cdot\nabla]\vec{v} = - \frac{1}{r}v_{0\phi}^2\vec{e}_r $.
+Inserting into the Navier-Stokes equations leads to
+\begin{align}
+- \frac{1}{r}v_{0\phi}^2\vec{e}_r &= -p'(z)\vec{e}_z - \rho_0g\vec{e}_z + \eta\kla\left( {\frac{1}{r}\partial_rr\partial_r + \frac{1}{r^2} \partial_\phi^2} \right) \kla\left( {v_{0\phi}\vec{e}_\phi + v(r)\vec{e}_z} \right) = \\
+&= -p'(z)\vec{e}_z - \rho_0g\vec{e}_z - \frac{\eta}{r^2}v_{0\phi}\vec{e}_\phi + \frac{\eta}{r}\partial_r rv'(r)\vec{e}_z.
+\end{align}
+Surprisingly, this equation does not allow for a non-zero flow in $\phi$-direction, hence $v_{0\phi} = 0$.
+The pressure profile is again linear with $p(z) = p_0 + \alpha z$, leading to
+\begin{align}
+\frac{1}{r}\partial_rrv' &= \frac{\rho_0g + \alpha}{\eta}.
+\end{align}
+Multiplying by $r$ and integrating gives
+\begin{align}
+v'(r) &= \frac{\rho_0g + \alpha}{2\eta}r &&\Rightarrow & v(r) &= \frac{\rho_0g + \alpha}{4\eta}r^2 + v_0.
+\end{align}
+The boundary condition gives
+\begin{align}
+0 &= \frac{\rho_0g + \alpha}{4\eta} \kla\left( {\frac{D}{2}} \right)^2 + v_0 &&\Rightarrow & v_0 &= -(\rho_0g + \alpha)\frac{D^2}{16\eta},
+\end{align}
+and therefore the full solution
+\begin{align}
+\vec{v} &= (\rho_0g + \alpha)\frac{D^2}{16\eta} \kla\left( {1 - \frac{4r^2}{D^2}} \right).
+\end{align}
+The total flow through the pipe is given by 
+\begin{align}
+I &= \intr\int_{\mathbb{R}^{2}}{\vec{v} }\,\cdot \mathrm{d}\vec{A} = (\rho_0g + \alpha)\frac{D^2}{16\eta}\intx\int_{0}^{D/2} \kla\left( {1 - \frac{4r^2}{D^2}} \right) \,2\pi r\mathrm{d}r = \\
+&= (\rho_0g + \alpha)\frac{D^2\pi}{8\eta}\frac{D^2}{16} = (\rho_0g + \alpha)\frac{D^4\pi}{128\eta}.
+\end{align}
+
+\subsection*{d)}
+Consider a sheet of fluid with dimensions $L\times L_y\times \tecxt\text{d}x$.
+Since we are considering the stationary limit we find an equilibrium of forces acting on such a sheet.
+We may omit the directional information, as pressure, gravity and friction are all parallel to the $z$-axis.
+The shear friction force is the given by
+\begin{align}
+F_R &= \eta LL_y v'(x) \Big\vert_x^{x+\tecxt\text{d}x}.
+\end{align}
+The forces by pressure and gravity amount to
+\begin{align}
+F_P + F_G &= \Delta p L_y\tecxt\text{d}x - g\underbrace{\rho_0 LL_y \tecxt\text{d}x}_{\equiv\, m}.
+\end{align}
+Note that the force generated by pressure acts on the area of the sheet with normal vector lying on the $z$-axis, thus said area is $L_y\tecxt\text{d}x$.
+The pressure difference $\Delta p$ is determined by the height $L$ of the sheet.
+The equilibrium then gives
+\begin{align}
+0 &= \sum F = \eta LL_y v'(x) \Big\vert_x^{x+\tecxt\text{d}x} + \Delta pL_y\tecxt\text{d}x - \rho_0 g  LL_y\tecxt\text{d}x.
+\end{align}
+Dividing by the volume element $LL_y\tecxt\text{d}x$ then gives
+\begin{align}
+v''(x) &= \frac{\rho_0 g - \frac{\Delta p}{L}}{\eta} .
+\end{align}
+Repeating this analysis for the pipe, we now consider a cylindrical sheet of fluid with dimensions $L\times r \times \tecxt\text{d}r$.
+The shear friction force is the given by
+\begin{align}
+F_R &= 2\pi rL \eta  v'(r) \Big\vert_r^{r+\tecxt\text{d}r}.
+\end{align}
+The forces by pressure and gravity amount to
+\begin{align}
+F_P + F_G &= \Delta p 2\pi r\tecxt\text{d}r - g\underbrace{2\pi rL \tecxt\text{d}r \rho_0}_{\equiv\, m}.
+\end{align}
+The equilibrium then gives
+\begin{align}
+0 &= \sum F = 2\pi rL\eta v'(r) \Big\vert_r^{r+\tecxt\text{d}r} + \Delta p 2\pi r\tecxt\text{d}r - 2\pi rL \tecxt\text{d}r\rho_0 g .
+\end{align}
+Dividing by the volume element $2\pi rL \tecxt\text{d}r$ then gives
+\begin{align}
+\frac{\rho_0 g - \frac{\Delta p}{L}}{\eta} &= \frac{1}{r} \frac{r( + \tecxt\text{d}r) v'\kla\left( r + \tecxt\text{d}r \right) - rv'(r)}{\tecxt\text{d}r} = \frac{1}{r}\partial_r rv'(r).
+\end{align}
+This equation is again identical to the previous one.
+%Note that there is some ambiguity with this approach.
+%Compared to the more precise analysis, we miss a factor of $\frac{1}{2}$ in the final expression.
+%If we had considered a volume element with $r\pm\frac{\tecxt\text{d}r}{2}$ instead of $r,r+\tecxt\text{d}r$, we would have found the same forces of pressure and gravity.
+%However, the friction would then be given by
+%\begin{align}
+%\frac{v'\kla\left( r + \frac{\tecxt\text{d}r}{2} \right) - v'\kla\left( r - \frac{\tecxt\text{d}r}{2} \right)}{\tecxt\text{d}r} = 
+%\end{align}
+
+%Solving this equation yields
+%\begin{align}
+%v'(x) &= \frac{\rho_0g + p'}{\eta}\tecxt\text{dx}??
+%\end{align}
+%The shear friction force for the infinite pipe is given by
+%\begin{align}
+%F_R &= \eta A v'(r) = A\kla\left( {\rho_0g + \alpha} \right)\frac{r}{2}.
+%\end{align}
+
+
+\newpage
+\section*{Problem 5: \normalfont\textit{\large{Linearization of the Navier-Stokes equations}}}
+The Navier-Stokes and continuity equations for a barotropic fluid without external potential and $\nabla\times\vec{v}=0$ are
+\begin{align}
+\rho\kla\left( {\partial_t\vec{v} + [\vec{v}\cdot\nabla]\vec{v}} \right) &= -\nabla p + \xi \nabla (\nabla\cdot \vec{v}),\\
+0 &= \dot{\rho} + \nabla\cdot\kla\left( {\rho\vec{v}} \right).
+\end{align}
+%\begin{align}
+%\partial_t\vec{v} + [\vec{v}\cdot\nabla]\vec{v} &= -\nabla h(\rho) + \frac{\xi}{\rho} \nabla (\nabla\cdot \vec{v}),\\
+%0 &= \dot{\rho} + \nabla\cdot\kla\left( {\rho\vec{v}} \right).
+%\end{align}
+%Here $h(\rho)$ denotes the specific enthalpy
+%\begin{align}
+%h(\rho) := \intx\int_{0}^{\rho} \frac{1}{\rho'}\frac{\tecxt\text{d}p(\rho')}{\tecxt\text{d}\rho'}\,\mathrm{d}\rho' = \int \frac{\tecxt\text{d}p}{\rho}.
+%\end{align}
+%This relation gives rise to $\tecxt\text{d}h = \frac{\tecxt\text{d}p}{\rho}$ and therefore $\nabla h = \frac{\nabla p}{\rho}$.
+We will assume small velocities $\vec{v} = \epsilon \tilde{\vec{v}}(\vec{r},t)$, as well as small pressure and density variations $p = p_0 + \epsilon\tilde{p}(\vec{r},t)$ and $\rho = \rho_0 + \epsilon\tilde{\rho}(\vec{r},t)$.
+Ignoring any terms of order $\epsilon^2$, the continuity equation reads
+\begin{align}
+0 &= \epsilon\dot{\tilde{\rho}} + \nabla\cdot \kla\left( {\rho_0\epsilon\tilde{\vec{v}}} \right) &&\Rightarrow & 0 &= \frac{\dot{\tilde{\rho}}}{\rho_0} + \nabla\cdot \tilde{\vec{v}}.
+\end{align}
+The Navier-Stokes equation becomes
+\begin{align}
+\rho_0\epsilon\dot{\tilde{\vec{v}}} &= -\nabla\epsilon\tilde{p} + \xi\epsilon\nabla \kla\left( {\nabla\cdot \tilde{\vec{v}}} \right),\\
+\Rightarrow\ \ \ \rho_0\dot{\tilde{\vec{v}}} &= -\nabla\tilde{p} - \frac{\xi}{\rho_0}\nabla\dot{\tilde{\rho}}.
+\end{align}
+Multiplying by $\nabla$ then leads to a wave equation for the density variation
+\begin{align}
+-\ddot{\tilde{\rho}} &= -\nabla^2\tilde{p} - \frac{\xi}{\rho_0}\nabla^2\dot{\tilde{\rho}}.
+\end{align}
+Since the fluid is barotropic, we have the relation $p=p(\rho)$.
+Expanding gives
+\begin{align}
+p_0 + \epsilon\tilde{p} &= p(\rho_0) + \epsilon p'(\rho_0)\tilde{\rho} &&\Rightarrow & \tilde{p} &= \tilde{p}'(\rho_0)\tilde{\rho}.
+\end{align}
+Thus we finally arrive at a wave-equation for $\tilde{\rho}$
+\begin{align}
+\ddot{\tilde{\rho}} -\tilde{p}'(\rho_0)\nabla^2\tilde{\rho} &= \frac{\xi}{\rho_0}\nabla^2\dot{\tilde{\rho}}.
+\end{align}
+Consider again the above equation 
+\begin{align}
+\rho_0\dot{\tilde{\vec{v}}} &= -\tilde{p}'(\rho_0)\nabla\tilde{\rho} - \xi\nabla\kla\left( \nabla\cdot\tilde{\vec{v}} \right).
+\end{align}
+Since we assumed $\nabla\times\vec{v} = 0$, we may write
+\begin{align}
+0 &= \nabla\times\kla\left( \nabla\times\vec{v} \right) = \nabla\kla\left( \nabla\cdot\vec{v} \right) - \nabla^2\vec{v} && \Rightarrow & \nabla \kla\left( \nabla\cdot\vec{v} \right) &= \nabla^2\vec{v}.
+\end{align}
+Taking the partial time-derivative of the previous equation the leads to 
+\begin{align}
+\rho_0\ddot{\tilde{\vec{v}}} &= -\tilde{p}'(\rho_0)\nabla\dot{\tilde{\rho}} + \xi\nabla^2\vec{v}.
+\end{align}
+Together with the continuity equation we then find a wave-equation for $\tilde{\vec{v}}$ with the same structure as the equation for $\tilde{\rho}$
+\begin{align}
+\ddot{\tilde{\vec{v}}} -\tilde{p}'(\rho_0)\nabla^2\tilde{\vec{v}} &= \frac{\xi}{\rho_0}\nabla^2\dot{\tilde{\vec{v}}}.
+\end{align}
+Assuming a plane wave $\tilde{\rho} = \e^{\i(\omega t - \vec{k}\cdot\vec{r})}$ we find
+\begin{align}
+-\omega^2 + \tilde{p}'(\rho_0)\vec{k}^2 &= -\frac{\xi}{\rho_0}\i\omega\vec{k}^2,\\
+\Rightarrow\ \ \ \omega(k) &= \frac{\i\xi}{2\rho_0}\vec{k}^2 \pm \sqrt{-\frac{\xi^2}{4\rho_0^2}\vec{k}^4 + \tilde{p}'(\rho_0)\vec{k}^2}.
+\end{align}
+The imaginary term leads to a dampening / energy dissipation.
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+\end{document}

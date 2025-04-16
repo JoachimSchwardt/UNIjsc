@@ -1,0 +1,407 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Richardson Extrapolation}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Numerical methods}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Introduction}
+Assume a real-valued sequence $(s_n)$ and their partial sums
+\begin{align}
+S_N &:= \sum_{n=0}^{N} s_n
+\end{align}
+converging to the limit $\lim_{N\rightarrow \infty} S_N =: S \in\mathbb{R}$.
+The goal of Richardson extrapolation is to construct a new series of partial sums, $R_N^{(K)}$, that converges to the same limit $S$ -- but ``faster''.
+In fact, it will turn out that the error scales like
+\begin{align}
+|R_N^{(K)} - S| &\sim  \frac{1}{N^K} \quad (\tecxt\text{as } N \rightarrow\infty) .
+\end{align}
+Thus we can already anticipate that the use of Richardson extrapolation will be limited to such series, whose convergence behaviour is slower than $\frac{1}{N^K}$ for some $K\in\mathbb{N}$.
+
+\section{Construction of the $K$-Richardson sequence}
+More formally, the assumption necessary for the following construction is the asymptotic condition
+\begin{align}
+S_N - S &\sim \frac{a_1}{N} + \frac{a_2}{N^2} + \dots  \quad (\tecxt\text{as } N \rightarrow\infty)
+\end{align}
+for a set of numbers $a_k\in\mathbb{R}$.
+If we allow this series to terminate after $K$ terms, we find the condition
+\begin{align}
+S_N - S &\sim \sum_{k=1}^K \frac{a_k}{N^k}.
+\end{align}
+\subsection{Special case of $K=1$}
+For $K=1$ we find the simple condition 
+\begin{align}
+S_N - S &\sim \frac{a_1}{N}.
+\end{align}
+Writing this down for both $N$ and $N+1$ we find
+\begin{align}
+S_N &\sim S + \frac{a_1}{N}\\
+S_{N+1} &\sim S + \frac{a_1}{N+1}.
+\end{align}
+This set of asymptotic equations can be solved in the following way.
+We start by multiplying the first equation by $N$ and the second by $N+1$. 
+Subtracting the first from the second then yields the condition
+\begin{align}
+R_N^{(1)} &:= (N+1)S_{N+1} - NS_N \sim (N+1)S + a_1 - NS - a_1 = S.
+\end{align}
+Here we defined the first Richardson sequence $R_N^{(1)}$, which converges to $S$ with an error of at most $\frac{1}{N^2}$.
+
+\subsection{General case}
+The general case follows the same idea, but is mathematically challenging.
+We being by writing out the equations for $N$, $N+1$, \dots $N+K$, giving
+\begin{align*}
+S_N - S &\sim \sum_{k=1}^K\frac{a_k}{N^k},\\
+&\vdots \\
+S_{N+K} - S &\sim \sum_{k=1}^K\frac{a_k}{(N+K)^k}. \numberthis
+\end{align*}
+Multiplying each equation by $(N+j)^K$ (for $j=0,\dots,K$), this system of asymptotic equations can be transformed to
+\begin{align*}
+N^KS_N - N^KS &\sim \sum_{k=1}^K a_kN^{K-k},\\
+&\vdots \\
+(N+K)^KS_{N+K} - (N+K)^KS &\sim \sum_{k=1}^K a_k(N+K)^{K-k}. \numberthis
+\end{align*}
+In a more compact way, we may write this as
+\begin{align}
+(N+j)^K (S_{N+j} - S) &\sim \sum_{k=1}^K a_k (N+j)^{K-k}.
+\end{align}
+Solving this system is non-trivial.
+We want to eliminate the (unknown) constants $a_k$, which should leave us with a single asymptotic equation of the form $R_N^{(K)}\sim S$.
+More explicitly, we may write
+\begin{align}
+R_N^{(K)} &:= \sum_{j=0}^K b_j (N+j)^K S_{N+j}.
+\end{align}
+Then summing up all $K+1$ equations yields
+\begin{align}
+\sum_{j=0}^K b_j  (N+j)^K S_{N+j} &\sim S + \sum_{j=0}^K \sum_{k=1}^K b_j  a_k (N+j)^{K-k},
+\end{align}
+where we already assumed the identity
+\begin{align}
+\sum_{j=0}^K b_j  (N+j)^K &= 1.
+\end{align}
+The goal is now to determine the $K+1$ coefficients $b_j\in\mathbb{R}$ in such a way, that
+\begin{align}
+\sum_{j=0}^K \sum_{k=1}^K b_j  a_k (N+j)^{K-k} &= 0.
+\end{align}
+Since both summations are finite, we may interchange them.
+All the $a_k$ are independent, therefore the terms have to vanish for each value of $k$.
+This leads to $K$ equations of the form
+\begin{align}
+\sum_{j=0}^K b_j (N+j)^{K-k} &= 0.
+\end{align}
+We may use the binomial theorem to expand the last term, giving
+\begin{align}
+\sum_{j=0}^K b_j \sum_{l=0}^{K-k} \binom{K-k}{l} N^{K-k-l}j^l &= 0.
+\end{align}
+The most simple solution would now certainly be to have each term vanish for $l=0,\dots,K-k$ independently.
+This gives rise to the conditions
+\begin{align}
+\sum_{j=0}^K b_j j^l &= 0.
+\end{align}
+However, recall that we also had the condition for the coefficient of $S$, which corresponds to $k=0$ (or $l=K$ respectively) and is given by
+\begin{align}
+\sum_{j=0}^K b_j j^K &= 1.
+\end{align}
+Summarizing, this yields
+\begin{align}
+\sum_{j=0}^K b_j j^l &= \delta_{lK}.
+\end{align}
+We may express this as a matrix equation of the form $Mb = (0,\dots,0,1)^\top$, where $b=(b_0,\dots , b_K)^\top$ and
+\begin{align}
+M &= \begin{pmatrix}
+1 & 1 & 1 & \dots & 1 \\
+0 & 1 & 2 & \dots & K \\
+0 & 1 & 4 & \dots & K^2 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & 1 & 2^K & \dots & K^K
+\end{pmatrix}
+\end{align}
+is a $(K+1)\times (K+1)$-matrix.
+We only care about the entries in the last column of the inverse of this matrix, since they correspond to the coefficients $b_j$.
+Experimenting for small $K$ suggests that 
+\begin{align}
+b_j &= \frac{1}{K!}\binom{K}{j}(-1)^{K-j}.
+\end{align}
+We will now prove that this set of coefficients is indeed a solution.
+\begin{proof}
+Consider the family of functions
+\begin{align}
+f_l^{(K)}(x) &:= \frac{1}{K!} \sum_{j=0}^K (-1)^{K-j}\binom{K}{j}(j - x)^l
+\end{align}
+for $l=0,\dots,K$.
+For $K=1$ we find
+\begin{align}
+f_0^{(1)}(x) &= -(0-x)^0 + (1-x)^0 = 0,\\
+f_1^{(1)}(x) &= -(0-x)^1 + (1-x)^1 = 1.
+\end{align}
+Now assume that $f_l^{(K)} (x) \equiv \delta_{lK}$ for some $K\in\mathbb{N}$.
+Then we find
+\begin{align}
+f_l^{(K+1)} (x) &= \frac{1}{(K+1)!} \sum_{j=0}^{K+1} (-1)^{K+1-j} \binom{K+1}{j} (j-x)^l = \\
+&= \frac{(K+1-x)^l}{(K+1)!} - \frac{1}{(K+1)!} \sum_{j=0}^{K} (-1)^{K-j} \underbrace{\frac{K+1}{K+1-j}}_{=1 + \frac{j}{K+1-j}} \binom{K}{j} (j-x)^l = \\
+&= \frac{(K+1-x)^l}{(K+1)!} - \frac{f_l^{(K)}(x)}{K+1} - g(x)
+\end{align}
+where we defined the third term as
+\begin{align}
+g(x) &:= \frac{1}{(K+1)!}\sum_{j=1}^K (-1)^{K-j} \frac{K!}{(j-1)!(K+1-j)!}(j-x)^l = \\
+&= -\frac{1}{(K+1)!}\sum_{j=0}^{K-1} (-1)^{K-j} \binom{K}{j}(j+1-x)^l = \\
+&= -\frac{f_l^{(K)}(x-1)}{K+1} + \frac{(K+1-x)^l}{(K+1)!}.
+\end{align}
+Reinserting into the first expression, we find
+\begin{align}
+f_l^{(K+1)}(x) &= \frac{f_l^{(K)}(x-1) - f_l^{(K)}(x)}{K+1}.
+\end{align}
+With the induction hypothesis this results in $f_l^{(K+1)} = 0$ for $l=0,\dots,K$.
+However, the hypothesis is only valid for those $l$; in particular it is not valid for $l=K+1$.
+This value has to be considered separately.
+But this is simple, since the first derivative of $f_{K+1}^{(K+1)}(x)$ is just given by
+\begin{align}
+{f_{K+1}^{(K+1)}}'(x) &= -(K+1)f_{K}^{(K+1)}(x) \equiv 0.
+\end{align}
+Hence we find $f_{K+1}^{(K+1)}(x) \equiv \tecxt\text{const.}$, where we can most easily figure out the constant by computing
+\begin{align}
+f_{K+1}^{(K+1)}(x) &\equiv f_{K+1}^{(K+1)}(0) = \frac{1}{(K+1)!}\sum_{j=1}^{K+1} (-1)^{K+1-j}\binom{K+1}{j} j^l = \\
+&= \frac{1}{(K+1)!}\sum_{j=0}^K (-1)^{K-j} \binom{K+1}{j+1} (j+1)^{K+1} = \\
+&= \frac{1}{K!}\sum_{j=0}^K (-1)^{K-j} \binom{K}{j} (j+1)^{K} = f_K^{(K)}(-1) = 1.
+\end{align}
+This completes the proof.
+\end{proof}
+Using the above, we now find 
+\begin{align}
+\sum_{j=0}^Kb_jj^l &= \frac{1}{K!} \sum_{j=0}^K (-1)^{K-j}\binom{K}{j} j^l = f_l^{(K)}(x=0) = \delta_{lK}.
+\end{align}
+Inserting the $b_j$ into our formula for the $K$-th Richardson sequence yields
+\begin{align}
+R_N^{(K)} &= \frac{1}{K!}\sum_{j=0}^K (-1)^{K-j} \binom{K}{j} (N+j)^K S_{N+j}. \label{eqn:richardson K N}
+\end{align}
+
+\subsection{Simplification of the Richardson sequence}
+There exists a more convenient form of \autoref{eqn:richardson K N}.
+Note that 
+\begin{align}
+R_N^{(K)} &= \frac{1}{K!} \sum_{j=0}^K (-1)^{K-j} \binom{K}{j} (N+j)^K \kla\left( S_N + \sum_{n=N+1}^{N+j} s_{n} \right) = \\
+&= S_N f_K^{(K)}(-N) + \frac{1}{K!} \sum_{j=1}^K \sum_{n=1}^{j} (-1)^{K-j} \binom{K}{j} (N+j)^K s_{N + n} = \\
+&= S_N + \frac{1}{K!} \sum_{j=0}^{K-1}\sum_{n=1}^{K-j} s_{N+n} (-1)^j \binom{K}{j} (N+K-j)^K.
+\end{align}
+We seek to swap the order of the summation.
+For this we make use of a special rule for products of sums
+\begin{align}
+\sum_{j=0}^{K-1} \sum_{n=1}^{K-j} \alpha_n\beta_j &= \sum_{j=0}^{K-1} \beta_j \kla\left( \alpha_1 + \alpha_2 + \dots + \alpha_{K-j} \right) = \\
+&= \alpha_1 \sum_{j=0}^{K-1} \beta_j + \alpha_2 \sum_{j=0}^{K-2} + \dots + \alpha_{K} \sum_{j=0}^{0}\beta_j = \sum_{n=1}^K \sum_{j=0}^{K-n} \alpha_n\beta_j.
+\end{align}
+Thus we finally arrive at 
+\begin{align}
+R_N^{(K)} &= S_N + \frac{1}{K!}\sum_{n=1}^{K} s_{N+n} \sum_{j=0}^{K-n} (-1)^j \binom{K}{j} (N+K-j)^K.
+\end{align}
+
+
+The following code-snippet shows a crude implementation of the $K$-th Richardson sequence
+\begin{minted}[frame=lines, bgcolor=bg, fontsize=\footnotesize, linenos]{python}
+def richardson(sn, N=1, K=2):
+    SN = np.sum(sn[:N])
+    corr = np.zeros(K)
+    for n in range(1, K+1, 1):
+        factor = np.sum([(-1)**j * np.math.comb(K, j) * (N+K-j)**K 
+                         for j in range(0, K-n+1, 1)])
+        corr[n-1] = sn[N+n] * factor
+    return SN + np.sum(corr) / np.math.factorial(K)
+\end{minted}
+
+
+%import numpy as np
+%import matplotlib.pyplot as plt
+%from matplotlib import special
+%special.setup()
+%
+%def richardson(sn, N=1, K=2):
+%    SN = np.sum(sn[:N])
+%    corr = np.zeros(K)
+%    for n in range(1, K+1, 1):
+%        factor = np.sum([(-1)**j * np.math.comb(K, j) * (N+K-j)**K 
+%                         for j in range(0, K-n+1, 1)])
+%        corr[n-1] = sn[N+n] * factor
+%    return SN + np.sum(corr) / np.math.factorial(K)
+%
+%def SN(sn, step=50):
+%    array = np.zeros(sn.shape[0] // step)
+%    array[0] = np.sum(sn[0:step])
+%    for k in range(1, array.shape[0], 1):
+%        array[k] = array[k-1] + np.sum(sn[k*step:(k+1)*step])
+%    return array
+%    
+%def RN(sn, step=50, K=5):
+%    array = np.zeros(sn.shape[0] // step)
+%    for k in range(0, array.shape[0], 1):
+%        array[k] = richardson(sn, N=(k+1)*step - K - 1, K=K)
+%    return array
+%   
+%n = 100
+%nval = np.arange(1, n+1, 1)
+%#sn = 1/nval**2
+%#S = np.pi**2/6
+%
+%sn = np.zeros(n)
+%sn[0] = 1
+%for k in range(1, n, 1):
+%    sn[k] = sn[k-1] / k
+%S = np.e
+%
+%fig, ax = plt.subplots()
+%step = 5
+%ax.plot(S - SN(sn, step=step), ls='', marker='o')
+%for K in range(1, 5, 1):
+%    ax.plot(S - RN(sn, step=step, K=K), ls='', marker='o', label=f"{K = }")
+%ax.legend()
+
+ 
+
+
+%The coefficients can now be found by solving this linear system of equations.
+%
+%
+%The first equation gives $c_K = -c_{K-1} + c_{K-2} - \dots$.
+%Inserting into the second gives $0 &= $
+
+
+%This is somewhat reminiscent of the binomial theorem, so it may be helpful to write $b_j = \binom{K}{j} c_j$.
+%Including the condition for the coefficient of $S$, we find the set of equations
+%\begin{align}
+%\sum_{j=0}^K \frac{K!}{j!(K-j)!} c_j j^l &= \delta_{lK}.
+%\end{align}
+%There is no obvious approach to finding the solution.
+%We will try to motivate the idea by checking the first few cases.
+%
+%For $K=1$ we have the two equations
+%\begin{align}
+%c_0 + c_1 &= 0,\\
+%c_1 &= 1
+%\end{align}
+%with the solution $c_0=-1$.
+%
+%For $K=2$ we have the three equations
+%\begin{align}
+%c_0 + 2c_1 + c_2 &= 0, \\
+%2c_1 + 2c_2 &= 0, \\
+%2c_1 + 4c_2 &= 1.
+%\end{align}
+
+\section{Exponential correction series}
+In this section we will assume a different behaviour of the asymptotic error.
+Explicitly, let
+\begin{align}
+S_N - S &\sim a_1\e^{-b_1N} + a_2\e^{-b_2N} + \dots \quad (\tecxt\text{as } N\rightarrow\infty ).
+\end{align}
+The general case is not solvable, but as seen before, the numerical stability of the algorithm deteriorates rapidly with the number of error terms.
+
+\subsection{Special case of $K=1$}
+For $K=1$ we find the condition
+\begin{align}
+S_N - S &\sim a\e^{-bN}.
+\end{align}
+We will need three equations to eliminate the unknowns.
+Since we are now dealing with exponential growth, it appears reasonable to choose 
+\begin{align}
+S_N - S &\sim a\e^{-bN},\\
+S_{2N} - S &\sim a\e^{-2bN},\\
+S_{4N} - S &\sim a\e^{-4bN}.
+\end{align}
+Dividing the first equation by the second gives
+\begin{align}
+\frac{S_N - S}{S_{2N} - S} &\sim \e^{bN}.
+\end{align}
+On the other squaring the first equation beforehand yields
+\begin{align}
+\frac{(S_N - S)^2}{S_{2N} - S} &\sim a.
+\end{align}
+Combining both conditions with the third equation gives
+\begin{align}
+S_{4N} - S &\sim \frac{(S_N - S)^2}{S_{2N} - S} \kla\left( \frac{S_N - S}{S_{2N} - S} \right)^{-4} = \frac{(S_{2N} - S)^3}{(S_N - S)^2} = \\
+&= \frac{S_{2N}^3 - 3S_{2N}^2S + 3S_{2N}S^2 - S^3}{S_N^2 - 2S_NS + S^2}.
+\end{align}
+We may reduce this condition into a quadratic equation of the form
+\begin{align}
+S_{4N}S_N^2 - 2S_{4N}S_NS + S_{4N}S^2 - S_N^2S + 2S_NS^2 &\sim S_{2N}^3 - 3S_{2N}^2S + 3S_{2N}S^2,
+\end{align}
+or equivalently
+\begin{align}
+S^2 \underbrace{\kla\left( S_{4N} + 2S_N - 3S_{2N} \right)}_{=: r} + S \underbrace{ \kla\left( -2S_{4N}S_N - S_N^2 + 3S_{2N}^2 \right)}_{=: p} + \underbrace{S_{4N}S_N^2 - S_{2N}^3}_{=: q} &\sim 0.
+\end{align}
+Finally, using the quadratic formula, we find 
+%\begin{align}
+%R_N^{(\tecxt\text{exp.1})} &:= \frac{S_N^2 + 2S_{4N}S_N - 3S_{2N}^2 \pm \sqrt{\kla\left( S_N^2 + 2S_{4N}S_N - 3S_{2N}^2 \right)^2 - 4\kla\left( S_{4N} + 2S_N - 3S_{2N} \right)\kla\left( S_{4N}S_N^2 - S_{2N}^3 \right)}}{2\kla\left( S_{4N} + 2S_N - 3S_{2N} \right)}
+%\end{align}
+\begin{align}
+R_N^{(\tecxt\text{exp.1})} &:= \frac{-p \pm \sqrt{p^2 - 4rq}}{2r} \sim S.
+\end{align}
+Note that
+\begin{align}
+p^2 &= 9S_{2N}^4 + S_N^4 + 4S_{4N}^2S_N^2 - 6S_{2N}^2S_N^2 + 4S_{4N}S_N^3 - 12S_{4N}S_{2N}^2S_N,\\
+4rq &= 4S_{4N}^2S_N^2 + 8S_{4N}S_N^3 - 12S_{4N}S_{2N}S_N^2 - 4S_{4N}S_{2N}^3 - 8S_{2N}^3S_N + 12S_{2N}^4
+\end{align}
+and therefore
+\begin{align}
+p^2 - 4rq &= S_N^4 - 4S_{4N}S_N^3 + 12S_{4N}S_{2N}S_N( S_N - S_{2N}) + 8S_{2N}^3S_N - 3S_{2N}^4 + 4S_{4N}S_{2N}^3.
+\end{align}
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

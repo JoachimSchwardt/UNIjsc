@@ -1,0 +1,109 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+
+\begin{document}
+
+\title{01 Metrische und normierte Räume}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Vollständigkeit und Abgeschlossenheit}
+Es gilt $(a)\Rightarrow(b)$:
+\begin{proof}
+Sei $(M, d)$ vollständig und $N$ abgeschlossen in $(M,d)$. Sei $x_n$ CF in $N$. Dann ist $x_n$ auch CF in $M$. Da $M$ vollständig ist konvergiert $x_n\rightarrow x\in M$. Da $N$ abgeschlossen ist liegt $x\in N$. Also konvergiert jede CF in N.
+\end{proof}
+Es gilt $(a)\Leftarrow(b)$:
+\begin{proof}
+Sei $(N,d)$ vollständig. Sei $x_n$ Folge in $N$, sodass $\exists x\in M:x_n\rightarrow x$. Also konvergiert $x_n$ in $M$ und ist somit insbesondere CF in $M$. Dann ist $x_n$ auch CF in $N$ und aus der Vollständigkeit folgt dann $x_n\rightarrow y\in N$. Da Grenzwerte eindeutig sind gilt $x=y$.
+\end{proof}
+\section{Höldersche Ungleichung}
+a)
+\begin{proof}
+Sei $p=1$ und $q=\infty$. Dann gilt:
+$$\sum_{k=1}^N|x_ky_k|\le\sum_{k=1}^N|x_k|\cdot ||y||_\infty \le ||x||_1||y||_\infty <\infty$$
+Die Reihe ($N\rightarrow\infty$) konvergiert also und es gilt $xy\in l^1$.\\
+Sei $||x||_p=||y||_q=1$. Dann gilt:
+$$\sum_{k=1}^N|x_ky_k|\le\sum_{k=1}^N\frac{1}{p}|x_k|^p+\frac{1}{q}|y_k|^q\le\frac{1}{p}||x||_p^p+\frac{1}{q}||y||_q^q=1$$
+Für allgemeine $x\in l^p,\ y\in l^q$ gilt dann:
+$$\frac{\|xy\|_1}{\|x\|_p\|y\|_q}=\left\|\frac{xy}{\|x\|_p\|y\|_q}\right\|_1\le 1$$
+\end{proof}
+b) Minkowski Ungleichung:
+\begin{proof}
+Für $p=1$:
+\begin{align*}
+\sum_{k=1}^N|x_k+y_k|\le\sum_{k=1}^N|x_k|+|y_k|\le\|x\|_1+\|y\|_1<\infty
+\end{align*}
+Für $p=\infty$ (noch $\mathrm{max}_k$ auf beiden Seiten nehmen):
+\begin{align*}
+|x_k+y_k|\le \|x\|_\infty\|y\|_\infty
+\end{align*}
+Für $p\in(1,\infty)$:
+\begin{align*}
+\sum_{k=1}^N|x_k+y_k|^p&\le\sum_{k=1}^N\kla\left( {|x_k|+|y_k|} \right)^p\le\sum_{k=1}^N\kla\left( {2\cdot\mathrm{max}\klammer\left\{ {|x_k|,|y_k|} \right\} } \right)^p\\
+&\le 2^p\sum_{k=1}^N|x_k|^p+|y_k|^p\le 2^p\kla\left( {\|x\|_p^p+\|y\|_p^p} \right)<\infty
+\end{align*}
+Sei $q=\frac{p}{p-1}$:
+\begin{align*}
+\|x+y\|_p^p&=\sum_{k=1}^\infty|x_k+y_k|^p\le\sum_{k=1}^\infty|x_k|\cdot |x_k+y_k|^{p-1}+\sum_{k=1}^\infty|y_k|\cdot |x_k+y_k|^{p-1}\\
+&\kom\overset{\substack{{\text{Hölder}} \\ |}}{\le}\|x\|_p\||x+y|^{p-1}\|_q+\|y\|_p\||x+y|^{p-1}\|_q=\kla\left( {\|x\|_p+\|y\|_p} \right)\cdot\kla\left( {\sum_{k=1}^\infty|x_k+y_k|^p} \right)^\frac{1}{q}\\
+&=\kla\left( {\|x\|_p+\|y\|_p} \right)\cdot \frac{\|x+y\|_p^p}{\|x+y\|_p}
+\end{align*}
+\end{proof}
+c) 
+\begin{proof}
+Sei $\|x\|_p=1$. Dann gilt:
+$$|x_k|=\kla\left( {|x_k|^p} \right)^{1/p}=\|x\|_p=1$$
+Für $q=\infty$ gilt also schon einmal $\|x\|_q=\sup |x_k|\le 1=\|x\|_p$.\\
+Sei $q<\infty$:
+$$\sum |x_k|^q\le\sum|x_k|^p\le\sum_k^\infty=\|x\|_p^p=1\ \ \Rightarrow\ \ \|x\|_q\le 1=\|x\|_p$$
+Sei nun $x\in l^p$ beliebig. Setze $y:=\frac{x}{\|x\|_p}$ mit $\|y\|_p=1$. Also gilt:
+$$\|y\|_q\le 1\ \ \Rightarrow\ \ \|x\|_q\le\|x\|_p$$
+\end{proof}
+d) Banachraum
+\begin{proof}
+Sei $x^n$ CF in $l^p$. Für $k\in\mathbb{N}$ gilt dann:
+$$|x_k^n-x_k^m|=\kla\left( {|x_k^n-x_k^m|^p} \right)^{1/p}\kom\overset{\substack{{\text{Summe über }k} \\ |}}{\le}\|x^n-x^m\|_p$$
+Also ist die Folge $(x_k^n)_{n\in\mathbb{N}}$ CF in $\mathbb{K}$ und somit dort konvergent. Setze also $x_k:=\lim_{n\rightarrow\infty}x_k^n$. (Zu zeigen bleibt: $x\in l^p$ und $x^n\rightarrow x$)\\
+Sei $\epsilon >0$. Dann $\exists N\in\mathbb{N}\forall n,m>N:\|x^n-x^m\|_p<\epsilon$.\\
+Für $k\in\mathbb{N}$ gilt somit:
+$$\kla\left( {\sum_j^k|x_j^n-x_j^m|^p} \right)^{1/p}\le\|x^n-x^m\|_p<\epsilon$$
+Für $m\rightarrow\infty$ folgt dann:
+$$\kla\left( {\sum_j^k|x_j^n-x_j|^p} \right)^{1/p}\le\epsilon$$
+Und schließlich mit $k\rightarrow\infty$:
+$$\|x^n-x\|_p\le\epsilon$$
+Damit gilt $x-x^n\in l^p$ also auch $x\in l^p$ ($l^p$ ist Vektorraum), sowie $x^n\rightarrow x$.
+\end{proof}
+
+\section{Normäquivalenz}
+\begin{proof}
+Sei $x\in\mathbb{C}^n$. Dann $\exists j\in\klammer\left\{ {1,\dots,n} \right\}$ mit $|x_j|=\|x\|_\infty$ Damit gilt:
+$$\|x\|_\infty=|x_j|\le\kla\left( {\sum_k^n|x_k|^p} \right)^{1/p}=\|x\|_p\le\kla\left( {\sum_k^n\|x\|_\infty^p} \right)^{1/p}=n^{1/p}\|x\|_\infty$$
+\end{proof}
+\section{Banachräume}
+\begin{proof}
+Die Vollständigkeit von $B(K)$ zeigt man wie die von $l^\infty$.
+Wenn $C(K)$ ein abgeschlossener Teilraum von $B(K)$ ist, ist $C(K)$ auch vollständig:\\
+Stetige Funktionen sind auf einer kompakten Menge beschränkt (Weierstrass), also ist $C(K)\subseteq B(K)$. \\
+Sei $f_n$ eine Folge in $C(K)$ mit $f_n\rightarrow f\in B(K)$. \\
+Sei $\epsilon>0$. Dann $\exists N\in\mathbb{N}:\|f_N-f\|_\infty<\epsilon$. Da $f_N$ stetig ist, $\exists\delta >0\forall s,t\in K:|t-s|<\delta\Rightarrow |f_N(t)-f_N(s)|<\epsilon$. Damit folgt:
+$$|f(t)-f(s)|\le |f(t)-f_N(t)|+|f_n(t)-f_N(s)|+|f_N(s)-f(s)|\le 2\|f-f_n\|_\infty+\epsilon <3\epsilon$$ 
+Also ist $f$ stetig und somit $f_n\rightarrow f\in C(K)$.
+\end{proof}
+\end{document}

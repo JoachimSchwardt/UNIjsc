@@ -1,0 +1,344 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage[most]{tcolorbox}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\usepackage[compat=1.1.0]{tikz-feynman}
+\usepackage{slashed}
+\usepackage{bbm}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Collection of QED calculations}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Quantum Electrodynamics}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+
+\section{Feynman Rules}
+Quantum Electrodynamics contains electrons, positrons and photons described by spinors $u(p,s)$, $v(p,s)$ and $\epsilon^\mu (p)$.
+The Feynman rules may be summarized as
+\begin{align}
+%\feynmandiagram [small, horizontal=i to f, baseline={-0.5ex}] {
+%    f [particle=$s_2$] -- [fermion, momentum'=$p$] i [particle=$s_1$];
+%}; &= \frac{\i \slashed{p} + m}{p^2 - m^2},\\
+%\feynmandiagram [small, horizontal=i to f, baseline={-0.5ex}] {
+%    f [particle=$s_2$] -- [boson, momentum'=$p$] i [particle=$s_1$];
+%}; &= \frac{-\i g_{\mu\nu}}{p^2},\\
+\begin{tikzpicture}
+    \begin{feynman}
+        \vertex (a);
+        \vertex[left=1cm of a] (b);
+        \diagram* {
+            (a) -- [momentum'=$p$] (b)
+        };
+        \draw[fill] (a) circle (0.5mm);
+        \draw[fill] (b) circle (0.5mm);
+        \node[right=0.5mm of a] (atext) {$s_2$};
+        \node[left=0.5mm of b] (btext) {$s_1$};
+    \end{feynman}
+\end{tikzpicture} &= \frac{\i \slashed{p} + m}{p^2 - m^2},\\
+\begin{tikzpicture}
+    \begin{feynman}
+        \vertex (a);
+        \vertex[left=1cm of a] (b);
+        \diagram* {
+            (a) -- [boson, momentum'=$p$] (b)
+        };
+        \draw[fill] (a) circle (0.5mm);
+        \draw[fill] (b) circle (0.5mm);
+        \node[right=0.5mm of a] (atext) {$s_2$};
+        \node[left=0.5mm of b] (btext) {$s_1$};
+    \end{feynman}
+\end{tikzpicture} &= \frac{-\i g_{\mu\nu}}{p^2},\\
+\begin{tikzpicture}
+    \begin{feynman}
+        \vertex (a);
+        \vertex[left=1cm of a] (b);
+        \diagram* {
+            (b) -- [fermion, momentum=$p$] (a)
+        };
+        \draw[fill] (a) circle (0.5mm);
+        \node[right=0.5mm of a] (atext) {$s_2$};
+        \node[left=0.5mm of b] (btext) {$s_1$};
+    \end{feynman}
+\end{tikzpicture} &= u(p,s_1),\\
+\begin{tikzpicture}
+    \begin{feynman}
+        \vertex (a);
+        \vertex[left=1cm of a] (b);
+        \diagram* {
+            (a) -- [fermion, momentum'=$p$] (b)
+        };
+        \draw[fill] (a) circle (0.5mm);
+        \node[right=0.5mm of a] (atext) {$s_2$};
+        \node[left=0.5mm of b] (btext) {$s_1$};
+    \end{feynman}
+\end{tikzpicture} &= \bar{u}(p,s_1),\\
+\begin{tikzpicture}
+    \begin{feynman}
+        \vertex (a);
+        \vertex[left=1cm of a] (b);
+        \diagram* {
+            (b) -- [anti fermion, momentum=$p$] (a)
+        };
+        \draw[fill] (a) circle (0.5mm);
+        \node[right=0.5mm of a] (atext) {$s_2$};
+        \node[left=0.5mm of b] (btext) {$s_1$};
+    \end{feynman}
+\end{tikzpicture} &= v(p,s_1),\\
+\begin{tikzpicture}
+    \begin{feynman}
+        \vertex (a);
+        \vertex[left=1cm of a] (b);
+        \diagram* {
+            (a) -- [anti fermion, momentum'=$p$] (b)
+        };
+        \draw[fill] (a) circle (0.5mm);
+        \node[right=0.5mm of a] (atext) {$s_2$};
+        \node[left=0.5mm of b] (btext) {$s_1$};
+    \end{feynman}
+\end{tikzpicture} &= \bar{v}(p,s_1),\\
+\begin{tikzpicture}
+    \begin{feynman}
+        \vertex (a);
+        \vertex[left=1cm of a] (b);
+        \diagram* {
+            (b) -- [boson, momentum=$p$] (a)
+        };
+        \draw[fill] (a) circle (0.5mm);
+        \node[right=0.5mm of a] (atext) {$s_2$};
+        \node[left=0.5mm of b] (btext) {$s_1$};
+    \end{feynman}
+\end{tikzpicture} &= \epsilon_\mu(p),\\
+\begin{tikzpicture}
+    \begin{feynman}
+        \vertex (a);
+        \vertex[left=1cm of a] (b);
+        \diagram* {
+            (a) -- [boson, momentum'=$p$] (b)
+        };
+        \draw[fill] (a) circle (0.5mm);
+        \node[right=0.5mm of a] (atext) {$s_2$};
+        \node[left=0.5mm of b] (btext) {$s_1$};
+    \end{feynman}
+\end{tikzpicture} &= \epsilon^\ast_\mu(p).
+\end{align}
+Every vertex contributes a factor $\i g_e \gamma^\mu$ where $\alpha = \frac{g_e^2}{4\pi}$ is the fine-structure constant and $g_e$ is the electrodynamic coupling constant.
+\section{Anomalous magnetic moment}
+The unperturbed contribution is $g = 2$ due to the sum over spins.
+The first order correction diagram is
+\begin{align*}
+&\feynmandiagram [small, horizontal=i to f, baseline={-0.5ex}] {
+    f [dot] -- [boson] i ;
+    f -- [fermion] a1 [dot] -- [boson] a2 [dot] -- [fermion] f;
+    a1 -- [fermion] e1;
+    a2 -- [anti fermion] e2;
+}; = \\
+\hspace{2cm} \int_{\mathbb{R}^{12}}\sum_{s_1s_2} &\bar{u}(p_1 - p_2 + p_3, s_2) \epsilon_\rho^\ast (p_2 - p_3) \i g_e \gamma^\rho \frac{\i \slashed{p}_3 + m}{p_3^2 - m^2} \i g_e \gamma^\nu \\
+&\frac{\i \slashed{p}_2 + m}{p_2^2 - m^2} \frac{-\i g_{\mu\nu}}{(p_1 - p_2)^2} \i g_e \gamma^\mu u(p_1,s_1)\, \frac{\mathrm{d}^4p_1}{(2\pi)^4} \frac{\mathrm{d}^4p_2}{(2\pi)^4} \frac{\mathrm{d}^4p_3}{(2\pi)^4}. \numberthis
+\end{align*}
+This expression can be evaluated using $\klammer\left\{ \gamma^\mu, \gamma^\nu \right\} = 2g^{\mu\nu}$ and $\klammer\left\{ \gamma^\mu, \slashed{A} \right\} = 2A^\mu$
+\begin{align*}
+\dots &= (\i g_e)^3 (-\i) \sum_{s} \int u^\dagger (p_1 - p_2 + p_3,s_2) \kla\left( 2g^{0\rho} - \gamma^\rho\gamma^0 \right) \epsilon^\ast_\rho (p_2 - p_3) \frac{\i \slashed{p}_3 + m}{p_3^2 - m^2} \times \\
+&\qquad\times\frac{2\i p_2^\nu - (\i \slashed{p}_2 + m) \gamma^\nu }{p_2^2 - m^2}  \frac{1}{(p_1 - p_2)^2} \gamma_\nu u(p_1,s_1) \, \frac{\mathrm{d}^4p_1}{(2\pi)^4} \frac{\mathrm{d}^4p_2}{(2\pi)^4} \frac{\mathrm{d}^4p_3}{(2\pi)^4} = \numberthis \\
+&= -g_e^3 \kla\left( 2g^{0\rho} - \gamma^\rho \gamma^0 \right) \sum_s \int u^\dagger(p_1 - p_2 + p_3,s_2) \epsilon_\rho^\ast(p_2 - p_3)  \frac{\i \slashed{p}_3 + m}{p_3^2 - m^2} \times\\
+&\qquad \times \frac{2\i \slashed{p}_2 - 4 \i \slashed{p}_2 - 4m}{p_2^2 - m^2} \frac{1}{p_1^2 + p_2^2 - 2p_1\cdot p_2} u(p_1,s_1)\, \frac{\mathrm{d}^4p_1}{(2\pi)^4} \frac{\mathrm{d}^4p_2}{(2\pi)^4} \frac{\mathrm{d}^4p_3}{(2\pi)^4} = \numberthis \\
+&= ???
+\end{align*}
+TODO: Somehow you want to do this in a very different way. Apparently the result is
+\begin{align}
+\dots &= 2\i g_e^2 \intr\int_{\mathbb{R}^{4}} \frac{\bar{u}(p_2) \klam\left[ \slashed{k} \gamma^\mu \kla\left( \slashed{k} + \slashed{q} \right) +m^2\gamma^\mu - 2m(2k + q)^\mu  \right] u(p_1)}{\kla\left( (k - p_1)^2 + \i 0^+ \right) \kla\left( (k + q)^2 - m^2 + \i 0^+ \right) \kla\left( k^2 - m^2 + \i 0^+ \right)} \, \frac{\mathrm{d}^{4}k}{(2\pi)^4} = \\
+&= \frac{8\i\pi \alpha }{(2\pi)^4} \intr\int_{\mathbb{R}^{4}}   \, \mathrm{d}^{4}k
+\end{align}
+Consider a general integral of the form
+\begin{align}
+I_a(x) &:= \intr\int_{\mathbb{R}^{4}} \frac{\e^{\i k\cdot x}}{(k - k_0)^2 - a^2 + \i 0^+} \, \frac{\mathrm{d}^{4}k}{(2\pi)^4}.
+\end{align}
+Then shifting $k \rightarrow k + k_0$ removes the offset while leaving the remaining integral unchanged.
+In spherical coordinates we find
+\begin{align}
+I_a(x) &= \frac{\e^{\i k_0 \cdot x}}{(2\pi)^4}\int_{\mathbb{R}^{ }} \intx\int_{0}^{\infty} \intx\int_{-1}^{1} \intx\int_{0}^{2\pi} \frac{\e^{\i\omega t} \e^{-\i kr \cos \theta}}{\omega^2 - k^2 - a^2 + \i 0^+} \, k^2\mathrm{d}\phi\, \mathrm{d}(\cos\theta)\, \mathrm{d}k \, \mathrm{d}\omega = \\
+&= \frac{\e^{\i k_0 \cdot x}}{(2\pi)^3} \intr\int_{\mathbb{R}^{ }} \e^{\i\omega t} \intx\int_{0}^{\infty} \frac{\e^{-\i kr} - \e^{\i kr} }{-\i kr} \frac{1}{\omega^2 - k^2 - a^2 + \i 0^+} \, k^2\mathrm{d}k \, \mathrm{d}\omega = \\
+&= \frac{\e^{\i k_0 \cdot x}}{(2\pi)^3\i r} \intr\int_{\mathbb{R}^{ }} \e^{\i\omega t} \intr\int_{\mathbb{R}^{ }} \frac{k\e^{-\i kr}}{\omega^2 - k^2 - a^2 + \i 0^+} \, \mathrm{d}k \, \mathrm{d}\omega. 
+\end{align}
+The poles of the inner integrand are $k_\pm = \pm\sqrt{\omega^2 - a^2} \pm \i 0^+$.
+Thus closing the contour in the upper half complex plane, only the $k_+$-pole contributes.
+It can be shown that the integral along the arc vanishes in the limit of an infinitely large radius $R$.
+Thus we find
+\begin{align}
+I_a(x) &= \frac{\e^{\i k_0 \cdot x}}{(2\pi)^3\i r} \intr\int_{\mathbb{R}^{ }} \e^{\i\omega t} 2\pi\i \frac{k_+ \e^{-\i k_+ r}}{k_- - k_+} \, \mathrm{d}\omega = \\
+&= \frac{-\e^{\i k_0 \cdot x}}{4\pi r} \intr\int_{\mathbb{R}^{ }} \e^{\i\omega t} \e^{-\i \sqrt{\omega^2 - a^2} r} \, \frac{\mathrm{d}\omega}{2\pi}.
+\end{align}
+For $a=0$ this reduces to the well known Green's function of the d'Alembert operator.
+We may express the integral of interest as a Fourier transformation evaluated at $x=0$.
+Since Fourier transformations of products are equivalent to convolutions of Fourier transforms, we have
+\begin{align}
+I_2(x) &:= I_a \ast I_b \intr\int_{\mathbb{R}^{4}} \e^{\i k\cdot x} \prod_j \frac{1}{k^2 - a_j^2 + \i 0^+} \, \frac{\mathrm{d}^{4}k}{(2\pi)^4} = \\
+&= \conv_j\ \intr\int_{\mathbb{R}^{4}} \frac{\e^{\i k\cdot x}}{k^2 - a_j^2 + \i 0^+} \, \frac{\mathrm{d}^{4}k}{(2\pi)^4} = \conv_j\ I_{a_j}(x).
+\end{align}
+For a product of two terms, the convolution yields\footnote{We defined $\omega_a := \sqrt{\omega^2 - a^2}$ and $\omega_b := \sqrt{\omega^2 - b^2}$.}
+\begin{align*}
+I_2(x) &= \intr\int_{\mathbb{R}^{4}} I_a(y) I_b(x - y) \, \mathrm{d}^{4}y =  \numberthis \\
+&= \intr\int_{\mathbb{R}^{ }} \intx\int_{0}^{\infty} \intx\int_{-1}^{1} \intx\int_{0}^{2\pi} \frac{-1}{4\pi r_y} \intr\int_{\mathbb{R}^{ }} \e^{\i\omega t_y - \i\sqrt{\omega^2 - a^2}r_y} \, \frac{\mathrm{d}\omega}{2\pi} \times \\
+&\hspace{2cm} \times \frac{-1}{4\pi \sqrt{r_x^2 + r_y^2 - 2r_xr_y \cos \theta}} \intr\int_{\mathbb{R}^{ }} \e^{\i\omega' (t_x - t_y) - \i\sqrt{\omega'^2 - b^2} \sqrt{r_x^2 + r_y^2 - 2r_xr_y \cos \theta}} \, \frac{\mathrm{d}\omega'}{2\pi} \times \\
+&\hspace{2cm} \times \, \mathrm{d}\phi\, \mathrm{d} (\cos\theta) \, r_y^2\mathrm{d}r_y \, \mathrm{d}t_y =  \numberthis \\
+&= 2\pi \intr\int_{\mathbb{R}^{ }} \intx\int_{0}^{\infty} \intx\int_{r_x + r_y}^{|r_x - r_y|} \intr\int_{\mathbb{R}^{ }} \intr\int_{\mathbb{R}^{ }} \frac{-1}{4\pi r_y}  \e^{\i\omega t_y - \i\sqrt{\omega^2 - a^2}r_y}  \times \\
+&\hspace{2cm} \times \frac{1}{4\pi r_xr_y} \e^{\i\omega' (t_x - t_y) - \i\sqrt{\omega'^2 - b^2} u} \, \frac{\mathrm{d}\omega}{2\pi} \, \frac{\mathrm{d}\omega'}{2\pi} \, \mathrm{d}\phi\, \mathrm{d} (\cos\theta) \, r_y^2\mathrm{d}r_y \, \mathrm{d}t_y = \numberthis  \\
+&= \frac{-1}{8\pi r_x} \intr\int_{\mathbb{R}^{}} \intx\int_{0}^{\infty} \intr\int_{\mathbb{R}^{}} \intr\int_{\mathbb{R}^{ }} \intx\int_{r_x + r_y}^{|r_x - r_y|} \e^{\i\omega' t_x} \e^{\i t_y (\omega - \omega')} \e^{-\i\sqrt{\omega^2 - a^2} r_y} \e^{-\i\sqrt{\omega'^2 - b^2} u} \, \mathrm{d}u \, \frac{\mathrm{d}\omega'}{2\pi} \, \frac{\mathrm{d}\omega}{2\pi} \, \mathrm{d}r_y \, \mathrm{d}t_y = \numberthis  \\
+&= \frac{-1}{8\pi r_x} \intx\int_{0}^{\infty} \intr\int_{\mathbb{R}^{ }} \e^{\i\omega t_x} \e^{-\i \sqrt{\omega^2 - a^2} r_y} \frac{\e^{-\i \sqrt{\omega^2 - b^2} |r_x - r_y|} - \e^{-\i \sqrt{\omega^2 - b^2} (r_x + r_y)}}{-\i \sqrt{\omega^2 - b^2}} \, \frac{\mathrm{d}\omega}{2\pi} \, \mathrm{d}r_y =  \numberthis \\
+%%%%%%&= \frac{1}{4\pi r_x} \intr\int_{\mathbb{R}^{ }} \frac{\e^{\i\omega t_x}}{\sqrt{\omega^2 - b^2}} \bigg( \int_{0}^{r_x} \e^{-\i \sqrt{\omega^2 - b^2} r_x} \sin \kla\left( \sqrt{\omega^2 - b^2} r_y \right)  \, \mathrm{d}r_y  + \\
+%%%%%%&\hspace{4cm} + \intx\int_{r_x}^{\infty} \e^{-\i \sqrt{\omega^2 - b^2} r_y} \sin \kla\left( \sqrt{\omega^2 - b^2} r_x \right) \, \mathrm{d}r_y \bigg)\, \frac{\mathrm{d}\omega}{2\pi} = \numberthis  \\
+%%%%%%&= \frac{1}{4\pi r_x} \intr\int_{\mathbb{R}^{ }} \frac{\e^{\i\omega t_x}}{\omega^2 - b^2 } \bigg( \e^{-\i\sqrt{\omega^2 - b^2} r_x} \klam\left[ 1 - \cos \left( \sqrt{\omega^2 - b^2} r_x \right) \right] + \\
+%%%%%%&\hspace{4cm} + \sin \kla\left( \sqrt{\omega^2 - b^2 } r_x \right) (-\i)\e^{-\i \sqrt{\omega^2 - b^2}r_x} \bigg) \, \frac{\mathrm{d}\omega}{2\pi} =  \numberthis \\
+%%%%%%&= \frac{-1}{4\pi r_x} \intr\int_{\mathbb{R}^{ }} \frac{\e^{\i\omega t_x} \e^{-\i \sqrt{\omega^2 - b^2}r_x} }{\omega^2 - b^2} \kla\left( \e^{\i \sqrt{\omega^2 - b^2}r_x} - 1 \right) \, \frac{\mathrm{d}\omega}{2\pi} =  \numberthis \\
+%%%%%%&= \frac{-1}{4\pi r_x} \intr\int_{\mathbb{R}^{ }} \frac{\e^{\i\omega t_x}}{\omega^2 - b^2} \, \frac{\mathrm{d}\omega}{2\pi} + \frac{1}{4\pi r_x} \intr\int_{\mathbb{R}^{ }} \frac{\e^{\i\omega t_x - \i \sqrt{\omega^2 - b^2}r_x}}{\omega^2 - b^2} \, \frac{\mathrm{d}\omega}{2\pi} =  \numberthis \\
+%%%%%%&= \frac{-\i}{8\pi r_x} \e^{-\i bt_x} + \frac{1}{4\pi r_x} \int_{\mathbb{R}^{ }} \frac{\e^{\i\omega t_x - \i \sqrt{\omega^2 - b^2}r_x}}{\omega^2 - b^2} \, \frac{\mathrm{d}\omega}{2\pi}.  \numberthis 
+ &= \frac{1}{4\pi r_x} \intr\int_{\mathbb{R}^{ }} \frac{\e^{\i\omega t_x}}{2\i\omega_b} \bigg( \int_{0}^{r_x} \e^{-\i \omega_b r_x} \klam\left[ \e^{\i (\omega_b - \omega_a) r_y} - \e^{-\i (\omega_b + \omega_a) r_y} \right] \, \mathrm{d}r_y  + \\
+&\hspace{3cm} + \intx\int_{r_x}^{\infty} \e^{-\i (\omega_b + \omega_a) r_y} \klam\left[ \e^{\i\omega_b r_x} - \e^{-\i\omega_b r_x} \right] \, \mathrm{d}r_y \bigg)\, \frac{\mathrm{d}\omega}{2\pi} =  \numberthis \\
+ &= \frac{1}{4\pi r_x} \intr\int_{\mathbb{R}^{ }} \frac{\e^{\i\omega t_x}}{2\i \omega_b} \bigg( \e^{-\i \omega_b r_x} \frac{\e^{\i (\omega_b - \omega_a) r_x} - 1}{\i (\omega_b - \omega_a)} - \e^{-\i\omega_b r_x} \frac{\e^{-\i(\omega_b + \omega_a) r_x} - 1}{-\i (\omega_b + \omega_a)} + \\
+ &\hspace{3cm} - \left[ \e^{\i\omega_b r_x} - \e^{-\i\omega_b r_x} \right] \frac{\e^{-\i (\omega_b + \omega_a) r_x}}{-\i (\omega_b + \omega_a) - 0^+} \bigg) \, \frac{\mathrm{d}\omega}{2\pi} =  \numberthis \\
+ &= \frac{-1}{4\pi r_x} \intr\int_{\mathbb{R}^{ }} \frac{\e^{\i\omega t_x}}{2 \omega_b} \bigg( \frac{\e^{-\i \omega_a r_x} - \e^{-\i \omega_b r_x}}{\omega_b - \omega_a} + \frac{\e^{-\i(2\omega_b + \omega_a) r_x} - \e^{-\i\omega_b r_x} }{\omega_b + \omega_a} + \\
+ &\hspace{3cm} -  \frac{\e^{-\i \omega_a r_x} - \e^{-\i (2\omega_b + \omega_a) r_x}}{-(\omega_b + \omega_a) + \i 0^+} \bigg) \, \frac{\mathrm{d}\omega}{2\pi}. \numberthis 
+\end{align*}
+%The general structure remains the same, but we did pick up some additional factors and terms. FIXME: lost the $a$-term in equation 6.
+At this point we make use of the identity $\frac{1}{x + \i \epsilon} = \frac{x - \i \epsilon}{x^2 + \epsilon^2} \rightarrow \frac{1}{x} - \pi\i \delta(x) $ which cancels one of the terms.
+Also note that $\omega_b + \omega_a \neq 0$ unless $a=b=0$.
+We will exclude this special case here as it will never appear in a non-trivial diagram.
+Then the convolution simplifies substantially
+\begin{align*}
+I_2(x) &= \frac{-1}{4\pi r_x} \intr\int_{\mathbb{R}^{ }} \frac{\e^{\i\omega t_x}}{2\omega_b} \bigg( \frac{\e^{-\i\omega_a r_x} - \e^{-\i\omega_b r_x}}{\omega_b - \omega_a} + \frac{\e^{-\i\omega_a r_x} - \e^{-\i\omega_b r_x}}{\omega_b + \omega_a} + \\
+&\hspace{3cm} + \i\pi \delta (\omega_b + \omega_a) \klam\left[ \e^{-\i \omega_a r_x} - \e^{-\i (2\omega_b + \omega_a) r_x} \right] \bigg) \, \frac{\mathrm{d}\omega}{2\pi} = \\
+&= \frac{-1}{4\pi r_x} \intr\int_{\mathbb{R}^{ }} \frac{\e^{\i\omega t_x}}{\omega_b^2 - \omega_a^2} \klam\left[ \e^{-\i\omega_a r_x} - \e^{-\i\omega_b r_x} \right] \, \frac{\mathrm{d}\omega}{2\pi} = \numberthis \\
+&= \frac{I_a(x) - I_b(x)}{a^2 - b^2}.
+\end{align*}
+A further convolution with some $I_c(x)$ then leads to
+\begin{align}
+I_3 := \left( I_a \ast I_b \right) \ast I_c &= \frac{1}{a^2 - b^2} \kla\left( I_a - I_b \right) \ast I_c = \\
+&= \frac{1}{a^2 - b^2} \kla\left( \frac{I_a - I_c}{a^2 - c^2} - \frac{I_b - I_c}{b^2 - c^2} \right) = \\
+&= \frac{1}{a^2 - b^2} \kla\left( \frac{I_a}{a^2 - c^2} - \frac{I_b}{b^2 - c^2} + I_c \klam\left[ \frac{1}{b^2 - c^2} - \frac{1}{a^2 - c^2} \right] \right).
+\end{align}
+Similarly we find
+\begin{align}
+I_3 \ast I_d &= \frac{1}{a^2 - b^2} \kla\left( \frac{1}{a^2 - c^2} \klam\left[ \frac{I_a - I_d}{a^2 - d^2} - \frac{I_c - I_d}{c^2 - d^2} \right] - \frac{1}{b^2 - c^2} \klam\left[ \frac{I_b - I_d}{b^2 - d^2} - \frac{I_c - I_d}{c^2 - d^2} \right] \right).
+\end{align}
+In general we may write the $N$-order convolution as
+\begin{align}
+I_N &= \sum_{j=1}^N c^{(N)}_j I_{a_j}.
+\end{align}
+Then convoluting with another $I_{a_{N+1}}$ yields
+\begin{align}
+I_{N+1} &= I_N \ast I_{a_{N+1}} = \sum_{j=1}^N c^{(N)}_j \frac{I_{a_j} - I_{a_{N+1}}}{a_j^2 - a_{N+1}^2} = \\
+&= -I_{a_{N+1}} \sum_{j=1}^N \frac{c^{(N)}_j}{a_j^2 - a_{N+1}^2} + \sum_{j=1}^N c^{(N)}_j \frac{I_{a_j}}{a_j^2 - a_{N+1}^2} \overset{!}{=} \sum_{j=1}^{N+1} c^{(N+1)}_j I_{a_j}.
+\end{align}
+We may read off the recursion relations
+\begin{align}
+c_j^{(N+1)} &= \frac{c_j^{(N)}}{a_j^2 - a_{N+1}^2} \qquad (\tecxt\text{for } j=1,\dots,N),\\
+c_{N+1}^{(N+1)} &= - \sum_{j=1}^N c_j^{(N+1)}.
+\end{align}
+Defining $c^{(1)}_1 := 1$ makes these expression well-defined.
+\begin{table}[!ht]
+\centering
+\begin{tabular}{*5c}
+\toprule\\
+$j$ & 1 & 2 & 3 & 4 \\ \midrule 
+$c_j^{(2)}$ & $\frac{1}{a_1^2 - a_2^2}$ & $\frac{-1}{a_1^2 - a_2^2}$ & & \\
+$c_j^{(3)}$ & $\frac{1}{a_1^2 - a_2^2} \frac{1}{a_1^2 - a_3^2}$ & $\frac{-1}{a_1^2 - a_2^2} \frac{1}{a_2^2 - a_3^2}$ & $\frac{1}{a_1^2 - a_2^2} \kla\left( \frac{1}{a_2^2 - a_3^2} - \frac{1}{a_1^2 - a_3^2} \right)$ & \\
+$c_j^{(4)}$ & $\frac{1}{a_1^2 - a_2^2} \frac{1}{a_1^2 - a_3^2} \frac{1}{a_1^2 - a_4^2}$ & $\frac{-1}{a_1^2 - a_2^2} \frac{1}{a_2^2 - a_3^2} \frac{1}{a_2^2 - a_4^2}$ & $\frac{1}{a_1^2 - a_2^2} \kla\left( \frac{1}{a_2^2 - a_3^2} - \frac{1}{a_1^2 - a_3^2} \right) \frac{1}{a_3^2 - a_4^2}$ & \dots \\
+\bottomrule\\
+\end{tabular}
+\caption{List of some $c_j^{(N)}$-coefficients from the $N$-th order convolutions.}
+\label{table:convolution-cjN-coefficients}
+\end{table}
+With this we have solved a large portion of our diagrams, but of course the numerator still remains.
+This may look very different for various diagrams, but in general it will still just be a polynomial expression involving powers of momenta.
+For example, the Fourier transformation of
+\begin{align}
+P(k) &:= \slashed{k} \gamma^\mu \kla\left( \slashed{k} + \slashed{q} \right) + m^2\gamma^\mu - 2m \kla\left( 2k + q \right)^\mu 
+\end{align}
+is given by
+\begin{align}
+P(x) &= \intr\int_{\mathbb{R}^{4}} P(k)\e^{\i k\cdot x} \, \frac{\mathrm{d}^{4}k}{(2\pi)^4} = \\
+&= \int_{\mathbb{R}^{4}} \kla\left( -\i\slashed{\partial} \gamma^\mu (-\i) \slashed{\partial} + m^2 \gamma^\mu - 2m \kla\left( -2\i k + q \right)^\mu  \right) \e^{\i k\cdot x} \, \frac{\mathrm{d}^{4}k}{(2\pi)^4} = \\
+&= P(-\i\partial) \delta(x).
+\end{align}
+Since our full integral is given by the convolution of $P(x)$ and $I_N(x)$ ($N=3$ in our example) evaluated at zero we finally get
+\begin{align}
+I &= \kla\left( P(-\i\partial) \delta \right) \ast I_N(x) \Big\vert_{x=0} = \delta \ast P(-\i\partial) I_N \Big\vert_{x=0} = \\
+&= \sum_{j=1}^N c_j^{(N)} P(-\i\partial) I_j(x) \Big\vert_{x=0} = \\
+&= \sum_{j=1}^N c_j^{(N)} P(-\i\partial^\mu) \frac{-1}{4\pi \sqrt{x_1^2 + x_2^2 + x_3^2}} \intr\int_{\mathbb{R}^{ }} \e^{\i \kla\left( \omega - \sqrt{\omega^2 - a_j^2} \right) t} \, \frac{\mathrm{d}\omega}{2\pi} \Big\vert_{x=0}.
+\end{align}
+In practice it is still cumbersome to evaluate the derivatives explicitly. 
+One should also note that all of the terms here are divergent in the limit $x\rightarrow 0$ due to the $\frac{1}{r}$-factor.
+Nevertheless, for an arbitrary polynomial $P(k)$ we may now write
+\begin{align}
+\intr\int_{\mathbb{R}^{4}} P(k) \prod_{j=1}^N \frac{1}{k^2 - \alpha_j + \i 0^+} \, \frac{\mathrm{d}^{4}k}{(2\pi)^4} = \sum_{j=1}^N c_j^{(N)} P(-\i\partial) \frac{-1}{4\pi |\textbf{x}|} \int_{\mathbb{R}^{ }} \e^{\i \kla\left( \omega - \sqrt{\omega^2 - \alpha_j} \right) t} \, \frac{\mathrm{d}\omega}{2\pi} \bigg\vert_{x=0}
+\end{align}
+where we generalized the problem slightly leading to 
+\begin{align}
+c_j^{(N+1)} &= \frac{c_j^{(N)}}{\alpha_j - \alpha_{N+1}} \qquad (\tecxt\text{for } j=1,\dots,N),\\
+c_{N+1}^{(N+1)} &= - \sum_{j=1}^N c_j^{(N+1)}.
+\end{align}
+with $c^{(1)}_1 = 1$.
+Feynman's crazy integration factor formula is
+\begin{align}
+\prod_{j=1}^N \frac{1}{A_j^{m_j}} &= \intx\int_{[0,1]^N} \delta \bigg( 1 - \sum_{j=1}^N x_j \bigg) \frac{\prod_{j=1}^N x_j^{m_j - 1} }{\klam\left[ \sum_{j=1}^N x_jA_j \right]^{\sum_{j=1}^N m_j}} \frac{\Gamma\kla\left( \sum_{j=1}^N x_j \right)}{\prod_{j=1}^N \Gamma \kla\left( x_j \right)} \, \mathrm{d}x_1 \dots \mathrm{d}x_N.
+\end{align}
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

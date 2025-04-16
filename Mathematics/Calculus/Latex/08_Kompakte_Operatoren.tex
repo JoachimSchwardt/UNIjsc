@@ -1,0 +1,181 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+
+\begin{document}
+
+\title{08 Kompakte Operatoren}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Endlichdimensionale Räume}
+a)
+\begin{proof}
+Sei $b^k$ eine ONB von $V$ (sonst Orthogonalisierungsverfahren auf eine beliebige Basis anwenden). Sei $\phi_l$ CF in $V$ mit Koeffizientenfolgen $a_l^k$ so, dass $\phi_l=\sum_k^na_l^kb^k$. Dann gilt:
+\begin{align*}
+\|\phi_l-\phi_m\|^2&=\brak\langle {\sum_k^na_l^kb^k-\sum_j^na_m^jb^j}| {\sum_p^na_l^pb^p-\sum_q^na_m^qb^q}\rangle=\\
+&=\sum_{kp}^n(a_l^k)^\ast a_l^p\brak\langle {b^k}| {b^p}\rangle-2\tecxt\text{Re\,}\sum_{jp}^n(a_m^j)^\ast a_l^p\brak\langle {b^j}| {b^p}\rangle+\sum_{jq}^n (a_m^j)^\ast a_m^q\brak\langle {b^j}| {b^q}\rangle=\\
+&=\sum_k^n|a_l^k|^2-2\tecxt\text{Re\,}(a_m^k)^\ast a_l^k +|a_m^k|^2=\sum_k^n|a_l^k-a_m^k|^2
+\end{align*}
+Also ist $a_l^k$ eine CF in $\mathbb{C}$. Damit gibt es $a_l^k\rightarrow a^k\in\mathbb{C}$. Daraus folgt die Konvergenz von $\phi_l$:
+\begin{align*}
+\|\sum_k^na^kb^k -\phi_l\|^2&= \|\sum_k^n(a^k-a_l^k)b^k \|^2=\sum_k^n |a^k-a_l^k|^2\rightarrow 0
+\end{align*}
+\end{proof}
+b)
+\begin{proof}
+Angenommen $M$ ist nicht beschränkt. Dann gibt es eine Folge $\phi_n$ in $M$ mit $\|\phi_n\|\ge n$. Da $M$ relativ kompakt ist, gibt es eine Teilfolge $\phi_{n_k}\rightarrow\psi\in\mathcal{H}$. Das heißt, $\exists k_0\in\mathbb{N}\forall k\ge k_0:\|\phi_{n_k}-\psi\|\le \|\psi\|+1$. Da aber $n_k$ unbeschränkt ist, gilt für große $k$ ein Widerspruch:
+\begin{align*}
+2\|\psi\|+1<n_k\le \|\phi_{n_k}-\psi\|+\|\psi\|\le 2\|\psi\|+1
+\end{align*}
+\end{proof}
+c)
+\begin{proof}
+$(i)\Rightarrow(ii)$:\\
+Sei $b^k$ eine ONB von $\mathcal{H}$ und $\phi_l$ eine beschränkte Folge. Dann gilt $\phi_l=\sum_k^na_l^kb^k$ und somit auch $\|\phi_l\|^2=\sum_k^n|a_l^k|^2$. Also sind die $a_l^k$ beschränkte Folgen in $\mathbb{C}$. Nach Bolzano-Weierstrass gibt es also Teilfolgen $a_{l_m}^k\rightarrow a^k\in\mathbb{C}$. Somit folgt:
+\begin{align*}
+\|\sum_k^n a^kb^k-\phi_{l_m}\|^2&=\|\sum_k^n (a^k-a_{l_m}^k)b^k\|^2=\sum_k^n|a^k-a_{l_m}^k|^2\rightarrow 0
+\end{align*}
+$(ii)\Rightarrow(i)$:\\
+Angenommen $\mathcal{H}$ ist nicht endlich dimensional. Dann gibt es ein beschränktes ONS $\phi_n$ mit $\|\phi_n-\phi_m\|^2=\|\phi_n\|^2-2\tecxt\text{Re\,}\brak\langle {\phi_n}| {\phi_m}\rangle+\|\phi_m\|^2=2$. Damit kann keine Teilfolge von $\phi_n$ eine CF sein und somit insbesondere auch nicht konvergieren. 
+\end{proof}
+\section{Separable Hilberträume}
+\begin{proof}
+Operatoren endlichen Ranges sind stetig und bilden folgich beschränkte Folgen auf beschränkte Folgen in endlichdimensionalen Hilberträumen ab. Nach 8.1c) haben die Bildfolgen dann eine konvergente Teilfolge, also sind die Operatoren endlichen Ranges kompakt. \\
+Sei $\phi_k$ eine ONB von $\mathcal{H}$ und $P_n:=\sum_k^n\oper |\phi_k\rangle\langle \phi_k|$. Dann gilt $\|P_n\|\le 1$ nach Bessel und $P_n\psi\rightarrow\psi$ für alle $\psi\in\mathcal{H}$. Weiterhin haben die Operatoren $P_n$ endlichen Rang und daher auch $P_nT$. Es genügt nun $\|P_nT-T\|\rightarrow 0$ zu zeigen. \\
+Sei $\epsilon>0$. Da $T$ kompakt ist, ist $T\klam\left[ {B\klam\left[ {0,1} \right]} \right]$ relativ kompakt, d.h. $\overline{T\klam\left[ {B\klam\left[ {0,1} \right]} \right]}$ ist kompakt. Wegen
+\begin{align*}
+\overline{T\klam\left[ {B\klam\left[ {0,1} \right]} \right]}&\subseteq \bigcup_{\psi\in\overline{T\klam\left[ {B\klam\left[ {0,1} \right]} \right]}}B(\psi,\epsilon)
+\end{align*}
+gibt es eine endliche Teilmenge $F$ von $\overline{T\klam\left[ {B\klam\left[ {0,1} \right]} \right]}$ mit 
+\begin{align*}
+\overline{T\klam\left[ {B\klam\left[ {0,1} \right]} \right]}\subseteq \bigcup_{\psi\in F} B(\psi,\epsilon)
+\end{align*}
+Weil $P_n\psi\rightarrow\psi$, gibt es $N\in\mathbb{N}$ mit $\|P_n\psi-\psi\|<\epsilon $ für alle $n\ge N$. \\
+Sei nun $\xi\in B\klam\left[ {0,1} \right]$. Dann gibt es $\psi\in F$ mit $\|T\xi -\psi\|<\epsilon $ und es gilt:
+\begin{align*}
+\|P_nT\xi-T\xi\|\le\|P_n(T\xi-\psi)\|+\|P_n\psi-\psi\|+\|\psi-T\xi\|<3\epsilon
+\end{align*}
+\end{proof}
+\section{Diagonaloperator}
+\begin{proof}
+$(i)\Rightarrow(ii)$:\\
+Sei $a_k$ keine NF. Dann gilt $|a_{n_k}|\ge c>0$. Sei $e^n$ die Standard-ONB des $l^2$. Für alle $k\neq l$ gilt dann:
+\begin{align*}
+\|M_ae^{n_k}-M_ae^{n_l}\|&=|a_{n_k}|^2+|a_{n_l}|^2\ge 2c^2
+\end{align*}
+Damit ist jede Teilfolge von $M_ae^{n_k}$ keine CF also insbesondere nicht konvergent. Somit ist $M_a$ nicht kompakt. 
+$(ii)\Rightarrow(i)$:\\
+Sei $a_k$ eine NF, $x_k$ beschränkt in $l^2$. Dann ist $M_ax=a_kx_k$ eine NF und somit insbesondere konvergent. Also ist $M_a$ kompakt.
+\end{proof}
+\section{Orthonormalbasen}
+a)
+\begin{proof}
+$(i)\Rightarrow(ii)$:\\
+Es gilt mit der Parseval'schen Gleichung:
+\begin{align*}
+\sum_k^\infty\|T^\ast\psi_k\|^2=\sum_k^\infty\sum_n^\infty|\brak\langle {\phi_n}| {T^\ast\psi_k}\rangle|^2=\sum_k^\infty\sum_n^\infty |\brak\langle {T\phi_n}| {\psi_k}\rangle|^2=\sum_n^\infty \|T\phi_n\|^2<\infty
+\end{align*}
+\end{proof}
+b)
+\begin{proof}
+Sei $P_n=\sum_k^n\oper |\phi_k\rangle\langle \phi_k|$ Dann gilt $P_nT\in F(\mathcal{H})$ und für alle $x\in B\klam\left[ {0,1} \right]$ gilt:
+\begin{align*}
+\|Tx-P_nTx\|^2=\sum_{k=n+1}^\infty |\brak\langle {\phi_k}| {Tx}\rangle|^2=\sum_{k=n+1}^\infty |\brak\langle {T^\ast\phi_k}| {x}\rangle|^2\le\sum_{k=n+1}^\infty \|T^\ast\phi_k\|^2\rightarrow 0
+\end{align*}
+(Finite Operatoren sind dicht in den kompakten Operatoren. Wenn eine Folge finiter Operatoren konvergiert, muss der Grenzwert also finit oder zumindest kompakt sein.)
+\end{proof}
+\section{Eigenwertgleichungen}
+a)   
+\begin{proof}
+Sei $m=0$. Dann gilt $\ker\kla\left( {T-\lambda I} \right)^0=\ker I=\klammer\left\{ {0} \right\}$. \\
+Sei $m=1$, $\phi_n$ eine beschränkte Folge in $\ker\kla\left( {T-\lambda I} \right)$. Weil $T$ kompakt ist, gibt es eine Teilfolge $\phi_{n_k}$ mit $T\phi_{n_k}\rightarrow\psi\in\mathcal{H}$. Damit folgt $\phi_{n_k}=\frac{1}{\lambda}T\phi_{n_k}\rightarrow\frac{\psi}{\lambda}$. Da $\ker\kla\left( {T-\lambda I} \right)$ abgeschlossen ist, gilt $\frac{\psi}{\lambda}\in\ker\kla\left( {T-\lambda I} \right)$. Also hat die beschränkte Folge $\phi_n$ eine in $\ker\kla\left( {T-\lambda I} \right)$ konvergente Teilfolge. Also ist der Kern endlich-dimensional.\\
+Sei $m\ge 2$. Dann gilt $\kla\left( {T-\lambda I} \right)^m=\sum_{j=0}^m\binom{m}{j}T^j(-\lambda)^{m-j}=S+\mu I$ mit $\mu =(-\lambda)^m$. Das Restglied ist als Linearkombination kompakter Operatoren $T^j$ wieder kompakt.
+\end{proof}
+b)
+\begin{proof}
+Angenommen $\forall m\in\mathbb{N}_0:\ker\kla\left( {T-\lambda I} \right)^{m}\neq\ker\kla\left( {T-\lambda I} \right)^{m+1}$. \\
+Sei $m\in\mathbb{N}$. Dann gilt $\ker\kla\left( {T-\lambda I} \right)^{m-1}\subseteq\ker\kla\left( {T-\lambda I} \right)^{m}$ (falls $T\phi=0$ so ist natürlich auch $T^2\phi=0$). Nach der Voraussetzung ist $\ker\kla\left( {T-\lambda I} \right)^{m-1}$ sogar ein echter abgeschlossener Teilraum. Also $\exists\phi_m\in\ker\kla\left( {T-\lambda I} \right)^{m}\tecxt\text{ mit }\|\phi_m\|=1:\phi_m\bot\ker\kla\left( {T-\lambda I} \right)^{m-1}$. \\
+Für $m<n$ gilt dabei:
+\begin{align*}
+(T-\lambda I)^{n-1}(T\phi_m-(T-\lambda I)\phi_n)&=T(T-\lambda I)^{n-m-1}(T-\lambda I)^m\phi_m-(T-\lambda I)^n\phi_n=0
+\end{align*}
+Also ist $T\phi_m-(T-\lambda I)\phi_n\in\ker\kla\left( {T-\lambda I} \right)^{n-1}$. Damit folgt:
+\begin{align*}
+\|T\phi_n-T\phi_m\|^2&=\|\lambda\phi_n-(T\phi_m-(T-\lambda I)\phi_n)\|^2=\\
+&=|\lambda|^2\|\phi_n\|^2+\|T\phi_m-(T-\lambda I)\phi_n\|^2\ge|\lambda|^2
+\end{align*}
+Da $\phi_m$ beschränkt ist, kann $T$ nicht kompakt sein - Widerspruch!
+\end{proof}
+c)
+\begin{proof}
+$n=1$ ist klar, s. Voraussetzung. \\
+Man zeige $\ker\kla\left( {T-\lambda I} \right)^{m+n+1}\subseteq\ker\kla\left( {T-\lambda I} \right)^{m}$ (die andere Teilmengenrelation ist klar, s. oben). Sei also $\phi\in\ker\kla\left( {T-\lambda I} \right)^{m+n+1}$. Dann ist $\left( {T-\lambda I} \right)^{m+n}\left( {T-\lambda I} \right)^{ }\phi=0$. D.h. $\left( {T-\lambda I} \right)^{ }\phi\in\ker\left( {T-\lambda I} \right)^{m+n}=\ker\left( {T-\lambda I} \right)^{m}$. Damit folgt $\phi\in\ker\left( {T-\lambda I} \right)^{m+1}=\ker\left( {T-\lambda I} \right)^{m}$
+\end{proof}
+d)
+\begin{proof}
+Sei $\phi\in\ker\left( {T-\lambda I} \right)^{2}$. Dann gilt $\phi\in\ker\left( {T-\lambda I} \right)^{ }$:
+\begin{align*}
+\|\left( {T-\lambda I} \right)^{ }\phi\|^2&=\brak\langle {\left( {T-\lambda I} \right)^{ }\phi}| {\left( {T-\lambda I} \right)^{ }\phi}\rangle=\brak\langle {\phi}| {(T^\ast-\lambda^\ast I)\left( {T-\lambda I} \right)^{ }\phi}\rangle=\\
+&=\brak\langle {\phi}| {\left( {T-\lambda I} \right)^{2}\phi}\rangle=0
+\end{align*}
+\end{proof}
+Bemerkung:\\
+Falls $\lambda$ ein EW von $T$ ist, nennt man die Menge:
+$$\tecxt\text{Hau}(T,\lambda):=\klammer\left\{ {\phi\in\mathcal{H}\ \vert\ \exists m\in\mathbb{N}:(T-\lambda I)^m\phi=0} \right\}=\bigcup_{m=1}^\infty\ker (T-\lambda I)^m$$
+den Hauptraum/verallgemeinerten Eigenraum von $T$ zu $\lambda$. Die Dimension von Hau$(T,\lambda)$ heißt algebraische Vielfachheit von $lambda$, die des Eigenraumes Eig$(T,\lambda):=\ker (T-\lambda I)$ die geometrische Vielfachheit. \\
+Aus der Aufgabe folgt, dass die Vielfachheiten jedes EW für kompakte Operatoren endlich sind, und sogar gleich, falls der Operator zusätzlich noch selbstadjungiert ist.  
+\section{Kartesische Produkte von Hilberträumen}
+a)
+\begin{proof}
+Setze $H:=\prod_k \mathcal{H}_k$. Betrachte $\chi=\phi+\lambda\psi$:
+\begin{align*}
+\chi&=\phi+\lambda\psi=(\phi_k+\lambda\cdot\phi_k)_k=(\chi_k)_k\in H
+\end{align*}
+\end{proof}
+b)
+\begin{proof}
+Setze $S:=\sum_k\mathcal{H}_k$. Dann ist $\chi=\phi+\lambda\psi\in S$:
+\begin{align*}
+\sum_k^\infty\|\phi_k+\lambda\psi_k\|_{\mathcal{H}_k}^2&\le\sum_k^\infty(\|\phi_k\|+\|\lambda\psi_k\|)^2\le 4\sum_k^\infty\max\klammer\left\{ {\|\phi_k\|^2,\|\lambda\psi_k\|^2} \right\}\le\\
+&\le 4\sum_k^\infty\|\phi_k\|^2+|\lambda|^2\|\psi_k\|^2<\infty
+\end{align*}
+Das Skalarprodukt ist wohldefiniert:
+\begin{align*}
+\sum_k^n  |\brak\langle {\phi_k}| {\psi_k}\rangle|&\le\sum_k^n \|\phi_k\|\|\psi_k\|\le \sum_k^n\max\klammer\left\{ {\|\phi_k\|^2,\|\psi_k\|^2} \right\}\le \sum_k^\infty\|\phi_k\|^2+\|\psi_k\|^2<\infty\\
+\sum_k^n  |\brak\langle {\phi_k}| {\psi_k}\rangle|&\overset{oder:}{\le}\sum_k^n\|\phi_k\|\psi_k\|\le\kla\left( {\sum_k^n\|\phi_k\|^2} \right)^{1/2}\kla\left( {\sum_k^n\|\psi_k\|^2} \right)^{1/2}\le \\
+&\le\kla\left( {\sum_k^\infty\|\phi_k\|^2} \right)^{1/2}\kla\left( {\sum_k^\infty\|\psi_k\|^2} \right)^{1/2}<\infty
+\end{align*}
+Dies gilt für alle $n\in\mathbb{N}$, also konvergiert die Reihe.
+$S$ ist vollständig. Sei $\phi^n$ eine CF in $S$. Dann ist $\phi_k^n$ eine CF in $\mathcal{H}_k$:
+\begin{align*}
+\|\phi_k^n-\phi_k^m\|\le\|\phi^n-\phi^m\|\rightarrow 0
+\end{align*}
+Also gibt es Grenzwerte $\phi_k^n\rightarrow\phi_k\in\mathcal{H}_k$. \\
+Zu zeigen ist noch, dass $\phi=(\phi_k)_k\in S$ und $\phi^n\rightarrow\phi$. Sei $\epsilon>0$. Dann $\exists N\in\mathbb{N}\forall m,n\ge N:\|\phi^n-\phi^m\|<\epsilon$. Also gilt insbesondere:
+\begin{align*}
+\kla\left( {\sum_k^j\|\phi_k^m-\phi_k^n\|^2} \right)^{1/2}\le\|\phi^m-\phi^n\|<\epsilon
+\end{align*}
+Für $m,j\rightarrow\infty$ folgt dann:
+\begin{align*}
+\|\phi-\phi^n\|&=\kla\left( {\sum_k^\infty\|\phi_k^n-\phi_k\|2} \right)^{1/2}\le\epsilon
+\end{align*}
+\end{proof}
+\end{document}

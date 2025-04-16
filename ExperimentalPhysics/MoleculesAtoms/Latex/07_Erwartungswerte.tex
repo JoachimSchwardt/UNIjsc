@@ -1,0 +1,89 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+
+\begin{document}
+
+\title{07 Erwartungswerte}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 19: Erwartungswerte und Unschärfe}
+\subsection*{a)}
+Die stationären Zustände lassen sich mit $k^2:=\frac{2mE}{\hbar^2}$ wie folgt bestimmen:
+\begin{align*}
+0&=\phi''+k^2\phi\ \ \Rightarrow\ \ \phi=Ae^{ikx}+Be^{-ikx}\\
+0&=\phi(0)=A+B\ \ \Rightarrow\ \ B=-A\\
+0&=\phi(a)=2iA\sin ka\ \ \Rightarrow\ \ ka=\pi n\\
+&\Rightarrow\ \ \phi_n=\sqrt{\frac{2}{a}}\sin\frac{\pi nx}{a} \\
+\brak\langle {\phi_n}| {\phi_m}\rangle&=\frac{2}{a}\intx\int_{0}^{a}\sin\frac{\pi nx}{a}\sin\frac{\pi mx}{a}\,\mathrm{d}x=\intx\int_{0}^{1}\cos\pi y(n-m)-\cos\pi y(n+m)\,\mathrm{d}y= \delta_{nm}
+\end{align*}
+Es gilt:
+\begin{align*}
+\Delta x^2&=\bra\langle {x^2}\rangle-\bra\langle {x}\rangle^2=\intx\int_{0}^{a}\frac{2}{a}x^2\sin^2\frac{\pi n x}{a}\,\mathrm{d}x-\kla\left( {\int_{0}^{a}\frac{2}{a}x\sin^2\frac{\pi n x}{a}\,\mathrm{d}x} \right)^2= \\
+&=a^2\intx\int_{0}^{1}y^2-y^2\cos 2\pi ny\,\mathrm{d}y-\kla\left( {a\intx\int_{0}^{1}y-y\cos 2\pi ny\,\mathrm{d}y} \right)^2=\\
+&=a^2\klam\left[ {\frac{1}{3}-\frac{y^2}{2\pi n}\sin\bigg\vert +\intx\int_{0}^{1}\frac{y}{\pi n}\sin \,\mathrm{d}y-\kla\left( {\frac{1}{2}-\frac{y}{2\pi n}\sin\bigg\vert +\intx\int_{0}^{1}\frac{1}{2\pi n}\sin \,\mathrm{d}y} \right)^2} \right]=\\
+&=a^2\klam\left[ {\frac{1}{3}-\frac{y}{2\pi^2n^2}\cos\bigg\vert+\intx\int_{0}^{1}\frac{1}{2\pi^2n^2}\cos \,\mathrm{d}y-\frac{1}{4}} \right]=\\
+&=a^2\klam\left[ {\frac{1}{12}-\frac{1}{2\pi^2n^2}} \right]\\
+\Delta x&=a\sqrt{\frac{1}{12}-\frac{1}{2\pi^2n^2}}\rightarrow \frac{a}{2\sqrt{3}}
+\end{align*}
+\subsection*{b)}
+Und:
+\begin{align*}
+\Delta E^2&=\bra\langle {H^2}\rangle-\bra\langle {H}\rangle^2=\intx\int_{0}^{a}\frac{2}{a}\sin^2\frac{\pi nx}{a}\frac{\hbar^4}{4m^2}\frac{\pi^4n^4}{a^4}\,\mathrm{d}x-\kla\left( {\intx\int_{0}^{a}\frac{2}{a}\sin^2\frac{\pi nx}{a}\frac{\hbar^2}{2m}\frac{\pi^2 n^2}{a^2}\,\mathrm{d}x} \right)^2=\\
+&=\frac{\hbar^4\pi^4n^4}{4m^2a^4}\klam\left[ {\intx\int_{0}^{1}1-\cos 2\pi ny\,\mathrm{d}y-\kla\left( {\intx\int_{0}^{1}1-\cos 2\pi ny\,\mathrm{d}y} \right)^2} \right]= \\
+&=\frac{\hbar^4\pi^4n^4}{4m^2a^4}\klam\left[ {1-1^2} \right]=0
+\end{align*}
+\section*{Aufgabe 20: Emission von Photonen}
+\subsection*{a)}
+Es ist $E_\gamma = h\nu =pc$:
+\begin{align*}
+E_{kin, K}&=\frac{p^2}{2M}=\frac{h^2\nu^2}{2Mc^2}
+\end{align*}
+\subsection*{b)}
+Für $\lambda=253,7\,$nm und $M_{Hg}=200,6\,$u:
+\begin{align*}
+E_{kin, Hg}&=\frac{h^2}{2M_{Hg}\lambda^2}=\underline{6.39\cdot 10^{-11}\,\mathrm{eV}}
+\end{align*}
+\subsection*{c)}
+Für $E_\gamma = 1,33\,$MeV und $M_{Ni}=58,7\,$u:
+\begin{align*}
+E_{kin, Ni}&=\frac{E_\gamma^2}{2M_{Ni}c^2}=\underline{16,18\,\mathrm{eV}}
+\end{align*}
+\section*{Aufgabe 21: Quantenmechanisches Bild der Emission von Photonen}
+\subsection*{a)}
+\subsection*{b)}
+\section*{Z4: Spektroskopie}
+\subsection*{a)}
+Es ist $f=\frac{c}{\lambda}=1,421\,$GHz, $E=hf=5,875\cdot 10^{-6}\,$eV.
+\subsection*{b)}
+Es gilt $\Delta E\Delta t\ge\frac{\hbar}{2}$. Also ist $\Delta E\approx \frac{h}{4\pi\tau}$ und somit $\Delta f\approx\frac{1}{4\pi\tau}$. Daraus folgt für die natürliche Linienbreite:
+\begin{align*}
+\Delta\lambda = \frac{c\Delta f}{f^2}\approx\frac{\lambda^2}{4c\pi\tau}=\underline{7,387\,\mathrm{mm}}
+\end{align*}
+Es ist $I(f)=I_0\exp\left( -\frac{Mc^2(f-f_0)^2}{2f_0^2k_BT} \right)$  mit $f_0=\frac{R_\infty}{h} \kla\left( {1-\frac{1}{n^2}} \right)$ mit $n=2$. Also ist $\sigma_f^2\approx \frac{f_0^2k_BT}{Mc^2}$. Bei Zimmertemperatur $T=300\,$K:
+\begin{align*}
+\Delta f^D=\sqrt{8\log 2}\sigma_f&\approx\sqrt{8\log 2} \frac{3R_\infty}{4hc}\sqrt{\frac{k_BT}{M}}=\underline{30,6\,\mathrm{GHz}}
+\end{align*}
+Aus der Abschätzung $\Delta f^D\overset{!}{=}\Delta f$ folgt:
+\begin{align*}
+T&\approx\frac{\sigma_f^2Mc^2}{f_0^2k_B}=\frac{8\log 2 Mc^2\Delta f^2}{f_0^2k_B}=\frac{8\log 2Mc^2h^2}{9R_\infty^2\pi^2\tau^2 k_B}=\underline{24,34\,\tecxt\text{mK}}
+\end{align*}
+\end{document}

@@ -1,0 +1,145 @@
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{bm} % bold math symbols, e.g. \bm{\sigma} etc.
+\usepackage{booktabs, multirow}  % schönere Tabellen
+%\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+%\pagestyle{scrheadings}  % Stil für die Seite setzen
+\usepackage{tabularx}
+\usepackage{setspace}
+%\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+%\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning, angles, babel}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\usepackage{slashed}
+\usepackage{bbm}
+\usepackage[compat=1.1.0]{tikz-feynman}
+
+\usepackage{caption}
+\captionsetup{
+    % width=.8\textwidth,
+    % indention=1cm,
+    margin=0.5cm,
+    format=plain,
+    labelfont=bf
+}
+%\usepackage{subcaption}
+%\subcaptionsetup{
+%    indention=0cm,
+%    format=hang,
+%    margin=0.5cm,
+%    labelfont=normalfont
+%}
+\usepackage[english,capitalise]{cleveref}
+\usepackage[
+    backend=biber,
+    sorting=none,
+    style=phys,
+    giveninits=true,
+    sortcites=true,
+    citestyle=numeric-comp,
+    % url=false,
+    % doi=false,
+    biblabel=brackets,
+    % eprint=false,
+    maxcitenames=3]{biblatex}
+\usepackage{csquotes}
+%\addbibresource{bibliography.bib}
+
+\usepackage{mathtools}
+% use \abs for absolute values
+% use \abs for \left ... \right version and \abs[\bigg for \bigg version etc.
+\let\abs\undefined
+\let\bra\undefined
+\let\braket\undefined
+\DeclarePairedDelimiter\abs{\vert}{\vert}
+\DeclarePairedDelimiter\kla{(}{)}
+\DeclarePairedDelimiter\klb{[}{]}
+\DeclarePairedDelimiter\klc{\{}{\}}
+\DeclarePairedDelimiter\bra{\langle}{\rangle}
+\DeclarePairedDelimiterX\brb[2]{\langle #1}{\rangle}{\delimsize\vert #2 }
+\DeclarePairedDelimiterX\brc[3]{\langle #1}{\rangle}{\delimsize\vert #2 \delimsize\vert #3 }
+
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\DeclareMathOperator{\sgn}{sgn}
+\newcommand{\kom}[1]{\overset{\substack{#1 \\ |}}{=}}
+\newcommand{\koml}[2]{\overset{\substack{#1 \\ |}}{#2}}
+\newcommand{\intx}[4]{\int_{#1}^{#2} #3 \,\mathrm{d}#4}
+\newcommand{\intr}[2]{\int_{\mathbb{R}} #1 \, \mathrm{d}#2}
+\newcommand{\intrnd}[3]{\int_{\mathbb{R}^{#1}} #2 \, \mathrm{d}^{#1}#3}
+\newcommand{\intrpi}[2]{\int_{\mathbb{R}} #1 \, \frac{\mathrm{d}#2}{2\pi}}
+\newcommand{\intrndpi}[3]{\int_{\mathbb{R}^{#1}} #2 \, \frac{\mathrm{d}^{#1}#3}{(2\pi)^{#1}}}
+\newcommand{\oper}[2]{\vert #1 \rangle \langle #2 \vert}
+\newcommand{\Text}[1]{\text{#1}}    % this is relevant because \text does not autocomplete to the default '\text{@}' but rather '\textbf' etc.
+\newcommand{\powe}[1]{\e^{#1}}
+\newcommand{\pow}[2]{{#1}^{#2}}
+\newcommand{\Ket}[1]{\vert #1 \rangle}
+\newcommand{\Bra}[1]{\langle #1 \vert}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\DeclareMathOperator{\arsinh}{arsinh}
+\DeclareMathOperator{\arcosh}{arcosh}
+\DeclareMathOperator{\artanh}{artanh}
+\DeclareMathOperator{\sinc}{sinc}
+\DeclareMathOperator{\cscc}{cscc}
+\DeclareMathOperator{\sinhc}{sinhc}
+\DeclareMathOperator{\cschc}{cschc}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+\newcommand*{\unity}{\text{\usefont{U}{bbold}{m}{n}1}}   % operator one from :: https://tex.stackexchange.com/questions/566780/import-mathbb1-character-from-the-unicode-math-package
+
+\renewcommand{\d}{\text{d}}
+\renewcommand{\r}{\text{r}}
+\renewcommand{\t}{\text{t}}
+\renewcommand{\a}{\text{a}}
+\renewcommand{\o}{\text{o}}
+\renewcommand{\F}{\text{F}}
+\renewcommand{\c}{\text{c}}
+\newcommand{\A}{\text{A}}
+\newcommand{\B}{\text{B}}
+\newcommand{\R}{\text{R}}
+\newcommand{\M}{\text{M}}
+\newcommand{\m}{\text{m}}
+\newcommand{\s}{\text{s}}
+\newcommand{\f}{\text{f}}
+\newcommand{\K}{\text{K}}
+\newcommand{\hc}{\text{h.c.}}
+\newcommand{\kf}{k_\F}
+\newcommand{\vf}{v_\F}
+\newcommand{\const}{\text{const.}}
+\renewcommand{\L}{\text{L}}
+\newcommand{\gray}[1]{\bgroup\color{white!40!black}#1\egroup}
+\newcommand{\TODO}[1]{\bgroup\color{red!60!black}#1\egroup}
+\newcommand\QnA[1]{\bgroup\color{blue}#1\egroup}
+\newcommand\highlight[1]{\bgroup\color{green!60!black}#1\egroup}
+
+\newcommand{\cabx}[3]{\begin{smallmatrix}\gray{A}&\gray{:}&#1 \\ \gray{B}&\gray{:}&#2 \\ \gray{\Xi}&\gray{:}&#3\end{smallmatrix}}
+\newcommand{\zabx}[3]{\begin{smallmatrix}\gray{A}&\gray{:}&#1 \\ \gray{B}&\gray{:}&#2 \\ \gray{Z}&\gray{:}&#3\end{smallmatrix}}
+\newcommand{\abx}[3]{\begin{smallmatrix}#1 \\ #2 \\ #3\end{smallmatrix}}
+
+\newcommand{\normord}[1]{
+  {:\mathrel{\mspace{1mu}#1\mspace{1mu}}:}
+}
+\newcommand{\varnormord}[1]{
+  {\mathrel{\mspace{1mu}\substack{\ast\\[-1.5pt] \ast}#1\substack{\ast\\[-1.5pt] \ast}\mspace{1mu}}}
+}
+
+% punctuation styles (see https://tex.stackexchange.com/questions/56063/how-to-properly-typeset-footnotes-superscripts-after-punctuation-marks)
+\let\origfootnote\footnote
+\renewcommand{\footnote}[1]{\kern.06em\origfootnote{#1}}
+\newcommand{\punctfootnote}[1]{\kern-.06em\origfootnote{#1}}
+
+% Multiline equations
+\newcommand{\bsplit}[1]{\begin{aligned}[t]#1\end{aligned}}

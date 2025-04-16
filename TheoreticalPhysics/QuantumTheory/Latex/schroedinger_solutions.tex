@@ -1,0 +1,304 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Special solutions to the Schrödinger equation}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Quantum Theory I}
+\title{\titel}
+%\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{One dimensional problems}
+\subsection{Harmonic oscillator}
+The harmonic oscillator potential is $V(x) = \frac{m\omega^2}{2}x^2$.
+This is the most famous potential, and is usually solved in an algebraic fashion using creation and annihilation operators.
+Here we will solve it using the standard methods of ordinary differential equations used throughout this chapter.
+The problem at hand is
+\begin{align}
+E\psi(x) &= -\frac{\hbar^2}{2m}\psi''(x) + \frac{m\omega^2}{2}x^2\psi(x).
+\end{align}
+We will factor out the asymptotic behaviour using $\psi(x) := \phi(x) \e^{-\gamma x^b}$ for some constants $\gamma,b>0$.
+The transformation of the derivative reads
+\begin{align}
+%\frac{\psi'}{\psi} &= \frac{\phi'}{\phi} - \gamma bx^{b-1},\\
+\frac{\psi''}{\psi} &= \frac{\phi''}{\phi} - \frac{2\gamma bx^{b-1}\phi'}{\phi} + \gamma^2b^2x^{2b-2} - \gamma b(b-1)x^{b-2}.
+\end{align}
+Inserting into the differential equation yields
+\begin{align}
+0 &= \frac{2mE}{\hbar^2} - \frac{m^2\omega^2}{\hbar^2}x^2 +  \gamma^2b^2x^{2b-2} - \gamma b(b-1)x^{b-2} - \frac{2\gamma bx^{b-1}\phi'}{\phi} + \frac{\phi''}{\phi}.
+\end{align}
+Choosing $b=2$ and $\gamma = \frac{m\omega}{2\hbar}$ allows us to eliminate the dominant $x^2$-term.
+The equation then simplifies to
+\begin{align}
+0 &= \frac{2mE}{\hbar^2} - 2\gamma - 4\gamma x\frac{\phi'}{\phi} + \frac{\phi''}{\phi}.
+\end{align}
+%Before attempting a Taylor expansion, we first eliminate a potential fractional term using the substitution $\phi(x) = x^\alpha P(x)$.
+%The derivatives become
+%\begin{align}
+%\frac{\phi'}{\phi} &= \frac{P'}{P} + \frac{\alpha}{x},\\
+%\frac{\phi''}{\phi} &= \frac{P''}{P} + \frac{2\alpha P'}{xP} + \frac{\alpha(\alpha - 1)}{x^2}
+%\end{align}
+%leading to the new equation
+%\begin{align}
+%0 &= \frac{2mE}{\hbar^2} - 2\gamma - 4\gamma x \kla\left( \frac{P'}{P} + \frac{\alpha}{x} \right) + \frac{P''}{P} + \frac{2\alpha P'}{xP} + \frac{\alpha(\alpha - 1)}{x^2}.
+%\end{align}
+%Choosing $\alpha = \frac{mE}{2\hbar^2\gamma} - \frac{1}{2}$ removes the energy from the equation.
+%Collecting terms then yields
+%\begin{align}
+%0 &= \frac{\alpha(\alpha - 1)}{x^2} + \kla\left( \frac{2\alpha}{x} - 4ax \right) \frac{P'}{P} + \frac{P''}{P}.
+%\end{align}
+%We expand the function in a series $P(x) = \sum a_nx^n$
+%\begin{align}
+%0 &= \sum_{n\ge 0} \klammer\left\{ x^{n-2}a_n \klam\left[ \alpha(\alpha - 1) + 2\alpha n + n(n-1) \right] - 4\gamma a_n n x^n \right\} = \\
+%&= \sum_{n\ge 0} x^n \klammer\left\{ a_{n+2} \klam\left[ \alpha(\alpha - 1) + 2\alpha (n+2) + (n+2)(n+1) \right] - 4\gamma a_nn \right\}.
+%\end{align}
+%Here we assumed $a_1 = 0$, since we do not allow terms of the form $\frac{1}{x}$ in the expansion.
+%This gives a recurrence relation 
+%\begin{align}
+%\frac{a_{n+2}}{a_n} &= \frac{4\gamma n}{\alpha (\alpha - 1) + 2\alpha (n+2) + (n+2)(n+1)} \sim \frac{4\gamma}{n}.
+%\end{align}
+%Since $a_{2n+1} = 0$, the function $P(x)$ is symmetric and has the asymptotic form $P\sim \sum_{n\ge 0} \frac{(4\gamma)^n}{n!} x^{2n} \sim \e^{4\gamma x^2}$.
+%This solution is non-normalizable, and thus the recurrence must terminate at some $N\in\mathbb{N}$.
+We expand the function in a series $\phi(x) = \sum a_nx^n$
+\begin{align}
+0 &= \sum_{n\ge 0} \klammer\left\{ x^{n-2}a_n n(n-1) + x^n a_n \klam\left[ \frac{2mE}{\hbar^2} - 2\gamma - 4\gamma n \right] \right\} = \\
+&= \sum_{n\ge 0} x^n \klammer\left\{ a_{n+2} (n+2)(n+1) - 4\gamma a_n \klam\left[ n + \frac{1}{2} - \frac{mE}{2\hbar^2\gamma} \right] \right\}.
+\end{align}
+There exist two solutions, which are essentially determined by $a_0=0$ and $a_1=1$ or $a_0=1$ and $a_1=0$.
+In both cases we find the recurrence relation 
+\begin{align}
+\frac{a_{n+2}}{a_n} &= \frac{4\gamma}{n+2} \frac{ n + \frac{1}{2} - \frac{mE}{2\hbar^2\gamma}}{n+1} \sim \frac{4\gamma}{n+2}.
+\end{align}
+In both cases the function $P(x)$ ends up with the asymptotic form $P\sim \sum_{n\ge 0} \frac{(4\gamma)^n}{n!} x^{2n} \sim \e^{4\gamma x^2}$.
+The resulting solution is non-normalizable, and thus the recurrence must terminate at some $N\in\mathbb{N}$ with $a_N = 0$.
+We find a discretized number of solutions with energies
+\begin{align}
+E_n &= \frac{2\hbar^2\gamma}{m} \kla\left( n + \frac{1}{2} \right) = \hbar\omega \kla\left( n + \frac{1}{2} \right).
+\end{align}
+%The recurrence relation can then be rewritten as
+%\begin{align}
+%\frac{a_n^{(N)}}{a_{n-2}^{(N)}} &= \frac{2m\omega}{n\hbar} \frac{N - n}{n-1}.
+%\end{align}
+%Distinguishing between even and odd terms, we may rewrite this as
+%\begin{align}
+%\frac{a_{2n}^{(2N)}}{a_{2(n-1)}^{(2N)}} &= \frac{2m\omega}{\hbar} \frac{2N - 2n}{2n (2n - 1)}, \\
+%\frac{a_{2n+1}^{(2N+1)}}{a_{2(n-1) + 1}^{(2N+1)}} &= \frac{2m\omega}{\hbar} \frac{2N - 2n}{2n (2n + 1)}
+%\end{align}
+%%%%For $a_0 = 1$ the first few terms are
+%%%%\begin{align}
+%%%%a_2^{(2N)} &= \frac{1}{2} \frac{2m\omega}{\hbar} (2N-2),\\
+%%%%a_4^{(2N)} &= \frac{1}{2\cdot 4} \kla\left( \frac{2m\omega}{\hbar} \right)^2 (2N-2)(2N-4)
+%%%%\end{align}
+%%%%and for $a_1 = 1$ they are
+%%%%\begin{align}
+%%%%a_3^{(2N+1)} &= \frac{1}{3}\frac{2m\omega}{\hbar} (2N-2),\\
+%%%%a_5^{(2N+1)} &= \frac{1}{3\cdot 5} \kla\left( \frac{2m\omega}{\hbar} \right)^2 (2N-2)(2N-4).
+%%%%\end{align}
+%%%%We may summarize these as
+%%%%\begin{align}
+%%%%a_{2k}^{(2N)} &= \frac{(2N-2)\dots (2N - 2k)}{(2k)!!} \kla\left( \frac{2m\omega}{\hbar} \right)^k = \frac{(2N-2)\dots (2N - 2k)}{(2k)!!} \kla\left( \frac{2m\omega}{\hbar} \right)^k, \\
+%%%%a_{2k+1}^{(2N+1)} &= \frac{(N-2)\dots (N-k)}{k!!} \kla\left( \frac{2m\omega}{\hbar} \right)^{\lfloor \frac{k}{2} \rfloor}.
+%%%%\end{align}
+%Except for normalization, the respective eigenfunctions are
+%\begin{align}
+%\psi_{2n}(x) &= \e^{-\frac{m\omega}{2\hbar}x^2} \sum_{k = 0}^n x^{2k} \klam\left[ \kla\left( \frac{4m\omega}{\hbar} \right)^k \frac{(n-k)\dots (n-1)}{(2k)!} \right] = \\
+%&= \e^{-\frac{m\omega}{2\hbar}x^2} \sum_{k = 0}^n \frac{(n-1)!}{(n-k-1)! (2k)!} \kla\left( \frac{4m\omega}{\hbar} x^2 \right)^k.
+%\end{align}
+
+\subsection{Morse potential}
+The Morse potential is defined as $V(r) = V_0\kla\left( 1 - \e^{-a(r-r_0)} \right)^2 - V_0$, where $r_0$ is the equilibrium distance and $V(r\rightarrow\infty) \rightarrow 0$.
+The Schrödinger equation reads
+\begin{align}
+E\psi(r) &= -\frac{\hbar^2}{2m}\psi''(r) + V(r)\psi(r).
+\end{align}
+It is useful to substitute $z = \e^{-a(r-r_0)}$.
+The second derivative then transforms as
+\begin{align}
+\frac{\tecxt\text{d}^2\psi(z)}{\tecxt\text{d}r^2} &= \frac{\tecxt\text{d}^2\psi(z)}{\tecxt\text{d}z^2} \kla\left( \frac{\tecxt\text{d}z}{\tecxt\text{d}r} \right)^2 + \frac{\tecxt\text{d} \psi(z)}{\tecxt\text{d}z} \frac{\tecxt\text{d}^2z}{\tecxt\text{d}r^2} = \psi''(z)a^2z^2 + \psi'(z)a^2z
+\end{align}
+which results in the differential equation
+\begin{align}
+0 &= \frac{2m}{\hbar^2a^2} \kla\left( E - V_0z^2 + 2V_0z \right)\psi(z) + z^2\psi''(z) + z\psi'(z).
+\end{align}
+Define $\epsilon := \frac{E}{V_0}$ and let $\psi(z) = \phi(z) \e^{-\gamma z}$ for some $\gamma > 0$.
+Then we find
+\begin{align}
+\frac{\psi'}{\psi} &= \frac{\phi'}{\phi} - \gamma,\\
+\frac{\psi''}{\psi} &= \frac{\phi''}{\phi} + \gamma^2 - 2\gamma \frac{\phi'}{\phi}
+\end{align}
+and the differential equation
+\begin{align}
+0 &= \frac{2mV_0}{\hbar^2a^2} \kla\left( \epsilon - z^2 + 2z \right) + z^2 \kla\left( \gamma^2 - 2\gamma \frac{\phi'}{\phi} + \frac{\phi''}{\phi} \right) + z\kla\left( \frac{\phi'}{\phi} - \gamma \right).
+\end{align}
+Choosing $\gamma = \sqrt{\frac{2mV_0}{\hbar^2a^2}}$ eliminates the term that would be of order $z^{n+2}$ in a potential Taylor expansion of $\phi(z)$.
+Collecting terms now gives
+\begin{align}
+0 &= \gamma^2 \kla\left( \epsilon + 2z - \frac{z}{\gamma} \right) + \frac{z\phi'}{\phi} \kla\left( 1 - 2\gamma z \right) + \frac{z^2\phi''}{\phi}.
+\end{align}
+Before the expansion, we will split off a polynomial factor using the transformation $\phi(z) = z^\alpha P(z)$.
+This gives
+\begin{align}
+\frac{\phi'}{\phi} &= \frac{\alpha}{z} + \frac{P'}{P},\\
+\frac{\phi''}{\phi} &= \frac{\alpha(\alpha - 1)}{z^2} + \frac{P''}{P} + \frac{2\alpha P'}{Pz}
+\end{align}
+and thus transforms the differential equation to
+\begin{align}
+0 &= \gamma^2\epsilon + 2z\gamma \kla\left( \gamma - \frac{1}{2} \right) + \kla\left( \alpha + \frac{zP'}{P} \right) \kla\left( 1 - 2\gamma z \right) + \alpha(\alpha - 1) + \frac{z^2P''}{P} + \frac{2\alpha zP'}{P} .
+\end{align}
+We choose $\alpha = \gamma \sqrt{-\epsilon}$ to eliminate the energy from the equation. 
+Note that we consider bound states, and thus $\epsilon < 0$.
+Collecting terms once again gives
+\begin{align}
+0 &= 2z\gamma \kla\left( \gamma - \frac{1}{2} - \alpha \right) P + \kla\left( 1 - 2\gamma z + 2\alpha \right) zP' + z^2P''.
+\end{align}
+At this point we may attempt to find a polynomial solution for $P(z)$, i.e. $P(z) = \sum_{n\ge 0} a_nz^n$.
+Inserting gives
+\begin{align}
+0 &= \sum_{n\ge 0} \klammer\left\{ z^{n+1} a_n\klam\left[ -2\gamma n + 2\gamma \kla\left( \gamma - \frac{1}{2} - \alpha \right) \right] + z^na_n \klam\left[ n(n-1) + n(1+2\alpha) \right] \right\} = \\
+&= \sum_{n\ge 0} z^{n+1} \klammer\left\{ -2\gamma a_n \klam\left[ n - \gamma + \frac{1}{2} + \alpha \right] + (n+1)a_{n+1} \klam\left[ n + 1 + 2\alpha \right] \right\}
+\end{align}
+where we performed an index shift $n\rightarrow n+1$ in the second part of the summation.
+This gives the recurrence relation
+\begin{align}
+\frac{a_{n+1}}{a_n} &= \frac{2\gamma}{n+1} \frac{n - \gamma + \frac{1}{2} + \alpha}{n+1 + 2\alpha} \kom\overset{\substack{\text{as }{n\rightarrow\infty} \\ |}}{\sim} \frac{2\gamma}{n+1}.
+\end{align}
+Due to the asymptotic behaviour, we find $a_{n+1} \sim \frac{(2\gamma)^{n+1}}{(n+1)!}$, or equivalently $P(z) \sim \e^{2\gamma z}$.
+This results in a non-normalizable solution, and thus the recursion must terminate at some step $N\in\mathbb{N}$
+\begin{align}
+0 &\overset{!}{=} N - \gamma + \frac{1}{2} + \alpha.
+\end{align}
+This gives an equation for the energy levels $\epsilon_N$ of the form
+\begin{align}
+\epsilon_N &= -\frac{\alpha^2}{\gamma^2} = \frac{-1}{\gamma^2} \kla\left( \gamma - N - \frac{1}{2} \right)^2.
+\end{align}
+Reinserting the constants we find
+\begin{align}
+E_n &= -\frac{\hbar^2a^2}{2m} \kla\left( \sqrt{\frac{2mV_0}{\hbar^2a^2}} - n - \frac{1}{2} \right)^2
+\end{align}
+for $n=1,\dots, \lfloor \gamma \rfloor$.
+
+\subsection{Anharmonic oscillator}
+Here we consider the anharmonic oscillator potential $V(x) = \frac{m\omega^2}{2}x^2 + Ax^4$.
+The Schrödinger equation is
+\begin{align}
+E\psi(x) &= -\frac{\hbar^2}{2m}\psi''(x) + \frac{m\omega^2}{2}x^2\psi(x) + Ax^4\psi(x).
+\end{align}
+We will factor out the asymptotic behaviour using $\psi(x) = \phi(x) \e^{-\gamma x^b}$ for some constants $\gamma,b>0$.
+The transformation of the derivative reads
+\begin{align}
+%\frac{\psi'}{\psi} &= \frac{\phi'}{\phi} - \gamma bx^{b-1},\\
+\frac{\psi''}{\psi} &= \frac{\phi''}{\phi} - \frac{2\gamma bx^{b-1}\phi'}{\phi} + \gamma^2b^2x^{2b-2} - \gamma b(b-1)x^{b-2}.
+\end{align}
+Inserting into the differential equation yields
+\begin{align}
+0 &= \frac{2mE}{\hbar^2} - \frac{m^2\omega^2}{\hbar^2}x^2 - \frac{2mA}{\hbar^2}x^4 + \gamma^2b^2x^{2b-2} - \gamma b(b-1)x^{b-2} - \frac{2\gamma bx^{b-1}\phi'}{\phi} + \frac{\phi''}{\phi}.
+\end{align}
+Choosing $b=3$ and $\gamma = \sqrt{\frac{2mA}{9\hbar^2}}$ allows us to eliminate the dominant $x^4$-term.
+The equation then simplifies to
+\begin{align}
+0 &= \frac{2mE}{\hbar^2} - \frac{m^2\omega^2}{\hbar^2}x^2 - 6\gamma x - 6\gamma x^2\frac{\phi'}{\phi} + \frac{\phi''}{\phi}.
+\end{align}
+%%%%AGAIN:
+%%%%\begin{align}
+%%%%0 &= \frac{2mE}{\hbar^2} - \frac{m^2\omega^2}{\hbar^2}x^2 - 6\gamma x - 6\gamma x^2 \kla\left( \frac{\phi'}{\phi} - \kappa bx^{b-1} \right) + \frac{\phi''}{\phi} - \frac{2\kappa bx^{b-1}\phi'}{\phi} + \kappa^2b^2x^{2b-2} - \kappa b(b-1)x^{b-2}
+%%%%\end{align}
+%%Before attempting a Taylor expansion, we first eliminate a potential fractional term using the substitution $\phi(x) = x^\alpha P(x)$.
+%%The derivatives become
+%%\begin{align}
+%%\frac{\phi'}{\phi} &= \frac{P'}{P} + \frac{\alpha}{x},\\
+%%\frac{\phi''}{\phi} &= \frac{P''}{P} + \frac{2\alpha P'}{xP} + \frac{\alpha(\alpha - 1)}{x^2}
+%%\end{align}
+%%leading to the new equation
+%%\begin{align}
+%%0 &= \frac{2mE}{\hbar^2} - \frac{m^2\omega^2}{\hbar^2}x^2 - 6\gamma x - 6\gamma x^2 \kla\left( \frac{P'}{P} + \frac{\alpha}{x} \right) + \frac{P''}{P} + \frac{2\alpha P'}{xP} + \frac{\alpha(\alpha - 1)}{x^2}.
+%%\end{align}
+Let $P(x) = \sum a_nx^n$.
+Then we find
+\begin{align}
+0 &= \sum_{n\ge 0} \klammer\left\{ x^{n-2} n(n-1)a_n + x^n \frac{2mE}{\hbar^2}a_n - 6\gamma x^{n+1}a_n (n+1) - x^{n+2} \frac{m^2\omega^2}{\hbar^2} a_n \right\} = \\
+&= \sum_{n\ge 0} x^n \klammer\left\{ a_{n+2} (n+2)(n+1) + a_n \frac{2mE}{\hbar^2} -6\gamma n a_{n-1} - \frac{m^2\omega^2}{\hbar^2}a_{n-2} \right\}.
+\end{align}
+This yields the recurrence relation
+\begin{align}
+a_{n+2} &= \frac{-\frac{2mE}{\hbar^2} a_n + 6\gamma n a_{n-1} + \frac{m^2\omega^2}{\hbar^2} a_{n-2}}{(n+2)(n+1)}.
+\end{align}
+Consider a more general form of this relation
+\begin{align}
+a_{n} &= \beta_na_{n-2} + \gamma_na_{n-3} + \delta_na_{n-4}.
+\end{align}
+Let $b_n := a_{n-1}$, $c_n := a_{n-2}$ and $d_n := a_{n-3}$.
+Then we may write this as
+\begin{align}
+A_n &:= \begin{pmatrix}
+a_n \\ b_n \\ c_n \\ d_n
+\end{pmatrix} = \begin{pmatrix}
+0 & \beta_n & \gamma_n & \delta_n \\
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0
+\end{pmatrix} \begin{pmatrix}
+a_{n-1} \\ b_{n-1} \\ c_{n-1} \\ d_{n-1}
+\end{pmatrix} =: T_nA_{n-1}.
+\end{align}
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

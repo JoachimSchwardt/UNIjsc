@@ -1,0 +1,436 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{BCS theory}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Superconductivity}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Free Hamiltonian}
+Let $\hat{H}_0$ be the Hamiltonian describing free electrons in a constant potential $V(\mathbf{r}) \equiv \tecxt\text{const}$ and let $s\in\{\uparrow,\downarrow\}$ denote the spin degree of freedom.
+Then we have
+\begin{align}
+\hat{H}_0 &= \sum_s \intr\int_{\mathbb{R}^{3}} \frac{1}{2m} \kla\left( \nabla \hat{\Psi}_s^\dagger \right)\cdot \kla\left( \nabla \hat{\Psi}_s \right) + V\hat{\Psi}_s^\dagger \hat{\Psi}_s \, \mathrm{d}^{3}r,
+\end{align}
+where the field operators satisfy $\klammer\left\{ \hat{\Psi}_{s_1}(\mathbf{r}_1), \hat{\Psi}_{s_2}^\dagger (\mathbf{r}_2) \right\} = \delta_{s_1s_2} \delta (\mathbf{r}_1 - \mathbf{r}_2)$.
+We may express these via modes $f_{\mathbf{k}}(\mathbf{r})$ in a series expansion of the form
+\begin{align}
+\hat{\Psi}_s &= \sum_{\mathbf{k}} \hat{c}_{\mathbf{k}s} f_{\mathbf{k}},
+\end{align}
+where the $\hat{c}_{\mathbf{k}s}$ are fermionic annihilation operators satisfying $\klammer\left\{ \hat{c}_{\mathbf{k}_1s_1}, \hat{c}_{\mathbf{k}_2s_2}^\dagger \right\} = \delta_{s_1s_2}\delta_{\mathbf{k}_1\mathbf{k}_2}$.
+In this form, the Hamiltonian
+\begin{align}
+\hat{H}_0 &= \sum_{\mathbf{k}s} \epsilon_{\mathbf{k}} \hat{c}_{\mathbf{k}s}^\dagger \hat{c}_{\mathbf{k}s}
+\end{align}
+is diagonal, with $\epsilon_{\mathbf{k}} = \frac{\mathbf{k}^2}{2m} + V$.
+In the ground state $\Ket | \psi_\tecxt\text{GS} \rangle$ all states with $\epsilon_{\mathbf{k}} < 0$ are occupied, and hence
+\begin{align}
+\hat{c}_{\mathbf{k}s}\Ket | \psi_\tecxt\text{GS} \rangle &= 0 \quad (\tecxt\text{for } \epsilon_{\mathbf{k}} \ge 0),\\
+\hat{c}_{\mathbf{k}s}^\dagger\Ket | \psi_\tecxt\text{GS} \rangle &= 0 \quad (\tecxt\text{for } \epsilon_{\mathbf{k}} < 0) .
+\end{align}
+
+\section{Effective interaction}
+Starting from an arbitrary interaction Hamiltonian
+\begin{align}
+\hat{H}_I &= \sum_{\mathbf{k}_{1,2,3,4}s_{1,2,3,4}} \hat{c}_{\mathbf{k}_1s_1}^\dagger \hat{c}_{\mathbf{k}_2s_2}^\dagger W_{\mathbf{k}_{1,2,3,4}}^{s_{1,2,3,4}} \hat{c}_{\mathbf{k}_4s_4} \hat{c}_{\mathbf{k}_3s_3}
+\end{align}
+one can derive, from the picture of attraction via lattice deformation, the effective Hamiltonian
+\begin{align}
+\hat{H}_I &= \sum_{\mathbf{k}\mathbf{k}'} W_{\mathbf{k}\mathbf{k}'} \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{-\mathbf{k}\downarrow}^\dagger \hat{c}_{-\mathbf{k}'\downarrow} \hat{c}_{\mathbf{k}'\uparrow} .
+\end{align}
+
+\section{Mean-field approximation}
+Let $\hat{b}_{\mathbf{k}} := \hat{c}_{-\mathbf{k}\downarrow} \hat{c}_{\mathbf{k}\uparrow}$ be an effective bosonic operator, since
+\footnote{Note that $[\hat{a},\hat{b}\hat{c}] = [\hat{a},\hat{b}]\hat{c} + \hat{b}[\hat{a},\hat{c}] = \{\hat{a},\hat{b}\}\hat{c} - \hat{b}\{\hat{a},\hat{c}\} $ and $[ \hat{a}\hat{b}, \hat{c} ] = [ \hat{a}, \hat{c} ]\hat{b} + \hat{a}[ \hat{b}, \hat{c} ] = \hat{a} \{\hat{b}, \hat{c} \} -  \{\hat{a}, \hat{c} \} \hat{b}$}
+\begin{align}
+\klam\left[ \hat{b}_{\mathbf{k}}, \hat{b}_{\mathbf{k}'} \right] &= \klam\left[ \hat{c}_{-\mathbf{k}\downarrow} \hat{c}_{\mathbf{k}\uparrow},  \hat{c}_{-\mathbf{k}'\downarrow} \hat{c}_{\mathbf{k}'\uparrow}   \right] = \\
+&= \hat{c}_{-\mathbf{k}\downarrow} \klam\left[ \hat{c}_{\mathbf{k}\uparrow},  \hat{c}_{-\mathbf{k}'\downarrow} \hat{c}_{\mathbf{k}'\uparrow}   \right] + \klam\left[ \hat{c}_{-\mathbf{k}\downarrow},  \hat{c}_{-\mathbf{k}'\downarrow} \hat{c}_{\mathbf{k}'\uparrow}   \right] \hat{c}_{\mathbf{k}\uparrow} = \\
+&= \hat{c}_{-\mathbf{k}\downarrow} \klam\left\{ \hat{c}_{\mathbf{k}\uparrow},  \hat{c}_{-\mathbf{k}'\downarrow}  \right\} \hat{c}_{\mathbf{k}'\uparrow} - \hat{c}_{-\mathbf{k}\downarrow} \hat{c}_{-\mathbf{k}'\downarrow} \klam\left\{ \hat{c}_{\mathbf{k}\uparrow},  \hat{c}_{\mathbf{k}'\uparrow}   \right\} + \dots = 0,\\
+\klam\left[ \hat{b}_{\mathbf{k}}, \hat{b}_{\mathbf{k}'}^\dagger \right] &= \klam\left[ \hat{c}_{-\mathbf{k}\downarrow} \hat{c}_{\mathbf{k}\uparrow},  \hat{c}_{\mathbf{k}'\uparrow}^\dagger \hat{c}_{-\mathbf{k}'\downarrow}^\dagger  \right] = \\
+&= \hat{c}_{-\mathbf{k}\downarrow} \klam\left[  \hat{c}_{\mathbf{k}\uparrow},  \hat{c}_{\mathbf{k}'\uparrow}^\dagger \hat{c}_{-\mathbf{k}'\downarrow}^\dagger  \right] + \klam\left[ \hat{c}_{-\mathbf{k}\downarrow} ,  \hat{c}_{\mathbf{k}'\uparrow}^\dagger \hat{c}_{-\mathbf{k}'\downarrow}^\dagger  \right] \hat{c}_{\mathbf{k}\uparrow} = \\
+&= \hat{c}_{-\mathbf{k}\downarrow} \klam\left\{  \hat{c}_{\mathbf{k}\uparrow},  \hat{c}_{\mathbf{k}'\uparrow}^\dagger   \right\} \hat{c}_{-\mathbf{k}'\downarrow}^\dagger -  \hat{c}_{\mathbf{k}'\uparrow}^\dagger \klam\left\{ \hat{c}_{-\mathbf{k}\downarrow} ,  \hat{c}_{-\mathbf{k}'\downarrow}^\dagger  \right\} \hat{c}_{\mathbf{k}\uparrow} = \\
+&= \hat{c}_{-\mathbf{k}\downarrow} \hat{c}_{-\mathbf{k}\downarrow}^\dagger \delta_{\mathbf{k}\mathbf{k}'} - \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{\mathbf{k}\uparrow} \delta_{\mathbf{k}\mathbf{k}'} = \\
+&= \delta_{\mathbf{k}\mathbf{k}'} \kla\left( 1 - \hat{c}_{-\mathbf{k}\downarrow}^\dagger \hat{c}_{-\mathbf{k}\downarrow} - \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{\mathbf{k}\uparrow} \right).
+\end{align}
+When applying this commutator to $\Bra\langle 0 |$ or $\Ket | 0 \rangle$, we indeed have $\left[ \hat{b}_{\mathbf{k}}, \hat{b}_{\mathbf{k}'}^\dagger \right] \equiv  \delta_{\mathbf{k}\mathbf{k}'}$, but this relation does not hold in general.
+Let $\hat{A} = \bra\langle \hat{A} \rangle + \Delta\hat{A}$ and $\hat{B} = \bra\langle \hat{B} \rangle + \Delta\hat{B}$. 
+Then the mean-field approximation consists of disregarding the term $\Delta\hat{A}\Delta\hat{B}$ in the product
+\begin{align}
+\hat{A}\hat{B} &= \bra\langle \hat{A} \rangle\bra\langle \hat{B} \rangle + \bra\langle \hat{A} \rangle\Delta\hat{B} + \bra\langle \hat{B} \rangle\Delta\hat{A} + \Delta\hat{A}\Delta\hat{B}.
+\end{align}
+Since $\Delta\hat{A} = \hat{A} - \bra\langle \hat{A} \rangle$, we may then write
+\begin{align}
+\hat{A}\hat{B} &\simeq \bra\langle \hat{A} \rangle\bra\langle \hat{B} \rangle + \bra\langle \hat{A} \rangle \kla\left( \hat{B} - \bra\langle \hat{B} \rangle \right) + \bra\langle \hat{B} \rangle\kla\left( \hat{A} - \bra\langle \hat{A} \rangle \right) = \\
+&= \bra\langle \hat{A} \rangle\hat{B} + \bra\langle \hat{B} \rangle\hat{A} - \bra\langle \hat{A} \rangle\bra\langle \hat{B} \rangle.
+\end{align}
+For $\hat{A} = \hat{b}_{\mathbf{k}}^\dagger$ and $\hat{B} = \hat{b}_{\mathbf{k}'}$ this results in
+\begin{align}
+\hat{b}_{\mathbf{k}}^\dagger \hat{b}_{\mathbf{k}'} &\simeq \bra\langle \hat{b}_{\mathbf{k}'} \rangle\hat{b}_{\mathbf{k}}^\dagger + \bra\langle \hat{b}_{\mathbf{k}}^\dagger \rangle\hat{b}_{\mathbf{k}'} - \bra\langle \hat{b}_{\mathbf{k}'} \rangle\bra\langle \hat{b}_{\mathbf{k}}^\dagger \rangle.
+\end{align}
+This leads to the BCS-Hamiltonian
+\begin{align}
+\hat{H} &= \hat{H}_0 + \hat{H}_I \simeq \\
+&\simeq \hat{H}_0 + \sum_{\mathbf{k}\mathbf{k}'} W_{\mathbf{k}\mathbf{k}'} \kla\left( \bra\langle \hat{b}_{\mathbf{k}}^\dagger \rangle\hat{c}_{-\mathbf{k}'\downarrow}\hat{c}_{\mathbf{k}'\uparrow} + \bra\langle \hat{b}_{\mathbf{k}'} \rangle \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{-\mathbf{k}\downarrow}^\dagger \right) - \sum_{\textbf{k}\textbf{k}'} W_{\textbf{k}\textbf{k}'} \bra\langle \hat{b}_{\mathbf{k}'} \rangle\bra\langle \hat{b}_{\mathbf{k}}^\dagger \rangle.
+\end{align}
+We can bring this into a simpler form by defining 
+\begin{align}
+\Delta_{\mathbf{k}} &:= -\sum_{\mathbf{k}'} W_{\mathbf{k}\mathbf{k}'} \bra\langle \hat{b}_{\mathbf{k}'} \rangle.
+\end{align}
+From $\hat{H}_I^\dagger = \hat{H}_I$ it follows that $W_{\mathbf{k}\mathbf{k}'}^\ast = W_{\mathbf{k}'\mathbf{k}}$.
+Then we find
+\begin{align}
+\hat{H} &= \hat{H}_0 - \sum_{\mathbf{k}} \kla\left( \Delta_{\mathbf{k}} \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{-\mathbf{k}\downarrow}^\dagger + \Delta_{\mathbf{k}}^\ast \hat{c}_{-\mathbf{k}\downarrow} \hat{c}_{\mathbf{k}\uparrow}  \right) + \sum_{\textbf{k}} \Delta_\textbf{k} \langle \hat{b}_{\mathbf{k}}^\dagger \rangle.
+\end{align}
+%
+%\subsection{FIXME: TESTING}
+%We introduce new fermionic operators $\gamma_{\textbf{k}s}$ by
+%\begin{align}
+%\hat{c}_{\textbf{k}\uparrow} &=: \alpha_\textbf{k} \hat{\gamma}_{\textbf{k}\uparrow} + \beta_\textbf{k} \hat{\gamma}_{-\textbf{k}\downarrow}^\dagger,\\
+%\hat{c}_{-\textbf{k}\downarrow}^\dagger &=: -\beta_\textbf{k}^\ast \hat{\gamma}_{\textbf{k}\uparrow} + \alpha_\textbf{k}^\ast \hat{\gamma}_{-\textbf{k}\downarrow}^\dagger.
+%\end{align}
+%To ensure their fermionic properties, we have to restrict the coefficients according to
+%\begin{align}
+%\klammer\left\{ \hat{c}_{\textbf{k}\uparrow}, \hat{c}_{\textbf{k}'\uparrow}^\dagger,  \right\} &= \klammer\left\{ \alpha_\textbf{k} \hat{\gamma}_{\textbf{k}\uparrow} + \beta_\textbf{k} \hat{\gamma}_{-\textbf{k}\downarrow}^\dagger, \alpha_{\textbf{k}'}^\ast \hat{\gamma}_{\textbf{k}'\uparrow}^\dagger + \beta_{\textbf{k}'}^\ast \hat{\gamma}_{-\textbf{k}'\downarrow} \right\} = \\
+%&= \kla\left( |\alpha_\textbf{k}|^2 + |\beta_\textbf{k}|^2 \right) \delta_{\textbf{k} \textbf{k}'} \overset{!}{=} \delta_{\textbf{k} \textbf{k}'}.
+%\end{align}
+%
+%\subsection{FIXME: ORIGINAL}
+Using our previous result for $\hat{H}_0$ and $\epsilon_{-\mathbf{k}} =  \epsilon_{\mathbf{k}}$, we can write this as
+\begin{align}
+\hat{H} &= \sum_{\mathbf{k}} \kla\left( \epsilon_{\mathbf{k}} \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{\mathbf{k}\uparrow} - \Delta_{\mathbf{k}} \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{-\mathbf{k}\downarrow}^\dagger - \Delta_{\mathbf{k}}^\ast \hat{c}_{-\mathbf{k}\downarrow} \hat{c}_{\mathbf{k}\uparrow} + \epsilon_{-\mathbf{k}} \hat{c}_{-\mathbf{k}\downarrow}^\dagger \hat{c}_{-\mathbf{k}\downarrow}  \right)  + \sum_{\textbf{k}} \Delta_\textbf{k} \langle \hat{b}_{\mathbf{k}}^\dagger \rangle = \\
+&= \sum_{\mathbf{k}} \begin{pmatrix}
+\epsilon_{\mathbf{k}} \hat{c}_{\mathbf{k}\uparrow}^\dagger - \Delta_{\mathbf{k}}^\ast \hat{c}_{-\mathbf{k}\downarrow} \\ -\Delta_{\mathbf{k}}\hat{c}_{\mathbf{k}\uparrow}^\dagger - \epsilon_{\mathbf{k}} \hat{c}_{\mathbf{k}\downarrow}
+\end{pmatrix}^\top \begin{pmatrix}
+\hat{c}_{\mathbf{k}\uparrow} \\ \hat{c}_{-\mathbf{k}\downarrow}^\dagger
+\end{pmatrix} + \sum_{\mathbf{k}}\epsilon_{\mathbf{k}} + \sum_{\textbf{k}} \Delta_\textbf{k} \langle \hat{b}_{\mathbf{k}}^\dagger \rangle = \\
+&= \sum_{\mathbf{k}} \begin{pmatrix}
+\hat{c}_{\mathbf{k}\uparrow}^\dagger & \hat{c}_{-\mathbf{k}\downarrow}
+\end{pmatrix} \underbrace{\begin{pmatrix}
+\epsilon_{\mathbf{k}} & -\Delta_{\mathbf{k}} \\ -\Delta_{\mathbf{k}}^\ast & -\epsilon_{\mathbf{k}}
+\end{pmatrix}}_{=:\,M_{\mathbf{k}}} \underbrace{\begin{pmatrix}
+\hat{c}_{\mathbf{k}\uparrow} \\ \hat{c}_{-\mathbf{k}\downarrow}^\dagger
+\end{pmatrix}}_{=:\,\vec{u}_{\mathbf{k}}}  + \sum_{\textbf{k}}\kla\left(  \epsilon_\textbf{k} + \Delta_\textbf{k} \langle \hat{b}_{\mathbf{k}}^\dagger \rangle \right).
+\end{align}
+The eigenvalues of $M_{\mathbf{k}}$ can be determined by solving the quadratic equation
+\begin{align}
+0 &= \lambda^2 - \lambda \tecxt\text{tr\,}M_{\mathbf{k}} + \det M_{\mathbf{k}} = \lambda^2 - \epsilon_{\mathbf{k}}^2 - |\Delta_{\mathbf{k}}|^2,
+\end{align}
+which gives $\lambda = \pm E_{\mathbf{k}} = \pm \sqrt{\epsilon_{\mathbf{k}}^2 + |\Delta_{\mathbf{k}}|^2}$.
+We can find the eigenvectors $\vec{\gamma}_{\mathbf{k}s} := (\alpha_{\mathbf{k}s}, \beta_{\mathbf{k}s})^\top$ of $M_{\mathbf{k}}$ by solving the system of equations
+\begin{align}
+\epsilon_{\mathbf{k}}\alpha_{\mathbf{k}s} - \Delta_{\mathbf{k}}\beta_{\mathbf{k}s} &= \pm E_\textbf{k} \alpha_{\mathbf{k}s},\\
+-\Delta_{\mathbf{k}}^\ast\alpha_{\mathbf{k}s} - \epsilon_{\mathbf{k}}\beta_{\mathbf{k}s} &= \pm E_{\mathbf{k}} \beta_{\mathbf{k}s}
+\end{align}
+where $s\in\{\uparrow, \downarrow\}$ for $\pm E_\textbf{k}$ respectively.
+This yields $\beta_{\mathbf{k}\uparrow} = \frac{\epsilon_{\mathbf{k}} - E_{\mathbf{k}}}{\Delta_{\mathbf{k}}}\alpha_{\mathbf{k}\uparrow}$ and $\alpha_{\mathbf{k}\downarrow} = \frac{E_{\mathbf{k}} - \epsilon_{\mathbf{k}}}{\Delta_{\mathbf{k}}^\ast} \beta_{\mathbf{k}\downarrow}$.
+The normalized eigenvectors can then be written as
+\begin{align}
+\vec{\gamma}_{\mathbf{k}\uparrow} &= \frac{1}{N}\begin{pmatrix}
+\Delta_{\mathbf{k}} \\ \epsilon_{\mathbf{k}} - E_{\mathbf{k}}
+\end{pmatrix} = \\
+&= \frac{1}{\sqrt{|\Delta_{\mathbf{k}}|^2 + \epsilon_{\mathbf{k}}^2 + E_{\mathbf{k}}^2 - 2\epsilon_{\mathbf{k}} E_{\mathbf{k}}}} \begin{pmatrix}
+\Delta_{\mathbf{k}}  \\ \epsilon_{\mathbf{k}} - E_{\mathbf{k}}
+\end{pmatrix} = \\
+&= \frac{1}{\sqrt{2E_{\mathbf{k}} (E_{\mathbf{k}} -\epsilon_{\mathbf{k}})}} \begin{pmatrix}
+\Delta_{\mathbf{k}} \\ \epsilon_{\mathbf{k}} - E_{\mathbf{k}}
+\end{pmatrix} =: \begin{pmatrix}
+\alpha_\textbf{k} \\ -\beta_\textbf{k}
+\end{pmatrix} , \\
+\vec{\gamma}_{\mathbf{k}\downarrow} &= \frac{1}{N}\begin{pmatrix}
+E_{\mathbf{k}} - \epsilon_{\mathbf{k}} \\ \Delta_{\mathbf{k}}^\ast
+\end{pmatrix} = \\
+&= \frac{1}{\sqrt{2E_{\mathbf{k}} (E_{\mathbf{k}} -\epsilon_{\mathbf{k}})}} \begin{pmatrix}
+E_{\mathbf{k}} - \epsilon_{\mathbf{k}} \\ \Delta_{\mathbf{k}}^\ast
+\end{pmatrix} = \begin{pmatrix}
+\beta_\textbf{k} \\ \alpha_\textbf{k}^\ast
+\end{pmatrix}.
+\end{align}
+Here we defined the coefficients
+\begin{align}
+\alpha_{\mathbf{k}} &:= \frac{\Delta_{\mathbf{k}}}{\sqrt{2E_{\mathbf{k}} ( E_{\mathbf{k}} - \epsilon_{\mathbf{k}})}},\\
+\beta_{\mathbf{k}} &:= \frac{E_{\mathbf{k}} - \epsilon_{\mathbf{k}}}{\sqrt{2E_{\mathbf{k}} ( E_{\mathbf{k}} - \epsilon_{\mathbf{k}})}} \ge 0
+\end{align}
+satisfying $|\alpha_\textbf{k}|^2 + \beta_\textbf{k}^2 = 1$.
+Since $\vec{\gamma}_{\mathbf{k}\uparrow}^\dagger \vec{\gamma}_{\mathbf{k}\downarrow} = \alpha_{\mathbf{k}}^\ast \beta_\textbf{k} - \beta_\textbf{k} \alpha_\textbf{k}^\ast = 0$, the eigenvectors are orthogonal.
+Thus the diagonalized Hamiltonian now takes the form
+\begin{align}
+\hat{H} &= \sum_{\mathbf{k}} \vec{u}_{\mathbf{k}}^\dagger  U_{\mathbf{k}}^\dagger \begin{pmatrix}
+E_{\mathbf{k}} & 0 \\
+0 & -E_{\mathbf{k}}
+\end{pmatrix} U_{\mathbf{k}} \vec{u}_{\mathbf{k}} + \sum_{\textbf{k}}\kla\left(  \epsilon_\textbf{k} + \Delta_\textbf{k} \langle \hat{b}_{\mathbf{k}}^\dagger \rangle \right)
+\end{align}
+where the transformation matrix is given by
+\begin{align}
+U_{\mathbf{k}} &= \begin{pmatrix}
+\alpha_\textbf{k}^\ast & -\beta_\textbf{k} \\ \beta_\textbf{k} & \alpha_\textbf{k}
+\end{pmatrix}.
+\end{align}
+We may now define
+\begin{align}
+\vec{\gamma}_{\mathbf{k}} &:= U_{\mathbf{k}}\vec{u}_{\mathbf{k}} = \vec{\gamma}_{\mathbf{k}\uparrow} \hat{c}_{\mathbf{k}\uparrow} + \vec{\gamma}_{\mathbf{k}\downarrow} \hat{c}_{-\mathbf{k}\downarrow}^\dagger,
+\end{align}
+or, written in terms of the vector components, 
+\begin{align}
+\hat{\gamma}_{\mathbf{k}\uparrow} &:=  \alpha^\ast_{\mathbf{k}}\hat{c}_{\mathbf{k}\uparrow} -\beta_\textbf{k} \hat{c}_{-\mathbf{k}\downarrow}^\dagger,\\
+\hat{\gamma}_{-\mathbf{k}\downarrow}^\dagger &:=  \beta_\textbf{k} \hat{c}_{\mathbf{k}\uparrow} + \alpha_\textbf{k} \hat{c}_{-\mathbf{k}\downarrow}^\dagger.
+\end{align}
+Note that we deliberately chose the form $\vec{\gamma}_{\mathbf{k}} = (\hat{\gamma}_{\mathbf{k}\uparrow}, \hat{\gamma}_{-\mathbf{k}\downarrow}^\dagger)^\top$ for in analogy to the previous form of $\vec{u}_{\mathbf{k}}$.
+These operators satisfy $\klammer\left\{ \hat{\gamma}_{\mathbf{k}s}, \hat{\gamma}_{\mathbf{k}'s'}^\dagger \right\} = \delta_{ss'} \delta_{\mathbf{k}\mathbf{k}'}$ and $\klammer\left\{ \hat{\gamma}_{\mathbf{k}s}, \hat{\gamma}_{\mathbf{k}'s'} \right\} = 0$, and may therefore be interpreted as operators creating fermionic quasi-particles.
+and the explicitly diagonalized Hamiltonian becomes
+\begin{align}
+\hat{H} &= \sum_{\mathbf{k}} \vec{\gamma}_{\mathbf{k}}^\dagger \begin{pmatrix}
+E_{\mathbf{k}} & 0 \\ 0 & -E_{\mathbf{k}}
+\end{pmatrix} \vec{\gamma}_{\mathbf{k}} + \sum_{\textbf{k}}\kla\left(  \epsilon_\textbf{k} + \Delta_\textbf{k} \langle \hat{b}_{\mathbf{k}}^\dagger \rangle \right) =  \\
+&= \sum_{\mathbf{k}} \hat{\gamma}_{\mathbf{k}\uparrow}^\dagger E_{\mathbf{k}} \hat{\gamma}_{\mathbf{k}\uparrow} + \hat{\gamma}_{-\mathbf{k}\downarrow} (-E_{\mathbf{k}}) \hat{\gamma}_{-\mathbf{k}\downarrow}^\dagger + \sum_{\textbf{k}}\kla\left(  \epsilon_\textbf{k} + \Delta_\textbf{k} \langle \hat{b}_{\mathbf{k}}^\dagger \rangle \right) =  \numberthis\\
+&= \sum_{\mathbf{k}s} E_{\mathbf{k}} \hat{\gamma}_{\mathbf{k}s}^\dagger \hat{\gamma}_{\mathbf{k}s} + \sum_{\textbf{k}}\kla\left(  \epsilon_\textbf{k} - E_\textbf{k} + \Delta_\textbf{k} \langle \hat{b}_{\mathbf{k}}^\dagger \rangle \right) \numberthis \label{eqn:diagonalized hamiltonian}.
+\end{align}
+Since $E_{\mathbf{k}} \ge 0$, we expect there to be a ground-state with respect to the quasi-particles satisfying $\hat{\gamma}_{\mathbf{k}s} \Ket | \psi_\tecxt\text{BCS} \rangle = 0$.
+Let $\Ket | \psi_\tecxt\text{BCS} \rangle = \mathcal{N}\hat{V}\Ket | 0 \rangle$, where $\mathcal{N}$ is a normalization constant, and assume that $\hat{V}$ takes the form
+\begin{align}
+\hat{V} &= \prod_{\mathbf{k}} \hat{V}_{\mathbf{k}} = \prod_{\mathbf{k}}  \exp\kla\left( u_{\mathbf{k}}  \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{-\mathbf{k}\downarrow}^\dagger \right).
+\end{align}
+We want to determine the coefficients, such that 
+\begin{align}
+\hat{\gamma}_{\mathbf{k}\uparrow} \hat{V}\Ket | 0 \rangle = 0.
+\end{align}
+Note that 
+\begin{align}
+\klam\left[ \hat{c}_{\mathbf{k}\uparrow}, u_{\mathbf{q}} \hat{c}_{\mathbf{q}\uparrow}^\dagger \hat{c}_{-\mathbf{q}\downarrow}^\dagger \right] &= u_{\mathbf{q}} \klammer\left\{ \hat{c}_{\mathbf{k}\uparrow}, \hat{c}_{\mathbf{q}\uparrow}^\dagger \right\} \hat{c}_{-\mathbf{q}\downarrow}^\dagger = u_{\mathbf{k}} \hat{c}_{-\mathbf{k}\downarrow}^\dagger \delta_{\mathbf{k}\textbf{q}},\\
+\klam\left[ \hat{c}_{\mathbf{k}\uparrow}^\dagger, u_{\mathbf{q}} \hat{c}_{\mathbf{q}\uparrow}^\dagger \hat{c}_{-\mathbf{q}\downarrow}^\dagger \right] &= 0.
+\end{align}
+We will make use of the identity $\klam\left[ \hat{a}, \hat{b}^n \right] = n\hat{c}\hat{b}^{n-1}$, which holds given that $\hat{c} = \klam\left[ \hat{a}, \hat{b} \right]$ commutes with $\hat{b}$.
+For $\hat{a} = \hat{\gamma}_{\mathbf{k}\uparrow}$ and $\hat{b} = u_{\mathbf{q}} \hat{c}_{\mathbf{q}\uparrow}^\dagger \hat{c}_{-\mathbf{q}\downarrow}^\dagger$ this is satisfied.
+We can now compute the desired commutator
+\begin{align}
+\klam\left[ \hat{\gamma}_{\mathbf{k}\uparrow}, \hat{V}_{\mathbf{q}} \right] &= \sum_{n\ge 0} \frac{1}{n!} \klam\left[ \hat{\gamma}_{\mathbf{k}\uparrow}, \kla\left( u_{\mathbf{q}} \hat{c}_{\mathbf{q}\uparrow}^\dagger \hat{c}_{-\mathbf{q}\downarrow}^\dagger \right)^n \right] = \\
+&= \sum_{n\ge 0}\frac{1}{n!} n \klam\left[ \alpha_{\mathbf{k}}^\ast \hat{c}_{\mathbf{k}\uparrow} - \beta_{\mathbf{k}} \hat{c}_{-\mathbf{k}\downarrow}^\dagger, u_{\mathbf{q}} \hat{c}_{\mathbf{q}\uparrow}^\dagger \hat{c}_{-\mathbf{q}\downarrow}^\dagger \right] \kla\left( u_{\mathbf{q}} \hat{c}_{\mathbf{q}\uparrow}^\dagger \hat{c}_{-\mathbf{q}\downarrow}^\dagger \right)^{n-1} = \\
+&= \delta_{\mathbf{k}\textbf{q}} \alpha_{\mathbf{k}}^\ast u_{\mathbf{k}} \hat{c}_{-\mathbf{k}\downarrow}^\dagger \sum_{n\ge 1} \frac{1}{(n-1)!} \kla\left( u_{\mathbf{k}} \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{-\mathbf{k}\downarrow}^\dagger \right)^{n-1} = \\
+&= \delta_{\mathbf{k}\textbf{q}} \alpha_{\mathbf{k}}^\ast u_{\mathbf{k}} \hat{c}_{-\mathbf{k}\downarrow}^\dagger \hat{V}_{\mathbf{k}}.
+\end{align}
+Since also $\klam\left[ \hat{\gamma}_{\mathbf{k}\uparrow}, \hat{V}_{\mathbf{q}} \right] \propto \delta_{\mathbf{k}\textbf{q}}$, we find 
+\begin{align}
+0 &= \hat{\gamma}_{\mathbf{k}\uparrow}\hat{V} \Ket | 0 \rangle = \prod_{\mathbf{q\neq k}} \hat{V}_{\mathbf{q}} \hat{\gamma}_{\mathbf{k}\uparrow} \hat{V}_{\mathbf{k}} \Ket | 0 \rangle = \\
+&= \prod_{\mathbf{q\neq k}} \hat{V}_{\mathbf{q}} \kla\left( \hat{V}_{\textbf{k}} \hat{\gamma}_{\mathbf{k}\uparrow} + \alpha_{\mathbf{k}} u_{\mathbf{k}} \hat{V}_{\mathbf{k}} \hat{c}_{-\mathbf{k}\downarrow}^\dagger  \right) \Ket | 0 \rangle = \\
+&= \prod_{\mathbf{q}} \hat{V}_{\mathbf{q}} \left( - \beta_{\mathbf{k}} + \alpha_{\mathbf{k}}^\ast u_{\mathbf{k}} \right) \hat{c}_{\mathbf{k}\downarrow}^\dagger \Ket | 0 \rangle.
+\end{align}
+This implies $u_{\mathbf{k}} = \frac{\beta_{\mathbf{k}}}{\alpha_{\mathbf{k}}^\ast}$ and therefore
+\begin{align}
+\hat{V}_{\mathbf{k}} &= \sum_{n\ge 0} \frac{1}{n!} \kla\left( \frac{\beta_{\mathbf{k}}}{\alpha_{\mathbf{k}}^\ast} \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{-\mathbf{k}\downarrow}^\dagger \right)^n = \\
+&= 1 + \frac{\beta_{\mathbf{k}}}{\alpha_{\mathbf{k}}^\ast} \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{-\mathbf{k}\downarrow}^\dagger + \frac{1}{2} \frac{\beta_{\mathbf{k}}^2}{(\alpha_{\mathbf{k}}^\ast)^2} \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{-\mathbf{k}\downarrow}^\dagger \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{-\mathbf{k}\downarrow}^\dagger + \dots = \\
+&= 1 + \frac{\beta_{\mathbf{k}}}{\alpha_{\mathbf{k}}^\ast} \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{-\mathbf{k}\downarrow}^\dagger - \frac{1}{2} \frac{\beta_{\mathbf{k}}^2}{(\alpha_{\mathbf{k}}^\ast)^2} \hat{c}_{-\mathbf{k}\downarrow}^\dagger \kla\left( \hat{c}_{\mathbf{k}\uparrow}^\dagger \right)^2 \hat{c}_{-\mathbf{k}\downarrow}^\dagger + \dots = \\
+&= 1 + \frac{\beta_{\mathbf{k}}}{\alpha_{\mathbf{k}}^\ast} \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{-\mathbf{k}\downarrow}^\dagger.
+\end{align}
+Redefining the normalization, the BCS ground state may therefore be written as
+\begin{align}
+\Ket | \psi_\tecxt\text{BCS} \rangle &= \mathcal{N} \hat{V}\Ket | 0 \rangle = \mathcal{N} \prod_{\mathbf{k}} \kla\left( \alpha_{\mathbf{k}}^\ast + \beta_{\mathbf{k}} \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{-\mathbf{k}\downarrow}^\dagger  \right) \Ket | 0 \rangle.
+\end{align}
+%For $k \gg k_\tecxt\text{F}$ we have $\epsilon_{\mathbf{k}} \gg |\Delta_{\mathbf{k}}|$ and hence $\beta_{\mathbf{k}} \rightarrow 0$.
+We can explicitly derive the normalization constant by considering 
+\begin{align}
+1 &= \braket\langle \psi_\tecxt\text{BCS} | \psi_\tecxt\text{BCS} \rangle = |\mathcal{N}|^2 \braket\langle 0 | \hat{V}^\dagger \hat{V} | 0 \rangle = \\
+&= |\mathcal{N}|^2 \braket\langle 0 | \prod_\textbf{k} \kla\left( \alpha_\textbf{k} + \beta_\textbf{k}^\ast \hat{b}_\textbf{k} \right) \kla\left( \alpha_\textbf{k}^\ast + \beta_\textbf{k} \hat{b}_\textbf{k}^\dagger \right) | 0 \rangle = \\
+&= |\mathcal{N}|^2 \braket\langle 0 | \prod_\textbf{k} \klam\left[ \kla\left( \alpha_\textbf{k}^\ast + \beta_\textbf{k} \hat{b}_\textbf{k}^\dagger \right) \kla\left( \alpha_\textbf{k} + \beta_\textbf{k}^\ast \hat{b}_\textbf{k} \right) + |\beta_\textbf{k}|^2 \klam\left[ \hat{b}_\textbf{k}, \hat{b}_\textbf{k}^\dagger \right] \right] | 0 \rangle = \\
+&= |\mathcal{N}|^2 \braket\langle 0 | \prod_\textbf{k} \klam\left[ |\alpha_\textbf{k}^\ast|^2 + |\beta_\textbf{k}|^2 \kla\left( 1 - \hat{c}_{-\mathbf{k}\downarrow}^\dagger \hat{c}_{-\mathbf{k}\downarrow} - \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{\mathbf{k}\uparrow} \right) \right] | 0 \rangle = \\
+&= |\mathcal{N}|^2 \braket\langle 0 | \prod_\textbf{k} \klam\left[ |\alpha_\textbf{k}|^2 + |\beta_\textbf{k}|^2 \right] | 0 \rangle = |\mathcal{N}|^2.
+\end{align}
+Since $|\mathcal{N}| = 1$, the state is already normalized correctly.
+
+\section{Energy reduction in the BCS state}
+We still have to answer the question, whether the system prefers the state $\Ket | \psi_\tecxt\text{BCS} \rangle$ over the ``normal'' ground state
+\begin{align}
+\Ket | \psi_\tecxt\text{F} \rangle &:= \prod_{|\textbf{k}| < k_\tecxt\text{F},s} \hat{c}_{\textbf{k}s}^\dagger \Ket | 0 \rangle =: \hat{F} \Ket | 0 \rangle,
+\end{align}
+where $k_\tecxt\text{F}$ is the Fermi momentum.
+Note that $\hat{c}_{\textbf{k}s}^\dagger \hat{c}_{\textbf{k}'s'}^\dagger = - \hat{c}_{\textbf{k}'s'}^\dagger \hat{c}_{\textbf{k}s}^\dagger + \delta_{\textbf{k}\textbf{k}'} \delta_{ss'}$.
+Since every term is unique, we do not have to worry about the $\delta$-part.
+However, the product above is only well-defined up to a sign, since we have not specified an order.
+We may make use of this by regrouping terms in a way that simplifies the expression to
+\begin{align}
+\hat{F} &= \prod_{|\textbf{k}|<k_\tecxt\text{F}} \hat{c}_{\textbf{k}\uparrow}^\dagger \hat{c}_{\textbf{k}\downarrow}^\dagger = \prod_{|\textbf{k}|<k_\tecxt\text{F}} \hat{c}_{\textbf{k}\uparrow}^\dagger \hat{c}_{-\textbf{k}\downarrow}^\dagger = \prod_{|\textbf{k}|<k_\tecxt\text{F}} \hat{b}_\textbf{k}^\dagger.
+\end{align}
+In the second step we made use of the fact that both $\hat{c}_{\textbf{k}\uparrow}^\dagger \hat{c}_{\textbf{k}\downarrow}^\dagger$ and $\hat{c}_{-\textbf{k}\uparrow}^\dagger \hat{c}_{-\textbf{k}\downarrow}^\dagger$ exist for any $\textbf{k}$ (except $\textbf{k}=0$, but in that case $\textbf{k}=-\textbf{k}$ anyway).
+Just as before, the rearranging of terms may result in a different sign.
+But this should not affect any expectation values, since this ``phase'' cancels when combined with $\hat{F}^\dagger$.
+\\
+Note that $\hat{F}$ is not unitary, but that the Fermi-state is normalized.
+To show this, consider
+\begin{align}
+\hat{F}^\dagger\hat{F} &= \prod_{|\textbf{k}'|<k_\tecxt\text{F}, s'} \hat{c}_{\textbf{k}'s'} \prod_{|\textbf{k}|<k_\tecxt\text{F}, s} \hat{c}_{\textbf{k}s}^\dagger = \prod_{|\textbf{k}| < k_\tecxt\text{F}, s} \hat{c}_{\textbf{k}s} \hat{c}_{\textbf{k}s}^\dagger = \prod_{|\textbf{k}| < k_\tecxt\text{F}, s}  \kla\left( 1 - \hat{c}_{\textbf{k}s}^\dagger \hat{c}_{\textbf{k}s}  \right) ,
+\end{align}
+where we have disregarded the global sign.
+When applied to the vacuum $\Ket | 0 \rangle$ the $\hat{c}$-terms do not contribute, giving $\hat{F}^\dagger \Ket | \psi_\tecxt\text{F} \rangle = \hat{F}^\dagger\hat{F} \Ket | 0 \rangle = \Ket | 0 \rangle$.
+%In this sense, we may consider $\hat{F}$ to be unitary.
+We want to calculate the expected energy in this state.
+We will make use of the following commutation relations
+\begin{align}
+\klam\left[ \hat{c}_{\textbf{k}\uparrow}, \hat{b}_{\textbf{q}}^\dagger \right] &= \klam\left[ \hat{c}_{\textbf{k}\uparrow}, \hat{c}_{\textbf{q}\uparrow}^\dagger \hat{c}_{-\textbf{q}\downarrow}^\dagger  \right] = \klammer\left\{ \hat{c}_{\textbf{k}\uparrow}, \hat{c}_{\textbf{q}\uparrow}^\dagger \right\} \hat{c}_{-\textbf{q}\downarrow}^\dagger - \hat{c}_{\textbf{q}\uparrow}^\dagger \klammer\left\{ \hat{c}_{\textbf{k}\uparrow}, \hat{c}_{-\textbf{q}\downarrow}^\dagger \right\} = \delta_{\textbf{k}\textbf{q}} \hat{c}_{-\textbf{k}\downarrow},\\
+\klam\left[ \hat{c}_{\textbf{k}\downarrow}, \hat{b}_{\textbf{q}}^\dagger \right] &= \klam\left[ \hat{c}_{\textbf{k}\downarrow}, \hat{c}_{\textbf{q}\uparrow}^\dagger \hat{c}_{-\textbf{q}\downarrow}^\dagger  \right] = \klammer\left\{ \hat{c}_{\textbf{k}\downarrow}, \hat{c}_{\textbf{q}\uparrow}^\dagger \right\} \hat{c}_{-\textbf{q}\downarrow}^\dagger - \hat{c}_{\textbf{q}\uparrow}^\dagger \klammer\left\{ \hat{c}_{\textbf{k}\downarrow}, \hat{c}_{-\textbf{q}\downarrow}^\dagger \right\} = -\delta_{\textbf{k},-\textbf{q}} \hat{c}_{-\textbf{k}\uparrow},\\
+\klam\left[ \hat{c}_{\textbf{k}s}^\dagger, \hat{b}_{\textbf{q}}^\dagger \right] &= 0.
+\end{align}
+Using these, we may calculate the commutators
+\begin{align}
+\klam\left[ \hat{c}_{\textbf{k}\uparrow}, \hat{F} \right] &= \bigg[ \hat{c}_{\textbf{k}\uparrow}, \prod_{|\textbf{q}| < k_\tecxt\text{F}} \hat{b}_{\textbf{q}}^\dagger \bigg] = \prod_{|\textbf{q}| < k_\tecxt\text{F}, \textbf{q}\neq \textbf{k}} \hat{b}_{\textbf{q}}^\dagger \klam\left[ \hat{c}_{\textbf{k}\uparrow}, \hat{b}_\textbf{k}^\dagger \right] = \prod_{|\textbf{q}| < k_\tecxt\text{F}, \textbf{q}\neq \textbf{k}} \hat{b}_{\textbf{q}}^\dagger \hat{c}_{-\textbf{k}\downarrow} ,\\
+\klam\left[ \hat{c}_{\textbf{k}\downarrow}, \hat{F} \right] &= \bigg[ \hat{c}_{\textbf{k}\downarrow}, \prod_{|\textbf{q}| < k_\tecxt\text{F}} \hat{b}_{\textbf{q}}^\dagger \bigg] = \prod_{|\textbf{q}| < k_\tecxt\text{F}, \textbf{q}\neq -\textbf{k}} \hat{b}_{\textbf{q}}^\dagger \klam\left[ \hat{c}_{\textbf{k}\downarrow}, \hat{b}_{-\textbf{k}}^\dagger \right] = - \prod_{|\textbf{q}| < k_\tecxt\text{F}, \textbf{q}\neq -\textbf{k}} \hat{b}_{\textbf{q}}^\dagger \hat{c}_{-\textbf{k}\uparrow},\\
+\klam\left[ \hat{c}_{\textbf{k}s}^\dagger, \hat{F} \right] &= 0.
+\end{align}
+Note that these relations only hold for $|\textbf{k}| < k_\tecxt\text{F}$, otherwise all commutators simply vanish.
+\\
+The diagonalized Hamiltonian from \autoref{eqn:diagonalized hamiltonian} is 
+\begin{align}
+\hat{H} &= \sum_{\mathbf{k}s} E_{\mathbf{k}} \hat{\gamma}_{\mathbf{k}s}^\dagger \hat{\gamma}_{\mathbf{k}s} + \sum_{\textbf{k}}\kla\left(  \epsilon_\textbf{k} - E_\textbf{k} + \Delta_\textbf{k} \langle \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{-\mathbf{k}\downarrow}^\dagger \rangle \right)
+\end{align}
+where the new fermionic operators are given by
+\begin{align}
+\hat{\gamma}_{\textbf{k}\uparrow} &= \alpha_\textbf{k} \hat{c}_{\textbf{k}\uparrow} - \beta_\textbf{k} \hat{c}_{-\textbf{k}\downarrow}^\dagger,\\
+\hat{\gamma}_{-\textbf{k}\downarrow}^\dagger &= \beta_\textbf{k} \hat{c}_{\textbf{k}\uparrow} - \alpha^\ast_\textbf{k} \hat{c}_{-\textbf{k}\downarrow}^\dagger.
+\end{align}
+We first evaluate the expectation values inside the constant term and $\Delta_\textbf{k}$
+\begin{align}
+\bra\langle \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{-\mathbf{k}\downarrow}^\dagger \rangle_{\psi_\tecxt\text{F}} &= \braket\langle \psi_\tecxt\text{F} | \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{-\mathbf{k}\downarrow}^\dagger | \psi_\tecxt\text{F} \rangle = \braket\langle 0 | \hat{F}^\dagger \hat{F} \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{-\mathbf{k}\downarrow}^\dagger | 0 \rangle = \braket\langle 0 | \hat{c}_{\mathbf{k}\uparrow}^\dagger \hat{c}_{-\mathbf{k}\downarrow}^\dagger | 0 \rangle = 0,\\
+\bra\langle \hat{c}_{-\mathbf{k}\downarrow} \hat{c}_{\mathbf{k}\uparrow} \rangle_{\psi_\tecxt\text{F}} &= \braket\langle \psi_\tecxt\text{F} | \hat{c}_{-\mathbf{k}\downarrow} \hat{c}_{\mathbf{k}\uparrow} | \psi_\tecxt\text{F} \rangle = \braket\langle 0 | \hat{c}_{-\mathbf{k}\downarrow} \hat{c}_{\mathbf{k}\uparrow} \hat{F}^\dagger \hat{F} | 0 \rangle = \braket\langle 0 | \hat{c}_{-\mathbf{k}\downarrow} \hat{c}_{\mathbf{k}\uparrow} | 0 \rangle = 0.
+\end{align}
+The latter immediately gives us
+\begin{align}
+\Delta_\textbf{k} &= -\sum_{\textbf{k}'} W_{\textbf{k}\textbf{k}'} \bra\langle  \hat{c}_{-\mathbf{k}\downarrow} \hat{c}_{\mathbf{k}\uparrow} \rangle = 0.
+\end{align}
+The more difficult task is to compute $\bra\langle \hat{\gamma}_{\mathbf{k}s}^\dagger \hat{\gamma}_{\mathbf{k}s} \rangle_{\psi_\tecxt\text{F}}$.
+Consider the commutators
+\begin{align}
+\klam\left[ \hat{\gamma}_{\textbf{k}\uparrow}, \hat{F} \right] &= \klam\left[ \alpha_\textbf{k}^\ast \hat{c}_{\textbf{k}\uparrow}, \hat{F} \right] = \alpha_\textbf{k}^\ast \prod_{|\textbf{q}| < k_\tecxt\text{F}, \textbf{q}\neq \textbf{k}} \hat{b}_{\textbf{q}}^\dagger \hat{c}_{-\textbf{k}\downarrow} = \klam\left[ \hat{F}^\dagger, \hat{\gamma}_{\textbf{k}\uparrow}^\dagger \right]^\dagger,\\
+\klam\left[ \hat{\gamma}_{\textbf{k}\downarrow}, \hat{F} \right] &= \klam\left[ \alpha_{-\textbf{k}}^\ast \hat{c}_{\textbf{k}\downarrow}, \hat{F} \right] = -\alpha_{-\textbf{k}}^\ast \prod_{|\textbf{q}| < k_\tecxt\text{F}, \textbf{q}\neq \textbf{k}} \hat{b}_{\textbf{q}}^\dagger \hat{c}_{-\textbf{k}\uparrow} = \klam\left[ \hat{F}^\dagger, \hat{\gamma}_{\textbf{k}\downarrow}^\dagger \right]^\dagger .
+\end{align}
+We may now compute the expectation values for $|\textbf{k}| < k_\tecxt\text{F}|$
+\begin{align}
+\bra\langle \hat{\gamma}_{\mathbf{k}\uparrow}^\dagger \hat{\gamma}_{\mathbf{k}\uparrow} \rangle_{\psi_\tecxt\text{F}} &= \braket\langle 0 | \hat{F}^\dagger \hat{\gamma}_{\mathbf{k}\uparrow}^\dagger \hat{\gamma}_{\mathbf{k}\uparrow} \hat{F} | 0 \rangle = \\
+&= \braket\langle 0 | \kla\Big( \hat{\gamma}_{\mathbf{k}\uparrow}^\dagger \hat{F}^\dagger + \alpha_\textbf{k} \hat{c}_{-\textbf{k}\downarrow}^\dagger \prod_{|\textbf{q}| < k_\tecxt\text{F}, \textbf{q}\neq \textbf{k}} \hat{b}_{\textbf{q}}  \Big) \hat{F} \hat{\gamma}_{\mathbf{k}\uparrow} | 0 \rangle = \\
+&= (-\beta_\textbf{k}) (-\beta_\textbf{k}^\ast) \braket\langle 0 |  \hat{c}_{-\textbf{k}\downarrow} \hat{F}^\dagger\hat{F} \hat{c}_{-\textbf{k}\downarrow}^\dagger | 0 \rangle = \\
+&= |\beta_\textbf{k}|^2  \braket\langle 0 | \hat{c}_{-\textbf{k}\downarrow} \prod_{|\textbf{q}| < k_\tecxt\text{F},s} \kla\left( 1 - \hat{c}_{\textbf{k}s}^\dagger \hat{c}_{\textbf{k}s} \right) \hat{c}_{-\textbf{k}\downarrow}^\dagger | 0 \rangle = \\
+&= |\beta_\textbf{k}|^2 \braket\langle 0 | \hat{c}_{-\textbf{k}\downarrow} \kla\left( 1 - \hat{c}_{-\textbf{k}\downarrow}^\dagger \hat{c}_{-\textbf{k}\downarrow}  \right) \hat{c}_{-\textbf{k}\downarrow}^\dagger  | 0 \rangle = \\
+&= |\beta_\textbf{k}|^2 \braket\langle 0 | \hat{c}_{-\textbf{k}\downarrow} \hat{c}_{-\textbf{k}\downarrow} \hat{c}_{-\textbf{k}\downarrow}^\dagger \hat{c}_{-\textbf{k}\downarrow}^\dagger   | 0 \rangle = 0,\\
+\bra\langle \hat{\gamma}_{\mathbf{k}\downarrow}^\dagger \hat{\gamma}_{\mathbf{k}\downarrow} \rangle_{\psi_\tecxt\text{F}} &= \braket\langle 0 | \hat{F}^\dagger \hat{\gamma}_{\mathbf{k}\downarrow}^\dagger \hat{\gamma}_{\mathbf{k}\downarrow} \hat{F} | 0 \rangle = \\
+&= \braket\langle 0 | \kla\Big( \hat{\gamma}_{\mathbf{k}\downarrow}^\dagger \hat{F}^\dagger - \alpha_{-\textbf{k}} \hat{c}_{-\textbf{k}\uparrow}^\dagger \prod_{|\textbf{q}| < k_\tecxt\text{F}, \textbf{q}\neq \textbf{k}} \hat{b}_{\textbf{q}}  \Big) \hat{F} \hat{\gamma}_{\mathbf{k}\downarrow} | 0 \rangle = \\
+&= (\beta_{-\textbf{k}}) (-\beta_{-\textbf{k}}^\ast) \braket\langle 0 |  \hat{c}_{-\textbf{k}\uparrow} \hat{F}^\dagger\hat{F} \hat{c}_{-\textbf{k}\uparrow}^\dagger | 0 \rangle = 0.
+\end{align}
+For $|\textbf{k}| \ge k_\tecxt\text{F}$ an analogous calculation leads to the same result, since we do not even have to consider potential contributions from the commutators.
+Thus the expectation value of the energy in the Fermi-state is simply
+\begin{align}
+\bra\langle \hat{H} \rangle_{\psi_\tecxt\text{F}} &= \sum_\textbf{k} \kla\left( \epsilon_\textbf{k} - E_\textbf{k} \right) = \sum_\textbf{k} \kla\left( \epsilon_\textbf{k} - \sqrt{\epsilon_\textbf{k}^2 + |\Delta_\textbf{k}|^2} \right) = 0.
+\end{align}
+For the BCS-state $\Ket | \psi_\tecxt\text{BCS} \rangle$ the $\hat{\gamma}^\dagger\hat{\gamma}$-terms vanish due to $\hat{\gamma}_{\textbf{k}s} \Ket | \psi_\tecxt\text{BCS} \rangle = 0$.
+Thus we only need to consider the expectation value of $\hat{b}_\textbf{k}^\dagger$
+\begin{align}
+\bra\langle \hat{b}_\textbf{k}^\dagger \rangle_{\psi_\tecxt\text{BCS}} &= \braket\langle \psi_\tecxt\text{BCS} | \hat{b}_\textbf{k}^\dagger | \psi_\tecxt\text{BCS} \rangle = |\mathcal{N}|^2 \braket\langle 0 | \hat{V}^\dagger \hat{b}_\textbf{k}^\dagger \hat{V} | 0 \rangle = \\
+&= \braket\langle 0 | \prod_\textbf{q} \left( \alpha_\textbf{q} + \beta_\textbf{q}^\ast \hat{b}_\textbf{q} \right) \hat{b}_\textbf{k}^\dagger \hat{V} | 0 \rangle = \\
+&= \braket\langle 0 | \left( \alpha_\textbf{k} + \beta_\textbf{k}^\ast \hat{b}_\textbf{k} \right) \hat{b}_\textbf{k}^\dagger  \prod_{\textbf{q} \neq \textbf{k}} \left( \alpha_\textbf{q} + \beta_\textbf{q}^\ast \hat{b}_\textbf{q} \right) \hat{V}  | 0 \rangle = \\
+&= \beta^\ast_\textbf{k}\braket\langle 0 | \kla\left( 1 - \hat{c}_{\textbf{k}\uparrow}^\dagger \hat{c}_{\textbf{k}\uparrow} +  \hat{c}_{-\textbf{k}\downarrow}^\dagger \hat{c}_{-\textbf{k}\downarrow} \right)  \prod_{\textbf{q} \neq \textbf{k}} \left( \alpha_\textbf{q} + \beta_\textbf{q}^\ast \hat{b}_\textbf{q} \right) \hat{V} | 0 \rangle  = \\
+&= \beta_\textbf{k}^\ast \braket\langle 0 | \left( \alpha_\textbf{k}^\ast + \beta_\textbf{k} \hat{b}_\textbf{k}^\dagger \right) \prod_{\textbf{q} \neq \textbf{k}} \left( \alpha_\textbf{q} + \beta_\textbf{q}^\ast \hat{b}_\textbf{q} \right) \left( \alpha_\textbf{q}^\ast + \beta_\textbf{q} \hat{b}_\textbf{q}^\dagger \right) | 0 \rangle = \\
+&= \alpha_\textbf{k}^\ast \beta_\textbf{k}^\ast \braket\langle 0 | \prod_{\textbf{q} \neq \textbf{k}} \klam\left[ |\alpha_\textbf{q}^\ast|^2 + |\beta_\textbf{q}|^2 \kla\left( 1 - \hat{c}_{\textbf{q}\uparrow}^\dagger \hat{c}_{\textbf{q}\uparrow} +  \hat{c}_{-\textbf{q}\downarrow}^\dagger \hat{c}_{-\textbf{q}\downarrow} \right) \right] | 0 \rangle = \\
+&= \alpha_\textbf{k}^\ast \beta_\textbf{k}^\ast \braket\langle 0 | \prod_{\textbf{q} \neq \textbf{k}} \klam\left[ |\alpha_\textbf{q}|^2 + |\beta_\textbf{q}|^2 \right] | 0 \rangle = \alpha_\textbf{k}^\ast \beta_\textbf{k}^\ast.
+\end{align}
+Before we combine our results in the energy expectation value consider the gap
+\begin{align}
+\Delta_\textbf{k} &= -\sum_{\textbf{k}'} W_{\textbf{k}\textbf{k}'} \bra\langle \hat{b}_{\textbf{k}'} \rangle_{\psi_\tecxt\text{BCS}} = -\sum_{\textbf{k}'} W_{\textbf{k}\textbf{k}'} \kla\left( \bra\langle \hat{b}_{\textbf{k}'}^\dagger \rangle_{\psi_\tecxt\text{BCS}} \right)^\ast = \\
+&= -\sum_{\textbf{k}'} W_{\textbf{k}\textbf{k}'} \alpha_{\textbf{k}'} \beta_{\textbf{k}'} = -\sum_{\mathbf{k}'} W_{\mathbf{k}\textbf{k}'} \frac{\Delta_{\mathbf{k}'} \kla\left( E_{\mathbf{k}'} - \epsilon_{\mathbf{k}'} \right)}{2E_{\mathbf{k}'} (E_{\mathbf{k}'} - \epsilon_{\mathbf{k}'})} = \\
+&= -\frac{1}{2}\sum_{\mathbf{k}'} W_{\mathbf{k}\textbf{k}'} \frac{\Delta_{\mathbf{k}'}}{\sqrt{\epsilon_{\mathbf{k}'}^2 + |\Delta_{\mathbf{k}'}|^2}}.
+\end{align}
+This is a self-consistency equation for $\Delta_\textbf{k}$.
+Before attempting a solution, note that the total energy now becomes
+\begin{align}
+E_\tecxt\text{BCS} &= \sum_\textbf{k} \kla\left( \epsilon_\textbf{k} - E_\textbf{k} + \Delta_\textbf{k} \langle \hat{b}_{\mathbf{k}}^\dagger \rangle \right) = \sum_\textbf{k} \kla\left( \epsilon_\textbf{k} - E_\textbf{k} + \Delta_\textbf{k} \alpha_\textbf{k}^\ast \beta_\textbf{k}^\ast \right) = \\
+&= \sum_\textbf{k} \kla\left( \epsilon_\textbf{k} - E_\textbf{k} + \frac{1}{2} \Delta_\textbf{k} \frac{\Delta_\textbf{k}^\ast}{E_\textbf{k}} \right) = \sum_\textbf{k} \frac{\epsilon_\textbf{k} E_\textbf{k} - E_\textbf{k}^2 + \frac{1}{2} |\Delta_\textbf{k}|^2}{E_\textbf{k}} = \\
+&= \sum_\textbf{k} \frac{\epsilon_\textbf{k}\kla\left( \sqrt{\epsilon_\textbf{k}^2 + |\Delta_\textbf{k}|^2} - \epsilon_\textbf{k} \right) - \frac{1}{2}|\Delta_\textbf{k}|^2}{\sqrt{\epsilon_\textbf{k}^2 + |\Delta_\textbf{k}|^2}}.
+\end{align}
+Thus the BCS state reduces the total energy regardless of $\Delta_\textbf{k}$ (except for $\Delta\equiv 0$).
+To see this, define $x := \frac{|\Delta_\textbf{k}|^2}{\epsilon_\textbf{k}^2}$.
+Then the claim of $E_\tecxt\text{BCS} < 0$ is equivalent to $\sqrt{1 + x} < 1+\frac{x}{2}$ for $x>0$.
+However, this is easy to see since
+\begin{align}
+1 + x &< 1+ x + \frac{x^2}{4} = \kla\left( 1 + \frac{x}{2} \right)^2\\
+\Rightarrow\ \ \ \sqrt{1 + x} &< 1 + \frac{x}{2}.
+\end{align}
+We may expand the total energy in the limit of $|\Delta_\textbf{k}| \ll \epsilon_\textbf{k}$.
+Then we find
+\begin{align}
+E_\tecxt\text{BCS} &= \sum_\textbf{k} \frac{\epsilon_\textbf{k}^2 \kla\left( \sqrt{1 + \frac{|\Delta_\textbf{k}|^2}{\epsilon_\textbf{k}^2}} - 1 \right) - \frac{|\Delta_\textbf{k}|^2}{2}}{E_\textbf{k}} \sim \\
+&\sim \sum_\textbf{k}  \frac{\epsilon_\textbf{k}^2 \kla\left( \frac{|\Delta_\textbf{k}|^2}{2\epsilon_\textbf{k}^2} - \frac{1}{8} \frac{|\Delta_\textbf{k}|^4}{\epsilon_\textbf{k}^4} \right) - \frac{|\Delta_\textbf{k}|^2}{2}}{E_\textbf{k}} = -\frac{1}{8} \sum_\textbf{k} \frac{|\Delta_\textbf{k}|^4}{\epsilon_\textbf{k}^2 E_\textbf{k}}
+\end{align}
+
+\section{Solution to the self-consistency equation}
+In the previous section we found a self-consistency equation for the gap
+\begin{align}
+\Delta_{\mathbf{k}} &= -\frac{1}{2}\sum_{\mathbf{k}'} W_{\mathbf{k}\textbf{k}'} \frac{\Delta_{\mathbf{k}'}}{\sqrt{\epsilon_{\mathbf{k}'}^2 + |\Delta_{\mathbf{k}'}|^2}}.
+\end{align}   
+The simplest case is that of a ``constant'' attractive potential $W_{\textbf{k}\textbf{k}'} \equiv -W$ and a constant gap $\Delta_\textbf{k} \equiv \Delta$.
+Then we find
+\begin{align}
+\Delta &= \frac{W}{2} \sum_{\textbf{k}} \frac{\Delta}{\sqrt{\epsilon_\textbf{k}^2 + |\Delta|^2}} \simeq \frac{W}{2} \intr\int_{\mathbb{R}^{3}} \frac{\Delta}{\sqrt{\kla\left( \frac{k^2}{2m} + V \right)^2 + |\Delta|^2}} \, \mathrm{d}^{3}k.
+\end{align}
+Substituting $x := \frac{k^2}{2m|\Delta|}$ and $v := \frac{V}{|\Delta|}$ gives
+\begin{align}
+\frac{\Delta}{2\pi W} &\simeq \intx\int_{0}^{\infty} \frac{k^2}{\sqrt{\kla\left( \frac{k^2}{2m|\Delta|} + \frac{V}{|\Delta|} \right)^2 + 1}}\, \frac{\mathrm{d}(k^2)}{2k} = \\
+&= \intx\int_{0}^{\infty} \frac{2m|\Delta|x}{\sqrt{\kla\left( x + v \right)^2 + 1}}\, \frac{2m|\Delta| \text{d}x}{2\sqrt{2m|\Delta|x}} = \\
+&= \kla\left( 2m|\Delta| \right)^{3/2} \frac{1}{2} \intx\int_{0}^{\infty} \frac{x^{1/2}}{\sqrt{\left( x + v \right)^2 + 1}} \, \mathrm{d}x
+\end{align}
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

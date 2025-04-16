@@ -1,0 +1,297 @@
+\documentclass[german, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[ngerman]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrpage2}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\newcommand*{\titel}{Comptonstreuung}
+\newcommand*{\autor}{Joachim Schwardt und Ludwig Romstedt}
+\newcommand*{\abk}{CS}
+\newcommand*{\betreuer}{Juliane Volkmer}
+\newcommand*{\messung}{15. Januar 2021}
+\newcommand*{\ort}{ASB/406a}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+\titlehead{F-Praktikum \abk \hfill TU Dresden}
+\subject{Versuchsprotokoll}
+\title{\titel}
+\author{Ludwig Romstedt und Joachim Schwardt}
+\date{\begin{tabular}{ll}
+Protokoll: & \today\\
+Messung: & \messung\\
+Betreuer: & \betreuer\\
+Ort: & \ort\\
+Versuchsplatz: & Szintillationsdetektor \end{tabular}}
+
+\begin{document}
+
+\begin{titlepage}
+\maketitle  % Titel setzen
+\tableofcontents  % Inhaltsverzeichnis setzen
+\end{titlepage}
+
+\section{Aufgabenstellung}
+\begin{itemize}
+\item[1.] Bestimmung optimaler Parameter für die spektroskopische Messung niederenergetischer Photonen im Bereich von 10\,keV bis 90\,keV mit einem Szintillations- oder Halbleiterdetektor
+\item[2.] Messung und Diskussion der Maxima einer Impulshöhenverteilung bei einem Streuwinkel von $90\,\degree$
+\item[3.] Untersuchung der Winkelabhängigkeit von Lage und Fläche des Vollenergiepeaks
+\item[4.] Bestimmung der Abhängigkeit vom Durchmesser des Streukörpers sowie vom Abstand zwischen Quelle und Streukörper
+\end{itemize}
+\section{Theoretischer Hintergrund}
+Wir verwenden im Folgenden natürliche Einheiten $c=1=\hbar$.
+\subsection{Wirkungsquerschnitt}
+Der Wirkungsquerschnitt $\sigma$ ist ein Maß dafür, wie groß die Wahrscheinlichkeit für einen bestimmten Prozess ist. Im Bezug auf experimentelle Größen kann man ihn über
+\begin{align*}
+\sigma :=\frac{N}{\Phi}\equiv\frac{\tecxt\text{Anzahl an Prozessen pro Zeit}}{\tecxt\text{Teilchenfluss pro Fläche und Zeit}}\numberthis\label{eqn:sigma definition simple}
+\end{align*}
+definieren. Der Wirkungsquerschnitt ist im Allgemeinen stark von der Energie der Teilchen abhängig. Bei der Wechselwirkung von Photon und Elektron gibt es dabei mehrere, qualitativ unterschiedliche Prozesse, die letztlich alle gleichzeitig auftreten, aber jeweils für unterschiedliche Energien dominant sind. Im Energiebereich dieses Versuchs von etwa $1\,\tecxt\text{keV}-100\,\tecxt\text{keV}$ sollte im Rahmen der Messgenauigkeit nur die Comptonstreuung relevant sein.
+\subsection{Comptonstreuung}
+Für die kinematische Untersuchung der Comptonstreuung nimmt man quasi-freie Elektronen an. Im Fall hoher Photonenenergien oder schwach gebundener Elektronen ist diese Annahme eine gute Näherung. Sei $E'$ die Energie eines eintreffenden Photons, $E$ die Energie des Photons bzw. $E_e$ die Energie des Elektrons nach dem Stoß, und sei der Streuwinkel definiert durch $\vec{p}\,'\cdot\vec{p} =: |\vec{p}\,'||\vec{p}|\cos\theta$. Die Viererimpuls-Erhaltung ergibt
+\begin{align*}
+p_e^2&=\kla\left( {p'+p_e'-p} \right)^2\\
+\Rightarrow\ \ \ m_e^2&=\kla\left( {E'-E+m_e} \right)^2-\kla\left( {\vec{p}\,'-\vec{p}} \right)^2.
+\end{align*}
+Daraus folgt mit dem Photonenimpuls $E=|\vec{p}|$ der Zusammenhang 
+\begin{align*}
+m_e^2&=(E'-E)^2+2m_e(E'-E)+m_e^2-E'^2 -E^2+2E'E\cos\theta\\
+\Rightarrow\ \ \ 0&=2m_e(E'-E)-2E'E\kla\left( {1-\cos\theta} \right)\\
+\Rightarrow\ \ \ E'&=E+\frac{E'E}{m}(1-\cos\theta).
+\end{align*}
+Mit $\mu:=\cos\theta$ erhält man dann einen Ausdruck für die Energie des gestreuten Photons:
+\begin{align*}
+E&=\frac{E'}{1+\frac{E'}{m_e}(1-\mu)} \numberthis\label{eqn:CS E of E prime and mu}
+\end{align*}
+Um die Wahrscheinlichkeit dafür zu berechnen, dass das Photon in ein Raumwinkelelement $\tecxt\text{d}\Omega=-\tecxt\text{d}\mu\tecxt\text{d}\phi$ gestreut wird, benötigt man die Quantenelektrodynamik. In niedrigster Ordnung erhält man gemäß \cite{Wiki Klein Nishina} mit dem klassischen Elektronenradius $r_e=\frac{\alpha}{m_e}$ folgendes Ergebnis:
+\begin{align*}
+\sigma_\Omega &:=\frac{\tecxt\text{d}\sigma}{\tecxt\text{d}\Omega}=\frac{r_e^2}{2}\kla\left( {\frac{1}{1+\frac{E'}{m_e}(1-\mu)}} \right)^2\kla\left( {\frac{E'}{m_e}(1-\mu)+\frac{1}{1+\frac{E'}{m_e}(1-\mu)} + \mu^2} \right)\numberthis\label{eqn:Klein Nishina}
+\end{align*}
+Für $\mu=1$ ergibt sich dabei einfach $\sigma_\Omega=r_e^2$. Allerdings führt die Vernachlässigung der Bindungsenergie in diesem Grenzfall zum falschen Ergebnis. Nach Compton ist $E_e=E'-E(\mu=1)=0$, die auf das Elektron übertragene Energie verschwindet im Grenzwert kleiner Streuwinkel. Bei einer benötigten, endlichen Anregungsenergie muss damit auch der Wirkungsquerschnitt gegen Null gehen.\\ 
+Allerdings ist die Argumentation über eine Formel, die ja unter Annahme freier Elektronen hergeleitet wurde, eigentlich nicht ausreichend, um eine solche Schlussfolgerung zu ziehen. Für eine präzise Herleitung benötigt man die sogenannte inkohärente Streufunktion \cite{CS Anleitung}.
+\subsection{Szintillationsdetektor}
+Wir verwenden an unserem Versuchsplatz einen Szintillationsdetektor. Dieser besteht üblicherweise aus einem Szintillator-Material und einem Photomultiplier. Der Szintillator kann von einfallenden Photonen angeregt werden, und emittiert dann die Anregungsenergie größtenteils in Form von Licht im sichtbaren, also niedrigen eV-Bereich. Dadurch kann ein einzelnes keV-Photon deutlich mehr als nur ein Lichtsignal auslösen. Wenn letztere auf die Photokathode des Photomultipliers treffen, lösen sie durch den photoelektrischen Effekt Elektronen heraus. Diese werden dann in einem elektrischen Feld in Richtung weiterer Elektroden beschleunigt, wodurch eine Verstärkung erreicht werden kann, die exponentiell mit der Anzahl der Elektroden ansteigt. Der gemessene Strom ist dann proportional zu der Anzahl einfallender Photonen. Die Energieauflösung ist mit grob $\frac{\Delta E}{E}\approx 10\,\%$ aber deutlich schlechter als bei einem Halbleiterdetektor.
+\section{Durchführung und Auswertung}
+Für die Messung wird das lokal vorhandene Programm \texttt{winTMCA32} verwendet, die ausgegebenen Dateien können dann in Textdateien konvertiert werden. Für die Auswertung lesen wir die Daten in ein selbstgeschriebenes Python-Skript ein. Die Kurvenanpassung erfolgt über \texttt{scipy.optimize.curve{\_}fit} und gibt die Parameter eines vorgegebenen Modells sowie deren Kovarianz zurück.\\
+Sofern nicht anders angegeben verwenden wir bei allen Messungen als Streukörper einen Aluminiumzylinder mit $d=6\,$mm Durchmesser und einen Abstand von Quelle zu Streukörper von $r=3\,$cm.
+\subsection{Kalibrierung des Detektors}
+Es stehen vier radioaktive Quellen zur Verfügung. Ziel ist es, einen Zusammenhang $E(k)=\alpha\cdot k+E_0$ für die Energie als Funktion der Kanalnummer $k$ zu erhalten. Für jede Quelle wird dazu ein Impulshöhenspektrum aufgenommen und der Peak des Maximums mittels gaussförmigen Fit einem Kanal zugeordnet. Anschließend wird der Peak mit der aus Datenblättern bekannten Energie verglichen. Aus der grafischen Darstellung für alle vier Quellen erhält man dann die Kalibrierung. Aufgrund der niedrigen Energieauflösung können viele Peakenergien grafisch nicht getrennt werden. Deshalb wurde in Tabelle \ref{table:kalibrierung} jeweils ein gewichteter Mittelwert über die Übergangswahrscheinlichkeiten für energetisch naheliegende Peaks gebildet.  
+\begin{table}[!h]
+\centering
+\begin{tabular}{c|c|c|c|c|c}
+Quelle&$E_\gamma\,/\,$keV&$P(E_\gamma)\,/\,$\%&$\overline{E}_\gamma\,/\,$keV&$k$&$\Delta k$\\ \hline
+        &30.625 & 33.9&&&\\ \cline{2-3}
+	    &30.973 & 62.2&&&\\ \cline{2-3}
+        &34.92 	& 5.88&31.61&348.80&0.226\\ \cline{2-3}
+${}^{133}$Ba&34.987 & 11.4&&&\\ \cline{2-3}
+	    &35.818 	& 3.51&&&\\ \cline{2-6}
+	    &79.614&2.65&\multirow{2}{*}{80.89}&\multirow{2}{*}{888.56}&\multirow{2}{*}{0.194} \\ \cline{2-3}
+	    &80.998&32.9&&& \\ \hline
+        &31.817 	& 1.99&&&\\ \cline{2-3}
+	    &32.194 	& 3.64&&&\\ \cline{2-3}
+${}^{137}$Cs&36.304 & 0.348&32.86&355.13&1.437\\ \cline{2-3}
+	    &36.378 	& 0.672&&&\\ \cline{2-3}
+	    &37.255 	& 0.213&&&\\ \hline
+\multirow{6}{*}{${}^{152}$Eu}&39.522 &21.0&&& \\ \cline{2-3}
+&40.118 &	     37.7&&&\\ \cline{2-3}
+&45.293 &3.75 &40.96&442.97&0.618 \\ \cline{2-3}
+&45.414 &	      7.26&&&\\ \cline{2-3}
+&46.578 &	      2.40&&&\\ \cline{2-6}
+&5.641 &14.0 &5.64&131.82&0.505\\ \hline
+\multirow{2}{*}{${}^{241}$Am}&59.541 & 35.9 & 59.54 &655.26&0.119\\ \cline{2-6}
+&26.345&2.4&26.35&--&-- \\ 
+\end{tabular}
+\caption{Kanalnummern $k$ der Peaks mit statistischer Unsicherheit und zugehörige gemittelte Photonen-Energien aus \cite{Radio Nuklid Info}.}
+\label{table:kalibrierung}
+\end{table}\\
+Für die Kalibrierung wird der Peak von ${}^{241}$Am bei $E= 26.35\,$keV nicht verwendet. Dieser Peak wird von Photonen überlagert, die nur einen Teil ihrer Energie im Detektor verlieren, aber eigentlich zum Peak mit $E= 59.54\,$keV gehören. Die Peaks liegen nur weit genug auseinander, um eine Deformierung zu kleineren Energien hin zu erkennen (s. Abb. \ref{figure:Am241} im Anhang). In Abb. \ref{figure:Ba133} sind die Messwerte mit Gauss-Fit für ${}^{133}$Ba grafisch dargestellt. Die anderen drei Plots befinden sich im Anhang.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.45]{Plot_1_Ba.png}
+\caption{Gauss-Fit für die Peaks eines Impulshöhenspektrums von ${}^{133}$Ba.}
+\label{figure:Ba133}
+\end{figure}\,\\ \\
+Die Parameter für die Kalibrierung ergeben sich aus der linearen Regression der Daten aus Tab. \ref{table:kalibrierung} zu $\alpha = (97\pm 4)\,$eV und $E_0=(-3.7\pm 2.2)\,$keV. Der lineare Zusammenhang konnte zwar mit Abb. \ref{figure:Kalibrierung} qualitativ bestätigt werden, der Fit ist aber nicht mit den geringen Unsicherheiten der bestimmten Kanalnummern vereinbar.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.45]{Plot_2_Kalibrierungskurve.png}
+\caption{Kalibrierungskurve für den Szintillationsdetektor.}
+\label{figure:Kalibrierung}
+\end{figure}
+\subsection{Zeitoptimierung}
+Für alle weiteren Messungen wird die ${}^{241}$Am-Quelle verwendet. Bei einem Streuwinkel von $\theta=90\,\degree$ nehmen wir bei einer Messzeit von $t=1200\,$s das Impulshöhenspektrum einmal mit und einmal ohne Streukörper auf. Es soll im Folgenden diejenige minimale Messzeit $t_\tecxt\text{opt}$ bestimmt werden, für die eine Fehlertoleranz von $\gamma:=\frac{\Delta\dot{N}}{\dot{N}}=5\,\%$ noch nicht überschritten wird.\\ 
+Zunächst berechnen wir dazu die Anzahl an Ereignissen $N_g$ im Peak. Um ein einheitliches Vorgehen dafür zu haben, bestimmen wir im Folgenden immer den Gauss-Fit und summieren dann über die Ereignisse in allen Kanälen, die in der $2\sigma$-Umgebung des Peaks liegen. Wählt man ein größeres Intervall, so berücksichtigt man auch die Ausläufer des Peaks. Der Nachteil liegt aber darin, dass dann auch das ``Rauschen'' stärker in die Auswertung mit eingeht. Die Wahl von $2\sigma$ ist dabei lediglich ein optisch abgeschätzter Kompromiss.\\
+Für die Bestimmung von $N_0$ verwenden wir dasselbe Kanalnummer-Intervall wie für $N_g$, da uns ja die Statistik des Peaks mit Streukörper interessiert, weshalb der Untergrund auch nur in diesem Bereich relevant ist. Insbesondere wird für die Untergrundmessung also kein Gauss-Fit bestimmt. Für die Formeln der optimalen Messzeit aus \cite{CS Anleitung} definieren wir noch allgemein die Zählrate $\dot{N}=\frac{N}{t}$ mit der Messzeit $t=1200\,$s und der Differenz $N=N_g-N_0$. Es wird von Poisson-verteilten Größen ausgegangen, also $\Delta N=\sqrt{N}$:
+\begin{align*}
+t_\tecxt\text{opt}&=t\cdot\frac{N_g+N_0}{\gamma^2(N_g-N_0)^2}=266.6\,\tecxt\text{s}\\
+\Delta t_\tecxt\text{opt}&=t\cdot\frac{\sqrt{(N_g+3N_0)^2N_g + (3N_g+N_0)^2N_0}}{\gamma^2(N_g-N_0)^3}=12.1\,\tecxt\text{s}
+\end{align*}
+Dabei waren die verwendeten Werte $N_g=11524$ und $N_0= 5920$, eine grafische Darstellung findet sich in Abb. \ref{figure:Zeitoptimierung}. Interessant ist noch, dass die Unsicherheit der Zählrate $\gamma$ quadratisch in die Messzeit eingeht, für eine höhere Genauigkeit muss also deutlich länger gemessen werden. Um im zeitlichen Rahmen zu bleiben, verwenden wir in Absprache mit der Betreuerin für alle weiteren Messungen $t=270\,$s.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.45]{Plot_3_Zeitoptimierung.png}
+\caption{Impulshöhenspektren mit und ohne Streukörper. Der Gauss-Fit ist über zwei Standardabweichungen dargestellt.}
+\label{figure:Zeitoptimierung}
+\end{figure}
+\subsection{Diskussion des Impulshöhenspektrums von Am${}^{241}$ bei $\theta=90\,\degree$}
+Das Spektrum aus Abb. \ref{figure:Zeitoptimierung} soll noch einmal genauer diskutiert werden. Zunächst einmal haben wir Energien bis etwa 100\,keV gemessen und erwarten gemäß den Daten aus Tab. \ref{table:kalibrierung} daher nur einen Peak bei $E\approx 59.5\,$keV und einen bei $E\approx 26.3\,$keV; bei der ``Untergrundmessung'' ist die Probe immer noch in der Nähe des Detektors, weshalb wir trotzdem erwarten, dass die charakteristischen Energien zumindest abgeschwächt erkennbar sind. Bei der Messung mit Streukörper verlieren die Photonen durch Comptonstreuung einen Teil ihrer Energie, die Peaks erwarten wir gemäß (\ref{eqn:CS E of E prime and mu}) hier bei $E\approx 53.3\,$keV bzw. $E\approx 25.0\,$keV. Der niederenergetische Peak muss deutlich kleiner sein, weil die Größe des Peaks abhängig von der jeweiligen Übergangswahrscheinlichkeit ist. \\
+Im Rahmen der Unsicherheiten können wir den großen Peak in der Messung eindeutig zuordnen, die Verschiebung des Maximums relativ zum Untergrund ist ebenfalls gut erkennbar. Außerdem stimmt die Form des Peaks gut mit einer Normalverteilung überein. Beim kleinen Peak ist das nicht der Fall, weil er von Photonen des größeren Peaks überlagert wird; siehe dazu die ausführlichere Begründung im Abschnitt zur Kalibrierung.  
+\subsection{Winkelabhängigkeit von Energie und Wirkungsquerschnitt}
+Um die Winkelabhängigkeit zu untersuchen, nehmen wir bei sechs weiteren Winkel ein Impulshöhenspektrum mit und ohne Streukörper auf. Die Kanalnummer des Peaks wird analog zum zuvor beschrieben Vorgehen bestimmt, aus der Kalibrierung erhält man dann die Energie der gestreuten Photonen. Für die Unsicherheit gilt nach Gauss und unter Berücksichtigung der Korrelation der Fitparameter:
+\begin{align*}
+\Delta E&=\sqrt{(\alpha\Delta k)^2+\kla\left( {k\Delta\alpha + \Delta E_0} \right)^2}\numberthis\label{eqn:Delta E von alpha und E0}
+\end{align*}
+In Tab. \ref{table:Winkelabhaenigkeit} ist außerdem die Zählrate mit Unsicherheit angegeben. Dazu berechnet man die Fläche des Peaks, der sich aus der Differenz der Daten mit und ohne Streukörper ergibt, und dividiert durch die Messzeit. Mit Fläche ist dabei die Summe über die Ereignisse in den Kanälen der $2\sigma$-Umgebung gemeint. Die Werte bei $\theta=90\,\degree$ entnehmen wir den Daten der vorherigen Messung, hier ist der relative Fehler aufgrund der längeren Messzeit deshalb deutlich kleiner. Die Unsicherheit kann wieder über Gauss mit $\Delta N=\sqrt{N}$ berechnet werden:
+\begin{align*}
+\Delta\dot{N}&=\sqrt{\kla\left( {\frac{\partial\dot{N}}{\partial\dot{N}_g}\Delta\dot{N}_g} \right)^2+\kla\left( {\frac{\partial\dot{N}}{\partial\dot{N}_0}\Delta\dot{N}_0} \right)^2}=\sqrt{\frac{\dot{N}_g+\dot{N}_0}{t}}\numberthis\label{eqn:Delta dot N von t}
+\end{align*} 
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c|c|c|c}
+$\theta\,/\,\degree$&$k$&$\Delta k$&$E\,/\,$keV&$\Delta E\,/\,$keV&$\dot{N}\,/\,\tecxt\text{s}^{-1}$&$\Delta\dot{N}\,/\,\tecxt\text{s}^{-1}$\\ \hline
+30 & 629.56 & 2.157 & 57.34 & 4.788 & 9.83 & 0.352\\ \hline
+55 & 607.92 & 2.168 & 55.24 & 4.699 & 7.07 & 0.223\\ \hline
+70 & 594.23 & 3.145 & 53.92 & 4.648 & 5.69 & 0.203\\ \hline
+90 & 579.38 & 1.40 & 52.48 & 4.578 & 4.24 & 0.089\\ \hline
+100 & 565.36 & 2.228 & 51.12 & 4.524 & 4.56 & 0.164\\ \hline
+115 & 551.94 & 2.667 & 49.82 & 4.471 & 4.47 & 0.160\\ \hline
+130 & 538.76 & 2.194 & 48.54 & 4.414 & 5.0 & 0.164\\
+\end{tabular}
+\caption{Kanalnummern der Peaks mit Unsicherheit aus dem Gauss-Fit im Impulshöhenspektrum bei verschiedenen Winkeln. Die Energie und ihre Unsicherheit werden mit der Kalibrierung und (\ref{eqn:Delta E von alpha und E0}) berechnet.}
+\label{table:Winkelabhaenigkeit}
+\end{table}\\
+Aus den Daten in Tab. \ref{table:Winkelabhaenigkeit} lässt sich die Theorie mit den Messwerten vergleichen. Bei der Winkelabhängigkeit der Energie wird einfach (\ref{eqn:CS E of E prime and mu}) für die erwartete Energie $E=59.54\,$keV in Abhängigkeit von $\mu$ dargestellt. Für Abb. \ref{figure:Energie von mu} wurde außerdem $\Delta\mu=\sin\theta\Delta\theta$ mit $\Delta\theta =2\,\degree$ verwendet. Die Unsicherheiten sind fast ausschließlich auf die Kalibrierung zurückzuführen. 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.45]{Plot_4_Energie.png}
+\caption{Winkelabhängigkeit der Energie der gestreuten Photonen.}
+\label{figure:Energie von mu}
+\end{figure}\\
+Die Zählraten in Tab. \ref{table:Winkelabhaenigkeit} sollten proportional zum Wirkungsquerschnitt sein, da sie ein Maß für die Wahrscheinlichkeit des Streuprozesses sind. Für den Vergleich mit der Theorie wird (\ref{eqn:Klein Nishina}) mit einem konstanten Faktor multipliziert, dieser ergibt sich aus einer Regression. Alternativ könnte man die Kurve auch auf den Messwert bei $\theta=90\,\degree$ normieren, da dieser die geringste Unsicherheit hat. Auch hier kann der qualitative Verlauf mit Abb. \ref{figure:Sigma Plot} grafisch bestätigt werden.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.45]{Plot_5_Sigma.png}
+\caption{Zählraten als Funktion des Richtungskosinus und Vergleich mit der Theorie nach Klein-Nishina.}
+\label{figure:Sigma Plot}
+\end{figure}\\
+Die einzelnen Impulsspektren werden nicht abgebildet, in Abb. \ref{figure:Gauss Fits Winkel} findet sich dafür eine grafische Darstellung der Gauss-Fits für alle Winkel. An den Maxima der Peaks kann man bereits den prinzipiellen Verlauf des Wirkungsquerschnitts in Abb. \ref{figure:Sigma Plot} erkennen.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.45]{Plot_5_Gauss.png}
+\caption{Gauss-Fits der Peaks für verschiedene Streuwinkel.}
+\label{figure:Gauss Fits Winkel}
+\end{figure}
+\subsection{Einfluss des Streukörperdurchmesser}
+Dieser Teilversuch erfolgt bei einem Streuwinkel von $\theta=55\,\degree$, damit wir die Untergrundmessung und die Messung für $d=6\,$mm nicht wiederholen müssen. Außerdem muss hier für jeden weiteren Durchmesser nur eine Messung mit Streukörper gemacht werden, da die Untergrundmessung aufgrund des konstanten Winkels immer dasselbe ergeben muss. Kanalnummern der Peaks, Zählraten und Unsicherheiten wurden analog zum bisherigen Vorgehen bestimmt. In Tab. \ref{table:Durchmesser} sind der Vollständigkeit halber auch noch einmal die Werte für $d=6\,$mm aufgelistet. 
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c|c}
+$d\,/\,$mm&$k$&$\Delta k$&$\dot{N}\,/\,\tecxt\text{s}^{-1}$&$\Delta\dot{N}\,/\,\tecxt\text{s}^{-1}$\\ \hline
+2 & 613.92 & 2.165 & 1.17 & 0.149 \\ \hline
+4 & 606.98 & 1.313 & 3.93 & 0.198 \\ \hline
+6 & 608.88 & 0.75 & 7.07 & 0.223 \\ \hline
+10 & 604.53 & 0.638 & 10.59 & 0.253 \\ \hline
+15 & 603.29 & 0.612 & 10.25 & 0.25 \\ 
+\end{tabular}
+\caption{Kanalnummern der Peaks mit Unsicherheit und zugehörige Zählraten für verschiedene Durchmesser.}
+\label{table:Durchmesser}
+\end{table}\\
+Abb. \ref{figure:Durchmesser Linear} zeigt die lineare Regression $\dot{N}=\beta\cdot d + n_0$ der Zählraten als Funktion des Durchmessers. Wir erhalten die Werte $\beta=(1.18 \pm 0.12)\,\tecxt\text{s}^{-1}\tecxt\text{mm}^{-1}$ und $n_0=(-0.8\pm 0.7)\,\tecxt\text{s}^{-1}$. Dabei wurde der Wert mit $d=15\,$mm nicht in die Regression mit einbezogen, da es sich bei der Probe vermutlich nicht um Aluminium handelt. Diese Vermutung ist allerdings falsch. Wir erwarten zwar einen linearen Zusammenhang, weil die Anzahl der Streuzentren entlang des Weges der Photonen proportional zur Zählrate ist. Da wir annehmen, dass der Streukörper homogen ist, muss diese Anzahl proportional zum Radius des Zylinders sein (und damit auch zum Durchmesser). Für größere Durchmesser treten allerdings zusätzliche Effekte wie Mehrfachstreuung und Absorption auf, die zu einem Abflachen der Zählrate führen. Es erreichen weniger Photonen den Detektor, weil eine vollständige Absorption wahrscheinlicher wird, oder weil sie durch die vielen Streuprozesse abgelenkt werden. Die Abweichung vom linearen Zusammenhang wird auch in Abb. \ref{figure:Durchmesser Gauss} deutlich. Der Peak mit $d=15\,$mm weicht bereits sehr stark ab. Um das Verhalten besser auflösen zu können, müssten aber höhere und vor allem mehr Durchmesser verwendet werden.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.45]{Plot_6_DurchmesserLinear.png}
+\caption{Lineare Regression der Zählraten.}
+\label{figure:Durchmesser Linear}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.45]{Plot_6_DurchmesserGauss.png}
+\caption{Gauss-Fits der Peaks für verschiedene Durchmesser, die Daten sind diesmal hellgrau hinterlegt.}
+\label{figure:Durchmesser Gauss}
+\end{figure}
+\subsection{Abhängigkeit vom Abstand zwischen Quelle und Streukörper}
+Zuletzt wollen wir noch den Abstand zwischen Quelle und Streukörper variieren. Für $r=3\,$cm können wir wieder Messwerte der vorherigen Versuche verwenden. Für jeden weiteren Abstand muss hier immer noch eine Untergrundmessung gemacht werden, da wir implizit natürlich auch den Abstand der Quelle zum Detektor verändern. Das experimentelle Vorgehen ist wieder genau analog zum vorherigen Versuch, die Ergebnisse sind in Tab. \ref{table:Abstand} aufgelistet. 
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c|c}
+$r\,/\,$cm&$k$&$\Delta k$&$\dot{N}\,/\,\tecxt\text{s}^{-1}$&$\Delta\dot{N}\,/\,\tecxt\text{s}^{-1}$\\ \hline
+3 & 608.88 & 0.75 & 7.07 & 0.223 \\ \hline
+5 & 604.87 & 1.226 & 4.39 & 0.192 \\ \hline
+7 & 600.05 & 1.556 & 2.83 & 0.16 \\ \hline
+9 & 602.25 & 1.838 & 2.65 & 0.155 \\ \hline
+11 & 604.18 & 2.34 & 1.87 & 0.14 \\
+\end{tabular}
+\caption{Kanalnummern der Peaks mit Unsicherheit und zugehörige Zählraten für verschiedene Abstände.}
+\label{table:Abstand}
+\end{table}\\
+Die Strahlung der Quelle verteilt sich auf einer Kugeloberfläche und nimmt somit quadratisch mit dem Abstand ab. Der Wirkungsquerschnitt, und damit die Zählrate, sollte proportional zum Verhältnis der Fläche des Streukörpers relativ zu der Fläche dieser Kugeloberfläche sein. Wir erwarten deshalb einen nicht-linearen Zusammenhang der Form $\dot{N}=\frac{\gamma}{r^2}+f_0$ und finden in der Regression letztlich $\gamma = (48\pm 5)\,\tecxt\text{s}^{-1}\tecxt\text{cm}^2$ und $f_0 =(1.93\pm 0.28)\,\tecxt\text{s}^{-1}$. Dafür haben wir die Zählraten über $\frac{1}{r^2}$ dargestellt, um wieder einen linearen Zusammenhang zu erhalten (s. Abb. \ref{figure:Abstand Linear}). Auch hier ist der prinzipielle Verlauf zwar erkennbar, die Linearität ist aber eigentlich nicht mit den geringen Unsicherheiten vereinbar.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.45]{Plot_7_AbstandLinear.png}
+\caption{Lineare Regression der Zählraten als Funktion des inversen quadratischen Abstands von Quelle zu Streukörper.}
+\label{figure:Abstand Linear}
+\end{figure}\\
+In Abb. \ref{figure:Abstand Gauss} sind wieder die Gauss-Fits in der jeweiligen $2\sigma$-Umgebung dargestellt. Im rechten Plot wurden die Peaks auf das Maximum des $r=3\,$cm-Peaks normiert, um die Veränderung von Mittelwert und Breite besser erkennen zu können. Letztere kann im Rahmen der Messgenauigkeit allerdings als konstant angesehen werden.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.45]{Plot_7_AbstandGauss.png}
+\caption{Gauss-Fits der Peaks für verschiedene Durchmesser (links) und Peaks normiert auf das Maximum für $r=3\,$cm (rechts).}
+\label{figure:Abstand Gauss}
+\end{figure}\,\newpage
+\section{Diskussion}
+Die Messungen wurden ``richtig'' durchgeführt, es konnten alle erwarteten Verläufe zumindest qualitativ bestätigt werden. Das beinhaltet den linearen Zusammenhang von Energie und Kanalnummer bei der Kalibrierung, den linearen Zusammenhang von Zählrate und Durchmesser (für kleine $d$), die $\frac{1}{r^2}$-Abhängigkeit der Zählrate vom Abstand zwischen Quelle und Streukörper und die theoretischen Verläufe von Wirkungsquerschnitt und Energie der gestreuten Photonen als Funktion des Streuwinkels.\\ \\
+Im letzten Versuch wurde die Unsicherheit der Abstandsmessung vernachlässigt, weil wir davon ausgegangen sind, dass andere Fehlerquellen dominieren. Aufgrund der relativ.
+Für eine quantitative Analyse müsste vor allem die Kalibrierung verbessert werden. Dafür bräuchte man abgesehen von einer längeren Messzeit und weiteren Quellen aber vermutlich auch einen Detektor mit höherer Energieauflösung. Interessant wäre noch der Nachweis gewesen, dass der Wirkungsquerschnitt für sehr kleine Streuwinkel verschwindet. 
+\begin{thebibliography}{9}
+\bibitem{Wiki Klein Nishina} Wikipedia: Klein-Nishina-Formel für den differentiellen Wirkungsquerschnitt der Streuung von Photonen an freien Elektronen, \url{https://en.wikipedia.org/wiki/Klein-Nishina_formula}, 10.\,Jan.~2021.
+\bibitem{CS Anleitung} Anleitung zum Versuch \emph{Comptonstreuung} (CS, 2020), \url{https://tu-dresden.de/mn/physik/ressourcen/dateien/studium/lehrveranstaltungen/praktika/fortgeschrittenenpraktikum/fp-anleitungen/CS_Anleitung_WS2020.pdf}, 11.\,Jan.~2021.
+\bibitem{Radio Nuklid Info} Radionuklid Daten, insbesondere \emph{decay information radiation} für Strahlungsübergänge, \url{https://www.nndc.bnl.gov/nudat2}, 15.\,Jan.~2021
+\end{thebibliography}
+
+\appendix
+\section{Weitere Impulshöhenspektren der Kalibrierung}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.45]{Plot_1_Cs.png}
+\caption{Gauss-Fit für die Peaks eines Impulshöhenspektrums von ${}^{137}$Cs.}
+\label{figure:Cs137}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.45]{Plot_1_Eu.png}
+\caption{Gauss-Fit für die Peaks eines Impulshöhenspektrums von ${}^{152}$Eu.}
+\label{figure:Eu152}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.45]{Plot_1_Am.png}
+\caption{Gauss-Fit für die Peaks eines Impulshöhenspektrums von ${}^{241}$Am.}
+\label{figure:Am241}
+\end{figure}
+
+
+\end{document}

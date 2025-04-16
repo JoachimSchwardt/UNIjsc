@@ -1,0 +1,104 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning,angles}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\usepackage[compat=1.1.0]{tikz-feynman}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Generalized Numerical Analysis of Fundamental Frequencies}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Frequency Analysis}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Overview}
+In this section we want to introduce the problem and illustrate how we will solve it without going too deep into the technical details.
+Consider a time-series, i.e. a sequence of $N$ complex numbers
+\begin{align}
+Z_N &:= \klammer\left\{ z_n \, \vert \, n=0,\dots,N-1 \right\}
+\end{align}
+which we will also refer to as a \emph{signal}.
+One could in principle also consider higher-dimensional variants.
+But if the components have a sufficient coupling, one can just extract all frequencies from either one of them, and otherwise the problem separates into one-dimensional problems anyway.
+As such there might be additional complications, but the general approach should still remain the same.
+\\
+We want to find the \emph{fundamental frequencies} of $Z_N$.
+For this we define a model of our signal as
+\begin{align}
+z_n^\tecxt\text{M} &:= \sum_{k=0}^K c_k \e^{2\pi\i \nu_k n}.
+\end{align}
+Here the $c_k$ are the amplitudes and phases of the frequency $\nu_k$ in our signal, and $K$ is total number of frequencies.
+The superscript M is to remind one that this is not the measured signal, but rather a reconstruction using Fourier-components.
+For this approach to work with only few such components, the Fourier-transformation of the $z_n$ will generally have to contain isolated peaks as only a few frequencies.
+A slightly more precise, while still somewhat ambiguous statement of this idea is that the Fourier-components
+\begin{align}
+F_j &:= \sum_{n=0}^{N-1} z_n \e^{-2\pi\i \frac{j}{N} n}
+\end{align}
+should only have large amplitudes for a number of indices $j\in\{0,\dots,N-1\}$ that is in a certain sense small compared to the total number of components $N$.\\
+So far, this setup is rather simple.
+The generalization, and ultimately improved frequency analysis, stems from the idea of weighting the signal using weights $w_n$ drawn from a weighting or window function $w(x)$ defined on the interval $[0,1]$.
+This window function should drop of to zero at the edges, to ensure that concatenating the weighted signal $w_nz_n$ with itself repeatedly results in as smooth of a periodic signal as possible.
+To give an example, consider 
+\begin{align}
+z_n := \sin\kla\left( 2\pi \frac{n}{N} \cdot \frac{3}{2} \right).
+\end{align}
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

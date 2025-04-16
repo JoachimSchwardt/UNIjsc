@@ -1,0 +1,125 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{tud} % https://github.com/tud-cd/tud-cd
+\usefonttheme{tud}
+
+
+\title{Extremal Types Theorem}
+\subtitle{Hauptseminar Extreme Events}
+\author{Joachim Schwardt}
+\institute{TU Dresden - Fakultät Physik}
+\date{November 23,~2022}
+
+\usepackage{amsmath}
+\usepackage[most]{tcolorbox}
+\usepackage{setspace}
+
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage[style=numeric, backend=biber, sortcites=true, sorting=none]{biblatex}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{multimedia}
+\usepackage[absolute,overlay]{textpos} %,showboxes for outline
+\TPGrid[0mm,0mm]{1}{1}    % slides are 16cm x 8cm
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{external, calc, shapes.symbols, decorations.markings, shadings, shapes.arrows}
+\usepgfplotslibrary{polar}
+%\pgfplotsset{compat=1.16}
+%\tikzexternalize[prefix=tmp/] % activate and define figures/ as cache folder
+
+\usepackage{hyperref}
+%\def\mathfamilydefault{cmr}
+
+\addbibresource{refs.bib}
+
+% Handle umlauts
+%\setbeamerfont{frametitle}{size=\linespread{1.1}\LARGE}
+\setbeamerfont{note page}{size=\scriptsize}
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+\setbeamertemplate{page number in footline}[frame][text]    % only show "Slide x" (instead of "Slide x of TOTAL")
+
+%%% NEW COMMANDS
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\citefull}[1]{\citeauthor{#1} \citeyear{#1} \cite{#1}}
+\newcommand{\bpt}{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}  % bullet point triangle ("bpt")
+
+%%%% allow placing figures at arbitrary positions without disrupting anything
+%%\newlength{\shiftusenospace}
+%%\newcommand{\usenospace}[2][0pt]{%
+%%  % this command sets it's argument as usual but makes it invisible
+%%  % for all the rest (a box of no width and no height)
+%%  % an optional argument may be provided to shift this structure
+%%  % up or downwards (default value 0pt)
+%%  \ifthenelse{\equal{#1}{c}}{ % then-branch
+%%    \settoheight{\shiftusenospace}{#2} %
+%%    \setlength{\shiftusenospace}{-0.5\shiftusenospace} %
+%%    \addtolength{\shiftusenospace}{0.5ex} %
+%%  }{ % else-branch
+%%    \setlength{\shiftusenospace}{#1}
+%%  } % \ifthenelse
+%%  \makebox[0pt][l]{% make a box of width zero (content
+%%                   % just exceeds it to the right)
+%%    \raisebox{\shiftusenospace}[0pt][0pt]{ %
+%%                   % raise content 0pt and tell TeX that
+%%                   % it exceeds the baseline 0pt above and
+%%                   % 0pt below (so: is of height zero)
+%%      {#2}         % set the content (in extra braces to
+%%                   % limit the validity of declarations
+%%                   % within #2 to #2 (and not beyond))
+%%    } % \raisebox
+%%  } % \makebox
+%%} % \newcommand[1]{\usenospace}
+%%\newcommand{\putatposition}[3]{%
+%%  % this command allows you to put its argument (#3) to the right by a
+%%  % length #1 and down by a length of #2 of the actual position without
+%%  % changing the positions of the surrounding text
+%%  \usenospace[#2]{\hspace{#1}{#3}}%
+%%} % \newcommand{\putatposition}[3]
+%%% example:
+%%%
+%%% My text\putatposition{-3cm}{2cm}{Hallo Welt}is written here!
+%%%
+
+%%% CUSTOM COMMANDS FOR AUTOCOMPLETION
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\renewcommand{\dd}{\,\mathrm{d}}
+
+\definecolor{myaccent}{RGB}{232,80,40} 
+\colorlet{tudaccent3}{myaccent}
+
+
+\begin{document}
+    \maketitle
+    
+    \input{sections/introduction.tex}
+    
+    \input{sections/theorem.tex}
+    
+    \input{sections/summary.tex}
+    
+    \appendix
+    
+    \begin{frame}[allowframebreaks]{Sources}
+        \phantom{\cite{ExtremeValueStatistics}}
+%        \nocite{*}        % cite everything
+        \printbibliography
+    \end{frame}
+
+\end{document}

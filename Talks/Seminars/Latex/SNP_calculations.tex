@@ -1,0 +1,147 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\begin{document}
+
+\title{Calculations and sidenotes}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Energy mass dependance}
+We assume $p_i=p_j$ for mass-type neutrinos $|\nu_i\rangle$:
+\begin{align*}
+E_i^2&=m_i^2+p_i^2=m_i^2+E^2\ \ \Rightarrow\ \ E_i=E\sqrt{1+\frac{m_i^2}{E^2}} \\
+E_i&= E(1+\frac{m_i^2}{2E^2}+\mathcal{O}(m_i^2))\simeq E+\frac{m_i^2c^4}{2E}
+\end{align*}
+\section{Vacuum oscillations}
+Consider the Hamiltonian describing the time evolution of the mass eigenstates of the system. Note that $\Delta m^2\equiv m_2^2-m_1^2$:
+\begin{align*}
+i\partial_t\begin{pmatrix}
+\nu_1 \\ \nu_2
+\end{pmatrix}&=\frac{1}{2E}\begin{pmatrix}
+m_1^2&0\\ 0&m_2^2
+\end{pmatrix}\begin{pmatrix}
+\nu_1\\ \nu_2
+\end{pmatrix}\ \ \Rightarrow\ \ i\partial_tU^\dagger\nu_a=H_{vac}^mU^\dagger\nu_a\ \ \Rightarrow\ \ i\partial_t\nu_a=UH_{vac}^mU^\dagger\nu_a\\
+&\Rightarrow\ \ i\partial_t\nu_a=\frac{1}{2E}\begin{pmatrix}
+\cos\theta&\sin\theta\\ -\sin\theta&\cos\theta
+\end{pmatrix}\begin{pmatrix}
+m_1^2&0\\ 0&m_2^2
+\end{pmatrix}\begin{pmatrix}
+\cos\theta&-\sin\theta\\ \sin\theta&\cos\theta
+\end{pmatrix}\begin{pmatrix}
+\nu_e\\ \nu_a
+\end{pmatrix}=\\
+&=\frac{1}{2E}\begin{pmatrix}
+m_1^2\cos\theta & m_2^2\sin\theta \\ -m_1^2\sin\theta &m_2^2\cos\theta  
+\end{pmatrix}\begin{pmatrix}
+\cos\theta&-\sin\theta\\ \sin\theta&\cos\theta
+\end{pmatrix}\begin{pmatrix}
+\nu_e\\ \nu_a
+\end{pmatrix}=\\
+&=\frac{1}{2E}\begin{pmatrix}
+m_1^2+\Delta m^2\sin^2\theta &\Delta m^2\sin\theta\cos\theta\\ \Delta m^2\sin\theta\cos\theta &m_2^2-\Delta m^2\sin^2\theta
+\end{pmatrix}\begin{pmatrix}
+\nu_e\\ \nu_a
+\end{pmatrix}
+\end{align*}
+The general diagonalization of a symmetric matrix has the following form:
+\begin{align*}
+\chi_H&=\det (H-TE_2)=T^2-T\,\textrm{tr }H-\det H=\\
+&=T^2-T(a+c)+(ac-b^2)=\\
+&\Rightarrow\ \ T_{2,1}=\frac{1}{2}\left[a+c\pm\sqrt{(a+c)^2-4(ac-b^2)}\right]=\frac{1}{2}\left[a+c\pm\sqrt{(a-c)^2+4b^2}\right]\\
+Hv&\overset{!}{=}Tv\ \ \Rightarrow\ \ \left\{\begin{matrix}
+2ax+2by=(a+c\pm D)x\\2bx+2cy=(a+c\pm D)y
+\end{matrix}\right.\ \ \Rightarrow\ \ \left\{\begin{matrix}
+2by=(c-a\pm D)x\\2bx=(a-c\pm D)y
+\end{matrix}\right.\\
+&\Rightarrow\ \ v_{2,1}=\frac{1}{\sqrt{4b^2+(a-c\pm D)^2}}\begin{pmatrix}
+a-c\pm D\\2b
+\end{pmatrix}=\frac{1/\sqrt{2}}{\sqrt{4b^2+(a-c)^2\pm (a-c)D}}\begin{pmatrix}
+a-c\pm D\\2b
+\end{pmatrix}
+\end{align*}
+\section{Matter effects on neutrino oscillations}
+Since $|\nu_e\rangle$ are 5-6 times more likely to scatter of electrons than the other flavours $|\nu_a\rangle$, the Hamiltonian describing the time evolution of the system will alter. To understand how this works, we will add a charged current potential $V_{CC}\equiv V=\sqrt{2}G_FN_e$ representing the weak potential created by the electron density to our equation:
+\begin{align*}
+H_m&=H_{vac}^m+UVU^\dagger=\frac{1}{2E}\begin{pmatrix}
+m_1^2&0\\ 0&m_2^2
+\end{pmatrix}+\begin{pmatrix}
+\cos\theta &\sin\theta\\ -\sin\theta &\cos\theta
+\end{pmatrix}\begin{pmatrix}
+V&0\\ 0&0
+\end{pmatrix}\begin{pmatrix}
+\cos\theta &-\sin\theta \\ \sin\theta &\cos\theta 
+\end{pmatrix}=\\
+&=\frac{1}{2E}\begin{pmatrix}
+m_1^2&0\\ 0&m_2^2
+\end{pmatrix}+V\begin{pmatrix}
+\cos^2\theta &\sin\theta\cos\theta\\ -\sin\theta\cos\theta &-\sin^2\theta
+\end{pmatrix}=\\
+&=\frac{V}{2}\begin{pmatrix}
+\frac{m_1^2}{EV}+1+\cos 2\theta &\sin 2\theta\\ -\sin 2\theta &\frac{m_2^2}{EV}-1+\cos 2\theta
+\end{pmatrix}\equiv H
+\end{align*}
+This new obtained Hamiltonian can again be diagonalized using different eigenstates(WRONG H MATRIX?!)
+\\
+We diagonalize the obtained Hamiltonian:
+\begin{align*}
+H_m&=H_{vac}+V=\frac{1}{2E}\begin{pmatrix}
+m_1^2+\Delta m^2\sin^2\theta +2EV&\Delta m^2\sin\theta\cos\theta\\ \Delta m^2\sin\theta\cos\theta &m_2^2-\Delta m^2\sin^2\theta
+\end{pmatrix}\\
+&\Rightarrow\ \ m_{2,1m}^2=\frac{1}{2}\left[m_1^2+m_2^2+2EV\pm\sqrt{(-\Delta m^2\cos 2\theta+2EV)^2+(2\Delta m^2\sin\theta\cos\theta)^2}\right]=\\
+&=\frac{1}{2}\left[m_1^2+m_2^2+2EV\pm\Delta m^2\sqrt{(c_2-\frac{2EV}{\Delta m^2})^2+s_2^2}\right]\equiv \frac{1}{2}[m_1^2+m_2^2+2EV\pm \Delta m^2 D]\\
+&\Rightarrow\ \ v_{2,1m}=\frac{1/\sqrt{2}}{\sqrt{s_2^2+(c_2-\frac{2EV}{\Delta m^2})^2\pm (c_2-\frac{2EV}{\Delta m^2})D}}\begin{pmatrix}
+c_2-\frac{2EV}{\Delta m^2}\pm D\\ s_2
+\end{pmatrix}\\
+&\Rightarrow\ \ s_m\equiv\frac{a}{\sqrt{2}}\frac{1}{\sqrt{a^2+b^2+b\sqrt{a^2+b^2}}}=\frac{1}{\sqrt{2}}\frac{\sqrt{a^2+b^2 -b\sqrt{a^2+b^2}}}{\sqrt{a^2+b^2}} \\
+&\Rightarrow\ \ s_{2m}\equiv\sin 2\theta_m=2s_m\sqrt{1-s_m^2}=\frac{\sqrt{a^2+b^2 -b\sqrt{a^2+b^2}}}{\sqrt{a^2+b^2}}\sqrt{2-\frac{a^2+b^2 -b\sqrt{a^2+b^2}}{a^2+b^2}}=\\
+&=\frac{\sqrt{a^2+b^2 -b\sqrt{a^2+b^2}}}{\sqrt{a^2+b^2}}\sqrt{\frac{a^2+b^2+b\sqrt{a^2+b^2}}{a^2+b^2}}=\frac{a\sqrt{a^2+b^2}}{a^2+b^2}=\frac{a}{\sqrt{a^2+b^2}}
+\end{align*}
+Summarizing our results:
+\begin{align*}
+\nu_a&=U\nu_j=\begin{pmatrix}
+\cos\theta &\sin\theta \\ -\sin\theta & \cos\theta 
+\end{pmatrix}\nu_j\\
+i\partial_t \nu_j&=H_{vac}^m\nu_j\ \ \Rightarrow\ \ i\partial_t\nu_a=UH_{vac}^mU^\dagger\nu_a\equiv H_{vac}\nu_a\\
+H_m&=H_{vac}+V=U_m DU_m^\dagger\\
+\sin 2\theta_m &=\frac{\sin 2\theta}{\sqrt{\sin^2 2\theta +(\cos 2\theta -\frac{2EV}{\Delta m^2})^2}}\\
+m_{2,1m}^2&=\frac{1}{2}\left[m_1^2+m_2^2+2EV\pm\Delta m^2\sqrt{(\cos 2\theta-\frac{2EV}{\Delta m^2})^2+\sin^2 2\theta}\right]\\
+D&\equiv \textrm{diag }(m_{1m}^2, m_{2m}^2)\\
+U&\equiv \begin{pmatrix}
+\cos\theta_m &\sin\theta_m \\
+-\sin\theta_m &\cos\theta_m
+\end{pmatrix}
+\end{align*}
+\section{Testing the results for matter oscillations}
+Let's denote $c\equiv\cos\theta_m$, $s\equiv\sin\theta_m$, $\Delta m^2\equiv m_2^2-m_1^2$ and $D\equiv \sqrt{(c_2-\frac{2V_{CC}E}{\Delta m^2})^2+s_2^2}$:
+\begin{align*}
+U^\top HU&=\begin{pmatrix}
+c&-s\\ s&c
+\end{pmatrix}\begin{pmatrix}
+a&b\\ b&d
+\end{pmatrix}\begin{pmatrix}
+c&s\\ -s&c
+\end{pmatrix}=\begin{pmatrix}
+ac-bs&bc-ds\\ as+bc&bs+dc
+\end{pmatrix}\begin{pmatrix}
+c&s\\ -s&c
+\end{pmatrix}=\\
+&=\begin{pmatrix}
+ac^2+ds^2-2bsc&bc^2-bs^2-(d-a)sc\\ bc^2-bs^2-(d-a)sc&as^2+dc^2+2bsc
+\end{pmatrix}= \\
+&=\begin{pmatrix}
+some&0.5\Delta m^2s_2\sqrt{1-s_{2m}^2}-0.5\Delta m^2c_2s_{2m}-EVs_{2m} \\ 1&some
+\end{pmatrix} \\
+&\Rightarrow\ \ X_{12}=0.5\Delta m^2\left(s_2\sqrt{1-\frac{s_2^2}{s_2^2+(c_2-\frac{2EV}{\Delta m^2})^2}}-c_2\frac{s_2}{\sqrt{s_2^2+(c_2-\frac{2EV}{\Delta m^2})^2}}\right)-EVs_{2m}=\\
+&=0.5\Delta m^2\left(s_2\frac{c_2-\frac{2VE}{\Delta m^2}}{D}-c_2\frac{s_2}{D}\right)=-\frac{VE}{D}
+\end{align*}
+
+\end{document}

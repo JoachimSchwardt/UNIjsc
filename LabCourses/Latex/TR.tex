@@ -1,0 +1,285 @@
+\documentclass[german, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[ngerman]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrpage2}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\newcommand*{\titel}{Transmission thermischer Neutronen}
+\newcommand*{\autor}{Joachim Schwardt und Ludwig Romstedt}
+\newcommand*{\abk}{TR}
+\newcommand*{\betreuer}{Jan-Eric Nitschke}
+\newcommand*{\messung}{6. November 2020}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+\titlehead{F-Praktikum \abk \hfill TU Dresden}
+\subject{Versuchsprotokoll}
+\title{Transmission thermischer Neutronen}
+\author{Ludwig Romstedt und Joachim Schwardt}
+\date{\begin{tabular}{ll}
+Protokoll: & \today\\
+Messung: & \messung\\
+Betreuer: & \betreuer\end{tabular}}
+
+\begin{document}
+
+\begin{titlepage}
+\maketitle  % Titel setzen
+\tableofcontents  % Inhaltsverzeichnis setzen
+\end{titlepage}
+
+\section{Aufgabenstellung}
+Ziel des Versuches war die Bestimmung des Wirkungsquerschnittes thermischer Neutronen mit verschiedenen Materialien. Dafür wurden zwei Gaszählrohre verwendet.
+\section{Hintergrund}
+\subsection{Poissonverteilung}
+Ein radioaktiver Zerfall ist ein Bernoulli-Experiment mit einer kleinen Wahrscheinlichkeit $p\ll 1$. Aufgrund der großen Anzahl an Kernen $N\gg 1$ kann die resultierende Binomialverteilung gut mit einer Poissonverteilung genähert werden. Letztere erhält man formal beim Grenzübergang $N\rightarrow\infty$, unter der Bedingung, dass der Erwartungswert $\lambda=Np$ konstant bleibt:
+\begin{align*}
+P_\tecxt\text{Binom}(k;N,p)&:=\binom{N}{k}p^k(1-p)^{N-k}\kom\overset{\substack{{N\rightarrow\infty} \\ |}}{\longrightarrow}\frac{\lambda^k}{k!}e^{-\lambda}=:P_\tecxt\text{Poisson}(k;\lambda)\numberthis\label{eqn:Binomial poisson konvergenz}
+\end{align*}
+Die Varianz dieser Verteilung kann man unter Anderem direkt aus der Varianz der Binomialverteilung erhalten:
+\begin{align*}
+\sigma^2_\tecxt\text{Binom.}&=Np(1-p)=\lambda(1-p)\kom\overset{\substack{{p\rightarrow 0} \\ |}}{\longrightarrow}\lambda=\sigma^2_\tecxt\text{Poisson}\numberthis\label{eqn:Varianz Poissonverteilung}
+\end{align*}
+Der gemessene Neutronenfluss $\Phi$ entspricht gerade dem Erwartungswert $\lambda$. Die Standardabweichung erhält man daher aus (\ref{eqn:Varianz Poissonverteilung}):
+\begin{align*}
+\Delta\Phi^\tecxt\text{stat}&=\sigma_\tecxt\text{Poisson}=\sqrt{\Phi}\numberthis\label{eqn:Standardabweichunng Phi}  
+\end{align*}
+\subsection{Totaler Wirkungsquerschnitt}
+Der Totale Wirkungsquerschnitt ist hier definiert als 
+\begin{align*}
+\sigma_\tecxt\text{tot}&:=\frac{\tecxt\text{Streuprozesse pro Zeiteinheit}}{\text{eintreffende Teilchenstromdichte}}\numberthis\label{eqn:Definition Wirkungsquerschnitt total}
+\end{align*}
+In diesem Experiment ist er ein Maß dafür, wie häufig die Wechselwirkung zwischen einem bestimmten Material und dem Neutronenfluss auftritt. Er hat die Einheit einer Fläche und wird häufig in \textsl{barn} angegeben, wobei $1\,\tecxt\text{b}=10^{-24}\,\tecxt\text{cm}^2$ entspricht.\\
+Sei $\rho$ die Dichte eines Materials, $A$ die molare Masse eines der Atome (oder Moleküle) und $N_A$ die Avogadro-Konstante. Dann ist die Anzahl an Atomen (oder Molekülen) pro Volumen gegeben durch 
+\begin{align*}
+n&:=\frac{N}{V}=\frac{\rho}{A/N_A}\numberthis\label{eqn:Teilchenzahldichte Material}
+\end{align*}
+Die relative Änderung eines Neutronenflusses $\frac{\tecxt\text{d}\Phi}{\Phi}$ ist proportional zur zurückgelegten Strecke d$x$, der Teilchenzahldichte $n$ des Mediums und dem Wirkungsquerschnitt $\sigma:=\sigma_\tecxt\text{tot}$:
+\begin{align*}
+\frac{\tecxt\text{d}\Phi}{\Phi}&=-n\cdot\sigma\cdot\tecxt\text{d}x\ \ &\Rightarrow &\ \ &\Phi(x)&=\Phi(0)e^{-n\sigma x}\numberthis\label{eqn:Phi von x}
+\end{align*}
+Die Anfangsbedingung $\Phi(0)$ kann im Experiment einfach aus einer Messung von $\Phi$ ohne Probe bestimmt werden. Man definiert die Transmission des Flusses über $T:=\frac{\Phi(x)}{\Phi(0)}$. Aus (\ref{eqn:Phi von x}) kann man dann den Wirkungsquerschnitt bestimmen:
+\begin{align*}
+\sigma&=\frac{1}{nx}\log\frac{1}{T}=\frac{A/N_A}{\rho x}\log\frac{1}{T}=\frac{A/N_A}{m_f}\log\frac{1}{T}\numberthis\label{eqn:sigma von T}
+\end{align*}
+Dabei ist $x$ nun die Dicke der Probe, der Term $\rho x$ beschreibt also eine Flächendichte. Für manche Proben ist diese direkt gegeben und wird dann als $m_f$ bezeichnet.
+\section{Messaufbau und Durchführung}
+\subsection{Die Neutronenquelle}
+Als Neutronenquelle wurde Americium-Beryllium verwendet. Dabei ist Americium-241 ein schwacher $\alpha$-Strahler mit einer Halbwertszeit von etwa 432 Jahren:
+\begin{align*}
+{}^{241}_{95}\tecxt\text{Am}\longrightarrow {}^{237}_{93}\tecxt\text{Np}+\underbrace{{}^{4}_{2}\tecxt\text{He}}_\alpha+\ \gamma\numberthis\label{eqn:Am241 Zerfall}
+\end{align*}
+Beryllium-9 kann mit dem $\alpha$-Teilchen zu angeregtem Kohlenstoff reagieren. Dieser regt sich unter Emission eines schnellen Neutrons ($2-11$\,MeV) und $\gamma$-Strahlung wieder ab:
+\begin{align*}
+{}^{9}_{4}\tecxt\text{Be}+{}^{4}_{2}\tecxt\text{He}\longrightarrow {}^{13}_{6}\tecxt\text{C}^\ast\longrightarrow {}^{12}_{6}\tecxt\text{C}+{}^{1}_{0}\tecxt\text{n}+\gamma\numberthis\label{eqn:Be9 alpha Einfang}
+\end{align*}
+Die ionisierende Strahlung der Quelle wird mit einer Bleischicht abgeschirmt. Zusätzlich dient das Blei zur Vervielfältigung der Neutronen. Maßgeblich dafür sind die (n,\,2n)-Reaktionen mit Pb-206, Pb-207 und Pb-208. Da hier jeweils Schwellwertenergien von $6-8$\,MeV nötig sind, können die emittierten Neutronen keine weiteren Multiplikationen auslösen.\\
+Letztendlich gibt es die Möglichkeit, eine Cadmium-Kappe zwischen die Quelle und den Detektor zu bringen. Der Wirkungsquerschnitt mit Neutronen skaliert dabei zumindest näherungsweise wie $1/\sqrt{E}$. Das Material eignet sich also sehr gut dazu, thermische ($E\approx 25\,$meV) Neutronen abzuschirmen aber schnelle ($E\ge 1\,$MeV) Neutronen durchzulassen. Aus der Differenz zum ungestörten Fluss lässt sich also der Fluss thermischer Neutronen bestimmen.
+\subsection{Gaszählrohre als Neutronendetektoren}
+Gegeben waren ein ${}^3$He- und ein $\tecxt\text{BF}_3$-Zählrohr. Ein Neutron kann in beiden Fällen eine Kernreaktion eingehen, wobei das Isotop ${}^{10}$B im Fall von Bortrifluorid relevant ist:
+\begin{align*}
+{}^3\tecxt\text{He}+n&\longrightarrow {}^3\tecxt\text{H} +p\ (765\,\tecxt\text{keV})\\
+{}^{10}\tecxt\text{B}+n&\longrightarrow {}^7\tecxt\text{Li}^\ast +\alpha\ (2310\,\tecxt\text{keV})
+\end{align*}
+Die resultierenden Protonen bzw. $\alpha$-Teilchen ionisieren weitere Atome, bis ihre kinetische Energie unter der Ionisierungsschwelle von typischerweise einigen eV liegt. Durch das Anlegen einer Spannung zwischen der zylinderförmigen Außenwand und dem goldbeschichteten Wolframdraht in der Mitte werden die Ladungen beschleunigt. Dabei bewegen sich die Elektronen auf den Draht zu und die positiv geladenen Ionen auf die Außenwand. Ohne die Spannung würden sie einfach rekombinieren, wodurch kein Ereignis detektiert werden könnte. Abhängig von der Detektorspannung ergeben sich nun drei qualitativ unterschiedliche Bereiche:\\ \\
+\textsl{Rekombinationsbereich}: Die Spannung genügt, um die meisten freien Elektronen am rekombinieren zu hindern. Die durch das elektrische Feld erhaltene Energie reicht aber nicht, um weitere Atome zu ionisieren. Die gesammelte Ladung ist proportional zu der deponierten Energie und somit zum Neutronenfluss.\\ \\
+\textsl{Proportionalitätsbereich}: Auf den mittleren freien Weglängen werden die Elektronen nun so stark beschleunigt, dass ihre Energie für weitere Ionisationen ausreicht. Die $\frac{1}{r}$-Abhängigkeit des Feldes führt zu einem Lawineneffekt in Drahtnähe, wodurch so viele Atome (oder Moleküle) ionisiert werden können, dass Verstärkungen von $10^3-10^5$ möglich sind. Dadurch steigt die Nachweiswahrscheinlichkeit, während die Ladung immer noch proportional zum Neutronenfluss ist.\\ \\
+\textsl{Geiger-Müller-Bereich}: Hier geht diese Proportionalität verloren, was hauptsächlich auf die Delokalisation des Lawineneffektes durch die steigende Feldstärke zurückzuführen ist. Ein einzelnes Ereignis kann bereits zu einer Sättigung des Zählrohres führen, wenn die Lawine erst dadurch gestoppt wird, dass die erzeugten Ladungen das elektrische Feld genügend abgeschwächt haben.
+\subsection{Charakteristiken messen}
+Die Hauptmessung sollte im Proportionalitätsbereich erfolgen. Um den Arbeitspunkt zu bestimmen, wurde die Zählrate als Funktion von der Detektorspannung in einem vorgegebenen Bereich aufgenommen ($800-1200$\,V für ${}^3$He und $1500-2500$\,V für BF${}_3$). Für Helium war dieser bereits mit 1150\,V vorgegeben. Die Charakteristik von BF${}^3$ war allerdings entgegen der Erwartung nicht-linear. Wir haben dann einfach die Mitte des Intervalls als Arbeitspunkt gewählt, wobei der nächstgelegene Messwert 2025\,V war. Zugegebenermaßen war diese Wahl aber eher willkürlich und hauptsächlich an dem gegebenen Intervall orientiert.\\ \\
+Der gewählte Arbeitspunkt konnte direkt im Messprogramm als Anteil der maximalen Spannung eingestellt werden. Beim ${}^3$He-Zählrohr konnte die Spannung auch direkt abgelesen werden. Im anderen Fall lag der Arbeitspunkt allerdings außerhalb des darstellbaren Bereichs, hier musste also auf die 2025\,V extrapoliert werden. Gemessen wurde die Korrespondenz zwischen 25\% und 634\,V, sowie 50\% und 1275\,V. Damit entsprechen 79\% der Maximalspannung dem Arbeitspunkt.\\
+Im Programm konnte eine untere Messgrenze festgelegt werden, um den niederenergetischen $\gamma$-Hintergrund auszublenden. Die Wahl dieser Grenze ist dabei rein empirisch, wurde aber von dem angezeigten Pulshöhenspektrum unterstützt. Ein Beispiel ist in Abbildung \ref{figure:Pulsspektrum Kohlenstoff ohne Cadmium} gezeigt. Die untere Messgrenze erkennt man an dem abgeschnittenen Verlauf zu kleinen Kanälen hin (hellgrüne vertikale Linie). Letztere stehen im Verhältnis zu der Energie, die ein Ereignis im Detektor abgegeben hat, sind für die Auswertung dieses Versuches aber nicht wichtig.
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{He3_C_gesamt_Ausschnitt.png}
+\caption{Pulshöhenspektrum für Kohlenstoff ohne Cadmiumkappe (Ausschnitt)}
+\label{figure:Pulsspektrum Kohlenstoff ohne Cadmium}
+\end{figure}\\
+Damit wurde nun der Neutronenfluss ohne Probe aufgenommen. Dies erfolgte für jedes Zählrohr einmal mit ($\Phi_\tecxt\text{bkg}$) und einmal ohne Cadmiumkappe ($\Phi_\tecxt\text{tot}$), wobei grundsätzlich jede Messung des Versuches eine relative Ungenauigkeit von weniger als $2.5\%$ haben sollte. Da diese gemäß (\ref{eqn:Standardabweichunng Phi}) gleich $1/\sqrt{\Phi}$ ist, mussten mindestens $(1/\Delta\Phi^\tecxt\text{rel})^2=1600$ Ereignisse aufgenommen werden. Die Ergebnisse sind mit den Messwerten des Hauptversuches in Tabelle \ref{table:Messdaten} aufgelistet. Dazu musste eine Messzeit festgelegt werden, die hier im Bereich von $1-2$ Minuten lag.\\
+Für die Berechnung des Wirkungsquerschnitts benötigt man in (\ref{eqn:sigma von T}) noch die Massenzahl und die Flächendichte der Proben. Für Kohlenstoff ist eine Masse von $m=468\,$g gegeben, der Durchmesser der kreisförmigen Probe beträgt $15,0\,$cm. Damit ergibt sich die Flächendichte zu $m_f=\frac{m}{\pi (d/2)^2}$. Für Aluminium und Eisen ist die Formel einfach $m_f=\rho x$. Gemessen wurden nur die Dicke der Proben aus Eisen, Aluminium und Kohlenstoff, wobei für Kohlenstoff nur der Durchmesser relevant ist. Die statistischen Unsicherheiten wurden dabei mit den Werten $\Delta x=0,005\,$cm und $\Delta d=0,1\,$cm aus folgenden Formeln berechnet:
+\begin{align*}
+\Delta m_f^\tecxt\text{Fe,Al}&=m_f^\tecxt\text{Fe,Al}\frac{\Delta x}{x^\tecxt\text{Fe,Al}}&\tecxt\text{und}&&\Delta m_f^\tecxt\text{C}&=m_f^\tecxt\text{C}\frac{2\Delta d}{d}
+\end{align*}
+Der Wert von $\Delta x$ entspricht einem halben Skalenteil. Bei der Messung des Durchmessers ist zwar mit dem selben Messgerät vorgenommen worden, allerdings ist es schwer, genau den Durchmesser zu treffen, weshalb $\Delta d$ größer abgeschätzt wurde. Außerdem sind in Tabelle \ref{table:Proben Parameter} die molaren Massen aufgelistet, wobei für Paraffin die Strukturformel $C_nH_{2n+2}$ mit $n=28$ angenommen wird. Dieser Wert ist nur eine grobe Abschätzung, die in der Auswertung etwas näher begründet wird. 
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c|c|c}
+Probe&$A\,/\,\frac{\tecxt\text{g}}{\tecxt\text{mol}}$&$\rho\,/\,\frac{\tecxt\text{g}}{\tecxt\text{cm}^3}$&$x\,/\,$cm&$m_f\,/\,\frac{\tecxt\text{g}}{\tecxt\text{cm}^2}$&$\Delta m_f\,/\,\frac{\tecxt\text{g}}{\tecxt\text{cm}^2}$\\ \hline
+Eisen&55,845&7,874&1,04&8,1890&0,0394\\ \hline
+Aluminium&26,981&2,70&5,00&13,50&0,0135\\ \hline
+Kohlenstoff&12,011&$-$&1,56&2,6483&0,0353\\ \hline
+Paraffin1&394,3&$-$&$-$&0,09455&$-$\\ \hline
+Paraffin2&394,3&$-$&$-$&0,18485&$-$\\ \hline
+Paraffin3&394,3&$-$&$-$&0,36113&$-$\\ \hline
+Paraffin4&394,3&$-$&$-$&0,52757&$-$\\ \hline
+\end{tabular}
+\caption{Verschiedene Parameter der Proben}
+\label{table:Proben Parameter}
+\end{table}
+\subsection{Hauptversuch}
+Auch für die Daten der einzelnen Proben wurde bei beiden Zählrohren jeweils einmal mit und einmal ohne Cadmiumkappe gemessen. Die Probe wurde dabei möglichst nahe an das Zählrohr gebracht. In der Tabelle \ref{table:Messdaten} sind außer den Daten aus dem Vorversuch auch die Werte der sieben Proben aufgelistet. Die angegebene Messzeit $t$ bezieht sich dabei jeweils auf die links gelegenen Daten. Für die Auswertung mussten die beiden He${}^3$-Messungen ohne Probe um den Faktor $\frac{70\,\tecxt\text{s}}{50\,\tecxt\text{s}}$ skaliert werden, da $\Phi$ direkt proportional zur Messzeit ist. Für BF${}_3$ wurde die Messung ohne Probe nicht gemacht, wir mussten hier die Werte aus der Charakteristik mit $\frac{120\,\tecxt\text{s}}{10\,\tecxt\text{s}}$ multipliziert werden, auch wenn das für sehr ungenaue Ergebnisse sorgt. Die so berechneten Werte sind mit Klammern gekennzeichnet.
+\begin{table}[h!]
+\centering
+\begin{tabular}{c||c|c|c||c|c|c}
+Probe&$\Phi_\tecxt\text{bkg}^\tecxt\text{He}$&$\Phi_\tecxt\text{ges}^\tecxt\text{He}$&$t\,/\,$s&$\Phi_\tecxt\text{bkg}^\tecxt\text{Bor}$&$\Phi_\tecxt\text{ges}^\tecxt\text{Bor}$&$t\,/\,$s\\ \hline
+ohne Probe&1908&3717&50&2040&3738&10\\
+(berechnet)&(2671,2)& (5203,8)&(70)&(24480)&(44856)&(120)\\ \hline
+Eisen&2049&2948&70&1720&11339&120\\ \hline
+Aluminium&1954&3514&70&1791&19467&120\\ \hline
+Kohlenstoff&2193&3503&70&1724&15831&120\\ \hline
+Paraffin1&2294&4104&70&2230&21038&120\\ \hline
+Paraffin2&2236&3551&70&2089&15247&120\\ \hline
+Paraffin3&1993&2979&70&1964&9759&120\\ \hline
+Paraffin4&1994&2510&70&1834&7018&120\\
+\end{tabular}
+\caption{Gesammelte Messdaten aus Vor- und Hauptversuch}
+\label{table:Messdaten}
+\end{table}
+\section{Auswertung}
+Es wurde für die Avogadro-Konstante der Wert $N_A=6,022141\cdot 10^{23}\frac{1}{\tecxt\text{mol}}$ verwendet. In Tabelle \ref{table:Unsicherheiten Messwerte} sind die aus (\ref{eqn:Standardabweichunng Phi}) erhaltenen statistischen Unsicherheiten der Messwerte zusammengefasst. Durch die Fehlerfortpflanzung mussten auch die statistischen Unsicherheiten der $\Phi(0)$-Werte skaliert werden. Im Folgenden wurde dann mit den in Klammern angegebenen Werten gerechnet.
+\begin{table}[h!]
+\centering
+\begin{tabular}{c||c|c||c|c}
+Probe&$\Delta\Phi_\tecxt\text{bkg}^\tecxt\text{He}$&$\Delta\Phi_\tecxt\text{ges}^\tecxt\text{He}$&$\Delta\Phi_\tecxt\text{bkg}^\tecxt\text{Bor}$&$\Delta\Phi_\tecxt\text{ges}^\tecxt\text{Bor}$\\ \hline
+keine Probe&51,684&72,137&45,166&61,139\\ 
+(berechnet)&(61,153)& (85,354)&(541,996)&(733,670)\\ \hline
+Eisen&45,266&54,295&41,473&106,485\\ \hline
+Aluminium&44,204&59,279&42,320&139,524\\ \hline
+Kohlenstoff&46,829&	59,186&41,521&125,821\\ \hline
+Paraffin1&47,896&64,062&47,223&145,045\\ \hline
+Paraffin2&47,286&59,590&45,706&123,479\\ \hline
+Paraffin3&44,643&54,580&44,317&98,788\\ \hline
+Paraffin4&44,654&50,100&42,825&83,774\\ 
+\end{tabular}
+\caption{Statistische Unsicherheiten der Messwerte}
+\label{table:Unsicherheiten Messwerte}
+\end{table}\\
+Die Transmission thermischer Neutronen ist gegeben durch $\frac{\Phi_\tecxt\text{ges}(x)-\Phi_\tecxt\text{bkg}(x)}{\Phi_\tecxt\text{ges}(0)-\Phi_\tecxt\text{bkg}(0)}$. Die statistische Unsicherheit berechnet sich nach der Gaußschen Fehlerfortpflanzung:
+\begin{align*}
+\Delta T&=T\cdot\sqrt{\frac{(\Delta\Phi_\tecxt\text{ges}(x))^2+(\Delta\Phi_\tecxt\text{bkg}(x))^2}{(\Phi_\tecxt\text{ges}(x)-\Phi_\tecxt\text{bkg}(x))^2}+\frac{(\Delta\Phi_\tecxt\text{ges}(0))^2+(\Delta\Phi_\tecxt\text{bkg}(0))^2}{(\Phi_\tecxt\text{ges}(0)-\Phi_\tecxt\text{bkg}(0))^2}}\numberthis\label{eqn:Delta T von phi}
+\end{align*}
+Die Wirkungsquerschnitte lassen sich dann mit (\ref{eqn:sigma von T}) berechnen. Die Fehlerfortpflanzung liefert hier
+\begin{align*}
+\Delta\sigma&=\sigma\cdot\sqrt{\kla\left( {\frac{\Delta m_f}{m_f}} \right)^2+\kla\left( {\frac{\Delta T}{T\log T}} \right)^2}\numberthis\label{eqn:Delta sigma von T}
+\end{align*}
+In Tabelle \ref{table:T mit Unsicherheiten} finden sich die Transmissionen mit ihren statistischen Unsicherheiten.
+\begin{table}[h!]
+\centering
+\begin{tabular}{c||c|c||c|c}
+Probe&$T^\tecxt\text{He}$&$\Delta T^\tecxt\text{He}$&$T^\tecxt\text{Bor}$&$\Delta T^\tecxt\text{Bor}$\\ \hline
+Eisen&	0,3550&	0,03155&	0,4721&	0,02186\\ \hline
+Aluminium&	0,6160&	0,03879&	0,8675&	0,03949\\ \hline
+Kohlenstoff&	0,5173&	0,03671&	0,6923&	0,03167\\ \hline
+Paraffin1&	0,7147&	0,04331&	0,9230&	0,04199\\ \hline
+Paraffin2&	0,5192&	0,03695&	0,6458&	0,02962\\ \hline
+Paraffin3&	0,3893&	0,03218&	0,3826&	0,01793\\ \hline
+Paraffin4&	0,2037&	0,02781&	0,2544&	0,01229\\ 
+\end{tabular}
+\caption{Transmissionen mit Unsicherheiten}
+\label{table:T mit Unsicherheiten}
+\end{table}\\
+In den Abbildungen \ref{figure:Helium Paraffin Regression} und \ref{figure:Bor Paraffin Regression} ist die lineare Regression der Transmission von Paraffin als Funktion der Flächendichte für die beiden Zählrohre dargestellt. Die Parameter wurden mit den Formeln aus \cite{Einfuehrung Praktikum} berechnet. Die Fehlerbalken entsprechen den statistischen Unsicherheiten der vier Messpunkte. Hier muss in der Fehlerfortpflanzung (\ref{eqn:Delta sigma von T}) noch der Term $\frac{\Delta n}{n}$ berücksichtigt werden.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.8]{He_Linear_Regression_Paraffin.png}
+\caption{Regression der Transmission von Paraffin (He${}^3$)}
+\label{figure:Helium Paraffin Regression}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.8]{Bor_Linear_Regression_Paraffin.png}
+\caption{Regression der Transmission von Paraffin (BF${}_3$)}
+\label{figure:Bor Paraffin Regression}
+\end{figure}\\
+Der Wirkungsquerschnitt von Paraffin lässt sich aus dem Anstieg $\alpha$ der Gerade bestimmen. Aus (\ref{eqn:sigma von T}) lässt sich ableiten, dass $\alpha=\frac{\sigma}{A/N_A}$ gilt. Mit $\alpha^\tecxt\text{He}=2,59\,\frac{\tecxt\text{b}}{\tecxt\text{g}}$ und $\alpha^\tecxt\text{Bor}=2,95\,\frac{\tecxt\text{b}}{\tecxt\text{g}}$ folgt daraus
+\begin{align*}
+\sigma_\tecxt\text{Par}^\tecxt\text{He}&=\frac{A\alpha^\tecxt\text{He}}{N_A}=1694,0\,\tecxt\text{b}&\tecxt\text{und}&&\sigma_\tecxt\text{Par}^\tecxt\text{Bor}&=\frac{A\alpha^\tecxt\text{Bor}}{N_A}=1933,8\,\tecxt\text{b}\\
+\Delta\sigma_\tecxt\text{Par}^\tecxt\text{He}&=\sigma_\tecxt\text{Par}^\tecxt\text{He}\cdot\frac{\Delta\alpha^\tecxt\text{He}}{\alpha^\tecxt\text{He}}=256,54\,\tecxt\text{b}&\tecxt\text{und}&&\Delta\sigma_\tecxt\text{Par}^\tecxt\text{Bor}&=\sigma_\tecxt\text{Par}^\tecxt\text{Bor}\cdot\frac{\Delta\alpha^\tecxt\text{Bor}}{\alpha^\tecxt\text{Bor}}=274,88\,\tecxt\text{b}
+\end{align*}
+Die Unsicherheiten der Anstiege wurden dabei ebenfalls mit der Formel aus \cite{Einfuehrung Praktikum} bestimmt und ergaben sich zu $\Delta\alpha^\tecxt\text{He}=0,135\,\frac{\tecxt\text{b}}{\tecxt\text{g}}$ und $\Delta\alpha^\tecxt\text{Bor}=0,0064\,\frac{\tecxt\text{b}}{\tecxt\text{g}}$.\\
+In Tabelle \ref{table:sigma mit Unsicherheiten} finden sich die Wirkungsquerschnitte der Proben mit ihren statistischen Unsicherheiten. Die Struktur von Paraffin ist $C_nH_{2n+2}$. In \cite{Paraffin} wird die Kettenlänge von Paraffin mit $16-32$ angegeben, wobei die Härte des Materials mit der Kettenlänge ansteigt. Da unsere Proben nicht 'leicht verformbar' waren, verwenden wir nur das Intervall $24\le n\le 32$. Das ist natürlich eine etwas willkürliche Abschätzung, aber die mittlere Kettenlänge ist ohne zusätzliche Informationen oder Experimente schwer zu quantifizieren. Sei im Folgenden also immer $n=28$ und $\Delta n=4$. Die Unsicherheit des Endergebnisses wird dann durch den Fehler der Kettenlänge dominiert. Die Werte für Wasserstoff wurden unter der Annahme bestimmt, dass gilt:
+\begin{align*}
+\sigma_\tecxt\text{Par}&=n\cdot\sigma_\tecxt\text{C}+(2n+2)\cdot\sigma_\tecxt\text{H}\numberthis\label{eqn:sigma Paraffin von H und C}
+\end{align*}
+Damit folgt für den Wirkungsquerschnitt von Wasserstoff und dessen Unsicherheit:
+\begin{align*}
+\sigma_\tecxt\text{H}&=\frac{\sigma_\tecxt\text{Par}-n\cdot\sigma_\tecxt\text{C}}{2n+2}\\
+\Delta\sigma_\tecxt\text{H}&=\frac{1}{2n+2}\sqrt{(\Delta\sigma_\tecxt\text{Par})^2+(n\Delta\sigma_\tecxt\text{C})^2+((\sigma_\tecxt\text{C}+2\sigma_\tecxt\text{H})\Delta n)^2}
+\end{align*}
+\begin{table}[h!]
+\centering
+\begin{tabular}{c||c|c||c|c}
+Probe&$\sigma^\tecxt\text{He}\,/\,$b&$\Delta\sigma^\tecxt\text{He}\,/\,$b&$\sigma^\tecxt\text{Bor}\,/\,$b&$\Delta\sigma^\tecxt\text{Bor}\,/\,$b\\ \hline
+Eisen&	11,73&	1,008&	8,50&	0,525\\ \hline
+Aluminium&	1,608	&0,2090&	0,472&	0,1511\\ \hline
+Kohlenstoff&	4,965&	0,5386&	2,769&	0,3445\\ \hline
+Paraffin1&	2326,3&	535,28&	554,5&	324,86\\ \hline
+Paraffin2&	2321,6&	416,59&	1549,1&	274,54\\ \hline
+Paraffin3&	1710,4&	286,64&	1742,2&	262,99\\ \hline
+Paraffin4&	1974,4&	329,03&	1698,8&	249,98\\ \hline
+Paraffin&	1694,0&	256,54&	1933,8&	274,88\\ \hline
+Wasserstoff&	26,8&	6,00&	32,0&	6,61\\
+\end{tabular}
+\caption{Wirkungsquerschnitte mit Unsicherheiten}
+\label{table:sigma mit Unsicherheiten}
+\end{table}
+\section{Diskussion}
+Aufgrund der fehlenden Langzeitmessung ohne Probe beim BF${}_3$-Zählrohr können die zugehörigen Ergebnisse quasi nicht mit der He${}^3$-Messung vergleichen werden. Die berechneten Unsicherheiten sind zwar aufgrund eines kleineren relativen Fehlers (trotz Skalierung) geringer, geben aber kein gutes Maß für den 'echten' Fehler wieder. Die Werte sind fast alle sehr weit von den Literaturwerten entfernt. \\
+Bei der He${}^3$-Messung musste die Messung zwar auch auf eine größere Messzeit hochskaliert werden, hier war der Faktor mit $1,4$ allerdings deutlich geringer. Dennoch hätten alle Messungen von vornherein mit derselben Messzeit durchgeführt werden sollen. Alternativ könnte man auch nur mit Messraten rechnen, die Messwerte also auf die jeweilige Messzeit skalieren.\\
+Sämtliche Literaturwerte sind der Datenbank \cite{JANIS} entnommen worden. Für Eisen muss berücksichtigt werden, dass verschiedene Isotope unterschiedliche Wirkungsquerschnitte haben. Die drei häufigsten sind laut \cite{Eisen} Fe-54 mit 5,8\,\%, Fe-56 mit 91,7\,\% und Fe-57 mit 2,2\,\%. Ihre Wirkungsquerschnitte sind $\sigma_\tecxt\text{Fe54}^\tecxt\text{Lit}=4,5\,$b, $\sigma_\tecxt\text{Fe56}^\tecxt\text{Lit}=14,8\,$b und $\sigma_\tecxt\text{Fe57}^\tecxt\text{Lit}\approx 3\,$b. Daraus ergibt sich ein gewichtetes Mittel von $\sigma_\tecxt\text{Fe}^\tecxt\text{Lit}\approx 13,9\,$b. Unsere Ergebnisse waren:
+\begin{align*}
+\sigma_\tecxt\text{Fe}^\tecxt\text{He}&=\underline{11,7\pm 1,0\,\tecxt\text{b}} &\tecxt\text{und}&&\sigma_\tecxt\text{Fe}^\tecxt\text{Bor}&=\underline{8,5\pm 0,5\,\tecxt\text{b}}
+\end{align*}
+Auch bei der He${}^3$-Messung liegt der Literaturwert nicht in den Fehlergrenzen. Eine mögliche Erklärung wäre ein niedrigerer Fe-56 Anteil in der Eisenprobe. \\
+Die Werte für Kohlenstoff und Aluminium sind eindeutiger, da hier (quasi) nur ein Isotop natürlich vorkommt. Sie lauten $\sigma_\tecxt\text{Al}^\tecxt\text{Lit}=1,68\,$b und $\sigma_\tecxt\text{C}^\tecxt\text{Lit}=4,95\,$b. Unsere Ergebnisse waren:
+\begin{align*}
+\sigma_\tecxt\text{Al}^\tecxt\text{He}&=\underline{1,61\pm 0,21\,\tecxt\text{b}} &\tecxt\text{und}&&\sigma_\tecxt\text{Al}^\tecxt\text{Bor}&=\underline{0,47\pm 0,15\,\tecxt\text{b}}\\
+\sigma_\tecxt\text{C}^\tecxt\text{He}&=\underline{5,0\pm 0,5\,\tecxt\text{b}} &\tecxt\text{und}&&\sigma_\tecxt\text{C}^\tecxt\text{Bor}&=\underline{2,77\pm 0,34\,\tecxt\text{b}}
+\end{align*}
+Die Werte der He${}^3$-Messung stimmen hier sehr gut mit dem Literaturwert überein. Der relative Fehler ist mit $\approx 10\%$ aber viel zu groß. \\
+Für Paraffin gibt es keinen allgemeinen Literaturwert, da es sich dabei eigentlich um eine Klasse an Stoffen mit abweichenden Werten handelt. Unsere Werte liegen aber vermutlich in der richtigen Größenordnungen, da der Wirkungsquerschnitt für Wasserstoff wieder (zumindest grob) dem Literaturwert entspricht:
+\begin{align*}
+\sigma_\tecxt\text{Par}^\tecxt\text{He}&=\underline{1690\pm 260\,\tecxt\text{b}} &\tecxt\text{und}&&\sigma_\tecxt\text{Par}^\tecxt\text{Bor}&=\underline{1930\pm 270\,\tecxt\text{b}}
+\end{align*}
+Der Literaturwert für Wasserstoff beträgt $\sigma_\tecxt\text{H}^\tecxt\text{Lit}=30,4\,$b, unser Endergebnis ist:
+\begin{align*}
+\sigma_\tecxt\text{H}^\tecxt\text{He}&=\underline{27\pm 6\,\tecxt\text{b}} &\tecxt\text{und}&&\sigma_\tecxt\text{H}^\tecxt\text{Bor}&=\underline{32\pm 7\,\tecxt\text{b}}
+\end{align*}
+Die angenommene Kettenlänge von Paraffin ist entscheidend für den genauen Wert des Wirkungsquerschnitts von Wasserstoff. In \cite{Paraffin} ist angegeben, dass die sich die Kettenlänge etwa im Bereich von $16-32$ befindet. Diese Angabe bezieht sich allerdings auch auf Weichparaffin, weshalb wir vom oberen Ende der Skala ausgegangen sind. Der relative Fehler wird dadurch allerdings sehr groß.\\
+Vermutlich ist bei der Kalibrierung des BF${}_3$-Zählrohr aber auch ein größerer Fehler aufgetreten. Die beiden Werte $\Phi_\tecxt\text{bkg}^\tecxt\text{Bor}=2040$ und $\Phi_\tecxt\text{bkg}^\tecxt\text{Bor}=3738$ sind für sich genommen schon fragwürdig. Verglichen mit den anderen Messungen des Zählrohrs, sind hier die beiden Werte zu nah aneinander.\\
+Abschließend kann man festhalten, dass deutlich längere Messzeiten von Vorteil wären. Im Versuch ist zudem genug Zeit, jede Messung mit gut 600\,s durchzuführen. 
+\begin{thebibliography}{9}
+\bibitem{Einfuehrung Praktikum} Einführung in das physikalische Praktikum (2015), \url{https://tu-dresden.de/mn/physik/ressourcen/dateien/studium/lehrveranstaltungen/praktika/pdf/Einfuehrung_Physik.pdf}, 10.\,Nov.~2020.
+\bibitem{TR Anleitung} Anleitung zum Versuch TR, \url{https://tu-dresden.de/mn/physik/iktp/studium/praktikum/versuche/transmission-thermischer-neutronen}, 10.\,Nov.~2020.
+\bibitem{Paraffin} Eigenschaften von Paraffin, \url{https://de.wikipedia.org/wiki/Paraffin}, 19.\,Nov.~2020.
+\bibitem{JANIS} Wirkungsquerschnitte aus der JANIS-Datenbank, \url{https://www.oecd-nea.org/janisweb/tree/N/'JEFF-3.0/A'/SIG}, 12.\,Nov.~2020.
+\bibitem{Eisen} Eisen-Isotope mit natürlicher Häufigkeit, \url{https://de.wikipedia.org/wiki/Eisen}, 12.\,Nov.~2020.
+\end{thebibliography}
+
+
+\end{document}

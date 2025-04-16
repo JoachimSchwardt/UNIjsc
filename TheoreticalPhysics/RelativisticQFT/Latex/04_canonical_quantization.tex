@@ -1,0 +1,256 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage[most]{tcolorbox}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Canonical Quantization}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Relativistic Quantum Field Theory}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Noether theorem}
+Assume some field theory, where the classical field $\phi_A(x)$ transform under Poincar\'e transformations as
+\begin{align}
+\phi_A &\rightarrow \phi_A' && \tecxt\text{where} & \phi_A'(\Lambda x + a) &= D_{AB}(\Lambda) \phi_B(x).
+\end{align}
+The infinitesimal field transformation is given by $\Lambda = \delta + \omega$.
+Note that 
+\begin{align}
+D_{AB}(\delta + \omega) = \delta_{AB} - \frac{\i}{2}\omega^{\mu\nu} (S_{\mu\nu})_{AB}
+\end{align} 
+where the prefactor $-\frac{\i}{2}$ ensures that the $S_{\mu\nu}$ satisfy the usual commutation relations.
+With this we find
+\begin{align}
+\phi_A'(x) &= D_{AB}(\delta + \omega) \phi_B (x - \omega x - a) = \\
+&= \kla\left( \delta_{AB} - \frac{\i}{2} \omega^{\mu\nu} (S_{\mu\nu})_{AB} \right) \left( 1 - a^\mu \partial_\mu - \omega^{\mu\nu} x_\nu \partial_\mu  \right) \phi_B(x) = \\
+&= \phi_A(x) + \left( - a^\mu \partial_\mu - \omega^{\mu\nu} x_\nu \partial_\mu \right) \phi_A(x) - \frac{\i}{2} \omega^{\mu\nu} (S_{\mu\nu})_{AB} \phi_B(x).
+\end{align}
+We may now identify $\phi_A' = \phi_A + \delta \phi_A$ where
+\begin{align}
+\delta\phi_A &= \left( \i a^\mu P_\mu - \frac{\i}{2} \omega^{\mu\nu} L_{\mu\nu} \right) \phi_A - \frac{\i}{2} \omega^{\mu\nu} (S_{\mu\nu})_{AB} \phi_B
+\end{align}
+and $P_\mu = \i\partial_\mu$, $L_{\mu\nu} = \i \left( x_{\mu} \partial_\nu - x_\nu \partial_\mu  \right)$.\\
+Assuming that the Lagrangian transforms as 
+\begin{align}
+\mathcal{L} &\rightarrow \mathcal{L}', &&& \mathcal{L}'(\Lambda x + a) &= \mathcal{L}(x)
+\end{align}
+we find\footnote{Note that $\omega$ is anti-symmetric and thus $\partial_\mu (\omega^{\mu\nu} x_\nu) = \omega^{\mu\nu} (x_\nu \partial_\mu + \delta_{\mu\nu}) = \omega^\mu\nu x_\nu \partial_\mu$.}
+\begin{align}
+\mathcal{L}'(x) &= \mathcal{L}(x - \omega x - a) = \mathcal{L}(x) - \omega^{\mu\nu} x_\nu \partial_\mu \mathcal{L}(x) - a^\mu \partial_\mu \mathcal{L}(x) = \\
+&= \mathcal{L}(x) + \partial_\mu \kla\left( -\omega^{\mu\nu} x_\nu \mathcal{L}(x) - a^\mu \mathcal{L}(x) \right) \equiv \mathcal{L}(x) + \partial_\mu \chi^\mu(x).
+\end{align}
+However, note that we may also write
+\begin{align}
+\mathcal{L}' &= \mathcal{L}\kla\left( \phi_A'(x), \partial_\rho \phi_A'(x) \right) = \mathcal{L} \kla\left( \phi_A + \delta\phi_A, \partial_\rho \phi_A + \partial_\rho \delta\phi_A \right) = \\
+&= \mathcal{L} + \frac{\partial \mathcal{L}}{\partial \phi_A} \delta\phi_A + \frac{\partial \mathcal{L}}{\partial \partial_\rho\phi_A}  \partial_\rho \delta\phi_A = \\
+&= \mathcal{L} + \partial_\rho \kla\left( \frac{\partial \mathcal{L}}{\partial \partial_\rho\phi_A} \delta\phi_A \right).
+\end{align}
+Combined with the above this yields
+\begin{align}
+0 &= \partial_\rho \kla\left( \frac{\partial \mathcal{L}}{\partial \partial_\rho\phi_A} \delta\phi_A - \chi^\rho  \right) \equiv \partial_\rho J^\rho.
+\end{align}
+Inserting our previous findings for $\delta\phi_A$ and $\chi^\mu$ we find
+\begin{align}
+J^\rho &= \frac{\partial \mathcal{L}}{\partial \partial_\rho\phi_A} \kla\left( \i a^\mu P_\mu - \frac{\i}{2} \omega^{\mu\nu} L_{\mu\nu} \right) \phi_A - \frac{\partial \mathcal{L}}{\partial \partial_\rho\phi_A} \frac{\i}{2} \omega^{\mu\nu} (S_{\mu\nu})_{AB} \phi_B +  \omega^{\rho\nu} x_\nu \mathcal{L} + a^\rho \mathcal{L} = \\
+&= a_\mu \kla\left( \frac{\partial \mathcal{L}}{\partial \partial_\rho\phi_A} \i P^\mu \phi_A + g^{\mu\rho} \mathcal{L} \right) - \omega_{\mu\nu} \kla\left( \frac{\i}{2} \frac{\partial \mathcal{L}}{\partial \partial_\rho\phi_A} \left[  L^{\mu\nu} \phi_A + (S^{\mu\nu})_{AB} \phi_B \right] - g^{\mu\rho} x^\nu \mathcal{L} \right) = \\
+&=: \mathcal{N} \kla\left(  \i T^{\rho\mu} a_\mu - \frac{\i}{2} \mathcal{M}^{\rho\mu\nu} \omega_{\mu\nu} \right).
+\end{align}
+Here the four currents $T^{\mu\rho}$ correspond to the translational invariance and the six currents $\mathcal{M}^{\rho\mu\nu}$ correspond to Lorentz invariance
+\begin{align}
+T^{\rho\mu} &= \frac{1}{\mathcal{N}} \kla\left( \frac{\partial \mathcal{L}}{\partial \partial_\rho\phi_A}  P^\mu \phi_A - \i g^{\mu\rho} \mathcal{L} \right) ,\\
+\mathcal{M}^{\rho\mu\nu} &= \frac{1}{\mathcal{N}} \kla\left( \i \kla\left( g^{\mu\rho} x^\nu - g^{\nu\rho} x^\mu \right) \mathcal{L} + \frac{\partial \mathcal{L}}{\partial \partial_\rho\phi_A} \klam\left[ L^{\mu\nu} \phi_A + (S^{\mu\nu})_{AB} \phi_B \right] \right)
+\end{align}
+where $\partial_\rho T^{\rho\mu} = 0$ and $\partial_\rho \mathcal{M}^{\rho \mu\nu} = 0$.
+The general form of the conserved charges is
+\begin{align}
+\hat{P}^\mu &:= \intr\int_{\mathbb{R}^{3}} T^{0\mu} \, \mathrm{d}^{3}x =  \frac{1}{\mathcal{N}} \int_{\mathbb{R}^{3}} \kla\left( \frac{\partial \mathcal{L}}{\partial \dot{\phi}_A} \i \partial^\mu \phi_A - \i g^{\mu 0}\mathcal{L} \right)  \, \mathrm{d}^{3}x,\\
+\hat{J}^{\mu\nu} &= \intr\int_{\mathbb{R}^{3}} \mathcal{M}^{0\mu\nu} \, \mathrm{d}^{3}x = \\
+&= \frac{1}{\mathcal{N}} \intr\int_{\mathbb{R}^{3}} \kla\left( \i \kla\left( g^{\mu 0} x^\nu - g^{\nu 0} x^\mu \right) \mathcal{L} + \frac{\partial \mathcal{L}}{\partial \dot{\phi}_A} \klam\left[ L^{\mu\nu} \phi_A + (S^{\mu\nu})_{AB} \phi_B \right] \right) \, \mathrm{d}^{3}x.
+\end{align}
+Note that $\frac{\partial\mathcal{L}}{\partial \dot{\phi}_A} =: \pi_A$ and therefore choosing the normalization factor as $\mathcal{N} = \i$ gives
+\begin{align}
+\hat{P}^0 &= \intr\int_{\mathbb{R}^{3}} \kla\left( \pi_A \dot{\phi}_A - \mathcal{L} \right) \, \mathrm{d}^{3}x = \intr\int_{\mathbb{R}^{3}} \mathcal{H} \, \mathrm{d}^{3}x = \hat{H}.
+\end{align}
+The currents in their final form are
+\begin{align}
+T^{\rho\mu} &= \frac{\partial \mathcal{L}}{\partial \partial_\rho \phi_A} \partial^\mu\phi_A - g^{\rho\mu} \mathcal{L} ,\\
+\mathcal{M}^{\rho\mu\nu} &= \kla\left( g^{\nu\rho} x^\mu - g^{\mu\rho} x^\nu \right) \mathcal{L} - \i \frac{\partial \mathcal{L}}{\partial \partial_\rho \phi_A} \klam\left[ L^{\mu\nu} \phi_A + (S^{\mu\nu})_{AB}\phi_B \right] = \\
+&= \frac{\partial \mathcal{L}}{\partial \partial_\rho \phi_A} \klam\left[ x^\mu\partial^\nu  - x^\nu\partial^\mu  \right]\phi_A + \kla\left( g^{\mu\rho}x^\nu - g^{\nu\rho} x^\mu \right) \mathcal{L} -\i \frac{\partial \mathcal{L}}{\partial \partial_\rho \phi_A} (S^\mu\nu)_{AB} \phi_B = \\
+&= x^\mu T^{\rho\nu} - x^\nu T^{\rho\mu} -\i \frac{\partial \mathcal{L}}{\partial \partial_\rho \phi_A} (S^\mu\nu)_{AB} \phi_B.
+\end{align}
+\section{Quantization of a spin 0 field}
+%show $[H,a_p^\dagger] = p^0 a_p^\dagger$ and $H=\intr\int_{\mathbb{R}^{3}} p^0 a_p^\dagger a_p \, \mathrm{d}^{3}p$.
+Recall that the Hamiltonian is
+\begin{align}
+\hat{H} &= \intr\int_{\mathbb{R}^{3}} \kla\left( \frac{m^2}{2} \hat{\phi}(x)^2 + \frac{1}{2} \hat{\pi}(x)^2 + \frac{1}{2} \nabla\hat{\phi}(x)^2 \right) \, \mathrm{d}^{3}x
+\end{align}
+where the hermitian field can be expressed using $\hat{a}_\textbf{p}$
+\begin{align}
+\hat{\phi}(x) &= \int \kla\left( \e^{-\i p\cdot x} \hat{a}_\textbf{p} + \e^{\i p\cdot x} \hat{a}_\textbf{p}^\dagger \right) \, \mathrm{d}\tilde{p}
+\end{align}
+and $\hat{\pi} = \dot{\hat{\phi}}$.
+Note that the measure defined as $\int \tecxt\text{d}\tilde{p}$ is Lorentz-invariant and takes the form
+\begin{align}
+\int \tecxt\text{d}\tilde{p} &:= \intr\int_{\mathbb{R}^{4}} 2\pi \delta(p^2 - m^2) \Theta(p^0) \, \frac{\mathrm{d}^{4}p}{(2\pi)^4} = \intr\int_{\mathbb{R}^{3}} \frac{1}{2p^0} \Big\vert_{p^0 = \sqrt{m^2 + \textbf{p}^2}} \, \frac{\mathrm{d}^{3}p}{(2\pi)^3}.
+\end{align}
+Note that $\left[ \hat{a}_\textbf{p}, \hat{a}_{\textbf{p}'}^\dagger \right] = 2p^0 (2\pi)^3 \delta(\textbf{p} - \textbf{p}')$ and $\left[ \hat{a}_\textbf{p}, \hat{a}_{\textbf{p}'} \right] = 0$.
+\subsection*{Approach I: Explicit calculation of $\hat{H}$}
+In the following integrals $p^0 = \sqrt{m^2 + \textbf{p}^2}$ is merely an abbreviation.
+Also note that we find terms of the form $\delta(\textbf{p} \pm \textbf{p}')$ and thus $p^0 = (p')^0$
+\begin{align}
+\intr\int_{\mathbb{R}^{3}} &\hat{\phi}(x)^2 \, \mathrm{d}^{3}x = \intx\int_{ }^{ } \left( \e^{-\i p\cdot x} \hat{a}_\textbf{p} + \e^{\i p\cdot x} \hat{a}_\textbf{p}^\dagger \right) \left( \e^{-\i p'\cdot x} \hat{a}_{\textbf{p}'} + \e^{\i p'\cdot x} \hat{a}_{\textbf{p}'}^\dagger \right) \, \mathrm{d}\tilde{p}\, \mathrm{d}\tilde{p}'\, \mathrm{d}^{3}x = \\
+&= \int \frac{1}{2p^0} \left( \e^{-2\i p^0t} \hat{a}_\textbf{p} \hat{a}_{-\textbf{p}} + \e^{2\i p^0 t} \hat{a}_\textbf{p}^\dagger \hat{a}_{-\textbf{p}}^\dagger + \hat{a}_\textbf{p}^\dagger \hat{a}_\textbf{p} + \hat{a}_\textbf{p} \hat{a}_\textbf{p}^\dagger \right)\, \mathrm{d}\tilde{p},\\
+\intr\int_{\mathbb{R}^{3}} &\dot{\hat{\phi}}(x)^2 \, \mathrm{d}^{3}x =  \int_{ }^{ } (-\i p^0)^2 \left( \e^{-\i p\cdot x} \hat{a}_\textbf{p} - \e^{\i p\cdot x} \hat{a}_\textbf{p}^\dagger \right) \left( \e^{-\i p'\cdot x} \hat{a}_{\textbf{p}'} - \e^{\i p'\cdot x} \hat{a}_{\textbf{p}'}^\dagger \right) \, \mathrm{d}\tilde{p}\, \mathrm{d}\tilde{p}'\, \mathrm{d}^{3}x = \\
+&= \int \frac{-(p^0)^2}{2p^0} \left( \e^{-2\i p^0t} \hat{a}_\textbf{p} \hat{a}_{-\textbf{p}} + \e^{2\i p^0 t} \hat{a}_\textbf{p}^\dagger \hat{a}_{-\textbf{p}}^\dagger - \hat{a}_\textbf{p}^\dagger \hat{a}_\textbf{p} - \hat{a}_\textbf{p} \hat{a}_\textbf{p}^\dagger \right)\, \mathrm{d}\tilde{p},\\
+\intr\int_{\mathbb{R}^{3}} &\nabla\hat{\phi}(x)^2 \, \mathrm{d}^{3}x =  \int_{ }^{ } \left( \i \textbf{p} \e^{-\i p\cdot x} \hat{a}_\textbf{p} - \i\textbf{p} \e^{\i p\cdot x} \hat{a}_\textbf{p}^\dagger \right) \cdot \left( \i\textbf{p}' \e^{-\i p'\cdot x} \hat{a}_{\textbf{p}'} - \i\textbf{p}' \e^{\i p'\cdot x} \hat{a}_{\textbf{p}'}^\dagger \right) \, \mathrm{d}\tilde{p}\, \mathrm{d}\tilde{p}'\, \mathrm{d}^{3}x = \\
+&= \int \frac{\textbf{p}^2}{2p^0} \left( \e^{-2\i p^0t} \hat{a}_\textbf{p} \hat{a}_{-\textbf{p}} + \e^{2\i p^0 t} \hat{a}_\textbf{p}^\dagger \hat{a}_{-\textbf{p}}^\dagger + \hat{a}_\textbf{p}^\dagger \hat{a}_\textbf{p} + \hat{a}_\textbf{p} \hat{a}_\textbf{p}^\dagger \right)\, \mathrm{d}\tilde{p}.
+\end{align}
+Since $\frac{-p^0}{2} + \frac{\textbf{p}^2}{2p^0} = \frac{-m^2}{2p^0}$ adding the second and third expression yields
+\begin{align}
+\int \frac{-m^2}{2p^0} \left( \e^{-2\i p^0t} \hat{a}_\textbf{p} \hat{a}_{-\textbf{p}} + \e^{2\i p^0 t} \hat{a}_\textbf{p}^\dagger \hat{a}_{-\textbf{p}}^\dagger \right)\, \mathrm{d}\tilde{p} + \intx\int_{ }^{ } \frac{\textbf{p}^2 + (p^0)^2}{2p^0} \left(  \hat{a}_\textbf{p}^\dagger \hat{a}_\textbf{p} + \hat{a}_\textbf{p} \hat{a}_\textbf{p}^\dagger \right) \, \mathrm{d}\tilde{p}.
+\end{align}
+Inserting into the Hamiltonian results in
+\begin{align}
+\hat{H} &= \frac{1}{2} \int \frac{m^2 + \textbf{p}^2 + (p^0)^2}{2p^0} \left( \hat{a}_\textbf{p}^\dagger \hat{a}_\textbf{p} + \hat{a}_\textbf{p} \hat{a}_\textbf{p}^\dagger \right) \,\mathrm{d}\tilde{p} = \\
+&= \frac{1}{2} \int_{\mathbb{R}^{3}} p^0 \kla\left( 2\hat{a}_\textbf{p}^\dagger \hat{a}_\textbf{p} + \klam\left[ \hat{a}_\textbf{p}^\dagger,  \hat{a}_\textbf{p} \right] \right) \, \mathrm{d}\tilde{p} = \\
+&= \intr\int_{\mathbb{R}^{3}} p^0 \hat{a}_\textbf{p}^\dagger \hat{a}_\textbf{p} \, \mathrm{d}\tilde{p} + \tecxt\text{const.}
+\end{align} %% \frac{\mathrm{d}^{3}p}{(2\pi)^3}
+The constant is divergent, but we will ignore it anyway.
+This is justified in the sense that a constant does neither influence commutation relations, nor change measurable energy differences.
+\subsection*{Approach II: Deduction of $\hat{H}$ via commutation relations}
+Using the commutation relations for $\hat{a}_\textbf{p}$ we find
+\begin{align}
+\klam\left[ \hat{\phi}(x), \hat{a}_\textbf{p}^\dagger \right] &= \intx\int_{ }^{ } \klam\left[ \e^{-\i p'\cdot x} \hat{a}_{\textbf{p}'} + \e^{\i p'\cdot x} \hat{a}_{\textbf{p}'}^\dagger, \hat{a}_\textbf{p}^\dagger \right] \, \mathrm{d}\tilde{p}' = \\
+&= \intx\int_{ }^{ } \e^{-\i p'\cdot x} (2\pi)^3 2p^0 \delta(\textbf{p} - \textbf{p}') \, \mathrm{d}\tilde{p} = \e^{-\i p\cdot x},\\
+\klam\left[ \partial_\mu \hat{\phi}(x), \hat{a}_\textbf{p}^\dagger \right] &= \partial_\mu \left[ \hat{\phi}(x), \hat{a}_\textbf{p}^\dagger \right] = -\i p_\mu \e^{-\i p\cdot x}.
+\end{align}
+%Consider the parts of the Hamiltonian separately 
+%\begin{align}
+%\left[ m^2\hat{\phi}^2(x), \hat{a}_\textbf{p}^\dagger \right] &= 2m^2 \hat{\phi}(x) \e^{-\i p\cdot x},\\
+%\left[ \kla\left( \nabla \hat{\phi}(x) \right)^2, \hat{a}_\textbf{p}^\dagger \right] &= \left( \i\textbf{p}\cdot \nabla\hat{\phi}(x) \right) \e^{-\i p\cdot x} + \e^{-\i p\cdot x} \left( \i\textbf{p}\cdot \nabla\hat{\phi}(x) \right) = \\
+%&= 2\i \textbf{p} \cdot (-\i \textbf{p}) \e^{-\i p\cdot x} \hat{\phi}(x) + \nabla\cdot \kla\left( \dots \right) = \\
+%&= 2\textbf{p}^2\e^{-\i p\cdot x} \hat{\phi}(x) + \nabla\cdot \kla\left( \dots \right),\\
+%\klam\left[ \dot{\hat{\phi}}(x)^2, \hat{a}_\textbf{p}^\dagger \right] &= 
+%\end{align}
+The following Fourier transform will be very useful
+\begin{align}
+\intr\int_{\mathbb{R}^{3}} \e^{-\i p\cdot x} \e^{\pm\i p'\cdot x} \, \mathrm{d}^{3}x &= \e^{-\i p^0t \pm \i p'^0 t} \intr\int_{\mathbb{R}^{3}} \e^{\i (\textbf{p} \mp \textbf{p}')\cdot \textbf{x}} \, \mathrm{d}^{3}x = (2\pi)^3 \delta \kla\left( \textbf{p} \mp \textbf{p}' \right) \e^{-\i t p^0 (1 \mp 1)}.
+\end{align}
+We may now evaluate the commutator
+\begin{align}
+\klam\left[ \hat{H}, \hat{a}_\textbf{p}^\dagger \right] &= \frac{1}{2} \intr\int_{\mathbb{R}^{3}} \klam\left[ m^2\hat{\phi}^2(x) + \dot{\hat{\phi}}(x)^2 + \kla\left( \nabla\hat{\phi}(x) \right)^2, \hat{a}_\textbf{p}^\dagger \right] \, \mathrm{d}^{3}x = \\
+&= \intr\int_{\mathbb{R}^{3}} \kla\left( m^2 \hat{\phi}(x) - \i p^0 \dot{\hat{\phi}}(x) + \i\textbf{p}\cdot \nabla\hat{\phi}(x) \right) \e^{-\i p\cdot x} \, \mathrm{d}^{3}x = \\
+&= \intr\int_{\mathbb{R}^{3}} \e^{-\i p\cdot x} \left( m^2 - \i p^0 \partial_t +\i\textbf{p} \cdot (-\i\textbf{p}) \right) \hat{\phi}(x) \, \mathrm{d}^{3}x = \\
+&= \intr\int_{\mathbb{R}^{3}} \e^{-\i p\cdot x} p^0 \left( p^0 - \i\partial_t  \right) \hat{\phi}(x) \, \mathrm{d}^{3}x = \\
+&= \intx\int_{ }^{ } \intr\int_{\mathbb{R}^{3}} \e^{-\i p\cdot x} p^0 \left( p^0 - \i\partial_t \right) \kla\left( \e^{-\i p'\cdot x} \hat{a}_{\textbf{p}'} + \e^{\i p'\cdot x} \hat{a}_{\textbf{p}'}^\dagger \right)  \, \mathrm{d}^{3}x \, \mathrm{d}\tilde{p}' = \\
+&= \intx\int_{ }^{ } \intr\int_{\mathbb{R}^{3}} \e^{-\i p\cdot x} p^0  \kla\left( \left( p^0 - p'^0 \right) \e^{-\i p'\cdot x} \hat{a}_{\textbf{p}'} + \left( p^0 + p'^0 \right) \e^{\i p'\cdot x} \hat{a}_{\textbf{p}'}^\dagger \right)  \, \mathrm{d}^{3}x \, \mathrm{d}\tilde{p}' = \\
+&= p^0 \kla\left( \e^{-2\i tp^0} \kla\left( p^0 - p^0 \right) \hat{a}_{-\textbf{p}} + \kla\left( p^0 + p^0 \right) \hat{a}_\textbf{p}^\dagger \right) \frac{1}{2p^0} = \\
+&= p^0 \hat{a}_\textbf{p}^\dagger.
+\end{align}
+Since $\hat{H}$ is hermitian this also yields
+\begin{align}
+\left[ \hat{H}, \hat{a}_\textbf{p} \right] &= -\left[ \hat{H}, \hat{a}_\textbf{p}^\dagger \right]^\dagger = -p^0 \hat{a}_\textbf{p}. 
+\end{align}
+These relations are also fulfilled by 
+\begin{align}
+\hat{\tilde{H}} &:= \intx\int_{ }^{ } p^0 \hat{a}_\textbf{p}^\dagger \hat{a}_\textbf{p} \, \mathrm{d}\tilde{p} + \tecxt\text{const}
+\end{align}
+and thus we may identify $\hat{\tilde{H}} \equiv \hat{H}$.
+
+
+%\section{Spin-statistics connection of a spin 0 field}
+%\section{Spinors}
+%test
+%\begin{align}
+%\parbox{\widthof{$a_{mk}$}}{$a_n$}&= 1\\
+%\parbox{\widthof{$a_{mk}$}}{$a_{mk}$}&= 1
+%\end{align}
+%\begin{align}
+%F_{n} \parbox{\widthof{$F_{mk}$}}{$F_n$} (a \parbox{\widthof{$a_{mk}$}}{$a_n$} x + b b_{mk}) &\parbox{\widthof{$\overset{m\, \rightarrow\, \infty}{\longrightarrow}$}}{$\overset{n\, \rightarrow\, \infty}{\longrightarrow}$} \overset{m\, \rightarrow\, \infty}{\longrightarrow} G\\
+%F_{n} \parbox{\widthof{$F_{mk}$}}{$F_n$} (a \parbox[t][][t]{\widthof{$a_{mk}$}}{$a_n$} x + b \parbox[t][][t]{\widthof{$b_{mk}$}}{$b_n$}) &\parbox[t][][t]{\widthof{$\overset{m\, \rightarrow\, \infty}{\longrightarrow}$}}{\centering $\overset{n\, \rightarrow\, \infty}{\longrightarrow}$} \overset{m\, \rightarrow\, \infty}{\longrightarrow} G\\
+%F_{n} \parbox{\widthof{$F_{mk}$}}{$F_n$} (a \parbox[t][][t]{\widthof{$a_{mk}$}}{$a_n$} x + b \parbox[t][][t]{\widthof{$b_{mk}$}}{$b_n$}) &\overset{ \parbox[t][][t]{\widthof{\scriptsize$m$}}{\centering \scriptsize $n$} \, \rightarrow\, \infty}{\longrightarrow} \overset{m\, \rightarrow\, \infty}{\longrightarrow} G\\
+%F_{n} F_{mk} (a a_{mk} x + b b_{mk}) &\overset{m\, \rightarrow\, \infty}{\longrightarrow} \overset{m\, \rightarrow\, \infty}{\longrightarrow} G\\
+%F_{n} \parbox[t][][t]{\widthof{$F_{mk}$}}{$F_n$} (a \parbox[t][][t]{\widthof{$a_{mk}$}}{$a_n$} x + b \parbox[t][][t]{\widthof{$b_{mk}$}}{$b_n$} ) &\overset{ \parbox[t][][t]{\widthof{\scriptsize $m$}}{\centering \scriptsize $n$} \, \rightarrow\, \infty}{\longrightarrow} \overset{m \, \rightarrow\, \infty}{\longrightarrow} G\\
+%F_n \parbox{\widthof{$F_{mk}$}}{$F_n$} (a \parbox[t][][t]{\widthof{$a_{mk}$}}{$a_n$} x + b \parbox[t][][t]{\widthof{$b_{mk}$}}{$b_n$}) &\overset{ \parbox[t][][t]{\widthof{\scriptsize$m$}}{\centering \scriptsize $n$} \, \rightarrow\, \infty}{\longrightarrow} \overset{m\, \rightarrow\, \infty}{\longrightarrow} G\\
+%F_n F_{\parbox[t][][t]{\widthof{\scriptsize $mk$}}{\scriptsize $n$}} (a \parbox[t][][t]{\widthof{$a_{mk}$}}{$a_n$} x + b \parbox[t][][t]{\widthof{$b_{mk}$}}{$b_n$}) &\overset{ \parbox[t][][t]{\widthof{\scriptsize$m$}}{\centering \scriptsize $n$} \, \rightarrow\, \infty}{\longrightarrow} \overset{m\, \rightarrow\, \infty}{\longrightarrow} G\\
+%F_n F_{mk} ( a a_{mk} x + b b_{mk} ) &\overset{m \, \rightarrow\, \infty}{\longrightarrow} \overset{m \, \rightarrow\, \infty}{\longrightarrow} G
+%\end{align}
+%\begin{align*}
+%    && a(z) L_0(y) &= L_0(y+z) - L_0(z) \\ 
+%    \text{swap }x,y: && a(y) L_0(z) &= L_0(z+y) - L_0(y) \\ 
+%    \Rightarrow && a(y) L_0(z) - a(z) L_0(y) &= -L_0(y) + L_0(z) \\ & \\ & \\
+%    \Rightarrow && L_0(y) \big( 1 - a(z) \big) &= L_0(z) \big( 1 - a(y) \big)
+%\end{align*}
+%\centering\begin{tcolorbox}[ams align*, colback=white, width=9cm]
+%    L_0(y) \big( 1 - a(z) \big) &= L_0(z) \big( 1 - a(y) \big) &&&& (1) \\
+%    a(z) L_0(y) &= L_0(y+z) - L_0(z) &&&& (2) \\
+%    L(y) &= L_0(y) + L(0) &&&& (3) \\
+%    L^{-1}(x) &= \log ( -\log G )  &&&& (4)
+%\end{tcolorbox} 
+%\centering\small\begin{tcolorbox}[ams align*, colback=white, top=0.0cm, left=0.1cm, bottom=0.0cm, right=0.1cm, width=6.0cm]
+%    L_0(y) \big( 1 - a(z) \big) &= L_0(z) \big( 1 - a(y) \big) \\
+%    a(z) L_0(y) &= L_0(y+z) - L_0(z) \\
+%    L(y) &= L_0(y) + L(0) \\
+%    L^{-1}(x) &= \log ( -\log G ) 
+%\end{tcolorbox} 
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

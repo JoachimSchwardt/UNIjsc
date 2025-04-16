@@ -1,0 +1,263 @@
+\documentclass[german, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[ngerman]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\newcommand{\I}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Convolutions and \Fourier Transformations}
+\newcommand*{\autor}{Joachim Schwardt}
+
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Complex analysis}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Definitions}
+\subsection{Convolutions}
+Let $f,g,h\in\mathcal{L}^1(\mathbb{R}^N)$ be integrable functions.
+Then the convolution is defined as
+\begin{align}
+(f\ast g)(x)=\intr\int_{\mathbb{R}^{N }}{f(y)g(x-y)}\,\mathrm{d}^{N }y. \label{eqn:ConvolutionDefinition}
+\end{align}
+It is commutative and associative, i.e.
+\begin{align}
+f\ast g &= g\ast f, \label{eqn:ConvolutionCommutative}\\
+f\ast (g\ast h)&=(f\ast g)\ast h. \label{eqn:ConvolutionAssociative}
+\end{align}
+Furthermore it conserves the norm, which refers to the property
+\begin{align}
+\|f\ast g\|&=\|f\|\cdot\|g\|, \label{eqn:ConvolutionNormProperty}
+\end{align}
+where the norm is defined as
+\begin{align}
+\|f\|&:=\intr\int_{\mathbb{R}^{N }}{f(x)}\,\mathrm{d}^{N}x. \label{eqn:NormDefinition}
+\end{align}
+\subsection{\Fourier transformation}
+Let $f,g\in\mathcal{L}^1(\mathbb{R}^N)$ be integrable functions.
+Then the \Fourier transformation is defined as
+\begin{align}
+\F[f](k)&:=\intr\int_{\mathbb{R}^{N}}{f(x)\e^{-\I k\cdot x}}\,\mathrm{d}^{N}x. \label{eqn:FourierTransformDefinition}
+\end{align}
+The inverse transformation is then given by
+\begin{align}
+\F^{-1}[f](x)&=\frac{1}{(2\pi)^N}\intr\int_{\mathbb{R}^{N}}{f(k)\e^{\I k\cdot x}}\,\mathrm{d}^{N}k. \label{eqn:FourierTransformInverse}
+\end{align}
+The heuristic prove of this being the inverse to the \Fourier transform requires the parameterization of the $\delta$-distribution as
+\begin{align}
+\delta (x)&=\frac{1}{(2\pi)^N}\intr\int_{\mathbb{R}^{N}}{\e^{\I k\cdot x}}\,\mathrm{d}^{N}k. \label{eqn:DeltaDefinition}
+\end{align}
+With this the inverse relationship between equations (\ref{eqn:FourierTransformDefinition}) and (\ref{eqn:FourierTransformInverse}) may be shown by evaluating the result of
+\begin{align*}
+\F^{-1}\klam\left[ {\F[f]} \right]&=\frac{1}{(2\pi)^N}\intr\int_{\mathbb{R}^{N}}{\intr\int_{\mathbb{R}^{N}}{f(x')\e^{-\I k\cdot x'}}\,\mathrm{d}^{N}x'}\e^{\I k\cdot x}\,\mathrm{d}^{N}k=\\
+&=\intr\int_{\mathbb{R}^{N}}{f(x')\frac{1}{(2\pi)^N}\intr\int_{\mathbb{R}^{N}}{\e^{\I k\cdot (x-x')}}\,\mathrm{d}^{N}x'}\,\mathrm{d}^{N}k\overset{(\ref{eqn:DeltaDefinition})}{=}\\
+&=\intr\int_{\mathbb{R}^{N}}{f(x')\delta (x-x')}\,\mathrm{d}^{N}x'=f(x).
+\end{align*}
+The \Fourier transformation is connected to convolutions via the relations
+\begin{align}
+\F[fg]&=\frac{1}{(2\pi)^N}\F[f]\ast\F[g],  \label{eqn:FourierTransformProduct}\\
+\F[f\ast g]&=\F[f]\F[g]. \label{eqn:FourierTransformConvolution}
+\end{align}
+Both of these relations can be computed directly.
+Consider first the product of two \Fourier transformations 
+\begin{align*}
+\F[f]\F[g]&=\intr\int_{\mathbb{R}^{N}}{f(y)\e^{-\I k\cdot y}}\,\mathrm{d}^{N}y \intr\int_{\mathbb{R}^{N}}{g(z)\e^{-\I k\cdot z}}\,\mathrm{d}^{N}z=\\
+&=\intr\int_{\mathbb{R}^{ }}{\intr\int_{\mathbb{R}^{N }}{f(y)g(z)\e^{-\I k\cdot (y+z)}}\,\mathrm{d}^{N}y}\,\mathrm{d}^{N}z\kom\overset{\substack{{x\,:=\, y+z} \\ |}}{=}\\
+&=\intr\int_{\mathbb{R}^{N}}{\intr\int_{\mathbb{R}^{N}}{f(y)g(x-y)}\,\mathrm{d}^{N}y}\,\e^{-\I k\cdot x}\,\mathrm{d}^{N}x=\F[f\ast g].
+\end{align*}
+The other identity can be shown by considering the convolution of two \Fourier transforms, i.e.
+\begin{align*}
+\F[f]\ast\F[g]&=\intr\int_{\mathbb{R}^{N}}{\intr\int_{\mathbb{R}^{N}}{f(x)\e^{-\I k'\cdot x}}\,\mathrm{d}^{N}x}\intr\int_{\mathbb{R}^{N}}{g(y)\e^{-\I (k-k')\cdot y}}\,\mathrm{d}^{N}y\,\mathrm{d}^{N}k'=\\
+&=\intr\int_{\mathbb{R}^{N}}\intr\int_{\mathbb{R}^{N}}{f(x)g(y)\intr\int_{\mathbb{R}^{N}}{\e^{-\I k'\cdot (x-y)}}\,\mathrm{d}^{N}k'}\e^{-\I k\cdot y}\,\mathrm{d}^{N}y\,\mathrm{d}^{N}x=\\
+&=(2\pi)^N\intr\int_{\mathbb{R}^{N}}\intr\int_{\mathbb{R}^{N}}{f(x)g(y)\delta(x-y)}\e^{-\I k\cdot y}\,\mathrm{d}^{N}y\,\mathrm{d}^{N}x=\\
+&=(2\pi)^N\intr\int_{\mathbb{R}^{N}}{f(x)g(x)}\e^{-\I k\cdot x}\,\mathrm{d}^{N}x=(2\pi)^N\F[fg].
+\end{align*}
+Note that the relations (\ref{eqn:FourierTransformProduct}) and (\ref{eqn:FourierTransformConvolution}) also hold for the inverse \Fourier transformation.
+They can be found by taking the inverse \Fourier transformation of either equation, while letting $f\rightarrow \F^{-1}[f]$ and $g\rightarrow \F^{-1}[g]$.
+This leads to
+\begin{align}
+\F^{-1}[fg]&=\F^{-1}[f]\ast\F^{-1}[g], \label{eqn:FourierTransformInverseProduct}\\
+\F^{-1}[f\ast g]&=(2\pi)^N\F^{-1}[f]\F^{-1}[g]. \label{eqn:FourierTransformInverseConvolution}
+\end{align}
+\section{Integral problems via \Fourier transformation}
+\subsection{Fourier transform of a cardinal sinus}
+The sinus cardinalis is defined as $\tecxt\text{sinc\,}(x):=\frac{\sin(x)}{x}$.
+Its \Fourier transform is particularly interesting, and can be computed in the following way.
+Let $\alpha> 0$ be a constant and consider the derivative
+\begin{align*}
+\partial_k\F[\tecxt\text{sinc\,}(\alpha x)](k)&=\intr\int_{\mathbb{R}^{}}{\frac{-\I}{\alpha}\sin (x\alpha)\e^{-\I k x}}\,\mathrm{d}^{}x=\\
+&=\frac{-\I}{2\I\alpha}\intr\int_{\mathbb{R}^{ }}{\kla\left( {\e^{\I\alpha x}-\e^{-\I\alpha x}} \right)\e^{-\I k x}}\,\mathrm{d}^{ }x=\\
+&=\frac{1}{2\alpha}\intr\int_{\mathbb{R}^{ }}{\e^{-\I x(k+\alpha)}}\,\mathrm{d}^{ }x-\frac{1}{2\alpha}\intr\int_{\mathbb{R}^{ }}{\e^{-\I x(k-\alpha)}}\,\mathrm{d}^{ }x\overset{(\ref{eqn:DeltaDefinition})}{=}\\
+&=\frac{\pi}{\alpha}\klam\left[ {\delta (k+\alpha)-\delta (k-\alpha)} \right]. 
+\end{align*}
+Integrating this expression up to some $k$ results in the \Fourier transform of the sinc-function, i.e.
+\begin{align}
+\F[\sinc(\alpha x)](k)&=\intx\int_{-\infty}^{k}\frac{\pi}{\alpha}\klam\left[ {\delta (k+\alpha)-\delta (k-\alpha)} \right]\,\mathrm{d}k=\frac{\pi}{\alpha}\Theta (\alpha-|k|). \label{eqn:FourierTransformSinc}
+\end{align}
+\subsection{Fourier transform of cardinal sinus products}
+From equation (\ref{eqn:FourierTransformSinc}) it is evident, that the integral
+\begin{align}
+\intr\int_{\mathbb{R}^{ }}{\frac{\sin (x)}{x}}\,\mathrm{d}^{ }x&=\pi. \label{eqn:IntegralSinc}
+\end{align}
+A more general problem can be formulated in the following way.
+Let $\alpha_0\ge\dots\ge\alpha_N > 0$ for some $N\in\mathbb{N}$ be monotonically decreasing, without loss of generality.
+Then we seek to evaluate the integral
+\begin{align}
+I(\alpha)&:=\intr\int_{\mathbb{R}^{ }}{\prod_{j=0}^N\sinc(\alpha_jx)}\,\mathrm{d}^{ }x \label{eqn:IntegralProductSinc}
+\end{align}
+as a function of the $\alpha_j$.
+This is equivalent to evaluating the \Fourier transformation 
+\begin{align}
+I(k,\alpha)&:=\F\klam\left[ {\prod_{j=0}^N\sinc(\alpha_jx)} \right] \label{eqn:IntegralProductSincFT}
+\end{align}
+at $k=0$.
+While this may appear to make the problem more difficult, it allows us to make use of the product formula (\ref{eqn:FourierTransformProduct}) for \Fourier transformations.
+Due to the commutative and associative properties of the convolution, we can write
+\begin{align}
+I(k,\alpha)&=2\pi\conv_{j=0}^{N}\frac{1}{2\pi}\F[\sinc (\alpha_jx)]=2\pi\conv_{j=0}^N\frac{1}{2\alpha_j}\Theta(\alpha_j-|k|), \label{eqn:IntegralProductSincConvolution} 
+\end{align}
+where the $N$-fold convolution of a sequence of functions $f_1,\dots,f_N$ is abbreviated as
+\begin{align}
+\conv_{j=1}^N f_j&:=f_1\ast\dots\ast f_N. \label{eqn:ConvolutionNfold}
+\end{align}
+Define the convolution in equation (\ref{eqn:IntegralProductSincConvolution}) and write it in its expanded form to get
+\begin{align*}
+C_N(k)&:=\conv_{j=0}^N\Theta (\alpha_j-|k|)=\\
+&=\int_{\mathbb{R}^{ }}\Theta(\alpha_N-|k_N|)\dots\int_{\mathbb{R}^{ }}\Theta(\alpha_1-|k_1|)\Theta(\alpha_0-|k-k_N-\dots-k_1|)\,\mathrm{d}k_1\,\mathrm{d}k_N=\\
+&=\intx\int_{-\alpha_N}^{\alpha_N}\dots\intx\int_{-\alpha_1}^{\alpha_1}\Theta\kla\bigg( {\alpha_0-\Big\vert k - \sum_{j=1}^Nk_j\Big\vert} \bigg)\,\mathrm{d}k_1\dots\mathrm{d}k_N.
+\end{align*}
+This expression can be further simplified by making use of $\Theta(x)=1-\Theta(-x)$ and defining $p_j:=\frac{k_j}{\alpha_j}$, leading to
+\begin{align*}
+C_N(k)&=\prod_{j=1}^N 2\alpha_j-\intx\int_{-1}^{1}\dots\intx\int_{-1}^{1}\Theta\bigg(\Big\vert k-\sum_{j=1}^N\alpha_jp_j\Big\vert - \alpha_0\bigg)\,\alpha_1\mathrm{d}p_1\dots\,\alpha_N\mathrm{d}p_N.
+\end{align*}
+Inserting this into equation (\ref{eqn:IntegralProductSincConvolution}) then yields
+\begin{align*}
+I(k,\alpha)&=2\pi\prod_{j=0}^N\frac{1}{2\alpha_j}\prod_{j=1}^N2\alpha_j-2\pi\frac{1}{2\alpha_0}\frac{1}{2^N}\intx\int_{[-1,1]^N}\Theta\bigg(\Big\vert k-\sum_{j=1}^N\Big\vert-\alpha_0\bigg)\,\mathrm{d}^Np=\\
+&=:\frac{\pi}{\alpha_0}\klam\left[ {1-\frac{1}{2^N}\epsilon_N\kla\left( {\frac{k}{\alpha_0}} \right)} \right].
+\end{align*}
+With $\beta_j:=\frac{\alpha_j}{\alpha_0}\in (0,1]$ and $p:=\frac{k}{\alpha_0}$ the new quantity can be written as
+\begin{align}
+\epsilon_N(p)&:=\intx\int_{[-1,1]^N}^{ }\Theta\bigg(\Big\vert p-\sum_{j=1}^N\beta_jp_j\Big\vert - 1\bigg)\,\mathrm{d}^Np\in [0,1]. \label{eqn:IntegralProductSincFTEpsilonDefinition}
+\end{align}
+Since we only need to evaluate this expression for $k=0$, we can simplify it to
+\begin{align}
+\epsilon_N&:=\epsilon_N(p=0)=\intx\int_{[-1,1]^N}^{ }\Theta\bigg(\Big\vert \sum_{j=1}^N\beta_jp_j\Big\vert - 1\bigg)\,\mathrm{d}^Np. \label{eqn:IntegralProductSincEpsilonDefinition}
+\end{align}
+Note that $\Theta(|x|-1)=\Theta(x-1)+\Theta(-x-1)$.
+Inserting this formula into equation (\ref{eqn:IntegralProductSincEpsilonDefinition}) and  substituting $p_j\rightarrow -p_j$ in the second term allows us to rewrite the expression for $\epsilon_N$ as
+\begin{align}
+\epsilon_N&=2\intx\int_{[-1,1]^N}^{ }\Theta (\beta\cdot p-1)\,\mathrm{d}^Np
+\end{align}
+There are two important remarks to be made about the integrand of equation (\ref{eqn:IntegralProductSincEpsilonDefinition}).
+Consider the inequality
+\begin{align*}
+\beta\cdot p&:=\sum_{j=1}^N\beta_jp_j\le\sum_{j=1}^N\beta_j. 
+\end{align*}
+Notice that our integrand is therefor less than $\Theta(\sum\beta_j-1)$ and vanishes under the condition 
+\begin{align}
+\sum_{j=1}^N\beta_j<1. \label{eqn:IntegralProductSincCondition}
+\end{align}
+In this case, we get $\epsilon_N=0$ and hence 
+\begin{align}
+I(\alpha)&=\intr\int_{\mathbb{R}^{ }}\prod_{j=0}^N\sinc (\alpha_jx)\,\mathrm{d}^{ }x=\frac{\pi}{\alpha_0}&\tecxt\text{iff}&&\sum_{j=1}^N\alpha_j&<\alpha_0. \label{eqn:IntegralProductSincConditionSolution}
+\end{align}
+Similarly, we find the general inequality
+\begin{align}
+\epsilon_N&= 2\int_{[-1,1]^N}\Theta \bigg(\sum_{j=1}^N\beta_jp_j-1\bigg)\,\mathrm{d}^Np\le 2^{N+1} \int_{[0,1]^N}\Theta (\beta\cdot p - 1)\,\mathrm{d}^Np. \label{eqn:IntegralProductSincEpsilonUpperBound}
+\end{align}
+In order to approach a general solution, we consider the simpler case of $\beta_j\equiv 1$.
+Introduce the abbreviation $\Sigma_N:=\sum_{j=1}^N\beta_jp_j$.
+Then we can attempt to find an iterative solution to the integral problem by applying $\max\klammer\left\{{x,y} \right\}=x+(y-x)\Theta (y-x)$, $\min\klammer\left\{{x,y} \right\}=y-(y-x)\Theta (y-x)$ as well as $\max\klammer\left\{{x,y} \right\}=-\min\klammer\left\{{-x,-y} \right\}$
+\begin{align*}
+\epsilon_N&=2\intx\int_{[-1,1]^N}^{ }\Theta (\Sigma _N-1)\,\mathrm{d}^Np=2\intx\int_{[-1,1]^{N-1}}^{ }\intx\int_{\max\klammer\left\{{-1,1-\Sigma_{N-1}\Theta(\Sigma_{N-1})} \right\}}^{1}\,\mathrm{d}p_N\,\mathrm{d}^{N-1}p=\\
+%&=2\intx\int_{[-1,1]^{N-1}}^{ }2-\kla\left( {2-\Sigma_{N-1}p} \right)\Theta\kla\left( {2-\Sigma_{N-1}p} \right)\,\mathrm{d}^{N-1}p=\\
+%&=4\intx\int_{[-1,1]^{N-1}}^{ }1-\kla\left( {1-\frac{1}{2}\Sigma_{N-1}p} \right)+\kla\left( {1-\frac{1}{2}\Sigma_{N-1}p} \right)\Theta \kla\left( {\frac{1}{2}\Sigma_{N-1}p-1} \right)\,\mathrm{d}^{N-1}p=\\
+%&=2\intx\int_{[-1,1]^{N-1}}^{ }\Sigma_{N-1}p\,\mathrm{d}^{N-1}p+4\intx\int_{[-1,1]^{N-1}}^{ }\Theta\kla\left( {\frac{1}{2}\Sigma_{N-1}p-1} \right) \,\mathrm{d}^{N-1}p-2\intx\int_{[-1,1]^N}^{ }\Sigma_{N-1}p\Theta\kla\left( {\frac{1}{2}\Sigma_{N-1}p-1} \right)\,\mathrm{d}^{N-1}p=\\
+&=2\intx\int_{[-1,1]^{N-1}}^{ }\min\klammer\left\{{2,\Sigma_{N-1}\Theta(\Sigma_{N-1})} \right\}\,\mathrm{d}^{N-1}p=\\
+&=4\intx\int_{[-1,1]^{N-1}}^{ }\frac{1}{2}\Sigma_{N-1}-\kla\left( {\frac{1}{2}\Sigma_{N-1}-1} \right)\Theta\kla\left( {\frac{1}{2}\Sigma_{N-1}-1} \right)\,\mathrm{d}^{N-1}p=\\
+%&=4\intx\int_{[-1,1]^{N-1}}^{ }\Theta\kla\left( {\frac{1}{2}\Sigma_{N-1}-1} \right) \,\mathrm{d}^{N-1}p-2\intx\int_{[-1,1]^{N-1}}^{ }\Sigma_{N-1}\Theta\kla\left( {\frac{1}{2}\Sigma_{N-1}-1} \right)\,\mathrm{d}^{N-1}p.
+&=2\intx\int_{[-1,1]^{N-1}}^{ }\cancelto{\small 0}{\Sigma}_{N-1}-(\Sigma_{N-1}-2)\Theta(\Sigma_{N-1}-2)\,\mathrm{d}^{N-1}p.
+\end{align*}
+Repeating this process one more time reveals a pattern.
+\begin{align*}
+\epsilon_N&=2\intx\int_{[-1,1]^{N-2}}^{ }\intx\int_{\max\klammer\left\{{-1,2-\Sigma_{N-2}\Theta (\Sigma_{N-2})} \right\}}^{1}2-\Sigma_{N-2}-p_{N-1}\,\mathrm{d}p_{N-1}\,\mathrm{d}^{N-2}p=\\
+&=2\int_{[-1,1]^{N-2}}^{ }(2-\Sigma_{N-2})\min\klammer\left\{{2,\Sigma_{N-2}\Theta (\Sigma_{N-2})-3} \right\}\,\mathrm{d}^{N-2}p+
+\end{align*}
+Hypothesis:
+\begin{align*}
+\epsilon_N&=\frac{2}{N!}\frac{\kla\left( {\min\klammer\left\{{2,\sum\beta} \right\}} \right)^N}{\prod\beta}.
+\end{align*}
+See \textsc{Borwein} integrals for further reference.
+Apparently, this formula is only correct under certain conditions. 
+In particular, it is sufficient that $\sum_{j=0}^{N-1}\beta_j<1$.
+This means, that the boundary value of 1 is only passed when including last value $\beta_N$. 
+The true result, expressed using $\beta_j=\frac{\alpha_j}{\alpha_0}$, $\gamma=(\gamma_1,\dots,\gamma_N)^\top$ with $\gamma_j\in\{\pm 1\}$, and $\epsilon_\gamma:=\gamma_1\dots\gamma_N\in\{\pm\}$ is
+\begin{align}
+\intr\int_{\mathbb{R}}\prod_{j=0}^N\sinc(\alpha_jx)\,\mathrm{d}x=\frac{\pi}{\alpha_0}\frac{\sum_{\gamma\in\{\pm\}^N}\epsilon_\gamma (1+\beta\cdot\gamma )^N\tecxt\text{sign\,}(1+\beta\cdot\gamma)}{2^N N!\prod_{j=1}^N\beta_j}. \label{eqn:IntegralProductSincSolution}
+\end{align}
+Under the mentioned condition, this result may be simplified to
+\begin{align}
+\intr\int_{\mathbb{R}^{ }}\prod_{j=0}^N\sinc(\alpha_jx)\,\mathrm{d}x=\frac{\pi}{\alpha_0}\klam\left[ 1-\frac{(\beta\cdot\gamma_+ - 1)^N}{2^{N-1} N!\prod_{j=1}^N\beta_j} \right]. \label{eqn:IntegralProductSincSolutionSimplified}
+\end{align}
+%A crucial intermediate step is to simplify the second term of this expression.
+%Notice how changing the sign of all the $p_j$ only introduces a global factor of $-1$, while transforming $\Theta(x-1)$ to $\Theta(-x-1)$.
+%The sum of these two functions would again 
+
+%Consider for a moment the simple symmetric integral
+%\begin{align*}
+%I&:=\intx\int_{-1}^{1}x\Theta (x-1)\,\mathrm{d}x=-\intx\int_{-1}^{1}x-x\Theta (x+1)\,\mathrm{d}x=\intx\int_{-1}^{1}x\Theta (x+1)\,\mathrm{d}x.
+%\end{align*}
+
+%\kom\overset{\substack{{k_j\,=:\,\alpha_jp_j} \\ |}}{=}
+
+%\begin{minted}[frame=lines, bgcolor=bg, fontsize=\footnotesize, linenos]{python}
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

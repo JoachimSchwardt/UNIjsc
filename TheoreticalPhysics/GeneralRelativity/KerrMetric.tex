@@ -1,0 +1,428 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Exact solutions to the Einstein Field Equations}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{General Relativity}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+
+\section{Diagonal two-dimensional metric}
+Consider a metric of the form
+\begin{align}
+\tecxt\text{d}s^2 &= a(x_1,x_2) \tecxt\text{d}x_1^2 + b(x_1,x_2)\tecxt\text{d}x_2^2.
+\end{align}
+The Lagrangian is then given by
+\begin{align}
+L &= a\dot{x}_1^2 + b\dot{x}_2^2.
+\end{align}
+The Euler-Lagrange equations are
+\begin{align}
+0 &= \frac{\tecxt\text{d}}{\tecxt\text{d}s} \kla\left( 2a\dot{x}_1 \right) - a_1\dot{x}_1^2 - b_1\dot{x}_2^2 = \\
+&= 2a \ddot{x}_1 + 2a_1\dot{x}_1^2 + 2a_2\dot{x}_2\dot{x}_1 - a_1\dot{x}_1^2 - b_1\dot{x}_2^2 = \\
+&= 2a \kla\left( \ddot{x}_1 + \frac{a_1}{2a}\dot{x}_1^2 + \frac{a_2}{a}\dot{x}_1\dot{x}_2 - \frac{b_1}{2a}\dot{x}_2^2 \right),\\
+0 &= \frac{\tecxt\text{d}}{\tecxt\text{d}s} \kla\left( 2b\dot{x}_2 \right) - a_2\dot{x}_1^2 - b_2\dot{x}_2^2 = \\
+&= 2b\ddot{x}_2 + 2b_1\dot{x}_1\dot{x}_2 + 2b_2\dot{x}_2^2 - a_2\dot{x}_1^2 - b_2\dot{x}_2^2 = \\
+&= 2b \kla\left( \ddot{x}_2 - \frac{a_2}{2b}\dot{x}_1^2 + \frac{b_1}{b}\dot{x}_1\dot{x}_2 + \frac{b_2}{2b}\dot{x}_2^2 \right).
+\end{align}
+The Christoffel symbols can be written as
+\begin{align}
+\Gamma^1 &= \frac{1}{2a} \begin{pmatrix}
+a_1 & a_2 \\ . & -b_1
+\end{pmatrix}, &&& \Gamma^2 &= \frac{1}{2b} \begin{pmatrix}
+-a_2 & b_1 \\ . & b_2
+\end{pmatrix}.
+\end{align}
+In our two-dimensional case the Riemann curvature tensor has only one independent component
+\begin{align}
+R_{1212} &= g_{1n} R^n_{\ 212} = g_{11} R^{1}_{\ 212} = aR^1_{\ 212},
+\end{align}
+where we may use the definition of the tensor to compute the unknown element
+\begin{align}
+R^1_{\ 212} &= \partial_1\Gamma^1_{22} - \partial_2\Gamma^1_{12} + \Gamma^n_{22}\Gamma^1_{n1} - \Gamma^n_{12}\Gamma^1_{n2} = \\
+&= \partial_1 \frac{-b_1}{2a} - \partial_2 \frac{a_2}{2a} + \frac{-b_1}{2a} \frac{a_1}{2a} + \frac{b_2}{2b} \frac{a_2}{2a} - \frac{a_2}{2a} \frac{a_2}{2a} - \frac{b_1}{2b} \frac{-b_1}{2a} = \\
+&= \frac{-b_{11}}{2a} + \frac{b_1a_1}{2a^2} - \frac{a_{22}}{2a} + \frac{a_2^2}{2a^2} - \frac{a_1b_1}{4a^2} + \frac{a_2b_2}{4ab} - \frac{a_2^2}{4a^2} + \frac{b_1^2}{4ab} = \\
+&= \frac{1}{4a} \kla\left( -2b_{11} - 2a_{22} + \frac{a_1b_1}{a} + \frac{a_2^2}{a} + \frac{a_2b_2}{b} + \frac{b_1^2}{b} \right).
+\end{align}
+The components of the Ricci tensor are given by
+\begin{align}
+R_{nm} &= R^{k}_{\ nkm} = R^1_{\ n1m} + R^2_{\ n2m} = g^{11} R_{1n1m} + g^{22} R_{2n2m} = \\
+&= g^{11} R_{1n1m} + g^{22} R_{n2m2}.
+\end{align}
+Note that the first term only contributes for $n=m=2$ and the second term only contributes for $n=m=1$.
+Thus the only non-zero components are
+\begin{align}
+R_{11} &= g^{22} R_{1212} = \frac{a}{b} R^1_{\ 212} ,\\
+R_{22} &= g^{11} R_{1212} = R^1_{\ 212}.
+\end{align}
+In vacuum the Einstein field equations yield $R_{\mu\nu} = 0$.
+Thus we are left with $R^1_{\ 212} = 0$, resulting in the non-linear PDE
+\begin{align}
+2ab (a_{22} + b_{11}) &= b(a_1b_1 + a_2^2) + a(a_2b_2 + b_1^2).
+\end{align}
+Note that a possible solution is given by $a=1$ and $b=x_1^2$, since
+\begin{align}
+2x_1^2 (0 + 2) &= x_1^2 (0 + 0) + (0 + 4x_1^2).
+\end{align}
+
+\section{Schwarzschild metric}
+For the Schwarzschild metric we start with an ansatz of the form
+\begin{align}
+\tecxt\text{d}s^2 &= A(r) \tecxt\text{d}t^2 - B(r) \tecxt\text{d}r^2 - r^2 \kla\left( \tecxt\text{d}\theta^2 + \sin^2\theta\tecxt\text{d}\phi^2 \right).
+\end{align}
+The Lagrangian is given by
+\begin{align}
+L &= A\dot{t}^2 - B\dot{r}^2 - r^2\dot{\theta}^2 - r^2\sin^2\theta \dot{\phi}^2
+\end{align}
+and contains two cyclic variables.
+These lead to two conserved quantities given by
+\begin{align}
+\frac{\partial L}{\partial \dot{t}} &= 2A\dot{t} = \tecxt\text{const} \equiv 2\epsilon,\\
+\frac{\partial L}{\partial \dot{\phi}} &= -2r^2\sin^2\theta\dot{\phi} = \tecxt\text{const} \equiv -2\ell.
+\end{align}
+Inserting these into the metric yields
+\begin{align}
+\tecxt\text{d}s^2 &= A \kla\left( \frac{\epsilon}{A} \tecxt\text{d}s \right)^2 - B\tecxt\text{d}r^2 - r^2\tecxt\text{d}\theta^2 - r^2\sin^2\theta \kla\left( \frac{\ell}{r^2\sin^2\theta} \tecxt\text{d}s \right)^2,\\
+\Rightarrow\ \ \ \tecxt\text{d}s^2 &= \frac{-B\tecxt\text{d}r^2 - r^2\tecxt\text{d}\theta^2}{1 - \frac{\epsilon^2}{A} + \frac{\ell^2}{r^2\sin^2\theta}} \equiv a(r,\theta)\tecxt\text{d}r^2 + b(r,\theta)\tecxt\text{d}\theta^2.
+\end{align}
+Using the general solution for a diagonal two-dimensional metric we find
+\begin{align}
+2ab(a_{\theta\theta} + b_{rr}) &= b (a_rb_r + a_\theta^2) + a(a_\theta b_\theta + b_r^2).
+\end{align}
+Note we may express the functions $a$ and $b$ as
+\begin{align}
+a &= \frac{B(r)}{C(r,\theta)}, &&& b &= \frac{r^2}{C(r,\theta)},
+\end{align}
+where we defined $C(r,\theta) := \frac{\epsilon^2}{A(r)} - 1 - \frac{\ell^2}{r^2\sin^2\theta}$.
+Inserting these into the PDE yields
+\begin{align*}
+0 =\ &\frac{r^2}{C} \kla\left( \frac{B'C - BC_r}{C^2} \frac{2rC - r^2C_r}{C^2} + \frac{B^2C_\theta^2}{C^4} \right) + \\
+&+ \frac{B}{C} \kla\left( \frac{-BC_\theta}{C^2} \frac{-r^2C_\theta}{C^2} + \klam\left[ \frac{2r}{C} - \frac{r^2C_r}{C^2} \right]^2 \right) -\\
+&- \frac{2Br^2}{C^2} \kla\left( \frac{-BC_{\theta\theta}}{C^2} + \frac{2BC_\theta^2}{C^3} + \frac{2C-r^2C_{rr}}{C^2} - 2\frac{(2rC-r^2C_r) C_r}{C^3} \right) = \\
+=\ & \frac{r^2}{C^5} \kla\left( B^2C_\theta^2 + 2rB'C^2 + r^2BC_r^2 - 2rBCC_r - r^2B'CC_r \right) + \\
+&+ \frac{B}{C^5} \kla\left( r^2BC_\theta^2 + 4r^2C^2 + r^4C_r^2 - 4r^3CC_r \right) - \\
+&- \frac{2Br^2}{C^5} \kla\left( -BCC_{\theta\theta} + 2BC_\theta^2 + 2C^2 - r^2CC_{rr} - 4rCC_r + 2r^2C_r^2 \right) = \\
+= \ & \frac{1}{C^5} \big( 2r^2B^2CC_{\theta\theta} + 2r^4BCC_{rr} - 2r^2B^2C_\theta^2 - \\
+&\hspace{0.8cm} -2r^4BC_r^2 + CC_r[ -r^4B' + 4r^3B ] + 2r^3B'C^2  \big) = \\
+= \ & \frac{2r^2B}{C^5} \kla\left( BCC_{\theta\theta} + r^2CC_{rr} - BC_\theta^2 - r^2C_r^2 + \frac{rB'C^2}{B} + rCC_r \klam\left[ 2 - \frac{rB'}{2B} \right] \right).
+\end{align*}
+The relevant derivatives of $C$ are
+\begin{align}
+C_r &= -\frac{\epsilon^2A'}{A^2} + \frac{2\ell^2}{r^3\sin^2\theta},\\
+C_\theta &= \frac{2\ell^2\cos\theta}{r^2\sin^3\theta},\\
+C_{rr} &= -\frac{\epsilon^2A''}{A^2} + \frac{2\epsilon^2 A'^2}{A^3} - \frac{6\ell^2}{r^4\sin^2\theta},\\
+C_{\theta\theta} &= -\frac{2\ell^2}{r^2\sin^2\theta} - \frac{6\ell^2\cos^2\theta }{r^2\sin^4} = -\frac{6\ell^2}{r^2\sin^4\theta} + \frac{4\ell^2}{r^2\sin^2\theta}.
+\end{align}
+Inserting yields
+\begin{align*}
+0 =\ & B \kla\left( \frac{\epsilon^2}{A} - 1 - \frac{\ell^2}{r^2\sin^2\theta} \right) \frac{2\ell^2}{r^2\sin^4\theta} \kla\left( 2\sin^2\theta - 3 \right) + \\
+&+ r^2 \left( \frac{\epsilon^2}{A} - 1 - \frac{\ell^2}{r^2\sin^2\theta} \right) \kla\left( -\frac{\epsilon^2A''}{A^2} + \frac{2\epsilon^2 A'^2}{A^3} - \frac{6\ell^2}{r^4\sin^2\theta} \right) - \\
+&- B \frac{4\ell^4\cos^2\theta}{r^4\sin^6\theta} - \\
+&- r^2 \kla\left( -\frac{\epsilon^2A'}{A^2} + \frac{2\ell^2}{r^3\sin^2\theta} \right)^2 + \\
+&+ \frac{rB'}{B} \kla\left( \frac{\epsilon^2}{A} - 1 - \frac{\ell^2}{r^2\sin^2\theta} \right)^2 + \\
+&+ r \kla\left( \frac{\epsilon^2}{A} - 1 - \frac{\ell^2}{r^2\sin^2\theta} \right) \kla\left( -\frac{\epsilon^2A'}{A^2} + \frac{2\ell^2}{r^3\sin^2\theta} \right) \klam\left[ 2 - \frac{rB'}{2B} \right] = \\
+=\ & \frac{1}{\sin^6\theta} \kla\left( \frac{6\ell^4B}{r^4} - \frac{4\ell^4B}{r^4}  \right) + \\
+&+ \frac{1}{\sin^4\theta} \kla\left( \frac{4\ell^4B}{r^4}  - \frac{6\ell^2B (\epsilon^2-A)}{Ar^2} - \frac{4\ell^2B}{r^4} + \frac{6\ell^4B}{r^4} + \frac{4\ell^4B}{r^4} + \frac{\ell^4B'}{r^3B} + \frac{2\ell^4}{r^4} \klam\left[ 2 - \frac{rB'}{2B} \right] \right) + \\
+&+ \frac{1}{\sin^2\theta} \kla\left( • \right)•
+\end{align*}
+\emph{well, this will not work out...}
+
+
+NEW ATTEMPT:
+Let
+\begin{align}
+a &= \frac{B(r)}{\frac{\epsilon^2}{A(r)} - 1 - \frac{\ell^2}{r^2\sin^2\theta}}, &&& b &= a\frac{r^2}{B(r)} \equiv aC(r).
+\end{align}
+Inserting into the PDE gives
+\begin{align}
+0 &= b (a_rb_r + a_\theta^2) + a(a_\theta b_\theta + b_r^2) - 2ab(a_{\theta\theta} + b_{rr}) = \\
+&= a\frac{r^2}{B} \kla\left( a_r \klam\left[ a_r + aC_r \right] + a_\theta^2 \right) + a\kla\left( a_\theta^2C + \klam\left[ a_r + aC_r \right]^2 \right) - 2a^2C\kla\left( A_{\theta\theta} + a_{rr}C + aC_{rr} + 2a_rC_r \right)
+\end{align}
+
+
+
+NEW ATTEMPT:
+Non-rotating, so $\ell = 0$.
+Thus we have
+\begin{align}
+\tecxt\text{d}s^2 &= \frac{B\tecxt\text{d}r^2 + r^2\tecxt\text{d}\theta^2}{\frac{\epsilon^2}{A} - 1}.
+\end{align}
+We find
+\begin{align}
+a &= \frac{AB}{\epsilon^2 - A},&&& b &= \frac{r^2A}{\epsilon^2 - A}.
+\end{align}
+The PDE reads
+\begin{align*}
+0 = \ & b (a_rb_r + a_\theta^2) + a(a_\theta b_\theta + b_r^2) - 2ab(a_{\theta\theta} + b_{rr}) = \\
+=\ & \frac{r^2A}{\epsilon^2 - A} \frac{(A'B + AB')(\epsilon^2 - A) - AB (-A')}{(\epsilon^2 - A)^2} \frac{(2rA + r^2A')(\epsilon^2 -A) - r^2A (-A')}{(\epsilon^2 - A)^2} + \\
+&+ \frac{AB}{\epsilon^2-A} \kla\left( \frac{(2rA + r^2A')(\epsilon^2 -A) - r^2A (-A')}{(\epsilon^2 - A)^2} \right)^2 - \\
+&- \frac{2A^2Br^2}{(\epsilon^2 - A)^2} \partial_r \kla\left( \frac{2rA + r^2A'}{\epsilon^2 - A} + \frac{r^2AA'}{(\epsilon^2 - A)^2} \right) = \\
+= \ & \dots - \frac{2A^2Br^2}{(\epsilon^2 - A)^2} \kla\left( \frac{2A + 2rA'}{\epsilon^2 - A} + \frac{2rA + r^2A'}{(\epsilon^2 - A)} A' + \frac{2rAA' + r^2A'^2 + r^2AA''}{(\epsilon^2 - A)^2} + \frac{2r^2AA'^2}{(\epsilon^2 - A)^3} \right) = \\
+= \ & 
+\end{align*}
+or instead consider $b = \frac{r^2}{B}a = Ca$, hence
+\begin{align}
+0 = \ & Ca a_r \kla\left( a_r C + aC_r \right) + a \kla\left( a_rC + aC_r \right)^2 - 2a^2C \kla\left( a_{rr}C + 2a_rC_r + aC_{rr} \right) = \\
+=\ & a \klam\left[ 2C^2a_r^2 + a^2C_r^2 - 2aC^2a_{rr} - aCa_rC_r - 2a^2CC_{rr} \right] = \\
+=\ & a
+\end{align}
+
+
+
+
+NEW ATTEMPT:
+Rescale $r$ such that $A(r) \tecxt\text{d}r^2 \rightarrow B(\tilde{r}) \tecxt\text{d}\tilde{r}^2$.
+Then $a=b$ and we find
+\begin{align}
+2a^2 (a_{rr} + a_{\theta\theta}) &= 2a(a_r^2 + a_\theta^2),\\
+\Rightarrow\ \ \ a_{rr} + a_{\theta\theta} &= \frac{a_r^2 + a_\theta^2}{a}.
+\end{align}
+$a=\frac{r^2}{\frac{\epsilon^2}{A} - 1 - \frac{\ell^2}{r^2\sin^2\theta}}$ 
+ANOTHER ONE
+\begin{align}
+\tecxt\text{d}s^2 &= \frac{BA\tecxt\text{d}r^2 + r^2A\tecxt\text{d}\theta^2}{\epsilon^2 - A - \frac{\ell^2A}{r^2\sin^2\theta}} = \\
+&= \frac{BAr^2\sin^2\theta \tecxt\text{d}r^2 + r^4A\sin^2\theta \tecxt\text{d}\theta^2}{(\epsilon^2 - A) r^2\sin^2\theta - \ell^2A} = \\
+&= \frac{r^2\sin^2\theta \tecxt\text{d}r^2 + r^4\sin^2\theta \kla\left( 1 - \frac{R_s}{r} \right) \tecxt\text{d}\theta^2}{ \kla\left( \epsilon^2 - 1 + \frac{R_s}{r} \right) r^2\sin^2\theta - \ell^2 \kla\left( 1 - \frac{R_s}{r} \right)} = \\
+&= \frac{r^3\sin^2\theta \tecxt\text{d}r^2 + r^4\sin^2\theta (r-R_s) \tecxt\text{d}\theta^2}{(re + R_s)r^2\sin^2\theta - \ell^2(r - R_s)}
+\end{align}
+($e = \epsilon^2 - 1$)
+Hence
+\begin{align}
+a &= \frac{r^3\sin^2\theta}{r^3e\sin^2\theta + R_sr^2\sin^2\theta - \ell^2r + \ell^2R_s},\\
+b &= \frac{r^5\sin^2\theta - R_sr^4\sin^2\theta}{r^3e\sin^2\theta + R_sr^2\sin^2\theta - \ell^2r + \ell^2R_s} = (r^2-R_sr) a .
+\end{align}
+The derivatives are
+\begin{align}
+a_r &= \frac{3a}{r} - \frac{a^2}{r^3\sin^2\theta}  \kla\left( 3r^2e\sin^2\theta + 2R_sr\sin^2\theta - \ell^2 \right),\\
+a_{rr} &= \frac{3a_r}{r} - \frac{3a}{r^2} - \frac{2aa_r}{r^3\sin^2\theta} (...) + \frac{3a^2}{r^4\sin^2\theta} (...) - \frac{a^2}{r^3\sin^2\theta} \kla\left( 6re\sin^2\theta + 2R_s\sin^2\theta \right) = \\
+&= \frac{6a}{r^2} - \frac{3a^2}{r^4\sin^2\theta} (...) - \frac{a^2 (6re + 2R_s)}{r^3} - \frac{3a^2}{r^4\sin^2\theta} (...) + \frac{2a^3}{r^6\sin^4\theta} (...)^2
+\end{align}
+
+The Schwarzschild metric is given by
+\begin{align}
+\tecxt\text{d}s^2 &= \kla\left( 1 - \frac{R_\text{s}}{r} \right) \tecxt\text{d}t^2 - \frac{\tecxt\text{d}r^2}{1 - \frac{R_\tecxt\text{s}}{r}} - r^2\kla\left( \tecxt\text{d}\theta^2 + \sin^2\theta \tecxt\text{d}\phi^2 \right)
+\end{align}
+where $R_\tecxt\text{s} = 2GM$ is the Schwarzschild radius.
+
+
+\section{Kerr metric}
+Due to the rotation we have an asymmetry in the polar angle $\phi$.
+While the unknown functions in the metric should not explicitly depend on $\phi$, we have to consider an off-diagonal element of the form $\tecxt\text{d}t\tecxt\text{d}\phi$.
+Let the metric be defined as
+\begin{align}
+\tecxt\text{d}s^2 &= f(r,\theta) \tecxt\text{d}t^2 - g(r,\theta) \tecxt\text{d}r^2 - h(r,\theta) \tecxt\text{d}\theta^2 - k (r,\theta) \sin^2\theta \tecxt\text{d}\phi^2 + 2j(r,\theta)\tecxt\text{d}t\tecxt\text{d}\phi.
+\end{align}
+The Lagrangian is
+\begin{align}
+L &= f\dot{t}^2 - g\dot{r}^2 - h\dot{\theta}^2 - k\sin^2\theta \dot{\phi}^2 + 2j\dot{t}\dot{\phi}.
+\end{align}
+The Euler-Lagrange equations for $t$ and $\phi$ are
+\begin{align}
+0 &= \frac{\tecxt\text{d}}{\tecxt\text{d}s} \frac{\partial L}{\partial \dot{t}} - \frac{\partial L}{\partial t} = \frac{\tecxt\text{d}}{\tecxt\text{d}s} \kla\left( 2f\dot{t} + 2j\dot{\phi} \right) = 2f \ddot{t} + 2f_r\dot{t}\dot{r} + 2f_\theta \dot{t}\dot{\theta} + 2j\ddot{\phi} + 2j_r\dot{\phi}\dot{r} + 2j_\theta \dot{\phi}\dot{\theta},\\
+0 &= \frac{\tecxt\text{d}}{\tecxt\text{d}s} \frac{\partial L}{\partial \dot{\phi}} - \frac{\partial L}{\partial \phi} = \frac{\tecxt\text{d}}{\tecxt\text{d}s} \kla\left( 2k\sin^2\theta \dot{\phi} + 2j\dot{t} \right) = \\
+&= 2k\sin^2\theta \ddot{\phi} + 4k\sin\theta\cos\theta \dot{\theta}\dot{\phi} + 2k_r\sin^2\theta \dot{r}\dot{\phi} + 2k_\theta \sin^2\theta \dot{\theta}\dot{\phi} + 2j\ddot{t} + 2j_r\dot{t}\dot{r} + 2j_\theta \dot{t}\dot{\theta},
+\end{align}
+where we use the notation $\dot{f} := \frac{\tecxt\text{d}f}{\tecxt\text{d}s}$ and $f_r := \partial_r f$.
+Solving the second equation for $\ddot{t}$ and plugging it into the first yields
+\begin{align*}
+\frac{f}{j} &\kla\left( 2k\sin^2\theta \ddot{\phi} + 4k\sin\theta\cos\theta \dot{\theta}\dot{\phi} + 2k_r\sin^2\theta \dot{r}\dot{\phi} + 2k_\theta \sin^2\theta \dot{\theta}\dot{\phi} + 2j_r\dot{t}\dot{r} + 2j_\theta \dot{t}\dot{\theta} \right) = \\
+&= 2f_r\dot{t}\dot{r} + 2f_\theta \dot{t}\dot{\theta} + 2j\ddot{\phi} + 2j_r\dot{\phi}\dot{r} + 2j_\theta \dot{\phi}\dot{\theta}. \numberthis
+\end{align*}
+This can be rewritten as
+\begin{align}
+0 = \ddot{\phi} &+ \frac{2fk\sin\theta\cos\theta + fk_\theta\sin^2\theta - jj_\theta}{fk\sin^2\theta - j^2} \dot{\theta}\dot{\phi} + \frac{fk_r\sin^2\theta - jj_r}{fk\sin^2\theta - j^2} \dot{r}\dot{\phi} + \\
+&+ \frac{fj_r - jf_r}{fk\sin^2\theta - j^2} \dot{t}\dot{r} + \frac{fj_\theta - jf_\theta}{fk\sin^2\theta - j^2} \dot{t}\dot{\theta}.
+\end{align}
+The Christoffel symbols for $\phi$ are
+\begin{align}
+\Gamma^\phi_{\theta\phi} &= \frac{2fk\sin\theta\cos\theta + fk_\theta \sin^2\theta - jj_\theta}{2fk\sin^2\theta - 2j^2},\\
+\Gamma^\phi_{r\phi} &= \frac{fk_r\sin^2\theta - jj_r}{2fk\sin^2\theta - 2j^2},\\
+\Gamma^\phi_{tr} &= \frac{fj_r - jf_r}{2fk\sin^2\theta - 2j^2},\\
+\Gamma^\phi_{t\theta} &= \frac{fj_\theta - jf_\theta}{2fk\sin^2\theta - 2j^2}.
+\end{align}
+We also find an equation for $\ddot{t}$ by inserting the previous result into the respective Euler-Lagrange equation
+\begin{align*}
+&\frac{2fk\sin^2\theta - 2j^2}{j} \kla\left( 2f\ddot{t} + 2f_r\dot{t}\dot{r} + 2f_\theta \dot{t}\dot{\theta} + 2j_r\dot{\phi}\dot{r} + 2j_\theta\dot{\phi}\dot{\theta} \right) = \\
+&\hspace{1cm}= [8fk\sin\theta\cos\theta + 4fk_\theta\sin^2\theta  -4jj_\theta] \dot{\theta}\dot{\phi} + [4fk_r\sin^2\theta - 4jj_r] \dot{r}\dot{\phi} +\\
+&\hspace{1.5cm} + [4fj_r - 4jf_r] \dot{t}\dot{r} + [4fj_\theta - 4jf_\theta] \dot{t}\dot{\theta} . \numberthis
+\end{align*}
+This may be rewritten as
+\begin{align}
+0 = \ddot{t} &+ \frac{1}{f} \klam\left[ f_r + \frac{j}{fk\sin^2\theta - j^2}[jf_r - fj_r] \right] \dot{t}\dot{r} + \\
+&+ \frac{1}{f} \klam\left[ f_\theta + \frac{j}{fk\sin^2\theta - j^2}  [jf_\theta - fj_\theta] \right] \dot{t}\dot{\theta} + \\
+&+ \frac{1}{f} \klam\left[ j_r - \frac{j}{fk\sin^2\theta - j^2} [fk_r\sin^2\theta - jj_r] \right] \dot{r}\dot{\phi} + \\
+&+ \frac{1}{f} \klam\left[ j_\theta - \frac{j}{fk\sin^2\theta - j^2} [2fk\sin\theta\cos\theta + fk_\theta\sin^2\theta - jj_\theta] \right] \dot{\theta}\dot{\phi}.
+\end{align}
+Thus the Christoffel symbols for $t$ are
+\begin{align}
+\Gamma^t_{rt} &= \frac{f_rk\sin^2\theta - jj_r}{2fk\sin^2\theta - 2j^2} ,\\
+\Gamma^t_{\theta t} &= \frac{f_\theta k\sin^2\theta - jj_\theta}{2fk\sin^2\theta - 2j^2} ,\\
+\Gamma^t_{r\phi} &= \frac{j_r k\sin^2\theta - jk_r\sin^2\theta}{2fk\sin^2\theta - 2j^2} ,\\
+\Gamma^t_{\theta\phi} &= \frac{j_\theta k\sin^2\theta - 2jk\sin\theta\cos\theta - jk_\theta\sin^2\theta}{2fk\sin^2\theta - 2j^2}.
+\end{align}
+The Euler-Lagrange equations for $r$ and $\theta$ are
+\begin{align}
+0 &= \frac{\tecxt\text{d}}{\tecxt\text{d}s} \frac{\partial L}{\partial \dot{r}} - \frac{\partial L}{\partial r} = \frac{\tecxt\text{d}}{\tecxt\text{d}s} \kla\left( -2g\dot{r} \right) - f_r\dot{t}^2 + h_r\dot{\theta}^2 + k_r\sin^2\theta \dot{\phi}^2 - 2j_r\dot{t}\dot{\phi} = \\
+&= -2g\ddot{r} - 2g_r\dot{r}^2 - 2g_\theta \dot{\theta}\dot{r} - f_r\dot{t}^2 + h_r\dot{\theta}^2 + k_r\sin^2\theta \dot{\phi}^2 - 2j_r\dot{t}\dot{\phi} = \\
+&= -2g \kla\left( \ddot{r} + \frac{g_r}{g}\dot{r}^2 + \frac{g_\theta }{g} \dot{\theta}\dot{r} + \frac{1}{2g} f_r\dot{t}^2 -\frac{1}{2g} h_r\dot{\theta}^2 -\frac{1}{2g} k_r\sin^2\theta \dot{\phi}^2 + \frac{j_r}{g} \dot{t}\dot{\phi} \right) ,\\
+0 &= \frac{\tecxt\text{d}}{\tecxt\text{d}s} \frac{\partial L}{\partial \dot{\theta}} - \frac{\partial L}{\partial \theta} = \\
+&= \frac{\tecxt\text{d}}{\tecxt\text{d}s} \kla\left( -2h\dot{\theta} \right) - f_\theta\dot{t}^2 + g_\theta \dot{r}^2 + h_\theta \dot{\theta}^2 + [k_\theta \sin^2\theta +2k\sin\theta\cos\theta ] \dot{\phi}^2 - 2j_\theta \dot{t}\dot{\phi} = \\
+&= -2h\ddot{\theta} - 2h_r\dot{r}\dot{\theta} - 2h_\theta\dot{\theta}^2 - f_\theta\dot{t}^2 + g_\theta \dot{r}^2 + h_\theta \dot{\theta}^2 + [k_\theta \sin^2\theta + k\sin2\theta ] \dot{\phi}^2 - 2j_\theta \dot{t}\dot{\phi} = \\
+&= -2h \kla\left( \ddot{\theta} + \frac{h_r}{h} \dot{r}\dot{\theta} + \frac{h_\theta}{2h} \dot{\theta}^2 + \frac{f_\theta}{2h} \dot{t}^2 - \frac{g_\theta}{2h}  \dot{r}^2 - \frac{k_\theta \sin^2\theta + k\sin2\theta}{2h} \dot{\phi}^2 + \frac{j_\theta }{h} \dot{t}\dot{\phi} \right).
+\end{align}
+We can read off the Christoffel symbols
+\begin{align}
+\Gamma^r_{rr} &= \frac{g_r}{2g}, &&&\Gamma^\theta_{\theta\theta} &= \frac{h_\theta}{2h},\\
+\Gamma^r_{\theta r} &= \frac{g_\theta}{2g}, &&&\Gamma^\theta_{\theta r} &= \frac{h_r}{2h},\\
+\Gamma^r_{tt} &= \frac{f_r}{2g}, &&&\Gamma^\theta_{tt} &= \frac{f_\theta}{2h},\\
+\Gamma^r_{\theta\theta} &= -\frac{h_r}{2g}, &&&\Gamma^\theta_{rr} &= -\frac{g_\theta}{2h},\\
+\Gamma^r_{\phi\phi} &= -\frac{k_r\sin^2\theta}{2g}, &&&\Gamma^\theta_{\phi\phi} &= -\frac{k_\theta\sin^2\theta + k\sin2\theta }{2h},\\
+\Gamma^r_{t\phi} &= \frac{j_r}{2g}, &&&\Gamma^\theta_{t\phi} &= \frac{j_\theta}{2h}.
+\end{align}
+We will use the formula
+\begin{align}
+R_{\mu\nu} &= \partial_\lambda \Gamma^\lambda_{\mu\nu} - \partial_\nu \Gamma^\lambda_{\mu\lambda} + \Gamma^\kappa_{\mu\nu} \Gamma^\lambda_{\kappa\lambda} - \Gamma^\kappa_{\mu\lambda} \Gamma^\lambda_{\kappa\nu} = \\
+&= \partial_r\Gamma^r_{\mu\nu} + \partial_\theta\Gamma^\theta_{\mu\nu} - \partial_\nu \frac{\partial_\mu D_g}{2D_g} + \Gamma^r_{\mu\nu} \frac{\partial_r D_g}{2D_g} + \Gamma^\theta_{\mu\nu} \frac{\partial_\theta D_g}{2D_g} - \Gamma^\kappa_{\mu\lambda} \Gamma^\lambda_{\kappa\nu}.
+\end{align}
+to compute the Ricci tensor, where $g$ is the determinant of the metric tensor
+\begin{align}
+D_g &= \det \begin{pmatrix}
+f & 0 & 0 & j \\ 
+0 & -g & 0 & 0 \\
+0 & 0 & -h & 0 \\
+j & 0 & 0 & -k\sin^2\theta
+\end{pmatrix} = -fghk\sin^2\theta - jghj = -gh \kla\left( fk\sin^2\theta + j^2 \right).
+\end{align}
+%Inserting into our formula yields
+%\begin{align*}
+%R_{\mu\nu} &= \partial_r\Gamma^r_{\mu\nu} + \partial_\theta\Gamma^\theta_{\mu\nu} - \partial_\nu \frac{\partial_\mu gh \kla\left( fk\sin^2\theta + j^2 \right)}{2gh \kla\left( fk\sin^2\theta + j^2 \right)} + \\
+%&\quad + \Gamma^r_{\mu\nu} \frac{\partial_r gh \kla\left( fk\sin^2\theta + j^2 \right)}{2D_g} + \Gamma^\theta_{\mu\nu} \frac{\partial_\theta gh \kla\left( fk\sin^2\theta + j^2 \right)}{2gh \kla\left( fk\sin^2\theta + j^2 \right)} - \Gamma^\kappa_{\mu\lambda} \Gamma^\lambda_{\kappa\nu}
+%\end{align*}
+Here is a complete list of the Christoffel symbols
+\begin{align}
+\Gamma^t &= \frac{1}{2fk\sin^2\theta - 2j^2} \begin{pmatrix}
+0 & . & . & 0 \\
+f_rk\sin^2\theta - jj_r & 0 & 0 & j_r k\sin^2\theta - jk_r\sin^2\theta \\
+f_\theta k\sin^2\theta - jj_\theta & 0 & 0 & j_\theta k\sin^2\theta - 2jk\sin\theta\cos\theta - jk_\theta\sin^2\theta \\
+0 & .& . & 0
+\end{pmatrix},\\
+\Gamma^r &= \frac{1}{2g} \begin{pmatrix}
+f_r & 0 & 0 & j_r \\
+0 & g_r & g_\theta & 0 \\
+0 & g_\theta & -h_r & 0 \\
+j_r & 0 & 0 & -k_r\sin^2\theta
+\end{pmatrix},\\
+\Gamma^\theta &= \frac{1}{2h} \begin{pmatrix}
+f_\theta & 0 & 0 & j_\theta \\
+0 & -g_\theta & h_r & 0 \\
+0 & h_r & h_\theta & 0 \\
+j_\theta & 0 & 0 & -k_\theta \sin^2\theta - k\sin 2\theta
+\end{pmatrix},\\
+\Gamma^\phi &= \frac{1}{2fk\sin^2\theta - 2j^2} \begin{pmatrix}
+0 & . & . & 0 \\
+fj_r - jf_r & 0 & 0 & fk_r\sin^2\theta - jj_r \\
+fj_\theta - jf_\theta & 0 & 0 & 2fk\sin\theta\cos\theta + fk_\theta \sin^2\theta - jj_\theta \\
+0 & .& . & 0
+\end{pmatrix},
+\end{align}
+%\Gamma^\phi_{\theta\phi} &= \frac{2fk\sin\theta\cos\theta + fk_\theta \sin^2\theta - jj_\theta}{2fk\sin^2\theta - 2j^2},\\
+%\Gamma^\phi_{r\phi} &= \frac{fk_r\sin^2\theta - jj_r}{2fk\sin^2\theta - 2j^2},\\
+%\Gamma^\phi_{tr} &= \frac{fj_r - jf_r}{2fk\sin^2\theta - 2j^2},\\
+%\Gamma^\phi_{t\theta} &= \frac{fj_\theta - jf_\theta}{2fk\sin^2\theta - 2j^2}.
+%
+%\Gamma^t_{rt} &= \frac{f_rk\sin^2\theta - jj_r}{2fk\sin^2\theta - 2j^2} ,\\
+%\Gamma^t_{\theta t} &= \frac{f_\theta k\sin^2\theta - jj_\theta}{2fk\sin^2\theta - 2j^2} ,\\
+%\Gamma^t_{r\phi} &= \frac{j_r k\sin^2\theta - jk_r\sin^2\theta}{2fk\sin^2\theta - 2j^2} ,\\
+%\Gamma^t_{\theta\phi} &= \frac{j_\theta k\sin^2\theta - 2jk\sin\theta\cos\theta - jk_\theta\sin^2\theta}{2fk\sin^2\theta - 2j^2}.
+%
+%\Gamma^r_{rr} &= \frac{g_r}{2g}, &&&\Gamma^\theta_{\theta\theta} &= \frac{h_\theta}{2h},\\
+%\Gamma^r_{\theta r} &= \frac{g_\theta}{2g}, &&&\Gamma^\theta_{\theta r} &= \frac{h_r}{2h},\\
+%\Gamma^r_{tt} &= \frac{f_r}{2g}, &&&\Gamma^\theta_{tt} &= \frac{f_\theta}{2h},\\
+%\Gamma^r_{\theta\theta} &= -\frac{h_r}{2g}, &&&\Gamma^\theta_{rr} &= -\frac{g_\theta}{2h},\\
+%\Gamma^r_{\phi\phi} &= -\frac{k_r\sin^2\theta}{2g}, &&&\Gamma^\theta_{\phi\phi} &= -\frac{k_\theta\sin^2\theta + k\sin2\theta }{2h},\\
+%\Gamma^r_{t\phi} &= \frac{j_r}{2g}, &&&\Gamma^\theta_{t\phi} &= \frac{j_\theta}{2h}.
+The calculation is rather tedious, so we will take it one component at a time.
+First consider
+\begin{align*}
+R_{tt} =\ &\partial_r\Gamma^r_{tt} + \partial_\theta\Gamma^\theta_{tt}  + \Gamma^r_{tt} \frac{\partial_r D_g}{2D_g} + \Gamma^\theta_{tt} \frac{\partial_\theta D_g}{2D_g} - \Gamma^t_{t\lambda} \Gamma^\lambda_{t t} - \Gamma^r_{t\lambda} \Gamma^\lambda_{r t} - \Gamma^\theta_{t\lambda} \Gamma^\lambda_{\theta t} - \Gamma^\phi_{t\lambda} \Gamma^\lambda_{\phi t} = \\
+=\ &\partial_r \frac{f_r}{2g} + \partial_\theta \frac{f_\theta}{2h} + \frac{f_r}{2g} \frac{\partial_rD_g}{2D_g} + \frac{f_\theta}{2h} \frac{\partial_\theta D_g}{2D_g} - \frac{f_rk\sin^2\theta - jj_r}{2fk\sin^2\theta - 2j^2} \frac{f_r}{2g} - \\
+&-\frac{f_\theta k\sin^2\theta - jj_\theta}{2fk\sin^2\theta - 2j^2} \frac{f_\theta}{2h} - \frac{f_r}{2g} \frac{f_rk\sin^2\theta - jj_r}{2fk\sin^2\theta - 2j^2} - \frac{j_r}{2g} \frac{fj_r-jf_r}{2fk\sin^2\theta - 2j^2} - \\
+&- \frac{f_\theta}{2h} \frac{f_\theta k\sin^2\theta - jj_\theta}{2fk\sin^2\theta - 2j^2} - \frac{j_\theta}{2h} \frac{fj_\theta - jf_\theta}{2fk\sin^2\theta - 2j^2} - \\
+&- \frac{fj_r - jf_r}{2fk\sin^2\theta - 2j^2} \frac{j_r}{2g} - \frac{fj_\theta - jf_\theta}{2fk\sin^2\theta - 2j^2} \frac{j_\theta}{2h} = \\
+= \ &\partial_r \frac{f_r}{2g} + \partial_\theta \frac{f_\theta}{2h} + \frac{f_r}{2g} \frac{\partial_rD_g}{2D_g} + \frac{f_\theta}{2h} \frac{\partial_\theta D_g}{2D_g} - \frac{f_rk\sin^2\theta - jj_r}{2fk\sin^2\theta - 2j^2} \frac{f_r}{g} - \\
+&-\frac{f_\theta k\sin^2\theta - jj_\theta}{2fk\sin^2\theta - 2j^2} \frac{f_\theta}{h} - \frac{fj_r - jf_r}{2fk\sin^2\theta - 2j^2} \frac{j_r}{g} - \frac{fj_\theta - jf_\theta}{2fk\sin^2\theta - 2j^2} \frac{j_\theta}{h} = \\
+= \ &\partial_r \frac{f_r}{2g} + \partial_\theta \frac{f_\theta}{2h} + \frac{f_r}{2g} \frac{\partial_rD_g}{2D_g} + \frac{f_\theta}{2h} \frac{\partial_\theta D_g}{2D_g} - \frac{f_r^2k\sin^2\theta + fj_r^2 - 2jj_rf_r}{2g(fk\sin^2\theta - 2j^2)}  - \\
+&-\frac{f_\theta^2 k\sin^2\theta + fj_\theta^2 - 2jj_\theta f_\theta}{2h(fk\sin^2\theta - 2j^2)}.
+\end{align*}
+Next consider
+\begin{align*}
+R_{rr} =\ &\partial_r\Gamma^r_{rr} + \partial_\theta\Gamma^\theta_{rr} - \partial_r \frac{\partial_r D_g}{2D_g} + \Gamma^r_{rr} \frac{\partial_r D_g}{2D_g} + \Gamma^\theta_{rr} \frac{\partial_\theta D_g}{2D_g} - \Gamma^t_{r\lambda} \Gamma^\lambda_{t r} - \Gamma^r_{r\lambda} \Gamma^\lambda_{r r} - \Gamma^\theta_{r\lambda} \Gamma^\lambda_{\theta r} - \Gamma^\phi_{r\lambda} \Gamma^\lambda_{\phi r} = \\
+=\ &
+\end{align*}
+In vacuum, all components of the Ricci tensor are zero.
+Note that as $r\rightarrow\infty$, we require $g_{\mu\nu} \rightarrow \eta_{\mu\nu}$.
+This is equivalent to $f,g \rightarrow 1$, $h,k \rightarrow r^2$ and $j\rightarrow 0$.
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,900 @@
+\chapter{Exceptional \texorpdfstring{\acrshort{ll}}{LL}: a case study}\label{chap:ell}
+In this chapter, we first introduce our model and apply the bosonization in \autoref{sec:ell:bos:bosonization}.
+In \autoref{sec:ell:gf}, we compute the single-particle \gls{gf} via perturbation theory and interpret the results by studying the \gls{nh} topology in \autoref{sec:ell:ep:eps_in_our_model}.
+Finally, we derive and discuss the \gls{rg} flow equations in \autoref{sec:ell:rg}.
+\section{Motivation}\label{sec:ell:motivation}
+The goal of this thesis is to understand the formation of \glspl{ep} that comprise the \gls{nh} topology in the context of \glspl{ll}, i.e. using bosonization.
+Thus far, the connection between \gls{nh} physics and \glspl{ll} has been mostly limited to either dissipative models or \gls{pt}-symmetric Hamiltonians.
+Examples of the former include an analysis of universal properties of dissipative \glspl{ll} with application to the \gls{nh} XXZ spin chain \cite{NHT_TLL_ExpVals_Yamamoto_2022}, exact spectra and scaling exponents via the Bethe ansatz \cite{NH_LL_dissipative_BetheAnsatz_Exponents_2023} and even the demonstration of an \gls{ep} \cite{NH_LL_dissipative_Lindblad_EP_Nakagawa_2021}.
+Meanwhile, the calculation of correlation functions after a \gls{nh} quench \cite{NH_LL_PT_Quench_Dora_2020,NH_LL_Quenched_Correlators_Dubey_2023} and a modified \gls{pt}-symmetric \gls{sg}-model harbouring an \gls{ep} \cite{NH_LL_PT_RG_QCritical_Ashida_2017} belong to the other category.\\
+However, in all of these cases the initial setup is already explicitly \gls{nh}, and thus we aspire to cover new ground by demonstrating the emergence of \glspl{ep} in a Hermitian \gls{ll}.
+Novelty aside, another motivation for using bosonization is that it allows exact treatment of some interactions.
+Thus we can hope that this approach even leads to quantitative predictions that are more accurate than what can be obtained via plain perturbation theory -- although it should be stressed that a correct qualitative description takes precedence over a quantitatively accurate one, and as such this may be regarded as a secondary goal.
+\section{Bosonization}\label{sec:ell:bos:bosonization}
+In this section, we introduce our model and subsequently apply the bosonization procedure laid out in \autoref{chap:bos}.
+\subsection{Model Hamiltonian}\label{sec:ell:bos:model_hamilton}
+The starting point is the model considered in \cite{EP_DynamicInduced_Quenched_Lehmann_2021}, which consists of a free Hamiltonian given by an extended \gls{ssh} model
+\begin{align*}
+H_0 &= -\frac{1}{2} \sum_{j=0}^{N-1} \klb*{J \textbf{c}_j^\dagger \sigma_x \textbf{c}_j - \textbf{c}_j^\dagger \kla*{t_x\sigma_x - \i t_y \sigma_y} \textbf{c}_{j+1}} + \hc
+\end{align*}
+where $N$ is the number of sites and $J,t_x,t_y$ are real-valued hopping parameters.
+The two-component annihilation operators $\textbf{c}_j = (c_{j,\A}, c_{j,\B})^\transpose$ act on site $j$ and the indices $\A,\B$ refer to the respective sublattice.
+Note that $\textbf{c}_{N} \equiv \textbf{c}_0$, i.e. we assume periodic boundary conditions.\\
+In order to make this model interesting there are now two necessary ingredients: tuning the parameters to $J=t_x$ and including a density-density interaction between neighbouring sites.
+To understand the first point, it is useful to rewrite the Hamiltonian in momentum space via $\textbf{c}_j = \frac{1}{\sqrt{N}} \sum_k \powe{\i kja} \textbf{c}_k$, where $a$ is the lattice spacing, and the sum runs over the momenta $k=\frac{2\pi}{Na} n_k$ with $n_k=-\frac{N}{2},\dots,\frac{N}{2}-1$ for even $N$.
+Using the orthogonality relation $ \frac{1}{N}\sum_{j=0}^{N-1} \powe{\i kja} = \delta_{k,0}$, one obtains
+\begin{align*}
+H_0 &= -\frac{1}{2} \sum_{k} \textbf{c}_{k}^\dagger \klb*{J \sigma_x - \powe{\i ka} t_x \sigma_x + \i \powe{\i ka} t_y \sigma_y + \hc} \textbf{c}_k = \sum_k \textbf{c}_k^\dagger h(k) \textbf{c}_k
+\end{align*}
+where $h(k) = \textbf{d}(k) \cdot \bm{\sigma}$ with the Pauli matrices $\bm{\sigma} = (\sigma_x, \sigma_y, \sigma_z)^\transpose$ and the Bloch vector $\textbf{d}(k) = (-J + t_x\cos(ka), t_y\sin(ka), 0)^\transpose$ \cite{EP_DynamicInduced_Quenched_Lehmann_2021}.
+The band structure is determined by the eigenvalues $E_\pm(k) = \pm \sqrt{\textbf{d}(k)^2}$ of the Bloch Hamiltonian $h$, and for $J=t_x$ there exists a band touching point at $k_0=0$ \cite{EP_DynamicInduced_Quenched_Lehmann_2021}.\\
+To model interactions between the particles, we then include a sublattice-dependent density-density term between nearest neighbours given by \cite{EP_DynamicInduced_Quenched_Lehmann_2021,NH_SkinEffect_QuasiParticles_NNint_Micallo_2023}\footnote{A similar inhomogeneous Hubbard-like interaction term has also been used in \cite{NHT_SymmetryProtectedExceptRings_Chiral_Yoshida_2019}.}
+\begin{align*}
+H_\tint &= \sum_{\bra*{j,j'}} \sum_{s\in \klc*{\A,\B}} U_s \varnormord{n_{j,s}} \varnormord{n_{j',s}}.
+\end{align*}
+Here, $n_{j,s} = c_{j,s}^\dagger c_{j,s}$ is the density operator and $\bra*{j,j'}$ denotes nearest neighbours.
+Recall that $\varnormord{A} = A - \bra*{A}_0$ and, since we assume half-filling, $\bra*{n_{j}}_0 = 1$ due to translational invariance (one particle per unit cell).
+The free Hamiltonian also admits sublattice symmetry, i.e. $\klc*{H_0, \sigma_z}=0$, and therefore $\bra*{n_{j,s}}_0 = \frac{1}{2}$.
+Note that the interaction strengths $U_\A$ and $U_\B$ on the sublattices are allowed to be different, which turns out to be a key requirement for \glspl{ep}, because it introduces asymmetry in the scattering rates.\\ 
+Linearizing the dispersion around the band touching point yields $E_+ = \vf k + \mathcal{O}\kla*{(ka)^2}$, where $\vf = t_ya$ is the Fermi velocity.
+%g\left(x\right)=r\left(x-\pi\right)\left(1+\frac{1}{2}\left(\frac{t^{2}}{4r^{2}}-\frac{1}{3}\right)\left(x-\pi\right)^{2}\right)
+\begin{figure}[!ht]
+\centering
+\includegraphics{figures/sketch_complex_E.pdf}
+\caption[Sketch of the dispersion of the effective \gls{nh} Hamiltonian with and without interactions.]{Plot of the complex energy eigenvalues of the numerically computed effective \gls{nh} Hamiltonian at $\omega=0$. 
+The dashed line in the left panel corresponds to the linearization around the band touching point. 
+Including interactions leads to the formation of \glspl{ep}, as illustrated on the right. 
+The interaction strengths are $U_\A=1.5$ and $U_\B=0$, hence the infinite lifetime mode at $k=0$. 
+The inverse temperature is $\beta\approx 0.7$.}
+\label{fig:ell:bos:sketch_complex_E}
+\end{figure}
+The linearized model is then described by
+\begin{align*}
+H_0 &= \sum_k \textbf{c}_k^\dagger \vf k \sigma_y \textbf{c}_k
+\end{align*}
+and one should note that the approximation is limited to roughly $|k| < \frac{\vf}{a^2} \equiv \Lambda_\tlin$.
+As mentioned in \autoref{sec:ep:eps}, one requirement for \glspl{ep} is a non-trivial matrix structure of the self-energy $\Sigma$, i.e. $\klb*{\Sigma, H_0} \neq 0$.
+This should be satisfied, because the interaction term contains a $\sigma_z$-contribution due to the different scattering rates, while the free Hamiltonian corresponds to $\sigma_y$.
+\autoref{fig:ell:bos:sketch_complex_E} shows an illustration of the dispersion relation of the numerically computed effective \gls{nh} Hamiltonian at $\omega=0$ with and without interactions, as well as the linearization around the band touching point.
+\\
+The calculations for the microscopic model in \cite{EP_DynamicInduced_Quenched_Lehmann_2021} were performed using a fully numeric approach, and consequently there was no need for this linearization. % based on the \TODO{self-consistent second Born approximation}
+Instead, starting from non-critical parameters, i.e. $J\neq t_x$, a quantum quench was performed to dynamically tune the parameters to $J=t_x$.
+As such, our model Hamiltonian is essentially an approximation of the intermediate result after this quench.
+Of course, due to the approximation, any quantitative comparisons are inherently limited to the bandwidth $\Lambda_\tlin$.\\
+Standard Parameters (\acrshort{stdpar}) are listed in the glossary entry.
+Note that due to $t_y=\frac{1}{2}$ and $a=1$ the Fermi velocity is $\vf = t_ya = \frac{1}{2}$.
+The interaction strengths and temperature vary, so their values are listed in the caption of respective plots.
+All the numerical data for the microscopic model in this thesis is courtesy of Carl Lehmann (first author of \cite{EP_DynamicInduced_Quenched_Lehmann_2021}).
+Note that it is directly computed in thermal equilibrium with a fixed temperature, rather than with the aforementioned quench.
+%TODO something along lines of "correspondence with author yields that finite temperature is essentially equivalent to equilibration post quench"
+\subsection{Bosonized model}\label{sec:ell:bos:model_boson}
+Before we can bosonize our model, we first diagonalize\footnote{Given that the linearized model already satisfies the requirements of unbounded discrete momenta with a monotonic spectrum, it may be tempting to instead directly use $\A$ and $\B$ to label the fermionic species. However, in the proof of the completeness of the boson mapping in \cite[\sapp B]{Bosonization_DelftSchoeller_1998}, the authors seem to tacitly assume decoupled modes, i.e. a diagonal Hamiltonian.} the free Hamiltonian by introducing
+\begin{align*}
+c_\R &= \frac{1}{\sqrt{2}} \kla*{c_\A - \i c_\B}\quad\text{and}\quad c_\L = \frac{1}{\sqrt{2}} \kla*{-\i c_\A + c_\B}.
+\end{align*}
+We then choose $\ell\equiv \R,\L$ as the labels of the fermionic species in \autoref{sec:bos:bosonization_identity}.
+Since $H_0$ becomes (we identify $\ell=\R=+1$ and $\ell=\L=-1$; similarly $s=\A=+1$ and $s=\B=-1$)
+\begin{align}
+H_0 &= \sum_{\ell=\R,\L} \sum_k \ell\vf k \varnormord{c_{k,\ell}^\dagger c_{k,\ell}},
+\end{align}
+and the dispersion relation $\pm\vf k$ explains the usual nomenclature of left-moving (L) and right-moving (R) fermions \cites[\ssec 10]{Bosonization_DelftSchoeller_1998}[\ssec 2.1]{Giamarchi_2004}. %also \cite[\ssec 2]{Bosonization_Schonhammer_1996}
+Note that the bosonization in this basis involves an additional subtlety, as the dispersion for $\ell=\L$ is monotonically decreasing rather than increasing.
+This means we have to count the momenta in the opposite way, which amounts to the replacement $x \rightarrow -x$ in the bosonization identity \cite[\ssec 10.A]{Bosonization_DelftSchoeller_1998}.
+Since it is rather cumbersome to keep track of the minus sign within the argument of the bosonic fields, we instead adjust the relations that are impacted by undoing this change via $\varphi_\L(-x)\rightarrow \varphi_\L(x)$.
+Then the bosonization identity in \autoref{eqn:bos:bosonization identity} takes the form\footnote{The colons $\normord{(\dots)}$ refer to normal-ordering; see \autoref{sec:bos:bosonization_identity} for a discussion of the difference to the regularization $\varnormord{(\dots)}$.}
+\begin{align*}
+\psi_\ell(x) &= \frac{\eta_\ell}{\sqrt{L}} \powe{\i \ell \frac{2\pi}{L} N_\ell x} \normord{\powe{-\i\varphi_\ell(x)}},
+\end{align*}
+although, with the thermodynamic limit in mind, we from now on neglect the phase factor.
+%As mentioned at the end of \autoref{sec:bos:bosonization_identity}, an expression of the form $\powe{m\varphi_\ell(x)}$ is called vertex operator.
+In the bosonic fields $\varphi_\ell$ from \autoref{eqn:bos:varphi_ell_minus_def} the oscillatory factor becomes $\powe{\i q\ell x}$.
+Consequently, we get minus signs in the density operator and commutation relation,
+\begin{align}
+\rho_\ell(x) &= \frac{-\ell}{2\pi} \partial_x\varphi_\ell(x) \quad\text{and}\quad \klb*{\varphi_\ell\eplus(x), \varphi_{\ell'}\eminus(x')} \asymeq{L\rightarrow\infty} \delta_{\ell,\ell'} \log\klb*{\frac{2\pi}{L} \kla*{\alpha + \i\ell (x-x')}}. \label{eqn:ell:bos:rho_ell_and_varphi_comm}
+\end{align}
+Using \autoref{eqn:bos:psi_ell_partial_psi_ell_regular} and dropping total derivatives as well as terms of order $\frac{1}{L}$, we find\footnote{The additional $\ell$ in $(-\i\ell\partial_x)$ is again due to the transform $x\rightarrow -x$ for the left-moving branch $\ell=\L$.}
+\begin{align*}
+H_0 &= \sum_\ell \ell\vf \intx{ }{ }{\varnormord{\psi_\ell^\dagger(x) (-\i\ell\partial_x) \psi_\ell(x)}}{x} = \sum_\ell \vf \intx{ }{ }{\pi\normord{\rho_\ell^2}}{x} = \sum_\ell \frac{\vf}{4\pi} \intr{ \normord{ \kla*{ \partial_x \varphi_\ell(x)}^2 }}{x}.
+\end{align*}
+To transform the interaction, note that $n_s = c_s^\dagger c_s = \frac{1}{2} \sum_\ell \kla[\big]{n_\ell +\i\ell s c_\ell^\dagger c_{-\ell}}$.
+Inserting this relation then leads to
+\begin{align*}
+H_\text{int} &= \frac{1}{4}\sum_s U_s \sum_{\ell,\ell'} \varnormord{\kla*{n_\ell +\i\ell s c_\ell^\dagger c_{-\ell}}} \varnormord{\kla*{n_{\ell'} +\i\ell' s c_{\ell'}^\dagger c_{-\ell'}}} = H_+ + H_-
+\end{align*}
+where, defining $U_\pm = \frac{1}{2} \kla*{U_\A \pm U_\B}$, the two terms are given by
+\begin{align*}
+H_+ &= \frac{U_+}{2} \sum_{\bra*{j,j'}} \sum_{\ell,\ell'} \kla*{\varnormord{n_{j,\ell}} \varnormord{n_{j',\ell'}} -\ell\ell' \varnormord{c_{j,\ell}^\dagger c_{j,-\ell}} \varnormord{c_{j',\ell'}^\dagger c_{j',-\ell'}}},\\
+H_- &= U_- \sum_{\bra*{j,j'}} \sum_{\ell,\ell'} \i\ell \varnormord{c_{j,\ell}^\dagger c_{j,-\ell}} \varnormord{n_{j',\ell'}}.
+\end{align*}%\frac{U_-}{2} \sum_{\bra*{j,j'}} \sum_{\ell,\ell'} \kla*{\i\ell' \varnormord{n_{j,\ell}} \varnormord{c_{j',\ell'}^\dagger c_{j',-\ell'}} + \i\ell \varnormord{c_{j,\ell}^\dagger c_{j,-\ell}} \varnormord{n_{j',\ell'}}}
+The definition of the field operators in \autoref{eqn:bos:psi_ell_from_c_k_ell} leads to the replacement $c_{j,\ell} = \sqrt{a} \psi_\ell(ja)$ \cite{MajoranaZeroModes_PeriodicallyGated_Malard_2015}.
+In the spirit of a continuum limit we then write $H_\pm = \frac{U_\pm a}{2} \sum_{\ell,\ell'} \intx{ }{ }{\mathcal{H}_{\pm,\ell,\ell'}}{x}$ where
+\begin{align*} 
+\mathcal{H}_{+,\ell,\ell'} &= \sum_{x'=x\pm a} \klb*{\rho_\ell(x) \rho_{\ell'}(x+\epsilon) -\ell\ell' \varnormord{\psi_\ell^\dagger(x) \psi_{-\ell}(x)} \varnormord{\psi_{\ell'}^\dagger(x') \psi_{-\ell'}(x')}},\\
+\mathcal{H}_{-,\ell,\ell'} &= \sum_{x'=x\pm a}  2 \i\ell \varnormord{\psi_\ell^\dagger(x) \psi_{-\ell}(x)} \rho_{\ell'}(x').
+\end{align*}
+Since $\bra[\big]{c_{j,\ell}^\dagger c_{j,-\ell}}_0 = 0$, we may also drop the regularization for the corresponding terms.
+Using \autoref{eqn:bos:psi ell dagger psi ellp neq ell} then leads to
+\begin{align*}
+\psi_\ell^\dagger(x) \psi_{-\ell}(x) &= \frac{\eta_\ell^\dagger\eta_{-\ell}}{L} \powe{\i \frac{2\pi}{L} \klb*{N_\ell - N_{-\ell} - 1}x} \normord{\powe{\i\varphi_\ell(x) - \i\varphi_{-\ell}(x)}} \overset{L\rightarrow \infty}{\sim} \frac{\eta_\ell \eta_{-\ell}}{L} \normord{\powe{\i\varphi_\ell(x) - \i\varphi_{-\ell}(x)}}.
+\end{align*}
+Note that in the thermodynamic limit the Klein factors become Hermitian.
+This is because adding or subtracting a fermion amounts to a shift of the Fermi momentum of order $\frac{1}{L}$, which becomes negligible.
+Within this limit the Klein factors therefore (asymptotically) obey the Majorana algebra, and can in our simple two-dimensional case be represented via Pauli matrices \cite[\spage 25]{Bosonization_LL_LectureNotes_Schulz_1998}; for example, one might set $\eta_\R = \tau_x$ and $\eta_\L = \tau_y$.
+We use the symbol $\tau$ instead of $\sigma$ to avoid confusion with the $2\times 2$-matrix structure of left- and right-movers.\\
+Inserting the density operator from \autoref{eqn:ell:bos:rho_ell_and_varphi_comm} and introducing $\varphi_\ell = \ell\phi - \theta$ yields\footnote{Normal-ordering the bilinear $\rho_\ell \rho_{\ell'}$ only introduces an irrelevant additive constant.}
+\begin{align*}
+\mathcal{H}_{+,\ell,\ell'} &= \sum_{x'=x\pm a} \frac{\ell\ell'}{4\pi^2} \normord{\partial_x\varphi_\ell(x) \partial_x \varphi_{\ell'}(x')} + \sum_{x'=x\pm a} \frac{1}{L^2} \normord{\powe{2\i\ell \phi(x)}}  \normord{\powe{2\i\ell'\phi(x')}} ,\\
+\mathcal{H}_{-,\ell,\ell'} &= \sum_{x'=x\pm a} 2 \i\ell \frac{\eta_\ell \eta_{-\ell}}{L} \normord{\powe{2\i\ell\phi(x)}} \frac{-\ell'}{2\pi}\partial_x\varphi_{\ell'}(x').
+\end{align*}
+Here, as well as in the following, the asymptotic limit is always implied.
+Normal-ordering the product of so-called vertex operators $\normord{\powe{\i m\phi}}$ gives (for details see \autoref{sec:app:normal_ordering_vertex_op})
+\begin{align*}
+\normord{\powe{\i m\phi(x)}} \normord{\powe{\i m'\phi(x+a)}} &= \normord{\powe{\i m\phi(x) + \i m'\phi(x+a)}} \klb*{\frac{2\pi}{L} \sqrt{\alpha^2+a^2} }^{\frac{mm'}{2}}.
+\end{align*}
+Interestingly, the product in $H_-$ is already normal-ordered, i.e. one can show that
+\begin{align*}
+\sum_{x'=x\pm a} \normord{\powe{\i m\phi(x)}} \partial_{x'} \phi(x') &= \sum_{x'=x\pm a} \normord{\powe{\i m\phi(x)}\partial_{x'}\phi(x')}.
+\end{align*}
+Thus far the full Hamiltonian is $H=H_0 + H_1 + H_2 + H_3 + H_4$, where
+\begin{align*}
+H_0 &= \frac{\vf}{2\pi} \intx{ }{ }{\normord{\klb*{\kla*{\partial_x\theta}^2 + \kla*{\partial_x\phi}^2}}}{x},\\
+H_1 &= \frac{U_+a}{2\pi^2} \sum_{s_a=\pm 1} \intx{ }{ }{\normord{\partial_x\phi(x) \partial_x\phi(x+s_aa)}}{x},\\
+H_2 &= \frac{U_-a}{2\pi L} \sum_\ell \i\ell \eta_{-\ell} \eta_\ell \sum_{s_a=\pm 1} \intx{ }{ }{\normord{\powe{2\i\ell\phi(x)} \partial_x\phi(x+s_aa)}}{x},\\
+H_3 &= \frac{U_+a}{2\pi^2} \sum_{\ell} \sum_{s_a=\pm 1} \intx{ }{ }{\frac{1}{4(a^2+\alpha^2)}\normord{\powe{2\i\ell\klb*{\phi(x) - \phi(x+s_aa)}}}}{x},\\
+H_4 &= \frac{U_+a}{2\pi^2} \sum_{\ell} \sum_{s_a=\pm 1} \intx{ }{ }{\frac{4\pi^4(a^2+\alpha^2)}{L^4} \normord{\powe{2\i\ell\klb*{\phi(x) + \phi(x+s_aa)}}}}{x}.
+\end{align*}
+At first glance taking the continuum limit seems to be an easy task: keep $u_\pm = U_\pm a$ fixed while $a\rightarrow 0$.
+There are, however, several issues with this procedure.
+The asymptotic expansion of $H_3$ boils down to
+\begin{align*}
+\normord{\powe{2\i\ell \klb*{\phi(x) - \phi(x+a)}}} &\asymeq{a\rightarrow 0} \normord{\powe{-2\i\ell a\partial_x\phi - 2\i\ell \frac{a^2}{2} \partial_x^2\phi}} \asymeq{a\rightarrow 0} \normord{\klb*{1 - 2\i\ell a\partial_x\phi - \i\ell a^2\partial_x^2\phi - 2a^2 \kla*{\partial_x\phi}^2}} \\
+&= - 2a^2 \normord{\kla*{\partial_x\phi}^2} + \text{constants and total derivatives}.
+\end{align*}
+Summing on $\ell$ gives $-4a^2\normord{\kla*{\partial_x\phi}^2}$, which would exactly cancel the term from the continuum limit of $H_1$ if not for the modified denominator $\frac{1}{a^2+\alpha^2}$.
+In principle one should set $\alpha=0$ whenever possible, but as discussed after \autoref{eqn:bos:varphi_ell_minus_def}, one can also argue $\alpha\ge a$ for a lattice model.
+Therefore this cancellation is not just avoided, but the term from $H_1$ can even be thought as contributing significantly more than the one from $H_3$.
+However, given the mathematical inconsistency in the calculation of correlation functions in \autoref{sec:bos:correlators}, this answer is certainly not quite satisfactory and we elaborate on this problem in \autoref{sec:ell:gf:preliminaries}.\\
+Even subtleties involving $\alpha$ aside, the continuum limit for $H_2$ is much more troublesome.
+The integrand turns into the total derivative $\asympropto{} \partial_x\powe{2\i\ell\phi(x)}$ and therefore the contribution vanishes.
+The result would then no longer depend on the difference between the interaction strengths, but we already know this to be a crucial ingredient from the numerical analysis in \cite{EP_DynamicInduced_Quenched_Lehmann_2021}.
+For now we tentatively accept that this limit is not straight-forward and simply keep the exact expression\footnote{Up to notation, a term essentially identical to $H_2$ has been discussed in \cite{Bosonization_incorrect_H2_Orignac_2004} and the authors claim that it reduces to a simple \gls{sg}-term.
+Although we do not discuss it explicitly, such a perturbation does not lead to \glspl{ep} consistent with numerical data.
+Since they drop numerous terms in the expansion, we have to conclude that this approximation is to blame and therefore their approach is not sufficient for our purposes.}.\\
+We can absorb the density-density terms $(\partial_x\phi)^2$ from $H_1$ and $H_3$ into $H_0$ by modifying the coefficients.
+This yields the interacting \gls{ll} described by the free Hamiltonian
+\begin{align}
+H_0 &= \frac{v}{2\pi} \intx{ }{ }{\normord{\klb*{K\kla*{\partial_x\theta}^2 + \frac{1}{K} \kla*{\partial_x\phi}^2}}}{x} \label{eqn:ell:bos:LL_interacting_H0} %= \frac{\vf}{2\pi} \intx{ }{ }{\normord{\klb*{\kla*{\partial_x\theta}^2 + \klb*{1 + \frac{U_+a}{\pi^2} \frac{2\pi}{\vf} \frac{\alpha^2}{\alpha^2+a^2}} \kla*{\partial_x\phi}^2}}}{x} \label{eqn:ell:bos:LL_pars_after_H0}
+\end{align}
+with the Luttinger parameter $K=\klb*{1 + \frac{2U_+a}{\pi\vf} \frac{\alpha^2}{\alpha^2+a^2}}^{-1/2}$ and the renormalized Fermi velocity $v=\frac{\vf}{K}$.
+As is common \cite[\spage 39]{Giamarchi_2004}, this gives $K<1$ for repulsive, and $K>1$ for attractive interactions.
+This exemplifies the potential of bosonization, as several interaction terms in the fermionic basis are reduced to a mere modification of prefactors in the bosonic model\footnote{Of course the downside is that any other type of interaction generically involves vertex operators containing arbitrary powers of the fields \cite[\spage 56]{Giamarchi_2004}.}.\\
+Courtesy of \autoref{eqn:bos:expval_prod_powe_iAj_varphi}, it is more convenient for the calculation of expectation values to deal with quantities that are not normal-ordered.
+Then the remaining perturbations read
+\begin{subequations}\begin{align}
+H_2 &= \frac{U_-a}{4\pi^2\alpha} \sum_\ell \i\ell \eta_{-\ell} \eta_\ell \sum_{s_a=\pm 1} \intx{ }{ }{\powe{2\i\ell\phi(x)} \partial_x\phi(x+s_aa)}{x},\\
+H_4 &= \frac{U_+a}{4\pi^2\alpha^2} \sum_\ell \intx{ }{ }{\powe{4\i\ell\phi}}{x},
+\end{align}\label{eqn:ell:bos:H2H4_model}\end{subequations}
+and we shall refer to $H=H_0+H_2+H_4$ as the \gls{ell}.
+As a quick sanity check, note that $H$ is still Hermitian.
+\section{Single-particle \texorpdfstring{\acrlong{gf}}{GF}}\label{sec:ell:gf}
+In this section, we compute the single-particle \gls{gf} of the \gls{ell} by treating $H_2$ as a perturbation, and analyse the result.
+%This is by far the most complicated part of the thesis since the calculation turns out to be rather nightmarish. %more than just ``a little bit painful'' \cite[\spage 387]{Giamarchi_2004}.
+Even though we restrict ourselves to the first order in $H_2$, the calculation turns out to be rather nightmarish.
+Since the difficulties are primarily mathematical in nature, the details are spread over several appendices and here we limit ourselves to highlighting some of the more interesting steps.
+In the second part, we then interpret the results and provide a first comparison to numerical data.
+\subsection{Preliminaries}\label{sec:ell:gf:preliminaries}
+Before we can compute the \gls{gf} for the interacting \gls{ll} given by \autoref{eqn:ell:bos:LL_interacting_H0}, we first need to consider the impact of the Luttinger parameter.
+If $K=1$, the Hamiltonian simplifies to $\frac{v}{4\pi} \sum_\ell \intr{\normord{\kla*{\partial_x\varphi_\ell}^2}}{x} $ and the fundamental correlators are hence given by
+\begin{align}
+\Phi_{\ell,\ell'}(z) &= \bra*{\varphi_\ell(z) \varphi_{\ell'}(0) - \varphi_\ell(0) \varphi_{\ell'}(0)} = \delta_{\ell,\ell'} \Phi(z_{-\ell}) \label{eqn:ell:gf:Phi_ell_ellp_of_z}
+\end{align}
+where $z_\ell = \frac{\pi}{\beta v} \kla*{v\tau + \i\ell x}$, the Kronecker delta is due to the commutation of bosonic operators from distinct species and the sign change for left-movers is once again due to the remapping $x\rightarrow -x$ explained in \autoref{sec:ell:bos:model_boson}.
+For the function $\Phi(z)$ see \autoref{eqn:bos:correlator_Phi_z_alpha_exact} and \autoref{eqn:bos:correlator_Phi_z_alpha_log_approx}.
+%The exact result for $\Phi(z)$ is given by \autoref{eqn:bos:correlator_Phi_z_alpha_exact} and its approximate form by \autoref{eqn:bos:correlator_Phi_z_alpha_log_approx}.
+Note that here and in the following the expectation values are all with respect to $H_0$, i.e. $\bra*{A} \equiv \frac{1}{Z_0} \tr \klc*{\powe{-\beta H_0} A}$.\\
+By inverting the relation $\varphi_\ell = \ell \phi - \theta$ we can then construct the correlation functions %for $\phi$ and $\theta$
+\begin{align*}
+\bra*{\klb*{\phi(z) - \phi(0)} \phi(0)} &= \frac{1}{4} \sum_{\ell,\ell'} \ell\ell' \Phi_{\ell,\ell'}(z) = \frac{1}{4} \sum_\ell \Phi(z_{-\ell}) = \bra*{\klb*{\theta(z) - \theta(0)} \theta(0)},\\
+\bra*{\klb*{\phi(z) - \phi(0)} \theta(0)} &= \frac{-1}{4} \sum_{\ell,\ell'} \ell\Phi_{\ell,\ell'}(z)= \frac{-1}{4} \sum_\ell \ell\Phi(z_{-\ell}) = \bra*{\klb*{\theta(z) - \theta(0)} \phi(0)}.
+\end{align*}
+The interacting case $K\neq 1$ amounts to a rescaling of the fields $\phi\rightarrow \phi \sqrt{K}$ and $\theta\rightarrow \theta / \sqrt{K}$, so the second row is unchanged while the first picks up an additional factor of $K$ or $\frac{1}{K}$ respectively \cite[\ssec 3.1]{Giamarchi_2004}\footnote{Although this ``replacement rule'' indeed gives the correct result, the argument may not be entirely convincing since $H_0$ is no longer diagonal in the bosonic operators $b_q$ from \autoref{eqn:bos:bq_ell_def}.
+A more careful derivation via a Bogoliubov transformation can be found in \cites[\ssec 10.B]{Bosonization_DelftSchoeller_1998}[\ssec 2.2]{Bosonization_Rao_2001}.
+We also present a brief version in \autoref{sec:app:bogoliubov_transform_interacting_LL} for the sake of completeness, and to address some subtleties with normal-ordering and the \acrlong{ope}.}.\\
+Let $z_j=(z_{j,+}, z_{j,-})$ with $z_{j,\pm} = \frac{\pi}{\beta v} \kla*{v\tau_j \pm \i x_j}$, and for convenience we introduce the notation%shorthand notation
+\begin{align*}
+\bra[\Big]{\abx{A}{B}{Z}} &= \bra[\Big]{\zabx{A_1 & A_2 & A_3 & \dots}{B_1 & B_2 & B_3 & \dots}{z_1 & z_2 & z_3 & \dots}} = \bra[\Big]{\prod_j \powe{\i \klb*{A_j \phi(z_j) + B_j\theta(z_j)}}}
+\end{align*}
+for an expectation value of an arbitrary product of vertex operators.
+Using the remarkable\footnote{The equivalent \seqnl{} 3.12 in \cite{Gogolin_1999} is even referred to as ``the most important formula in this book''.} result in \autoref{eqn:bos:expval_prod_powe_iAj_varphi} one can then show that
+\begin{align}
+\bra[\Big]{\abx{A}{B}{Z}} &= \prod_{j<k} \prod_\ell \powe{-\frac{1}{4} \klb*{KA_jA_k + \frac{1}{K} B_jB_k + \ell \kla*{A_jB_k + A_kB_j}} \Phi(z_{jk,\ell})} \label{eqn:ell:gf:expval_prod_ABZ}
+\end{align}
+where $z_{jk} = z_j-z_k$ and the neutrality conditions $A=\sum_jA_j = 0$ and $B=\sum_jB_j=0$ are assumed; for details see \autoref{sec:app:expval_ABZ_general}.
+This is the most general kind of expectation value we need to calculate, and it sits at the heart of the perturbative calculation of the \gls{gf}.
+\subsection{Interacting \texorpdfstring{\acrlong{ll}}{LL}}\label{sec:ell:gf:interacting_LL}
+We are now in a position to write down the \gls{gf} of the interacting \gls{ll}, which of course also corresponds to the zeroth order of the perturbation theory.
+Using \autoref{eqn:ell:gf:expval_prod_ABZ} one immediately obtains
+\begin{align*}
+G_{0,\ell,\ell'}^\M(z) &= -\bra*{\mathcal{T}_\tau \psi_\ell(z) \psi_{\ell'}^\dagger(0)} = -\frac{\eta_\ell \eta_{\ell'}}{2\pi\alpha} \bra*{\zabx{-\ell & \ell'}{1 & -1}{z & 0}} = -\frac{\delta_{\ell,\ell'}}{2\pi\alpha} \prod_{s=\pm 1} \powe{-\frac{1}{4} \klb*{-K - \frac{1}{K} + 2\ell s} \Phi(z_s)}\\ %= -\frac{\delta_{\ell,\ell'}}{2\pi\alpha} \prod_{s=\pm \ell} \kla*{\frac{\pi\alpha}{\beta v} \csc\kla*{z_s}}^{M + \delta_{-\ell,s}}\\
+&\asymeq{\alpha\rightarrow 0} -\frac{\delta_{\ell,\ell'}}{2\beta v} \kla*{\frac{\pi\alpha}{\beta v}}^{2M} \csc\kla*{z_{-\ell}}^{M+1} \csc\kla*{z_{\ell}}^M \numberthis\label{eqn:ell:gf:order0_matsubara_real_space}
+\end{align*}
+where $M=\frac{1}{4} \klb*{K + \frac{1}{K} - 2}\ge 0$.
+As alluded to in \autoref{sec:bos:correlators}, this result is consistent with the generic anti-periodicity of fermionic Matsubara \glspl{gf} -- but only within the asymptotic limit $\alpha\rightarrow 0$, i.e. for the approximation of $\Phi(z)$ given by \autoref{eqn:bos:correlator_Phi_z_alpha_log_approx}.\\
+Now that all the pieces are assembled, let us briefly summarize the inconsistencies surrounding $\alpha$:
+One first introduces $\alpha$ as an artificial regularization to avoid divergences in the bosonization procedure, see e.g. \cite[\ssec 5]{Bosonization_DelftSchoeller_1998}.
+While from a mathematical point of view this cut-off should later be taken to zero, physically one can argue that $\alpha$ represents a finite bandwidth and therefore only needs to be sufficiently small to not influence the linearization of the dispersion relation.
+A different perspective is provided in \cite[\spage 45]{Giamarchi_2004}, where the author argues that generically a finite interaction range replaces $\alpha$ in all relevant expressions (this would suggest $\alpha=a$ for our lattice model with nearest-neighbour interactions, as in \cite[\spage 10]{Bosonization_SSH_Giamarchi_2023}).
+However, any such argument is severely at odds with the \gls{gf} only being anti-periodic as $\alpha \rightarrow 0$, and clearly the limit can not be taken due to the global prefactor.\\
+%\cite[\seqn 6.16]{Bosonization_Senechal_2004} (no alpha, uses CFT) [\seqn 96]{Bosonization_Rao_2001} (alpha "bothersome")
+In \autoref{table:ell:gf:gf_literature} we list various \glspl{gf} from the literature that all (roughly) correspond to \autoref{eqn:ell:gf:order0_matsubara_real_space}.
+Evidently this is the accepted result\footnote{Note that \cite[\seqn 6.16]{Bosonization_Senechal_2004} actually does not contain any cut-off, but it is not clear whether the approach is reliable for global prefactors since it seems to be primarily designed to give the correct scaling exponents.}, although \cite[\spage 22]{Bosonization_Rao_2001} at least refers to the appearance of $\alpha$ as ``bothersome''; the author argues that the scaling laws are not affected, but of course, for quantitative predictions the prefactor is still relevant.
+It is also worth noting that the dependence on $\alpha$ disappears for $K=1$.
+Since this is the non-interacting case that is not surprising; otherwise a simple fermionic calculation would be sufficient to resolve the issue.
+Needless to say, this is all a bit unsatisfactory, but although there might be a deeper reason for the problem, and potentially even a way to resolve it, this is most definitely beyond the scope of this thesis.
+\begin{table}[!ht]
+\centering
+\begin{tabular}{ccccc}\toprule
+&\multicolumn{2}{c}{$L\rightarrow\infty$}&\multicolumn{2}{c}{finite L}\\ %\cline{2-5}
+&$T=0$&finite $T$&$T=0$&finite $T$\\ \midrule
+$K=1$&\cite[\seqn 2.84]{Giamarchi_2004} & \cites[\seqn H.12]{Bosonization_DelftSchoeller_1998}[\seqn 46]{Bosonization_FiniteT_Bowen_2001} & \cite[\seqn H.6]{Bosonization_DelftSchoeller_1998} & --- \\ \midrule
+$K\neq 1$ & \cites[\seqn 9]{Bosonization_GF_LL_Meden_1999}[\seqn 6.124]{Fradkin_2013} & \cite[\seqn 6.182]{Fradkin_2013} & --- & \cite{LL_FiniteT_FiniteL_Properties_Mattson_1997}\\ \bottomrule % T=0, L=inf [\seqn 3.83]{FermiLiquid_LL_review_Voit_1995}[\seqn 6.70]{QMB_Fabrizio_2022}
+\end{tabular}
+\caption[List of references to \glspl{gf} in the literature on \glspl{ll}]{List of several \glspl{gf} in the literature on \glspl{ll}. Note that some of the references tackle the more complicated problem of a spinful \gls{ll}, but the $\alpha$-predicament is the same. Importantly all of the results for $K\neq 1$ either contain the cut-off explicitly or omit a proportionality constant (obviously this list is far from exhaustive).}
+\label{table:ell:gf:gf_literature}
+\end{table}\\
+Computing the \gls{ft} of $G_0^\M(z)$ directly is highly non-trivial\footnote{One can get close by breaking up the spatial \gls{ft} into a convolution over the spatial \glspl{ft} of the individual $\csc(z)^b$-factors. The temporal \gls{ft} can then be performed, but the final integral is too difficult for a direct application of the residue theorem.}.
+We can avoid this by realizing that without any perturbation there is no need to invoke the Matsubara formalism in the first place -- we may also directly calculate the retarded \gls{gf} in real time.\\
+This mostly corresponds to simply replacing $\tau = \i t$ in all our previous results, since the derivation of the correlation function remains unchanged.
+Analogous to \autoref{eqn:bos:correlator_Phi_z_alpha_log_approx}
+\begin{align}
+\Phi(\xi) &= \bra*{\kla*{\varphi(\xi) - \varphi(0)}\varphi(0)} \simeq \log\klb*{-\i w \csch(\xi)} \label{eqn:ell:gf:correlator_Phi_xi_alpha_log_approx}
+\end{align}
+where $w=\frac{\pi\alpha}{\beta v}$ is a dimensionless parameter and $\xi_\pm = \frac{\pi}{\beta v} \kla*{vt \pm x}$ are the light-cone variables.
+Similar\footnote{Albeit with some additional subtleties; see \autoref{sec:app:ret_gf_real_time} for details.} to the calculation for the Matsubara \gls{gf} we then get
+\begin{align*}
+G^\ret_{0,\ell,\ell'}(\xi_+, \xi_-) &= \i\Theta(\xi_+ + \xi_-) \Theta(\xi_+\xi_-) \frac{\delta_{\ell,\ell'} w^{2M}}{\beta v} 2\sin(\pi M) \csch(\xi_{-\ell})^{M+1} \csch(\xi_{\ell})^M.
+\end{align*}%&= -\i\Theta(t) \bra*{\klc*{\psi_\ell(\xi_+, \xi_-), \psi_{\ell'}^\dagger(0)}} \\ 
+The two-dimensional \gls{ft} can be rewritten in terms of the light-cone variables, giving
+\begin{align*}
+G^\ret_{0,\ell,\ell'}(k,\omega) &= \intr{ \intr{\powe{\i \omega t - \i kx} G^\ret_{0,\ell,\ell'}(x,t)}{x} }{t} \\
+&= \frac{\beta^2}{2v\pi^2} \intx{0}{\infty}{\intx{0}{\infty}{ \powe{\i\omega \frac{\beta}{2\pi} (\xi_+ + \xi_-) - \i k \frac{\beta v}{2\pi} (\xi_+ - \xi_-)} G^\ret_{0,\ell,\ell'}(\xi_+, \xi_-) }{\xi_+}}{\xi_-}.
+\end{align*}
+This is valid, because the Heaviside function $\Theta(t)$ limits the integration region to $t\ge 0$, which corresponds to $\xi_\pm \ge 0$.
+With $k_\pm = \frac{\beta}{4\pi} (\omega \pm vk)$, inserting our expression for the \gls{gf} yields
+\begin{align}
+G^\ret_{0,\ell,\ell'}(k,\omega) &= \frac{\i\beta^2}{2v\pi^2} \frac{\delta_{\ell,\ell'}w^{2M}}{\beta v} 2\sin(\pi M) I_M(k_{-\ell}) I_{M+1}(k_{\ell})
+\end{align}
+where the integral $I_M(k)$ is given by \autoref{eqn:app:general_csch_FT_res}.\\
+The idea at this point is to realize that, if the analytic continuation $\i\omega_n\rightarrow \omega + \i \eta$ is possible for the result of the \gls{ft} of \autoref{eqn:ell:gf:order0_matsubara_real_space}, it must be identical to the above.
+More explicitly, rescaling the integration variables gives
+\begin{align*}
+G^\M_{0,\ell,\ell'}(k,\i\omega_n^\F) &= \intx{0}{\beta}{\intr{\powe{\i\omega_n^\F\tau - \i kx} G^\M_{0,\ell,\ell'}(x,\tau)}{x} }{\tau} \\
+&= \frac{-\delta_{\ell,\ell'} w^{2M}}{2\beta v} \frac{\beta^2}{v\pi^2} \intx{0}{\pi}{\intr{\powe{\i \omega_n^\F \frac{\beta }{\pi} \tau + \i k \ell \frac{\beta v}{\pi} x} \csc\kla*{\tau + \i x}^{M+1} \csc\kla*{\tau - \i x}^M }{x} }{\tau}.
+\end{align*}
+This is consistent with our result for the retarded \gls{gf} if, and only if,
+\begin{align*}
+&\intx{0}{\pi}{\intr{\powe{\i (2n+1) \tau - \i k x} \csc\kla*{\tau + \i x}^{M+1} \csc\kla*{\tau - \i x}^M }{x} }{\tau}\\
+&\qquad\qquad\qquad = -\i \sin(\pi M) I_M\kla*{\frac{\i(2n+1) + k}{4}} I_{M+1}\kla*{\frac{\i(2n+1) - k}{4}}.
+\end{align*}
+%k=0.85; n=3; om=1j*(2*n+1); b=0.3
+%mybeta = lambda x,y: special.gamma(x) * special.gamma(y) / special.gamma(x+y)
+%i_m = lambda z, b: 2**(b-1) * mybeta(1 - b, b/2 - 1j*z)
+%print(c_quad(lambda tau: np.exp(1j*(2*n+1)*tau)* c_quad(lambda x: np.exp(-1j*k*x) / np.sin(tau+1j*x)**(b+1) / np.sin(tau-1j*x)**b,-4, 4)[0], 0, np.pi))
+%print(-1j*np.sin(np.pi*b) * i_m((om+k)/4, b) * i_m((om-k)/4, b+1))
+There are quite a few subtle steps in the argument, so it is very encouraging that a direct numerical integration for fixed parameters confirms that the above is indeed correct.
+This confirmation also alleviates the need for further mathematical justification\footnote{Still, a more direct proof would be desirable because it may provide some deeper insight into the method with which one should approach integrals of this kind. This is not a purely academic question, as it may at least make a second order calculation accessible.} and allows us to simply adopt the stance of ``justified by success''. 
+A generalization of this result to related integrals useful for the first order perturbation theory is given in \autoref{sec:app:J_bN_function}.\\
+Finally, it should be noted that a somewhat different approach using the same idea of switching to real time has actually already been used in \cite[\sapp C]{Giamarchi_2004} to derive a similar retarded correlation function.
+However, the insight to recover the difficult imaginary time \gls{ft} and the generalization of the integral appear to be new.
+\subsection{Sine-Gordon-like perturbation}\label{sec:ell:gf:sine_Gordon_perturbation}
+Already the calculation of the first order correction to the \gls{gf} turns out to be rather involved and is therefore split into multiple subsections (some of the more technical details can be found in the appendix).
+That said, conceptually the problem is simple enough; given the perturbation
+\begin{align}
+H_\tint &= g \frac{v}{\alpha} \sum_{s=\pm 1} \i s\eta_{-s} \eta_s \sum_{s_a = \pm 1} \int \powe{2\i s\phi(x,\tau)} \partial_x \phi(x + s_aa, \tau)\,\d x,
+\end{align}
+we want to calculate the single-particle \gls{gf} to first order in the dimensionless coupling $g$.
+As laid out in \autoref{sec:gf:perturbation_series}, this boils down to inserting the expansion of the time-evolution operator $U_\tint(\beta, 0)$ in \autoref{eqn:gf:U_int_expansion}
+into the general result for the Matsubara correlation function. 
+With $\sact_\tint = \intx{0}{\beta}{H_\tint}{\tau}$ and $\mathcal{O} = A(\tau)B(0)$ the resulting perturbation series in \autoref{eqn:gf:perturbation_series} then reads
+\begin{align*}
+C^\M_{AB}(\tau) &= -\bra*{\mathcal{O}} + \bra*{\mathcal{O}; \sact_\tint}^\c - \frac{1}{2} \bra*{\mathcal{O}; \sact_\tint^2}^\c - \bra*{\mathcal{O}; \sact_\tint}^\c \bra*{\sact_\tint} + \dots
+\end{align*}
+where $\bra{A;B}^\c = \bra{AB} - \bra{A}\bra{B}$ denotes the connected average, and for notational convenience we omit the time-ordering.\\
+To first order we therefore need to compute the terms $\bra{A(\tau)B(0) \sact_\tint}$ and $\bra{\sact_\tint}$.
+Note that the latter vanishes due to the neutrality condition, as the interaction only contains a single vertex operator per summand.
+Similarly, it is easy to see that $\bra[\big]{\sact_\tint^{2N+1}} = 0$ for all $N\ge 0$.
+A closer inspection of the neutrality condition also demonstrates that all even order corrections must have a diagonal matrix structure, while all odd order corrections are off-diagonal.
+\myparagraph{Real Space} %\label{sec:ell:gf:sine_Gordon_real_space}
+To calculate expectation values involving the interaction we make use of
+\begin{align*}
+\partial_x\phi(x+s_aa,\tau) &= s_a\partial_a \lim_{J\rightarrow 0} (-\i\partial_J) \powe{\i J\phi(\tilde{z})},
+\end{align*}
+where $\tilde{z}$ again denotes the tuple $(\tilde{z}_+,\tilde{z}_-)$ but with $\tilde{x} = x + s_aa$ (to put it in words, the tilde always implies that the spatial coordinate is offset by a lattice spacing).
+In the following, the limit $J\rightarrow 0$ is often implicit and differentials such as $\d x'\d \tau'$ are neglected.
+It should always be clear which variables are integrated over from the context.\\
+The first order correction can then be written as
+\begin{align*}
+G^\M_{1,\ell,\ell'}(z) &= \bra*{\mathcal{T}_\tau \psi_\ell(z) \psi_{\ell'}^\dagger(0) \sact_\tint }\\
+&= \sum_{s,s_a=\pm 1} \frac{\i sv}{2\pi\alpha^2} \int \bra*{\mathcal{T} \eta_\ell \powe{-\i\varphi_\ell(z)} \eta_{\ell'} \powe{\i\varphi_{\ell'}(0)} \eta_{-s} \eta_{s}\powe{2\i s\phi(z')} s_a\partial_a (-\i\partial_J) \powe{\i J\phi(\tilde{z}')}},
+\end{align*}
+and the full \gls{gf} is given by $G^\M = G^\M_0 + gG^\M_1 + \mathcal{O}(g^2)$. 
+Before computing the expectation value itself, let us take a closer look at the general properties of \autoref{eqn:ell:gf:expval_prod_ABZ}.
+By construction one has the recursion
+\begin{align*}
+\bra[\Big]{\abx{A_1&\dots&A_n}{B_1&\dots&B_n}{z_1&\dots&z_n}} &= \bra[\Big]{\abx{A_1&\dots&A_{n-1}}{B_1&\dots&B_{n-1}}{z_1&\dots&z_{n-1}}} \prod_{j<n} \bra[\Big]{\abx{A_j&A_n}{B_j&B_n}{z_j&z_n}} = \prod_{j<k} \bra[\Big]{\abx{A_j&A_k}{B_j&B_k}{z_j&z_k}}
+\end{align*}
+where again the neutrality conditions $\sum_j A_j = 0 = \sum_j B_j$ are assumed.
+In the special case $B_1=s\in\klc*{1,0,-1}$ and $B_2=0$ the two-point function admits the relation
+\begin{align}
+\bra[\Big]{\abx{A_1&A_2}{s&0}{z_1&z_2}} &= \prod_{\ell=\pm 1} \powe{-\frac{1}{4} \klb*{KA_1A_2 + \ell A_2s} \Phi(z_{1,\ell} - z_{2,\ell})} = \bra[\Big]{\abx{A_2&A_1}{0&s}{z_2&z_1}} \powe{\frac{1}{2} A_2s\pi\i\sgn (x_{1} - x_{2})} \label{eqn:ell:gf:expval_AB_sign_swap}
+\end{align}
+due to $\Phi(-z_\ell) = \Phi(z_\ell) + \i\pi \sgn(\Im z_\ell)$\footnote{This relation once again only holds for the asymptotic expression of $\Phi(z)$ (this is essentially where the anti-periodicity breaks).}.\\
+Turning back to the integrand, the neutrality condition now requires $-\ell + \ell' + 2s = 0$, and thus we can only get a finite result for $\ell'=-\ell$ and $s=\ell$.
+Note that we ignore the additional neutrality-violating term $J$ for now.
+Since it is a priori unclear what effect this might have, we first assume to be working in a large but finite system.
+This alleviates the neutrality condition to a mere damping factor that depends on the magnitude of the violation via $\powe{-\frac{1}{2}J^2 \bra*{\phi(0)^2}}$ \cite[\ssec 3]{Gogolin_1999}.
+We make an explicit calculation below, but the gist is that due to the square the violation vanishes sufficiently fast to not affect the thermodynamic limit.\\
+The Klein factors are not explicitly time-dependent, but we do have to keep the time-ordering in mind, because their order is dictated by the vertex operators they are attached to. 
+We have to distinguish the two cases $\tau'<\tau$ and $\tau'>\tau$ in which the Klein factors reduce to
+\begin{align*}
+\eta_\ell (-1)^2 \eta_{-s} \eta_{s} \eta_{\ell'} &= -1\quad\text{and}\quad (-1)^4 \eta_{-s} \eta_{s} \eta_{\ell} \eta_{\ell'} = 1
+\end{align*}
+respectively, and the factors $(-1)^2$ and $(-1)^4$ originate from the definition of the time-ordering operator (although here this evidently does not make a difference).
+To better understand the effect of the time-ordering, we also have to consider the expectation value inside the integral.
+For the first case of $\tau'<\tau$ it is
+\begin{align*}
+\bra*{\abx{-\ell&2\ell&J&-\ell}{1&0&0&-1}{z&z'&\tilde{z}'&0}} &= \powe{-\frac{1}{2}J^2 \bra*{\phi(0)^2}} \bra*{\abx{-\ell&2\ell}{1&0}{z&z'}} \bra*{\abx{-\ell&J}{1&0}{z&\tilde{z}'}} \bra*{\abx{2\ell&J}{0&0}{z'&\tilde{z}'}} \bra*{\abx{-\ell&-\ell}{1&-1}{z&0}} \bra*{\abx{2\ell&-\ell}{0&-1}{z'&0}} \bra*{\abx{J&-\ell}{0&-1}{\tilde{z}'&0}},
+\end{align*}
+and similarly for the second case of $\tau'>\tau$,
+\begin{align*}
+\bra*{\abx{2\ell&J&-\ell&-\ell}{0&0&1&-1}{z'&\tilde{z}'&z&0}} &= \powe{-\frac{1}{2}J^2 \bra*{\phi(0)^2}} \bra*{\abx{2\ell&J}{0&0}{z'&\tilde{z}'}} \bra*{\abx{2\ell&-\ell}{0&1}{z'&z}} \bra*{\abx{J&-\ell}{0&1}{\tilde{z}'&z}} \bra*{\abx{2\ell&-\ell}{0&-1}{z'&0}} \bra*{\abx{J&-\ell}{0&-1}{\tilde{z}'&0}} \bra*{\abx{-\ell&-\ell}{1&-1}{z&0}}.
+\end{align*}
+Due to \autoref{eqn:ell:gf:expval_AB_sign_swap}, interchanging the order inside the two-point functions results in an extra minus sign if $|A_1B_2 + A_2B_1| = 2$.
+Therefore, combined with the sign change due to the Klein factors, the only remaining difference between the two expressions is the phase $\powe{\mp \frac{1}{2} J\pi \i}$ from the term involving $z-\tilde{z}'$.
+Note that because of the limit
+\begin{align}
+\lim_{J\rightarrow 0} \partial_J \powe{AJ^2 + BJ} &= B \label{eqn:ell:gf:limit_partial_J_powe_AJ2_BJ}
+\end{align}
+this phase factor reduces to an additive constant that, rather conveniently, vanishes upon differentiation with respect to $a$.
+Additionally, \autoref{eqn:ell:gf:limit_partial_J_powe_AJ2_BJ} also shows that the neutrality-violating factor $\powe{-\frac{1}{2} J^2 \bra*{\phi(0)^2}}$ simply drops out regardless of the system size.\\
+Putting it all together, the integrands for $\tau'<\tau$ and $\tau'>\tau$ turn out to be exactly the same.
+This is both somewhat remarkable -- given the numerous phase factors and sign changes -- and very useful, because we do not need to split up the integration region\footnote{Although we do not consider higher order terms here, it is not too difficult to see that this statement remains true there. Without giving a formal argument, any sign change by the Klein factors is compensated by the respective phase factor from swapping the order in the expectation value; additionally, any remaining phases drop out due to the derivatives. %Similar patterns likely exist for other sine-Gordon perturbations, but, the devil being in the details, an even more general statement would certainly require some more scrutiny
+}.
+The first order correction then takes the form
+\begin{align*}
+G_{1,\ell,\ell'}^\M(z) &= \sum_{s_a=\pm 1} \frac{-\ell\pi v \delta_{\ell,-\ell'} s_a\partial_a \partial_J}{2(\beta v w)^2} \int \bra*{\abx{-\ell&2\ell}{1&0}{z&z'}} \bra*{\abx{-\ell&J}{1&0}{z&\tilde{z}'}} \bra*{\abx{2\ell&J}{0&0}{z'&\tilde{z}'}} \bra*{\abx{-\ell&-\ell}{1&-1}{z&0}} \bra*{\abx{2\ell&-\ell}{0&-1}{z'&0}} \bra*{\abx{J&-\ell}{0&-1}{\tilde{z}'&0}}\\
+&= \delta_{\ell,-\ell'} \frac{-\pi v}{2(\beta vw)^2} \bra*{\abx{-\ell&-\ell}{1&-1}{z&0}} \int \bra*{\abx{-\ell&2\ell}{1&0}{z&z'}} \bra*{\abx{2\ell&-\ell}{0&-1}{z'&0}} f_{1,\ell}(z,z')
+\end{align*}
+where the $J$-dependences and derivatives are contained in the function
+\begin{align*}
+f_{1,\ell}(z,z') &= \sum_{s_a=\pm 1} \ell\partial_a \partial_J \bra*{\abx{-\ell&J}{1&0}{z&\tilde{z}'}} \bra*{\abx{2\ell&J}{0&0}{z'&\tilde{z}'}} \bra*{\abx{J&-\ell}{0&-1}{\tilde{z}'&0}}.
+\end{align*}
+After an elementary but lengthy calculation in \autoref{sec:app:algebra:eval_f_1_ell}, this becomes
+\begin{align*}
+f_{1,\ell}(z,z') &= \sum_{s_a,s=\pm 1} \frac{\i\ell \pi (1-Ks)}{4\beta v} \klb*{\cot(z_{\ell s} - z_{\ell s}' - \i\ell s_a s \frac{\pi a}{\beta v}) + \cot(z_{-\ell s}' - \i\ell s_a s \frac{\pi a}{\beta v})}.
+\end{align*}
+The remaining two-point functions evaluate to
+\begin{align*}
+\bra*{\abx{-\ell&-\ell}{1&-1}{z&0}} &= \prod_{s=\pm 1} \powe{-\frac{1}{4} \klb*{K - \frac{1}{K}} \Phi(z_s)} = \klb*{w^2\csc(z_+) \csc(z_-)}^{M - \frac{K}{2} + \frac{1}{2}} ,\\
+\bra*{\abx{-\ell&2\ell}{1&0}{z&z'}} &= \prod_{s=\pm 1} \powe{-\frac{1}{4} \klb*{-2K + 2s\ell} \Phi(z_s - z_s')} = w^{K} \csc(z_{-\ell} - z_{-\ell}')^{K_+} \csc(z_{\ell} - z_{\ell}')^{K_{-}}\\
+\text{and} \quad \bra*{\abx{2\ell&-\ell}{0&-1}{z'&0}} &= \prod_{s=\pm 1} \powe{-\frac{1}{4} \klb*{-2K - 2s\ell} \Phi(z_s')} = w^{K} \csc(z_{-\ell}')^{K_{-}} \csc(z_{\ell}')^{K_+}
+\end{align*}
+where we identify $\frac{1}{4} \klb*{\frac{1}{K} - K} = M - \frac{K}{2} + \frac{1}{2}$ in the first term, and define $K_\pm = \frac{K \pm 1}{2}$ in the other two.
+Collecting all the contributions then gives
+\begin{align*}
+G_{1,\ell,\ell'}^\M(z) = \int &\sum_{s,s_a=\pm 1} \frac{-\i\ell\pi (1-Ks)}{4\beta v} \frac{\pi v \delta_{\ell,-\ell'} w^{2M+2K_-}}{2(\beta v)^2} \csc(z_+)^{M-K_-} \csc(z_-)^{M-K_-} \\
+&\times \csc(z_{-\ell}')^{K_-} \csc(z_{\ell}')^{K_+}  \csc(z_{-\ell}-z_{-\ell}')^{K_+} \csc(z_{\ell}-z_{\ell}')^{K_-} \\
+&\times \klb*{\cot\kla*{z_{\ell s}-z_{\ell s}' - \i \ell ss_a \frac{\pi a}{\beta v}} + \cot\kla*{z_{-\ell s}' - \i \ell ss_a\frac{\pi a}{\beta v}}}. \numberthis \label{eqn:ell:gf:G1M_real_space_res}
+\end{align*}
+This is our final result for the correction term in real space, and it is indeed anti-periodic in the imaginary time $\tau$.
+To see this, note that $\tau\rightarrow \tau + \beta$ corresponds to $z\rightarrow z + \pi$.
+Since the trigonometric functions satisfy $\cot(z+\pi)=\cot(z)$ and $\csc(z+\pi) = -\csc(z)$, this shift yields a minus sign from the product of cosecants containing the difference $z-z'$.
+\myparagraph{Frequency Space} %\label{sec:ell:gf:sine_Gordon_freq_space}
+Conceptually, the next step is again straight-forward since we just need to carry out the \gls{ft}
+\begin{align*}
+G^\M_1(k,\i\omega_n^\F) &= \intx{0}{\beta}{\intr{\powe{\i\omega_n^\F \tau - \i k x} G^\M_1(x,\tau)}{x} }{\tau}.
+\end{align*}
+The only problem, of course, is that this integral is absurd; not only is it four-dimensional, there also is asymmetry due to the finite interval for $\tau$, and simply put, the integrand itself contains too many factors.
+The last statement already hints at a potential solution, since the \gls{ft} of a product of functions can be broken down into the convolution of the individual \glspl{ft} by means of the \gls{ct}.\\
+The details of the calculation are given in \autoref{sec:app:convolution_theorem_first_order} and ultimately lead to our final result for the \gls{gf} to first order,
+\begin{align*} 
+G_{\ell,\ell}^\M(k,\i\omega_n^\F) &= -\frac{\beta w^{2M}}{2\pi^2} J_{M,1}\kla*{-\ell \frac{\beta vk}{\pi}, \frac{\beta\i\omega_n^\F}{\pi}} + \mathcal{O}\kla*{g^2} \numberthis \label{eqn:ell:gf:order0_res},\\
+G_{\ell,-\ell}^\M(k,\i\omega_n^\F) &= -\i\ell \int_\mathbb{R} \sum_{s,s'=\pm 1} \sum_{m\in\mathbb{Z}} g (1+Ks) \frac{\beta  w^{2M+K-1}}{8\pi^4} J_{M-K_-,0}\kla*{k',2\i m} \\
+&\phantom{= -\i\ell \int_\mathbb{R}} \times J_{K_-,1} \kla*{s' \frac{\beta v}{\pi}k-s' k',\frac{\beta\i\omega_n^\F}{\pi} - 2\i m} \\
+&\phantom{= -\i\ell \int_\mathbb{R}} \times S_{K_-,1,s}\kla*{s' k' - s' \frac{\beta v}{\pi} k,\frac{\beta\i\omega_n^\F}{\pi} - 2\i m, \frac{\pi a}{\beta v}}\,\d k' + \mathcal{O}\kla*{g^3}. \numberthis \label{eqn:ell:gf:order1_res}
+\end{align*}
+For the definition and derivation of $J_{b,N}$ see \autoref{eqn:app:J_bN_function} and for the new set of functions $S_{b,1,s}$ see \autoref{eqn:app:S_b1s_function_def} and \autoref{eqn:app:S_b1s_function_res} respectively.
+A visualization of these functions for sample parameters is given in \autoref{fig:app:special_func_of_k}.
+The only dimensionful quantity in this result is $\beta$ and, as it should be in natural units, the \gls{gf} therefore has units of one over energy.\\
+This result is useful, because the analytic continuation $\i\omega_n^\F \rightarrow \omega + \i \eta$ reduces to a straight-forward replacement and therefore provides a decisive advantage over the direct \gls{ft}. 
+Numerically, however, \autoref{eqn:ell:gf:order1_res} is still a bit difficult to evaluate; a short discussion of the implementation is given in \autoref{sec:app:numerics}. %and the tricks used to speed up and stabilize the calculation are
+\subsection{Interpretation}\label{sec:ell:gf:interpretation}
+Before we turn to an interpretation of the result, note that we still have to consider the \gls{sg}-perturbation $H_4$.
+Due to the neutrality condition, only even orders can contribute, and thus only the diagonal components are affected.
+In \autoref{sec:ell:rg}, we discuss how $H_4$ can be taken into account by renormalizing the Luttinger parameter.
+\begin{figure}[!ht]
+\centering
+\includegraphics{figures/gf_ua_eq_ub_cov_dual_example.pdf}
+\caption[Comparison of analytic and numeric results for $G_{\R\R}$ for $U_\A=U_\B$]{Comparison of analytic (lines) and numeric (dots) results for $U_\A=U_\B$ and $\beta=1$ (\acrshort{stdpar} for $\vf$ and $\alpha$). 
+Panel (a) shows the real and imaginary parts of the component $G_{\R\R}$ as a function of momentum for $U_\A=1$.
+The solid line corresponds to \autoref{eqn:ell:gf:order0_res} with the explicit formulas from \autoref{eqn:ell:bos:LL_interacting_H0} for $K$ and $v$.
+For the dashed line, these two are instead used as fit parameters for the numerical data (error estimates from \texttt{scipy.optimize.curve{\_}fit} \cite{Scipy_2020}).
+Panel (b) shows how these ``optimal'' values compare to the microscopic formula for varying $U_\A$.
+Note that up to $U_\A\approx 1$ the result is more consistent with a constant value $v=\vf$.}
+\label{fig:ell:gf:gf_ua_eq_ub_dual_example}
+\end{figure}\\
+Let us start with the case $U_\A=U_\B$.
+Then $U_-=0$, so the zeroth order already gives the exact result, at least up to neglecting the other \gls{sg}-term.
+Since the \gls{gf} becomes diagonal and the components $G_{\R\R}$ and $G_{\L\L}$ are related by symmetry, it suffices to focus on one of them.
+\autoref{fig:ell:gf:gf_ua_eq_ub_dual_example} illustrates a comparison between \autoref{eqn:ell:gf:order0_res} and numerical data for $\beta=1$.
+In panel (a) we set $U_\A=1$ and the analytic result is shown twice; once with the parameters $K$ and $v$ of the \gls{ll} calculated using the microscopic formulas from \autoref{eqn:ell:bos:LL_interacting_H0}, and once with the same parameters instead fitted to the numerical data.
+Note that the fit is only performed for $|k|<\Lambda_\tlin = \frac{1}{2}$ where we can expect agreement due to the linearization.
+Since the width of the peak increases with the interaction strength, we can also expect significant deviations once the features grow beyond this bandwidth.
+Evidently the qualitative behaviour is correct, and in principle \autoref{eqn:ell:gf:order0_res} allows for a reasonably accurate quantitative agreement as well.
+However, the precise values of $K$ and $v$ do seem to deviate quite substantially from the microscopic prediction. %TODO \footnote{\cite[\ssec 3.1]{Giamarchi_2004} and \cite[\spage 79]{Giamarchi_2004} for phenomenological interpretation of $K$ and $v$.}
+There may be several reasons for this.
+For one, due to technical reasons the numerical approach in \cite{EP_DynamicInduced_Quenched_Lehmann_2021} is limited to rather high temperatures\footnote{It is also limited to moderate interaction strengths, so we can unfortunately not analyse the limit of very small interactions in this way.}.
+Given that for $\beta=1$ the bandwidth $\Lambda_\ttherm \approx \frac{1}{\beta v}$ generated by thermal fluctuations is of the order of unity, here our bosonization may already start to become invalid since $\Lambda_\tlin \approx \Lambda_\ttherm$.
+Additionally, as mentioned before, $H_4$ has to be taken into account too, and in \autoref{sec:ell:rg} we discuss how to incorporate the term by means of modifying the \gls{ll} parameters.\\
+Panel (b) of \autoref{fig:ell:gf:gf_ua_eq_ub_dual_example} illustrates $K$ and $v$ as a function of the interaction strength, once using the explicit formulas and once using the fit to numerical data as discussed above.
+While $K$ is in reasonable agreement with the numerics, the renormalized Fermi velocity is far off.
+In fact, up to around $U_\A\approx 1$ it is more compatible with a constant value of $v=\vf$, which would be the case for $\alpha=0$.
+This is intriguing, because although setting $\alpha$ to zero would also lead to $K=1$, a deviation from this could then in principle be explained by the neglected \gls{sg}-term (although the technical issues with the $\alpha$-dependence would remain).\\
+Since our calculation is merely first order in the coupling $g$, it is useful to have some measure of the accuracy, or at least reliability, of the result.
+As a dimensionless quantity, $g$ appears to be a good candidate, but we instead identify the ratio
+\begin{align}
+\PTR(k,\omega) &= \abs*{g\frac{G_1(k,\omega)}{G_0(k,\omega)}} \label{eqn:ell:gf:PTR_def}
+\end{align}
+as the ``small quantity'' of the perturbation series.
+%TODO heuristic based on the assumption that higher order terms will roughly be of order $\PTR^N$.
+Despite the simplicity of this heuristic, the case $R\approx 1$ coincides reasonably well with several breakdowns of the theory, e.g. positive imaginary energies and unphysical divergences (see the discussion of \autoref{fig:ell:ep:ll_par_fit}).\\
+For $U_\A\neq U_\B$ we also get an off-diagonal contribution.
+A more detailed analysis along the lines of the previous case is given in \autoref{sec:app:interpretation_G1}, but suffice it to say that qualitatively \autoref{eqn:ell:gf:order1_res} agrees with the numerical result (although the quantitative comparison is much less favourable).
+\FloatBarrier
+\section{\texorpdfstring{\acrlongpl{ep}}{EP} in our model}\label{sec:ell:ep:eps_in_our_model}
+In this section, we discuss the \gls{nh} topology of our model by analysing the effective Hamiltonian generated by the single-particle \gls{gf} computed previously.
+\subsection{Symmetries and structure of the effective Hamiltonian}\label{sec:ell:ep:symmetry_heff}
+In the following, quantities are always assumed to be in the $\A\B$-basis, i.e. indices correspond to a sublattice.
+Whenever an object is instead in the basis of left- and right-movers, we denote it with a subscript.\\ 
+Our result for the single-particle \gls{gf} in the $\R\L$-basis given by \autoref{eqn:ell:gf:order0_res} and \autoref{eqn:ell:gf:order1_res} gives rise to the matrix structure
+\begin{align}
+G^\ret_{\R\L}(k,\omega) &= \begin{pmatrix}
+G_0(k,\omega) & -\i gG_1(k,\omega) \\ \i gG_1(k,\omega) & G_0(-k,\omega)
+\end{pmatrix} + \mathcal{O}(g^2)
+\end{align}
+where the functions $G_0$ and $G_1$ are determined by the aforementioned equations.
+Evidently, in this basis the free part of the \gls{gf} is diagonal and the perturbation is a pure $\sigma_y$-term.
+Writing $G_\pm(k) = \frac{1}{2} \klb*{G_0(k) \pm G_0(-k)}$, we have $G^\ret_{\R\L} = G_+ \sigma_0 + \textbf{g}_{\R\L}\cdot \bm{\sigma}$ where $\textbf{g}_{\R\L} = (0, gG_1, G_-)^\transpose$, and by construction $G_+$ ($G_-$) is symmetric (anti-symmetric) in $k$.\\
+As discussed in \autoref{sec:ep:eps}, in one dimensional systems stable \glspl{ep} generically require an additional symmetry to reduce the codimension of \autoref{eqn:ep:dr2_di2_and_drdi_condition}.
+In our case the model admits chiral symmetry $\chs$ with the transformation matrix $U_S=\sigma_z$ in the $\A\B$-basis.
+The important consequence of this symmetry is the relation
+\begin{align}
+\sigma_z H_\eff^\dagger(k,\omega) \sigma_z &= -H_\eff(k,-\omega) \label{eqn:ell:ep:chiral_h_eff_symmetry}
+\end{align}
+for the effective Hamiltonian defined via the single-particle \gls{gf} in \autoref{eqn:ep:g_ret_from_h_eff}.
+This result is given in \cite{EP_DynamicInduced_Quenched_Lehmann_2021} without derivation, and we therefore discuss it in some more detail in \autoref{sec:app:chiral_symmetry_gf}.\\
+%TODO Even without an in-depth explanation it is very intuitive that only the frequency picks up a minus sign since chiral symmetry is composed of particle-hole exchange $\phs$ and time reversal $\trs$.
+%Both of these flip the momentum $k$, but $\omega$ is only affected by $\trs$.\\
+As in \autoref{sec:ep:eps}, the effective Hamiltonian can be decomposed as $H_\eff(k,\omega) = d_0(k,\omega)\sigma_0 + \textbf{d}(k,\omega)\cdot \bm{\sigma}$, where the functions $d_0$ and $\textbf{d}$ are then constrained by \autoref{eqn:ell:ep:chiral_h_eff_symmetry}.
+Explicitly, omitting the argument $k$, we then have
+\begin{align*}
+d_0^\ast(\omega) &= -d_0(-\omega), \quad d_x^\ast(\omega) = d_x(-\omega), \quad d_y^\ast(\omega) = d_y(-\omega) \quad\text{and} \quad d_z^\ast(\omega) = -d_z(-\omega).
+\end{align*}
+For $\omega=0$ this implies that $d_0$ and $d_z$ are purely imaginary, while $d_x$ and $d_y$ are real.
+Consequently, at the Fermi level the second condition in \autoref{eqn:ep:dr2_di2_and_drdi_condition}, $(\Re \textbf{d})\cdot (\Im \textbf{d}) = 0$, is already guaranteed by symmetry.\\
+To actually obtain the effective Hamiltonian via \autoref{eqn:ep:g_ret_from_h_eff}, we need the \gls{gf} in the $\A\B$-basis.
+The transformation matrix from \autoref{sec:ell:bos:model_boson} is $U=\frac{1}{\sqrt{2}} \begin{psmallmatrix} 1 & \i \\ \i & 1 \end{psmallmatrix}$, and thus
+\begin{align*}
+G^\ret &= U^\dagger G^\ret_{\R\L} U = G_+\sigma_0 - G_-\sigma_y - gG_1\sigma_z = G_+\sigma_0 + \textbf{g} \cdot \bm{\sigma}
+\end{align*}%np.allclose(U.conj()@sigma_z@U,-sigma_y); np.allclose(U.conj()@sigma_y@U,sigma_z)
+where $\textbf{g}=(0, -G_-, gG_1)^\transpose$.
+Therefore, the effective Hamiltonian becomes\footnote{Note the general formula for the inverse of the matrix $\kla*{g_0 \sigma_0 + \textbf{g}\cdot \bm{\sigma}}^{-1} = \frac{1}{g_0^2 - \textbf{g}^2} \kla*{g_0 \sigma_0 - \textbf{g}\cdot\bm{\sigma}}$. }
+%import sympy as sy
+%g0,gx,gy,gz=sy.symbols("g_0 g_x g_y g_z")
+%sigma_0 = np.array([[1,0],[0,1]])
+%sigma_x = np.array([[0,1],[1,0]])
+%sigma_y = np.array([[0,-sy.I],[sy.I,0]])
+%sigma_z = np.array([[1,0],[0,-1]])
+%mat = g0*sigma_0 +gx*sigma_x +gy*sigma_y +gz*sigma_z
+%matinv = (g0*sigma_0 -gx*sigma_x -gy*sigma_y -gz*sigma_z) / (g0**2 - gx**2 - gy**2 - gz**2)
+%for i in range(2):
+%    for j in range(2):
+%        print((mat@matinv)[i,j].simplify())
+\begin{align*}
+H_\eff(k,\omega) &= \omega\sigma_0 - \kla*{G^\ret(k,\omega)}^{-1} = \frac{\kla*{\omega - G_+} \sigma_0 + G_-\sigma_y - gG_1\sigma_z}{G_+^2 - G_-^2 - g^2G_1^2}. %\label{eqn:ell:ep:h_eff_def}
+\end{align*}
+Omitting the frequency argument, the functions $d_0$ and $\textbf{d}$ are then given by
+\begin{align}
+d_0(k) &= \frac{\omega - G_+(k)}{G_0(k) G_0(-k) - g^2G_1(k)^2} \quad \text{and} \quad \textbf{d}(k) = -\frac{\textbf{g}(k)}{G_0(k) G_0(-k) - g^2G_1(k)^2}. \label{eqn:ell:ep:d0_dk_general_2x2}
+\end{align}
+%G1 symmetrc in k; k=0.44; omega=0.15; green_perturbative([k, -k], omega)
+Since $G_1(k,\omega)=G_1(-k,\omega)$, this means that $d_0$ and $d_z$ are symmetric in $k$, while $d_y$ is anti-symmetric.
+Numerically it is readily checked that the constraints from the chiral symmetry are obeyed by \autoref{eqn:ell:ep:d0_dk_general_2x2} (which is reassuring).
+%k=np.linspace(-1,1,301); omega=0.0
+%green=green_perturbative(k,omega,g=0.5)
+%heff=tlk.hamilton_from_green(omega, tlk.basis_lr_to_ab(green))
+%d0,dx,dy,dz=tlk.hamilton_2x2_decomp(heff[:,0])
+%fig,ax=plt.subplots(2,2)
+%d=np.array([[d0,dx],[dy,dz]])
+%for i in range(2):
+%    for j in range(2):
+%        ax[i,j].plot(k,d[i,j].real,c='b')
+%        ax[i,j].plot(k,d[i,j].imag,c='orange')
+\subsection{\texorpdfstring{\acrlongpl{ep}}{EP} and parameter dependence}\label{sec:ell:ep:parameter_plots}
+Before turning to a more quantitative analysis, let us demonstrate the existence of \glspl{ep} in our model in the static limit $\omega=0$ analytically.
+Since the second condition in \autoref{eqn:ep:dr2_di2_and_drdi_condition} is already met due to the chiral symmetry, we are left with analysing the equation $\textbf{d}_\r^2 = \textbf{d}_\i^2$, where the subscripts refer to real and imaginary part.
+Clearly the common denominator of \autoref{eqn:ell:ep:d0_dk_general_2x2} is irrelevant here\footnote{At least unless it vanishes, which coincidentally happens exactly for $R=1$. This is also why one can expect the first order perturbation theory to hold so long as $R$ is sufficiently small.}, and thus the condition simplifies to
+\begin{align*}
+\kla*{\Re G_-(k)}^2 + g^2 \kla*{\Re G_1(k)}^2 &= \kla*{\Im G_-(k)}^2 + g^2 \kla*{\Im G_1(k)}^2.
+\end{align*}
+Since $G_0(k,0)=-G_0(-k,0)^\ast$, we have $G_-(k,0) = \Re G_0(k,0)$.
+Similarly $J_{b,0}(k,\i\omega)\in\mathbb{R}$, $J_{b,1}(k,\i\omega)^\ast = -J_{b,1}(-k,\i\omega)$ and $S_{b,1,s}(k,\i\omega,a)^\ast = S_{b,1,s}(-k,\i\omega,a)$.
+Combining these three relations then leads to $G_1(k,0)^\ast = -G_1(k,0)$, and thus the condition for the \gls{ep} simplifies to $\abs*{G_-(k,0)} = \abs*{g G_1(k,0)}$.
+By construction $G_-(0,\omega)=0$, and, by virtue of the intermediate value theorem, the existence of an \gls{ep} is then ensured if $\abs*{G_-(k,0)}>\abs*{g G_1(k,0)}$ for some $k$.
+While a quantitative prediction for the location $k_\text{EP}$ of the \gls{ep} is difficult due to the complicated analytical structure of the solution, arguing the existence is rather straight-forward.
+Clearly $\abs*{G_-(k,0)}$ is not identically zero, and the function must therefore be increasing on some interval $[0,k_1]$.
+Thus, for any fixed $k<k_1$, it must be possible to fulfil the inequality by reducing the coupling $g$.\\
+Analytically this is about as far as one can go in terms of general statements without resorting to severe approximations.
+For the sake of a quantitative comparison to the numerical data, we therefore implement the analytic result numerically to avoid unnecessary additional errors.\\
+%\autoref{fig:ell:ep:ll_example_ep} shows an example of the \glspl{ep} for illustrative purposes and confirms the previous discussion: taken at face value the perturbation theory result does indeed predict the emergence of exceptional topology.
+The phase of the complex energy gap is given by
+\begin{align}
+\vartheta &= \arg \kla*{E_+ - E_-} = \arg \sqrt{\textbf{d}_\r^2 - \textbf{d}_\i^2 + 2\i \textbf{d}_\r\cdot \textbf{d}_\i}. \label{eqn:ell:ep:phase_vartheta}
+\end{align}
+It deviates from zero for any finite $\textbf{d}_\r\cdot\textbf{d}_\i$ and sensitively depends on the sign of $\textbf{d}_\r^2 - \textbf{d}_\i^2$.
+If this expression is negative, we have $\vartheta\rightarrow \frac{\pi}{2}$ as $\textbf{d}_\r\cdot\textbf{d}_\i\rightarrow 0^+$, and likewise $\vartheta\rightarrow - \frac{\pi}{2}$ as $\textbf{d}_\r\cdot\textbf{d}_\i\rightarrow 0^-$.
+Consequently, inside regions with $\textbf{d}_\r^2<\textbf{d}_\i^2$ the phase jumps by $\pi$ when crossing a so-called imaginary Fermi arc corresponding to a line with $\textbf{d}_\r\cdot\textbf{d}_\i=0$ \cite[\ssec II.B]{ExceptTop_RevModPhys.93.015005}.
+Since the jump relies on $\textbf{d}_\r^2<\textbf{d}_\i^2$, these arcs end at $\textbf{d}_\r^2=\textbf{d}_\i^2$ and therefore always connect two \glspl{ep}.
+\autoref{fig:ell:ep:ep_contour_dual_example} visualizes the conditions in \autoref{eqn:ep:dr2_di2_and_drdi_condition} and the phase $\vartheta$ for a fixed set of parameters.
+As expected, we find a pair of \glspl{ep} connected by an imaginary Fermi arc at the Fermi energy $\omega=0$ and panel (a) illustrates the corresponding complex energy eigenvalues.
+Note that qualitatively (b) is remarkably similar to Figure 2 in \cite{EP_DynamicInduced_Quenched_Lehmann_2021}\footnote{Our result shares all the symmetries and features such as the three arcs protruding from the horizontal line and the additional pair of \glspl{ep} at finite $\omega$.
+The main visual difference is that in the numerical result the three lobes of $\textbf{d}_\r^2 = \textbf{d}_\i^2$ are connected into one contour, but this is merely a quantitative problem.
+Due to the vastly different temperatures a direct comparison between the figures is difficult anyway.}.\\
+Since $\PTR_\text{max}\ll 1$, we can be confident that the first order calculation is sufficiently accurate, and since $\Lambda_\ttherm \ll \Lambda_\tlin$ for the chosen temperature, bosonization should also be reliable.
+This is good enough to make the most exciting claim of this thesis: Our model of an \gls{ell} does indeed deserve its name, for it contains \glspl{ep}!
+\begin{figure}[!ht]
+\centering
+\includegraphics{figures/ep_contour_dual_example.pdf}
+\caption[Contour lines for EP conditions in frequency space and example of complex energy eigenvalues]{Visualization of the \glspl{ep} for $\beta=20$, $K=0.4$, $v=0.8$ and $g=0.1$ ($\PTR_\text{max} \approx 0.3$ and \acrshort{stdpar} for $\alpha$).
+Panel (b) shows the contour lines for \autoref{eqn:ep:dr2_di2_and_drdi_condition} as well as the phase $\vartheta$ from \autoref{eqn:ell:ep:phase_vartheta} in frequency space.
+\glspl{ep} correspond to intersections of the contours and are marked with black dots connected by imaginary Fermi arcs (grey lines, see main text).
+In panel (a) we plot the dispersion $E_\pm(k)$ at $\omega=0$ to illustrate the square-root dependence $E\sim \sqrt{|k-k_\text{EP}|}$ near the \glspl{ep}.
+This section corresponds to the central horizontal line in (b).}
+\label{fig:ell:ep:ep_contour_dual_example}
+\end{figure}\\
+%The chosen temperature of $\beta=15$, but this is only for illustrative purposes.
+%Since $\Lambda_\ttherm \ll \Lambda_\tlin$ the concern about the validity of the theory at high temperatures raised in \autoref{sec:ell:gf:interpretation} should be alleviated.
+%Also note that $\max R\approx 0.6$ so at this point we can be reasonably confident that the result is at least qualitatively correct.
+%\begin{figure}[!ht]
+%\centering
+%\includegraphics{figures/ll_ep_beta15.000_K0.400_vf0.500_g0.200_a1.000_alpha2.000_mmln9.9.9.48.pdf}
+%\caption{Visualization of the complex eigenvalues of the effective Hamiltonian from \autoref{eqn:ep:h_eff_def} in the static limit $\omega=0$.
+%The parameters are $\beta=15$, $K=0.4$, $g=0.2$ and $\alpha=\frac{1}{\vf} = 2$.}
+%\label{fig:ell:ep:ll_example_ep}
+%\end{figure}
+To better understand the influence of the various parameters on the structure of the spectrum we define the quantities
+\begin{align}
+\bra*{E_\text{EP}} &= \frac{E_{+} + E_{-}}{2} \quad\text{and}\quad \Delta E_\text{EP} = \frac{E_{+} - E_{-}}{2} \label{eqn:ell:ep:ep_size_offset_def}
+\end{align}
+where the eigenvalues are given by \autoref{eqn:ep:eigvals_of_d} evaluated at the origin in \tpspace{} $(k,\omega)=(0,0)$.
+\autoref{fig:ell:ep:ep_size_quad_example} illustrates the dependence of the size\footnote{Of course as a point the \gls{ep} certainly has no ``size''. Here, we refer to a geometric interpretation visualized in the inset of panel (d) in \autoref{fig:ell:ep:ep_size_quad_example}.} $\Delta E_\text{EP}$, offset $\bra*{E_\text{EP}}$ and location $k_\text{EP}$ of the \gls{ep} on the four parameters $g$, $K$, $v$ and $\beta$.\\
+%The geometric interpretation of the the three variables is visualized in the inset of panel (d).\\
+As anticipated from a first order calculation, varying $g$ leads to a linear increase in the perturbation and hence the size of the \gls{ep}.
+The deviation from this behaviour toward larger couplings corresponds to the breakdown of the first order approximation and coincides with $\PTR\approx 1$.\\
+Interestingly, the results are essentially invariant under the transformation $K\leftrightarrow \frac{1}{K}$ as exemplified by panel (b).
+For the zeroth order this invariance is rather obvious, as it only depends on $K+\frac{1}{K}$ (as is usual for such correlation functions, e.g. \cite[\spage 48]{Giamarchi_2004}).
+Curiously, the behaviour persists despite of $G_1$ also containing isolated instances of $K$.\\
+Panel (c) shows that the velocity has the biggest impact on the ratio between the size of the energy gap and the distance between the \glspl{ep}.
+Finally, in panel (d) $\beta$ is varied, and as expected the \glspl{ep} vanish for high temperatures.
+Analytically this can be traced back to the global prefactor of $\csch\kla[\big]{\frac{\pi a}{\beta v}}$ in $S_{b,1,s}$ that leads to an exponential suppression of the perturbation\footnote{Note that numerically this only happens at higher temperatures and less abruptly. It is conceivable that much like in a perturbation series with terms $\sim x^n\powe{-x}$ the weight of contributions shifts to higher orders as the parameters increase, so one might conjecture that the third order term softens the decay.}.
+As discussed in \autoref{sec:bos:introduction}, Fermi liquid theory breaks down in one dimension because the lifetime asymptotically behaves like $\tau \sim \beta$ and thus does not diverge fast enough for well-defined quasi-particles.
+But regardless, it is still natural to expect any imaginary parts to vanish in the zero temperature limit; $\tau$ does go to infinity after all.
+Panel (d) demonstrates this, as the \glspl{ep} shrink as $\beta\rightarrow \infty$, albeit slowly\footnote{From a numerical perspective, unfortunately, excruciatingly slowly. This is due to the very slow convergence of the remaining Matsubara sums for low temperatures, see \autoref{sec:app:Sb1s_convergence}.}.
+\begin{figure}[!ht]
+\centering
+\includegraphics{figures/ep_size_quad_example.pdf}
+\caption[Parameter dependence of the size, offset and location of the EPs]{Plot of the size and offset of the \glspl{ep} defined in \autoref{eqn:ell:ep:ep_size_offset_def}, as well as the location of the \gls{ep} (scaled by $v_0=0.2$ to give an energy) for $\beta=20$, $K=0.4$, $v=0.8$ and $g=0.1$ (\acrshort{stdpar} for $\alpha$).
+In panel (a), $g$ is varied, and as anticipated from a first order calculation the size of the gap scales linear with the coupling (and so does $k_\text{EP}$).
+The deviation from this behaviour toward larger couplings corresponds to the breakdown of the first order approximation and coincides with $\PTR\approx 1$.
+In panel (b), $K$ is varied, and the $x$-axis is symmetrically logarithmic around $K=1$ (hence the visual gap).
+The advantage of this visualization is that the symmetry $K\leftrightarrow \frac{1}{K}$ becomes apparent.
+As in (a), the offset is primarily dictated by the free \gls{gf} while the size and location of the \glspl{ep} are determined by the perturbation.
+In panel (c), $v$ is varied, and here the impact on size and location is asymmetric, thus the velocity changes the shape of the ``bubble''.
+Finally, in (d) $\beta$ is varied, and as expected the \glspl{ep} vanish for sufficiently large or small temperatures.
+The inset in (d) visualizes the geometric meaning of the three variables.}
+\label{fig:ell:ep:ep_size_quad_example}
+\end{figure}
+\FloatBarrier
+\subsection{Quantitative comparison to numerics}\label{sec:ell:ep:quant_comp_num}
+Now that we have some understanding of how the analytic result changes as we dial the knobs, let us finally compare to numerical data.
+Unfortunately, despite the success hitherto, using the microscopic predictions for $K$, $v$ and $g$ does not even remotely lead to quantitative agreement.
+Therefore, in this section the three parameters are always used to fit the result to the data.
+The hope is that, if a clear pattern emerges, it might then be possible to more accurately predict the correct values via a \acrlong{rg} analysis.
+\begin{figure}[!ht]
+\centering
+\includegraphics{figures/ep_ll_par_fit_cov_triple_UBI14.6.pdf}
+\caption[Plot of optimal fit parameters for the complex energy eigenvalues.]{Panel (a) shows a plot of the optimal fit parameters for $K$, $v$ and $g$ at $\beta=1$ and $U_\A=1.5$ as a function of $U_\B$ (error estimates from \texttt{scipy.optimize.curve{\_}fit} \cite{Scipy_2020} as in \autoref{fig:ell:gf:gf_ua_eq_ub_dual_example}).
+The coupling shows exponential dependence on $U_\B$ and is therefore measured on the logarithmic axis to the right of (a).
+Two examples of the result of the fit are shown in panel (b) and (c) where $U_\B=1.2$ and $U_\B=-0.9$ respectively (dots for numerics).
+Note that the gap in (a) around $U_\B=0$ is not accessible using our perturbative approach and the underlying problem is exemplified by the divergent imaginary part in (c).}
+\label{fig:ell:ep:ll_par_fit}
+\end{figure}\\
+The results of this fit for $\beta=1$, $U_\A=1.5$ and various values of $U_\B$ are shown in \autoref{fig:ell:ep:ll_par_fit}.
+Let us discuss this by starting from the right of panel (a), i.e. $U_\B=1.5=U_\A$.
+Here the numerics actually predict a small real-valued gap, which is not contained in the analytic result.
+Since there are no \glspl{ep}, $g=0$ and $K$ is determined by the imaginary part of the energy, while $v$ corresponds to the slope of the linear section (this is also the case for $U_\B=-1.5=-U_\A$).\\
+As $U_\B$ is decreased, the coupling increases -- but contrary to the microscopic prediction the increase is exponential rather than linear.
+Furthermore, while at least qualitatively a decrease in $K$ is to be expected, just like in \autoref{sec:ell:gf:interpretation} the value of $v$ is much further from the simple $v=\frac{\vf}{K}$.
+Unsurprisingly, the exponential growth of $g$ rapidly increases $\PTR$, and at around $U_\B=0.7$ we can no longer obtain a reasonable fit using our first order calculation.
+Intuitively, it is not too difficult to understand that approaching $U_\B=0$ is actually infeasible, even if truncating the perturbation series at a higher order.
+This is because the ``bubble'' constituting the imaginary energy gap has to touch the origin at $k=0$.
+But in the language of the \gls{ell} this is highly unstable, as an arbitrary small increase in $g$ would then immediately lead to a small positive imaginary energy\footnote{It may be possible to at least get good results exactly at $U_\B=0$ by using plain fermionic perturbation theory in the sublattice basis. This is because the self-energy then only contains a single non-zero entry $\Sigma_{\A\A}$, whose value could be estimated from the pure \gls{ll}.}.
+Another hint that this barrier may be insurmountable is the qualitative change in the behaviour for $U_\B<0$.
+Evidently the dependence of $g$ is once again exponential, but despite the increase in $U_-$, the coupling actually goes down.
+Similarly, the decrease in $U_+$ would naively lead to an increase of $K$ towards unity, while we observe the exact opposite.
+Finally, $v$ is much larger than for $U_\B>0$, which compensates for the significantly smaller coupling (this is also why the two examples in panels (b) and (c) are similar in size).
+\FloatBarrier
+\section{Renormalization Group Analysis}\label{sec:ell:rg}
+As discussed in the previous section, our analytic solution via first order perturbation theory contains \glspl{ep} and the qualitative behaviour matches the numerics.
+Also, by interpreting $K$, $v$ and $g$ as free effective parameters it is even possible to get appreciable quantitative agreement.
+While the perturbative approaches laid out in \autoref{chap:rg} are presumably not sophisticated enough to deal with the problem of the gap in \autoref{fig:ell:ep:ll_par_fit}, we can at least hope to get a better understanding of the parameters in the accessible region.
+In this section, we therefore apply both the \tms{} \gls{rg} and the \gls{rg} based on the \gls{ope} to our \gls{ell}.%\footnote{Note that in the first part we only introduce basic concepts irrelevant to readers familiar with \gls{rg}. In sprit this decidedly classifies as theoretical background, but due to the way we set up bosonization it does not quite fit there.}
+\subsection{Fixed point action of our model}\label{sec:ell:rg:msrg_fixed_point}
+Naturally the fixed point of our model is given by the interacting \gls{ll}, as is typical for the low-energy limit of one-dimensional models \cite[\spage 76]{Giamarchi_2004}.
+Owing to the commutation relation in \autoref{eqn:ell:bos:rho_ell_and_varphi_comm} we have
+\begin{align*}
+\klb*{\phi(0), \theta(x)} &= \frac{1}{4} \sum_{\ell,\ell',p,p'} \ell \klb*{\varphi_\ell\epsmall{p}(x), \varphi_{\ell'}\epsmall{p'}(0)} = \frac{1}{4} \sum_{\ell,p} \ell p \log\klb*{\frac{2\pi}{L}\kla*{\alpha + \i\ell px}} = \frac{1}{2} \log\klb*{\frac{\alpha +\i x}{\alpha - \i x}}
+\end{align*}
+and therefore\footnote{$\frac{1}{x+\i 0^+} = \mathcal{P}\frac{1}{x} - \i\pi\delta(x)$ where $\mathcal{P}$ denotes the principal value} $\klb*{\phi(0), \partial_x\theta(x)} \rightarrow \i\pi\delta(x)$ as $\alpha\rightarrow 0$.
+Consequently $\Pi = \frac{1}{\pi}\partial_x\theta$ is the conjugate momentum for $\phi$ \cite[\spage 73]{Giamarchi_2004}, and the action is then defined via the Legendre transformation $\sact = -\intx{0}{\beta}{\klb*{\Pi \i\partial_\tau\phi - H}}{\tau}$, which for the interacting \gls{ll} in \autoref{eqn:ell:bos:LL_interacting_H0} reads \cite[\sapp C]{Giamarchi_2004}
+\begin{align*}
+\sact_0 &= \frac{1}{2\pi K} \intx{0}{\beta}{ \intx{-L/2 }{L/2 }{\klb*{\frac{1}{v} \kla*{\partial_\tau \phi}^2 + v\kla*{\partial_x\phi}^2}}{x} }{\tau}.
+\end{align*}
+Introducing the coordinate $y=v\tau$ brings this into the usual form of a kinetic term discussed in \autoref{sec:rg:momentum_shell_rg}, thus $\sact_0$ is a fixed point of the \gls{rg}.
+With $\textbf{q}=(\omega_n^\B/v, k)$ and $\textbf{r}=(x,y)$ the Fourier representation of the fields is given by
+\begin{align*}
+\phi(\textbf{r}) &= \frac{1}{\beta L} \sum_\textbf{q} \powe{\i \textbf{q}\cdot \textbf{r}} \phi(\textbf{q})
+\end{align*}
+where $\textbf{q}\cdot \textbf{r} = kx-\omega_n^\B\tau$.
+Inserting this into the action leads to
+\begin{align*}
+\sact_0 &= \frac{1}{2\pi K} \frac{1}{\beta^2 L^2} \sum_{\textbf{q},\textbf{q}'} \int \powe{\i (\textbf{q}+\textbf{q}')\cdot \textbf{r} } \i \textbf{q} \phi(\textbf{q})\cdot \i \textbf{q}' \phi(\textbf{q}')\,\d^2r = \frac{v}{2\pi K\beta L} \sum_\textbf{q} q^2 \abs[\big]{\phi(\textbf{q})}^2.
+\end{align*}
+For the \tms{} \gls{rg}, we need to evaluate the ``fast'' correlator $\Phi_\f(\textbf{r}) = \bra*{\phi_\f(\textbf{r}) \phi_\f(0)}_\f$.
+Note that in order for the interaction to remain local in time, some authors only separate the spatial momenta into slow and fast modes, while still integrating over all frequencies \cites[\ssec IV.B]{Bosonization_Shankar_1994}[\ssec III.A]{Bosonization_Schulz_1995}[\ssec 4]{Bosonization_Rao_2001}, although others treat $\omega$ and $k$ equally, e.g. \cite[\sapp E]{Giamarchi_2004}.
+Here, we follow the prescription for a smooth cut-off described in \autoref{sec:rg:momentum_shell_rg} to avoid non-local operators.
+Essentially, by integrating over all modes, but weighted according to a distribution function, we trade some locality in \tpspace{} for locality in \trspace{}.
+In order to compute $\Phi_\f$, we first evaluate the equivalent expression in momentum space via a field integration \cite[\sapp C]{Giamarchi_2004}
+\begin{align*}
+\bra*{\phi(\textbf{q}_1)\phi(\textbf{q}_2)} &= \int \powe{-\frac{v}{2\pi K\beta L} \sum_\textbf{q} q^2 \abs*{\phi(\textbf{q})}^2} \phi(\textbf{q}_1) \phi(-\textbf{q}_2)^\ast \,\mathcal{D}\phi = \delta_{\textbf{q}_1,-\textbf{q}_2} \frac{\pi K\beta L}{v q_1^2}.
+\end{align*}%= \int \powe{-\sact[\phi]} \phi(\textbf{q}_1) \phi(\textbf{q}_2)\,\mathcal{D}\phi 
+This can be inserted into the definition of $\Phi_\f$ to give%\footnote{$\sum_{n\in\mathbb{Z}} \frac{\powe{\i 2\pi nb}}{2\pi n + \i a} = \i \powe{a[b]} \frac{1}{1 - \powe{-a}}$ where $[b] = b- \lfloor b\rfloor$ denotes the fractional part and thus\\ $\sum_{n\in\mathbb{Z}} \frac{\cos(2\pi nb)}{(2\pi n)^2 + a^2} = \frac{1}{2a} \klb*{\frac{\powe{a[b]}}{\powe{a} - 1} + \frac{\powe{-a[b]}}{1 - \powe{-a}}} = \frac{1}{2a} \frac{\cosh(a/2 - a[b])}{\sinh(a/2)}$.}
+%\begin{align*}
+%\Phi_\f(\textbf{r}) &= \bra*{\phi_\f(\textbf{r}) \phi_\f(0)}_\f = \frac{1}{\beta^2 L^2} \sum_{\f,\f'} \powe{\i \textbf{q} \cdot \textbf{r}} \bra*{\phi_\f(\textbf{q}) \phi_\f(\textbf{q}')}_\f = \frac{\pi K}{\beta L v} \sum_\f \powe{\i \textbf{q}\cdot\textbf{r}} \frac{1}{q^2} \asymeq{L\rightarrow\infty} \frac{K}{2\beta v} \int_\f \sum_n \powe{\i \textbf{q}\cdot \textbf{r}} \frac{1}{q^2}\,\d k\\
+%&= \frac{K}{2} \intx{\Lambda/s}{\Lambda}{ \cos(kx) \frac{1}{k} \frac{\cosh\kla*{\klb*{\beta/2 - \tau} vk}}{\sinh(\beta vk/2)} }{k} \overset{s=1 + \d l}{=} \frac{K}{2} \cos(\Lambda x) \frac{\cosh\kla*{\klb*{\beta/2 - \tau} v\Lambda }}{\sinh(\beta v\Lambda /2)} \d l.
+%\end{align*}
+%In the last step we exploited the infinitesimal nature of the \gls{rg} to solve the integral.
+%This is less simple when also treating the frequencies ...
+\begin{align*}
+\Phi_\f(\textbf{r}) &= \bra*{\phi_\f(\textbf{r}) \phi_\f(0)}_\f = \frac{1}{\beta^2 L^2} \sum_{\f,\f'} \powe{\i \textbf{q} \cdot \textbf{r}} \bra*{\phi_\f(\textbf{q}) \phi_\f(\textbf{q}')}_\f = \frac{\pi K}{\beta L v} \sum_\f \powe{\i \textbf{q}\cdot\textbf{r}} \frac{1}{q^2}.
+\end{align*}
+For an arbitrary cut-off function $f(x)$, the sum over fast modes is replaced by
+\begin{align*}
+\sum_\textbf{q} \powe{\i \textbf{q} \cdot \textbf{r}} \frac{1}{q^2} \klb*{-2 \frac{\d l}{\Lambda^2} q^2 f'\kla*{\frac{q^2}{\Lambda^2}}} \asymeq{L,\beta \rightarrow\infty} - 2\beta Lv \frac{\d l}{\Lambda^2} \intrndpi{2}{\powe{\i \textbf{q} \cdot \textbf{r}} f'\kla*{\frac{q^2}{\Lambda^2}}}{q}.
+\end{align*}
+In principle, here one could also keep the temperature finite and deal with the Jacobi theta functions that pop out of the Matsubara summation.
+However, the calculations become significantly more complicated and the \acrshort{ope}-based approach we consider later does not easily handle finite temperature anyway.
+Therefore, $\beta\rightarrow \infty$ also makes the comparison easier.\\
+Note that at tree-level we only encounter the quantity $\Phi_\f(0)$.
+Due to the boundary conditions on $f$ we have
+\begin{align*}
+\Phi_\f(0) &= -2\pi K \frac{\d l}{\Lambda^2} \frac{1}{(2\pi)^2} \intx{0}{2\pi}{\intx{0}{\infty}{ f'\kla*{\frac{q^2}{\Lambda^2}} q }{q}}{\varphi_q} = \frac{K}{2} \d l \klb*{f(0) - f(\infty)} = \frac{K}{2} \d l,
+\end{align*}
+and consequently the result is actually independent of the choice of $f$.
+Finally, we define $\tilde{\Phi}_\f = \frac{2}{K \d l} \Phi_\f$ and for $f(x) = \powe{-x}$ this yields
+\begin{align*}
+\tilde{\Phi}_\f(\textbf{r}) &= \frac{1}{\pi \Lambda^2} \intrnd{2}{\powe{\i \textbf{q}\cdot \textbf{r}} \powe{- q^2/\Lambda^2}}{q} = \powe{-\kla*{\Lambda r/2}^2}.
+\end{align*}
+The gaussian form is very convenient for the one-loop calculation we discuss next.
+\subsection{Interactions in the \tms{} \texorpdfstring{\acrshort{rg}}{RG}}\label{sec:ell:rg:msrg_interactions}
+%TODO Consequentially, whether the density-density interaction is considered as an interaction or absorbed into the free Hamiltonian from the start should be of negligible relevance; we choose the latter option as it substantially reduces the notational clutter along the way.
+Let us start with the standard \gls{sg} interaction term
+\begin{align*}
+H_b^\tsg &= \frac{g}{\alpha^2} \sum_{s=\pm 1} \int \powe{\i bs\phi(\textbf{r})}\,\d^2r
+\end{align*}
+where the coupling $g$ is dimensionless.
+In order to derive the effective action, we need to compute the connected averages of the corresponding action.
+At tree-level, this amounts to
+\begin{align*}
+\bra[\big]{\sact_b^\tsg}_\f &= \frac{g}{\alpha^2} \sum_{s=\pm 1} \int \powe{\i bs \phi_\s(\textbf{r})} \bra*{\powe{\i bs \phi_\f(\textbf{r})}}_\f = \frac{g}{\alpha^2} \sum_{s=\pm 1} \int \powe{\i bs \phi_\s(\textbf{r})} \powe{-\frac{1}{2}b^2 \bra*{\phi_\f(0)^2}_\f} = \powe{-\frac{1}{2} b^2 \Phi_\f(0)} \sact_{b,\s}^\tsg,
+\end{align*}
+and up to this point we have $g\rightarrow \powe{-\frac{1}{2} b^2\Phi_\f(0)} g$.
+But, as alluded to in \autoref{sec:rg:momentum_shell_rg}, this is not quite the full story, because the allowed momenta are now $k < \Lambda /s$, rather than $k< \Lambda$.
+In order to get back to the original action, we introduce the rescaled momentum $k'=ks$.
+In $d=2$ dimensions there is no field renormalization (see \autoref{sec:rg:momentum_shell_rg}), and
+combined with the other rescaled variables we therefore recover the original interaction $\sact_b^\tsg$, but with the modified coupling strength $g' = s^2\powe{-\frac{1}{2}b^2 \Phi_\f(0)} g$.
+As a differential equation, this reads $\frac{\d g}{\d l} = \kla*{2 - \frac{K}{4} b^2} g$.\\
+Next, consider our \gls{sg}-like interaction term
+\begin{align*}
+H_2 &= \frac{g_2}{\alpha} \sum_{s,s_a=\pm 1} \i s \eta_{-s}\eta_s \int \powe{2\i s\phi(\textbf{r})}\partial_x\phi(\tilde{\textbf{r}}) \,\d^2r
+\end{align*}
+where $\tilde{\textbf{r}} = (x+s_aa,v\tau)$ in analogy to \autoref{sec:ell:gf:sine_Gordon_perturbation}.
+Using \autoref{eqn:bos:expval_prod_powe_Cj}, we find\footnote{Note that $\bra[\big]{\powe{2\i s\phi_\f(\textbf{r})} \partial_x \phi_\f(\tilde{\textbf{r}})}_\f = \partial_J s_a\partial_a \bra[\big]{\powe{2\i s\phi_\f} \powe{J\phi_\f(\tilde{\textbf{r}})}}_\f = \partial_J s_a\partial_a \powe{\frac{1}{2} \kla{J^2 - 4} \bra{\phi_\f^2}_\f} \powe{2\i sJ \bra*{\phi_\f(0) \phi_\f(s_aa)}_\f}$.}
+%\begin{align*}
+%\bra*{\sact_2}_\f &= \frac{g_2}{\alpha} \sum_{s,s_a=\pm 1} \i s\eta_{-s}\eta_s \int \powe{2\i s\phi_\s(\textbf{r})} \bra*{\powe{2\i s\phi_\f(\textbf{r})} \partial_x\klb*{\phi_\s(\tilde{\textbf{r}}) + \phi_\f(\tilde{\textbf{r}})}}_\f \,\d^2r\\
+%&= \powe{-2\bra*{\phi_\f(0)^2}_\f} \sact_{2,\s} + \frac{g_2}{\alpha} \sum_{s,s_a=\pm 1} \i s\eta_{-s}\eta_s \int \powe{2\i s\phi_\s} \partial_J s_a\partial_a \bra*{\powe{2\i s\phi_\f} \powe{J\phi_\f(\tilde{\textbf{r}})}}_\f\\
+%&= \powe{-2\Phi_\f(0)} \sact_{2,\s} +  \frac{g_2}{\alpha} \sum_{s,s_a=\pm 1} \i s\eta_{-s}\eta_s \int \powe{2\i s\phi_\s} \partial_J s_a\partial_a \powe{\frac{1}{2} \kla*{J^2 - 4} \bra*{\phi_\f^2}_\f} \powe{2\i sJ \bra*{\phi_\f(0) \phi_\f(s_aa)}_\f}\\
+%&= \powe{-2\Phi_\f(0)} \sact_{2,\s} +  \powe{-2\Phi_\f(0)} \frac{g_2}{\alpha} \sum_{s,s_a=\pm 1} \i s\eta_{-s}\eta_s \int \powe{2\i s\phi_\s} s_a\partial_a 2\i s \Phi_\f(s_aa) \numberthis\label{eqn:ell:rg:expval_f_S2_prelim_partial_a_Phi_f}
+%\end{align*}
+\begin{align*}
+\bra*{\sact_2}_\f &= \frac{g_2}{\alpha} \sum_{s,s_a=\pm 1} \i s\eta_{-s}\eta_s \int \powe{2\i s\phi_\s(\textbf{r})} \bra*{\powe{2\i s\phi_\f(\textbf{r})} \partial_x\klb*{\phi_\s(\tilde{\textbf{r}}) + \phi_\f(\tilde{\textbf{r}})}}_\f \,\d^2r\\
+&= \powe{-2\Phi_\f(0)} \sact_{2,\s} +  \powe{-2\Phi_\f(0)} \frac{g_2}{\alpha} \sum_{s,s_a=\pm 1} \i s\eta_{-s}\eta_s \int \powe{2\i s\phi_\s} s_a\partial_a 2\i s \Phi_\f(s_aa) \numberthis\label{eqn:ell:rg:expval_f_S2_prelim_partial_a_Phi_f}
+\end{align*}
+The function $\Phi_\f$ is symmetric in $x$, and thus the second part in \autoref{eqn:ell:rg:expval_f_S2_prelim_partial_a_Phi_f} vanishes, leaving us with $\bra*{\sact_2}_\f = \powe{-2\Phi_\f(0)} \sact_{2,\s}$.
+With the rescaling described above, we then have\footnote{The factors of $s$ can also be guessed from power counting. Every derivative contributes $\frac{1}{s}$ and every differential from an integration contributes $s$. Therefore $\sact_0$ remains invariant, since $\frac{1}{s^2} s^2 = 1$, while $\sact_2$ picks up $\frac{1}{s} s^2 = s$ and $\sact_b^\tsg$ gets $s^2$.} $g_2' = s\powe{-2\Phi_\f(0)} g_2$.
+Note that the lattice spacing also needs to be renormalized to $a' = \frac{a}{s}$ in order to keep the arguments $x\pm a$ structurally identical.
+Just like the rescaling of $L$ and $\beta$, this does not actually affect the physical scales, but is merely a consequence of the change of the ruler with which we measure these quantities.
+We can also view this as zooming out in \trspace{}, effectively making all length scales -- including the lattice spacing -- appear smaller. %REF and TODO mentioned in theory?
+\myparagraph{One-loop corrections}
+Here, we carry out the procedure in some detail for $H_b^\tsg$, and only give the results for the other terms.
+Again making use of \autoref{eqn:bos:expval_prod_powe_Cj}, we have
+\begin{align*}
+\bra[\big]{(\sact_b^\tsg)^2}_\f^\c &= \frac{g^2}{\alpha^4} \sum_{s,s'} \int \powe{\i sb\phi_\s(\textbf{r}_1) + \i s'b\phi_\s(\textbf{r}_2)} \bra*{\powe{\i sb\phi_\f(\textbf{r}_1) + \i s'b\phi_\f(\textbf{r}_2)}}_\f^\c\\
+&= \frac{g^2}{\alpha^4} \sum_{s,s'} \int \powe{\i sb\phi_\s(\textbf{r}_1) + \i s'b\phi_\s(\textbf{r}_2)} \klc*{\powe{-b^2 \Phi_\f(0)} \powe{-ss' b^2 \Phi_\f(\textbf{r}_1-\textbf{r}_2)} - \powe{-b^2 \Phi_\f(0)}}\\
+&= \frac{g^2b^2}{\alpha^4} \powe{-b^2 \Phi_\f(0)} \sum_{s,s'} (-ss') \int \powe{\i sb\phi_\s(\textbf{r}_1) + \i s'b\phi_\s(\textbf{r}_2)} \Phi_\f(\textbf{r}_1 - \textbf{r}_2).
+\end{align*}
+Due to the factor of $\d l$ in $\Phi_\f$ the first prefactor drops out, and the sum yields
+\begin{align*}
+\bra[\big]{(\sact_b^\tsg)^2}_\f^\c &= \frac{Kg^2b^2}{\alpha^4} \d l \sum_{s} \int \klc*{\powe{\i sb\klb*{\phi_\s(\textbf{r}_1) - \phi_\s(\textbf{r}_2)}} - \powe{\i sb\klb*{\phi_\s(\textbf{r}_1) + \phi_\s(\textbf{r}_2)}}} \tilde{\Phi}_\f(\textbf{r}_1 - \textbf{r}_2).
+\end{align*}
+The second term corresponds to a \gls{sg} interaction with doubled frequency and can be neglected \cite[\ssec 8.2]{AltlandSimons}.
+For the other term, it now becomes apparent why the smooth cut-off is crucial to restrict the relative coordinate $\textbf{r} = \textbf{r}_1 - \textbf{r}_2$ and thus keep the operators local.
+This also means we may safely expand in powers of $\textbf{r}$, and by introducing $\textbf{R} = \frac{1}{2}(\textbf{r}_1 + \textbf{r}_2)$ we get
+\begin{align*}
+-\frac{Kg^2b^2}{\alpha^4} \d l \int b^2 \klb*{\phi_\s\kla*{\textbf{R} + \frac{\textbf{r}}{2}} - \phi_\s\kla*{\textbf{R} - \frac{\textbf{r}}{2}}}^2 \tilde{\Phi}_\f(\textbf{r}) \simeq  -\frac{Kg^2b^4}{\alpha^4} \d l \int \kla*{\textbf{r} \cdot \nabla_\textbf{R}\phi_\s(\textbf{R})}^2 \tilde{\Phi}_\f(\textbf{r})
+\end{align*}
+up to an irrelevant additive constant and higher order terms (see \cite[\sapp E]{Giamarchi_2004} for a similar calculation).
+Inserting the explicit form of the cut-off function yields\footnote{$\intr{x^{2n} \powe{-a^2x^2}}{x} = \frac{\Gamma(n+1/2)}{a^{2n+1}}$ and thus $\int x^2 \tilde{\Phi}_\f = \frac{\sqrt{\pi}}{\Lambda / 2} \frac{\sqrt{\pi} / 2}{(\Lambda / 2)^3} = \frac{8\pi}{\Lambda^4}$}
+\begin{align*}
+\bra[\big]{(\sact_b^\tsg)^2}_\f^\c &\simeq -\frac{8\pi Kg^2b^4}{(\Lambda\alpha)^4} \d l \int \kla*{\nabla_\textbf{R}\phi_\s(\textbf{R})}^2 \equiv -\frac{(4\pi K gb^2)^2}{(\Lambda\alpha)^4} S_0[\phi_\s],
+\end{align*}
+which corresponds to a renormalization of $K$.
+Note that at finite temperature the asymmetry between $x$ and $y$ would also lead to a change in $v$, but the leading contribution is presumably due to $H_2$.\\
+The calculations for the terms involving $H_2$ are a bit tedious and can be found in \autoref{sec:app:ms_one_loop}.
+The leading contributions are
+\begin{align*}
+\bra[\big]{\sact_2 \sact_4^\tsg}_\f^\c &\approx \frac{16\pi K g}{(\Lambda\alpha)^2} \d l \sact_{2}[\phi_\s] \quad \text{and} \quad \bra*{\sact_2^2}_\f^\c \approx \frac{128\pi Kg_2^2}{(\Lambda\alpha)^2} \d l \int \kla*{\partial_X \phi_\s}^2.
+\end{align*}
+Neglected terms include higher orders in derivatives and field operators, as well as \gls{sg}-terms of higher frequency.
+\subsection{Interactions in the \texorpdfstring{\acrshort{ope}}{OPE} \texorpdfstring{\acrshort{rg}}{RG}}\label{sec:ell:rg:ope_vertex_operators}
+In this section, we evaluate the scaling dimensions and \gls{ope} coefficients for the operators contained in the \gls{ell} using the theory described in \autoref{sec:rg:ope_and_rg}.
+The calculation of the commutator of the relevant field $\phi$ is a bit subtle and the details are given in \autoref{sec:app:bogoliubov_transform_interacting_LL}.
+Here we need \autoref{eqn:app:phi_plus_phi_minus_K}, which reads
+\begin{align*}
+\klb*{\phi\eplus(\textbf{r}), \phi\eminus(0)} &= \frac{K}{2} \log\klb*{\frac{2\pi}{L} \sqrt{r^2 + \alpha^2}},
+\end{align*}
+and the result for the bosonic correlation function\footnote{$F(\textbf{r}) =2 \bra*{\phi\eminus(0)\phi\eplus(0)} - 2\bra*{\phi\eminus(\textbf{r})\phi\eplus(0)} \asymeq{r\rightarrow 0} 2 \klb*{\phi\eplus(\textbf{r}), \phi\eminus(0)} - 2 \klb*{\phi\eplus(0), \phi\eminus(0)}$\\ (note that $r\rightarrow 0$ generically also corresponds to the zero temperature limit $\beta\rightarrow \infty$, thus $\phi\eminus \Ket{0} \simeq 0$)}
+\begin{align}
+F(\textbf{r}) &= \bra*{\klb*{\phi(\textbf{r}) - \phi(0)}^2} \asymeq{r\rightarrow 0} \frac{K}{2} \log\klb*{\frac{r^2 + \alpha^2}{\alpha^2}}. \label{eqn:ell:rg:F_r}
+\end{align}
+We use the asymptotic form, because the \gls{ope} is all about the short-distance behaviour of operators and expectation values.
+Consequently, with $\textbf{r}_{jk} = \textbf{r}_j - \textbf{r}_k$ \autoref{eqn:ell:gf:expval_prod_ABZ} gives
+\begin{align*}
+\bra[\Big]{\prod_j \powe{ A_j \phi(\textbf{r}_j)}} &\asymeq{r\rightarrow 0} \prod_{j<k} \powe{\frac{1}{2} A_j A_k F(\textbf{r}_{jk})}.
+\end{align*}
+To illustrate the procedure, let us start with the usual vertex operators defined by
+\begin{align}
+V_n(\textbf{r}) &= \frac{1}{\alpha^{\Delta^V_n}} \powe{\i n\phi(\textbf{r})} = \kla*{\frac{2\pi}{L}}^{\Delta^V_n} \normord{\powe{\i n\phi(\textbf{r})}}. \label{eqn:ell:rg:vertex_operator_Vn_def}
+\end{align}
+Here, the prefactor is chosen in a way that ensures normalization of the asymptotic behaviour of the expectation value
+\begin{align*}
+\bra*{V_n(r) V_m(r+\epsilon)} &= \frac{1}{\alpha^{\Delta^V_n + \Delta^V_m}} \delta_{n,-m} \powe{\frac{1}{2} nm F(\epsilon)} \simeq \delta_{n,-m} \frac{1}{\alpha^{2\Delta^V_n}} \kla*{\frac{\epsilon}{\alpha}}^{\frac{K}{2}nm} = \frac{\delta_{n,-m}}{\epsilon^{2\Delta^V_n}}
+\end{align*}
+where the scaling dimension can be identified as $\Delta^V_n = \frac{K}{4}n^2$, and $\epsilon\gg \alpha$ (modulo notation, this corresponds to \cite[\ssec 4.6]{Fradkin_2013}). %(modulo notation, the results thus far correspond to the Kosterlitz \gls{rg} discussed in \cite[\ssec 4.6]{Fradkin_2013}).
+The \gls{ope} of two such operators can then be computed in a similar spirit as the point-splitting in \autoref{eqn:bos:psi dagger psi epsilon}.
+As such, we start by normal-ordering the product
+\begin{align*}
+V_n(\textbf{r}) V_m(\textbf{r}+\bm{\epsilon}) &= \kla*{\frac{2\pi}{L}}^{\Delta^V_n} \powe{\i n\phi\eplus(\textbf{r})} \powe{\i n\phi\eminus(\textbf{r})} \kla*{\frac{2\pi}{L}}^{\Delta^V_m} \powe{\i m\phi\eplus(\textbf{r}+\bm{\epsilon})} \powe{\i m\phi\eminus(\textbf{r}+\bm{\epsilon})}\\
+&= \kla*{\frac{2\pi}{L}}^{\frac{K}{4} (n^2+m^2)} \normord{\powe{\i n\phi(\textbf{r}) + \i m\phi(\textbf{r}+\bm{\epsilon})}} \powe{\klb*{\i n\phi\eminus(\textbf{r}), \i m\phi\eplus(\textbf{r}+\bm{\epsilon})}} \simeq \frac{V_{n+m}(\textbf{r})}{\epsilon^{\Delta^V_n + \Delta^V_m - \Delta^V_{n+m}}}.
+\end{align*}%&= \kla*{\frac{2\pi}{L}}^{\Delta^V_{n+m} - \frac{K}{2} nm} \normord{\powe{\i n\phi(\textbf{r}) + \i m\phi(\textbf{r}+\bm{\epsilon})}} \kla*{\frac{2\pi\epsilon}{L}}^{\frac{K}{2} nm}
+For $n\neq -m$ this calculation is fine and we can read off $C^{V,V,V}_{n,m,n+m} = 1$.
+The special case instead requires a bit more care in the final step, i.e. we need to expand the exponent in
+\begin{align*}
+\normord{\powe{\i n\phi(\textbf{r}) - \i n\phi(\textbf{r} + \bm{\epsilon})}} &\simeq \normord{\powe{-\i n\bm{\epsilon}\cdot \nabla\phi - \i n\frac{1}{2} \kla*{\bm{\epsilon}\cdot\nabla}^2 \phi}} \simeq 1 - \i n\bm{\epsilon}\cdot \nabla\phi - \i n\frac{1}{2} \kla*{\bm{\epsilon}\cdot\nabla}^2 \phi - \frac{n^2}{2} \kla*{\bm{\epsilon}\cdot \nabla\phi}^2.
+\end{align*}
+Up to constants and total derivatives, this contains the contribution $\frac{-n^2}{2} \kla*{\bm{\epsilon}\cdot \nabla\phi}^2$.
+Evidently this expression does not only depend on the magnitude of $\epsilon$, but also its angular component.
+As argued in \autoref{sec:rg:ope_and_rg}, the integration over the thin shell in \trspace{} implies that we average out this angular dependence by parametrizing $\bm{\epsilon} = (\epsilon\cos\vartheta, \epsilon\sin \vartheta)^T$, and thus obtain
+\begin{align*}
+\frac{1}{2\pi} \intx{0}{2\pi}{ \kla*{\bm{\epsilon}\cdot\nabla\phi}^2 }{\vartheta} &= \frac{\epsilon^2}{2\pi} \intx{0}{2\pi}{\klb*{\cos(\vartheta)^2 \kla*{\partial_x\phi}^2 + 2\cos(\vartheta) \sin(\vartheta) \partial_x\phi \partial_y\phi + \sin(\vartheta)^2 \kla*{\partial_y\phi}^2 }}{\vartheta}.
+\end{align*}
+Defining the operators $X_0 = \kla*{\partial_x\phi}^2$ and $Y_0 = \kla*{\partial_y\phi}^2$ that make up the fixed point action $\sact_0$, this yields $\frac{\epsilon^2}{2} \klb*{X_0 + Y_0}$ and therefore $C^{V,V,X}_{n,-n,0} = -\frac{1}{4}n^2 = C^{V,V,Y}_{n,-n,0}$.\\
+The calculations for $\sact_2$ are once again a bit cumbersome and the details are given in \autoref{sec:app:ope_Wn}.
+The correct definition for the normalized operators is given by \autoref{eqn:app:W_n_def} and, consistent with naive power-counting, the scaling dimension is $\Delta^W_n = \frac{K}{4}n^2+1$.
+%\begin{align}
+%W_n(r) &= \frac{\sqrt{2}}{Kn\alpha^{\Delta^W_n - 1}} \sum_{s_a=\pm 1} \powe{\i n\phi(r)} \partial_x\phi(r+ s_aa). \label{eqn:ell:rg:W_n_def}
+%\end{align}
+In the end the relevant \gls{ope} coefficients are
+\begin{align*}
+C^{V,V,V}_{n,m,n+m} &= 1,\quad C^{V,V,X}_{n,-n,0} = - \frac{1}{4}n^2,\quad C^{V,V,Y}_{n,-n,0} = - \frac{1}{4}n^2,\quad C^{W,V,W}_{n,m,n+m} = \frac{n+m}{n} = C^{V,W,W}_{m,n,n+m},\\
+C^{W,W,V}_{n,m,n+m} &= 1,\quad C^{W,W,X}_{n,-n,0} = - \frac{Kn^2-4}{8K} \frac{3Kn^2 - 16}{Kn^2}\quad \text{and} \quad C^{W,W,Y}_{n,-n,0} = - \frac{Kn^2-4}{8K}.
+\end{align*}
+With this, we have all the pieces to construct the flow equations for both the \tms{} and \gls{ope} \gls{rg}.\newpage
+\subsection{\texorpdfstring{\acrshort{rg}}{RG} flow equations for the \texorpdfstring{\acrshort{ell}}{eLL}}\label{sec:ell:rg:flow_eqn_ell}
+Our model of the \gls{ell} in \autoref{eqn:ell:bos:H2H4_model} contains the standard \gls{sg}-term $H_4$ with coupling $g_4 = \frac{U_+a}{4\pi^2v}$ and the perturbation $H_2$ with $g_2 = \frac{U_-a}{4\pi^2v}$.
+Using the results from \autoref{sec:ell:rg:msrg_interactions}, the renormalization of the couplings is given by
+\begin{align*}
+\frac{\d g_4}{\d l} &= \kla*{2 - 4K} g_4 \quad \text{and} \quad \frac{\d g_2}{\d l} = \kla*{1 - K} g_2 - 8\pi K g_4 g_2.
+\end{align*}
+Let us ignore the one-loop corrections for a moment and focus solely on the tree-level.
+The general procedure is to integrate these flow equations and use the new couplings for further calculations.
+But, the answer clearly depends on the \gls{rg} ``time'' at which we terminate the flow, i.e. the value $l_\text{max}$.
+This may vary from one application to the next, but at finite temperature an intuitive answer is given by $\Lambda(l_\text{max}) \approx \Lambda_\ttherm$ where $\Lambda_\ttherm=\frac{1}{\beta v}$ is the bandwidth of thermal fluctuations \cite[\ssec 8.2]{AltlandSimons}.
+This leads to $l_\text{max} \approx \log\kla[\big]{\frac{\Lambda_\tlin}{\Lambda_\ttherm}}$, although it should be noted that this only works for sufficiently low temperatures (for $\beta=1$ and our usual parameters, the value is negative, but this is not even the main issue).\\
+For $K> \frac{1}{2}$, the perturbation $H_4$ is \gls{rg}-irrelevant due to the asymptotic scaling $\sim \powe{(2-4K)l}$, which justifies neglecting it for the calculation of the \gls{gf}.
+The \gls{sg}-like perturbation $H_2$ turns out to be relevant in the \gls{rg}-sense, since $K<1$.
+This would be troublesome for our first order perturbation theory, if not for a rather curious cancellation: The ratio between the prefactors of $G_1$ and $G_0$ is proportional to $w^{K-1}$, where $w=\frac{\pi\alpha}{\beta v}$.
+Due to $\beta(l)=\beta\powe{-l}$ in the \tms{} \gls{rg}, this factor counteracts the scaling of $g_2$, and thus $w^{K-1} g_2$ is constant, if $K$ remains unchanged.\\
+Of course, the latter is not quite true.
+The contributions to $X_0$ and $Y_0$ are
+\begin{align*}
+\frac{v'}{2\pi K'} &= \frac{v}{2\pi K} + 1024\pi Kv g_4^2 \d l - 64\pi Kv g_2^2 \d l \quad \text{and} \quad
+\frac{1}{2\pi v' K'} = \frac{1}{2\pi vK} + 1024\pi \frac{K}{v} g_4^2 \d l,
+\end{align*}
+and, rewritten as differential equations for $K$ and $v$, we have\footnote{$\frac{v'}{K'} - \frac{v}{K} = vX\d l$ and $\frac{1}{v'K'} - \frac{1}{vK} = \frac{1}{v} Y\d l$ gives $\frac{2}{v} \frac{\d v}{\d l} = K(X+Y)$ and $-\frac{2}{K} \frac{\d K}{\d l} = K(X-Y)$.}
+\begin{align*}
+\frac{\d v}{\d l} &= -64\pi^2 K^3 v g_2^2 \quad \text{and} \quad
+\frac{\d K}{\d l} = 64\pi^2 K^3 \kla*{ g_2^2 - 32 g_4^2}.
+\end{align*}
+Let us first focus on the correction induced by $H_4$.
+As anticipated in \autoref{sec:ell:gf:interpretation}, although this perturbation is \gls{rg}-irrelevant, it does renormalize the Luttinger parameter $K$.
+This change is finite, even for $l\rightarrow \infty$, but only if $g_4$ is sufficiently small to ensure $K>\frac{1}{2}$ at all times.
+Otherwise the perturbation stops being irrelevant, and then the perturbative \gls{rg} is no longer valid.
+However, assuming we do not drop below $K=\frac{1}{2}$, the previous argument for the validity of the perturbation theory for the \gls{gf} still holds.
+Instead of $w^{K-1}g_2$ being entirely independent of $l$, it asymptotically enters a dynamic equilibrium as $g_4\rightarrow 0$ ($g_2$ and $w$ change, but not the relevant combination).\\
+This picture eventually breaks down due to the corrections from $H_2$.
+Since our \gls{rg} is only perturbative, the exponential increase of $g_2$ fundamentally limits the analysis to moderately short \gls{rg} times.
+However, we can still illustrate what the ``correct answer'' might look like by means of the hypothetical\footnote{Due to the approximate invariance under $K\leftrightarrow \frac{1}{K}$ in \autoref{fig:ell:ep:ep_size_quad_example}, this is not entirely unreasonable.
+Although it definitely goes against the microscopic prediction, and the usual $K<1$ for repulsive interactions.} scenario of $K>1$.
+In this case, both perturbations are irrelevant, and unless the initial couplings are too large, following the \gls{rg} flow leads to an exponential decrease in $g_2$ and $g_4$.
+Meanwhile, $K$ and $v$ are renormalized, and their final values depend on the interaction strengths, ideally matching \autoref{fig:ell:ep:ll_par_fit}.
+Due to the dynamic equilibrium, the precise cut-off $l_\text{max}$ does not matter either, which avoids the problem of its slightly ambiguous definition (for example, it is hard to argue $\Lambda_\ttherm = \frac{1}{\beta v}$ instead of, say, $\frac{2\pi}{\beta\vf}$, so results should better not sensitively depend on $l_\text{max}$).
+%Furthermore, $w^{K-1}g_2$ is only asymptotically constant, and its precise value still depends on the initial parameters.
+%While it is certainly not obvious that this would lead to the exponential dependence observed in \autoref{fig:ell:ep:ll_par_fit}, it is at least conceivable.
+\\
+With the results from \autoref{sec:ell:rg:ope_vertex_operators}, the \gls{ell} Hamiltonian can also be brought into the form of \autoref{eqn:rg:OPE_action_def}.
+The operators are $V_{\pm 4}$ and $W_{\pm 2}$ with the respective coupling constants $g_{\pm 4}^V = \frac{U_+a}{4\pi^2v}$ and $ g_{\pm 2}^W = \frac{U_-a}{4\pi^2v} \i \eta_\L\eta_\R K\sqrt{2}$.
+%\begin{align*}
+%g_{\pm 4}^V &= \frac{U_+a}{4\pi^2v} \quad\text{and} \quad g_{\pm 2}^W = \frac{U_-a}{4\pi^2v} \i \eta_\L\eta_\R K\sqrt{2}.
+%\end{align*}
+The flow equations are then given by
+\begin{align*}
+\frac{\d}{\d l} g_{\pm 2}^W &= (1 - K) g_{\pm 2}^W - \pi 2C^{W,V,W}_{\mp 2, \pm 4, \pm 2} g_{\mp 2}^W g_{\pm 4}^V,\\
+\frac{\d}{\d l} g_{\pm 4}^V &= (2 - 4K) g_{\pm 4}^V - \pi C^{W,W,V}_{\pm 2, \pm 2, \pm 4} g_{\pm 2}^W g_{\pm 2}^W,\\
+\frac{\d}{\d l} \frac{v}{2\pi K} &= - 2v\pi C^{W,W,X}_{2,-2,0} g_{+2}^W g_{-2}^W - 2v\pi C^{V,V,X}_{4,-4,0} g_{+4}^V g_{-4}^V,\\
+\frac{\d}{\d l} \frac{1}{2\pi Kv} &= - 2\frac{1}{v} \pi C^{W,W,Y}_{2,-2,0} g_{+2}^W g_{-2}^W - 2\frac{1}{v} \pi C^{V,V,Y}_{4,-4,0} g_{+4}^V g_{-4}^V.
+\end{align*}
+As one might expect, the change of the couplings does not depend on the sign of the exponent in the vertex operator, and we can simplify the system of equations by identifying $g_{\pm 2}^W \equiv g_2 K\sqrt{2} \i\eta_\L \eta_\R$ and $g_4 \equiv g_{\pm 4}^V$.
+Inserting the concrete values of the \gls{ope} coefficients then yields
+\begin{align*}
+\frac{\d g_2}{\d l} &= (1 - K) g_2 - 2\pi g_2 g_4,\quad \frac{\d g_4}{\d l} = (2 - 4K) g_4 + 2\pi K^2 g_2^2,\\
+\frac{1}{2\pi} \frac{\d}{\d l} \frac{v}{K} &= -2v\pi \frac{1-K}{2K} \frac{3K-4}{K} 2K^2 g_2^2 + 8v\pi g_4^2,\quad \frac{1}{2\pi} \frac{\d}{\d l} \frac{1}{Kv} = - 2\frac{1}{v} \pi \frac{1-K}{2K} 2K^2 g_2^2 + 8\frac{1}{v} \pi g_4^2.
+\end{align*}
+Similar to the \tms{} \gls{rg}, the latter two equations can be rewritten as
+\begin{align*}
+\frac{\d K}{\d l} &= -\kla*{4\pi Kg_4}^2 - 2 (1-K)^2 \kla*{2\pi K g_2}^2 \quad \text{and} \quad
+\frac{\d v}{\d l} = 4\pi^2 Kv (2-K) (1-K) g_2^2.
+\end{align*}
+Note that, as before, $v$ is only renormalized given a finite coupling $g_2$.
+This is expected, because due to the spatial derivative $\partial_x\phi$, the perturbation $H_2$ is the only part of the Hamiltonian breaking the symmetry between space and time.
+Also, quite remarkably, the tree-level results exactly match those obtained prior, despite the two formalisms being very different.
+The technical reason for this is probably the independence of the \tms{} \gls{rg} on the cut-off function at tree-level demonstrated at the end of \autoref{sec:ell:rg:msrg_fixed_point}.\\
+The one-loop corrections, on the other hand, are pretty much entirely different: $v$ always increases within \tms{}, while it decreases within the \gls{ope} approach for $K<1$.
+The influence of $g_4$ on $K$ is qualitatively similar in both, but for $g_2$ it is exactly opposite.
+There is even a qualitative difference, as the \gls{ope} contains a feedback from $g_2$ to $g_4$, which is absent in the \tms{} \gls{rg}.\\
+Numeric integration of the flow equations makes it clear that we have to forfeit the goal of quantitatively predicting the parameters from \autoref{fig:ell:ep:ll_par_fit} via this simple \gls{rg}.
+First, the results sensitively depend on the value $l_\text{max}$ at which we terminate the \gls{rg} (although as the hypothetical case $K>1$ illustrates, this is not always a problem).
+At least partially, this is once again a consequence of working with too high interaction strengths.
+Presumably, the perturbative \gls{rg} can not handle the region $K< \frac{1}{2}$ at all, and at least for sufficiently small couplings this is avoided.
+Second, even if the results were more stable, the deviation between the two methods is much too severe to trust either of them.
+Finally, even on the level of a mere qualitative understanding, the exponential increase of $g_2$ in \autoref{fig:ell:ep:ll_par_fit} remains somewhat elusive.%at least somewhat, there are some rough ideas

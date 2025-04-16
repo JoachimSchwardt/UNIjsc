@@ -1,0 +1,283 @@
+%\begin{frame}{Extremal Types Theorem}
+%    \begin{textblock}{0.32}(0.66, 0.07)
+%        \scriptsize\color{tudgrey} 
+%        \begin{spacing}{0.0}
+%            Leadbetter, Lindgren and Rootz\'en: \emph{Extremes and Related Properties of Random Sequences and Processes}, 1983
+%        \end{spacing}
+%        \normalsize\color{tudbase}
+%    \end{textblock} 
+%    If for some $a_n> 0$, $b_n$ and c.d.f. $F(x)$
+%    \begin{align*}
+%        \left[ F(a_n x + b_n) \right]^n &\longrightarrow G(x) \hspace{4cm}\,
+%    \end{align*}
+%    \uncover<2-> {Then $G$ must be one of the three extremal types ($\alpha > 0$)}
+%    \begin{align*}
+%        \uncover<3-> {G_{I}(x) &= \e^{-\e^{-x}} &&&& &&&& (\text{Gumbel}) \\}
+%        \uncover<4-> {G_{II}(x) &= \e^{-x^{-\alpha}}, &&& x &> 0 &&&& (\text{Fr\'echet}) \\}
+%        \uncover<5-> {G_{III}(x) &= \e^{-(-x)^\alpha}, &&& x &< 0 \hspace{2cm}\, &&&& (\text{Weibull})}
+%    \end{align*}
+%    \,\\
+%    \uncover<6-> {For $M_n := \max \{ \xi_1, \dots, \xi_n\}$ and $\xi_j$ i.i.d.}
+%    \begin{align*}
+%        \uncover<6-> {P\big( \color{myaccent} \tilde{M}_n \color{tudbase} \le x \big) &:= P\left( \frac{M_n - b_n}{a_n} \le x \right)}\uncover<7-> { = P\big( M_n \le a_n x + b_n \big)} \uncover<8-> {= \left[ F(a_n x + b_n) \right]^n}
+%    \end{align*}
+%\end{frame}
+
+\begin{frame}{Extremal Types Theorem}
+    \begin{textblock}{0.32}(0.66, 0.07)
+        \scriptsize\color{tudgrey} 
+        \begin{spacing}{0.0}
+            Leadbetter, Lindgren and Rootz\'en: \emph{Extremes and Related Properties of Random Sequences and Processes}, 1983
+        \end{spacing}
+        \normalsize\color{tudbase}
+    \end{textblock} 
+    If for some $a_n> 0$, $b_n$ and c.d.f. $F(x)$
+    \begin{align*}
+        \left[ F(a_n x + b_n) \right]^n &\longrightarrow G(x) \hspace{4cm}\,
+    \end{align*}
+    \uncover<2-> {Then $G$ must be one of the three extremal types ($\alpha > 0$)}
+    \begin{align*}
+        \uncover<3-> {G_{I}(x) &= \e^{-\e^{-x}} &&&& &&&& (\text{Gumbel}) \\}
+        \uncover<4-> {G_{II}(x) &= \e^{-x^{-\alpha}}, &&& x &> 0 &&&& (\text{Fr\'echet}) \\}
+        \uncover<5-> {G_{III}(x) &= \e^{-(-x)^\alpha}, &&& x &< 0 \hspace{2cm}\, &&&& (\text{Weibull})}
+    \end{align*}
+    \,\\
+    \uncover<6-> {For $\tilde{M}_n := \frac{M_n - b_n}{a_n}$ with $M_n := \max \{ \xi_1, \dots, \xi_n\}$, $\xi_j$ i.i.d.}
+%    \begin{align*}
+%        \uncover<6-> {P\big( \color{myaccent} \tilde{M}_n \color{tudbase} \le x \big) &:= P\left( \frac{M_n - b_n}{a_n} \le x \right)}\uncover<7-> { = P\big( M_n \le a_n x + b_n \big)} \uncover<8-> {= \left[ F(a_n x + b_n) \right]^n}
+%    \end{align*}
+    \begin{align*}
+        \uncover<6-> {P\big( \color{tudbase} \tilde{M}_n \color{tudbase} \le x \big) &= P\big( M_n \le a_n x + b_n \big)} \uncover<7-> {= \left[ F(a_n x + b_n) \right]^n}
+    \end{align*}
+\end{frame}
+
+%\begin{frame}{Khintchine's Convergence Theorem}
+%    For $a_n > 0,b_n$ consider
+%    \begin{itemize}
+%        \pause\item[] $F\kla\left( \frac{x}{a_n} + b_n \right) \overset{\tecxt\text{conditions?}}{\longrightarrow} G(x) \quad (n\rightarrow\infty)$
+%    \end{itemize}
+%\end{frame}
+%
+%\begin{frame}{Extreme Distribution Types}
+%    The three types are
+%    \begin{align*}
+%        \uncover<1->{    \tecxt\text{Type I:}\quad G(x) &= \e^{-\e^{-x}}, &&& (\tecxt\text{Gumball class})    }\\
+%        \uncover<2->{    \tecxt\text{Type II:}\quad G(x) &= \begin{cases} \e^{-x^{-\alpha}}, &x > 0 \\
+%0, &x\le 0 \end{cases},  &&& (\tecxt\text{Fr\'echet class})    }\\
+%        \uncover<3->{    \tecxt\text{Type III:}\quad G(x) &= \begin{cases} 1, &x > 0 \\
+%\e^{-(-x)^\alpha}, &x\le 0 \end{cases}, &&& (\tecxt\text{Weibull class})    }
+%    \end{align*}
+%\end{frame}
+%
+%\begin{frame}{Extreme Distribution Types}
+%    \begin{textblock}{0.7}(0.15, 0.1)    %%% FIGURE POSITION TEMPLATE
+%        \begin{figure}[!ht]
+%            \centering
+%            \includegraphics[width=\linewidth]{../EE_Pictures/ev_distributions_simple_sans_v2.png}
+%        \end{figure}
+%    \end{textblock}
+%\end{frame}
+
+\begin{frame}{Khintchine's Theorem (simplified)}
+    Consider sequences $a_n > 0, b_n$ and functions $F_n$ \hfill {\color{tudgrey} (later $F_n = [F]^n$)}
+    \begin{align*}
+        \only<1-2> {\color{white} \tilde{F}_n(x) :=\, \color{tudbase} F_n(a_nx + b_n) &\overset{n\,\rightarrow\, \infty}{\longrightarrow} G_1(x)\\}
+        \only<3-> {\color{tudaccent3} \tilde{F}_n(x) := \color{tudbase} F_n(a_nx + b_n) &\overset{n\,\rightarrow\, \infty}{\longrightarrow} G_1(x)\\}
+        \only<1-1> {\color{white} \tilde{F}_n(\tilde{a}_nx + \tilde{b}_n) := F_n(\alpha_nx + \beta_n) &\color{white} \overset{n\,\rightarrow\, \infty}{\longrightarrow} G_2(x)}
+        \only<2-3> {\color{white} \tilde{F}_n(\tilde{a}_nx + \tilde{b}_n) := \color{tudbase} F_n(\alpha_nx + \beta_n) &\overset{n\,\rightarrow\, \infty}{\longrightarrow} G_2(x)}
+        \only<4-> {\color{tudaccent3} \tilde{F}_n(\tilde{a}_nx + \tilde{b}_n) := \color{tudbase} F_n(\alpha_nx + \beta_n) &\overset{n\,\rightarrow\, \infty}{\longrightarrow} G_2(x)}
+    \end{align*}
+    \uncover<4-> {\color{tudgrey} \small $\big[ \tilde{a}_n = \frac{\alpha_n}{a_n} > 0$ and $\tilde{b}_n = \frac{\beta_n - b_n}{a_n} \big]$ \color{tudbase} \normalsize
+    \,\\ \,\\}
+    \uncover<5-> {$A := \lim_{n\,\rightarrow\, \infty} \tilde{a}_n$\\
+    $B := \lim_{n\,\rightarrow\, \infty} \tilde{b}_n$}
+    \begin{align*}
+        \only<1-4> {\color{white} G_2(x) &\color{white} = \lim_{n\,\rightarrow\, \infty} \tilde{F}_n(\tilde{a}_nx + \tilde{b}_n) = G_1(Ax + B)}
+        \only<5-5> {G_2(x) \color{white} &\color{white} = \lim_{n\,\rightarrow\, \infty} \tilde{F}_n(\tilde{a}_nx + \tilde{b}_n) = G_1(Ax + B)}
+        \only<6-6> {G_2(x) &= \lim_{n\,\rightarrow\, \infty} \tilde{F}_n(\tilde{a}_nx + \tilde{b}_n) \color{white} = G_1(Ax + B)}
+        \only<7-> {\color{tudaccent3} G_2(x) &= \lim_{n\,\rightarrow\, \infty} \tilde{F}_n(\tilde{a}_nx + \tilde{b}_n) = \color{tudaccent3} G_1(Ax + B)}
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Max-stable property}
+    For arbitrary but fixed $k\in\mathbb{N}$ consider $n = mk = k, 2k, 3k, \dots$
+%    \begin{align*}
+%        \uncover<2-> {F_{mk}(a_{mk}x + b_{mk}) &\overset{m\,\rightarrow\, \infty}{\longrightarrow} G(x)} \uncover<3-> { =: G_1(x)}\\
+%        \uncover<4-> {\left[ F_{mk}(a_{mk}x + b_{mk}) \right]^{1/k} } \uncover<5-> { &\overset{m\,\rightarrow\, \infty}{\longrightarrow} \left[ G(x) \right]^{1/k} } \uncover<6-> { =: G_2(x) }
+%    \end{align*}
+%    \begin{align*}
+%        \only<1-1> {\parbox[t][][t]{\widthof{$F_{mk}$}}{$F_n$} ( \parbox[t][][t]{\widthof{$a_{mk}$}}{$a_n$} x + \parbox[t][][t]{\widthof{$b_{mk}$}}{$b_n$} ) &\overset{ \parbox[t][][t]{\widthof{\scriptsize $m$}}{\centering \scriptsize $n$} \, \rightarrow\, \infty}{\longrightarrow} G(x)\\}
+%        \only<2-2> {F_{\color{myaccent} mk} ( a_{\color{myaccent} mk} x + b_{\color{myaccent} mk} ) &\overset{{\color{myaccent} m} \, \rightarrow\, \infty}{\longrightarrow} G(x)\\}
+%        \only<3-> {F_{\color{myaccent} mk} ( a_{\color{myaccent} mk} x + b_{\color{myaccent} mk} ) &\overset{{\color{myaccent} m} \, \rightarrow\, \infty}{\longrightarrow} G(x) =: G_1(x) \\}
+%        \uncover<4-> {\left[ F_{mk}(a_{mk}x + b_{mk}) \right]^{1/k} } \uncover<5-> { &\overset{m\,\rightarrow\, \infty}{\longrightarrow} \left[ G(x) \right]^{1/k} } \uncover<6-> { =: G_2(x) }
+%    \end{align*}
+    \begin{align*}
+        \only<1-1> {F_{\parbox[c][][t]{\widthof{\scriptsize $mk$}}{\scriptsize $n$}} ( a_{\parbox[c][][t]{\widthof{\scriptsize $mk$}}{\scriptsize $n$}} x + b_{\parbox[c][][t]{\widthof{\scriptsize $mk$}}{\scriptsize $n$}} ) &\overset{ \parbox[c][][t]{\widthof{\scriptsize $m$}}{\centering \scriptsize $n$} \, \rightarrow\, \infty}{\longrightarrow} G(x)\\}
+        \only<2-2> {F_{\color{myaccent} mk} ( a_{\color{myaccent} mk} x + b_{\color{myaccent} mk} ) &\overset{{\color{myaccent} m} \, \rightarrow\, \infty}{\longrightarrow} G(x)\\}
+        \only<3-> {F_{\color{myaccent} mk} ( a_{\color{myaccent} mk} x + b_{\color{myaccent} mk} ) &\overset{{\color{myaccent} m} \, \rightarrow\, \infty}{\longrightarrow} G(x) =: G_1(x) \\}
+        \uncover<4-> {\left[ F_{mk}(a_{mk}x + b_{mk}) \right]^{1/k} } \uncover<5-> { &\overset{m\,\rightarrow\, \infty}{\longrightarrow} \left[ G(x) \right]^{1/k} } \uncover<6-> { =: G_2(x) }
+    \end{align*}
+    \uncover<7-> {Magic happens for our case of $F_n = \left[ F \right]^n$}
+    \begin{align*}
+        \only<1-7> {\color{white} F_m( \underbrace{ a_{mk} }_{=:\ \alpha_m} x + \underbrace{ b_{mk} }_{=:\ \beta_m} ) &\color{white} \overset{m\,\rightarrow\, \infty}{\longrightarrow} G_2(x) \color{tudbase} }
+        \only<8-8> {F_m(\color{white} \underbrace{ \color{tudbase} a_{mk} \color{white} }_{=:\ \alpha_m} \color{tudbase} x + \color{white} \underbrace{ \color{tudbase} b_{mk} \color{white} }_{=:\ \beta_m} \color{tudbase} ) &\overset{m\,\rightarrow\, \infty}{\longrightarrow} G_2(x) }
+        \only<9-> {F_m(\underbrace{a_{mk}}_{=:\ \color{tudaccent3} \alpha_m \color{tudbase} }x + \underbrace{b_{mk}}_{=:\ \color{tudaccent3} \beta_m \color{tudbase} }) &\overset{m\,\rightarrow\, \infty}{\longrightarrow} G_2(x)}
+    \end{align*}
+    \uncover<10-> {But $G_2(x) = G_1(A_kx + B_k)$ from Khintchine!  \hfill \parbox[c][][c]{\widthof{\small $B_k = \lim_{m\rightarrow\infty} \frac{b_{mk} - b_m}{a_m}$}}{\color{tudgrey} \small $A_k = \lim_{m\rightarrow\infty} \frac{a_{mk}}{a_m}$\\ $B_k = \lim_{m\rightarrow\infty} \frac{b_{mk} - b_m}{a_m}$} }
+    \begin{align*}
+        \only<1-10> {\color{white} G(x) &\color{white} = \left[ G_2(x) \right]^k \overset{[\text{K. thm.}]}{=} \left[ G_1(A_kx + B_k) \right]^k = \left[ G(A_kx + B_k) \right]^k}
+        \only<11-11> {G(x) &= \left[ G_2(x) \right]^k \color{white} \overset{[\text{K. thm.}]}{=} \left[ G_1(A_kx + B_k) \right]^k = \left[ G(A_kx + B_k) \right]^k}
+        \only<12-12> {G(x) &= \left[ G_2(x) \right]^k \overset{[\text{K. thm.}]}{=} \left[ G_1(A_kx + B_k) \right]^k \color{white} = \left[ G(A_kx + B_k) \right]^k}
+        \only<13-> { \color{tudaccent3} G(x) &= \left[ G_2(x) \right]^k \overset{[\text{K. thm.}]}{=} \left[ G_1(A_kx + B_k) \right]^k = \color{tudaccent3} \left[ G(A_kx + B_k) \right]^k \color{tudbase}} \uncover<13-> {\qquad (G\text{ max-stable})} 
+    \end{align*}
+\end{frame}
+
+\begin{frame}{What is $G(x)$?}
+    Max-stable condition: $\quad G(x) = \left[ G(A_kx + B_k) \right]^k$\\
+    \uncover<2-> {Consider $s>0,\ a(s) > 0,\ b(s)$}
+    \begin{align*}
+        \uncover<2-> { G(x) &= \left[ G\big( a(s) x + b(s) \big) \right]^s\\}
+        \only<1-2> { \color{white} - \log G(x) &\color{white} = -\,  s\cdot \log G\big( a(s) x + b(s) \big)\\}
+        \only<3-3> { \color{white} - \color{tudbase} \log G(x) &= \color{white} -\, \color{tudbase} s\cdot \log G\big( a(s) x + b(s) \big)\\}
+        \only<4-> { \color{myaccent} - \color{tudbase} \log G(x) &= \color{myaccent} -\, \color{tudbase} s\cdot \log G\big( a(s) x + b(s) \big)\\}
+        \only<1-4> { \color{white} \log \big( -\log G(x) \big) &\color{white} =  \log \Big( -\log G\big( a(s) x + b(s) \big) \Big) + \log s}
+        \only<5-5> { \log \big( -\log G(x) \big) &=  \log \Big( -\log G\big( a(s) x + b(s) \big) \Big) + \log s}
+        \only<6-> { \color{myaccent} \log \big( -\log G  \color{tudbase} (x)  \color{myaccent} \big) &=  \color{myaccent} \log \Big( -\log G  \color{tudbase} \big( a(s) x + b(s) \big) \color{myaccent} \Big) \color{tudbase} + \log s}
+    \end{align*}
+    \,\\
+    \uncover<6-> {Define $L^{-1} := \log (-\log G)$}
+    \begin{align*}
+        \uncover<8-> { && y := } \uncover<7-> { L^{-1}(x) &= L^{-1}\big(a(s)x + b(s) \big) + \log s  &&&&\,\\} 
+        \uncover<9-> { \Rightarrow && \quad y - \log s &= L^{-1}\big(a(s)L(y) + b(s) \big)  &&&&\,\\}
+        \uncover<10-> { \Rightarrow && \quad L(y - \log s) &= a(s)L(y) + b(s) &&&&\,}
+    \end{align*}
+\end{frame}
+
+%%% AGAINFRAME et. al.: https://stackoverflow.com/questions/64879955/latex-beamer-only-show-subset-of-overlays-in-a-frame
+
+\begin{frame}{What is $L(y)$?}
+    \begin{align*}
+        \uncover<1-> {&& a(s)L(y) + b(s) &= L(y - \log s)\\}
+        \uncover<2-> {y=0: && a(s)L(\color{myaccent} 0 \color{tudbase}) + b(s) &= L(\color{myaccent} 0 \color{tudbase} - \log s)\\}
+        \uncover<3-> {(I) - (II): && a(s) \big( L(y) - L(0) \big) &= L(y - \log s) - L(-\log s)}
+    \end{align*}
+    \,\\
+    \uncover<4-> {Simplify notation: $z := -\log s$, $a(s) \rightarrow a(z)$}
+    \begin{align*}
+        \only<1-4> { \color{white} a(z) \underbrace{ \big( L(y) - L(0) \big) }_{ =\ L_0(y)} &\color{white} = \underbrace{  L(y + z) - L(0) }_{ =\ L_0(y + z)} - \underbrace{ \big( L(z) - L(0) \big) }_{ =\ L_0(z)} }
+        \only<5-5> { a(z) \color{white}\underbrace{ \color{tudbase} \big( L(y) - L(0) \big) \color{white}}_{ =\ L_0(y)} &= \color{white} \underbrace{ \color{tudbase} L(y + z) \color{white} - L(0) }_{ =\ L_0(y + z)} \color{tudbase} - \color{white} \underbrace{ \big( \color{tudbase} L(z) \color{white} - L(0) \big) }_{ =\ L_0(z)} }
+        \only<6-6> { a(z) \color{white}\underbrace{ \color{tudbase} \big( L(y) - L(0) \big) \color{white}}_{ =\ L_0(y)} &= \color{white} \underbrace{ \color{tudbase} L(y + z) \color{tudaccent3} - L(0) \color{white} }_{ =\ L_0(y + z)} \color{tudbase} - \color{white} \underbrace{ \color{tudbase} \big( L(z) \color{tudaccent3} - L(0) \color{tudbase} \big) \color{white}}_{ =\ L_0(z)} }
+        \only<7-7> { a(z) \underbrace{\big( L(y) - L(0) \big)}_{ =\ L_0(y)} &= \underbrace{ L(y + z) - L(0) }_{ =\ L_0(y + z)} - \underbrace{\big( L(z) - L(0) \big)}_{ =\ L_0(z)} }
+    \end{align*}
+\end{frame}
+
+\begin{frame}{What is $L_0(y)$?}
+    \begin{align*}
+        \uncover<1-> { && a(z) L_0(y) &= L_0(y+z) - L_0(z) &&&& \uncover<5-> {(2)} \\ }
+        \uncover<2-> {y \leftrightarrow z: && a(y) L_0(z) &= L_0(z+y) - L_0(y) &&&& \\ }
+        \uncover<3-> {(II) - (I): && a(y) L_0(z) - a(z) L_0(y) &= -L_0(y) + L_0(z) &&&&}
+    \end{align*}
+    \,\\ \,\\
+    \uncover<4-> {\centering\begin{tcolorbox}[ams align*, colback=white, width=10cm]
+        \uncover<4-> {L_0(y) \big( 1 - a(z) \big) &= L_0(z) \big( 1 - a(y) \big) &&&& (1) \\}
+        \uncover<5-> {a(z) L_0(y) &= L_0(y+z) - L_0(z) &&&& (2) \\}
+        \uncover<6-> {L(y) &= L_0(y) + L(0) &&&& (3) \\}
+        \uncover<7-> {L^{-1}(x) &= \log ( -\log G(x) ) &&&& (4) }
+    \end{tcolorbox}}
+\end{frame}
+
+\begin{frame}{Extremal Types -- Case I}
+    \begin{textblock}{0.4}(0.6, 0.05)
+        \centering\small\begin{tcolorbox}[ams align*, colback=white, top=0.0cm, left=0.1cm, bottom=0.0cm, right=0.1cm, width=6.0cm]
+            L_0(y) \big( 1 - a(z) \big) &= L_0(z) \big( 1 - a(y) \big) \\
+            a(z) L_0(y) &= L_0(y+z) - L_0(z) \\
+            L(y) &= L_0(y) + L(0) \\
+            L^{-1}(x) &= \log ( -\log G(x) ) 
+        \end{tcolorbox} 
+    \end{textblock}
+    Case I: $a \equiv 1$
+%    \begin{align*}
+%        \only<1-1> {L_0(z) \big( 1 - a(y) \big) &= L_0(y) \big( 1 - a(z) \big) }
+%        \only<2-> {\color{tudaccent3} \quad 0 \quad \color{tudbase} &= \color{tudaccent3} \quad 0 \quad \color{tudbase} }
+%    \end{align*}
+    \begin{align*}
+        \uncover<2-> {(2): \hspace{1cm} \color{tudaccent3} 1\cdot \color{tudbase} L_0(y) &= L_0(y+z) - L_0(z) \hspace{8cm}\, \\}
+        \uncover<3-> {L_0(y+z) &= L_0(y) + L_0(z)}
+    \end{align*}
+    \uncover<4-> {$L_0$ must be linear!\\}
+    \begin{align*}
+        \uncover<5-> {(3): \hspace{1cm} && L(y) &= -r y + L(0) \uncover<6->{ =: -\frac{y + B}{A}}  \hspace{2cm} (r>0,\ L \text{ is decreasing}) \\}
+        \uncover<7-> {(4): \hspace{1cm} && G(x) &= \exp \left( -\exp \left[ L^{-1}(x) \right] \right) \uncover<8-> { = \exp \Big( -\exp \big[ -(Ax+B) \big] \Big) } \hspace{3cm}}
+    \end{align*}
+    \uncover<9-> {\hspace{2cm} $G_I(x) = \e^{-\e^{-x}}$ \hfill (Gumbel) \hspace{3cm}}
+\end{frame}
+
+\begin{frame}{Extremal Types -- Case II}
+    \begin{textblock}{0.4}(0.6, 0.05)
+        \centering\small\begin{tcolorbox}[ams align*, colback=white, top=0.0cm, left=0.1cm, bottom=0.0cm, right=0.1cm, width=6.0cm]
+            L_0(y) \big( 1 - a(z) \big) &= L_0(z) \big( 1 - a(y) \big) \\
+            a(z) L_0(y) &= L_0(y+z) - L_0(z) \\
+            L(y) &= L_0(y) + L(0) \\
+            L^{-1}(x) &= \log ( -\log G(x) ) 
+        \end{tcolorbox} 
+    \end{textblock}
+    Case II: $\exists z_0: a(z_0) \neq 1$.
+    \begin{align*}
+        \uncover<1-> {(1): && L_0(z_0) \big( 1 - a(y) \big) &= L_0(y) \big( 1 - a(z_0) \big) \hspace{8cm}\, \\}
+        \only<1-1> { \color{white} \Rightarrow && \color{white} L_0(y) & \color{white} = \underbrace{ \frac{L_0(z_0)}{1 - a(z_0)} }_{=:\ c} \big( 1 - a(y) \big)\color{tudbase} }
+        \only<2-2> { \Rightarrow && L_0(y) &= \color{white} \underbrace{ \color{tudbase} \frac{L_0(z_0)}{1 - a(z_0)} \color{white} }_{=:\ c} \color{tudbase} \big( 1 - a(y) \big)}
+        \only<3-> { \Rightarrow && L_0(y) &= \underbrace{\frac{L_0(z_0)}{1 - a(z_0)}}_{=:\ \color{tudaccent3} c} \big( 1 - a(y) \big) }
+        \uncover<4-> { \\ & \\ (2): && a(z) L_0(y) &= L_0(y+z) - L_0(z) \\}
+        \uncover<5-> { && a(z) \color{tudaccent3} c \color{tudbase} \big( 1 - a(y) \big) &= \color{tudaccent3} c \color{tudbase} \big( 1 - a(y+z) \big) - \color{tudaccent3} c \color{tudbase} \big( 1 - a(z) \big) \\ }
+        \uncover<6-> { && a(z) - a(z)a(y) &= - a(y+z) + a(z) \\}
+        \uncover<7-> {\Rightarrow && a(y+z) &= a(y)a(z) } \uncover<8-> {\hspace{1.5cm} \Rightarrow \hspace{1.5cm} a(y) = \e^{ry}}
+    \end{align*}
+%    \uncover<8-> {$a(y) = \e^{ry}$ \qquad ($r=0$ equivalent to case I!)}
+\end{frame}
+
+\begin{frame}{Extremal Types -- Case II}
+    \begin{textblock}{0.4}(0.6, 0.05)
+        \centering\small\begin{tcolorbox}[ams align*, colback=white, top=0.0cm, left=0.1cm, bottom=0.0cm, right=0.1cm, width=6.0cm]
+            L_0(y) \big( 1 - a(z) \big) &= L_0(z) \big( 1 - a(y) \big) \\
+            a(z) L_0(y) &= L_0(y+z) - L_0(z) \\
+            L(y) &= L_0(y) + L(0) \\
+            L^{-1}(x) &= \log ( -\log G(x) ) 
+        \end{tcolorbox} 
+    \end{textblock}
+    \begin{align*}
+        \uncover<1-> {(1): && L_0(y) &= c\big( 1 - a(y) \big)} \uncover<2-> { = c\big( 1 - \e^{ry} \big) \\} 
+        \uncover<3-> {(3): && L(y) &= c\big( 1 - \e^{ry} \big) + L(0)} \uncover<4-> { =: \frac{\e^{ry} - B}{A} \hspace{8cm}} 
+    \end{align*}
+    \uncover<5-> {Invert:\quad $L^{-1}(x) = y$}
+    \begin{align*}
+        \uncover<5-> { Ax + B &= \e^{rL^{-1}(x)}\\ }
+        \uncover<6-> { \Rightarrow\quad L^{-1}(x) &= \frac{1}{r} \log \big( Ax+B \big) \hspace{5cm}}
+    \end{align*}
+    \begin{align*}
+        \uncover<7-> {(4): && G(x) &= \exp \left( -\exp \left[ L^{-1}(x) \right] \right)} \uncover<8-> {\\ && &= \exp \left( -\exp \left[ \frac{1}{r} \log \big( Ax+B \big) \right] \right) } \uncover<9-> { = \exp \Big( -\big[ Ax+B \big]^{1/r} \Big) \hspace{4cm} }
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Extremal Types -- Case II}
+    \begin{textblock}{0.4}(0.6, 0.05)
+        \centering\small\begin{tcolorbox}[ams align*, colback=white, top=0.0cm, left=0.1cm, bottom=0.0cm, right=0.1cm, width=6.0cm]
+            L_0(y) \big( 1 - a(z) \big) &= L_0(z) \big( 1 - a(y) \big) \\
+            a(z) L_0(y) &= L_0(y+z) - L_0(z) \\
+            L(y) &= L_0(y) + L(0) \\
+            L^{-1}(x) &= \log ( -\log G(x) ) 
+        \end{tcolorbox} 
+    \end{textblock}
+    \begin{align*}
+        G(x) &= \exp \Big( -\big[ Ax+B \big]^{1/r} \Big) \hspace{8cm}
+    \end{align*}
+    \uncover<1-> {$L(y) = \frac{\e^{ry} - B}{A}$ is decreasing\\}
+    \uncover<2-> {$\quad\Longrightarrow\quad A$ and $r$ have opposite signs!\\ \,\\}
+    \uncover<3-> {Case II(a)\ $A > 0,\ r<0$:\qquad $r\rightarrow -\frac{1}{\alpha} < 0$
+    \begin{align*}
+        \uncover<4-> {G_{II}(x) &= \exp \left( -x^{-\alpha} \right), \qquad x > 0} \uncover<4-> { &&& &(\text{Fr\'echet})}
+    \end{align*}}
+    \uncover<5-> {Case II(b)\ $A < 0,\ r>0$:\qquad $r\rightarrow \frac{1}{\alpha} > 0$
+    \begin{align*}
+        \uncover<6-> {G_{III}(x) &= \exp \left( -(-x)^{\alpha} \right), \qquad x < 0} \uncover<6-> { &&& &(\text{Weibull})}
+    \end{align*}}
+\end{frame}

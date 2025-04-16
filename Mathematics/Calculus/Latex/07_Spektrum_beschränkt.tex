@@ -1,0 +1,216 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+
+\begin{document}
+
+\title{07 Spektrum beschränkter Operatoren}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Diagonaloperator}
+a)
+\begin{proof}
+Sei $a_k$ Folge in $l^\infty$. Gemäß Aufgabe 7.4 ist $\sigma_r(M_a)=\emptyset$, da $M_a$ ein normaler Operator ist. Betrachte $M_ax=\lambda x$:
+\begin{align*}
+a_kx_k&=\lambda x_k\ \ \Rightarrow\ \ \sigma_p=\klammer\left\{ {a_k\in\mathbb{C}} \right\}
+\end{align*}
+Es ist $M_a -\lambda I$ genau dann bijektiv, wenn $\exists c>0: |a_k-\lambda|\ge c$. Das ist äquivalent zu $\lambda\notin\overline{\klammer\left\{ {a_k\in\mathbb{C}\ \vert\ k\in\mathbb{N}} \right\}}$.
+\end{proof}
+b)
+\begin{proof}
+$K$ ist separabel. Sei $n\in\mathbb{N}$. Dann ist $\kla\left( {B(x,\frac{1}{n})} \right)_{x\in K}$ offenbar eine Überdeckung von $K$ aus offenen Mengen. Da $K$ kompakt ist, gibt es eine endliche Teilmenge $F_n$ von $K$ mit $K\subseteq\bigcup_{x\in F_n}B(x,\frac{1}{n})$. Die  Menge $D:=\bigcup_{n\in\mathbb{N}}F_n$ ist dann eine abzählbare dichte Teilmenge von $K$.\\
+Sei $a_k$ eine dichte Folge in $K$. Dann ist der zugehörige Diagonaloperator $M_a$ beschränkt und normal. Nach Teil a) gilt:
+\begin{align*}
+\sigma (M_a)&=\overline{a_k\in\mathbb{C}\ \vert\ k\in\mathbb{N}}=K
+\end{align*}
+\end{proof}
+c)
+\begin{proof}
+Sei $\lambda\in\mathbb{C}\setminus [a,b]$. Dann gibt es $r>0$ mit $|x-\lambda|\ge r$ für alle $x\in\klam\left[ {a, b} \right]$. Damit folgt $\lambda\in\rho(Q)$, da $Q$ selbstadjungiert ist:
+\begin{align*}
+\|Q\phi-\lambda\phi\|_2^2&=\intx\int_{a}^{b}|x-\lambda|^2|\phi|^2\,\mathrm{d}x\ge r^2\|\phi\|_2^2
+\end{align*}
+Sei $\lambda\in (a,b)$ und setze für alle $n\in\mathbb{N}$ mit $a<\lambda -\frac{1}{n}$ und $\lambda +\frac{1}{n}<b$: $\phi_n(x):=\left\{\begin{matrix}
+(n/2)^{1/2} & |x-\lambda|\le 1/n \\
+0 & \mathrm{sonst}
+\end{matrix}\right.$. Dann gilt $\|\phi_n\|_2=1$ und:
+\begin{align*}
+\|Q\phi_n-\lambda\phi_n\|_2^2&=\intx\int_{\lambda-\frac{1}{n}}^{\lambda+\frac{1}{n}}|x-\lambda|^2|\phi_n|^2\,\mathrm{d}x\le\intx\int_{\lambda-\frac{1}{n}}^{\lambda+\frac{1}{n}}\frac{1}{n^2}\cdot\frac{n}{2}\,\mathrm{d}x=\frac{1}{n^2}\rightarrow 0
+\end{align*}
+Also ist nach dem Weyl'schen Kriterim $\lambda\in\sigma(Q)$. Da $\sigma$ abgeschlossen ist, gilt somit auch $\klam\left[ {a, b} \right]=\overline{\kla\left( {a, b} \right)}\subseteq\sigma(Q)$.
+Da $Q$ selbstadjungiert ist, gilt $\sigma_r=\emptyset$. Es gilt $\sigma_p=\emptyset$:
+\begin{align*}
+(Q-\lambda I)\phi&=(x-\lambda)\phi\overset{!}{=}0
+\end{align*}
+Aber $\lambda\neq x$ für fast alle $x$, also muss $\phi(x)=0$ für fast alle $x$ sein, folglich ist $\lambda$ kein Eigenwert.\\
+Es gilt:
+\begin{align*}
+\sigma_c=\sigma\setminus (\sigma_p\cup\sigma_r)=\sigma=\klam\left[ {a, b} \right]
+\end{align*}
+\end{proof}
+\section{Resolventenmenge}
+a)
+\begin{proof}
+Setze $R_\lambda, F_\lambda$ als die Resolventen zu $T, S$. Dann gilt:
+\begin{align*}
+F_\lambda (T-S)R_\lambda&=F_\lambda (T-\lambda I-S+\lambda I)R_\lambda=F_\lambda - R_\lambda
+\end{align*}
+\end{proof}
+b)
+\begin{proof}
+$(i)\Rightarrow(ii)$:\\
+Sei $\lambda\in\rho(T)$:
+\begin{align*}
+SR_\lambda&=R_\lambda (T-\lambda I)SR_\lambda=R_\lambda (ST-S\lambda)R_\lambda=R_\lambda S(T-\lambda I)R_\lambda =R_\lambda S
+\end{align*}
+$(iii)\Rightarrow(i)$:\\
+Es gilt mit der Voraussetzung:
+\begin{align*}
+S(T-\lambda I)&= (T-\lambda I)R_\lambda S(T-\lambda I)=(T-\lambda I)SR_\lambda (T-\lambda I)=(T-\lambda I)S
+\end{align*}
+Daraus folgt dann:
+\begin{align*}
+ST=S(T-\lambda I)+\lambda S=(T-\lambda I)S+\lambda S=TS
+\end{align*}
+\end{proof}
+c)
+\begin{proof}
+Sei $\lambda\in\rho(T)$. Dann gilt $\lambda\in\rho (S^{-1}TS)$:
+\begin{align*}
+\kla\left( {S^{-1}TS-\lambda I} \right)^{-1}&=\kla\left( {S^{-1}TS-\lambda S^{-1}S} \right)^{-1}=\kla\left( {S^{-1}(T-\lambda I)S} \right)^{-1}=S^{-1}R_\lambda S
+\end{align*}
+\end{proof}
+d)
+\begin{proof}
+Beim Nachweis, dass $\rho(T)$ offen ist, wurde gezeigt, dass $B(\lambda,\|R_\lambda\|^{-1})\subseteq\rho(T)$ gilt. Für jedes $\mu\in\sigma(T)$ folgt damit $|\lambda-\mu|\ge \|R_\lambda\|^{-1}$, da $\mu\notin B(\lambda, \|R_\lambda\|^{-1})$.
+\end{proof}
+\section{Inverse Operatoren}
+a)
+\begin{proof}
+Es gilt $S=T-(T-S)=T(I-T^{-1}(T-S))$. Da $\|T^{-1}(T-S)\|\le q<1\| $ ist $I-T^{-1}(T-S)$ stetig invertierbar mit:
+\begin{align*}
+\|(I-T^{-1}(T-S))^{-1}\|&\le\frac{1}{1-\|T^{-1}(T-S)\|}\le\frac{1}{1-q}
+\end{align*}
+Folglich ist auch $S$ stetig invertierbar mit $S^{-1}=\kla\left( {I-T^{-1}(T-S)} \right)^{-1}T^{-1}$ und:
+\begin{align*}
+\|S^{-1}\|&\le\|\kla\left( {I-T^{-1}(T-S)} \right)^{-1}\|\cdot\|T^{-1}\|\le\frac{\|T^{-1}\|}{1-q}
+\end{align*}
+\end{proof}
+b)
+\begin{proof}
+$\Omega$ ist offen. Aus a) folgt direkt für alle $T\in\Omega$, dass $B(T,\frac{1}{\|T^{-1}\|})\subseteq\Omega$ ist. \\
+Sei $\delta\in (0,\frac{\|T^{-1}\|}{2}]$. Dann ist jedes $S\in B(T,\delta)$ stetig invertierbar mit $\|S^{-1}\|\le 2\|T^{-1}\|$ und es folgt:
+\begin{align*}
+\|S^{-1}-T^{-1}\|&=\|S^{-1}(T-S)T^{-1}\|\le \|S^{-1}\|\cdot\|T-S\|\cdot\|T^{-1}\|\le 2\delta\|T^{-1}\|^2
+\end{align*}
+Für $\epsilon> 0$ wähle man daher $\delta =\min\klammer\left\{ {\frac{\|T^{-1}\|}{2},\frac{\epsilon}{2\|T^{-1}\|^2}} \right\}$.
+\end{proof}
+\section{Approximatives Punktspektrum}
+a)
+\begin{proof}
+$M\subseteq\mathbb{C}\setminus\sigma_{ap}(T)$. Sei $\lambda\in M$. Dann gilt insbesondere $\|T\phi-\lambda\phi\|\ge C$ für alle $\phi\in\mathcal{H}$ mit $\|\phi\|=1$. Also gilt $\lambda\notin\sigma_{ap}(T)$. \\
+$\mathbb{C}\setminus M\subseteq \sigma_{ap}(T)$. Sei $\lambda\in\mathbb{C}$ so, dass $\forall C>0\exists\phi\in\mathcal{H}:\|T\phi-\lambda\phi\|<C\|\phi\|$. Dann gibt es insbesondere eine Folge $\psi_n$ in $\mathcal{H}$ mit $\|T\psi_n-\lambda\psi_n\|<\frac{1}{n}\|\psi_n\|$. Mit $\phi_n:=\frac{\psi_n}{\|\psi_n\|}$ folgt dann $\lambda\in\sigma_{ap}(T)$:
+\begin{align*}
+\|T\phi_n-\lambda\phi_n\|&<\frac{1}{n}\rightarrow 0
+\end{align*}
+\end{proof}
+b)
+\begin{proof}
+$\sigma_p\subseteq\sigma_{ap}$ ist klar, wähle einen normierten Eigenvektor. \\
+$\sigma_c\subseteq\sigma_{ap}$. Sei $\lambda\in\mathbb{C}\setminus\sigma_{ap}$. Dann gibt es $C>0$ mit $\|T\phi-\lambda\phi\|\ge C\|\phi\|$ für alle $\phi\in\mathcal{H}$. Daraus folgt, dass im\,$(T-\lambda I)$ abgeschlossen ist, also gilt $\lambda\notin\sigma_c$.\\
+$\partial_\sigma\subseteq\sigma_{ap}$. Sei $\lambda\in\partial\sigma$. Dann gibt es eine Folge $\lambda_n\rightarrow\lambda$ in $\rho(T)$. Nach Aufgabe 7.2d) gilt dann:
+\begin{align*}
+\|R_{\lambda_n}\|&\ge \frac{1}{|\lambda_n-\lambda|}
+\end{align*}
+Also gibt es eine Folge $\psi_n$ in $\mathcal{H}$ mit $\|\psi_n\|=1$ und $\|R_{\lambda_n}\psi_n\|\ge\frac{1}{2|\lambda_n-\lambda|}$. Setze $\phi_n:=\frac{R_{\lambda_n}\psi_n}{\|R_{\lambda_n}\psi_n\|}$:
+\begin{align*}
+\|T\phi_n-\lambda\phi_n\|&\le\|T\phi_n-\lambda_n\phi_n\|+|\lambda_n-\lambda|\cdot\|\phi_n\|=\frac{\|\psi_n\|}{\|R_{\lambda_n}\psi_n\|}+|\lambda_n-\lambda|\\
+&\le 2|\lambda_n-\lambda|+|\lambda_n-\lambda|\rightarrow 0
+\end{align*}
+$\sigma_{ap}\subseteq\sigma$. Sei $\lambda\in\rho$. Dann gilt:
+\begin{align*}
+\|\phi\|&=\|R_\lambda (T\phi-\lambda\phi)\|\le\|R_\lambda\|\cdot\|T\phi-\lambda\phi\|
+\end{align*}
+Mit $C:=\frac{1}{\|R_\lambda\|}$ folgt dann $\lambda\in M$ und somit $\lambda\notin\sigma_{ap}$. 
+\end{proof}
+c)
+\begin{proof}
+Da $\sigma$ und $\rho=\mathbb{C}\setminus\sigma$ nichtleer sind, ist auch $\partial\sigma$ nichtleer und damit auch $\sigma_{ap}$ nach b).\\
+Wir zeigen $\mathbb{C}\setminus\sigma_{ap}$ offen (dann $\sigma_{ap}$ abgeschlossen und wegen b) beschränkt, also kompakt). \\
+Sei $\lambda\in\mathbb{C}\setminus\sigma_{ap}$. nch a) gibt es dann ein $C>0$ mit $\|T\phi-\lambda\phi\|\ge C\|\phi\|$ für alle $\phi\in\mathcal{H}$. Für $\mu\in B(\lambda, C)$ gilt dann:
+\begin{align*}
+\|T\phi-\mu\phi\|&\ge |\|T\phi-\lambda\phi\|-|\lambda-\mu|\cdot\|\phi\||\ge |C-|\lambda-\mu||\cdot\|\phi\|
+\end{align*}
+\end{proof}
+d)
+\begin{proof}
+Mit b) folgt $\sigma_{ap}(L)=\sigma(L)=\klammer\left\{ {\lambda\in\mathbb{C}\ \vert\ |\lambda|\le 1} \right\}$:
+\begin{align*}
+\sigma_p(L)\cup\sigma_c(L)\subseteq\sigma_{ap}(L)\subseteq\sigma(L)=\sigma_p(L)\cup\sigma_c(L)
+\end{align*}
+Es gilt $\sigma_c(R)=\klammer\left\{ {\lambda\ \vert\ |\lambda|=1} \right\}\subseteq\sigma_{ap}(R)$. Es ist $\klammer\left\{ {\lambda\ \vert\ |\lambda|<1} \right\}\subseteq\mathbb{C}\setminus\sigma_{ap}(R)$, also folgt $\sigma_{ap}(R)\subseteq\klammer\left\{ {\lambda\ \vert\ |\lambda|\ge 1} \right\}\cap\sigma(R)=\sigma_c(R)$. Also gilt $\sigma_{ap}(R)=\sigma_c(R)$.
+\end{proof}
+e)
+\begin{proof}
+Für $S\in B(\mathcal{H})$ normal gilt $\|S\phi\|=\|S^\ast\phi\|$ (vgl. Aufgabe 6.2e)). Insbesondere ist somit $\ker S=\ker S^\ast$. Da $T$ normal ist, ist auch $T-\lambda I$ normal:
+\begin{align*}
+(T-\lambda I)^\ast(T-\lambda I)&=T^\ast T-\lambda^\ast T-\lambda T^\ast +\lambda\lambda^\ast I=(T-\lambda I)(T-\lambda I)^\ast
+\end{align*}
+Daraus folgt dann $\ker(T-\lambda I)=\ker(T-\lambda I)^\ast=\ker(T^\ast-\lambda^\ast I)$.
+Sei $\lambda\in\sigma(T)$ und $T-\lambda I$ injektiv, d.h. $\lambda\notin\sigma_p(T)$. Dann hat $T-\lambda I$ ein dichtes Bild, also gilt $\lambda\notin\sigma_r(T)$. Daraus folgt dann $\sigma_{ap}(T)=\sigma(T)$:
+\begin{align*}
+\sigma=\sigma_p\cup\sigma_c\cup\sigma_r=\sigma_p\cup\sigma_c\subseteq\sigma_{ap}\subseteq\sigma
+\end{align*}
+Sei $\lambda,\mu\in\sigma_p(T)$ mit $\lambda\neq\mu$ und sei $\phi\in\ker(T-\lambda I)$ sowie $\psi\in\ker(T-\mu I)$. Insbesondere gilt dann $\psi\in\ker(T^\ast-\mu^\ast I)$ (vgl. oben), also folgt $\brak\langle {\psi}| {\phi}\rangle=0$:
+\begin{align*}
+\lambda\brak\langle {\psi}| {\phi}\rangle&=\brak\langle {\psi}| {\lambda\phi}\rangle=\brak\langle {\psi}| {T\phi}\rangle=\brak\langle {T^\ast\psi}| {\phi}\rangle=\brak\langle {\mu^\ast\psi}| {\phi}\rangle=\mu\brak\langle {\psi}| {\phi}\rangle
+\end{align*}
+\end{proof}
+\section{Spektralradius}
+a)
+\begin{proof}
+Setze $r:=\inf a_k^{1/k}\ge 0$. Sei $a_k\neq 0$ (ist $a_n=0$ so folgt daraus $0\le a_{n+m}\le a_na_m=0$, also ist dann die Folge konstant $0$). Sei $\epsilon>0$. Dann gibt es ein $N$ mit $a_N^{1/N}\le r+\epsilon$. Setze $s:=\max\klammer\left\{ {\frac{a_l}{(r+\epsilon)^l}\ \vert\ l\in\klammer\left\{ {1\dots N} \right\}} \right\}>0$. Sei $n>N$. Dann gibt es $k,l\in\mathbb{N}$ mit $l\le N$ und $n=kN+l$. Damit folgt:
+\begin{align*}
+a_n=a_{kN+l}\le a_{kN}a_l\le a_N^ka_l\le (r+\epsilon)^{kN}a_l=(r+\epsilon)^n\frac{a_l}{(r+\epsilon)^l}\le (r+\epsilon)^ns
+\end{align*}
+Daraus folgt dann:
+\begin{align*}
+r\le a_n^{1/n}\le (r+\epsilon)s^{1/n}\rightarrow r+\epsilon
+\end{align*}
+Da die Operatornorm submultiplikativ ist gilt $\|T^{m+n}\|\le\|T^m\|\cdot\|T^n\|$. Also folgt mit dem Lemma:
+\begin{align*}
+\lim \|T^k\|^{1/k}=\inf\|T^k\|^{1/k}=:r
+\end{align*}
+Sei $\lambda\in\mathbb{C}$ mit $|\lambda|>r$. Dann gilt:
+\begin{align*}
+\lim \|\frac{T^k}{\lambda^k}\|^{1/k}=\frac{r}{|\lambda|}<1
+\end{align*}
+Also ist die Reihe $\sum_k \frac{T^k}{\lambda^{k+1}}$ absolut konvergent und folglich $T-\lambda I$ stetig invertierbar, d.h. $\lambda\in\rho(T)$. Damit ist $\sigma(T)\subseteq\klammer\left\{ {\lambda\ \vert\ |\lambda|\le r} \right\}$, also $r_\sigma(T)\le r$.
+\end{proof}
+b)
+\begin{proof}
+$S^2$ ist normal.
+\begin{align*}
+S^2(S^2)^\ast&=SSS^\ast S^\ast=S^\ast SSS^\ast=S^\ast S^\ast SS=(S^2)^\ast S^2 \\
+\|S^2\|^2&=\|(S^2)^\ast S^2\|=\|S^\ast SS^\ast S\|=\|(S^\ast S)^2\|=\|S^\ast S\|^2=\|S\|^4
+\end{align*}
+Es gilt mit $\lim \|T^k\|^{1/k}=\inf \|T^k\|^{1/k}=:r$ insbesondere auch $\lim \|T^{2^k}\|^{2^{-k}}=r$. Aus der Vorbemerkung gilt $\|T^{2^k}\|^{2^{-k}}=\|T\|$, weshalb $r=\|T\|$ folgt. 
+\end{proof}
+\end{document}

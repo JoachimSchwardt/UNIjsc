@@ -1,0 +1,470 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{ll_scrarticle}
+
+\newcommand*{\titel}{Constructive Bosonization}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Quantum Physics in 1D}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+
+\section{Introduction}
+Constructive bosonization refers to the derivation of an operator identity relating fermionic creation and annihilation operators to bosonic ones.
+Intuitively, one dimensional systems are special because -- when viewed in real-space -- particles can not move freely due to the dimensional restriction.
+This gives rise to the idea that the fundamental excitations are not to be described by individual electrons but instead by collective particle-hold excitations.
+More formally the starting point for constructive bosonization lies in the so-called \emph{nesting condition} $\epsilon(\textbf{k}+\textbf{q}) = -\epsilon(\textbf{k})$.
+For a fixed momentum $q$ this condition can generally only be met at isolated points.
+One dimension is special here because a linear dispersion relation allows for nesting in an entire region of momentum space.
+For this it is sufficient that the two Fermi velocities differ by a minus sign, i.e.
+\begin{align}
+\vf &= \frac{\partial\epsilon}{\partial k} \Big\vert_{\kf} = -\frac{\partial\epsilon}{\partial k} \Big\vert_{-\kf} .
+\end{align}
+Then setting $q=2\kf$, assuming $\epsilon_\F=0$ and writing $k=-\kf + \Delta k$ one finds that the nesting condition is satisfied to first order in $\Delta k$ because
+\begin{align}
+\epsilon(k+q) + \epsilon(k) &= \epsilon(\kf + \Delta k) + \epsilon(-\kf + \Delta k) \approx \vf\Delta k + (-\vf) \Delta k + \mathcal{O}(\Delta k^2) \approx 0.
+\end{align}
+To understand why this condition is relevant in the first place consider the Fourier transform of the retarded density-density correlation\footnote{\TODO{Giamarchi (p.6), (1.5) refers to Mahan 1981, but I can not find it there... also see lecture notes on nesting}}
+\begin{align}
+\chi^\r(q,\omega) &= \frac{1}{L} \sum_k \frac{n_\F(k) - n_\F(k+q)}{\omega + \epsilon(k) - \epsilon(k+q) + \i\delta}.
+\end{align}
+With the nesting condition this becomes
+\begin{align}
+\chi^\r(2\kf,0) &= \frac{1}{L} \sum_k \frac{1}{2\epsilon(k) + \i\delta} \klc*{\frac{1}{\powe{\beta\epsilon(k)} + 1} - \frac{1}{\powe{-\beta\epsilon(k)} + 1}} \simeq -\int \rho_\Text{d.o.s.}(\epsilon) \frac{\tanh\kla*{\beta\frac{\epsilon}{2}}}{2\epsilon}\,\d\epsilon
+\end{align}
+which diverges logarithmically for ``large'' energies.
+This is because assuming $\beta\epsilon \gg 1$ we have $\tanh(\beta\epsilon) \approx 1$ and hence $\chi^\r(2\kf,0) \simeq -\rho_\Text{d.o.s.} \log \kla*{\beta\epsilon_\Text{max}}$ where $\epsilon_\Text{max} = \vf \kla*{k_\Text{max} - \kf}$ and $k_\Text{max}$ refers to the edge of the region in momentum space, in which the nesting condition is satisfied.
+%\section{Phenomenological Bosonization}
+\section{Particle-hole excitations}
+Here we want to derive the bosonization identity for a special case of the Tomonaga-Luttinger model
+\begin{align}
+H &= \sum_{\ell=\R,\L} \sum_k \ell \vf k \varnormord{c_{k,\ell}^\dagger c_{k,\ell}}
+\end{align}
+which has a Fermi momentum of $\kf =0$.
+The normal-ordering $\varnormord{A} \equiv A - \bra*{A}_0$ is required to take care of the infinitely many occupied states below the Fermi energy.
+Note that $\ell=\R\equiv +1$ refers to ``right-movers'' and $\ell=-\L\equiv -1$ refers to ``left-movers''.
+The nomenclature here is rather intuitive since $\ell=+1$ corresponds to a positive slope of the dispersion relation and hence a particle moving to the right in real space.
+\\
+Consider the density operators in real space defined by
+\begin{align}
+\rho_\ell(x) &= \varnormord{c_{x,\ell}^\dagger c_{x,\ell}} 
+\end{align}
+where $c_{x,\ell}$ are correspond to the Fourier transform of the annihilation operators
+\begin{align}
+c_{k,\ell} &= \frac{1}{\sqrt{L}} \intx{-L/2}{L/2}{\powe{-\i kx} c_{x,\ell}}{x}. \label{eqn:c k ell FFT}
+\end{align}
+The normal-ordering ensures that the operator is well-defined and has the intuitive interpretation of only measuring finite differences relative to the ground state that already contains infinitely many particles.
+Using the inverse of \autoref{eqn:c k ell FFT} we can write
+\begin{align}
+\rho_\ell(x) &= \frac{1}{L} \sum_{k,k'} \powe{-\i kx} \powe{\i k'x} \varnormord{c_{k,\ell}^\dagger c_{k',\ell}}.
+\end{align}
+This gives rise to the Fourier components 
+\begin{align}
+\rho_{q,\ell} &= \intx{-L/2}{L/2}{\powe{-\i qx} \rho_\ell(x)}{x} = \sum_{k,k'} \delta_{k',-k-q} \varnormord{c_{k,\ell}^\dagger c_{k',\ell}} = \sum_k \varnormord{c_{k,\ell}^\dagger c_{k+q,\ell}}.
+\end{align}
+Note that the normal-ordering is only required for $q=0$ since otherwise $\bra*{c_{k,\ell}^\dagger c_{k+q,\ell}}_0=0$.
+Thus we define $N_\ell = \rho_{q=0,\ell}$ and drop the normal-ordering for $q\neq 0$.
+\\
+Since $\klc*{c_{x,\ell}, c_{x',\ell'}^\dagger} = \delta_{\ell,\ell'} \delta(x-x')$ we find the commutation relations\footnote{The momenta are discretized by $k=\frac{2\pi}{L}n_k$ for $n_k\in\mathbb{Z}$.}
+\begin{align}
+\klc*{c_{k,\ell}, c_{k',\ell'}^\dagger} &= \frac{1}{L} \intx{-L/2}{L/2}{\intx{-L/2}{L/2}{\klc*{\powe{-\i kx} c_{x,\ell}, \powe{\i k'x'} c_{x',\ell'}}}{x'} }{x} = \frac{\delta_{\ell,\ell'}}{L} \intx{-L/2}{L/2}{\powe{\i (k'-k)x}}{x} \\
+&= \delta_{\ell,\ell'} \frac{2}{L(k'-k)} \sin\kla*{\frac{L}{2}(k'-k)} = \delta_{\ell,\ell'} \delta_{k,k'}.
+\end{align}
+Consequently for $q,q'\neq 0$ we find
+\begin{align}
+\rho_{q,\ell} \rho_{q',\ell'} &= \sum_{k,k'}c_{k,\ell}^\dagger c_{k+q,\ell} c_{k',\ell'}^\dagger c_{k'+q',\ell'} = \sum_{k,k'}c_{k,\ell}^\dagger \klc*{\delta_{\ell,\ell'} \delta_{k+q,k'} - c_{k',\ell'}^\dagger c_{k+q,\ell} } c_{k'+q',\ell'}\\
+&= -\sum_{k,k'} c_{k',\ell'}^\dagger c_{k,\ell}^\dagger c_{k'+q',\ell'} c_{k+q,\ell} + \delta_{\ell,\ell'} \sum_k c_{k,\ell}^\dagger c_{k+q+q',\ell}\\
+&= \rho_{q',\ell'}\rho_{q,\ell} + \delta_{\ell,\ell'} \sum_k c_{k,\ell}^\dagger c_{k+q+q',\ell} - \delta_{\ell,\ell'} \sum_k c_{k-q',\ell}^\dagger c_{k+q,\ell}.
+\end{align}
+To avoid problems arising from the subtraction of infinities we make use of normal-ordering to get
+\begin{align}
+\klb*{\rho_{q,\ell},\rho_{q',\ell'}} &= \delta_{\ell,\ell'} \sum_k \klc*{ \varnormord{c_{k,\ell}^\dagger c_{k+q+q',\ell}} + \bra*{c_{k,\ell}^\dagger c_{k+q+q',\ell}}_0} \\
+&= \delta_{\ell,\ell'} \delta_{q,-q'} \sum_k \klc*{\bra*{c_{k,\ell}^\dagger c_{k,\ell}}_0 - \bra*{c_{k+q,\ell}^\dagger c_{k+q,\ell}}_0 }.
+\end{align}
+To understand the last expression note that $\bra*{c_{k,\ell}^\dagger c_{k,\ell}} = 1$ if the state is occupied and zero otherwise.
+For $\ell=+1$ this is identical to $\Theta(-k)$ since on that branch all states with negative momentum lie below the Fermi energy and are therefore occupied in the ground state.
+Thus we find
+\begin{align}
+\klb*{\rho_{q,\ell},\rho_{q',\ell'}} &= \delta_{\ell,\ell'} \delta_{q,-q'} \sum_k \klc*{\Theta(-\ell k) - \Theta(-\ell k - \ell q)} = \delta_{\ell,\ell'} \delta_{q,-q'} \sum_{n_k\in\mathbb{Z}} \klc*{\Theta(n_k) - \Theta(n_k - \ell n_q)}\\
+&= \delta_{\ell,\ell'} \delta_{q,-q'} \ell n_q = \delta_{\ell,\ell'} \delta_{q,-q'} \ell \frac{Lq}{2\pi}.
+\end{align}
+Since $\rho_{q,\ell}^\dagger = \rho_{-q,\ell}$ by construction we may now define the operators
+\begin{align}
+b_q &= -\i \sqrt{\frac{2\pi}{L|q|}} \sum_\ell \Theta(\ell q) \rho_{q,\ell}
+\end{align}
+for $q\neq 0$ that satisfy the canonical commutation relations
+\begin{align}
+\klb*{b_q, b_{q'}} &= -\frac{2\pi}{L\sqrt{|qq'|}} \sum_{\ell,\ell'} \Theta(\ell q)\Theta(\ell' q') \klb*{\rho_{q,\ell}, \rho_{q',\ell'}} = -\frac{2\pi}{L|q|} \delta_{q,-q'} \sum_{\ell} \Theta(\ell q)\Theta(-\ell q) \ell \frac{Lq}{2\pi} = 0,\\
+\klb*{b_q, b_{q'}^\dagger} &= \frac{2\pi}{L\sqrt{|qq'|}} \sum_{\ell,\ell'} \Theta(\ell q)\Theta(\ell' q') \klb*{\rho_{q,\ell}, \rho_{-q',\ell'}} = \frac{2\pi}{L|q|} \delta_{q,q'} \sum_{\ell} \Theta(\ell q) \ell \frac{Lq}{2\pi} = \delta_{q,q'}.
+\end{align}
+These bosonic operators conserve the number of particles on either branch.
+\TODO{Interpretation + figures, see Miranda, Giamarchi and lecture notes}
+\\
+The complete basis can therefore be constructed via
+\begin{align}
+\Ket{N_+,N_-,\klc*{m_q}} &= \prod_{q\neq 0} \frac{1}{\sqrt{m_q!}} \kla*{b_q^\dagger}^{m_q} \Ket{N_+,N_-}_0.
+\end{align}
+In order to change the total number of particles on a branch we now introduce the Klein factors $\eta_\ell$ satisfying $\klb*{\eta_\ell, b_q} = 0$ and 
+\begin{align}
+\eta_\ell \Ket{N_\ell, N_{-\ell}}_0 &= \ell^{N_+} \Ket{N_\ell - 1, N_{-\ell}}_0.
+\end{align}
+From now on we will always assume to be in the thermodynamic limit $L\rightarrow \infty$.
+Whenever $L$ appears in an equation one should therefore think of the asymptotic behaviour.
+In this limit the Klein factors satisfy the Majorana algebra $\klc*{\eta_\ell, \eta_{\ell'}} = 2\delta_{\ell,\ell'}$ and $\eta_\ell^{-1} = \eta_\ell^\dagger = \eta_\ell$.
+\\
+Let us now consider the commutation relations of $b_q$ and $H$.
+Using the above we find
+\begin{align}
+\klb*{b_q, H} &= \sum_{\ell,k\neq 0} \ell \vf k \klb*{b_q, c_{k,\ell}^\dagger c_{k,\ell}} = -\i\sum_{\ell,\ell',k\neq 0} \ell \vf k \sqrt{\frac{2\pi}{L|q|}} \Theta(\ell' q) \klb*{\rho_{q,\ell'}, c_{k,\ell}^\dagger c_{k,\ell}} \\
+&= -\i\sum_{\ell,\ell',k\neq 0, k'} \ell \vf k \sqrt{\frac{2\pi}{L|q|}} \Theta(\ell' q) \klb*{c_{k',\ell'}^\dagger c_{k'+q,\ell'}, c_{k,\ell}^\dagger c_{k,\ell}}  \\
+&= -\i\sum_{\ell,\ell',k\neq 0, k'} \ell \vf k \sqrt{\frac{2\pi}{L|q|}} \Theta(\ell' q) \klc*{c_{k',\ell'}^\dagger \klc*{c_{k'+q,\ell'}, c_{k,\ell}^\dagger} c_{k,\ell} - c_{k,\ell}^\dagger \klc*{c_{k',\ell'}^\dagger , c_{k,\ell}} c_{k'+q,\ell'}}\\
+&= -\i\sum_{\ell,k\neq 0} \ell \vf k \sqrt{\frac{2\pi}{L|q|}} \Theta(\ell q) \klc*{c_{k-q,\ell}^\dagger c_{k,\ell} - c_{k,\ell}^\dagger c_{k+q,\ell}}.
+\end{align}
+At this point we can shift the momentum in the first term by $q$ -- there is no need for normal-ordering due to $q\neq 0$ -- and obtain
+\begin{align}
+\klb*{b_q,H} &= -\i\vf q \sum_{\ell,k\neq 0} \sqrt{\frac{2\pi}{L|q|}} \Theta(\ell q) \ell c_{k,\ell}^\dagger c_{k+q,\ell} = \vf q \klc*{\Theta(q) b_q - \Theta(-q) b_q} = \vf |q| b_q.
+\end{align}
+These commutation relations thus mean that, since the $b_q$ form a complete basis, the Hamiltonian must take the form
+\begin{align}
+H &= \sum_{q\neq 0} \vf |q| b_q^\dagger b_q
+\end{align}
+when expressed in terms of the $b_q$.
+%Similarly we find that
+%\begin{align}
+%\klb*{\rho_{q,\ell}^\dagger, \psi_{\ell'}(x)} &= \frac{1}{\sqrt{L}} \sum_{k,k'} \powe{\i k'x} \klb*{c_{k+q,\ell}^\dagger c_{k,\ell}, c_{k',\ell'}} = -\delta_{\ell,\ell'} \sum_k \powe{\i (k+q)x} c_{k,\ell} = -\delta_{\ell,\ell'} \powe{\i qx} \psi_\ell(x).
+%\end{align}
+%This is particularly interesting because the same commutation relation would also be satisfied by $\tilde{\psi}_\ell(x) = \exp\kla*{\sum_{q\neq 0} \frac{2\pi\ell}{Lq} \powe{\i qx} \rho^\dagger_{-q,\ell} }$ due to\footnote{$\klb*{A, \powe{B}} = \klb*{A,B}\powe{B}$ for $\klb*{A,B}\in\mathbb{C}$}
+%\begin{align}
+%\klb*{\rho_{q,\ell}^\dagger, \tilde{\psi}_{\ell'}(x)} &= \sum_{q'\neq 0} \klb*{\rho^\dagger_{q,\ell}, \frac{2\pi\ell'}{Lq'} \powe{\i qx} \rho^\dagger_{-q',\ell'}} \tilde{\psi}_{\ell'}(x) = -\delta_{\ell,\ell'} \powe{\i qx} \tilde{\psi}_\ell(x).
+%\end{align}
+Similarly we find
+\begin{align}
+\klb*{b_q, \psi_{\ell}(x)} &= -\i\sqrt{\frac{2\pi}{L|q|}} \frac{1}{\sqrt{L}} \sum_{\ell',k} \powe{\i kx} \Theta(\ell' q) \klb*{\rho_{q,\ell'}, c_{k,\ell}} \\
+&= -\i\sqrt{\frac{2\pi}{L|q|}} \frac{1}{\sqrt{L}} \sum_{k,k'} \Theta(\ell q) \powe{\i kx} \klb*{c_{k',\ell}^\dagger c_{k'+q,\ell}, c_{k,\ell}} = \i\Theta(\ell q) \sqrt{\frac{2\pi}{L|q|}} \powe{-\i qx} \psi_\ell(x) \\
+&\equiv  a_{q,\ell}(x)\psi_\ell(x)
+\end{align}
+and $\klb*{b_q^\dagger, \psi_\ell(x)} = a_{q,\ell}^\ast(x) \psi_\ell(x)$.
+Since $b_q\Ket{N_+,N_-}_0 = 0$ we thus find that $\psi_\ell(x) \Ket{N_+, N_-}_0$ must be a coherent state because
+\begin{align}
+b_q\psi_\ell(x) \Ket{N_+, N_-}_0 &= \klb*{b_q, \psi_\ell(x)} \Ket{N_+, N_-}_0 = a_{q,\ell}(x) \psi_\ell(x) \Ket{N_+, N_-}_0.
+\end{align}
+and can therefore be written as
+\begin{align}
+\psi_\ell(x) \Ket{N_+, N_-}_0 &= w_\ell(x) \powe{\sum_{q\neq 0} a_{q,\ell}(x) b_q^\dagger} \eta_\ell \Ket{N_+, N_-}_0.
+\end{align}
+Due to $b_q\Ket{N_+,N_-}_0=0$ we can write down the preliminary operator identity
+\begin{align}
+\psi_\ell(x) &= \eta_\ell w_\ell(x) \powe{\sum_{q\neq 0} a_{q,\ell}(x) b_q^\dagger} \powe{-\sum_{q\neq 0} a_{q,\ell}^\ast(x) b_q}
+\end{align}
+which is valid for all ground states $\Ket{N_+,N_-}_0$.
+We can determine the normalization by evaluating ${}_0\brc*{N_+,N_-}{\eta_\ell^\dagger \psi_\ell(x)}{N_+,N_-}_0$ in two different ways.
+First, from the definition we have
+\begin{align}
+\frac{1}{\sqrt{L}} \sum_k \powe{\i kx} {}_0\brc*{N_\ell-1,N_{-\ell}}{\ell^{N_+} c_{k,\ell}}{N_\ell,N_{-\ell}}_0 &= \frac{1}{\sqrt{L}} \powe{\i k^\ast x}
+\end{align}
+where $k^\ast$ is the momentum of the highest occupied state, i.e. $k^\ast = \ell \frac{2\pi}{L} N_\ell$.
+Second, inserting our preliminary operator identity gives
+\begin{align}
+w_\ell(x) {}_0\brc*{N_\ell,N_{-\ell}}{\powe{\sum_{q\neq 0} a_{q,\ell}(x) b_q^\dagger} \powe{-\sum_{q\neq 0} a_{q,\ell}^\ast(x) b_q}}{N_\ell, N_{-\ell}}_0 &= w_\ell(x)
+\end{align}
+and therefore $w_\ell(x) = \frac{1}{\sqrt{L}} \powe{\i\ell \frac{2\pi}{L} N_\ell}$.
+At this point we define the fields 
+\begin{align}
+\varphi_\ell^{(+)}(x) &= \i \sum_{q\neq 0} \powe{-\frac{\alpha}{2}|q|} a_{q,\ell}(x) b_q^\dagger = -\sqrt{\frac{2\pi}{L}}\sum_{q\neq 0} \Theta(\ell q) \frac{1}{\sqrt{|q|}} \powe{-\i qx} b_q^\dagger,\\
+\varphi_\ell^{(-)}(x) &\equiv \kla*{\varphi_\ell^{(+)}}^\dagger = -\sqrt{\frac{2\pi}{L}}\sum_{q\neq 0} \powe{-\frac{\alpha}{2}|q|} \Theta(\ell q) \frac{1}{\sqrt{|q|}} \powe{\i qx} b_q
+\end{align}
+and note that they can be combined into $\varphi_\ell = \varphi_\ell^{(+)} + \varphi_\ell^{(-)}$ and satisfy the commutation relations\footnote{$\sum_{n\ge 1} \frac{1}{n} x^n = -\log(1-x)$}
+\begin{align}
+\klb*{\varphi_\ell^{(+)}(x), \varphi_{\ell'}^{(-)}(x')} &= \frac{2\pi}{L} \sum_{q,q'\neq 0} \Theta(\ell q) \Theta(\ell' q') \frac{1}{\sqrt{|qq'|}} \powe{-\frac{\alpha}{2}(|q|+|q'|)} \klb*{\powe{-\i qx} b_q^\dagger, \powe{\i q'x'} b_{q'}} \\
+&= -\frac{2\pi}{L} \sum_{q\neq 0} \frac{1}{|q|} \Theta(\ell q) \Theta(\ell' q) \powe{-\alpha |q|} \powe{-\i q(x-x')} \\
+&= -\delta_{\ell,\ell'} \frac{2\pi}{L} \sum_{q>0} \frac{1}{q} \powe{-\alpha q} \powe{-\i\ell q(x-x')} = -\delta_{\ell,\ell'} \sum_{n_q\ge 1} \frac{1}{n_q} \powe{-n_q \frac{2\pi}{L} \kla*{\alpha + \i\ell (x-x')}} \\
+&= \delta_{\ell,\ell'} \log\klb*{1 - \powe{-\frac{2\pi}{L} \kla*{\alpha + \i\ell(x-x')}}} \simeq \delta_{\ell,\ell'} \log\klb*{\frac{2\pi}{L} \kla*{\alpha + \i\ell (x-x')}}.
+\end{align}
+Note that $\alpha$ is a short-distance cut-off that was introduced to ensure convergence and may safely be taken to zero in some -- but not all -- expressions.
+Thus far we have found
+\begin{align}
+\psi_\ell(x) &= \frac{\eta_\ell}{\sqrt{L}} \powe{\i\ell \frac{2\pi}{L}N_\ell} \powe{-\i\varphi_\ell^{(+)}(x)} \powe{-\i\varphi_\ell^{(-)}(x)} = \frac{\eta_\ell}{\sqrt{L}} \powe{\i\ell \frac{2\pi}{L}N_\ell} \normord{\powe{-\i\varphi_\ell(x)}} = \lim_{\alpha\rightarrow 0} \frac{\eta_\ell}{\sqrt{2\pi\alpha}} \powe{\i\ell \frac{2\pi}{L}N_\ell} \powe{-\i\varphi_\ell(x)}
+\end{align}
+where the second identity introduced a different type of normal-ordering that puts all $b_q^\dagger$ to the left of an expression.
+The third identity can be obtained using the Baker-Campbell-Hausdorff relation $\powe{A}\powe{B} = \powe{A+B}\powe{\frac{1}{2}\klb*{A,B}}$ valid for $\klb*{A,B}\in\mathbb{C}$.
+\\
+The only thing left to show is that the operator identity also holds when applied to an arbitrary state $\Ket{N_+,N_-,\klc*{m_q}}$.
+Before we prove that this is indeed the case note that
+\begin{align}
+\psi_\ell(x) b_q^\dagger &= b_q^\dagger \psi_\ell(x) + \klb*{\psi_\ell(x), b_q^\dagger} = \kla*{b_q^\dagger - a_{q,\ell}^\ast(x)}\psi_\ell(x)
+\end{align}
+which can be readily generalized to hold for arbitrary powers of $b_q^\dagger$ and consequently any function that can be written as a series.
+Here we merely need that
+\begin{align}
+\psi_\ell(x) \Ket{N_\ell,N_{-\ell},\klc*{m_q}} &= \psi_\ell(x) \prod_{q\neq 0} \frac{1}{\sqrt{m_q!}} \kla*{b_q^\dagger}^{m_q} \Ket{N_\ell,N_{-\ell}}_0 \\
+&= \prod_{q\neq 0} \frac{1}{\sqrt{m_q!}} \kla*{b_q^\dagger - a_{q,\ell}^\ast(x)}^{m_q} \psi_\ell(x) \Ket{N_\ell,N_{-\ell}}_0\\
+&= \frac{\eta_\ell}{\sqrt{L}} \powe{-\i\varphi_\ell^{(+)}(x)} \prod_{q\neq 0} \frac{1}{\sqrt{m_q!}} \kla*{b_q^\dagger - a_{q,\ell}^\ast(x)}^{m_q} \powe{-\i\varphi_\ell^{(-)}(x)} \Ket{N_\ell,N_{-\ell}}_0\\
+&=  \frac{\eta_\ell}{\sqrt{L}} \powe{-\i\varphi_\ell^{(+)}(x)} \powe{-\i\varphi_\ell^{(-)}(x)} \prod_{q\neq 0} \frac{1}{\sqrt{m_q!}} \kla*{b_q^\dagger - a_{q,\ell}^\ast(x)}^{m_q} \Ket{N_\ell,N_{-\ell}}_0 \\
+&= \frac{\eta_\ell}{\sqrt{L}} \powe{-\i\varphi_\ell^{(+)}(x)} \powe{-\i\varphi_\ell^{(-)}(x)} \Ket{N_\ell,N_{-\ell},\klc*{m_q}}
+\end{align}
+where we repeatedly inserted the identity
+\begin{align}
+\powe{\i\varphi_\ell^{(-)}(x)} \kla*{b_q^\dagger - a_{q,\ell}^\ast(x)} \powe{-\i\varphi_\ell^{(-)}(x)} &= \kla*{b_q^\dagger - a_{q,\ell}^\ast(x)} + \klb*{\i\varphi_\ell^{(-)}(x), b_q^\dagger} = b_q^\dagger.
+\end{align}
+\TODO{Show that the $\rho_\ell = \frac{-\ell}{2\pi}\partial_x\varphi_\ell$ relation can be derived without invoking the identity itself.}
+\\
+\TODO{Include finite-size effects everywhere. Also include $\kf$-dependence (not for presentation)}
+\\
+Sometimes it is more convenient to work with a different basis defined by $\varphi_\ell \equiv \ell \phi - \theta$.
+\section{Expectation values}
+In this section we want to derive the expectation values we will need to analyse the Green's function of some bosonized model.
+Here we will only consider the Tomonaga-Luttinger liquid -- any sine-Gordon terms will be treated perturbatively.
+In the first subsection we show how to evaluate its fundamental correlation functions and in the second we show how the general expectation values of products of vertex operators can be constructed from those.
+\subsection{The interacting Luttinger liquid}
+Using the chiral fields we can show that
+\begin{align}
+h_{\ell,\ell'} &= \frac{1 }{2\pi}\intx{-L/2}{L/2}{\varnormord{\partial_x\varphi_\ell\partial_x\varphi_{\ell'}}}{x} \\
+&= \frac{1 }{L} \sum_{q,q'\neq 0} \frac{\Theta(\ell q)\Theta(\ell'q')}{\sqrt{|qq'|}} \varnormord{\kla*{-\i q\powe{-\i qx} b_q^\dagger + \i q \powe{\i qx}b_q} \kla*{-\i q'\powe{-\i q'x} b_{q'}^\dagger + \i q' \powe{\i q'x}b_{q'}}}\\
+&= \frac{1 }{L} \sum_{q,q'\neq 0} \frac{\Theta(\ell q)\Theta(\ell'q')}{\sqrt{|qq'|}} qq' \kla*{b_q^\dagger b_{q'} L\delta_{q,q'} - b_q^\dagger b_{q'}^\dagger L\delta_{q,-q'}} + \hc\\
+&= \sum_{q\neq 0} |q|\Theta(\ell q) \klc*{\delta_{\ell,\ell'} b_q^\dagger b_q + \delta_{\ell,-\ell'} b_q^\dagger b_{-q}^\dagger } + \hc
+\end{align}
+and consequently $H_0 = \vf(h_{++} + h_{--})$.
+The general Tomonaga-Luttinger Hamiltonian is defined by
+\begin{align}
+H &= \frac{u}{2\pi} \intx{-L/2}{L/2}{\varnormord{\klb*{K\kla*{\partial_x\theta}^2 + \frac{1}{K} \kla*{\partial_x\phi}^2}}}{x} = \frac{u}{2\pi} \sum_{\ell,\ell'} \frac{1}{4} \intx{-L/2}{L/2}{\varnormord{\klb*{K + \frac{\ell\ell'}{K}} \partial_x\varphi_\ell \partial_x\varphi_{\ell'}}}{x}
+\end{align}
+which we may rewrite in terms of the bosonic operators as
+\begin{align}
+H &= \frac{u}{4} \sum_{\ell,\ell'} \klb*{K + \frac{\ell\ell'}{K}} h_{\ell,\ell'} = \frac{u}{4} \sum_{\ell,q\neq 0} |q|\Theta(\ell q) \klc*{\klb*{K + \frac{1}{K}} b_q^\dagger b_q + \klb*{K - \frac{1}{K}} b_q b_{-q}} + \hc\\
+&= \frac{u}{4} \sum_{q\neq 0} |q| \klc*{2\klb*{K + \frac{1}{K}} b_q^\dagger b_q + \klb*{K - \frac{1}{K}} \kla*{b_q b_{-q} + b_q^\dagger b_{-q}^\dagger}}.
+\end{align}
+We can diagonalize this Hamiltonian via a Bogoliubov transformation
+\begin{align}
+d_q &= c_q b_q + s_q b_{-q}^\dagger
+\end{align}
+where preservation of the canonical commutation relations requires the conditions
+\begin{align}
+\klb*{d_q, d_{q'}} &= c_q s_{-q} - s_q c_{-q} = 0,\\
+\klb*{d_q, d_{q'}^\dagger} &= |c_q|^2 - |s_q|^2 = 1.
+\end{align}
+A set of sufficient conditions for this is $c_{-q} = c_q$, $s_q=s_{-q}$, $c_q^2 - s_q^2 = 1$ and  $c_q,s_q\in\mathbb{R}$.
+The inverse transformation is $b_q = c_qd_q - s_q d_{-q}^\dagger$ and thus
+\begin{align}
+b_q^\dagger b_q &= \kla*{c_qd_q^\dagger - s_q d_{-q}} \kla*{c_qd_q - s_q d_{-q}^\dagger} = c_q^2 d_q^\dagger d_q + s_q^2 d_{-q}^\dagger d_{-q} - c_qs_q d_qd_{-q} - c_qs_q d_q^\dagger d_{-q}^\dagger + \const,\\
+b_q b_{-q} &= \kla*{c_qd_q - s_q d_{-q}^\dagger} \kla*{c_qd_{-q} - s_q d_{q}^\dagger} = c_q^2 d_qd_{-q} + s_q^2 d_q^\dagger d_{-q}^\dagger - c_qs_q d_q^\dagger d_q - c_qs_q d_{-q}^\dagger d_{-q} + \const .
+\end{align}
+In order to cancel all off-diagonal components we require
+\begin{align}
+-2\klb*{K+\frac{1}{K}} c_qs_q + \klb*{K - \frac{1}{K}} \kla*{c_q^2 + s_q^2} &= 0
+\end{align}
+%%WA: (1+2x^2)(K-1/K) = 2x sqrt(1+x^2) (K+1/K)
+%K=0.8; c=(K+1) / 2 / np.sqrt(K); s = (K-1) / 2 / np.sqrt(K)
+%print((c**2+s**2) * (K-1/K) - c*s*2 * (K+1/K))
+%print(2*(c**2+s**2) * (K+1/K) - 4*c*s * (K-1/K))
+which leads to $s_q = \frac{1}{2\sqrt{K}}(K-1)$, $c_q = \frac{1}{2\sqrt{K}} (K+1)$ and
+\begin{align}
+H &= \frac{u}{4} \sum_{q\neq 0} |q| \klc*{2 \klb*{K+\frac{1}{K}} (c_q^2+s_q^2) - 4c_qs_q\klb*{K-\frac{1}{K}}  }d_q^\dagger d_q\\
+&= \frac{u}{4} \sum_{q\neq 0} |q| \klc*{ \klb*{\frac{K^2+1}{K}} \frac{K^2+1}{K} -  \frac{K^2-1}{K} \klb*{\frac{K^2-1}{K}}  }d_q^\dagger d_q = u\sum_{q\neq 0} |q| d_q^\dagger d_q .
+\end{align}
+Interestingly the form of the Hamiltonian has not changed at all.
+Before we continue with the evaluation of expectation values consider the imaginary time evolution
+\begin{align}
+-\partial_\tau d_q &= \klb*{d_q, H} = u |q| \klb*{d_q, d_q^\dagger d_q} = u|q| d_q,\\
+-\partial_\tau d_q^\dagger &= \klb*{d_q^\dagger, H} = u |q| \klb*{d_q^\dagger, d_q^\dagger d_q} = -u|q| d_q^\dagger
+\end{align}
+giving $d_q(\tau) = d_q \powe{-|q|u\tau}$ and $d_q^\dagger = d_q^\dagger \powe{|q|u\tau}$.
+The expectation values of the original operators therefore now take the form
+\begin{align}
+\bra*{\normord{b_q^\dagger(\tau) b_{q'}}} &= \frac{1}{4K}\bra*{\normord{\kla*{(K+1) d_q^\dagger(\tau) - (K-1) d_{-q}(\tau)} \kla*{(K+1) d_{q'} - (K-1) d_{-q'}^\dagger}}}\\
+&= \delta_{q,q'} \frac{1}{4K} \kla*{(K+1)^2 \powe{|q|u\tau} + (K-1)^2\powe{-|q|u\tau}} n_\B(|q|u\beta),\\
+\bra*{\normord{b_q(\tau) b_{q'}^\dagger}} &= \delta_{q,q'} \frac{1}{4K} \kla*{(K+1)^2 \powe{-|q|u\tau} + (K-1)^2\powe{|q|u\tau}} n_\B(|q|u\beta),\\
+\bra*{\normord{b_q(\tau) b_{q'}}} &= \frac{1}{4K}\bra*{\normord{\kla*{(K+1) d_q \powe{-|q|u\tau} - (K-1) d_{-q}^\dagger \powe{|q|u\tau}} \kla*{(K+1) d_{q'} - (K-1) d_{-q'}^\dagger}}}\\
+&= \delta_{q,-q'} \frac{1-K^2}{2K} \cosh\kla*{|q|u\tau}  n_\B(|q|u\beta) = \bra*{\normord{b_q^\dagger(\tau) b_{q'}^\dagger}}.
+\end{align}
+This allows us to evaluate the terms
+\begin{align}
+\tilde{\Phi}_{\ell,\ell'}(x,\tau) &= \bra*{\normord{\varphi_\ell(x,\tau) \varphi_{\ell'}(0)}} = \frac{2\pi}{L} \sum_{q,q'\neq 0} \frac{\Theta(q\ell) \Theta(q'\ell')}{\sqrt{|qq'|}} \bra*{\normord{\kla*{\powe{-\i qx} b_q^\dagger(\tau) + \powe{\i qx} b_q(\tau)} \kla*{b_{q'}^\dagger + b_{q'}}}}\\
+&= \frac{2\pi}{L} \sum_{q\neq 0} \frac{\Theta(q\ell)}{|q|} \bsplit{\klc[\bigg]{&\delta_{\ell,\ell'} \kla*{\frac{(K+1)^2}{2K} \cos\kla*{qx + \i |q|u\tau} + \frac{(K-1)^2}{2K} \cos\kla*{qx - \i |q|u\tau} } \\
+&+ \delta_{\ell,-\ell'} \frac{1 - K^2}{K} \cos(qx) \cosh(|q|u\tau) } n_\B(|q|u\beta). }
+\end{align}
+In order to perform the limit $L\rightarrow \infty$ one should consider the regularized version of this expression
+\begin{align}
+\Phi_{\ell,\ell'}(x,\tau) &= \tilde{\Phi}_{\ell,\ell'}(x,\tau) - \tilde{\Phi}_{\ell,\ell'}(0).
+\end{align}
+For $\ell=\ell'$ this yields\footnote{Here we made use of the identities $\intx{0}{\infty}{t^{x-1} \powe{-at}}{t} = \frac{\Gamma(x)}{a^x}$, $\sum_{n\ge 1} \frac{1}{n} x^n = -\log(1-x)$ and $\prod_{n\ge 1} \kla*{1 - \frac{x^2}{n^2}} = \frac{\sin(\pi x)}{\pi x}$.}
+\begin{align}
+\Phi_{\ell,\ell}(x,\tau) &= \sum_{s=\pm 1} \frac{(K+s)^2}{2K} \intx{0}{\infty}{ \frac{1}{q} \frac{\cos\kla*{\ell qx + \i squ\tau}-1}{\powe{qu\beta} - 1} }{q}\\
+&= \sum_{s=\pm 1} \frac{(K+s)^2}{2K} \intx{0}{\infty}{ \sum_{j\ge 1} \frac{(-1)^j}{(2j)!} \frac{1}{q} q^{2j} \kla*{\ell x + \i su\tau}^{2j} \sum_{m\ge 1} \powe{- qu\beta m} }{q}\\
+&= \sum_{s=\pm 1} \frac{(K+s)^2}{2K} \sum_{m\ge 1} \sum_{j\ge 1} \frac{(-1)^j}{(2j)!} \kla*{\ell x + \i su\tau}^{2j} \frac{\Gamma(2j)}{\kla*{u\beta m}^{2j}}\\
+&= -\sum_{s=\pm 1} \frac{(K+s)^2}{4K} \sum_{m\ge 1} \log\klb*{1 - \frac{(u\tau - \i s\ell x)^2}{(u\beta m)^2}}\\
+&= \sum_{s=\pm 1} \frac{(K+s\ell)^2}{4K} \log \klb*{\frac{\pi (u\tau - \i sx)}{\beta u} \csc\kla*{\frac{\pi (u\tau - \i sx)}{\beta u}}}.
+\end{align}
+For $\ell=-\ell'$ we instead get
+\begin{align}
+\Phi_{\ell,-\ell}(x,\tau) &= \frac{1-K^2}{K} \intx{0}{\infty}{\frac{1}{q} \frac{\cos(qx) \cosh(qu\tau) - 1}{\powe{qu\beta} - 1}}{q}\\
+&= \frac{1-K^2}{K} \sum_{m\ge 1} \intx{0}{\infty}{\intx{0}{\infty}{\powe{-qv} \powe{-qu\beta m} \kla*{\cos(qx) \cosh(qu\tau) - 1}}{q} }{v}\\
+&= \frac{1-K^2}{4K} \sum_{s,s'=\pm 1} \sum_{m\ge 1} \intx{0}{\infty}{ \klb*{\frac{1}{v + u\beta m + su\tau + \i s' x} - \frac{1}{v + u\beta m}} }{v}\\
+&= -\frac{1-K^2}{4K} \sum_{s,s'=\pm 1} \sum_{m\ge 1} \log\klb*{1 + s'\frac{u\tau + \i sx}{u\beta m}}\\
+&= -\frac{1 - K^2}{4K} \sum_{s=\pm 1} \sum_{m\ge 1} \log\klb*{\kla*{1 - \frac{(u\tau - \i sx)^2}{(u\beta m)^2}}}\\
+&= \frac{1-K^2}{4K} \sum_{s=\pm 1} \log \klb*{\frac{\pi (u\tau - \i sx)}{\beta u} \csc\kla*{\frac{\pi (u\tau - \i sx)}{\beta u}}}.
+\end{align}
+Note that these results can be combined to evaluate
+\begin{align}
+\bra*{\normord{\kla*{\phi(z) - \phi(0)}\phi(0)}} &= \frac{1}{4} \sum_{\ell,\ell'} \ell\ell' \Phi_{\ell,\ell'} = \frac{1}{4} \sum_\ell \Phi_{\ell,\ell} - \frac{1}{4} \sum_\ell \Phi_{\ell,-\ell}\\
+&= \frac{1}{4} \sum_{s=\pm 1} \log\klb*{\frac{\pi z_{-s}}{\beta u} \csc\kla*{\frac{\pi z_{-s}}{\beta u}}} \sum_\ell \klc*{\frac{(K+s\ell)^2}{4K} - \frac{1 - K^2}{4K}}\\
+&= \frac{K}{4} \sum_{s=\pm 1} \log\klb*{\frac{\pi z_{-s}}{\beta u} \csc\kla*{\frac{\pi z_{-s}}{\beta u}}} = \frac{K}{2}F_1(z),\\
+\bra*{\normord{\kla*{\theta(z) - \theta(0)}\theta(0)}} &= \frac{1}{4} \sum_{\ell,\ell'} \Phi_{\ell,\ell'} = \frac{1}{4} \sum_\ell \Phi_{\ell,\ell} + \frac{1}{4} \sum_\ell \Phi_{\ell,-\ell}\\
+&= \frac{1}{4} \sum_{s=\pm 1} \log\klb*{\frac{\pi z_{-s}}{\beta u} \csc\kla*{\frac{\pi z_{-s}}{\beta u}}} \sum_\ell \klc*{\frac{(K+s\ell)^2}{4K} + \frac{1 - K^2}{4K}}\\
+&= \frac{1}{4K} \sum_{s=\pm 1} \log\klb*{\frac{\pi z_{-s}}{\beta u} \csc\kla*{\frac{\pi z_{-s}}{\beta u}}} = \frac{1}{2K}F_1(z),\\
+\bra*{\normord{\kla*{\theta(z) - \theta(0)}\phi(0)}} &= \frac{-1}{4} \sum_{\ell,\ell'} \ell' \Phi_{\ell,\ell'} = \frac{-1}{4} \sum_\ell \ell \Phi_{\ell,\ell} + \frac{1}{4} \sum_\ell \ell \Phi_{\ell,-\ell}\\
+&= \sum_{s=\pm 1} \log\klb*{\frac{\pi z_{-s}}{\beta u} \csc\kla*{\frac{\pi z_{-s}}{\beta u}}} \sum_\ell \frac{-\ell}{4} \frac{(K+s\ell)^2}{4K}\\
+&= -\frac{1}{4} \sum_{s=\pm 1} s \log\klb*{\frac{\pi z_{-s}}{\beta u} \csc\kla*{\frac{\pi z_{-s}}{\beta u}}}= \bra*{\normord{\kla*{\phi(z) - \phi(0)}\theta(0)}} = \frac{1}{2} F_2(z).
+\end{align}
+This is the formal way to arrive at the intuitive result that for $K\neq 1$ one merely needs to include a factor of $\sqrt{K}$ for any $\phi$-field and a factor of $\frac{1}{\sqrt{K}}$ in any $\theta$-field when evaluating expectation values.
+With this knowledge in mind it is much less cumbersome to simply remain in the $b_q$ basis and merely make use of this ``replacement rule'' when needed.
+%At this point we should come back to the commutation relations for the $\varphi_\ell$ fields since they now change due to the time evolution.
+%This also means that the bosonization identity has to be revised starting with the new commutation relation
+%\begin{align}
+%\klb*{b_q(\tau), b_{q'}^\dagger(\tau')} &= \frac{1}{K} \klb*{K_+ d_q \powe{-|q|u\tau} - K_- d_{-q}^\dagger \powe{|q|u\tau}, K_+ d_{q'}^\dagger \powe{|q'|u\tau'} - K_- d_{-q'} \powe{-|q'|u\tau'}}\\
+%&= \delta_{q,q'} \frac{1}{K} \kla*{K_+^2\powe{-|q|u(\tau-\tau')} - K_-^2 \powe{|q|u(\tau-\tau')}}
+%\end{align}
+%where we introduced the parameters $K_\pm = \frac{K\pm 1}{2}$.
+%This leads to the commutator
+%\begin{align}
+%\klb*{\varphi_\ell^{(+)}(x,\tau), \varphi_{\ell'}^{(-)}(x',\tau')} &= \frac{2\pi}{L} \sum_{q,q'\neq 0} \frac{\Theta(\ell q) \Theta(\ell' q')}{\sqrt{|qq'|}} \powe{-\frac{\alpha}{2} (|q|+|q'|)} \klb*{\powe{-\i qx} b_q^\dagger(\tau), \powe{\i q'x'} b_{q'}(\tau')} \\
+%&= \frac{-\delta_{\ell,\ell'}}{K} \frac{2\pi}{L} \sum_{q\neq 0} \frac{\Theta(\ell q)}{|q|} \powe{-\alpha |q|} \powe{-\i q(x-x')} \kla*{K_+^2\powe{-|q|u(\tau-\tau')} - K_-^2 \powe{+|q|u(\tau-\tau')}}\\
+%&= -\delta_{\ell,\ell'} \sum_{s=\pm 1} \frac{sK_s^2}{K} \sum_{n_q\ge 1} \frac{1}{n_q} \powe{-n_q \frac{2\pi}{L} \kla*{\alpha + \i \ell (x-x') + su(\tau-\tau')}}\\
+%&= \delta_{\ell,\ell'} \sum_{s=\pm 1} \frac{sK_s^2}{K} \log\klb*{1 - \powe{-\frac{2\pi}{L} \kla*{\alpha + \i\ell (x-x') + su(\tau-\tau')}}}\\
+%&\simeq \delta_{\ell,\ell'} \sum_{s=\pm 1} \frac{sK_s^2}{K} \log\klb*{\frac{2\pi}{L} \kla*{\alpha + \i\ell (x-x') + su(\tau-\tau')}}.
+%\end{align}
+%%The bosonization identity can be rewritten as
+%%\begin{align}
+%%\psi_\ell(x,\tau) &= \frac{1}{\sqrt{L}} \powe{-\i\varphi_\ell^{(+)}(x,\tau)} \powe{-\i\varphi_\ell^{(-)}(x,\tau)} \\
+%%&= \frac{1}{\sqrt{L}} \bsplit{&\powe{\i\sqrt{\frac{2\pi}{L}} \sum_{q\neq 0} \frac{\Theta(\ell q)}{\sqrt{|q|}} \powe{-\i qx} \frac{1}{\sqrt{K}} \kla*{K_+ d_q^\dagger\powe{|q|u\tau} - K_- d_{-q} \powe{-|q|u\tau}} }\\
+%%&\times \powe{\i\sqrt{\frac{2\pi}{L}} \sum_{q\neq 0} \frac{\Theta(\ell q)}{\sqrt{|q|}} \powe{\i qx} \frac{1}{\sqrt{K}} \kla*{K_+ d_q\powe{-|q|u\tau} - K_- d_{-q}^\dagger \powe{|q|u\tau}} }}\\
+%%&= \frac{1}{\sqrt{L}} \normord{\powe{-\i\varphi_\ell(x,\tau)}} \powe{\frac{2\pi}{L} \sum_{q,q'\neq 0} \frac{\Theta(\ell q)\Theta(\ell q')}{\sqrt{|qq'|}} \frac{1}{K} \powe{\i x(q'-q)} K_-^2 \powe{u\tau (|q| - |q'|)} \klb*{d_{-q}, d_{-q'}^\dagger}}\\
+%%&= \frac{1}{\sqrt{L}} \normord{\powe{-\i\varphi_\ell(x,\tau)}} \powe{\frac{2\pi}{L} \frac{K_-^2}{K} \sum_{q\neq 0} \frac{\Theta(\ell q)}{|q|} \powe{-\alpha|q|}}\\
+%%&= \frac{1}{\sqrt{L}} \normord{\powe{-\i\varphi_\ell(x,\tau)}} \powe{\frac{K_-^2}{K} \sum_{n_q\ge 1} \frac{1}{n_q} \powe{-\alpha \frac{2\pi}{L} n_q}}\\
+%%&\simeq \frac{1}{\sqrt{L}} \normord{\powe{-\i\varphi_\ell(x,\tau)}} \powe{-\frac{K_-^2}{K} \log\klb*{\frac{2\pi}{L} \alpha}} = \frac{1}{\sqrt{L}} \klb*{\frac{L}{2\pi\alpha}}^\frac{K_-^2}{K} \normord{\powe{-\i\varphi_\ell(x,\tau)}}.
+%%\end{align}
+\subsection{Free Green's Function}
+The bosonization identity can be expressed in the new basis via
+\begin{align}
+\psi_\ell(x) &= \frac{\eta_\ell}{\sqrt{L}} \normord{\powe{-\i\varphi_\ell(x)}}_{b\text{-basis}} = \frac{\eta_\ell}{\sqrt{L}} \powe{-\i \varphi_\ell^{(+)}(x)} \powe{-\i \varphi_\ell^{(-)}(x)} \\
+&= \frac{\eta_\ell}{\sqrt{L}} \powe{\i \sqrt{\frac{2\pi}{L}} \sum_{q\neq 0} \frac{\Theta(\ell q)}{\sqrt{|q|}} \powe{-\i qx} b_q^\dagger } \powe{\i \sqrt{\frac{2\pi}{L}} \sum_{q\neq 0} \frac{\Theta(\ell q)}{\sqrt{|q|}} \powe{\i qx} b_q}\\
+&= \frac{\eta_\ell}{\sqrt{L}} \powe{\i \sqrt{\frac{2\pi}{L}} \sum_{q\neq 0} \frac{\Theta(\ell q)}{\sqrt{|q|}} \powe{-\i qx} \klb*{\frac{K+1}{2\sqrt{K}} d_q^\dagger - \frac{K-1}{2\sqrt{K}}d_{-q}} } \powe{\i \sqrt{\frac{2\pi}{L}} \sum_{q\neq 0} \frac{\Theta(\ell q)}{\sqrt{|q|}} \powe{\i qx} \klb*{\frac{K+1}{2\sqrt{K}} d_q - \frac{K-1}{2\sqrt{K}}d_{-q}^\dagger}}\\
+&= \frac{\eta_\ell}{\sqrt{L}} \normord{\powe{-\i\varphi_\ell(x)}}_{d\text{-basis}}\powe{\klb*{-\i \sqrt{\frac{2\pi}{L}} \sum_{q\neq 0} \frac{\Theta(\ell q)}{\sqrt{|q|}} \powe{-\i qx} \frac{K-1}{2\sqrt{K}}d_{-q},\  -\i \sqrt{\frac{2\pi}{L}}\sum_{q'\neq 0} \frac{\Theta(\ell q')}{\sqrt{|q'|}} \powe{\i q'x} \frac{K-1}{2\sqrt{K}}d_{-q'}^\dagger}}\\
+&= \frac{\eta_\ell}{\sqrt{L}} \normord{\powe{-\i\varphi_\ell(x)}}_{d\text{-basis}} \powe{-\sum_{q\neq 0} \frac{\Theta(\ell q)}{|n_q|} \frac{(K-1)^2}{4K} \powe{-\alpha |q|}}\\
+&= \frac{\eta_\ell}{\sqrt{L}} \normord{\powe{-\i\varphi_\ell(x)}}_{d\text{-basis}} \powe{- \frac{(K-1)^2}{4K} \sum_{n_q\ge 1} \frac{1}{n_q} \powe{-\alpha n_q \frac{2\pi}{L}}} \\
+&= \frac{\eta_\ell}{\sqrt{L}} \normord{\powe{-\i\varphi_\ell(x)}}_{d} \powe{\frac{(K-1)^2}{4K} \log\klb*{1 - \powe{-\alpha \frac{2\pi}{L}}}} = \frac{\eta_\ell}{\sqrt{L}} \normord{\powe{-\i\varphi_\ell(x)}}_{d} \klb*{\frac{2\pi\alpha}{L}}^\frac{(K-1)^2}{4K}.
+\end{align}
+Evidently when expressed in the new basis the normal-ordering no longer regularizes the result.
+Note that
+\begin{align}
+\normord{\powe{-\i\varphi_\ell(x)}}_d &= \powe{\i \sqrt{\frac{2\pi}{L}} \sum_{q\neq 0} \frac{\Theta(\ell q)}{\sqrt{|q|}} \klb*{\frac{K+1}{2\sqrt{K}} \powe{-\i qx} d_q^\dagger - \frac{K-1}{2\sqrt{K}} \powe{\i qx}d_{-q}^\dagger} } \powe{\i \sqrt{\frac{2\pi}{L}} \sum_{q\neq 0} \frac{\Theta(\ell q)}{\sqrt{|q|}}  \klb*{\frac{K+1}{2\sqrt{K}} \powe{\i qx} d_q - \frac{K-1}{2\sqrt{K}} \powe{-\i qx}d_{-q}}}\\
+&= \powe{-\i\varphi_\ell(x)} \powe{-\frac{1}{2} \frac{2\pi}{L} \sum_{q,q'\neq 0} \frac{\Theta(\ell q)\Theta(\ell q')}{\sqrt{|qq'|}} \klb*{\frac{K+1}{2\sqrt{K}} \powe{-\i qx} d_q^\dagger - \frac{K-1}{2\sqrt{K}} \powe{\i qx}d_{-q}^\dagger, \ \frac{K+1}{2\sqrt{K}} \powe{\i q'x} d_{q'} - \frac{K-1}{2\sqrt{K}} \powe{-\i q'x}d_{-q'}} }\\
+&= \powe{-\i\varphi_\ell(x)} \powe{\frac{1}{2} \sum_{n_q\ge 1} \frac{1}{n_q} \klb*{\frac{(K+1)^2}{4K} - \frac{(K-1)^2}{4K}} \powe{-\alpha \frac{2\pi}{L} n_q}} = \powe{-\i\varphi_\ell(x)} \sqrt{\frac{L}{2\pi\alpha}}
+\end{align}
+is still the same so ``un-normal-ordering'' the identity does not get rid of the $\alpha$-dependence.
+To compute the Green's function we now make use of
+\begin{align}
+\bra*{\powe{C_1} \powe{C_2}} &= \bra*{\powe{C_1 + C_2}} \powe{\frac{1}{2} \klb*{C_1, C_2}} = \powe{\frac{1}{2} \bra*{\kla*{C_1 + C_2}^2}} \powe{\frac{1}{2} \klb*{C_1, C_2}} = \powe{\frac{1}{2} \bra*{C_1^2 + C_2^2} + \bra*{C_1C_2}}
+\end{align}
+for $C_1 = -\i\varphi_\ell(x)$ and $C_2 =\i\varphi_\ell(0)$.
+This gives
+\begin{align}
+\bra*{\psi_\ell(x)\psi_\ell^\dagger(0)} &= \frac{1}{2\pi\alpha} \klb*{\frac{2\pi\alpha}{L}}^\frac{(K-1)^2}{4K} \powe{-\bra*{\varphi_\ell(0)^2} + \bra*{\varphi_\ell(x) \varphi_\ell(0)}} = \dots
+\end{align}
+(\TODO{somehow this is inconsistent...})
+\subsection{General expectation values}
+We will once again consider the expectation values of a Tomonaga-Luttinger liquid described by
+\begin{align}
+H = \frac{u}{2\pi} \intx{-L/2}{L/2}{\varnormord{\klb*{K(\partial_x\theta)^2 + \frac{1}{K} (\partial_x\phi)^2}}}{x}
+\end{align}
+in the limit $L\rightarrow \infty$.
+As was properly derived in the previous subsection, the only effect of $K\neq 1$ lies in the replacement rules
+\begin{align}
+\bra*{\phi(x,\tau)\phi(0)}&\longrightarrow K\bra*{\phi(x,\tau)\phi(0)},\\
+\bra*{\theta(x,\tau)\theta(0)}&\longrightarrow \frac{1}{K}\bra*{\theta(x,\tau)\theta(0)}
+\end{align}
+due to the intuitive transformations $\phi \rightarrow \sqrt{K} \phi$ and $\theta \rightarrow \frac{1}{\sqrt{K}} \theta$.
+Since it is rather inconvenient to actually make this substitution and work with the transformed fields all the way we will now return to the case of $K=1$ and only use the aforementioned identities once we need to evaluate expectation values.
+At this point we introduce the notation $z_\pm = u\tau \pm \i x$ and $z = (z_+,z_-)$ and evaluate the basic correlation functions for $K=1$ given by
+\begin{align}
+\Phi_{\ell,\ell'}(z) &= \bra*{\normord{\kla*{\varphi_\ell(z) - \varphi_\ell(0)} \varphi_{\ell'}(0)}}\\
+&= \frac{2\pi}{L} \sum_{q,q'\neq 0} \frac{\Theta(\ell q) \Theta(\ell' q')}{\sqrt{|qq'|}} \bra*{\normord{ \kla*{\powe{-\i qx + |q|u\tau} b_q^\dagger + \powe{\i qx - |q|u\tau} b_q} \kla*{b_{q'}^\dagger + b_{q'}} }} - \kla*{z=0}\\
+&= 2\delta_{\ell,\ell'} \intx{0}{\infty}{\frac{1}{q} \frac{\cosh\kla*{qz_{-\ell}} - 1}{\powe{qu\beta} - 1}}{q} = \delta_{\ell,\ell'} \log\klb*{\frac{\pi z_{-\ell}}{\beta u} \csc\kla*{\frac{\pi z_{-\ell}}{\beta u}}}.
+\end{align}
+For $K\neq 1$ one then finds the relation
+\begin{align}
+F_\ell(z) &= \bra*{\normord{\kla*{\varphi_\ell(z) - \varphi_\ell(0)} \varphi_\ell(0)}} = \frac{1}{2}\klb*{K + \frac{1}{K}} F_1(z) - \ell F_2(z)
+\end{align}
+where we defined the correlation functions
+\begin{align}
+F_1(z) &= \frac{2}{K}\bra*{\normord{\kla*{\phi(z) - \phi(0)} \phi(0)}} = 2K\bra*{\normord{\kla*{\theta(z) - \theta(0)} \theta(0)}} = \frac{1}{2} \sum_\ell \Phi_{\ell,\ell},\\
+F_2(z) &= 2\bra*{\normord{\kla*{\phi(z) - \phi(0)} \theta(0)}} = 2\bra*{\normord{\kla*{\theta(z) - \theta(0)} \phi(0)}} = -\frac{1}{2}\sum_\ell \ell \Phi_{\ell,\ell}
+\end{align}
+which are consistent with those in the previous subsection.
+This finally leads to the expression\footnote{$K+\frac{1}{K} = \frac{2}{u}$ for $\vf=1$}
+\begin{align}
+F_\ell(z) &= \frac{1}{2} \sum_{s=\pm 1} \klb*{\frac{1}{u} + \ell s} \Phi_{s,s} = \frac{1}{2} \sum_{s=\pm 1} \klb*{\frac{1}{u} - s} \log\klb*{\frac{\pi z_{s\ell}}{\beta u} \csc\kla*{\frac{\pi z_{s\ell}}{\beta u}}}.
+\end{align}
+The last piece of the puzzle is the identity 
+\begin{align}
+\bra*{\normord{\powe{B}}} &= \powe{\frac{1}{2} \bra*{\varnormord{B^2}}}
+\end{align}
+which is valid for any linear combination $B$ of the bosonic operators.
+Note that due to the quadratic nature the type of normal-ordering on the right-hand side is irrelevant.
+\TODO{Prove this relation; I think I have everything needed written somewhere in my notes around 01.09.2023}\\
+The commutation relations for the $\varphi_\ell$-components can be written as
+\begin{align}
+\klb*{\varphi_\ell^{(+)}(z), \varphi_{\ell'}^{(-)}(0)} &= \delta_{\ell\ell'}\log\klb*{\frac{2\pi}{L} z_{-\ell}}.
+\end{align}
+Now we are ready to evaluate the Matsubara Green's function
+\begin{align}
+G_{0,\ell,\ell'}^\M(z) &= -\mathcal{T}\bra*{\psi_\ell(z) \psi_{\ell'}^\dagger(0)} = -\frac{1}{L} \bra*{\normord{\powe{-\i\varphi_\ell(z)}} \normord{\powe{\i\varphi_{\ell'}(0)}}} = -\frac{1}{L} \klb*{\frac{L}{2\pi z_{-\ell}}}^{\delta_{\ell,\ell'}} \bra*{\normord{\powe{-\i\varphi_\ell(z) + \i\varphi_{\ell'}(0)}}}\\
+&= -\frac{1}{L} \klb*{\frac{L}{2\pi z_{-\ell}}}^{\delta_{\ell,\ell'}} \powe{-\frac{1}{2} \bra*{\normord{ \kla*{\varphi_\ell(z) - \varphi_{\ell'}(0)}^2 }}} \\
+&= -\frac{1}{L} \klb*{\frac{L}{2\pi z_{-\ell}}}^{\delta_{\ell,\ell'}} \powe{-\frac{1}{2} \bra*{\normord{\kla*{\varphi_\ell(0)^2 + \varphi_{\ell'}(0)^2 - \varphi_\ell(z) \varphi_{\ell'}(0) - \varphi_{\ell'}(0) \varphi_\ell(z)}}}}\\
+&= -\frac{\delta_{\ell,\ell'}}{2\pi z_{-\ell}} \powe{F_\ell(z)} = -\frac{\delta_{\ell,\ell'}}{2\pi z_{-\ell}} \klb*{\frac{\pi z_\ell}{\beta u} \csc\kla*{\frac{\pi z_\ell}{\beta u}}}^{\frac{1-u}{2u}} \klb*{\frac{\pi z_{-\ell}}{\beta u} \csc\kla*{\frac{\pi z_{-\ell}}{\beta u}}}^{\frac{1+u}{2u}}\\
+&= -\frac{\delta_{\ell,\ell'}}{2\pi} \klb*{\frac{\pi}{\beta u}}^\frac{1}{u} \kla*{z_+ z_-}^\frac{1-u}{2u} \csc\kla*{\frac{\pi z_\ell}{\beta u}}^{\frac{1-u}{2u}} \csc\kla*{\frac{\pi z_{-\ell}}{\beta u}}^{\frac{1+u}{2u}}
+\end{align}
+To first the sine-Gordon potential generates the correction term
+\begin{align}
+G_{1,\ell,\ell'}^\M(z) &= \frac{1}{L^2} \sum_{s=\pm 1} \eta_\ell \eta_s \eta_{-s} \eta_{\ell'} \intx{0}{\beta}{\intr{\bra*{\normord{\powe{-\i\varphi_\ell(z)}}\normord{\powe{-\i\varphi_s(z')}} \normord{\powe{\i\varphi_{-s}(z')}} \normord{\powe{\i\varphi_{\ell'}(0)}}}}{x'} }{\tau'}\\
+&= -\frac{\delta_{\ell,-\ell'}}{L^2} \intx{0}{\beta}{\intr{\bra*{\normord{\powe{-\i\varphi_\ell(z)}}  \normord{\powe{\i\varphi_{\ell}(z')}} \normord{\powe{-\i\varphi_{-\ell}(z')}} \normord{\powe{\i\varphi_{-\ell}(0)}}}}{x'} }{\tau'} \\
+&= -\frac{\delta_{\ell,-\ell'}}{L^2} \intx{0}{\beta}{\intr{ \frac{L}{2\pi (z_{-\ell}' - z_{-\ell})} \frac{L}{-2\pi z_\ell'} \bra*{\normord{\powe{-\i\varphi_\ell(z)+\i\varphi_{\ell}(z')}} \normord{\powe{-\i\varphi_{-\ell}(z')+\i\varphi_{-\ell}(0)}}}}{x'} }{\tau'} \\
+&= -\frac{\delta_{\ell,-\ell'}}{4\pi^2} \intx{0}{\beta}{\intr{\frac{1}{z_\ell' (z_{-\ell} - z_{-\ell}')} \powe{-\frac{1}{2} \bra*{\varnormord{\kla*{\varphi_{\ell}(z) - \varphi_{\ell}(z') + \varphi_{-\ell}(z') - \varphi_{-\ell}(0)}^2} } }}{x'} }{\tau'}\\
+&= -\frac{\delta_{\ell,-\ell'}}{4\pi^2} \int \frac{1}{z_\ell' (z_{-\ell} - z_{-\ell}')} \powe{-\frac{1}{2} \bra*{\varnormord{\kla*{2\varphi_\ell(0)^2 + 2\varphi_{-\ell}(0)^2 - 2\varphi_{\ell}(z)\varphi_{\ell}(z') - \varphi_{-\ell}(z') \varphi_{-\ell}(0)}}}} \,\d z'\\
+&= -\frac{\delta_{\ell,-\ell'}}{4\pi^2} \int \frac{1}{z_\ell' (z_{-\ell} - z_{-\ell}')} \powe{F_\ell(z-z') + F_{-\ell}(z')} \,\d z' = -\delta_{\ell,-\ell} G_{0,\ell,\ell}^\M \ast G_{0,-\ell,-\ell}^\M
+\end{align}
+Since this is a convolution its Fourier transform decomposes into the product
+\begin{align}
+G_{1,\ell,\ell'}^\M(k,\i\omega_n^\F) &= -\delta_{\ell,-\ell'} G_{0,\ell,\ell}^\M(k,\i\omega_n^\F) G_{0,-\ell,-\ell}^\M(k,\i\omega_n^\F)
+\end{align}
+which immediately reveals that $G_1^\M\propto \sigma_x$.
+%To continue we now require the Fourier transform of $G_0^\M$
+%\begin{align}
+%G_{0,\ell,\ell}^\M(k,\i\omega_n^\F) &= -\frac{1}{2\pi} \klb*{\frac{\pi}{\beta u}}^\frac{1}{u} \int \powe{\i\omega_n^\F\tau - \i kx} \kla*{z_+z_-}^\frac{1-u}{2u} \csc\kla*{\frac{\pi z_+}{\beta u}}^\frac{1-\ell u}{2u} \csc\kla*{\frac{\pi z_-}{\beta u}}^\frac{1+\ell u}{2u}\,\d z\\
+%&= -\frac{1}{2\pi} \klb*{\frac{\pi}{\beta u}}^\frac{1}{u} \sum_{n'\in\mathbb{Z}} \intr{ J_0\kla*{\ell(k-k'),\i\omega_{n-n'}^\F; \frac{1-u}{2u}} \partial_{k_+'}^\frac{1-u}{2u} \partial_{k_-'}^\frac{1-u}{2u} \delta_{n',0} \delta(k') }{k'}\\
+%&= -\frac{1}{2\pi} \klb*{\frac{\pi}{\beta u}}^\frac{1}{u} \kla*{\partial_{k_+}\partial_{k_-}}^\frac{1-u}{2u} J_0\kla*{\ell k, \i\omega_n^\F; \frac{1-u}{2u}}.
+%\end{align}
+%At the special point $u=\frac{1}{3}$ we can actually evaluate this to get
+%\begin{align}
+%G_{0,\ell,\ell}^\M(k,\i\omega_n^\F) &= -\frac{1}{2\pi} \klb*{\frac{3\pi}{\beta}}^3 \partial_{k_+}\partial_{k_-} J_0\kla*{\ell \frac{k_+ + k_-}{2}, \frac{k_- - k_+}{2}; 1}.
+%\end{align}
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

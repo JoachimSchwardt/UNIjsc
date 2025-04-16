@@ -1,0 +1,483 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{02 Berry phase and Berry connection}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Topological Insulators and Superconductors}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Problem 2.1: Berry phase for a four-spin loop}
+Consider a path through the four spinor states
+\begin{align}
+\Ket | u_0 \rangle &= \begin{pmatrix}
+1 \\ 0
+\end{pmatrix} &&& \Ket | u_1 \rangle &= \frac{1}{\sqrt{2}}\begin{pmatrix}
+1 \\ 1
+\end{pmatrix} &&& \Ket | u_2 \rangle &= \begin{pmatrix}
+0 \\ 1
+\end{pmatrix} &&& \Ket | u_3 \rangle &= \frac{1}{\sqrt{2}}\begin{pmatrix}
+1 \\ \i
+\end{pmatrix} .
+\end{align}
+We know that, in the discrete setting, the Berry phase is simply related to the quantity
+\begin{align}
+S &:= \prod_{j\in\tecxt\text{loop}} \brak\langle u_j | u_{j+1} \rangle = \brak\langle u_0 | u_1 \rangle\brak\langle u_1 | u_2 \rangle \brak\langle u_2 | u_3 \rangle \brak\langle u_3 | u_0 \rangle = \label{eqn:S discrete Berry phase}\\
+&= \frac{1}{\sqrt{2}}\cdot \frac{1}{\sqrt{2}} \cdot \frac{\i}{\sqrt{2}} \cdot \frac{1}{\sqrt{2}} = \frac{\i}{4}.
+\end{align}
+The Berry phase is then given by $\phi := -\tecxt\text{Im\,}\log S$.
+Note that in general
+\begin{align}
+\log z &= \log r\e^{\i\chi} = \log r + \i\chi + 2\pi\i n,
+\end{align}
+where $n\in\mathbb{Z}$ may be any integer.
+However, since the Berry phase is only defined modulo $2\pi$, we may write
+\begin{align}
+\phi &= -\tecxt\text{Im\,}\log S = -\tecxt\text{Im\,} |S| -\tecxt\text{Im\,}\i\arg S = -\arg S.
+\end{align}
+Since in our case $\arg S = \frac{\pi}{2}$, we find $\phi = -\frac{\pi}{2}$.
+%\begin{align}
+%\phi &= -\tecxt\text{Im\,}\log \frac{\i}{4} = -\tecxt\text{Im\,}\log \i = -\tecxt\text{Im\,}\i\frac{\pi}{2} = -\frac{\pi}{2}.
+%\end{align}
+
+\newpage
+\section*{Problem 2.2: Two-dimensional massive Dirac Hamiltonian}
+Consider the two-dimensional massive Dirac Hamiltonian
+\begin{align}
+H(k_x,k_y) &= m\tau_z + k_x\tau_x + k_y\tau_y.
+\end{align}
+Since $(\vec{A}\cdot\vec{\tau})^2 = \vec{A}\,^2$, we find the eigenvalues 
+\begin{align}
+\epsilon_\pm &= \pm\sqrt{H^2} = \pm\sqrt{m^2 + \vec{k}^2},
+\end{align}
+where $\vec{k} := (k_x, k_y)^\top$.
+The eigenstates $\Ket | \pm \rangle := (a, b)^\top$ are found by solving the system of equations
+\begin{align}
+H\Ket | \pm \rangle &= \begin{pmatrix}
+ma + (k_x-\i k_y)b \\ (k_x + \i k_y)a - mb
+\end{pmatrix} \overset{!}{=} \epsilon_\pm\Ket | \pm \rangle = \epsilon_\pm \begin{pmatrix}
+a \\ b
+\end{pmatrix}.
+\end{align}
+The second row yields
+\begin{align}
+b &= \frac{k_x + \i k_y}{m + \epsilon_\pm} a,
+\end{align}
+which leads to the eigenstates 
+\begin{align}
+\Ket | \pm \rangle &= N_\pm \begin{pmatrix}
+m + \epsilon_\pm \\ k_x + \i k_y
+\end{pmatrix}.
+\end{align}
+The normalization constant is
+\begin{align}
+N_\pm^2 &= (m+\epsilon_\pm)^2 + (k_x^2 + k_y^2) = 2\epsilon_\pm\kla\left( m + \epsilon_\pm \right).
+\end{align}
+Thus the eigenstates can be expressed as
+\begin{align}
+\Ket | \pm \rangle &= \frac{1}{\sqrt{2\epsilon (m \pm \epsilon)}} \begin{pmatrix}
+m \pm \epsilon \\ k_x + \i k_y
+\end{pmatrix},
+\end{align}
+where $\epsilon := |\epsilon_\pm| = \sqrt{m^2 + \vec{k}^2}$.
+The Berry connection is given by
+\begin{align}
+\vec{A} &:= \braket\langle \pm | \i\partial_{\vec{k}} | \pm \rangle,
+\end{align}
+where we may interpret our two-dimensional setting as one of complex variables.
+Then we can express the Berry connection as
+% the components are
+%\begin{align}
+%A_1 &= \frac{1}{\epsilon (m\pm \epsilon)} \begin{pmatrix}
+%m\pm\epsilon & k_x -\i k_y
+%\end{pmatrix} \i\partial_{k_x} \begin{pmatrix}
+%m\pm\epsilon \\ k_x +\i k_y
+%\end{pmatrix} = \frac{k_y + \i k_x}{\epsilon (m\pm \epsilon)}, \\
+%A_2 &= \frac{1}{\epsilon (m\pm \epsilon)} \begin{pmatrix}
+%m\pm\epsilon & k_x -\i k_y
+%\end{pmatrix} \i\partial_{k_y} \begin{pmatrix}
+%m\pm\epsilon \\ k_x +\i k_y
+%\end{pmatrix} = \frac{\i k_y -  k_x}{\epsilon (m\pm \epsilon)}.
+%\end{align}
+\begin{align}
+A(k) &= \braket\langle \pm | \i\partial_k | \pm \rangle = \frac{1}{2\epsilon (m\pm \epsilon)} \begin{pmatrix}
+m\pm\epsilon & k^\ast
+\end{pmatrix} \i\partial_{k} \begin{pmatrix}
+m\pm\epsilon \\ k
+\end{pmatrix} = \\
+&= \frac{\i }{2\epsilon (m\pm \epsilon)}\kla\left( (m\pm \epsilon)\frac{\pm k}{\epsilon} +  k^\ast \right) = \frac{\pm\i k}{2\epsilon^2} + \frac{\i k^\ast}{2\epsilon (m\pm\epsilon)}.
+\end{align}
+Let $k(t)=k\e^{\i t}$ for $t\in[0,1)$ be a circular loop with radius $k$ in the parameter space. 
+Then we may compute the Berry phase via
+\begin{align}
+\phi &= \oint A(k)\,\tecxt\text{d}k = \intx\int_{0}^{2\pi} A(t) \,\i k(t) \mathrm{d}t = \\
+&= \intx\int_{0}^{2\pi}\frac{\mp k^2}{2\epsilon^2} \underbrace{\e^{2\i t}}_{\rightarrow\, 0}\, \mathrm{d}t +  \frac{-1}{2\epsilon (m\pm \epsilon)}\intx\int_{0}^{2\pi} |k|^2\, \mathrm{d}t = \\
+&= -\frac{\pi |k|^2 (m\mp \epsilon)}{\epsilon (m^2 - \epsilon^2)} = \frac{\pi (m\mp \epsilon)}{\epsilon} = \pi \kla\left( \frac{m}{\sqrt{m^2 + |k|^2}} \mp 1 \right).
+\end{align}
+Now we will use the second approach to compute the same result.
+Note that the Berry curvature is here given by a pseudo-cross product, i.e. only the $k_z$-component 
+\begin{align}
+\Omega(\vec{k}) &= |\partial_{\vec{k}}\times \vec{A}(\vec{k})| = |\partial_{k_x} A_y - \partial_{k_y} A_x |.
+\end{align}
+We will first compute the partial derivatives of our eigenstates
+\begin{align}
+\partial_{k_x}\Ket | \pm \rangle &= \partial_{k_x}\frac{1}{\sqrt{2\epsilon(m\pm\epsilon)}} \begin{pmatrix}
+m\pm \epsilon \\ k_x + \i k_y 
+\end{pmatrix} = \\
+&= -\frac{\partial_{k_x}\epsilon}{2\epsilon}\Ket | \pm \rangle - \frac{\partial_{k_x}(m\pm \epsilon)}{2(m\pm \epsilon)}\Ket | \pm \rangle + \frac{1}{\sqrt{2\epsilon(m\pm\epsilon)}} \begin{pmatrix}
+0 \\ 1
+\end{pmatrix} = \\
+&= -\frac{1}{2}\kla\left( \frac{k_x}{\epsilon^2} \pm \frac{k_x}{\epsilon(m\pm \epsilon)} \right)\Ket | \pm \rangle + \frac{1}{\sqrt{2\epsilon(m\pm\epsilon)}} \begin{pmatrix}
+0 \\ 1
+\end{pmatrix},\\
+\partial_{k_y}\Ket | \pm \rangle &= -\frac{1}{2}\kla\left( \frac{k_y}{\epsilon^2} \pm \frac{k_y}{\epsilon(m\pm \epsilon)} \right)\Ket | \pm \rangle + \frac{1}{\sqrt{2\epsilon(m\pm\epsilon)}} \begin{pmatrix}
+0 \\ \i
+\end{pmatrix}.
+\end{align}
+Then the Berry curvature can be obtained from
+\begin{align}
+\Omega &= 2\tecxt\text{Im\,}\brak\langle \partial_{k_x}\pm | \partial_{k_y}\pm \rangle = \\
+&= \frac{1}{\epsilon (m\pm\epsilon)} - \frac{k_x^2+k_y^2}{\epsilon^2}\kla\left( 1\pm \frac{\epsilon}{m\pm\epsilon} \right)\frac{1}{\sqrt{2\epsilon(m\pm\epsilon)}^2} = \\
+&= -\frac{k^2}{2\epsilon^3(m\pm\epsilon)}\kla\left( 1 \pm \frac{\epsilon}{m\pm\epsilon} - \frac{2\epsilon^2}{k^2} \right) = \\
+&= -\frac{1}{2\epsilon^3(m\pm \epsilon)}\kla\left( k^2 - 2\epsilon^2 \pm \frac{\epsilon (\epsilon^2 - m^2)}{m\pm\epsilon} \right) = \\
+&= \frac{1}{2\epsilon^3(m\pm \epsilon)^2} \kla\left( (\epsilon^2 + m^2)(m\pm\epsilon) \mp\epsilon(\epsilon^2-m^2) \right) = \\
+&= \frac{1}{2\epsilon^3(m\pm \epsilon)^2} \kla\left( m^3\pm 2m^2\epsilon + m\epsilon^2 \right) = \frac{m}{2\epsilon^3} .
+\end{align}
+This is just the $z$-component of the general formula $\vec{\Omega} = \frac{\vec{d}}{2d^3}$, which would have been a much faster approach.
+%It is more convenient to express $A(k)$ as a vector here, i.e. 
+%\begin{align}
+%\vec{A} &= \frac{\i}{2\epsilon^2(m\pm \epsilon)}\begin{pmatrix}
+%\pm k_x(m\pm\epsilon) + k_x\epsilon \\ 
+%\pm k_y(m\pm\epsilon) - k_y\epsilon
+%\end{pmatrix} = \frac{\i}{2\epsilon^2(m\pm \epsilon)}\begin{pmatrix}
+%\pm k_x m + 2k_x\epsilon \\ 
+%\pm k_ym
+%\end{pmatrix} = \\
+%&= \frac{\pm\i}{2\epsilon^2}\begin{pmatrix}
+% k_x \\ 0
+%\end{pmatrix} + \frac{\i}{2\epsilon^2(\epsilon\pm m)} \begin{pmatrix}
+%\pm k_x\epsilon \\ 
+%k_ym
+%\end{pmatrix}.
+%\end{align}
+%Then using $\epsilon^2 = m^2+k_x^2+k_y^2$ the Berry curvature becomes
+%\begin{align}
+%\Omega &= \left\vert \partial_{k_x} \frac{ k_ym}{2\epsilon^2( \epsilon \pm m)} - \partial_{k_y} \frac{\pm k_x}{2\epsilon^2} - \partial_{k_y} \frac{\pm k_x\epsilon}{2\epsilon^2( \epsilon \pm m)} \right\vert = \\
+%&= \left\vert \frac{\pm k_xk_y}{\epsilon^4} - \frac{k_xk_y (m\mp\epsilon)}{\epsilon^4(\epsilon\pm m)} + \frac{k_xk_y (-m\mp \epsilon)}{2\epsilon^3(\epsilon\pm m)^2} \mp \frac{k_xk_y}{2\epsilon^3(\epsilon\pm m)} \right\vert = \\
+%&= \frac{k_xk_y}{2\epsilon^4}\left\vert 2 + \frac{2(\epsilon^2 - m^2)}{(\epsilon\pm m)^2} - \frac{\epsilon}{\epsilon\pm m} - \frac{\epsilon}{\epsilon\pm m} \right\vert = \\
+%&= \frac{k_xk_y}{\epsilon^4(\epsilon\pm m)^2}\left\vert (\epsilon\pm m)^2 + \epsilon^2 - m^2 - \epsilon (\epsilon\pm m) \right\vert = \\
+%&= \frac{k_xk_y}{2\epsilon^4(\epsilon\pm m)^2}\left\vert \epsilon^2 \pm \epsilon m \right\vert = \\
+%&= \frac{m}{2\epsilon^3}  \left\vert \frac{k_xk_y}{m(\epsilon\pm m)} \right\vert.
+%\end{align}
+%The literature gives this result without the complicated absolute value factor.
+Then the Berry phase is given by an integral over the surface, corresponding to the boundary $k(t)$ used above.
+The integral can most easily be evaluated in polar $k$-coordinates, since there is no angular dependence.
+This yields
+\begin{align}
+\phi &= \intx\int_{ }^{ }\Omega(k)\, 2\pi k\mathrm{d}k = 2\pi\intx\int_{0}^{k} \frac{m}{2\epsilon(k')^3}\, k'\mathrm{d}k' = \pi m\intx\int_{0}^{k}\frac{k'}{\kla\left( m^2 + k'^2 \right)^{3/2}}\, \mathrm{d}k' = \\
+&= -\pi m\kla\left( m^2 + k'^2 \right)^{-1/2}\Big\vert_0^k  = \pi \kla\left( 1 - \frac{m}{\epsilon} \right).
+\end{align}
+Note that this is not quite equivalent to the previous expression, so there must be some mistake along the way, but there is most likely just some error/confusion with the $\pm$ signs.
+
+%We may again reinterpret this as a complex derivative, since $\partial_z f(z) = \partial_x\tecxt\text{Re\,}f + \i\partial_y\tecxt\text{Im\,}f$.
+%Note that $A_x\equiv \tecxt\text{Re\,}A$ and $A_y \equiv \tecxt\text{Im\,}A$.
+%Using the Cauchy-Riemann equations $\partial_x\tecxt\text{Re\,}f = \partial_y\tecxt\text{Im\,}f$ and $\partial_y\tecxt\text{Re\,}f = -\partial_x\tecxt\text{Im\,}f$ we find
+%\begin{align}
+%\Omega (k) &\equiv \partial_{k_x}\tecxt\text{Im\,}A(k) - \partial_{k_y}\tecxt\text{Re\,}A(k) = \partial_{k_x}\tecxt\text{Im\,}A(k) + \partial_{k_y}\tecxt\text{Im\,}A(k) \equiv \left\vert\partial_k A(k)\right\vert.
+%\end{align}
+
+
+
+\newpage
+\section*{Problem 2.3: Berry phase in a magnetic field}
+Consider a spin-1/2 particle in a uniform magnetic field $\vec{B} = B\vec{n}$. 
+Its Hamiltonian is given by
+\begin{align}
+H &= -\gamma\vec{B}\cdot \vec{S} = -\frac{\gamma\hbar B}{2}\vec{n}\cdot\vec{\tau}.
+\end{align}
+Note that $\vec{n}  =(\cos\phi\sin\theta, \sin\phi\sin\theta, \cos\theta)^\top$, which lets us express the Hamiltonian in spherical coordinates
+\begin{align}
+H &= -\frac{\gamma\hbar B}{2} \kla\left( \cos\phi\sin\theta\tau_x + \sin\phi\sin\theta\tau_y + \cos\theta\tau_z \right).
+\end{align}
+Let $\Ket | \uparrow_{\vec{n}} \rangle = (a, b)^\top$ be the eigenstates of $H$ with eigenvalue $\lambda_{\vec{n}}$.
+Note that the eigenvalues are simply found by
+\begin{align}
+H^2 &= \kla\left( \frac{\gamma\hbar B}{2} \right)^2 \underbrace{(\vec{n}\cdot\vec{\tau})^2}_{=\,\vec{n}\,^2\,=\, 1} = \lambda_{\vec{n}}^2 &&\Rightarrow & \lambda_{\vec{n}} &= \pm \frac{\gamma\hbar B}{2}.
+\end{align}
+The spin-up state can thus be found by solving the system of equation given by 
+\begin{align}
+H\Ket | \uparrow_{\vec{n}} \rangle &=  -\frac{\gamma\hbar B}{2} \begin{pmatrix}
+\cos\theta a + \sin\theta \e^{-\i\phi}b \\
+\sin\theta\e^{\i\phi} a - \cos\theta b
+\end{pmatrix} \overset{!}{=} \lambda_{\vec{n}}\Ket | \uparrow_{\vec{n}} \rangle = \frac{\gamma\hbar B}{2}\begin{pmatrix}
+a \\ b
+\end{pmatrix}.
+\end{align}
+The second row gives us the relation 
+\begin{align}
+b =  a \e^{\i\phi} \frac{\sin\theta}{1 + \cos\theta}  =  a \e^{\i\phi}  \frac{2\sin\frac{\theta}{2}\cos\frac{\theta}{2}}{ 2\cos^2\frac{\theta}{2}} =  a \e^{\i\phi} \tan\frac{\theta}{2}.
+\end{align}
+%for $\lambda_{\vec{n}} = -\frac{\gamma\hbar B}{2}$ the second row gives us 
+%\begin{align}
+%b =  a \e^{\i\phi} \frac{\sin\theta}{-1 + \cos\theta}  =  a \e^{\i\phi}  \frac{2\sin\frac{\theta}{2}\cos\frac{\theta}{2}}{ -2\sin^2\frac{\theta}{2}} =  -a \e^{\i\phi} \cot\frac{\theta}{2}.
+%\end{align}
+%Inserting into the first row yields
+%\begin{align}
+%\cos\theta + \sin\theta\tan\theta &= \lambda_{\vec{n}} &&\Rightarrow & 1 &= \lambda_{\vec{n}}\cos\theta.
+%\end{align}
+%Thus we obtain the eigenvalues as $\lambda_{\vec{n}} = \frac{1}{\cos\theta}$.
+Thus we can write our eigenstates as
+\begin{align}
+\Ket | \uparrow_{\vec{n}} \rangle &\propto \begin{pmatrix}
+1 \\ \e^{\i\phi}\tan\theta/2
+\end{pmatrix},
+\end{align}
+where the expression currently has a squared magnitude of
+\begin{align}
+N_+^2 &= 1 + \tan^2\frac{\theta}{2} = \frac{1}{\cos^2\frac{\theta}{2}} .
+\end{align}
+%respectively. && \tecxt\text{and} & N_-^2 &= 1 + \cot^2\frac{\theta}{2} = \frac{1}{\sin^2\frac{\theta}{2}}
+Normalizing then yields
+\begin{align}
+\Ket | \uparrow_{\vec{n}} \rangle &= \begin{pmatrix}
+\cos\frac{\theta}{2} \\ \e^{\i\phi}\sin\frac{\theta}{2}
+\end{pmatrix}.
+\end{align}
+Next, consider $N$ states $\Ket | \uparrow_j \rangle := \Ket | \uparrow_{\vec{n}(\phi_j)} \rangle$ with equidistant values of $\phi_j := \frac{2\pi j}{N}$ for $j = 0,\dots,N-1$ for a fixed $\theta$.
+We want to compute the Berry phase, and for that matter once again start with the product formula \eqref{eqn:S discrete Berry phase}
+\begin{align}
+S &= \prod_{j=0}^{N-1} \brak\langle \uparrow_j | \uparrow_{j+1} \rangle =  \prod_{j=0}^{N-1} \cos^2\frac{\theta}{2} + \kla\left( \e^{-\i\phi_j}\e^{\i\phi_{j+1}} \right) \sin^2\frac{\theta}{2} = \\
+&= \prod_{j=0}^{N-1} \cos^2\frac{\theta}{2} + \e^{\i \frac{2\pi}{N}} \sin^2\frac{\theta}{2} = \kla\left( \cos^2\frac{\theta}{2} + \e^{\i \frac{2\pi}{N}} \sin^2\frac{\theta}{2} \right)^N.
+\end{align}
+Now the berry phase is given by
+\begin{align}
+\phi &= -\tecxt\text{Im\,}\log S = -N\tecxt\text{Im\,} \log\kla\left( \cos^2\frac{\theta}{2} + \e^{\i \frac{2\pi }{N}} \sin^2\frac{\theta}{2} \right) = \\
+&= -N \arg\kla\left( \cos^2\frac{\theta}{2} + \cos\frac{2\pi }{N} \sin^2\frac{\theta}{2}  + \i\sin\frac{2\pi}{N}\sin^2\frac{\theta}{2} \right) = \\
+&= -N \arctan\kla\left( \frac{\sin\frac{2\pi }{N}\sin^2\frac{\theta}{2}}{\cos^2\frac{\theta}{2} + \cos\frac{2\pi }{N}\sin^2\frac{\theta}{2}} \right).
+\end{align}
+In the limit $N\rightarrow\infty$ we find $\cos\frac{2\pi}{N}\rightarrow 1 + \mathcal{O}\kla\left( \frac{1}{N^2} \right)$ and $\sin\frac{2\pi}{N}\rightarrow \frac{2\pi}{N} + \mathcal{O}\kla\left( \frac{1}{N^3} \right)$.
+Thus, using $\arctan(x) \rightarrow x + \mathcal{O}(x^3)$, we may write (not completely rigorously)
+\begin{align}
+\lim_{N\rightarrow\infty} \phi &= -\lim_{N\rightarrow\infty}N\arctan\kla\left( \frac{\frac{2\pi }{N}\sin^2\frac{\theta}{2} + \mathcal{O}\kla\left( \frac{1}{N^3} \right)}{\cos^2\frac{\theta}{2} + \sin^2\frac{\theta}{2} + \mathcal{O}\kla\left( \frac{1}{N^2} \right)} \right) = \\
+&= -\lim_{N\rightarrow\infty} N\arctan\kla\left( \frac{2\pi}{N}\sin^2\frac{\theta}{2} \right) = \\
+&= -\lim_{N\rightarrow\infty} N \frac{2\pi}{N}\sin^2\frac{\theta}{2} + \mathcal{O}\kla\left( \frac{1}{N^2} \right) = -2\pi\sin^2\frac{\theta}{2}.
+\end{align}
+
+Now consider the continuous case.
+We have two parameters, denoted as $R_1 := \theta$ and $R_2 := \phi$.
+Also let $\vec{R} := (R_1,R_2)^\top$.
+Then the Berry connection/potential $\vec{A} = (A_1, A_2)^\top$ is defined by
+\begin{align}
+A_1 &:= \braket\langle \uparrow_{\vec{n}} | \i\partial_{R_1} | \uparrow_{\vec{n}} \rangle = \begin{pmatrix}
+\cos\frac{\theta}{2} & \e^{-\i\phi}\sin\frac{\theta}{2}
+\end{pmatrix} \i\partial_\theta\begin{pmatrix}
+\cos\frac{\theta}{2} \\ \e^{\i\phi}\sin\frac{\theta}{2}
+\end{pmatrix} = \\
+&= \i\kla\left( -\cos\frac{\theta}{2}\sin\frac{\theta}{2} + \sin\frac{\theta}{2}\cos\frac{\theta}{2} \right) = 0, \\
+A_2 &:= \braket\langle \uparrow_{\vec{n}} | \i\partial_{R_2} | \uparrow_{\vec{n}} \rangle = \begin{pmatrix}
+\cos\frac{\theta}{2} & \e^{-\i\phi}\sin\frac{\theta}{2}
+\end{pmatrix} \i\partial_\phi\begin{pmatrix}
+\cos\frac{\theta}{2} \\ \e^{\i\phi}\sin\frac{\theta}{2}
+\end{pmatrix} = \\
+&= \i\kla\left( 0 + \i\sin^2\frac{\theta}{2}  \right) = -\sin^2\frac{\theta}{2}.
+\end{align}
+Now let $t\in [0,2\pi)$, i.e. $\tecxt\text{d}\vec{R} = (0, \tecxt\text{d}t)^\top$ (since $\theta$ is fixed, we have $\tecxt\text{d}\theta = 0$).
+Then the Berry phase for this particular loop is given by
+\begin{align}
+\phi &= \int_{0}^{2\pi} \vec{A} \cdot \mathrm{d}\vec{R} = \int_{0}^{2\pi} -\sin^2\frac{\theta}{2}\, \mathrm{d}t = -2\pi\sin^2\frac{\theta}{2},
+\end{align}
+which is exactly what we found in the limit of our discrete solution.
+The berry curvature is given by
+\begin{align}
+\Omega &= \partial_{R_1}A_2 - \partial_{R_2}A_1 = \partial_\theta \kla\left( -\sin^2\frac{\theta}{2} \right) = -2\sin\frac{\theta}{2}\cos\frac{\theta}{2} \cdot \frac{1}{2} = -\frac{1}{2}\sin\theta.
+\end{align}
+
+\newpage
+\section*{Problem 2.4: The anisotropic QWZ model}
+The lattice Hamiltonian of the anisotropic Qi-Wu-Zhang (QWZ) model is 
+%\begin{align*}
+%H &= -\eta\sum_{j=1}^{N-1}\sum_{k=1}^N\frac{\tau_{\alpha\beta}^z + \i\tau_{\alpha\beta}^x}{2}c_{j+1,k,\alpha}^\dagger c_{j,k,\beta} + \tecxt\text{h.c.} - \\
+%&\hspace{0.5cm} - \sum_{j=1}^{N-1}\sum_{k=1}^N\frac{\tau_{\alpha\beta}^z + \i\tau_{\alpha\beta}^x}{2}c_{j,k+1,\alpha}^\dagger c_{j,k,\beta} + \tecxt\text{h.c.} + \\
+%&\hspace{0.5cm} + u\sum_{j=1}^{N}\sum_{k=1}^N\tau_{\alpha\beta}^zc_{j,k,\alpha}^\dagger c_{j,k,\beta} \numberthis.
+%\end{align*}
+\begin{align*}
+H &= -\eta\sum_{m_x=1}^{N-1}\sum_{m_y=1}^N\oper | m_x+1,m_y \rangle\langle m_x,m_y |\otimes\frac{\tau_z + \i\tau_x}{2} + \tecxt\text{h.c.} - \\
+&\hspace{0.5cm} - \sum_{m_x=1}^{N-1}\sum_{m_y=1}^N\oper | m_x,m_y+1 \rangle\langle m_x,m_y |\otimes\frac{\tau_z + \i\tau_y}{2} + \tecxt\text{h.c.} + \\
+&\hspace{0.5cm} + u\sum_{j=1}^{N}\sum_{k=1}^N\oper | m_x,m_y \rangle\langle m_x,m_y |\otimes\tau_z \numberthis.
+\end{align*}
+We can introduce momentum operators to express the annihilation operators
+\begin{align}
+\Ket | m_x,m_y \rangle &= \frac{1}{\sqrt{N}}\sum_{k_x,k_y} \e^{\i k_x a m_x + \i k_y am_y}\Ket | k_x,k_y \rangle.
+\end{align}
+Inserting this into the Hamiltonian yields
+\begin{align*}
+H &= -\frac{1}{N}\sum_{k_x,k_x',k_y,k_y',m_x,m_y}\e^{\i (k_x-k_x') a m_x + \i (k_y-k_y') am_y}\oper | k_x,k_y \rangle\langle k_x',k_y' |\otimes\\
+&\hspace{0.7cm} \otimes \kla\left( \eta\e^{\i k_xa}\frac{\tau_z + \i\tau_x}{2} + \e^{\i k_ya}\frac{\tau_z + \i\tau_y}{2} + \tecxt\text{h.c.} + u\tau_z\right) =  \numberthis\\
+&= -\sum_{k_x,k_y} \oper | k_x,k_y \rangle\langle k_x,k_y | \otimes\\
+&\hspace{0.7cm}  \otimes \kla\Big( \tau_z\klam\left[ u + \eta\cos(k_xa) + \cos(k_ya) \right] + \eta\tau_x\sin(k_xa) + \tau_y\sin(k_ya) \Big). \numberthis
+\end{align*}
+We find the Hamiltonians 
+\begin{align}
+H(k_x,k_y) &= \braket\langle k_x,k_y | H | k_x,k_y \rangle = \\
+&= \tau_z\klam\left[ u + \eta\cos(k_xa) + \cos(k_ya) \right] + \eta\tau_x\sin(k_xa) + \tau_y\sin(k_ya) =: \vec{d}\cdot\vec{\tau},
+\end{align}
+which lead to the energy bands
+\begin{align}
+E(k_x,k_y) &= \pm |\vec{d}| = \pm \sqrt{\eta^2\sin^2(k_xa) + \sin^2(k_ya) + \klam\left[ u + \eta\cos(k_xa) + \cos(k_ya) \right]^2}.
+\end{align}
+We know that the Chern number can only change, when $\vec{d}=0$.
+This leads to the equations
+\begin{align}
+0 &= \begin{pmatrix}
+\eta\sin(k_xa) \\ \sin(k_ya) \\ u + \eta\cos(k_xa) + \cos(k_ya)
+\end{pmatrix},
+\end{align}
+which has several solutions listed in table \ref{table:chern d vec zero crossings}.
+\begin{table}[!ht]
+\centering
+\begin{tabular}{c|c||c}
+$k_xa$ & $k_ya$ & $u(\eta)$ \\ \hline
+0 & 0 & $-1-\eta$ \\ \hline
+$\pi$ & 0 & $-1+\eta$ \\ \hline
+0 & $\pi$ & $1-\eta$ \\ \hline
+$\pi$ & $\pi$ & $1+\eta$ \\
+\end{tabular}
+\caption{Momenta corresponding to zero-crossings of $\vec{d}(k_x,k_y)$ lead to different values of the parameter $u$ as a function of $\eta$.}
+\label{table:chern d vec zero crossings}
+\end{table}
+\\
+In the resulting $u,\eta$ parameter space, we find that there may in principle be
+\begin{itemize}
+\item[1)] five different values of $Q(u)$ for $|\eta| > 1$
+\item[2)] four different values of $Q(u)$ for $|\eta| = 1$
+\item[3)] five different values of $Q(u)$ for $|\eta| < 1$
+\item[4)] three different values of $Q(u)$ for $\eta = 0$.
+\end{itemize}
+
+%eta = np.linspace(-2,2,400)
+%u1 = 1 + eta
+%u2 = 1 - eta
+%u3 = -1 + eta
+%u4 = -1 - eta
+%uarr = np.array([u1, u2, u3, u4])
+%fig, ax = plt.subplots()
+%for i, u in enumerate(uarr):
+%    ax.plot(eta, u, label=f"$u_{{{i}}}(\\eta)$")
+%ax.legend()
+
+However, the Chern number is zero in the outermost region in each case, since those correspond to a non-zero band gap.
+Thus we are really only interested in one, two or at most three values of $Q$.
+\\
+Generally, the Chern number can be computed using the representation of the Berry curvature as
+\begin{align}
+\vec{\Omega} &= \frac{\vec{d}}{2d^3},
+\end{align}
+and integrating over the Brillouin-zone with normal vector $\vec{n} = (0,0,1)^\top$
+\begin{align}
+Q &= \frac{1}{2\pi}\intx\int_{\tecxt\text{BZ}}^{ }\vec{\Omega}\cdot\mathrm{d}\vec{S} = \frac{1}{2\pi} \intx\int_{\tecxt\text{BZ}}^{ } \frac{d_z}{2d^3}\, \mathrm{d}k_x \tecxt\text{d}k_y = \\
+&= \frac{1}{\pi}\intx\int_{0}^{\pi}\intx\int_{0}^{\pi}\frac{u + \eta\cos x + \cos y}{\kla\left( \eta^2\sin^2x + \sin^2y + \klam\left[ u + \eta\cos x + \cos y \right]^2 \right)^{3/2}}\, \mathrm{d}x \mathrm{d}y = \\
+&= -\frac{1}{\pi} \partial_u\intx\int_{0}^{\pi}\intx\int_{0}^{\pi} \frac{1}{\sqrt{\eta^2\sin^2x + \sin^2y + \klam\left[ u + \eta\cos x + \cos y \right]^2}} \, \mathrm{d}x \mathrm{d}y = \\
+&= -\frac{1}{\pi} \partial_u\intx\int_{0}^{\pi}\intx\int_{0}^{\pi} \frac{1}{\sqrt{\eta^2 + u^2 + 1 + 2u (\eta\cos x + \cos y) + 2\eta\cos x\cos y}} \, \mathrm{d}x \mathrm{d}y = \\
+&= ???.
+\end{align}
+Let $v=\cos x$ and $w=\cos y$.
+Then we find
+\begin{align}
+Q &= -\frac{1}{\pi}\partial_u\intx\int_{-1}^{1}\intx\int_{-1}^{1} \frac{\sqrt{1-v^2}\sqrt{1-w^2}}{\sqrt{\eta^2+u^2+1+2u\eta v + 2uw+2\eta vw}}\, \mathrm{d}v \mathrm{d}w
+\end{align}
+Obviously this integral is ridiculous, so there must be a more clever way... 
+See Gauss-Bonnet theorem for a much deeper theory.
+%\begin{align}
+%Q &= \frac{1}{2\pi}\intx\int_{-\pi/a}^{\pi/a}\intx\int_{-\pi/a}^{\pi/a} \frac{1}{2d^2}\, \mathrm{d}k_x \mathrm{d}k_y = \\
+%&= \frac{1}{\pi}\intx\int_{0}^{\pi}\intx\int_{0}^{\pi} \frac{1}{\eta^2\sin^2x + \sin^2y + \klam\left[ u + \eta\cos x + \cos y \right]^2}\, \mathrm{d}x\, \mathrm{d}y = \\
+%&= \frac{1}{\pi}\intx\int_{-1}^{1}\intx\int_{-1}^{1} \frac{\sqrt{1-v^2}\sqrt{1-w^2}}{\eta^2+u^2+1+2u\eta v + 2uw+2\eta vw} \, \mathrm{d}v \mathrm{d}w = \\
+%&= \frac{1}{\pi}\intx\int_{-1}^{1}\frac{\sqrt{1-w^2}}{2\eta (u+w)} \intx\int_{-1}^{1} \frac{\sqrt{1-v^2}}{k + v}\, \mathrm{d}v\, \mathrm{d}w = \\
+%&= \frac{1}{\pi}\intx\int_{-1}^{1}\frac{\sqrt{1-w^2}}{2\eta (u + w)}\kla\left(  -\frac{{\pi}\sqrt{k^2-1}-{\pi}k}{2}+\arcsin\left(\frac{1}{k}\right)\sqrt{k^2-1}-1 \right) \, \mathrm{d}w
+%\end{align}
+%Here $k(w) = \frac{\eta^2+u^2+1 + 2uw}{2\eta (u+w)}$.
+
+%def integrand(x, eta=1.0, u=1.0):
+%    k = (eta**2 + u**2 + 1 + 2*u*x) / (2*eta * (u + x))
+%    fac = -(np.pi*np.sqrt(k**2-1)-np.pi*k)/2 + np.arcsin(1/k)*np.sqrt(k**2-1)-1
+%    return np.sqrt(1 - x**2) * fac / (2*eta * (u + x))
+
+
+%%%https://phyx.readthedocs.io/en/latest/TI/Lecture%20notes/3.html
+
+%@njit
+%def chern(u, eta, N=100):
+%    kx, ky = np.linspace(-np.pi, np.pi, N+1), np.linspace(-np.pi, np.pi, N+1)
+%    res = 0
+%    for i in range(N):
+%        for j in range(N):
+%            dvec = np.array([eta * np.sin(kx[i]), np.sin(ky[j]), u + np.cos(ky[j]) + eta * np.cos(kx[i])])
+%            res += dvec[2] / np.linalg.norm(dvec, ord=2)**3
+%    return res / (4*np.pi) * (kx[1] - kx[0])**2
+
+%The Chern number may also be obtained by counting how often the image of the Brillouin zone ``wraps around the origin''.
+%In the lecture we already discussed the case of $\eta = 1$, which gives $Q(u) = \pm 1$ for $0<u<2$ and $-2<u<0$ respectively.
+%But I fail to understand how the ``torus''-like structure came about, which apparently is this BZ-image.
+
+%Figure \ref{figure:phi} shows how the angle $\phi(k)$ behaves for the same parameters. 
+%\begin{figure}[ht!]
+%\centering
+%\includegraphics[width=\linewidth]{01_WindingNumber_phi_v2.png}
+%\caption{Function $\phi(k)$ for $k\in[-\pi,\pi)$. }
+%\label{figure:phi}
+%\end{figure}
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

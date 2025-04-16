@@ -1,0 +1,602 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{myscrarticle}
+\renewcommand{\r}{\text{r}}
+\renewcommand{\t}{\text{t}}
+\renewcommand{\a}{\text{a}}
+\renewcommand{\o}{\text{o}}
+\renewcommand{\F}{\text{F}}
+\newcommand{\hc}{\text{h.c.}}
+\newcommand{\B}{\text{B}}
+\newcommand{\R}{\text{R}}
+\renewcommand{\L}{\text{L}}
+\newcommand{\TODO}[1]{\color{red!60!black} #1\color{black}}
+%\newcommand{\QnA}[1]{\color{blue!80!black} #1\color{black}}
+\newcommand\QnA[1]{\bgroup\color{blue} #1\egroup}
+
+\newcommand*{\titel}{Notes on Luttinger Liquids}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Quantum Physics in 1D}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Analytical tools}
+\subsection{Gaussian integrals}
+A very important formula is
+\begin{align}
+I &= \int_{\mathbb{C}^N} \exp\kla*{-\brc*{u}{A}{u} + \brb*{h}{u} + \brb*{u}{h}  } \, \frac{\mathrm{d}u_1\mathrm{d}u_1^\ast}{2\pi\i} \dots \frac{\mathrm{d}u_N\mathrm{d}u_N^\ast}{2\pi\i} = \frac{\powe{ \brc*{h}{A^{-1}}{h} }}{\det A}. \label{eqn:exp minus u ast A u plus h ast u plus u ast h}
+\end{align}
+Here $\Ket{v} \equiv (v_1,\dots,v_N)^T$ and $\Bra{v} \equiv (v_1^\ast, \dots, v_N^\ast)$.
+The proof of this formula is relatively simple for the special case of diagonalizable matrices satisfying $A = UDU^\dagger$.
+Then one may substitute $u = Uv$ to get
+\begin{align}
+I &= \int_{\mathbb{C}^N} \exp\kla*{-\brc*{v}{D}{v} + \brc*{h}{U}{v} + \brc{v}{U^\dagger}{h}  } \, \frac{\mathrm{d}v_1\mathrm{d}v_1^\ast}{2\pi\i} \dots \frac{\mathrm{d}v_N\mathrm{d}v_N^\ast}{2\pi\i}.
+\end{align}
+Now all the $v$'s are decoupled and the integral decomposes into
+\begin{align}
+I &= \prod_{j=1}^N \int_{\mathbb{R}^2} \powe{-(v_\r - \i v_\i) \lambda_j (v_\r + \i v_\i) + (U^\dagger h)_j (v_\r + \i v_\i) + (v_\r - \i v_\i) (U^\dagger h)_j^\ast } \frac{\mathrm{d}v_\r\mathrm{d}v_\i}{2\pi\i} = \\
+&= \prod_{j=1}^N \int_{\mathbb{R}^2} \powe{-(v_\r^2 + v_\i^2) \lambda_j +  v_\r  2\Re (U^\dagger h)_j + \i v_\i 2\i\Im (U^\dagger h)_j } \frac{\mathrm{d}v_\r\mathrm{d}v_\i}{2\pi\i}.
+\end{align}
+At this point we may use 
+\begin{align}
+\intr{\powe{-ax^2 + bx}}{x} &= \sqrt{\frac{\pi}{a}} \powe{\frac{b^2}{4a}} \label{eqn:e to the minus a x squared plus b x}
+\end{align}
+to solve the integrals over $v_\r$ and $v_\i$ giving
+\begin{align}
+I &= \prod_{j=1}^N \frac{\pi}{\lambda_j} \frac{1}{2\pi\i} \powe{ \frac{1}{\lambda_j} \klb*{\Re (U^\dagger h)_j}^2 } \powe{ \frac{1}{\lambda_j} \klb*{-\Im (U^\dagger h)_j}^2 } = \frac{1}{(2\i)^N} \frac{1}{\det A} \exp \kla*{ \sum_{j=1}^N \frac{1}{\lambda_j} \abs*{(U^\dagger h)_j}^2  }.
+\end{align}
+The expression in the exponent is simply $\brc*{h}{U D^{-1}U^\dagger }{h} = \brc*{h}{A^{-1}}{h}$, which completes the proof (except for the normalization factor in front). \\
+From this result one can also derive the important matrix elements
+\begin{align}
+\bra*{u_j^\ast u_k} &= \frac{\int_{\mathbb{C}^N} \exp\kla*{-\brc*{u}{A}{u} } u_j^\ast u_k \, \frac{\mathrm{d}u_1\mathrm{d}u_1^\ast}{2\pi\i} \dots \frac{\mathrm{d}u_N\mathrm{d}u_N^\ast}{2\pi\i}}{\int_{\mathbb{C}^N} \exp\kla*{-\brc*{u}{A}{u} } \, \frac{\mathrm{d}u_1\mathrm{d}u_1^\ast}{2\pi\i} \dots \frac{\mathrm{d}u_N\mathrm{d}u_N^\ast}{2\pi\i}} =  (A^{-1})_{jk}. \label{eqn:exp minus u ast A u uj ast uk over exp minus u ast A u}
+\end{align}
+This follows from realizing that the numerator may be expressed as the derivative of the denominator with respect to $-A_{jk}$.
+We already solved that integral, and thus
+\begin{align}
+\bra*{u_j^\ast u_k} &= \frac{1}{I[h=0]} \frac{\partial }{\partial (-A_{jk})} I[h=0] = -\det A \frac{\partial }{\partial A_{jk}} \frac{1}{\det A} = \frac{1}{\det A} \frac{\partial }{\partial A_{jk}} \det A = \frac{\partial }{\partial A_{jk}} \log \det A.
+\end{align}
+Using $\log \det A = \Tr \log A$ and $\kla*{\frac{\partial }{\partial A_{jk}} \log A}_{nl} = \sum_{m=1}^N \kla*{\frac{\partial A_{nm}}{\partial A_{jk}}}_{nm} (A^{-1})_{ml} $ gives
+\begin{align}
+I_{jk} &= \Tr \kla*{ \sum_{m=1}^N  \delta_{jn} \delta_{mk} (A^{-1})_{ml} }_{nl} = \sum_{n=1}^N  \delta_{jn} (A^{-1})_{nk} = (A^{-1})_{jk}.
+\end{align}
+\subsection{Matsubara Summation}
+We can evaluate the series of a function over even $\omega_n^\B = \frac{2\pi n}{\beta}$ or odd Matsubara frequencies $\omega_n^\F = \frac{(2n+1)\pi}{\beta}$ where $n\in\mathbb{Z}$ using the Residue theorem in reverse.
+Denote the poles of $g(z)$ by $z_k$ and choose the contour $z=R\powe{\i t}$, $t\in [0,2\pi)$ for large $R$.
+Since the Bose (Fermi) occupation function $f_{\B/\F}(z) = \frac{1}{\powe{\beta z} \mp 1}$ has poles at $\i\omega_n^{\B/\F}$ with residue $\lim_{z\rightarrow \i\omega_n^{\B/\F}} \frac{z - \i\omega_n^{\B/\F}}{\powe{\beta z } \mp 1} = \frac{1}{\beta} \powe{-\beta \i \omega_n^{\B/\F}} = \frac{\pm 1}{\beta}$ we have
+\begin{align}
+\oint f_{\B/\F}(z) g(z) \,\mathrm{d}z &= 2\pi\i \sum_{n\in\mathbb{Z}} \Res \klb*{f_{\B/\F} g}(\i\omega_n^{\B/\F}) + 2\pi\i \sum_{z_k} \Res \klb*{f_{\B/\F} g}(z_k) = \\
+&= 2\pi\i \sum_{n\in\mathbb{Z}} \frac{\pm 1}{\beta} g(\i\omega_n^{\B/\F})  + 2\pi\i \sum_{z_k} f_{\B/\F}(z_k) \Res \klb*{g}(z_k).
+\end{align}
+Assuming the integral to vanish, which is justified for $|g(z)| \lesssim \frac{1}{|z|^{1+\epsilon}}$, then
+\begin{align}
+\sum_{n\in\mathbb{Z}} g(\i\omega_n^{\B/\F}) &= \mp \beta \sum_{z_k} f_{\B/\F}(z_k) \Res[g] (z_k). \label{eqn:sum g of i omega n BF is mp  beta sum fBF of zk times Res g of zk}
+\end{align}
+In general the expression on the right hand side will be significantly easier to evaluate.
+However, one should be mindful of the convergence criteria to avoid mistakes introduced by this replacement.
+In essence, we need to consider the inequality
+\begin{align}
+\abs*{\oint_{|z|=R} f_{\B/\F}(z) g(z) \,\mathrm{d}z} &\le \intx{0}{2\pi}{ \abs*{f_{\B/\F}\kla*{R\powe{\i t}} \frac{1}{|R\powe{\i t}|^{1+\epsilon}}} R }{t} = \frac{1}{R^\epsilon} \intx{0}{2\pi}{\frac{1}{ \abs*{\powe{\beta R \powe{\i t}} \mp 1} }}{t} \overset{R \rightarrow \infty}{\longrightarrow} 0.
+\end{align}
+\subsection{Correlations}
+\subsubsection{Basic correlations}
+Let $r=(x,u\tau)$ with some velocity $u$ and the imaginary time $\tau = \i t$.
+Also let $\textbf{q} = \kla*{k, \frac{\omega_n}{u}}$ with the Matsubara frequencies $\omega_n$ and write $\textbf{q}r \equiv kx - \omega_n \tau$.
+We define the Fourier transform as
+\begin{align}
+\phi(r) &= \sum_\textbf{q} \phi(\textbf{q}) \powe{\i r\textbf{q}},\\
+\phi(\textbf{q}) &= \frac{1}{\beta L} \int \phi(r) \powe{-\i r\textbf{q}} \,\mathrm{d}\textbf{q}.
+\end{align}
+Then we can compute the correlation
+\begin{align}
+\bra*{\klb*{\phi(r_1) - \phi(r_2)}^2} &= \bra[\bigg]{ \klb[\bigg]{\sum_{\textbf{q} } \phi(\textbf{q}) \kla*{\powe{\i r_1\textbf{q}} - \powe{\i r_2\textbf{q}}}}^2   } = \\
+&= \sum_{\textbf{q}_1,\textbf{q}_2} \bra*{\phi(\textbf{q}_1) \phi(\textbf{q}_2)}  \kla*{\powe{\i r_1\textbf{q}_1} - \powe{\i r_2\textbf{q}_1}} \kla*{\powe{\i r_1\textbf{q}_2} - \powe{\i r_2\textbf{q}_2}}.
+\end{align}
+The expectation values in momentum space can be represented as a path integral
+\begin{align}
+\bra*{\phi^\ast(\textbf{q}_1) \phi(\textbf{q}_2)} &= \frac{1}{Z} \int \phi^\ast(\textbf{q}_1) \phi(\textbf{q}_2) \powe{-\frac{S}{\hbar}} \,\mathcal{D}\phi(\textbf{q}_1) \mathcal{D}\phi(\textbf{q}_2)
+\end{align}
+where the action is
+\begin{align}
+-\frac{S}{\hbar} &= \intx{0}{\beta}{ \intx{ }{ }{ \klb*{\i\Pi \partial_\tau \phi - H(\phi,\Pi)}  }{x}}{\tau}.
+\end{align}
+For a typical quadratic Luttinger Hamiltonian and $\Pi = \frac{1}{\pi} \nabla \theta$ this gives
+\begin{align}
+-\frac{S}{\hbar} &= \intx{0}{\beta}{ \intx{ }{ }{ \klb*{\i\frac{1}{\pi} \nabla\theta \partial_\tau \phi - \frac{u}{2\pi} \kla*{K(\nabla\theta)^2 + \frac{1}{K} (\nabla\phi)^2} }  }{x}}{\tau}.
+\end{align}
+Using Fourier components this is equivalent to
+\begin{align}
+-\frac{S}{\hbar} &= \frac{1}{\pi}\sum_{\textbf{q},\textbf{q}'} \intx{0}{\beta}{\intx{ }{ }{ \klb*{ \omega_n \phi(\textbf{q}) \i k' \theta(\textbf{q}')  + \frac{u}{2} \kla*{K k k' \theta(\textbf{q}) \theta(\textbf{q}') + \frac{1}{K} kk' \phi(\textbf{q}) \phi(\textbf{q}')  }   } \powe{\i r\textbf{q}} \powe{\i r\textbf{q}'} }{x}}{\tau} = \\
+&= -\frac{\beta L}{\pi} \sum_{\textbf{q}} \klb*{\omega_n \i k\phi(\textbf{q}) \theta(-\textbf{q}) + \frac{uk^2}{2} \kla*{K \theta(\textbf{q}) \theta(-\textbf{q}) + \frac{1}{K} \phi(\textbf{q}) \phi(-\textbf{q})} }.
+\end{align}
+Note that $\phi(-\textbf{q}) = \phi^\ast(\textbf{q})$ and similarly for $\theta$.
+Then the action may also be written as
+\begin{align}
+\frac{S}{\hbar} &= \frac{\beta L}{2\pi} \sum_{\textbf{q}} \begin{pmatrix}
+\theta_\textbf{q}^\ast, \phi_\textbf{q}^\ast
+\end{pmatrix} \begin{pmatrix}
+uKk^2 & \i\omega_n k \\ \i\omega_n k & \frac{u}{K}k^2
+\end{pmatrix} \begin{pmatrix}
+\theta_\textbf{q} \\ \phi_\textbf{q}
+\end{pmatrix} =: \frac{\beta L}{2\pi} \sum_\textbf{q} \Gamma_\textbf{q}^\dagger M^{-1} \Gamma_\textbf{q}.
+\end{align}
+Since the quantity we want to average does not involve and $\theta$-terms it is possible to eliminate the corresponding integration.
+We may write
+\begin{align}
+\frac{S}{\hbar} &= \frac{\beta L}{2\pi} \sum_\textbf{q} \klb*{\frac{uk^2}{K} \phi_\textbf{q} \phi_{-\textbf{q}} + uk^2 K \kla*{\theta_\textbf{q} + \frac{\i\omega_nk\phi_\textbf{q}}{uk^2 K}} \kla*{\theta_{-\textbf{q}} + \frac{\i\omega_nk\phi_{-\textbf{q}}}{uk^2 K}} - uk^2 K \frac{\i\omega_nk\phi_\textbf{q}}{uk^2 K} \frac{ \i\omega_nk \phi_{-\textbf{q}}}{uk^2 K} }.
+\end{align}
+Defining the shifted variable $\tilde{\theta}_\textbf{q} := \theta_\textbf{q} + \frac{\i\omega_n}{ukK} \phi_\textbf{q}$ simplifies this expression to
+\begin{align}
+\frac{S}{\hbar} &= \frac{\beta L}{2\pi} \sum_\textbf{q} \klb*{ \kla*{\frac{uk^2}{K} + \frac{\omega_n^2}{uK} } \phi_\textbf{q} \phi_{-\textbf{q}} + uk^2K \tilde{\theta}_\textbf{q} \tilde{\theta}_{-\textbf{q}} }.
+\end{align}
+Both the numerator as well as the denominator $Z$ will contain the same contribution from the $\tilde{\theta}$-integration which consequently drops out.
+This effectively leaves
+\begin{align}
+\bra*{\phi^\ast(\textbf{q}_1) \phi(\textbf{q}_2)} &= \frac{\int \powe{-\frac{S_\phi}{\hbar}} \phi_{\textbf{q}_1}^\ast \phi_{\textbf{q}_2} \, D\phi_\textbf{q} D\phi_\textbf{q}^\ast }{\int \powe{- \frac{S_\phi}{\hbar}}  \, D\phi_\textbf{q} D\phi_\textbf{q}^\ast} = (A^{-1})_{\textbf{q}_1 \textbf{q}_2}
+\end{align}
+where the relevant matrix is implicitly defined via $\frac{S}{\hbar} = \sum_{\textbf{q}\textbf{q}'} \phi_\textbf{q}^\ast A_{\textbf{q} \textbf{q}'} \phi_{\textbf{q}'}$ and is explicitly given by
+\begin{align}
+A_{\textbf{q}\textbf{q}'} &= \delta_{\textbf{q}\textbf{q}'} \frac{\beta L}{2\pi uK} \kla*{u^2k^2 + (\omega_n^\B)^2}.
+\end{align}
+The expectation value is thus
+\begin{align}
+\bra*{\phi^\ast(\textbf{q}_1) \phi(\textbf{q}_2)} &= \delta_{\textbf{q}_1 \textbf{q}_2} \frac{2\pi uK}{\beta L} \frac{1}{u^2k^2 + (\omega_n^\B)^2}.
+\end{align}
+\TODO{additional factor of $2\pi$? $\hbar$ probably inconsistent?}\\
+One may also make use of \autoref{eqn:exp minus u ast A u uj ast uk over exp minus u ast A u} more directly since $\bra*{\phi^\ast(\textbf{q}_1) \phi(\textbf{q}_2)}$ is the $\phi,\phi^\ast$ component of
+\begin{align}
+\kla*{\frac{\beta L}{2\pi} M^{-1}}^{-1} &= \frac{2\pi}{\beta L} \frac{1}{u^2 k^4 + (\omega_n^\B)^2 k^2 } \begin{pmatrix}
+\frac{u}{K} k^2 & -\i\omega_n^\B k \\ -\i\omega_n^\B k & uKk^2
+\end{pmatrix} = \frac{2\pi}{\beta L} \frac{1}{u^2k^2 + (\omega_n^\B)^2} \begin{pmatrix}
+\frac{u}{K} & -\frac{\i\omega_n}{k} \\ -\frac{\i\omega_n^\B}{k} & uK
+\end{pmatrix}. \label{eqn:M inverse k-correlations}
+\end{align}
+With this information we can continue our computation of the correlation function
+\begin{align}
+\bra*{\klb*{\phi(r) - \phi(0)}^2} &= \sum_{\textbf{q}} \frac{2\pi uK}{\beta L} \frac{1}{u^2k^2 + (\omega_n^\B)^2} \kla*{\powe{\i r\textbf{q}} - 1} \kla*{\powe{-\i r\textbf{q}} - 1} = \\
+&= \frac{2\pi uK}{\beta L} \sum_k \sum_{n\in\mathbb{Z}} \frac{1}{u^2k^2 + (\omega_n^\B)^2} \kla*{2 - 2 \cos (kx - \omega_n^\B \tau)} = \\
+&= \frac{uK}{\beta} \sum_{n\in\mathbb{Z}} \intx{}{}{\frac{2}{u^2k^2 + (\omega_n^\B)^2} \kla*{1 - \cos(kx - \omega_n^\B\tau)} }{k}.
+\end{align}
+%%\TODO{
+%%Giamarchi claims divergence of integrals at large $k$, but why? 
+%%These seem to converge (for simplicity assume $x\ge 0$, otherwise need additional care of residue signs)
+%%\begin{align}
+%%\dots &= \frac{2uK}{\beta} \sum_{\omega_n} \intr{\frac{1}{u^2k^2 + \omega_n^2}}{k} - \frac{2uK}{\beta} \sum_{\omega_n} \intr{\frac{\cos(kx - \omega_n\tau)}{u^2k^2 + \omega_n^2}}{k} = \\
+%%&= \frac{2uK}{\beta} \sum_{\omega_n} \klb*{2\pi\i \frac{1}{u^2} \lim_{k \rightarrow \i \frac{\omega_n}{u}} \frac{k - \i \frac{\omega_n}{u}}{k^2 + \frac{\omega_n^2}{u^2}} - \Re\kla*{2\pi\i\frac{1}{u^2} \lim_{k \rightarrow \i \frac{\omega_n}{u}} \frac{k - \i \frac{\omega_n}{u}}{k^2 + \frac{\omega_n^2}{u^2}} \powe{\i (kx-\omega_n\tau)} } } = \\
+%%&= \frac{2uK}{\beta} \sum_{\omega_n} \klb*{ \frac{2\pi\i}{u^2} \frac{1}{2\i \frac{\omega_n}{u}} - \Re \kla*{\frac{2\pi\i}{u^2} \frac{\powe{-\i\omega_n\tau} \powe{-\frac{\omega_n}{u}x} }{2\i \frac{\omega_n}{u}} } } = \\
+%%&= \frac{2\pi K}{\beta} \sum_{\omega_n} \klb*{\frac{1}{\omega_n} - \frac{\cos (\omega_n\tau)}{\omega_n} \powe{-\frac{\omega_n}{u}x} }.
+%%\end{align}
+%%Okay, maybe the $\frac{1}{\omega_n}$-sum doesn't look that good... is this the issue (from a mathematical POV)?
+%%}\\
+To avoid potential problems with divergences let us introduce an additional factor of $\powe{-\alpha|k|}$ in the integrand.
+Then the correlation function is
+\begin{align}
+\bra*{\klb*{\phi(r) - \phi(0)}^2} &= \frac{2K}{\beta u} \sum_{n\in\mathbb{Z}} \intr{\frac{\powe{-\alpha|k|}}{k^2 + \frac{(\omega_n^\B)^2}{u^2}}  \kla*{1 - \Re \powe{\i (kx -\omega_n^\B \tau)}} }{k} =: KF_1(r).
+\end{align}
+We can use the residue theorem to solve this integral.
+Note that depending on the sign of $x$ the contour must be closed in the upper (lower) half of the complex plane when $x> 0$ ($x<0$).
+Closing in the lower half plane also changes the global orientation of the contour which introduces an additional minus sign.
+The relevant pole is thus $k_0 = \sgn (x) \i \frac{|\omega_n^\B|}{u}$ and we get
+\begin{align}
+F_1(r) &= \frac{2}{\beta u} \sum_{n\in\mathbb{Z}} 2\pi\i \sgn(x)  \lim_{k \rightarrow k_0} \frac{\powe{-\alpha|k|}}{k + k_0} \kla*{1 - \Re \powe{\i (kx-\omega_n\tau)}} = \\
+&= \frac{2\pi}{\beta u} \sum_{n\in\mathbb{Z}} \sgn(x) \frac{u}{|\omega_n^\B|} \powe{-\alpha \frac{|\omega_n^\B|}{u}} \kla*{1 - \cos(\omega_n^\B\tau) \powe{-\frac{|\omega_n^\B|}{u}|x|} }.
+\end{align}
+%\TODO{
+%The summand, as a function of $\i\omega_n$, has a single pole at the origin.
+%Using \autoref{eqn:sum g of i omega n BF is mp  beta sum fBF of zk times Res g of zk} for the Bose case we find
+%\begin{align}
+%\bra*{\klb*{\phi(r) - \phi(0)}^2} &= 2\pi K \sgn (x) \lim_{z\rightarrow 0} z \frac{1}{|z|} \dots
+%\end{align}
+%Actually, there is no pole at zero, and thus the sum is just zero (which is obviously incorrect). What went wrong here?\\
+%Try different approach: $\sum_{n\ge 1} g(\i\omega_n^B) = -\beta \sum_{z_l} \dots + \int gf_\B$.
+%Since $g(z) = \frac{1}{|z|} \powe{-\alpha \frac{|z|}{u}} \kla*{1 - \cos(\i z\tau) \powe{-\frac{|x|}{u}|z|} } $
+%\begin{align}
+%\dots &= \intr{g(x) \frac{1}{\powe{\beta x} - 1}}{x} + \lim_{\epsilon \rightarrow 0} \intx{\pi}{0}{ g(\epsilon\powe{\i t}) \frac{1}{\powe{\beta \epsilon \powe{\i t}} - 1} \epsilon\i \powe{\i t}}{t} = \\
+%&= \intr{\frac{g(x)}{\powe{\beta x} - 1}}{x} + \intx{\pi}{0}{ \frac{|x|}{u} \frac{\i\powe{\i t}}{\beta \powe{\i t}} }{t} = \intr{\frac{g(x)}{\powe{\beta x} - 1}}{x} -\i \frac{|x|}{\beta u}.
+%\end{align}
+%%#LUTTINGER
+%%alpha=0.1
+%%x=5.6
+%%tau=-0.3
+%%u=1.0
+%%beta=1.0
+%%N=1000
+%%SIZE=100
+%%omegan = 2*np.pi/beta * np.arange(-N, N+1)
+%%omegan2 = np.copy(omegan[omegan > 0])
+%%def corr(k, omega, x, tau, u, beta):
+%%    return 2*u/beta * (1 - np.cos(k*x-omega*tau)) / (k**2*u**2 + omega**2) * np.exp(-alpha * np.abs(k))
+%%
+%%print(2*np.pi/beta * (np.sum(1/omegan2 * np.exp(-alpha/u * np.abs(omegan2)) * (1 - np.cos(omegan2 * tau) * np.exp(-np.abs(x) / u * np.abs(omegan2))) ) * 2 + x/u))
+%%print(quad(lambda k: np.sum(corr(k, omegan, x, tau, u, beta)), -np.inf, np.inf))
+%%giaint = lambda k: 2*np.exp(-alpha * k)/k * (2/(np.exp(beta*u*k) - 1) * (1 - np.cos(k*x) * np.cosh(tau*u*k)) + (1 - np.cos(k*x) * np.exp(-np.abs(tau*k*u))))
+%%print(quad(giaint, 0, SIZE))
+%}
+%%%NEW APPROACH: Matsubara summation first.
+%%%\begin{align}
+%%%\bra*{\klb*{\phi(r) - \phi(0)}^2} &= \frac{2Ku}{\beta } \sum_{\omega_n} \intr{\frac{\powe{-\alpha|k|}}{u^2k^2 + \omega_n^2}  \kla*{1 - \Re \powe{\i (kx -\omega_n\tau)}} }{k} =: \intr{\sum_{n\in\mathbb{Z}} g(\i\omega_n^\B)}{k}.
+%%%\end{align}
+%%%Using \autoref{eqn:sum g of i omega n BF is mp  beta sum fBF of zk times Res g of zk} this gives\footnote{$f_\B(x) + f_\B(-x) \equiv -1$.}
+%%%\begin{align}
+%%%\bra*{\klb*{\phi(r) - \phi(0)}^2} &= \intr{ (-\beta)\sum_{z_l=\pm uk} \Res[g](z_l) f_\B(z_l) }{k} = \\
+%%%&= -2Ku \intr{ \powe{-\alpha|k|}  \sum_{z_l=\pm uk} \frac{1}{-2z_l} f_\B(z_l) \kla*{1 - \powe{\i kx - z_l \tau} }  }{k} = \\
+%%%&= K \intr{\frac{\powe{-\alpha |k|}}{k} \klb*{f_\B(uk) \kla*{1 - \powe {\i kx- ku\tau}} - f_\B(-uk) \kla*{1 - \powe{\i kx + ku\tau}} }  }{k} = \\
+%%%&= 2K \intx{0}{\infty}{\frac{\powe{-\alpha|k|}}{k} \klb*{f_\B(uk) \kla*{1 - \cos(kx) \powe{-ku\tau}} - f_\B(-uk)\kla*{1 - \cos(kx) \powe{ku\tau}} } }{k} = \\
+%%%&= 2K \intx{0}{\infty}{\frac{\powe{-\alpha|k|}}{k} \klb*{2f_\B(uk) \kla*{1 - \cos(kx) \cosh(ku\tau)} + \kla*{1 - \cos(kx) \powe{ku\tau}} } }{k}.
+%%%\end{align}
+%%%\TODO{This is correct except for $\tau \rightarrow -|\tau|$. Where can this replacement come from?}\\
+%%%%%!!BREAK!!%%%%%
+%NEW
+%Note that $\cos(kx\pm \omega_n^\B \tau) = \cos(kx)\cos(\omega_n^\B\tau)$ under the integral, as the the antisymmetric term vanishes upon $k$-integration. 
+%Then
+%\begin{align}
+%F_1(r) &= \frac{2u}{\beta} \sum_{n\in\mathbb{Z}} \intr{\powe{-\alpha|k|} \frac{1}{k^2u^2 + (\omega_n^\B)^2} \kla*{1 - \powe{\i kx} \cos(\omega_n^\B \tau) } }{k} = \\
+%&= \frac{2}{\beta u} \sum_{n\in\mathbb{Z}} 2\pi\i \powe{-\alpha \frac{|\omega_n^\B|}{u}} \frac{1}{2\i \frac{|\omega_n^\B|}{u}} \kla*{1 - \powe{- x\frac{|\omega_n^\B|}{u}} \cos \kla*{\omega_n^\B\tau} } = \\
+%&= \frac{2\pi}{\beta} \frac{x}{u} + \frac{2\pi}{\beta} 2\Re \sum_{n\ge 1} \powe{-\frac{\alpha}{u} \omega_n^\B} \frac{1}{\omega_n^\B} \kla*{1 - \powe{-\frac{x}{u} \omega_n^\B} \powe{\i \tau \omega_n^\B}}.
+%\end{align}
+Splitting of the $n=0$-term and using the symmetry we can reduce this expression to
+\begin{align}
+F_1(r) &= \frac{2\pi}{\beta} \frac{x}{u} + \sgn(x) \frac{2\pi}{\beta} 2\Re \sum_{n\ge 1} \powe{-\frac{\alpha}{u} \omega_n^\B} \frac{1}{\omega_n^\B} \kla*{1 - \powe{-\frac{|x|}{u} \omega_n^\B} \powe{\i \tau \omega_n^\B}}.
+\end{align}
+Consider the general series for some complex number $c\in\mathbb{C}$ with $\Re(c) > 0$
+\begin{align}
+S(c) &:= \sum_{n\ge 1} \frac{1}{n} \powe{-cn}.
+\end{align}
+The derivative with respect to $\Re(c)$ is a geometric series
+\begin{align}
+\frac{\partial S}{\partial \Re(c)} &= -\sum_{n\ge 1} \powe{-cn} = -\frac{\powe{-c}}{1 - \powe{-c}} = -\frac{1}{\powe{c} - 1}.
+\end{align}
+Using the limit $S(c\rightarrow \infty) \rightarrow 0$ gives
+\begin{align}
+S(c) &= \intx{\Re(c)}{\infty}{\frac{1}{\powe{\i \Im(c)} \powe{z} - 1}}{z} = \log \kla*{1 - \powe{-\i \Im(c)} \powe{-z}} \Big\vert_{\Re(c)}^\infty = -\log \kla*{1 - \powe{-c}}.
+\end{align}
+Also note that $2\Re \kla*{S(c)} = -\log \kla*{1 + \powe{-2\Re (c)} - 2\powe{-\Re(c)} \cos\kla*{\Im(c)} } $.
+Our correlation function is equivalent to the difference of two such series since
+\begin{align}
+\sgn(x) F_1(r) &= \frac{2\pi |x|}{\beta u} + 2 \Re \klb*{S\kla*{\frac{2\pi\alpha}{\beta u}} - S\kla*{\frac{2\pi(\alpha + |x|)}{\beta u} + \frac{2\pi \tau}{\beta}\i} } = \\
+&= \frac{2\pi |x|}{\beta u} - 2 \log \kla*{1 - \powe{-\frac{2\pi\alpha}{\beta u}}} +  \log \kla*{1 + \powe{-\frac{4\pi (\alpha + |x|)}{\beta u}} - 2\powe{-\frac{2\pi (\alpha + |x|)}{\beta u}} \cos \kla*{\frac{2\pi\tau}{\beta}} }.
+\end{align}
+This expression can be simplified a bit more by bringing all terms into one logarithm
+\begin{align}
+\powe{\sgn(x) F_1(r)} &= \frac{\powe{\frac{2\pi |x|}{\beta u}} + \powe{-\frac{2\pi (2\alpha  + |x|)}{\beta u}} - 2 \powe{-\frac{2\pi \alpha}{\beta u}} \cos \kla*{\frac{2\pi\tau}{\beta}} }{\kla*{1 - \powe{-\frac{2\pi\alpha}{\beta u}}}^2} = \\
+&= \frac{2\cosh\kla*{\frac{2\pi (\alpha + |x|)}{\beta u}} - 2\cos \kla*{\frac{2\pi\tau}{\beta}} }{4\sinh^2\kla*{\frac{\pi\alpha}{\beta u}} } = \\
+&= \frac{\sinh^2 \kla*{\frac{\pi (\alpha + |x|)}{\beta u}} + \sin^2\kla*{\frac{\pi\tau}{\beta}} }{\sinh^2\kla*{\frac{\pi\alpha}{\beta u}} }.
+\end{align}
+Thus the first special function is
+\begin{align}
+F_1(r) &= -2\sgn(x) \log \sinh \kla*{\frac{\pi\alpha}{\beta u}} +\sgn(x)  \log \klb*{\sinh^2 \kla*{\frac{\pi (\alpha + |x|)}{\beta u}} + \sin^2\kla*{\frac{\pi\tau}{\beta}}}.
+\end{align}
+\TODO{This is actually more accurate than the approximation given in Giamarchi (C.28)!
+For reference, he gives $F_1(r) = \QnA{\frac{1}{2}} \log \klb*{\frac{\beta^2u^2}{\pi^2\alpha^2} \kla*{\sin^2 \kla*{\frac{\pi x}{\beta u}} + \sinh^2\kla*{\frac{\pi\tau}{\beta}}} } $..
+However, the sign function is probably a mistake and I have an additional factor of 2...}\\
+Following \autoref{eqn:M inverse k-correlations} we can compute the $\theta$-correlation function from the $\phi$-correlation function by the replacement $K\rightarrow \frac{1}{K}$, i.e. $\bra*{\klb*{\theta(r) - \theta(0)}^2} = \frac{1}{K}F_1(r)$.
+The mixed correlations are
+\begin{align}
+\bra*{\phi(r_1)\theta(r_2)} &= \sum_{\textbf{q}_1, \textbf{q}_2} \bra*{\phi(\textbf{q}_1) \theta(\textbf{q}_2)} \powe{\i r_1\textbf{q}_1} \powe{\i r_2\textbf{q}_2} = \\
+&= \frac{2\pi}{\beta L} \sum_{\textbf{q}} \frac{1}{k} \frac{-\i \omega_n^\B}{u^2k^2 + (\omega_n^\B)^2} \powe{\i (r_1-r_2)\textbf{q}} =: \frac{1}{2}F_2(r).
+\end{align}
+Again assuming $L\rightarrow \infty$ we have
+\begin{align}
+F_2(r) &= \frac{-2\i}{\beta u^2} \sum_{n\in\mathbb{Z}, n\neq 0} \intr{\frac{\powe{-\alpha |k|}}{k} \frac{\omega_n^\B}{k^2 + \frac{(\omega_n^\B)^2}{u^2}} \powe{\i (kx-\omega_n^\B \tau)} }{k} .
+\end{align}
+Similar to the previous case the relevant pole is $k_0 = \i \sgn(x) \frac{|\omega_n^\B|}{u}$.
+An additional complexity is the need to avoid the origin.
+This is done by a small semicircle parametrized by $k(t) = \epsilon \powe{\sgn(x) \i t}$ for $t\in [\pi, 0]$.
+The corresponding integral gives
+\begin{align}
+I_\epsilon &= \frac{-2\i}{\beta u^2} \sum_{n\in\mathbb{Z}, n\neq 0} \sgn(x) \i \intx{\pi}{0}{ \powe{-\alpha \epsilon} \frac{\omega_n^\B}{\epsilon^2 \powe{ \sgn(x)2\i t} + \frac{(\omega_n^\B)^2}{u^2} } \powe{-\i \omega_n^\B\tau} \powe{\i x \epsilon \powe{\sgn(x) \i t}} }{t} \\
+&\overset{\epsilon\rightarrow 0}{\longrightarrow} \frac{2}{\beta u^2} \sum_{n\in\mathbb{Z}, n\neq 0} \sgn(x) \omega_n^\B \powe{-\i\omega_n^\B\tau} \frac{u^2}{(\omega_n^\B)^2} \intx{\pi}{0}{ }{t} = \frac{2\pi}{\beta} \sgn(x) 2\i\Im\sum_{n\ge 1} \frac{\powe{\i\omega_n^\B\tau} }{\omega_n^\B}.
+\end{align}
+Using our formula gives
+\begin{align}
+I_{\epsilon=0} &= -\sgn(x) 2\i\Im \log \kla*{1 - \powe{\i \frac{2\pi\tau}{\beta}}}.
+\end{align}
+For $x<0$ the orientation of the contour changes which produces a minus sign in front of the residue giving
+\begin{align}
+F_2(r) &= -I_{\epsilon = 0} + 2\pi\i \sgn(x) \frac{-2\i}{\beta u^2} \sum_{n\in\mathbb{Z},n\neq 0} \omega_n^\B \frac{\powe{-\alpha|k_0|}}{2k_0^2} \powe{\i k_0x} \powe{-\i \omega_n^\B\tau} = \\
+&= \sgn(x) 2\i\Im \log \kla*{1 - \powe{\i \frac{2\pi\tau}{\beta}}} + \sgn(x) \frac{2\pi}{\beta} 2\i\Im\sum_{n\ge 1} \frac{\powe{-\frac{\alpha}{u} \omega_n^\B}}{\omega_n^\B} \powe{\i\omega_n^\B\tau} \powe{-\frac{|x|}{u} \omega_n^\B} = \\
+&= \sgn(x) 2\i\Im\klc*{\log \kla*{1 - \powe{\i\frac{2\pi\tau}{\beta}}} - \log \kla*{1 - \powe{-\frac{2\pi(\alpha + |x|)}{\beta u} + \i\frac{2\pi\tau}{\beta}}}  } = \\
+&= \sgn(x) 2\i \Im \log \kla*{\frac{\powe{-\i\frac{\pi\tau}{\beta}} - \powe{\i \frac{\pi\tau}{\beta}} }{ \powe{-\i\frac{\pi\tau}{\beta}} - \powe{-\frac{2\pi(\alpha + |x|)}{\beta u}} \powe{\i \frac{\pi\tau}{\beta}} }}.
+\end{align}
+%Let us first compute 
+%\begin{align}
+%\sum_{n\ge 1} \frac{\powe{-\frac{2\pi(\alpha + |x|)}{\beta u} n}}{n} \powe{\i \frac{2\pi\tau}{\beta} n} &= -\log \kla*{1 - \powe{-\frac{2\pi (\alpha + |x|)}{\beta u} + \i \frac{2\pi\tau}{\beta}}}.
+%\end{align}
+%The imaginary part takes the form $\Im\kla*{-\log \kla*{1 - \powe{-c}}} = -\arg\kla*{1 - \powe{-c}}$.
+%We can also write this as
+%\begin{align}
+%\arg\kla*{1 - \powe{-2(a+\i b)}} &= \arg \kla*{\powe{a} \powe{\i b} - \powe{-a} \powe{-\i b}} - b = \\
+%&= \arg \kla*{2\sinh(a)\cos(b) + 2\cosh(a) \i\sin(b)} - b = \\
+%&= \arg \kla*{\sinh(a) \cos(b) + \i \cosh(a) \sin(b)} - b = \\
+%&= \arg \kla*{\tanh(a) + \i \tan(b)} - b.
+%\end{align}
+%In our case $a = \frac{\pi (\alpha + |x|)}{\beta u}$ and $b = -\frac{\pi\tau}{\beta}$
+%\begin{align}
+%F_2(r) &= -I_{\epsilon = 0} - 2\i \klc*{\arg \klb*{\tanh\kla*{\frac{\pi (\alpha + |x|)}{\beta u}} - \i \tan \kla*{\frac{\pi\tau}{\beta}} } + \frac{\pi\tau}{\beta} } = \\
+%&= -2\i \arg \klb*{\tan \kla*{\frac{\pi\tau}{\beta}} + \i\tanh\kla*{\frac{\pi (\alpha + |x|)}{\beta u}}} - \frac{2\pi\i\tau}{\beta} + \pi\i - I_{\epsilon=0}.
+%\end{align}
+In general $\Im\log (z) = \arg(z)$ and 
+\begin{align}
+\arg \kla*{\frac{\powe{a}\powe{-\i b} - \powe{-a} \powe{\i b}}{\powe{-\i b} - \powe{\i b} }} &= \arg \kla*{\frac{2\sinh(a) \cos(b) - 2\cosh(a)  \i\sin(b)}{-2\i \sin(b)}} = \arg\kla*{\tan(b) + \i \tanh(a)}.
+\end{align}
+In our case $a = \frac{\pi (\alpha + |x|)}{\beta u}$ and $b = \frac{\pi\tau}{\beta}$
+\begin{align}
+F_2(r) &= -\sgn(x) 2\i \arg \klb*{\tan\kla*{\frac{\pi\tau}{\beta}} + \i \tanh \kla*{\frac{\pi (\alpha + |x|)}{\beta u}}}.
+\end{align}
+In this case the result converges for $\alpha \rightarrow 0$ and we get
+\begin{align}
+F_2(r) &= -2\i\arctan \klb*{\frac{\tanh \kla*{\frac{\pi x}{\beta u}} }{\tan \kla*{\frac{\pi\tau}{\beta }} }} .
+\end{align}
+\TODO{Up to the same factor of 2 this is the so called ``naive'' result given in Giamarchi (C.28).
+However, numerically this seems to be identical for $\alpha \rightarrow 0$ so I do not get the subtlety here.
+Of course the result is only well-defined modulo $2\pi$ and as such replacing $\arg$ with $\arctan$ can in principle differ.}\\
+REMARK: Subtlety in $F_2$.\\
+Explained in Giamarchi (C.40)--(C.45).
+\subsubsection{General correlations}
+Let $\phi_j$ for $j=1,\dots,N$ be bosonic operators.
+Then we can derive a formula for the general expectation value
+\begin{align}
+\bra*{\prod_j \powe{\phi_j}} &= \bra*{\powe{\sum_j \phi_j}} \powe{\frac{1}{2} \sum_{j<k} \klb*{\phi_j, \phi_k}}.
+\end{align}
+For this we make use of the relation
+\begin{align}
+\bra*{\powe{\sum_j \phi_j}} &= \powe{\frac{1}{2} \bra*{\kla*{\sum_j \phi_j}^2}}.
+\end{align}
+Then we find
+\begin{align}
+\bra*{\prod_j \powe{\phi_j}} &= \powe{\frac{1}{2} \sum_j \bra*{\phi_j^2} + \frac{1}{2} \sum_{j<k} \bra*{\phi_j\phi_k} + \frac{1}{2} \sum_{j>k} \bra*{\phi_j\phi_k}} \powe{\frac{1}{2} \sum_{j<k} \bra*{\klb*{\phi_j, \phi_k}}} = \\
+&= \powe{\frac{1}{2} \sum_j \bra*{\phi_j^2} + \sum_{j<k} \bra*{\phi_j \phi_k}}.
+\end{align}
+The following derivation for the general correlation function can be simplified by making use of this formula, translational invariance and $KF_1(r) = \bra*{\klb*{\phi(r) - \phi(0)}^2}$ and similar relations for the other expectation values.\\
+But this is not required, one can also arrive at the correct result in a more brute force manner.
+This will be shown next.\\
+Now consider the general correlation function
+\begin{align}
+\bra*{\exp\kla[\Big]{\sum_j \i\kla*{A_j \phi(r_j) + B_j\theta(r_j)} } } &= \bra*{\exp\kla[\Big]{\i \sum_j \sum_\textbf{q} \kla*{A_j\phi(\textbf{q}) + B_j \theta(\textbf{q})} \powe{\i r_j\textbf{q}} }}.
+\end{align}
+Defining $A(\textbf{q}) = \sum_j A_j \powe{-\i r_j\textbf{q}}$ and similarly $B(\textbf{q})$ this gives
+\begin{align}
+\bra*{\exp \kla[\Big]{\sum_\textbf{q} \kla*{A(\textbf{q}) \phi(-\textbf{q}) + B(\textbf{q}) \theta(-\textbf{q})}} }  .
+\end{align}
+Inserting $\Ket{h} = -\i\kla[\big]{B(\textbf{q}), A(\textbf{q})}^T$, $\Ket{u} = \kla[\big]{\theta(\textbf{q}), \phi(\textbf{q})}^T$ and $A= \frac{\beta L}{2\pi} M^{-1}$ into \autoref{eqn:exp minus u ast A u plus h ast u plus u ast h} yields
+\begin{align}
+\kla*{A^{-1}} &= \exp\kla[\Big]{-\sum_\textbf{q} \brc*{h}{A^{-1}}{h} } = \\
+&= \exp\kla*{-\frac{2\pi}{\beta L} \sum_{\textbf{q}} \begin{pmatrix}
+B(-\textbf{q}),& A(-\textbf{q})
+\end{pmatrix} \frac{1}{k^2u^2 + (\omega_n^\B)^2} \frac{1}{k} \begin{pmatrix}
+\frac{u}{K}k & -\i\omega_n^\B \\ -\i\omega_n^\B & uKk
+\end{pmatrix} \begin{pmatrix}
+B(\textbf{q}) \\ A(\textbf{q})
+\end{pmatrix} }.
+\end{align}
+The $A^2$-term is
+\begin{align}
+-\frac{2\pi}{\beta L} \sum_{\textbf{q}} \frac{uK}{k^2u^2 + (\omega_n^\B)^2} A(\textbf{q})A^\ast(\textbf{q}) = -\frac{2\pi}{\beta L} \sum_{\textbf{q}} \sum_{jj'} \frac{uK}{k^2u^2 + (\omega_n^\B)^2} A_jA_{j'} \cos\kla*{\textbf{q}[r_j - r_{j'}]} .
+\end{align}
+Replacing $\cos \rightarrow \cos -1 + 1$ recovers $F_1$ and allows us to write
+\begin{align}
+\frac{1}{2} \sum_{jj'} A_jA_{j'} KF_1(r_j - r_{j'}) - \kla[\Big]{\sum_j A_j}^2 \sum_\textbf{q} \frac{uK}{k^2u^2 + (\omega_n^\B)^2}.
+\end{align}
+Since the correlation function is the exponential of this expression and because the second term diverges to $+\infty$ we only get a non-zero result if $\sum_jA_j = 0$.
+Likewise the $B^2$-terms require $\sum_jB_j = 0$ since the corresponding term can be found by the replacement $K\rightarrow\frac{1}{K}$.
+The $AB$-terms give
+\begin{align}
+\frac{2\pi\i}{\beta L} \sum_{\textbf{q}} \klb*{B(-\textbf{q})A(\textbf{q}) + A(-\textbf{q})B(\textbf{q})} \frac{1}{k} \frac{\omega_n^\B}{k^2u^2 + (\omega_n^\B)^2} &= -\sum_{jj'} \klb*{A_jB_{j'} + B_j A_{j'}} \frac{1}{2} F_2(r_j - r_{j'})
+\end{align}
+And thus the full correlation function becomes
+\begin{align}
+\bra*{\powe{\sum_j \i\kla*{A_j \phi(r_j) + B_j\theta(r_j)} } } &= \powe{\frac{1}{2} \sum_{jj'} \klc*{\klb*{KA_jA_{j'} + \frac{1}{K}B_jB_{j'}} F_1(r_j - r_{j'}) - \klb*{A_jB_{j'} + B_jA_{j'} } F_2(r_j - r_{j'})}  }. \label{eqn:general correlation function}
+\end{align}
+\TODO{Again correct result up to factors of 2, \QnA{most likely from a misunderstanding in \autoref{eqn:exp minus u ast A u uj ast uk over exp minus u ast A u}}.
+The book has an additional $\frac{1}{2}$ in the exponent, which is incompatible with my result.}
+\subsubsection{Chrial fields}
+The chiral fields are $\phi_\eta = K\theta - \eta \phi$ where $\eta = R,L$ or $\eta=\pm$ respectively.
+The action can be expressed in these fields using the inverse transformation $\phi = \frac{\phi_L - \phi_R}{2}$ and $\theta = \frac{\phi_L + \phi_R}{2K}$
+\begin{align}
+\frac{S}{\hbar} &= \frac{\beta L}{2\pi} \sum_\textbf{q} \begin{pmatrix}
+\theta_\textbf{q}^\ast, & \phi_\textbf{q}^\ast
+\end{pmatrix} k\begin{pmatrix}
+uKk & \i\omega_n^\B \\ \i\omega_n^\B & \frac{u}{K}k
+\end{pmatrix} \begin{pmatrix}
+\theta_\textbf{q} \\ \phi_\textbf{q}
+\end{pmatrix} = \\
+&= \frac{\beta L}{2\pi} \sum_\textbf{q} \begin{pmatrix}
+\phi_{R,\textbf{q}}^\ast, & \phi_{L,\textbf{q}}^\ast
+\end{pmatrix} \frac{1}{2K} \begin{pmatrix}
+1 & -K \\ 1 & K
+\end{pmatrix} k\begin{pmatrix}
+uKk & \i\omega_n^\B \\ \i\omega_n^\B & \frac{u}{K}k
+\end{pmatrix} \frac{1}{2K} \begin{pmatrix}
+1 & 1 \\ -K & K
+\end{pmatrix} \begin{pmatrix}
+\phi_{R,\textbf{q}} \\ \phi_{L,\textbf{q}}
+\end{pmatrix} = \\
+&= \frac{\beta L}{2\pi} \sum_\textbf{q} \begin{pmatrix}
+\phi_{R,\textbf{q}}^\ast, & \phi_{L,\textbf{q}}^\ast
+\end{pmatrix} \frac{k}{2K} \begin{pmatrix}
+uk - \i\omega_n^\B & 0 \\ 0 & uk + \i\omega_n^\B
+\end{pmatrix}  \begin{pmatrix}
+\phi_{R,\textbf{q}} \\ \phi_{L,\textbf{q}}
+\end{pmatrix}.
+\end{align}
+\subsection{Analytical continuation}
+In Fourier space the analytical continuation of a time-ordered Green's function is simply done by $G(\i\omega_n) \rightarrow G(\omega + \i\delta)$.\\
+It is simpler to first obtain the ordered correlation function in \emph{real} time 
+\begin{align}
+\chi_{BA}^\t(t) &= - \Theta(t) \bra*{B(t)A(0)} \mp \Theta(-t) \bra*{A(0)B(t)}
+\end{align}
+where the upper sign corresponds to bosons and the lower sign corresponds to fermions.
+$A(t) = \powe{\i Ht}A\powe{-\i Ht}$ is the usual Heisenberg evolution of an operator $A$. 
+Note that
+\begin{align}
+\Theta(t) \chi_{BA}^\t(t) &= - \bra*{B(t)A(0)},\\
+\Theta(t) \kla[\big]{\chi_{A^\dagger B^\dagger}^\t (-t)}^\ast &= \mp \bra*{B^\dagger(0) A^\dagger (-t)}^\ast = \mp \bra*{A(0)B(t)}.
+\end{align}
+The retarded correlation function is given by
+\begin{align}
+\chi_{BA}^\r(t) &= -\i \Theta(t) \bra*{\klb*{B(t)A(0)}_\mp} = \i\Theta(t) \klb*{\chi_{BA}^\t(t) - \kla[\big]{\chi_{A^\dagger B^\dagger}^\t (-t)}^\ast}.
+\end{align}
+One can obtain the time-ordered correlation functions in real time by performing the Wick rotation 
+\begin{align}
+\tau &= \i t + \epsilon \sgn(t) \label{eqn:Wick rotation}
+\end{align}
+in the time-ordered functions for imaginary time where $\epsilon=0^+$.
+\subsubsection{Example: correlation of exponential of $\phi$}
+Consider the correlation function
+\begin{align}
+\chi(x,\tau) &= -\bra*{\mathcal{T}_\tau \powe{\i 2\phi(x,\tau)} \powe{-\i 2\phi(0,0)} }.
+\end{align}
+This corresponds to \autoref{eqn:general correlation function} with $B_j\equiv 0$ and $A_{1,2} = \pm 2$ giving
+\begin{align}
+\chi(x,\tau) &= -\powe{\frac{1}{4} \sum_{jj'} \klc*{KA_jA_{j'} F_1(r_j - r_{j'}) )}  } = -\powe{-K F_1(r)} = \\
+&= -\frac{\sinh^{2K} \kla*{\frac{\pi\alpha}{\beta u}} }{\klb*{\sinh^2\kla*{\frac{\pi (\alpha + |x|)}{\beta u}} + \sin^2\kla*{\frac{\pi\tau}{\beta}} }^K}.
+\end{align}
+For small $\alpha \ll |x|$ expanding to lowest order yields\footnote{Note $\sinh(a+\i b) \sinh(a-\i b) = \frac{1}{4} \kla*{\powe{a}\powe{\i b} - \powe{-a} \powe{-\i b}} \kla*{\powe{a} \powe{-\i b} - \powe{-a} \powe{\i b}} = \frac{\cosh (2a)}{2}  - \frac{\cos (2b)}{2} = \sinh^2 (a) + \sin^2(b)$.}
+\begin{align}
+\chi(x,\tau) &\simeq - \frac{\kla*{\frac{\pi\alpha}{\beta u}}^2}{\klb*{ \sinh^2\kla*{\frac{\pi x}{\beta u}} + \sin^2 \kla*{\frac{\pi\tau}{\beta}} }^K} = -\frac{\kla*{\frac{\pi\alpha}{\beta u}}^2}{\klb*{ \sinh\kla*{\frac{\pi}{\beta u} \klb*{x + \i\tau u} } \sinh\kla*{\frac{\pi}{\beta u} \klb*{x - \i\tau u} } }^K}.
+\end{align}
+The real time correlation function is thus
+\begin{align}
+\chi^\t(x,t) &= -\frac{\kla*{\frac{\pi\alpha}{\beta u}}^2}{\klb*{ \sinh\kla*{\frac{\pi}{\beta u} \klb*{x - tu + \i\epsilon u\sgn (t)} } \sinh\kla*{\frac{\pi}{\beta u} \klb*{x + tu - \i\epsilon u\sgn (t)} } }^K} \\
+&=: -A^{-K} \kla*{\frac{\pi\alpha}{\beta u}}^{2K}.
+\end{align}
+\TODO{In this case $\chi_{A^\dagger B^\dagger}(\tau) = \chi_{AB}(\tau)$ (why is that? Is there a complex conjugation missing?)}
+Note that the $\Theta(t)$-factor ensures $\sgn(t) = 1$ and we can therefore rewrite the complex part as $A^{-K} = \powe{-K\log (A)}$ where\footnote{Note $\sinh(a + \i\epsilon) \sinh(b - \i\epsilon) = \klb*{\sinh(a) + \i\epsilon \cosh (a)} \klb*{\sinh(b) - \i\epsilon \cosh(b)} + \mathcal{O}(\epsilon^2)$.}
+\begin{align}
+A &= \sinh\kla*{\frac{\pi}{\beta u} [x+tu]} \sinh\kla*{\frac{\pi}{\beta u}[x-tu]} + \i\epsilon \frac{\pi}{\beta} \sinh \kla*{\frac{2\pi t}{\beta}}. 
+\end{align}
+When $\epsilon \rightarrow 0$ we require the first term to be negative for $\log (A)$ to have an imaginary part.
+This is the case when $(x+tu)(x-tu) < 0$, or equivalently, when $|x| < tu$.
+In particular, since $\epsilon = 0^+$, the imaginary part of the logarithm will be positive, since $A$ lies in the upper half plane and we make a branch cut on the negative real axis.
+Thus we can write
+\begin{align}
+\powe{-K\log (A)} \equiv \powe{- K\log (|A|) } \powe{-\i K\pi \Theta(tu - |x|)}
+\end{align}
+and the retarded correlation function becomes
+\begin{align}
+\chi^\r(t) &= -\Theta(t) 2\Im\chi^\t (x,t) = \\
+&= -\Theta(t) \Theta (tu - |x|) 2\sin(K\pi) \kla*{\frac{\pi\alpha}{\beta u}}^{2K} \abs*{\sinh\kla*{\frac{\pi}{\beta u} [x+tu]} \sinh\kla*{\frac{\pi}{\beta u}[x-tu]}}^{-K}.
+\end{align}
+Define $\xi_\pm = tu \pm x$.
+Performing the Fourier transform then gives
+\begin{align}
+\chi^\r(k,\omega) &= \intrndpi{2}{\powe{-\i (kx - \omega t)} \chi^\r(x,t)}{(x,t)} = \\
+&= -\intx{0}{\infty}{\intx{-tu}{tu}{ 2\sin(K\pi) \kla*{\frac{\pi\alpha}{\beta u}}^{2K} \abs*{\sinh\kla*{\frac{\pi\xi_+}{\beta u}} \sinh\kla*{\frac{\pi\xi_-}{\beta u}}}^{-K} \powe{-\i (kx - \omega t)} }{x}}{t}.
+\end{align}
+We can transform to $\xi_\pm$ using $ \begin{pmatrix}
+x \\ t
+\end{pmatrix} = \frac{1}{2u}\begin{pmatrix}
+u & -u \\ 1 & 1
+\end{pmatrix} \begin{pmatrix}
+\xi_+ \\ \xi_-
+\end{pmatrix}$.
+The determinant of this transformation is $\frac{1}{2u}$ and the region of integration is determined by $t> 0$ and $|x|< tu$.
+Rewritten in terms of the new coordinates these are $\xi_++\xi_- > 0$ and $|\xi_+ - \xi_-| < \xi_+ + \xi_- $.
+Neither condition places an upper bound on the variables, but they can not be negative.
+We can express this change of variables as
+\begin{align}
+\intx{0}{\infty}{\intx{-tu}{tu}{ }{x}}{t} &= \frac{1}{2u} \intx{0}{\infty}{ }{\xi_+} \intx{0}{\infty}{ }{\xi_-}
+\end{align}
+and thus the correlation function becomes
+\begin{align}
+\chi^\r(k,\omega) &= -\frac{1}{u} \kla*{\frac{\pi\alpha}{\beta u}}^{2K} \sin(K\pi)  I\kla*{\frac{\omega - ku}{2u}, \frac{\pi}{\beta u}} I\kla*{\frac{\omega + ku}{2u}, \frac{\pi}{\beta u}}
+\end{align}
+where we defined the general integral
+\begin{align}
+I(a, b) &= \intx{0}{\infty}{ \powe{\i ax } \frac{1}{\sinh^K\kla*{bx} } }{x} = 2^K \intx{0}{\infty}{\powe{\i ax} \frac{\powe{- Kbx}}{\kla*{1 - \powe{- 2bx}}^K} }{x}.
+\end{align}
+Defining $y = 1 - \powe{-2bx}$ gives
+\begin{align}
+I(a,b) &= 2^K \intx{0}{1}{y^{-K} \powe{ (\i a - Kb) \frac{-1}{2b}\log (1-y)} \frac{1}{2b(1-y)} }{y} = \\
+&= 2^K \frac{1}{2b} \intx{0}{1}{y^{-K} (1-y)^{\frac{K}{2} - 1 - \i\frac{a}{2b}} }{y} = 2^K \frac{1}{2b} B\kla*{1-K, \frac{K}{2} - \i \frac{a}{2b}}
+\end{align}
+where $B(x,y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}$ is the Beta function.
+The correlation function then becomes
+\begin{align}
+\chi^\r(k,\omega) &= -\frac{\sin(K\pi)}{u} \kla*{\frac{\pi\alpha}{\beta u}}^{2K}  4^K \frac{\beta^2 u^2}{4\pi^2} B\kla*{1 - K, \frac{K}{2} - \i \frac{\beta u}{2\pi} \frac{\omega + ku}{2u}} B\kla*{1 - K, \frac{K}{2} - \i \frac{\beta u}{2\pi} \frac{\omega - ku}{2u}} = \\
+&= -\frac{\alpha^2\sin(K\pi)}{u} \kla*{\frac{2\pi\alpha}{\beta u}}^{2K-2} B\kla*{1 - K, \frac{K}{2} - \i \frac{\beta (\omega + ku)}{4\pi}} B\kla*{1 - K, \frac{K}{2} - \i \frac{\beta (\omega - ku)}{4\pi}}.
+\end{align}
+\subsection{Bosonization dictionary}
+\section{Articles}
+\subsection{245414 (2016): Dynamic response functions and helical gaps in Rashba nanowires}
+\subsubsection{Bosonization}
+The kinetic energy term is
+\begin{align}
+H_0 &= \sum_{p,s} \omega(p,s) \psi_{ps}^\dagger \psi_{ps}
+\end{align}
+with the dispersion $\omega(p,s) = \frac{p^2}{2m} - g_\text{R} s p$.
+Let us first consider a simple term $\omega = p$ and drop the spin index.
+Then we find
+\begin{align}
+H_0 &= \sum_{p} \frac{1}{L} \intr{\intr{\psi^\dagger(x') \psi(x) p\powe{\i p(x'-x)} }{x} }{ x'} = \\
+&= \intr{\intr{\psi^\dagger(x') \psi(x) \i\nabla_x \delta(x-x') }{x} }{x'} = \\
+&= \intr{\psi^\dagger(x) (-\i\nabla_x) \psi(x)}{x}.
+\end{align}
+Using the bosonization identities\footnote{$(\ell s)$ refers to the product as a single index}
+\begin{align}
+\psi_{\ell s}(x) &= \frac{\eta_{\ell s}}{\sqrt{2\pi\alpha}} \powe{\i\ell k_F x} \powe{-\i\ell \phi_{(\ell s)}(x) + \i\theta_{(\ell s)}(x)}
+\end{align}
+and $\psi_s = \psi_{\R s} + \psi_{\L s}$ we find (dropping the Klein-factors and all oscillatory or constant terms)
+\begin{align}
+\psi_s^\dagger (-\i\nabla_x) \psi_s &= \kla*{\powe{-\i k_Fx}\powe{\i\phi_s - \i\theta_s} + \powe{\i k_Fx} \powe{-\i\phi_{-s} - \i\theta_{-s}} } \frac{1}{2\pi\alpha} (-\i\nabla_x) \kla*{\powe{\i k_Fx}\powe{-\i\phi_s + \i\theta_s} + \powe{-\i k_Fx} \powe{\i\phi_{-s} + \i\theta_{-s}} } = \\
+&= \frac{1}{2\pi\alpha} \kla*{ \nabla_x\klb*{-\phi_s +\theta_s } + \nabla_x \klb*{\phi_{-s} + \theta_{-s}} }.
+\end{align}
+Similarly, the second order derivatives yield
+\begin{align}
+\psi_s^\dagger (-\i\nabla_x)^2 \psi_x &= \frac{1}{2\pi\alpha} \kla*{\klb*{-\nabla_x\phi_s + \nabla_x \theta_s}^2 + \klb*{\nabla_x\phi_{-s} + \nabla_x\theta_{-s}}^2 + \nabla_x^2 \klb*{-\phi_s +\theta_s } + \nabla_x^2 \klb*{\phi_{-s} + \theta_{-s}}}.
+\end{align}
+Summing over $s$ results in the identities
+\begin{align}
+\sum_s \psi_s^\dagger (-\i\nabla_x)^2 \psi_s &= \frac{1}{2\pi\alpha} \kla*{2 (\nabla_x\phi_+)^2 + 2 (\nabla_x\theta_+)^2 + 2(\nabla_x\phi_-)^2 + 2(\nabla_x\theta_-)^2 + 2\nabla_x^2 \theta_+ + 2\nabla_x^2 \theta_-},\\
+\sum_s s\psi_s^\dagger (-\i\nabla_x) \psi_s &= \frac{1}{2\pi\alpha} \kla*{2\nabla_x \phi_- - 2\nabla_x \phi_+}.
+\end{align}
+Upon integration over $x$ the total derivative terms drop out and we are left with
+\begin{align}
+H_0 &= \frac{u_0}{2\pi} \sum_s \intr{ \klb*{ (\nabla_x\theta_s)^2 + (\nabla_x\phi_s)^2 }  }{x}
+\end{align}
+where $u_0 = \frac{1}{\alpha m}$.
+In the charge-spin basis $\phi_{\rho,\sigma} = \frac{\phi_+ \pm \phi_-}{\sqrt{2}}$ and $\theta_{\rho,\sigma} = \frac{\theta_+ \pm \theta_-}{\sqrt{2}}$ this becomes
+\begin{align}
+H_0 &= \frac{u_0}{2\pi} \sum_{j=\rho,\sigma} \intr{ \klb*{\kla*{\nabla_x\theta_j}^2 + \kla*{\nabla_x\phi_j}^2} }{x}.
+\end{align}
+\TODO{Including the interaction renormalizes the parameters, which introduces $U_\rho, K_\rho, u_\sigma, K_\sigma$.}\\
+Additionally, there exist spin-exchange and spin-flip terms.
+The former is given by
+\begin{align}
+V_\text{sx} &\propto \frac{1}{L}\sum_s \sum_{pp'q} \psi_{\L, s,p+q}^\dagger \psi_{\R, -s,p'-q}^\dagger \psi_{\R, s,p'} \psi_{\L, -s,p} = \\
+&= \frac{1}{L^3} \sum_s \intrnd{4}{ \sum_{pp'q} \psi_{\L, s}^\dagger (x_1) \powe{\i x_1(p+q)} \psi_{\R, -s}^\dagger(x_2) \powe{\i x_2(p'-q)} \psi_{\R, s}(x_3) \powe{-\i x_3p'} \psi_{\L, -s}(x_4) \powe{-\i x_4 p} }{x} = \\
+&= \sum_s \intr{\psi_{\L, s}^\dagger (x) \psi_{\R, -s}^\dagger(x) \psi_{\R, s}(x) \psi_{\L, -s}(x)}{x} \propto \\
+&\propto \sum_s \intr{ \powe{-\i\phi_{-s} - \i\theta_{-s}} \powe{\i\phi_{-s} - \i\theta_{-s}} \powe{-\i\phi_s + \i\theta_s} \powe{\i\phi_s + \i\theta_s} }{x} = \\
+&= \sum_s \intr{ \powe{2\i (\theta_s - \theta_{-s})}}{x} \propto g_\text{sx} \intr{\cos \kla[\big]{2\sqrt{2}\theta_\sigma} }{x}.
+\end{align}
+Similarly the spin-flip term becomes
+\begin{align}
+V_\text{sf} &\propto \frac{1}{L} \sum_s \sum_{pp'q} \psi_{\L, +,p+q}^\dagger \psi_{\L, +,p'-q}^\dagger \psi_{\R, -,p'} \psi_{\L, -,p} + (\L+ \leftrightarrow \R-) = \\
+&= \intr{\psi_{\L, +}^\dagger (x) \psi_{\L, +}^\dagger(x) \psi_{\R, -}(x) \psi_{\R, -}(x)}{x} + (\L+ \leftrightarrow \R-) \propto \\
+&\propto \sum_s \intr{ \klb*{\powe{-2\i\phi_{-} - 2\i\theta_{-}} \powe{-2\i\phi_- + 2\i\theta_- } + \text{h.c.}} }{x} = \\
+&= \intr{ \powe{-4\i \phi_-}}{x} \propto g_\text{sf} \intr{\cos \kla[\big]{2\sqrt{2}[\phi_\rho - \phi_\sigma]} }{x}.
+\end{align}
+\TODO{(12) and (19) in article contains momentum prefactors $(2p'-q)(2p+q)$, why can those be assumed constant and absorbed in the coupling?
+Or do these terms generate additional derivatives that can somehow be absorbed in the Luttinger parameters?
+Also, global minus sign missing (maybe from Klein-factors)?}
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

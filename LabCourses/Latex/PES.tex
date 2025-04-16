@@ -1,0 +1,264 @@
+\documentclass[german, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[ngerman]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrpage2}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\newcommand*{\titel}{Photoelektronenspektroskopie}
+\newcommand*{\autor}{Joachim Schwardt und Ludwig Romstedt}
+\newcommand*{\abk}{PES}
+\newcommand*{\betreuer}{Dr. Steffen Danzenbächer}
+\newcommand*{\messung}{29. Januar 2021}
+\newcommand*{\ort}{Virtuell}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+\titlehead{F-Praktikum \abk \hfill TU Dresden}
+\subject{Versuchsprotokoll}
+\title{\titel}
+\author{\autor}
+\date{\begin{tabular}{ll}
+Protokoll: & \today\\
+Messung: & \messung\\
+Betreuer: & \betreuer\\
+Ort: & \ort \end{tabular}}
+
+\begin{document}
+
+\begin{titlepage}
+\maketitle  % Titel setzen
+\tableofcontents  % Inhaltsverzeichnis setzen
+\end{titlepage}
+
+\section{Aufgabenstellung und kurze Motivation}
+Wir wollen mittels Photoelektronenspektroskopie die Bandstruktur eines Festkörpers bestimmen. Dabei dient der Versuch ausschließlich der Grundlagenforschung. Durch den Vergleich der experimentellen Ergebnisse mit theoretischen Modellen, kann unser Verständnis von Festkörpern erweitert werden. Aufgrund der Oberflächenempfindlichkeit muss die Probe dazu eine sehr reine Oberfläche aufweisen, wofür ein entsprechendes Verfahren diskutiert werden soll. Mittels LEED-Analyse wird die Ausrichtung des Normalenvektors der Probe bestimmt, wozu anhand einiger Vorversuche zunächst ein Verständnis für die Funktionsweise aufgebaut werden soll. 
+\section{LEED-Analyse}
+Die mittlere freie Weglänge von Elektronen in Festkörpern beträgt in einem Bereich von 10\,eV bis 1000\,eV weniger als $1\,$nm. Die Beugung niederenergetischer Elektronen erfolgt aufgrund der geringen Eindringtiefe in erster Näherung nur an Oberflächenatomen, was die Verwendung der Einfachstreutheorie ermöglicht \cite{PES Anleitung}. Der prinzipielle Aufbau ist in Abb. \ref{figure:LEED Aufbau} gezeigt. Der monoenergetische Elektronenstrahl aus der Kathode wird durch das Linsensystem fokussiert und auf die Probe gerichtet. Die Gitter 1 bis 3 sind für den Versuch nicht weiter relevant. An Gitter 4 wird ein Wert knapp unter der Beschleunigungsspannung angelegt, sodass nur elastisch gestreute Elektronen genug Energie haben, das Gitter zu passieren. Anschließend werden diese mit etwa 5\,kV auf einen Leuchtschirm zu beschleunigt. 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{LEED_Aufbau.png}
+\caption{Skizze des experimentellen Aufbaus zur LEED-Analyse \cite{PES Anleitung}.}
+\label{figure:LEED Aufbau}
+\end{figure}\\
+Die Intensität der Reflexe ist durch 
+\begin{align*}
+I&\propto |F|^2=\left\vert\intr\int_{\mathbb{R}^{3}}{n(\vec{r})e^{-i\vec{r}\cdot (\vec{k}-\vec{k}')}}\,\mathrm{d}^{3}r\right\vert^2
+\end{align*}
+gegeben, wobei die Streuamplitude $F$ gerade der Fouriertransformation der Ladungsdichte $n$ entspricht, und $\vec{k}$ den Wellenvektor der einfallenden, beziehungsweise $\vec{k}'$ den der ausfallenden Welle bezeichnet. Die Translationsinvarianz von $n$ führt schließlich auf die Laue-Bedingung, gemäß der die Streuung nur für $\Delta\vec{k}=\vec{k}-\vec{k}'=\vec{G}$ möglich ist, wobei $\vec{G}$ einen beliebigen Vektor des reziproken Gitters bezeichnet. Die Reflexe können gemäß dieser Bedingung mittels der Ewald-Konstruktion vorhergesagt werden. Zunächst einmal gilt die Beziehung $k\equiv|\vec{k}|=\frac{1}{\hbar}\sqrt{2mE_\tecxt\text{kin}}$ für den Betrag des $k$-Vektors des Elektrons. Man zeichne nun diesen Vektor so im $k$-Raum ein, dass er auf einen beliebigen Gitterpunkt zeigt. Zusätzlich konstruiere man die Ewald-Kugel mit Radius $k$ um den Ursprung von $\vec{k}$. Alle Schnittpunkte der Kugel mit dem Gitter entsprechen dann möglichen Streuvektoren und sind somit im LEED-Bild zu erkennen. \\
+Die Gittervektoren $\vec{b}_j$ des reziproken Gitters erfüllen die Beziehung $\vec{a}_k\cdot\vec{b}_j=2\pi\delta_{kj}$, wobei die $\vec{a}_k$ die Vektoren des direkten Gitters sind. Betrachte zunächst eine zweidimensionale Schicht, es ist also $\vec{a}_3\equiv\infty$. In diesem Grenzfall entarten die reziproken Gitterpunkte zu Gitterstäben, weil $\vec{b}_3=0$ gelten muss, entlang einer bestimmten Richtung liegen die Punkte also beliebig dicht. Für ausreichend große $k$, gibt es immer Schnittpunkte einer Kugel mit einem Gitter aus regelmäßig angeordneten Stäben, wir erwarten also für beliebige Energien Reflexe. In der Realität führt die endliche Ausdehnung der Oberfläche dazu, dass das reziproke Gitter als eine Überlagerung von Gitterstäben und Gitterpunkten angesehen werden kann, was zu unterschiedlich starken Reflexen führt (siehe Abb. \ref{figure:Ewald Konstruktion}).  
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{Ewald_Konstruktion.png}
+\caption{Zweidimensionale Ewald-Konstruktion für eine Überlagerung von Gitterstäben und Punkten. In drei Dimensionen setzt sich das Gitter in die Zeichenebene fort, aus dem Kreis wird dann die Ewald-Kugel \cite{PES Anleitung}.}
+\label{figure:Ewald Konstruktion}
+\end{figure}\\
+\subsection{Reinigung der Probe}
+Gegeben ist ein Wolfram-Einkristall in einem Ultrahochvakuum von $p=10^{-10}\,$mbar, welches durch kontinuierliches Pumpen über den Verlauf mehrerer Tage entstanden ist. Nach Angabe des Betreuers dauert es bei einem Druck von $10^{-6}\,$mbar nur eine Sekunde, bis sich eine Lage an Fremdatomen auf der Probe abgesetzt hat. Unter der Annahme, dass diese Zeitskala invers proportional zum Druck ist, stehen also nach erfolgter Reinigung etwa drei Stunden Messzeit zur Verfügung.\\
+Zur Reinigung der Probe schlagen wir zunächst den Beschuss mit Ionen oder einem Laser vor. Dies ``reinigt'' zwar die Oberfläche, auf einigen Bildern von Herrn Danzenbächer ist an den entstandenen Kratern allerdings zu erkennen, dass selbige dabei zu schwer beschädigt wird. Wir schlagen daher das Heizen der Probe vor, was allerdings bei der Größe der Probe enorme Ströme erfordern würde. Stattdessen erfolgt das Erhitzen durch den Beschuss mit Elektronen, indem eine Spannung zwischen der Probe und einer Glühwindel angelegt wird. Dabei werden etwa 99\,\% der Energie in Form von Wärme an die Probe abgegeben, wodurch eine Temperatur von etwa 2000\,\degree C erreicht werden kann.\\ \\
+Im Folgenden wird versucht, das Vorgehen so zu beschreiben, als befänden wir uns am Versuchsplatz.\\
+Nach dem Einschalten der Messelektronik heizen wir eine Minute lang die Probe durch das Anlegen einer Beschleunigungsspannung von $U_B=1.4\,$kV und einem Strom von $I=240\,$mA, also einer Heizleistung von etwa 330\,W.  Der Druck erhöht sich durch die verdampften Fremdatome auf $10^{-8}\,$mbar und wird durch die Pumpen nach wenigen Minuten auf etwa $5\cdot 10^{-9}\,$mbar reduziert.\\
+Der Betreuer gibt uns den Hinweis, dass jetzt nur noch Kohlenstoff auf der Oberfläche vorhanden ist. Dieser hat allerdings einen Schmelzpunkt von 3550\,\degree C und kann nicht durch Erhitzen entfernt werden, weil der Schmelzpunkt von Wolfram bereits bei 3400\,\degree C erreicht ist. Durch das Einlassen von $10^{-6}\,$mbar Sauerstoff kann der Kohlenstoff allerdings oxidiert werden. Fünf Minuten lang wird die Probe nun mit $U_B=1\,$kV und $I=50\,$mA geheizt (50\,W), wobei sich bei laufender Pumpe und Sauerstoffeinlass ein dynamisches Gleichgewicht bei $p=10^{-6}\,$mbar einstellt. Es bildet sich eine dicke Schicht Wolframoxid ($\approx 100$ Atomlagen), die aber durch Erhitzen entfernt werden kann. Anschließend wird weitere fünf Minuten bei 50\,W geheizt, woraufhin die Sauerstoffzufuhr unterbrochen und der Druck über zwei Stunden hinweg auf $10^{-9}\,$mbar gesenkt wird.\\ \\
+Abb. \ref{figure:0 mal heizen kreuze} zeigt eine LEED-Aufnahme, bei der deutlich die kreuzförmigen Reflexe sichtbar werden. Nach Angabe des Betreuers sind diese auf Wolframoxid zurückzuführen. Im Folgenden soll durch mehrmaliges Heizen die Oxidschicht entfernt werden, was allerdings vorsichtig erfolgen muss, da sonst im Kristallinnern gebundener Kohlenstoff an die Oberfläche diffundiert.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{002_Wolframoxid_dickeSchicht_vorHeizen_Kreuz_215V.jpg}
+\caption{LEED-Bild vor dem Heizen mit $U_B=215\,$V. Die Kreuze sind klare Anzeichen für Wolframoxid.}
+\label{figure:0 mal heizen kreuze}
+\end{figure}\\
+Das erste Heizen erfolgt eine Minute lang bei $U_B=1\,$kV mit 90\,W. In Abb. \ref{figure:1 mal heizen kreuze} sind die Kreuze allerdings immer noch leicht erkennbar, die Probe ist also nicht heiß genug geworden.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{004_Wolframoxid_dickeSchicht_1xHeizen_Kreuz_163V.jpg}
+\caption{LEED-Bild nach dem ersten Heizen mit $U_B=163\,$V. Die Kreuze sind noch leicht zu erkennen.}
+\label{figure:1 mal heizen kreuze}
+\end{figure}\\
+Das zweite Heizen erfolgt ebenfalls eine Minute lang bei erhöhtem Strom mit 120\,W und führt nach Abkühlen auf das LEED-Bild in Abb. \ref{figure:2 mal heizen neue reflexe}. Es liegt nun eine Monolage Wolframoxid vor, wobei teilweise Nachbaratome fehlen. Da diese Anordnung energetisch ungünstig ist, bildet sich eine andere Kristallstruktur. Es kommt zur Pärchenbildung, also einer halbierten Frequenz im Realraum, was wir als doppelte Frequenz im $k$-Raum beobachten. Im Vergleich zu Abb. \ref{figure:1 mal heizen kreuze} erkennt man die höhere Dichte der Reflexe besonders gut, weil etwa die gleiche Beschleunigungsspannung gewählt wurde, und somit die Ewald-Kugel in beiden Fällen die gleiche Größe hat. Diese letzte Lage ist besonders stabil uns muss mit höherer Leistung entfernt werden.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{006_Wolframoxid_duenneSchicht_2xHeizen_nachAbkuehlen_161V.jpg}
+\caption{LEED-Bild nach dem zweiten Heizen mit $U_B=161\,$V. Fehlende Nachbaratome führen zu enger liegenden Reflexen.}
+\label{figure:2 mal heizen neue reflexe}
+\end{figure}\\
+Der dritte Heizvorgang erfolgt erneut eine Minute lang, diesmal bei $U_B=1.4\,$kV und $I=240\,$mA. Nach dieser dritten Reinigung nehmen wir die Probe nun als sauber an.
+\subsection{LEED-Simulation einiger Kristallstrukturen}
+Da die beobachteten Reflexe - also Intensitäten - nur zum Betragsquadrat der Fouriertransformation der Ladungsdichte proportional sind, kann letztere nicht einfach durch Rücktransformation bestimmt werden, weil die Phaseninformation verloren gegangen ist. Stattdessen wird uns ein Simulationsprogramm zur Verfügung gestellt, dass ausgehend von einer bestimmten Konfiguration ein LEED-Bild erzeugt. Damit soll die Orientierung der Probe rekonstruiert werden. Allerdings haben wir drei Parameter für den Normalenvektor, einen für die Drehung und zwei für die Kippung, deren Bestimmung ein systematisches Vorgehen erfordert. Im Folgenden sollen daher zunächst einfache Spezialfälle betrachtet werden, um ein Verständnis für die Wirkung der verschiedenen Parameter zu erhalten.\\
+Die Voreinstellungen sind ein Normalenvektor $\vec{n}=(0,0,1)^\top$, eine Drehung von $\phi=0\,\degree$, eine links-rechts-Kippung von $\alpha=0\,\degree$ und eine oben-unten-Kippung von $\beta=0\,\degree$. Wir verwenden eine quaderförmige Abschneidefunktion $A=(x,y,z)$, wobei $x,y,z$ die Ausdehnung in die jeweilige Raumrichtung bezeichnet.
+\subsubsection{Variation der Kristallgröße}
+Betrachte zunächst eine Abschneidefunktion der Form $(1,1,1)$, also ein einzelnes Atom. Die Elektronendichte wird also durch eine Delta-Distribution im Ursprung beschrieben, und die Fouriertransformierte ist dementsprechend konstant. Der Schnitt einer beliebigen Ewald-Kugel mit den kontinuierlichen Reflexen im $k$-Raums ergibt also bei Projektion auf die $k_xk_y$-Ebene einfach ein konstantes LEED-Bild, dessen Graustufe nur von der Intensität beeinflusst wird.\\
+Mit $A=(11,11,11)$ bilden sich in Abb. \ref{figure:Kristallgroessen} deutlich sichtbare Maxima auf einem Quadrat um den Ursprung. Da die Periodizitätslänge in $(1,1,0)$-Richtung um einen Faktor $\sqrt{2}$ größer als in $x$- bzw. $y$-Richtung ist, liegen die entsprechenden Peaks im reziproken Raum um diesen Faktor näher am Ursprung.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.9]{Kristallgroessen.png}
+\caption{Kristalle für $A\in\{(11,11,11),(33,33,33),(33,33,11)\}$, der Normalenvektor zeigt jeweils in die linke obere Ecke. LEED bei $E_\tecxt\text{kin}=250\,$eV.}
+\label{figure:Kristallgroessen}
+\end{figure}\\
+Bei genauerer Betrachtung sind die Maxima Teil eines $k_xk_y$-Gitters aus mehr oder weniger starken Beugungsreflexen. Dies wird damit begründet, dass die Ladungsverteilung als Stufenfunktion einer Linearkombination von Kosinusfunktionen entspricht. Da insgesamt nur wenige Atome vorhanden sind, sind die Peaks im $k$-Raum noch stark verschmiert. Für $A=(33,33,33)$ sind durch die erhöhte Atomanzahl die Peaks jetzt schärfer. Im Vergleich zu $A=(33,33,11)$ sind auch die Nebenmaxima deutlich erkennbar.\\
+Mit $A=(11,33,33)$ sind $x$- und $y$-Richtung nun ausgezeichnet. Die Symmetrie im LEED-Bild wird folglich gebrochen (s. Abb. \ref{figure:xy Asymmetrie Kristall}). Da in $x$-Richtung weniger Atome vorhanden sind, werden die Reflexe in dieser Richtung stärker verschmiert. Bei Vertauschung von $x$ und $y$ in der Abschneidefunktion wird das LEED-Bild lediglich gedreht. Je mehr Atome in einer direkten Raumrichtung vorliegen, desto schärfer sind die Reflexe in der entsprechenden Richtung im reziproken Raum. 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.9]{xy_Asymmetrie.png}
+\caption{Kristalloberflächen für $A\in\{(11,33,33),(33,11,33)\}$ und LEED bei $E_\tecxt\text{kin}=250\,$eV.}
+\label{figure:xy Asymmetrie Kristall}
+\end{figure}\\
+Für die Rekonstruktion scheint es daher sinnvoll zu sein, einen möglichst großen und flachen Kristall zu verwenden.
+\subsubsection{Eindimensionale Ketten}
+Wir erweitern den einatomigen Kristall nun in lediglich einer Dimension. Für $A=(1,1,33)$ ergeben sich endliche Abstände in $k_z$-Richtung, wir erhalten im $k$-Raum also äquidistanten $k_xk_y$-Flächen. Deren Schnittpunkte mit der Ewald-Kugel resultieren bei Projektion in konzentrischen Kreisen, wobei für größere Energien aufgrund der größeren Ewald-Kugel auch mehr Kreise sichtbar werden.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=1]{z_Kette.jpg}
+\caption{LEED für Kette in z-Richtung bei $E_\tecxt\text{kin}\in\{70,250,450\}\,$eV.}
+\label{figure:z Kette}
+\end{figure}\\
+Für $A=(33,1,1)$ erhalten wir eine eindimensionale Kette in $x$-Richtung, also in $k_x$-Richtung äquidistante Flächen im $k$-Raum. Die Projektion der Schnittpunkte ergibt hier vertikale Linien. Für $A=(1,33,1)$ erhalten wir dementsprechend horizontale Linien, die Bilder sind hier allerdings nicht zusätzlich aufgeführt.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=1]{x_Kette.png}
+\caption{LEED für Kette in x-Richtung bei $E_\tecxt\text{kin}\in\{50,200,400\}\,$eV.}
+\label{figure:x Kette}
+\end{figure}
+\subsubsection{Drehung eines Quaders}
+Wir verwenden $A=(33,33,11)$ und variieren den Drehwinkel $\phi$. Für $\phi=90\,\degree$ ändert sich der Kristall nicht, somit bleibt also auch das LEED-Bild gleich. In Abb. \ref{figure:QuaderDrehung} erkennt man, dass sowohl Kristall als auch LEED-Bild gegen den Uhrzeigersinn gedreht werden. Die Reflexe geben eine Richtung an, in der im direkten Gitter eine Periodizität vorliegt. Bei der Rotation des Gitters müssen sich dementsprechend auch die Reflexe mitdrehen.
+\begin{figure}[htp!]
+\centering
+\includegraphics[scale=0.9]{QuaderDrehung.png}
+\caption{LEED von Quader für $\phi\in\{0,22,45\}\,\degree$ bei $E_\tecxt\text{kin}=360\,$eV.}
+\label{figure:QuaderDrehung}
+\end{figure}
+\subsubsection{Symmetriebrechung durch Kippung}
+Bei gleicher Abschneidefunktion und einer zurück auf $\phi=0\,\degree$ gesetzten Drehung ändern wir nun die links-rechts-Kippung $\alpha$. In Abb. \ref{figure:KippungAlpha} erkennt man die Symmetriebrechung entlang der $yz$-Ebene im Realraum und der $k_yk_z$-Ebene im $k$-Raum. Insbesondere verschieben sich die Reflexe für steigende $\alpha$ in $k_x$-Richtung, sodass bei $\alpha=10\,\degree$ sogar einer verschwindet. Letztlich entspricht die Kippung einfach nur einer Drehung der reziproken Gittervektoren um die $k_x$-Achse. Man betrachte zunächst den Gitterstab bei $k_x,k_y=0$, der die Ewald-Kugel für beliebige Radien schneidet. Durch die endliche Ausdehnung des Kristalls in $z$-Richtung sehen wir den Reflex allerdings nicht immer, weil die Gitterstäbe wieder zu ausgedehnten Punkten werden. Durch die Drehung des Stabs um $k_x$, verschiebt sich bei gleichbleibender Energie der Schnittpunkt und erscheint in der Projektion auf die $k_xk_y$-Ebene dann weiter rechts. 
+\begin{figure}[htp!]
+\centering
+\includegraphics[scale=0.9]{KippungAlpha.png}
+\caption{LEED von Quader für $\alpha\in\{0,5,10\}\,\degree$ bei $E_\tecxt\text{kin}=100\,$eV. Der nicht-gekippte Kristall ist in Draufsicht, also der $xy$-Ebene gezeigt, bei den andern beiden Bildern betrachtet man den Kristall in der $xz$-Ebene.}
+\label{figure:KippungAlpha}
+\end{figure}\\
+Etwas anschaulicher ist die Betrachtung des Elektronenstrahls selbst. Wenn dieser auf die gekippte Probe trifft, ändert sich auch der Austrittswinkel der Elektronen entsprechend, wodurch sie verschoben auf dem Schirm auftreffen.\\
+Durch das Kombinieren mit einer Änderung der oben-unten-Kippung $\beta$ kann eine beliebige Translation der Reflexe in der $k_xk_y$-Ebene erreicht werden. Im untersuchten Bereich kleiner Kippwinkel sind die verschiedenen Operationen scheinbar sogar linear, das LEED-Bild ergibt sich also durch Translation in $k_x$-Richtung gemäß $\alpha$ und anschließender Translation in $k_y$-Richtung gemäß $\beta$.
+\subsubsection{Einflüsse des Oberflächenvektors}
+Wir betrachten zunächst einen Oberflächenvektor $\vec{n}=(0.5,0,1)^\top$ bei $A=(62,62,2)$ im Vergleich zum vorherigen $\vec{n}$. In Abb. \ref{figure:x050 normalen vektor} erkennt man zunächst, dass sich die $k_y$-Koordinaten der Reflexe nicht ändern, weil wir den Kristall im direkten Raum ebenfalls entlang $y$ unverändert lassen. Durch das Kippen des Oberflächenvektors bilden sich im Kristall Stufen aus. Der Vektor wurde hier gerade so gewählt, dass die Stufen jeweils aus drei bzw. zwei Atomen bestehen, je nach Blickrichtung. Insbesondere führt die Stufung zu einer Kippung, weshalb im zweiten LEED-Bild der Hauptreflex nicht mehr mittig ist. Im direkten Raum entsprechen die Stufen einer Periodizität mit dreifacher Wellenlänge, wir erwarten im reziproken Raum also Nebenmaxima, mit einem Drittel des Abstands der Hauptmaxima. Besonders in der oberen und unteren Reihe der Reflexe ist dies im zweiten Bild gut zu erkennen, es liegen jeweils zwei Punkte zwischen den helleren Hauptreflexen. Der Abstand zwischen letzteren erhöht sich leicht, weil die Atome durch die Stufung in $x$-Richtung etwas enger liegen. Im dritten und vierten LEED-Bild wurde $\alpha$ so gewählt, dass die Stufen horizontal werden. Durch die Kippung scheint sich noch eine Verzerrung zu ergeben, die hier nur leicht zu erkennen ist, wir uns allerdings nicht erklären können.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.9]{x050_NormalenVektor.png}
+\caption{LEED von Fläche mit $\vec{n}=(0.5,0,1)^\top$ für $\alpha\in\{0,20,-30\}\,\degree$ bei $E_\tecxt\text{kin}=110\,$eV. Die Kristalle sind in der $xz$-Ebene gezeigt. Der Kippwinkel ist für das dritte und vierte Bild so gewählt worden, dass die Stufen der Länge drei bzw. zwei etwa horizontal sind. Das linke LEED-Bild dient als Referenz für eine glatte Fläche.}
+\label{figure:x050 normalen vektor}
+\end{figure}\\
+Es sollen nun noch einmal etwas kleinere Änderungen betrachtet werden. In Abb. \ref{figure:Doppelreflexe} beobachten wir die Aufspaltung einiger Reflexe in zwei Punkte. Diese Doppelreflexe treten auch in den experimentellen LEED-Bildern auf, sind also für die Rekonstruktion der Probe interessant. Allerdings können wir ihre Entstehung nicht zufriedenstellend erklären, an dieser Stelle also nur unser Ansatz:\\
+Ausgehend von der Position der Doppelreflexe, müssen diese mit den Diagonalen Periodizitäten im direkten Raum zusammenhängen. Entlang dieser Richtungen beobachten wir durch die Stufe eine Änderung der $z$-Koordinaten der Atome. Da wir eine Monolage betrachten, ergeben sich im reziproken Raum wieder Gitterstäbe, die aber diesmal nicht ganz parallel zur $k_z$-Achse sind. Der Schnitt mit der Ewald-Kugel ergibt zwei mögliche Reflexe, die bei Projektion auf die $k_xk_y$-Ebene nicht mehr direkt aufeinander liegen, deren Entartung also aufgehoben wurde. Das Problem mit dieser Erklärung ist allerdings, dass wir dieselbe Argumentation auch auf die reinen $x$- und $y$-Richtungen anwenden können, wir also auch Doppelreflexe bei allen anderen Reflexen sehen sollten. Da dies nicht der Fall ist, müssen wir hier also etwas grundsätzlich übersehen oder falsch verstanden haben.\\ \\
+Betrachten wir noch die Stufen in Abb. \ref{figure:Doppelreflexe}. Diese sind neun bzw. vier bis fünf Atome lang, gemäß der vorherigen Überlegung würden wir im LEED-Bild daher Punkte mit neunfacher bzw. vier- bis fünffacher Dichte in $k_x$-Richtung erwarten. Qualitativ ist zumindest bei starker Übersättigung zu erkennen, dass entsprechend mehr Nebenmaxima auftreten, quantitativ konnten wir die genauen Werte allerdings nicht nachweisen. 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.9]{DoppelReflexe.png}
+\caption{LEED von Fläche mit $\vec{n}\in\{(0,0,1)^\top,(0.05,0,1)^\top,(0.1,0,1)^\top\}$ für $\alpha\in\{0,-2.8,-5.5\}\,\degree$ bei $E_\tecxt\text{kin}=100\,$eV. Die Kristalle sind in der $xz$-Ebene gezeigt. Besonders auffällig sind die entstehenden Doppelreflexe.}
+\label{figure:Doppelreflexe}
+\end{figure}
+\subsection{Rekonstruktion der Orientierung der Probe}
+Um die grobe Orientierung zu bestimmen, betrachten wir zunächst ein Bild bei höherer Energie und erkennen eindeutig ein hexagonales Muster. In Abb. \ref{figure:HexagonHinweis} bilden wir dieses zumindest prinzipiell mit $\vec{n}=(1,0,1)^\top$ nach.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.9]{HexagonHinweis.png}
+\caption{Im ersten Bild ist ein kubischer Kristall in der $(101)$-Richtung gezeigt. Hier erkennen wir an der Kante den Teil eines hexagonalen Musters. Mit dem Oberflächenvektor $\vec{n}=(1,0,1)^\top$ kann dieses Muster auch als Fläche erzeugt werden. Das experimentelle LEED-Bild wurde bei $E_\tecxt\text{kin}=492\,$eV aufgenommen, das simulierte bei 100\,eV.}
+\label{figure:HexagonHinweis}
+\end{figure}\\
+Alle experimentellen LEED-Bilder sind symmetrisch um die vertikale Achse, wir können also davon ausgehen, dass der Kristall höchstens eine links-rechts-Kippung aufweist, die eine Abweichung des Oberflächenvektors von $\vec{n}=(1,0,1)^\top$ ausgleicht. Im Video \cite{Hauptreflex YT} (oder alternativ in einem ``Daumenkino'' der Einzelbilder) erkennt man, dass sich der Hauptreflex, der seine Position bei Änderung der Energie nicht verändert, nicht direkt in der Mitte befindet. Der Kristall ist also nach unten gekippt, wobei für Abb. \ref{figure:Hauptreflex} bereits $\beta=-11\,\degree$ verwendet wurde, obwohl wir zunächst von $\beta=-10\,\degree$ ausgegangen sind. Allerdings ist die Änderung nur schwer zu erkennen, weshalb wir hier nachträglich bereits unseren ``finalen'' Wert verwenden. Die Energie der Simulation wurde so gewählt, dass die Position der Reflexe relativ zum Bildrand mit denen des Experiments etwa übereinstimmen. Dabei sollte beachtet werden, dass durch den kreisförmigen Ausschnitt im Experiment bei manchen Energien Reflexe abgeschnitten werden. Im Folgenden verwenden wir aufgrund von $\frac{110\,\tecxt\text{eV}}{137\,\tecxt\text{eV}}\approx 0.8$ in der Simulation immer eine Energie von $E_\tecxt\text{sim}=0.8\cdot E_\tecxt\text{exp}$. Insbesondere verwenden wir die Abschneidefunktion $A=(55,55,2)$. In $xy$-Richtung wollen wir eine große Ausdehnung, um möglichst präzise Reflexe zu erhalten. In $z$-Richtung wollen wir nur eine Atomlage, um zusätzliche Reflexe zu vermeiden und die Geschwindigkeit der Simulation zu erhöhen.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.9]{HauptreflexEnergieSkalierung.png}
+\caption{Vergleich von Experiment und Simulation mit $\beta=-11\,\degree$. Als Hauptreflex identifizieren wir den Reflex am unteren Bildrand, was aber nur bei Variation der Energie eindeutig wird. Das experimentelle LEED-Bild wurde bei $E_\tecxt\text{kin}=137\,$eV aufgenommen, das simulierte bei 110\,eV.}
+\label{figure:Hauptreflex}
+\end{figure}\\
+Zuletzt fällt uns noch auf, dass im Experiment Doppelreflexe vorhanden sind. Diese hatten wir zuvor besonders gut beobachten können, wenn sich die Atome in zwei gleich großen Stufen angeordnet hatten. Anstatt von $\vec{n}=(0.05,0,1)^\top$ war hier eine stärkere Abweichung zu $\vec{n}=(1.17,0,1)^\top$ nötig. Um die entstandene links-rechts-Kippung auszugleichen, verwenden wir $\alpha=-4.5\,\degree$. In Abb. \ref{figure:HexagonZweistufig} sind Kristall und LEED-Bild gezeigt.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.9]{HexagonZweistufig.png}
+\caption{Zweistufiger Kristall in $xz$-Ebene und LEED-Simulation mit $\vec{n}=(1.17,0,1)^\top$ und $\alpha =-4.5\,\degree$ bei $E_\tecxt\text{kin}=110\,$eV.}
+\label{figure:HexagonZweistufig}
+\end{figure}\\
+Um die gefundenen Parameter zu überprüfen ist im Anhang ein simuliertes LEED-Bild bei der entsprechenden Energie im direkten Vergleich zu jeder experimentellen Aufnahme aufgeführt. In der Simulation gibt es mehr Doppelreflexe als im Experiment. Das scheint aber ein Artefakt der skalierten Energien in der Simulation zu sein, die wir verwendet hatten, um den Bildausschnitt künstlich zu verkleinern. Es wäre vermutlich sinnvoller gewesen, den Ausschnitt einfach im Nachhinein anzupassen, aber dafür die richtigen Energien zu verwenden.
+\section{Photoelektronenspektroskopie}
+Wir haben die Messwerte für einen $\tecxt\text{YbIr}_2\tecxt\text{Si}_2$-Kristall gegeben, untersuchen hier also nicht den zuvor betrachteten Wolfram-Kristall. Ytterbium gehört zu den Lanthanoiden und führt aufgrund der Elektronenkonfiguration zu einem interessanten Aspekt der Bandstruktur.
+\subsection{Versuchsaufbau}
+Durch den Photoeffekt werden Elektronen aus dem Festkörper gelöst. Aufgrund der kinetischen Energien von einigen eV, ist dieses Verfahren oberflächenempfindlich, weil die Elektronen nur eine geringe freie Weglänge haben. Die kinetische Energie der Elektronen ergibt sich dann zu 
+\begin{align*}
+E_\tecxt\text{kin}&=\hbar\omega - \phi - E_\tecxt\text{B},\numberthis\label{eqn:E kin von omega und phi}
+\end{align*}
+wobei $\omega$ die Kreisfrequenz der monoenergetischen Photonen, $\phi$ die Austrittsarbeit und $E_\tecxt\text{B}$ die Bindungsenergie ist. Man führt zudem den Austrittswinkel $\alpha$ zur Normalen ein. Um nur Elektronen mit einer ausgewählten Energie zu detektieren, werden zwei halbkugelförmige Schalen mit entgegengesetzten Ladungen verwendet, wobei die äußere Schale negativ geladen ist. Nur Elektronen mit einer bestimmten kinetischen Energie und Winkel $\alpha$ können diese Schalen passieren. Haben sie zu viel Energie, treffen sie auf die äußere Schale, weil die Ablenkung nicht stark genug ist. Haben sie zu wenig Energie, treffen sie hingegen auf die innerer, positiv geladene Schale, weil die Ablenkung zu stark ist. Für einen festen Winkel kann durch Änderung der Ladung die Zählrate als Funktion der Energie gemessen werden.\\ \\
+Im Versuch verwenden wir UV-Licht, sodass der Impulsübertrag auf das Elektron vernachlässigt werden kann. Beim Austritt aus dem Festkörper bleibt die Komponente des $k$-Vektors parallel zur Oberfläche näherungsweise erhalten und berechnet sich daher gemäß Pythagoras einfach zu
+\begin{align*}
+k_\parallel&=k'_\parallel =k'\sin\alpha = \frac{1}{\hbar}\sqrt{2mE_\tecxt\text{kin}}\sin\alpha,\numberthis\label{eqn:k parallel von E kin}
+\end{align*}
+wobei sich die gestrichenen Variablen auf das Elektron nach dem Austritt beziehen.
+\subsection{Visualisierung der Ergebnisse}
+Im Versuch wurde in Schritten von 0.3\,\degree ein Impulshöhenspektrum aufgenommen. Die Bandstruktur muss um $k_\parallel=0$, also $\alpha=0\,\degree$ symmetrisch sein. Insbesondere müssen hier lokale Maxima oder Minima vorliegen, wodurch das zu $\alpha=0\,\degree$ zugehörige Spektrum bestimmt wurde (man stelle sich Abb. \ref{figure:Spektren mit maxima} um 90\,\degree gekippt vor; abgesehen von einer ``$\sin\alpha\approx\alpha$''-Näherung erhält man bereits die Bandstruktur aus den markierten Punkten). Um alle Spektren in einem Diagramm darzustellen, wurde in Abb. \ref{figure:Spektren mit maxima} ein konstanter $y$-Shift eingeführt, um Schnittpunkte zwischen den Kurven zu vermeiden. Das erkennt man insbesondere bei den Energien über 50.5\,eV, hier verschwindet die gemessene Intensität für alle Winkel, wodurch die Verschiebung deutlich wird. Die lokalen Maxima wurden dabei mit größtenteils mit einem Python-Skript bestimmt, nur einige Punkte im linken unteren Bereich von Abb. \ref{figure:Spektren mit maxima} wurden per Hand ergänzt (kurze Erläuterung des Programms im Anhang).
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=1]{SpektrenMitMaxima2.png}
+\caption{Impulshöhenspektren für verschiedene Winkel. Markiert sind lokale Maxima, wobei hier auch lokale Erhebungen eingeschlossen werden, die keine Maxima im mathematischen Sinne sind.}
+\label{figure:Spektren mit maxima}
+\end{figure}\\
+Die Fermi-Energie entspricht in der Abbildung dabei gerade der größten Energie, bei der die Intensität einen Wendepunkt hat, liegt also in der letzten fallenden Flanke. Mitteln über alle Spektren ergibt dann eine Fermi-Energie von $E_\tecxt\text{F}=(50.362\pm  0.008)\,$eV. Die Angabe des statistischen Fehlers soll lediglich zeigen, dass das Verfahren für alle Spektren sehr ähnliche Werte liefert. Die systematische Unsicherheit dieser Methode ist sicherlich relevanter. Wir sind aber ohnehin nur an Energiedifferenzen der Bänder interessiert.\\ \\
+Aus den Maxima soll nun die Bandstruktur rekonstruiert werden. Dazu wird für jedes Maxima die Bindungsenergie $E_\tecxt\text{B}=E_\tecxt\text{kin}-E_\tecxt\text{F}$ als Funktion der parallelen Komponente des $k$-Vektors der Elektronen gemäß (\ref{eqn:k parallel von E kin}) dargestellt. Das Ergebnis ist in Abb. \ref{figure:Bandstruktur} dargestellt.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.8]{Bandstruktur.png}
+\caption{Rekonstruierte Bandstruktur von $\tecxt\text{YbIr}_2\tecxt\text{Si}_2$. Auffällig sind einige horizontale Linien, insbesondere diejenige, die sich nur wenige meV vor der Fermi-Kante befindet.}
+\label{figure:Bandstruktur}
+\end{figure}\\
+Da es sich um die Bandstruktur eines dreidimensionalen Festkörpers handelt, können sich verschiedene Bänder schneiden. Dadurch ist nicht immer eindeutig, welche Messpunkte zu welchem Band gehören, weshalb wir insbesondere keine Verbindungslinien einzeichnen. Zu diesem Zweck müsste man noch etwas genauere Messungen anstellen.\\
+Dennoch sind einige Linien zu erkennen, die praktisch keine Dispersion zeigen. Die Energieniveaus entstehen durch die Überlappung der äußersten besetzten Elektronen-orbitale der Bestandteile des Kristalls. Das Pauli-Verbot führt dann zu Bereichen mit quasi-kontinuierlich verteilten Zuständen, den Bändern, und Bereichen ohne erlaubten Zuständen, den Bandlücken. Die Breite eines Bandes ist nun unter anderem von der Größe des Transferintegrals und somit der Größe der beteiligten Orts-Wellenfunktionen abhängig. Je kleiner ein Orbital, desto geringer ist also auch die Dispersion. Normalerweise sind die inneren Elektronen allerdings viel stärker gebunden, sodass nur die Elektronenzustände mit den größten Ausdehnungen beobachtet werden.\\
+Das Besondere an Ytterbium ist nun, dass in seiner Gruppe der Lanthanoide das 4f-Orbital aufgefüllt wird, diese Elektronen also am schwächsten gebunden sind. Allerdings ist das viel größere 6s-Orbital bereits voll und somit für die chemische Bindung verantwortlich. Die horizontalen Linien können also mit den 4f-Elektronen des Yb identifiziert werden, weil sie einerseits schwach genug gebunden sind, um im Energiebereich von Abb. \ref{figure:Bandstruktur} zu liegen, aber andererseits relativ zu den 6s-Elektronen so stark lokalisiert sind, dass sie vom restlichen Festkörper (fast) nichts mitbekommen, und daher zu nicht-dispergierenden Linien führen.\\
+In der virtuellen Durchführung des Versuchs hatten wir noch besprochen, dass die Linie aus Abb. \ref{figure:Bandstruktur} knapp unter der Fermi-Kante dem $4\tecxt\text{f}^{13}$-Elektron zugeordnet werden kann, welches als das äußerste Elektron nur mit wenigen meV gebunden ist. In der Nachbereitung gab es etwas Verwirrung, weil Ytterbium eigentlich auch ein $4\tecxt\text{f}^{14}$-Elektron besitzt. In der Verbindung $\tecxt\text{YbIr}_2\tecxt\text{Si}_2$ ist das allerdings nicht mehr der Fall.
+\begin{thebibliography}{9}
+\bibitem{PES Anleitung} Anleitung zum Versuch \emph{Photoelektronenspektroskopie} (PES, 2020), \url{https://tu-dresden.de/mn/physik/ifp/ressourcen/dateien/lehre/praktika/pes_neu.pdf}, 04.\,März~2021.
+\bibitem{Hauptreflex YT} Videoaufnahme der LEED-Analyse des Wolfram-Kristalls, \url{https://www.youtube.com/watch?v=-D68KSqUQAg}, 05.\,März~2021.
+\end{thebibliography}
+%https://www.physik.tu-dresden.de/sfb463/paper.htm
+\newpage
+\appendix
+\section{Fotocollage der simulierten und experimentellen LEED-Bilder}
+Die Parameter sind $A=(55,55,2)$, $\vec{n}=(1.17,0,1)^\top$, $\phi=0\,\degree$, $\alpha=-4.5\,\degree$ und $\beta=-11\,\degree$ bei unterschiedlichen Intensitäten und Energien $E_\tecxt\text{sim}=0.8\cdot E_\tecxt\text{exp}$.
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c}
+$E_\tecxt\text{exp}\,/\,$eV & 47 & 76 & 101 & 137 & 155 & 183 & 204 & 245 & 300 & 350 & 420 & 492\\ \hline
+$E_\tecxt\text{sim}\,/\,$eV & 38 & 61 & 81 & 110 & 124 & 146 & 163 & 196 & 240 & 280 & 336 & 394\\
+\end{tabular}
+\caption{Energien der experimentellen und simulierten LEED-Bilder.}
+\label{table:Energien exp und sim}
+\end{table}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.9]{FotocollageLEED.png}
+\caption{LEED-Bilder aus Experiment und Simulation mit Energien aus Tab. \ref{table:Energien exp und sim}.}
+\label{figure:Fotocollage leed}
+\end{figure}
+\section{Bestimmung lokaler Maxima und Erhebungen mit Python}
+Natürlich gibt es in Python Funktionen für Peak-Erkennung. Aufgrund einer Vielzahl einstellbarer Parameter haben wir hier \texttt{scipy.signal.find{\_}peaks} verwendet. Problematisch ist aber, dass wir nicht nur an mathematisch strengen lokalen Maxima interessiert sind, sondern an allen Erhebungen, die man als einen (beispielsweise teilweise überlagerten) Peak interpretieren kann. Nun ist es uns aber etwas schwer gefallen, diese doch sehr unpräzise Anweisung von ``Suche alles, was wie ein Peak aussieht'', in ein Programm zu übersetzen. \\
+Unser Lösungsansatz verwendet noch \texttt{scipy.ndimage.filters.uniform{\_}filter1d}. Diese Funktion macht letztlich nichts weiter, als die Daten etwas zu glätten und kann als primitiver Noise-Filter eingesetzt werden. Der Kniff ist nun, dass wir \texttt{find{\_}peaks} nicht auf ein Impulshöhenspektrum selbst anwenden, sondern auf dessen Differenz zum geglätteten Spektrum. Dadurch werden Peaks zwar geringfügig verschoben, aber somit können prinzipiell lokale Erhebungen erkannt werden.
+
+
+\end{document}

@@ -1,0 +1,230 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{04 Partition functions}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Theoretical Physics (Master)}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Problem 1: \normalfont\textit{\large{Partition functions}}}
+We calculate the partition function of the harmonic oscillator in two different ways.
+%\subsection*{a)}
+The direct definition is
+\begin{align}
+Z &:= \sum_{n\ge 0}\e^{-\beta E_n} = \sum_{n\ge 0}\e^{-\beta\omega \kla\left( n+\frac{1}{2} \right)} = \e^{-\beta\omega/2} \frac{1}{1 - \e^{-\beta\omega}} = \frac{2}{\sinh\kla\left( \frac{\beta\omega}{2} \right)}.
+\end{align}
+%\subsection*{b)}
+The propagator for the harmonic oscillator is
+\begin{align}
+G &= \sqrt{\frac{m\omega}{2\pi\i\sin (\omega t)}} \exp\kla\left( \frac{\i m \omega}{2\sin (\omega t)}\klam\left[ (x_N^2 + x_0^2)\cos(\omega t) - 2x_Nx_0 \right] \right).
+\end{align}
+The partition function may also be computed from
+\begin{align}
+Z &= \intr\int_{\mathbb{R}^{ }} G(x, t=-\i\beta | x, 0) \, \mathrm{d}^{ }x = \\
+&= \sqrt{\frac{m\omega}{2\pi\i\sin(-\omega \i\beta)}} \intr\int_{\mathbb{R}^{ }} \exp\kla\left( \frac{\i m\omega}{\sin (-\omega \i\beta)} x^2\klam\left[ \cos(\omega \i\beta) - 1 \right] \right) \, \mathrm{d}^{ }x = \\
+&= \sqrt{\frac{m\omega}{2\pi\i\sin(-\omega \i\beta)}} \sqrt{\frac{\pi \sin(-\omega\i\beta)}{-\i m\omega \kla\left( \cosh(\omega\beta) - 1 \right)}} = \\
+&= \frac{2}{\sqrt{\frac{\cosh(\beta\omega) - 1}{2}}} = \frac{2}{\sinh\kla\left( \frac{\beta\omega}{2} \right)}.
+\end{align}
+Here we used
+\begin{align}
+\sinh^2(x) = \frac{\e^{2x} + \e^{-2x} - 2}{4} = \frac{\cosh(2x)}{2} - \frac{1}{2}
+\end{align}
+with $x = \frac{\beta\omega}{2}$.
+
+\newpage
+\section*{Problem 2: \normalfont\textit{\large{Single-mode Bogoliubov transforms}}}
+Consider a quadratic bosonic Hamiltonian of the form (this could be a bosonic toy model for the Bardeen-Cooper-Schrieffer theory of superconductivity)
+\begin{align}
+H &= \omega a^\dagger a + \eta a^2 + \eta^\ast a^{\dagger\,2}.
+\end{align}
+\subsection*{a)}
+Let $a = ub + vb^\dagger$, where we want $b$ to be a bosonic annihilation operator.
+Then we find
+\begin{align}
+\klam\left[ a,a^\dagger  \right] &= \klam\left[ ub + vb^\dagger, u^\ast b^\dagger + v^\ast b \right] = uu^\ast - vv^\ast \overset{!}{=} 1,\\
+\klam\left[ a,a \right] &= \klam\left[ ub + vb^\dagger, ub + vb^\dagger \right] = uv - vu = 0.
+\end{align}
+
+\subsection*{b)}
+Now let $u,v\in\mathbb{R}$.
+Then we may express the Bogoliubov as 
+\begin{align}
+\begin{pmatrix}
+a \\ a^\dagger
+\end{pmatrix} &= \begin{pmatrix}
+u & v \\ v & u
+\end{pmatrix}\begin{pmatrix}
+b \\ b^\dagger
+\end{pmatrix}.
+\end{align}
+
+\subsection*{c)}
+
+
+\section*{Problem 3: \normalfont\textit{\large{Coherent state of Landau levels}}}
+The Hamiltonian of an electron sensing a magnetic field is
+\begin{align}
+H &= \frac{p_x^2 + p_y^2}{2m} + \frac{m}{2}\omega_L^2 (x^2+y^2) - \omega_L (xp_y-yp_x) = \\
+&= \omega_L\kla\left( a_x^\dagger a_x + a_y^\dagger a_y + 1 \right) + \i\omega_L\kla\left( a_x^\dagger a_y - a_y^\dagger a_x \right) = 2\omega_L\kla\left( b^\dagger b + \frac{1}{2} \right)
+\end{align}
+where $\omega_L = \frac{eB}{2m}$ is the Larmor frequency.
+Now consider a state of the form
+\begin{align}
+\Ket | \Psi \rangle &:= D_+(\alpha_+)D_-(\alpha_-) \Ket | 0 \rangle = \exp\kla\left( \alpha_+b_+^\dagger - \alpha_+^\ast b_+ \right)  \exp\kla\left( \alpha_-b_-^\dagger - \alpha_-^\ast b_- \right) \Ket | 0 \rangle.
+\end{align}
+\subsection*{a)}
+Then we may compute the expectation values
+\begin{align}
+\bra\langle x \rangle &= 
+\end{align}
+\subsection*{b)}
+
+\section*{Problem 4: \normalfont\textit{\large{Boundary effects on Landau levels}}}
+Consider the Landau Hamiltonian with an additional effective boundary at $x=0$, i.e. the potential
+\begin{align}
+V(x) &= \left\{\begin{matrix}
+\infty & : & x<0 \\ 0 & : &  x\ge 0
+\end{matrix} \right. .
+\end{align}
+In the Landau gauge $\vec{A} = Bx\vec{e}_y$, the full Hamiltonian then becomes
+\begin{align}
+H &= \frac{1}{2m}\klam\left[ p_x^2 + \kla\left( p_y - eBx \right)^2 \right] + V(x).
+\end{align}
+\subsection*{a)}
+We can write the Hamiltonian in the more explicit form
+\begin{align}
+H &= \frac{p_x^2+p_y^2}{2m} + \frac{e^2B^2x^2}{2m} - \frac{eB}{2m}\klammer\left\{ p_y, x \right\} + V(x) = \\
+&=  \frac{p_x^2+p_y^2}{2m} + \frac{m}{2}\omega_B^2x^2 - \omega_Bp_yx + V(x).
+\end{align}
+With $k_y$ being the eigenvalue of $p_y$, we may express our Hamiltonian with the effective potential
+\begin{align}
+V_\tecxt\text{eff}(x) &= \frac{m}{2}\omega_B^2x^2-\omega_Bk_yx + V(x).
+\end{align}
+\subsection*{b)}
+For $k_y=0$ the Hamiltonian effectively becomes a one dimensional harmonic oscillator potential, but with the additional requirement $\psi(x=0)=0$.
+Thus only the odd eigenfunctions $\psi_k(x)$ for $k=2n+1$ are possible, which leads to the energies
+\begin{align}
+E_n(k_y=0) &= \omega_b \kla\left( [2n+1] + \frac{1}{2} \right).
+\end{align}
+For $k_y\rightarrow\infty$ ???
+\subsection*{c)}
+
+\section*{Problem 5: \normalfont\textit{\large{Tunneling probability}}}
+Consider a particle subject to the potential
+\begin{align}
+V(x) = \alpha (x^2 - \Delta^2)^2
+\end{align}
+with $\alpha,\Delta> 0$.
+\subsection*{a)}
+\subsection*{b)}
+Now consider the negative of the potential $V$.
+Then conservation of energy gives
+\begin{align}
+E &= \frac{m}{2}\dot{x}^2 + \alpha (x^2-\Delta^2)^2.
+\end{align}
+Separation of variables leads to
+\begin{align}
+\pm\sqrt{\frac{2}{m}} t &= \intx\int_{0}^{t}\frac{\dot{x}}{\sqrt{E - \alpha (x^2 - \Delta^2)^2}}\, \mathrm{d}t = \intx\int_{x_0}^{x}\frac{1}{\sqrt{E - \alpha (s^2 - \Delta^2)^2}}\, \mathrm{d}s \kom\overset{\substack{{s\,=\,\Delta\cosh (u)} \\ |}}{=} \\
+&= \intx\int_{ }^{ }\frac{\Delta \sinh (u)}{\sqrt{E - \alpha\Delta^4 \sinh^4(u)}}\, \mathrm{d}u = \sqrt{\frac{\alpha\Delta^4}{E}}
+\end{align}
+Now substitute $u := \kla\left( E - \alpha(s^2-\Delta^2)^2 \right)^{-1/2}$.
+Then we find $s = \sqrt{\Delta^2 + \sqrt{\frac{1}{\alpha}\kla\left( E - \frac{1}{u^2} \right)}}$ and the differential relation
+\begin{align}
+\frac{\tecxt\text{d}u}{\tecxt\text{d}s} &= -\frac{1}{2}u^3\kla\left( -2\alpha (s^2-\Delta^2)(2s) \right) = \\
+&= 2\alpha u^3 \sqrt{\Delta^2 + \sqrt{\frac{1}{\alpha}\kla\left( E - \frac{1}{u^2} \right)}}\sqrt{\frac{1}{\alpha}\kla\left( E - \frac{1}{u^2} \right)}
+\end{align}
+The differential equation is
+\begin{align}
+m\ddot{x} &= -V'(x) = 4\alpha x (x^2-\Delta^2) &&\Rightarrow & \ddot{x} + \omega^2x &= \frac{4\alpha}{m} x^3
+\end{align}
+with $\omega^2 := \frac{4\alpha\Delta^2}{m} $ and .
+Now measure time with the dimensionless parameter $s := \omega t$ to obtain $\ddot{x}(t) = \ddot{x}(s(t)) = x''(s) \dot{s}^2 = x''(s)\omega^2$ and
+\begin{align}
+x'' + x &= ax^3
+\end{align}
+where $a := \frac{4\alpha}{m\omega^2}$.
+This is the anharmonic oscillator, and it is not solvable analytically.
+However, we may very well be able to obtain the solution as an asymptotic series.
+Start with $a=0$, which yields the unperturbed
+\begin{align}
+x_0(s) &= x_0\cos (rs).
+\end{align}
+Here we chose the cosine solution, since we know that the initial and final position are supposedly antisymmetric with $x(t_\tecxt\text{in}=0) = x_\tecxt\text{in} = -\Delta$ and $x(t_\tecxt\text{out}=T) = x_\tecxt\text{out} = \Delta$.
+Then we can write the full solution as a series in powers of $a$, i.e.
+\begin{align}
+x(s) &= \sum_{k\ge 0} x_k(s)a^k, 
+\end{align}
+where we have already determined the zeroth coefficient.
+We may insert the initial conditions at this point, giving
+\begin{align}
+x_0(s) = -\Delta \cos (s)
+\end{align}
+where $\cos(S := \omega T) \overset{!}{=} -1$ gives $T = \frac{\pi}{\omega}$.
+Note that
+\begin{align}
+x^3 &= \kla\left( \sum_k x_ka^k \right)^3 = \sum_ka^k\sum_{i+j+l=k} x_ix_jx_l
+\end{align}
+Inserting our series into the differential equation yields
+\begin{align}
+\sum_ka^k\kla\left( x_k''+x_k \right) &= \sum_ka^{k+1}\sum_{i+j+l=k} x_ix_jx_l.
+\end{align}
+For $k=1$ we find :
+\begin{align}
+x_1''+x_1 &= 3x_0^2x_1 = 3\Delta^2\cos^2(s)x_1
+\end{align}
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+\end{document}

@@ -1,0 +1,50 @@
+Ergänzungen
+
+Einstieg... hamiltonian systems, abstract, wissenschaftlichen diskussion nicht präzise genug
+
+Vortrag alles ok :)
+
+
+
+Arbeit ::
+
+settings? h.systems, frequencies of what?
+	beliebige zeitreihen, nur ausprobieren, muss also nicht mit h. anfangen
+	aber: methode um time-series zu analysieren -> mehr an andere Leser denken
+
+ref 4 eigentlich nicht so gut, das ist allgemeiner als in m.lange
+
+chapter 2
+	überall nummers für eqn,
+	g(n) -> g(x), M einführen, g plotten,
+	S ist nicht S, eigentlich S^1, oder halt andere Namen
+	windowing kommt nicht vor
+	referenzen zu arbeiten bei definition WBA
+	h funktion vielleicht einfach weglassen
+	argmax geht nicht so ganz
+
+chapter 3
+	nu_N - nu
+	arctan2 gibts auch nicht, außerdem ist das eigentlich arctan2(y,x), nicht (x,y)
+		phi_n = arg(z_n)
+	z_n := delta phi_n, name ungünstig, weil das war gerade noch komplexes signal
+		x_n, auch in 2 x_n nehmen
+	Z_N falsch, average davon ist ja 0 -> Z_N käme erst später...
+	3.2 -> reihenfolge a,b,c komisch
+	r_n definieren
+	"more complex" :)
+
+	p.17, much easier to compute ist unwissenschaftlich, generell speed
+		ausführlicher :: fft vs numba variante etc...
+		außerdem offensichtlich, wba ~ N, fft ~ N log N
+	3.9 N fehlt
+
+	p.20 statt especially sensitive to irregular
+		particuar fast for regular, hence difference conv to irregular larger
+
+	appnedix chapter??
+	journals in ref, bei abbrevs
+
+
+
+

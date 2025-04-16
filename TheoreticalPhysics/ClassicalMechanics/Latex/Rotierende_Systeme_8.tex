@@ -1,0 +1,98 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\begin{document}
+
+\title{Rotierende Systeme}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 23: Euler-Gleichungen}
+\subsection*{a)} Die Euler-Gleichungen lauten:
+\begin{align*}
+\vv{0}&=\begin{pmatrix} J_1\dot{\omega_1}+\omega_3\omega_2(J_3-J_2)\\ J_2\dot{\omega_2}+\omega_1\omega_3(J_1-J_3)\\ J_3\dot{\omega_3}+\omega_2\omega_1(J_2-J_1)  \end{pmatrix}=\begin{pmatrix} \omega_1 J_1\dot{\omega_1}+\omega_1\omega_3\omega_2(J_3-J_2)\\ \omega_2 J_2\dot{\omega_2}+\omega_2\omega_1\omega_3(J_1-J_3)\\ \omega_3 J_3\dot{\omega_3}+\omega_3\omega_2\omega_1(J_2-J_1)  \end{pmatrix}\ \ \Rightarrow\\
+0&=\dot{\omega_1}J_1\omega_1+\dot{\omega_2}J_2\omega_2+\dot{\omega_3}J_3\omega_3 +\omega_1\omega_2\omega_3(\underbrace{J_3-J_2+J_1-J_3+J_2-J_1}_{=0}) \numberthis\label{Euler}
+\end{align*}
+Die kinetische Energie $E_{kin}=\frac12 \vv{\omega}\cdot\underline{J}\cdot\vv{\omega}$ ist immer erhalten, denn:
+\begin{align*}
+\frac{d}{dt}(E_{kin})&=\frac12 \dot{\vv{\omega}}\cdot\underline{J}\cdot\vv{\omega}+\frac12 \vv{\omega}\cdot\underline{J}\cdot\dot{\vv{\omega}}=\dot{\omega_1}J_1\omega_1+\dot{\omega_2}J_2\omega_2+\dot{\omega_3}J_3\omega_3\overset{\substack{(1)\\|}}{=}0
+\end{align*}
+\subsection*{b)} Es gilt der Zusammenhang $\underline{D}\cdot\vv{\omega_K}=\vv{\omega_L}$ und $\underline{D}\cdot\vv{L_K}=\vv{L_L}$, sowie $\langle \underline{D}\vv{x}, \underline{D}\vv{y}\rangle = \langle \vv{x},\vv{y}\rangle$:
+\begin{align*}
+\vv{\omega_K}\cdot\underline{I_K}\cdot\vv{\omega_K}=\vv{\omega_K}\cdot\vv{L_K}=\underline{D}^\top \vv{\omega_L}\cdot\underline{D}^\top \vv{L_L}=\vv{\omega_L}\cdot\vv{L_L}=\vv{\omega_L}\cdot\underline{I_L}\cdot\vv{\omega_L}
+\end{align*}
+\section*{Aufgabe 24: Trägheitstensor}
+\subsection*{a)} Da alle vier Massen gleich groß sind, gilt für den Schwerpunkt:
+$$\vv{R_s}(t)=\frac14 (\vv{r_1}+\vv{r_2}+\vv{r_3}+\vv{r_4})\overset{\substack{\substack{\vv{r_1}=-\vv{r_2}\\ \vv{r_3}=-\vv{r_4}}\\|}}{=}\vv{0}$$
+\subsection*{b)}
+\subsection*{c)}
+\section*{Aufgabe 25: Dynamisches Gleichgewicht}
+Es wird angenommen, dass $\vv{\omega}=\omega \vv{e_z}$. Sei a die Seitenlänge des gleichseitigen Dreiecks:
+\begin{align*}
+&\begin{cases} m_1\ddot{\vv{r_1}}=m_1\omega^2\vv{r_1}-\frac{G}{a^3}(m_1m_2(\vv{r_1}-\vv{r_2})+m_1m_3(\vv{r_1}-\vv{r_3}))\\  m_2\ddot{\vv{r_2}}=m_2\omega^2\vv{r_2}-\frac{G}{a^3}(m_2m_3(\vv{r_2}-\vv{r_3})+m_2m_1(\vv{r_2}-\vv{r_1})) \\ m_3\ddot{\vv{r_3}}=m_3\omega^2\vv{r_3}-\frac{G}{a^3}(m_3m_1(\vv{r_3}-\vv{r_1})+m_3m_2(\vv{r_3}-\vv{r_2})) \end{cases}\\
+&\Rightarrow\ \ M\ddot{\vv{R_s}}=M\omega^2\vv{R_s}\ \ \Rightarrow\ \ \vv{R_s}(t) = e^{\lambda t}\\
+&\Rightarrow\ \ \lambda^2 = \omega^2\ \ \Rightarrow\ \ \vv{R_s}(t) = c_1e^{\omega t}+c_2e^{-\omega t}\overset{\substack{\dot{\vv{R_s}}\overset{!}{=}0\\|}}{=}\vv{R_s}_0\cosh(\omega t)\overset{\substack{\vv{R_s}_0\overset{!}{=}0\\|}}{=}\vv{0}
+\end{align*}
+Definiere zwei Relativkoordinaten:
+\begin{align*}
+\vv{r_1}_2&:=\vv{r_1}-\vv{r_2}\ \ \mathrm{und}\ \ \vv{r_1}_3:=\vv{r_1}-\vv{r_3}\\
+&\Rightarrow\ \begin{cases} \ddot{\vv{r}}_{12}=\omega^2\vv{r_1}_2 -\frac{G}{a^3}M\vv{r_1}_2 \\ \ddot{\vv{r}}_{13}=\omega^2\vv{r_1}_3 -\frac{G}{a^3}M\vv{r_1}_3 \end{cases}\\
+&\Rightarrow\ \ \ddot{\vv{r}}_{12}+\left(\frac{GM}{a^3}-\omega^2\right)\vv{r_1}_2\ \ \Rightarrow\ \ \vv{r_1}_2(t)=(\vv{r_1}_0-\vv{r_2}_0)\cos(\omega_{12}t)\ \ \mathrm{mit}\ \ \omega_{12}=
+\sqrt{\frac{GM}{a^3}-\omega^2}\\
+&\Rightarrow\ \ \ddot{\vv{r}}_{13}+\left(\frac{GM}{a^3}-\omega^2\right)\vv{r_1}_3\ \ \Rightarrow\ \ \vv{r_1}_3(t)=(\vv{r_1}_0-\vv{r_3}_0)\cos(\omega_{12}t)
+\end{align*}
+Mit der Bewegungsgleichung für den Schwerpunkt folgt daraus:
+\begin{align*}
+&\begin{cases} \vv{r_1}_2=\vv{r_1}-\vv{r_2} \\ \vv{r_1}_3 =\vv{r_1}-\vv{r_3} \\ M\vv{R_s}=m_1\vv{r_1}+m_2\vv{r_2}+m_3\vv{r_3} \end{cases}\ \ \Rightarrow\ \ \begin{cases} \vv{r_1}=\vv{r_1}_2+\vv{r_2} = \vv{r_3}+\vv{r_1}_3\\ \vv{r_2}=\vv{r_3}+\vv{r_1}_3-\vv{r_1}_2  \\ \vv{0}=M\vv{r_3}+m_1\vv{r_1}_3+m_2(\vv{r_1}_3-\vv{r_1}_2) \end{cases}\\
+&\Rightarrow\ \ \vv{r_3} =\frac{1}{M}(m_2\vv{r_1}_2-(m_1+m_2)\vv{r_1}_3)=\frac{1}{M}(m_2\vv{r_1}_2+m_3\vv{r_1}_3)-\vv{r_1}_3\\
+&\Rightarrow\ \ \vv{r_1}=\frac{1}{M}(m_2\vv{r_1}_2+m_3\vv{r_1}_3)\ \ \mathrm{und}\ \ \vv{r_2}=\frac{1}{M}(m_2\vv{r_1}_2+m_3\vv{r_1}_3)-\vv{r_1}_2
+\end{align*}
+Mit der Bedingung, dass die relative Abstände der Massen konstant bleiben folgt dann:
+\begin{align*}
+a&\overset{!}{=}\begin{cases} |\vv{r_1}-\vv{r_2}|=a\ \cos(\omega_{12}t)\\ |\vv{r_1}-\vv{r_3}|=a\ \cos(\omega_{12}t) \\ |\vv{r_2}-\vv{r_3}|=a\ \cos(\omega_{12}t) \end{cases}\ \ \Rightarrow\ \ \omega_{12}=0\ \ \Rightarrow\ \ \omega=\sqrt{\frac{GM}{a^3}}
+\end{align*}
+Um die gegebenen Bedingungen zu erfüllen, muss $\vv{\omega}$ also im Schwerpunkt des Systems liegen und senkrecht zu den Bewegungen in der x-y-Ebene stehen:
+$$\vv{\omega}=\sqrt{\frac{GM}{a^3}}\vv{e_z}$$
+\section*{Aufgabe 26: Bonus*}
+%Betrachte den Zylinder bei einem Kippwinkel von $45\degree$.
+%Für das Volumen des Zylinders, das sich unter der Wasseroberfläche befindet gilt dann:
+%$$V=\int_{-H/2}^{H/2}\int_{-R}^{-z}\int_{-\sqrt{R^2-x^2}}^{\sqrt{R^2-x^2}} dydxdz=\frac{\pi}{2}R^2H$$
+%Für die Schwerpunktskoordinaten im rotierten Bezugssystem gilt dann:
+%\begin{align*}
+%Vx_s'&=\int_{-H/2}^{H/2}\int_{-R}^{-z}\int_{-\sqrt{R^2-x^2}}^{\sqrt{R^2-x^2}}x\ dydxdz = \\
+%&= \frac{H^3\sqrt{4R^2-H^2}}{48}-\frac{5HR^2\sqrt{4R^2-H^2}}{24}-\frac{R^4\arcsin(\frac{H}{2R})}{2} \\
+%Vy_s'&=\int_{-H/2}^{H/2}\int_{-R}^{-z}\int_{-\sqrt{R^2-x^2}}^{\sqrt{R^2-x^2}}y\ dydxdz = 0\\
+%Vz_s'&=\int_{-H/2}^{H/2}\int_{-R}^{-z}\int_{-\sqrt{R^2-x^2}}^{\sqrt{R^2-x^2}}z\ dydxdz= \\
+%&=-\frac{-8\arcsin\left(\frac{H}{2R}\right)R^4+\sqrt{4R^2-H^2}\left(2HR^2+H^3\right)+8H^2\arcsin\left(\frac{H}{2R}\right)R^2}{16}
+%\end{align*}
+%
+%Damit das Drehmoment $\vv{M}=\vv{r}\times\vv{F_A}$ verschwindet, muss  $x_s'=z_s'$ gelten. Sei $H=a\cdot R$:
+%\begin{align*}
+%0&=x_s'-z_s'=aR^4\left(\frac{1}{12}a^2\sqrt{4-a^2}+\frac12 \arcsin(\frac{a}{2})-\frac{1}{12}\sqrt{4-a^2}\right)\ \ \Rightarrow\\
+%0&=(a^2-1)\sqrt{4-a^2}+6\arcsin(\frac{a}{2})
+%\end{align*}
+%
+%Generell gilt:
+%$$ V=\int_{-H/2}^{H/2}\int_{-R}^{\tan(\alpha)z}\int_{-\sqrt{R^2-x^2}}^{\sqrt{R^2-x^2}} dydxdz=\frac{\pi}{2}R^2H $$
+%Hierbei muss dann $x_s'=\tan(\alpha)z_s'pre$ gelten.
+Setze den Drehpunkt in den Schwerpunkt und betrachte das Drehmoment durch die Auftriebskraft. Für die z-Komponente des Angriffspunktes gilt dann:
+\begin{align*}
+z_s^{(\mathrm{vertikal})}&=\frac{1}{V^{(\mathrm{Wasser})}}\int_{-H/2}^{0}\int_{-R}^{R}\int_{-\sqrt{R^2-x^2}}^{\sqrt{R^2-x^2}} z\ dydxdz=\frac{2}{\pi R^2H}\pi R^2 \frac{z^2}{2}\bigg\vert_{-H/2}^{0}=-\frac{H}{4}\\
+z_s^{(\mathrm{horizontal})}&=\frac{1}{V^{(\mathrm{Wasser})}}\int_{-H/2}^{H/2}\int_{-R}^{R}\int_{-\sqrt{R^2-y^2}}^{0} z\ dzdydx = \frac{2}{\pi R^2H}H\int_{-R}^{R} -\frac12 (R^2-y^2)\ dy =\\
+&=-\frac{2}{\pi R^2}(R^2y-\frac{y^3}{3})\bigg\vert_0^{R}=-\frac{4R}{3\pi}
+\end{align*}
+Somit folgt für das kritische Verhältnis von Höhe und Radius:
+$$ z_s^{(h)}\overset{!}{=}z_s^{(v)}\ \ \Rightarrow\ \ R=\frac{3\pi}{16}H $$
+Daruas kann man die Bedingung für die bevorzugte Lage ableiten:
+\begin{align*}
+\textrm{vertikal für:}&\ \ R>\frac{3\pi}{16}H\\
+\textrm{horizontal für:}&\ \ R<\frac{3\pi}{16}H
+\end{align*}
+\end{document}

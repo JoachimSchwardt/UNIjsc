@@ -1,0 +1,393 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[ngerman]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Adiabatische Näherung}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Theoretische Festkörperphysik}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Zwei gekoppelte Oszillatoren}
+\subsection*{a)}
+Gegeben ist der Hamilton-Operator
+\begin{align}
+H &= \frac{p_1^2}{2M} + \frac{p_2^2}{2m} + \frac{K}{2}x_1^2 + \frac{k}{2} \kla\left( x_1 - x_2 \right)^2.
+\end{align}
+Sei $M_0 = 0$ und $M_1 = m$.
+Wir transformieren unsere Impulse und Koordinaten gemäß $p_\mu \rightarrow \tilde{p}_\mu := \sqrt{M_\mu}p_\mu$ und $x_\mu \rightarrow \tilde{x}_\mu := \frac{1}{\sqrt{M_\mu} } x_\mu$.
+Damit lautet der Hamilton-Operator dann
+\begin{align}
+H &= \frac{1}{2}\sum_{\mu} \tilde{p}_\mu^2 + \frac{1}{2}\sum_{\mu\nu} D_{\mu\nu} \tilde{x}_\mu \tilde{x}_\nu.
+\end{align}
+In der allgemeinen Formulierung der Vorlesung ist die dynamische Matrix als
+\begin{align}
+D_{n\mu j}^{n'\mu'j'} := \frac{1}{\sqrt{M_\mu M_\nu}} \frac{\partial^2V}{\partial R_{n\mu j} \partial R_{n'\mu' j'}}
+\end{align}
+definiert.
+Hier haben wir allerdings nur eine ``Einheitszelle'' (also $n\equiv 1$) und auch nur eine Raumdimension (also $j\equiv 1$).
+Damit vereinfacht sich die Formulierung zu
+\begin{align}
+D_{\mu\nu} = \frac{1}{\sqrt{M_\mu M_\nu}} \frac{\partial^2}{\partial \tilde{x}_\mu \partial \tilde{x}_\nu} \kla\left( \frac{K}{2} \tilde{x}_1^2 + \frac{k}{2}(\tilde{x}_1 - \tilde{x}_2)^2 \right) = \begin{pmatrix}
+\frac{K+k}{M} & - \frac{k}{\sqrt{mM}} \\ - \frac{k}{\sqrt{mM}} & \frac{k}{m}
+\end{pmatrix}.
+\end{align}
+Um diese Matrix zu diagonalisieren, bestimmen wir zunächst die Eigenwerte $\lambda$ aus der Gleichung
+\begin{align}
+0 &= \lambda^2 - \tecxt\text{tr\,}D + \det D = \lambda^2 - \kla\left( \frac{K+k}{M} + \frac{k}{m} \right) \lambda + \frac{kK}{mM}.
+\end{align}
+Die Lösungen lauten 
+\begin{align}
+\lambda &= \frac{K+k}{2M} + \frac{k}{2m} \pm \sqrt{\frac{k^2}{4m^2} + \frac{K^2 + 2kK + k^2}{4M^2} + \frac{kK+k^2}{2mM} - \frac{kK}{mM}} = \\
+&= \frac{K+k}{2M} + \frac{k}{2m} \pm \sqrt{\frac{K^2}{4M^2} + \frac{kK}{2mM} \kla\left( \frac{m}{2M} - 1 \right) + \frac{k^2}{4m^2} \kla\left( 1 + \frac{m}{M} \right)^2}.
+\end{align}
+Wir identifizieren die Eigenwerte als $\omega_{1,2}^2$.
+Das System kann nun als zwei voneinander unabhängige harmonische Oszillatoren mit den entsprechenden Frequenzen interpretiert werden.
+Die Gesamtenergie ergibt sich daher zu
+\begin{align}
+E_{\nu_1\nu_2} &= \omega_1 \kla\left( \nu_1 + \frac{1}{2} \right) + \omega_2 \kla\left( \nu_2 + \frac{1}{2} \right).
+\end{align}
+
+%Die Eigenwertgleichung ist $D\vec{u} = \lambda \vec{u}$, oder explizit
+%\begin{align}
+%\begin{pmatrix}
+%(K+k)u_1 - ku_2 \\ -ku_1 + ku_2
+%\end{pmatrix} &= \lambda \begin{pmatrix}
+%u_1 \\ u_2
+%\end{pmatrix}.
+%\end{align}
+%Als Lösungen ergeben sich $u_2 = \frac{1}{k}\klam\left[ K+k-\lambda_+ \right]u_1$ und $u_1 = \frac{1}{k} \klam\left[ k - \lambda_- \right]u_2$, also die Eigenvektoren
+%\begin{align}
+%\vec{u}_1 &= \frac{1}{N} \begin{pmatrix}
+%k \\ K+k-\lambda_+
+%\end{pmatrix} = \frac{1}{N} \begin{pmatrix}
+%k \\ \frac{K}{2} - \kappa
+%\end{pmatrix} = \frac{1}{\sqrt{2\kappa (\kappa- K)}} \begin{pmatrix}
+%k \\ \frac{K}{2} - \kappa
+%\end{pmatrix},\\
+%\vec{u}_2 &= \frac{1}{N} \begin{pmatrix}
+%k - \lambda_- \\ k
+%\end{pmatrix} = \frac{1}{N} \begin{pmatrix}
+%\kappa - \frac{K}{2} \\ k
+%\end{pmatrix} = \frac{1}{\sqrt{2\kappa (\kappa - K)}} \begin{pmatrix}
+%\kappa - \frac{K}{2} \\ k
+%\end{pmatrix}.
+%\end{align}
+%Mit der Transformationsmatrix $U:= (\vec{u}_1, \vec{u}_2)$ können wir nun neue Koordinaten gemäß
+%\begin{align}
+%\vec{y} &:= \begin{pmatrix}
+%y_1 \\ y_2
+%\end{pmatrix} = U\begin{pmatrix}
+%x_1 \\ x_2
+%\end{pmatrix} = \frac{1}{N}\begin{pmatrix}
+%kx_1 + \kla\left( \frac{K}{2} - \kappa \right)x_2 \\ 
+%\kla\left( \kappa - \frac{K}{2} \right)x_1 + kx_2
+%\end{pmatrix}
+%\end{align}
+%einführen.
+%Insbesondere gilt
+%\begin{align}
+%\frac{\partial}{\partial x_1} &= \frac{\partial y_1}{\partial x_1} \frac{\partial}{\partial y_1} +  \frac{\partial y_2}{\partial x_1} \frac{\partial}{\partial y_2} = k \frac{\partial}{\partial y_1} +  \kla\left( \kappa - \frac{K}{2} \right) \frac{\partial}{\partial y_2}.
+%\end{align}
+
+\subsection*{b)}
+In der adiabatischen Näherung fassen wir $T_a := \frac{p_1^2}{2M}$ als die ``atomare'' kinetische Energie auf und vernachlässigen diese zunächst.
+Übrig bleibt das ``elektronische'' Problem
+\begin{align}
+H_0 &= \frac{p_2^2}{2m} + \frac{K}{2}x_1^2 + \frac{k}{2}(x_1 - x_2)^2.
+\end{align}
+Dieses kann mit $y_2 := x_2 - x_1$ sehr einfach gelöst werden.
+Es ergibt sich
+\begin{align}
+H_0 &= \frac{p_2^2}{2m} + \frac{K}{2}x_1^2 + \frac{k}{2}y_2^2,
+\end{align}
+und damit die Energien $\epsilon_{\nu_2}(x_1) = \sqrt{\frac{k}{m}}\kla\left( \nu_2 + \frac{1}{2} \right) + \frac{K}{2}x_1^2$.
+\\
+Jetzt lösen wir noch das verbliebene ``atomare'' Problem
+\begin{align}
+H_0 &= \frac{p_1^2}{2M} + \epsilon_{\nu_1}(x_1) = \frac{p_1^2}{2M} + \frac{K}{2}x_1^2 + \sqrt{\frac{k}{m}}\kla\left( \nu + \frac{1}{2} \right).
+\end{align}
+Die Lösung führt auf die Gesamtenergien
+\begin{align}
+E_{\nu_1\nu_2} &= \sqrt{\frac{K}{M}}\kla\left( \nu_1 + \frac{1}{2} \right) + \sqrt{\frac{k}{m}}\kla\left( \nu_2 + \frac{1}{2} \right).
+\end{align}
+Das entspricht gerade der Energie zweier nicht-gekoppelter harmonischer Oszillatoren.
+
+\subsection*{c)}
+Die beiden Lösungen haben bereits dieselbe Struktur, allerdings unterscheiden sich die Frequenzen der zugrunde liegenden Oszillatoren.
+Wir betrachten die exakten Ergebnisse für $\frac{m}{M} \ll 1$
+\begin{align}
+\omega_{1,2}^2 &= \frac{1}{m} \kla\left( \frac{k}{2} + [K+k]\frac{m}{2M} \pm \sqrt{\frac{K^2m^2}{4M^2} + \frac{kKm}{2M} \kla\left( \frac{m}{2M} - 1 \right) + \frac{k^2}{4} \kla\left( 1 + \frac{m}{M} \right)^2} \right) \simeq \\
+&\simeq \frac{1}{m} \kla\left( \frac{k}{2} + [K+k]\frac{m}{2M} \pm \sqrt{\frac{k^2}{4} + \frac{k^2m}{2M} - \frac{kKm}{2M}} \right) \simeq \\
+&\simeq \frac{1}{m} \kla\left( \frac{k}{2} + [K+k]\frac{m}{2M} \pm \frac{k}{2} \klam\left[ 1 + \frac{m}{M} - \frac{Km}{kM}\right] \right).
+\end{align}
+Für die unterschiedlichen Vorzeichen ergeben sich damit
+\begin{align}
+\omega_1^2 &= \frac{1}{m} \kla\left( k + [K+k]\frac{m}{2M} + \frac{km}{2M} - \frac{Km}{2M} \right) = \frac{k}{m} \kla\left( 1  + \frac{m}{M} \right),\\
+\omega_2^2 &= \frac{1}{m} \kla\left( [K+k]\frac{m}{2M} - \frac{km}{2M} + \frac{Km}{2M} \right) = \frac{K}{M}.
+\end{align}
+Das sind (für $\frac{m}{M} \rightarrow 0$) gerade die Frequenzen aus der adiabatischen Näherung.
+
+%\newpage
+\section{Graphen}
+
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}   
+    \pgfmathsetmacro{\a}{1.0}
+    \pgfmathsetmacro{\d}{sqrt(3.0)*\a}
+    \pgfmathsetmacro{\h}{1.5*\a}
+    \pgfmathsetmacro{\phi}{60}
+    \pgfmathsetmacro{\r}{0.05}
+    \pgfmathsetmacro{\xmin}{-5}
+    \pgfmathsetmacro{\xmax}{5}
+    \pgfmathsetmacro{\ymin}{-2.5}
+    \pgfmathsetmacro{\ymax}{4}
+    
+    
+    \coordinate (o) at (0,0);
+    \coordinate (xmax) at (\xmax,0);
+    \coordinate (xmin) at (\xmin,0);
+    \coordinate (ymax) at (0,\ymax);
+    \coordinate (ymin) at (0,\ymin);
+    
+    \node[anchor=north] at (xmax) {$x$};
+    \node[anchor=west] at (ymax) {$y$};
+    
+%    color=black!35!white
+%    \draw[thick, -{Stealth[length=1.5mm,width=1.5mm]}] (kmin) arc (180:45:\R);
+    
+    \draw[color=black, -latex] (xmin) to (xmax);
+    \draw[color=black, -latex] (ymin) to (ymax);
+    
+    % primitive Einheitszelle
+    \filldraw[fill=green!40!white, draw=black] (o) -- (0.5*\d,\h) -- (1.5*\d,\h) -- (\d,0) -- cycle;
+    
+    % Wigner-Seitz-Zelle
+    \draw (-0.5*\d,-0.5*\a) --++ (0,2*\h) --++ (-1.5*\d,-1.5*\a) -- cycle;
+    \draw (-1.5*\d,-0.5*\a) --++ (0,2*\h) --++ (1.5*\d,-1.5*\a) -- cycle;
+    \filldraw[fill=black!15!white, draw=black] (-0.5*\d,0.5*\a) --++ (0,\a) --++ (-0.5*\d,0.5*\a) --++ (-0.5*\d,-0.5*\a) --++ (0,-\a) --++ (0.5*\d,-0.5*\a) -- cycle;
+    
+    \draw[very thick, color=red!60!black, -{Stealth[length=1.5mm,width=1.5mm]}] (o) to (0,-\a);
+    \node[left=0.5mm] at (0,-\a) {$\color{red!60!black}{-\vec{a}_1'}$};
+    
+    % Grid zeichnen
+    \foreach \i in {-2,...,2}{
+        \foreach \j in {0,2}{
+            \draw[fill] (\i*\d,\j*\h) circle (\r);
+            \draw[fill] (\i*\d + 0.5*\d,\j*\h - \h) circle (\r);
+        }
+    }
+    \foreach \i in {-2,...,2}{
+        \foreach \j in {0,2}{
+            \draw[fill] (\i*\d + 0.5*\d,\j*\h - 0.5*\a) circle (\r);
+            \draw[fill] (\i*\d,\j*\h - \h - 0.5*\a) circle (\r);
+%            \draw[color=red] (\i*\d + 0.5*\d,\j*\h - 0.5*\a) circle (\a);
+%            \draw[color=red] (\i*\d,\j*\h - \h - 0.5*\a) circle (\a);
+        }
+    }
+    
+    % Kohlenstoff-Sorten-Labels A und B
+    \node[below left=-0.08cm and -0.04cm] at (o) {A};
+    \node[below left=-0.08cm and -0.04cm] at (-\d,0) {A};
+    \node[left] at (-0.5*\d,\h) {A};
+    \node[left] at (-1.5*\d,\h) {A};
+    
+    \node[left] at (0,\a) {B};
+    \node[left] at (-\d,\a) {B};
+    \node[left] at (-0.5*\d,-0.5*\a) {B};
+    \node[left] at (-1.5*\d,-0.5*\a) {B};
+    
+    % Wrong basis vectors
+    \draw[very thick, color=blue, -{Stealth[length=1.5mm,width=1.5mm]}] (o) to (0,\a);
+    \node[above left=0.6mm and 0.5mm] at (o) {$\color{blue}{\vec{a}_1'}$};
+    
+    \draw[very thick, color=blue, -{Stealth[length=1.5mm,width=1.5mm]}] (o) to (0.5*\d,-0.5*\a);
+    \node[below right=0.3cm and 0.9mm] at (o) {$\color{blue}{\vec{a}_2'}$};
+    
+    % True basis vecotrs
+    \draw[very thick, color=green!60!black, -{Stealth[length=1.5mm,width=1.5mm]}] (o) to (\d,0);
+    \node[below right=0.0mm and 1.2cm] at (o) {$\color{green!60!black}{\vec{a}_1}$};
+    
+    \draw[very thick, color=green!60!black, -{Stealth[length=1.5mm,width=1.5mm]}] (o) to (0.5*\d,\h);
+    \node[above right=0.4cm and 0.2cm] at (0,\a) {$\color{green!60!black}{\vec{a}_2}$};
+    
+%    \draw (0,0) circle (\a);
+%    \draw (0,0) arc (60:0:\d);
+    
+\end{tikzpicture}
+\caption{Skizze der Gitterstruktur von Graphen mit Strukturgröße $a$, also $|\vec{a}_{1,2}'| = a$ und $|\vec{a}_{1,2}| = \sqrt{3}a$.
+Das zugrundeliegende Bravais-Gitter ist dreieckig und ist hier an den Kohlenstoff-Atomen der Sorte A orientiert.
+Die primitiven Gittervektoren $\vec{a}_{1,2}$ spannen die primitive Einheitszelle, welche hier grün hinterlegt ist.
+Die Wigner-Seitz-Zelle ist grau hinterlegt, wobei die Linien zur Konstruktion explizit dargestellt sind.}
+\label{figure:tikz graphen}
+\end{figure}
+
+\subsection*{a)}
+Beim zweidimensionalen hexagonalen Punktgitter gibt es keine ``Löcher''. 
+Genauer, es müsste bei Graphen auch Gitterpunkte bei $-\vec{a}_1'$ geben (rot eingezeichnet in \autoref{figure:tikz graphen}).
+Deshalb ist das Honigwabengitter allerdings auch kein Bravais-Gitter, da nicht jede Linearkombination der $\vec{a}_{1,2}'$ wieder auf dem Gitter landet.
+
+\subsection*{b)}
+Die primitiven Gittervektoren sind $\vec{a}_{1,2}$ (siehe \autoref{figure:tikz graphen}).
+Es liegt ein dreieckiges Bravais-Gitter mit zweiatomiger Basis vor. 
+Eine mögliche primitive Einheitszelle ist in \autoref{figure:tikz graphen} grün hinterlegt.
+Die Wigner-Seitz-Zelle entspricht hier einem Hexagon mit Kantenlänge $a$.
+Die Fläche ist daher gleich dem sechsfachen der gleichseitigen Dreiecke, also ist 
+\begin{align}
+A_\tecxt\text{WS} &= 6A_\tecxt\text{Dreieck} = 6\cdot \frac{1}{2} \cdot a \cdot \frac{\sqrt{3}a}{2} = \frac{3\sqrt{3}}{2}a^2.
+\end{align}
+
+\subsection*{c)}
+Um die Basisvektoren des reziproken Gitters zu bestimmen, führen wir zunächst noch $\vec{a}_3 = (0,0,a)^\top$ als dritten Gittervektor ein.
+Die anderen beiden lauten dann $\vec{a}_1 = (\sqrt{3}a,0,0)^\top$ und $\vec{a}_2 = (\frac{\sqrt{3}}{2}a,\frac{3}{2}a,0)^\top$.
+Dann können wir die allgemeine Formel verwenden, wobei zunächst einmal
+\begin{align}
+V &= \vec{a}_3\cdot \kla\left( \vec{a}_1\times\vec{a}_2 \right) = \vec{a}_3 \cdot \frac{3\sqrt{3}}{2} a^2\vec{e}_z = \frac{3\sqrt{3}}{2}a^3.
+\end{align}
+Damit können wir dann die Basisvektoren berechnen
+\begin{align}
+\vec{b}_1 &= \frac{2\pi}{V} (\vec{a}_2\times\vec{a}_3) = \frac{4\pi}{3a}  \begin{pmatrix}
+\sqrt{3}/2 \\ -1/2 \\ 0
+\end{pmatrix},\\
+\vec{b}_2 &= \frac{2\pi}{V} (\vec{a}_3\times\vec{a}_1) = \frac{4\pi}{3a}  \begin{pmatrix}
+0 \\ 1 \\ 0
+\end{pmatrix},\\
+\vec{b}_3 &= \frac{2\pi}{V} (\vec{a}_1\times\vec{a}_2) = \frac{2\pi}{a}  \begin{pmatrix}
+0 \\ 0 \\ 1
+\end{pmatrix}.
+\end{align}
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}[scale=1]
+    \pgfmathsetmacro{\a}{1.0}
+    \pgfmathsetmacro{\d}{4*pi/3/\a}
+    \pgfmathsetmacro{\h}{sqrt(3)/2*\d}
+    \pgfmathsetmacro{\phi}{60}
+    \pgfmathsetmacro{\r}{0.05}
+    \pgfmathsetmacro{\xmin}{-5}
+    \pgfmathsetmacro{\xmax}{5}
+    \pgfmathsetmacro{\ymin}{-5}
+    \pgfmathsetmacro{\ymax}{5}
+    
+    
+    \coordinate (o) at (0,0);
+    \coordinate (xmax) at (\xmax,0);
+    \coordinate (xmin) at (\xmin,0);
+    \coordinate (ymax) at (0,\ymax);
+    \coordinate (ymin) at (0,\ymin);
+    
+    \node[anchor=north] at (xmax) {$x$};
+    \node[anchor=west] at (ymax) {$y$};
+    
+%    color=black!35!white
+%    \draw[thick, -{Stealth[length=1.5mm,width=1.5mm]}] (kmin) arc (180:45:\R);
+    
+    % primitive Einheitszelle
+%    \filldraw[fill=green!40!white, draw=black] (o) -- (0.5*\d,\h) -- (1.5*\d,\h) -- (\d,0) -- cycle;
+    
+    % Wigner-Seitz-Zelle
+    \draw (-\h,-0.5*\d) --++ (2*\h,0) --++ (-\h,1.5*\d) -- cycle;
+    \draw (-\h,0.5*\d) --++ (2*\h,0) --++ (-\h,-1.5*\d) -- cycle;
+    \filldraw[fill=black!15!white, draw=black] (0.5*\h,-0.25*\d) --++ (0,0.5*\d) --++ (-0.5*\h,0.25*\d) --++ (-0.5*\h,-0.25*\d) --++ (0,-0.5*\d) --++ (0.5*\h,-0.25*\d) -- cycle;
+%    \draw (o) circle (0.5*\d);    
+    
+    \draw[color=black, -latex] (xmin) to (xmax);
+    \draw[color=black, -latex] (ymin) to (ymax);
+    
+    % Grid zeichnen
+    \foreach \i in {-1,...,1}{
+        \foreach \j in {0}{
+            \draw[fill] (2*\j*\h,\i*\d) circle (\r);
+        }
+    }
+    \foreach \i in {0,1}{
+        \foreach \j in {0,1}{
+            \draw[fill] (-2*\j*\h + \h,\i*\d - 0.5*\d) circle (\r);
+        }
+    }
+    
+    % Reciprocal basis vecotrs
+    \draw[very thick, color=green!60!black, -{Stealth[length=1.5mm,width=1.5mm]}] (o) to (\h,-0.5*\d);
+    \node[below right=0.0mm and 1.2cm] at (o) {$\color{green!60!black}{\vec{b}_1}$};
+    
+    \draw[very thick, color=green!60!black, -{Stealth[length=1.5mm,width=1.5mm]}] (o) to (0,\d);
+    \node[above right=0.4cm and 0.2cm] at (0,0.5*\d) {$\color{green!60!black}{\vec{b}_2}$};
+    
+%    \draw (0,0) circle (\d);
+%    \draw (2*\h,0) circle (\d);
+    
+\end{tikzpicture}
+\caption{Skizze des reziproken Gitters mit den Basisvektoren $\vec{b}_{1,2}$.
+Die erste Brillouin-Zone ist grau hinterlegt und die Konstruktionslinien sind explizit dargestellt.
+Die Skizze ist maßstabsgetreu relativ zu \autoref{figure:tikz graphen}.
+Da $a=1$ gewählt wurde, erscheint das reziproke Gitter deutlich dünner besetzt.}
+\label{figure:tikz graphen}
+\end{figure}
+\\
+\section{Orthogonalität}
+Die Gittervektoren sind gegeben durch $\textbf{R}_n = n_1\textbf{a}_1 + n_2\textbf{a}_2 + n_3\textbf{a}_3$ mit $n_{1,2,3}\in\mathbb{Z}$.
+Seien $\mathbf{q},\mathbf{q}'\in$ 1.\,BZ, also $\mathbf{q} = m_1\textbf{b}_1 + m_2\textbf{b}_2 + m_3\textbf{b}_3$ mit $m_{1,2,3}\in\mathbb{Z}$.
+Dann gilt
+\begin{align}
+\frac{1}{N}\sum_n \e^{\i (\textbf{q}' - \textbf{q})\cdot \textbf{R}_n} &= \frac{1}{N}\sum_{n_1n_2n_3} \e^{\i \sum_{j,k=1}^3 (m_j'-m_j)n_k \textbf{b}_j\cdot \textbf{a}_k} = \\
+&= \frac{1}{N}\sum_{n_1n_2n_3} \prod_{j=1}^3 \e^{2\pi\i (m_j'-m_j)n_j} = \\
+&= \prod_{j=1}^3 \frac{1}{N_j} \sum_{n_j=0}^{N_j-1} \e^{2\pi\i (m_j'-m_j)n_j} = \\
+&= \prod_{j=1}^3 \frac{1}{N_j} \frac{1 - \e^{2\pi\i (m_j'-m_j)N_j}}{1 - \e^{2\pi\i (m_j' - m_j)}} = \prod_{j=1}^3 \delta_{m_jm_j'} \equiv \delta_{\textbf{q}\textbf{q}'}.
+\end{align}
+
+\end{document}

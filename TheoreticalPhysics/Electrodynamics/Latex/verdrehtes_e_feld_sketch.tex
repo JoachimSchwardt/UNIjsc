@@ -1,0 +1,66 @@
+\begin{tikzpicture}
+
+\draw[blue,pattern=north east lines,pattern color=blue] (1, 0) -- (1.5,0) -- (1.5,-2.5) node[midway,right]{A} --  (1,-2.5) --cycle;
+
+\draw[-latex]  (1.05,0.45) arc (45:135:1.5 and 0.5) node[above, midway] {$I$};
+
+\draw[dotted] (0,0) -- (0,-2.5);
+
+
+\draw  (0,0) ellipse (1 and 0.25);
+\draw  (0,0) ellipse (1.5 and 0.5);
+
+\draw[dashed]  (-1,0) edge (-1,-2.5);
+\draw  (-1.5,0) edge (-1.5,-2.5);
+\draw[dashed]  (1,0) edge (1,-2.5);
+\draw  (1.5,0) edge (1.5,-2.5);
+
+\draw[dashed]  (0,-2.5) ellipse (1 and 0.25);
+\draw  (-1.5,-2.5) arc (180:360:1.5 and 0.5);
+\draw[dashed]  (1.5,-2.5) arc (0:180:1.5 and 0.5);
+
+
+
+
+\draw[|-|] (-1.75,0) -- (-1.75,-2.5) node[midway, left] {$h$};
+
+\draw[|-|] (-1.5,-1.25) -- (0,-1.25) node[midway, above] {$a$};
+
+\begin{scope}[yshift=-120.0]
+\draw[latex-]  (1.05,0.45) arc (45:135:1.5 and 0.5) node[below, midway] {$I$};
+\draw[blue,pattern=north east lines,pattern color=blue] (2, 0) -- (2.5,0) -- (2.5,-2.5) node[midway,right]{A} --  (2,-2.5) --cycle;
+\draw[dotted] (0,0) -- (0,-2.5);
+
+\draw  (0,0) ellipse (2 and 0.75);
+\draw  (0,0) ellipse (2.5 and 1.0);
+
+\draw[dashed]  (-2,0) edge (-2,-2.5);
+\draw  (-2.5,0) edge (-2.5,-2.5);
+\draw[dashed]  (2,0) edge (2,-2.5);
+\draw  (2.5,0) edge (2.5,-2.5);
+
+\draw[dashed]  (0,-2.5) ellipse (2 and 0.75);
+\draw  (-2.5,-2.5) arc (180:360:2.5 and 1.0);
+\draw[dashed]  (2.5,-2.5) arc (0:180:2.5 and 1.0);
+
+\draw[|-|] (-2.75,0) -- (-2.75,-2.5) node[midway, left] {$h$};
+
+\draw[|-|] (-2.0,-1.35) -- (0,-1.35) node[midway, above] {$b$};
+
+
+\draw[dotted,very thin]  (0,0) ellipse (1 and 0.25);
+\draw[dotted,very thin]  (0,0) ellipse (1.5 and 0.5);
+
+\draw[dotted,very thin]  (-1,0) edge (-1,-2.5);
+\draw[dotted,very thin]  (-1.5,0) edge (-1.5,-2.5);
+\draw[dotted,very thin]  (1,0) edge (1,-2.5);
+\draw[dotted,very thin]  (1.5,0) edge (1.5,-2.5);
+
+\draw[dotted,very thin]  (0,-2.5) ellipse (1 and 0.25);
+\draw[dotted,very thin]  (-1.5,-2.5) arc (180:360:1.5 and 0.5);
+\draw[dotted,very thin]  (1.5,-2.5) arc (0:180:1.5 and 0.5);
+
+\end{scope}
+
+
+\end{tikzpicture}

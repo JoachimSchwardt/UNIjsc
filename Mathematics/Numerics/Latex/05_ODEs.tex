@@ -1,0 +1,224 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[ngerman]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+%\pagestyle{scrheadings}  % Stil für die Seite setzen
+%\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+%\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{siunitx}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{05 Gewöhnliche Differentialgleichungen}
+\newcommand*{\autor}{Joachim Schwardt und Julian Fleck}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Numerik II - Aufgaben}
+\title{\titel}
+%\author{\autor}
+\author{\begin{tabular}{l|l}
+Joachim Schwardt & 4768711 \\ 
+Julian Fleck & 4759587\\ 
+\end{tabular}}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Aufgabe 1}
+%Die Differentialgleichung $x'(t) = f(t,x(t))$ kann in integraler Form als
+%\begin{align}
+%x(t) &= x_0 + \intx\int_{0}^{t} f(s,x(s))\, \mathrm{d}s
+%\end{align}
+%geschrieben werden, wobei $x_0 := x(0)$.
+%Damit ohne Anfangswert nur genau eine Lösung existiert, muss also insbesondere obige Gleichung unabhängig von $x_0$ sein.
+%Für $f(s,x) = -2x\delta(s)$ ergibt sich
+%\begin{align}
+%x(t) &= x_0 - 2 \intx\int_{0}^{t} x(s) \delta(s)\, \mathrm{d}s = 0,
+%\end{align}
+%womit $x\equiv 0$ die eindeutige Lösung der Differentialgleichung ist. 
+%\\
+%Anmerkung: Uns ist nichts vernünftiges eingefallen. Vermutlich übersehen wir etwas, aber eine eindeutige Lösung ohne Angabe der Anfangsbedingung erscheint völlig unmgölich.
+Wir betrachten die Differentialgleichung
+\begin{align}
+x'(t) &= f(t, x(t)).
+\end{align}
+Falls $f$ stetig ist, gilt der Existenzsatz von Peano.
+In diesem Fall sollte es also für jede Anfangsbedingung zumindest prinzipiell eine Lösung geben -- womit die Forderung nach einer eindeutigen Lösung ohne Angabe der Anfangsbedingung nicht erfüllt ist.
+Wir suchen also vermutlich nach einer unstetigen Funktion.
+Angenommen $x(t) = t$ wäre die eindeutige Lösung der Differentialgleichung.
+Dann muss 
+\begin{align}
+f(t,t) &\equiv 1
+\end{align}
+gelten.
+Diese Bedingung erfüllt beispielsweise die Funktion 
+\begin{align}
+\delta(x,y) = \begin{cases} 1, & x=y \\ 0, &x\neq y \end{cases}.
+\end{align}
+Sei also $f(t,x) = \delta(t,x)$.
+Da $f$ eine Stufenfunktion ist, muss $x(t)$ als Integral dieser Funktion stückweise linear sein.
+Allerdings fordern wir, dass $x$ differenzierbar ist.
+Daher kann nur $x(t) = bt+a$ eine Lösung sein.
+Einsetzen liefert dann
+\begin{align}
+b &= \delta(t, bt+a).
+\end{align}
+Diese Gleichung kann nur dann für alle $t$ erfüllt sein, wenn $b=1$ und $a=0$ ist.
+Falls die Funktion die Differentialgleichung für alle $t\in\mathbb{R}$ erfüllen sollte, wäre das auch die einzige Lösung. 
+Wir betrachten hier aber nur das Intervall $[0,1]$, womit auch $a \notin [0,1]$ mit $b=0$ eine Lösung ist.
+Diese Lösungen lassen sich allerdings durch den Term $\Theta\left( \left\vert x-\frac{1}{2}\right\vert - \frac{1}{2} \right)$ ausschließen, wobei $\frac{1}{2}$ gerade die Mitte des betrachteten Intervalls ist.
+Dabei sei
+\begin{align}
+\Theta(x) &=\begin{cases} 1,&x> 0 \\ 0,&x\le 0 \end{cases}.
+\end{align}
+Damit hat also die Differentialgleichung
+\begin{align}
+x'(t) &= \delta(t,x(t)) + \Theta\left( \left\vert x-\frac{1}{2}\right\vert - \frac{1}{2} \right)
+\end{align}
+ohne Angabe einer Anfangsbedingung auf dem Intervall $[0,1]$ die eindeutige Lösung $x(t)=t$.
+
+\section*{Aufgabe 2}
+Sei $\brak\langle \cdot | \cdot  \rangle : \mathbb{R}^d \times \mathbb{R}^d \rightarrow\mathbb{R}$ ein Skalarprodukt und bezeichne $\|\cdot\|$ die dadurch induzierte Norm.
+Die Funktion $f:[a,b]\times\mathbb{R}^d \rightarrow \mathbb{R}^d $ genüge einer einseitige Lipschitz-Bedingung der Form
+\begin{align}
+\brak\langle f(t,u) - f(t,v) | u-v \rangle &\le \nu \| u -v\|^2, \quad \forall t\in[a,b],\ u,v\in\mathbb{R}^d,
+\end{align}
+mit einer Konstante $\nu\in\mathbb{R}$.
+Seien $u_{1,2}$ zwei Lösungen von 
+\begin{align}
+u' &= f(t,u)
+\end{align}
+im Intervall $[a,b]$.
+Definiere $w := u_1 - u_2$.
+Für $w(t) = 0$ ist die behauptete Ungleichung trivial, da dann
+\begin{align}
+\|w(t)\| &= 0 \le \e^{\nu (t-t_0)} \|w(t_0)\|
+\end{align}
+für beliebige $t_0$ gilt.
+Sei also $\|w(t)\| \neq 0$. 
+Dann gilt
+\begin{align}
+\frac{\tecxt\text{d}}{\tecxt\text{d}t} \|w(t)\|^2 &= \frac{\tecxt\text{d}}{\tecxt\text{d}t} \brak\langle w(t) | w(t) \rangle = 2\brak\langle w'(t) | w(t) \rangle = \\
+&= 2\brak\langle u_1' - u_2' | u_1 - u_2 \rangle = \\
+&= 2\brak\langle f(t,u_1) - f(t,u_2) | u_1 - u_2 \rangle \le 2\nu \|u_1 - u_2\|^2 = 2\nu \|w(t)\|^2.
+\end{align}
+Umstellen und integrieren liefert dann mit der Substitution $z := \|w(s)\|^2$
+\begin{align}
+2\nu (t-t_0) &\ge \intx\int_{t_0}^{t} \frac{\frac{\tecxt\text{d}}{\tecxt\text{d}s}\|w(s)\|^2}{\|w(s)\|^2}\, \mathrm{d}s = \intx\int_{\|w(t_0)\|^2}^{\|w(t)\|^2} \frac{1}{z} \, \mathrm{d}z = \log\left( \frac{\|w(t)\|^2}{\|w(t_0)\|^2} \right),\\
+\Rightarrow\ \ \ \|w(t)\| &\le \|w(t_0)\| \e^{\nu (t-t_0)}.
+\end{align}
+Diese Ergebnis ist äquivalent zu 
+\begin{align}
+\|u_1(t) - u_2(t)\| &\le \e^{\nu (t-t_0)} \|u_1(t_0) - u_2(t_0)\|
+\end{align}
+für $t_0\le t$.
+
+\section*{Aufgabe 3}
+Sei $\Omega = [0,T] \times \mathbb{R}^d$ und $f\in C^1(\Omega)$.
+Betrachte die Differentialgleichung
+\begin{align}
+x'(t) &= f(t,x)
+\end{align}
+mit dem Phasenfluss $\Phi^{t+\tau,t}$.
+Sei $(t,x)\in\Omega$ und $\tau > 0$ hinreichend klein.
+Dann gilt
+\begin{align}
+\Phi^{t+\tau,t}x &= \Phi^{t,t}x + \intx\int_{0}^{\tau} \frac{\tecxt\text{d}}{\tecxt\text{d}s} \Phi^{t+s,t}x\, \mathrm{d}s = \\
+&= x + \intx\int_{0}^{\tau} \bigg( \frac{\tecxt\text{d}}{\tecxt\text{d}s} \Phi^{t+s,t}x \bigg\vert_{s=0} + \intx\int_{0}^{s}  \frac{\tecxt\text{d}^2}{\tecxt\text{d}\sigma^2} \Phi^{t+\sigma,t}x \, \mathrm{d}\sigma \bigg) \, \mathrm{d}s = \\
+&= x + \tau \frac{\tecxt\text{d}}{\tecxt\text{d}\tau} \Phi^{t+\tau,t} x\bigg\vert_{\tau = 0} + \intx\int_{0}^{\tau} (\tau - s) \frac{\tecxt\text{d}^2}{\tecxt\text{d}s^2} \Phi^{t+s,t}x \, \mathrm{d}s.
+\end{align}
+Im letzten Schritt wurde dabei die Integrationsreihenfolge geändert, wobei die $\sigma$-Integration anstatt von $0$ zu $s$ dann von $0$ bis $\tau$ läuft, und die $s$-Integration von $\sigma$ bis $\tau$.
+Allgemein gilt
+\begin{align}
+\Phi^{t+\tau,t} x &= \sum_{k=0}^{n-1} \tau^k \frac{\tecxt\text{d}^k}{\tecxt\text{d}\tau^k} \Phi^{t+\tau,t} x \bigg\vert_{\tau=0} + \intx\int_{0}^{\tau} (\tau - s)^n \frac{\tecxt\text{d}^n}{\tecxt\text{d}s^n} \Phi^{t+s,t}x \, \mathrm{d}s \kom\overset{\substack{{s \rightarrow \tau s} \\ |}}{=} \\
+&= \sum_{k=0}^{n-1} \frac{\tau^k}{k!} \frac{\tecxt\text{d}^k}{\tecxt\text{d}\tau^k} \Phi^{t+\tau,t} x \bigg\vert_{\tau=0} + \tau^{n} \intx\int_{0}^{1} (1 - s)^{n-1} \frac{\tecxt\text{d}^n}{\tecxt\text{d}(s\tau)^n} \Phi^{t+s\tau,t}x \, \mathrm{d}s.
+\end{align}
+Dabei gilt
+\begin{align}
+\frac{\tecxt\text{d}}{\tecxt\text{d}\tau} \Phi^{t+\tau,t} x &= \frac{\tecxt\text{d}}{\tecxt\text{d}\tau} x(t+\tau) = f(t+\tau, x(t+\tau)) = f\kla\left( t + \tau, \Phi^{t+\tau,t}x \right),\\
+\frac{\tecxt\text{d}^2}{\tecxt\text{d}\tau^2} \Phi^{t+\tau,t} x &= f_t + f_x f\kla\left( t+\tau, \Phi^{t+\tau,t}x \right).
+\end{align}
+%Im Folgenden sei das Argument $f\equiv f\left(t+\tau, \Phi^{t+\tau,t}x \right)$, falls es nicht explizit angegeben ist.
+Insbesondere folgt dann für den Konsistenzfehler des Euler-Verfahrens $\Psi^{t+\tau,t}x = x + \tau f(t,x)$ die Ungleichung
+\begin{align}
+|\epsilon(t,x,\tau)| &= \left\vert \Phi^{t+\tau,t} x - \Psi^{t+\tau,t}x \right\vert = \\
+&= \left\vert x + \tau f(t,x) + \tau^2 \intx\int_{0}^{1}(1-s) \frac{\tecxt\text{d}^2}{\tecxt\text{d}(s\tau)^2}\Phi^{t+ s\tau,t} x  \, \mathrm{d}s - x - \tau f(t,x) \right\vert \le \\
+&\le \tau^2 \intx\int_{0}^{1}(1-s) \left\vert f_t \kla\left( t+s\tau, \Phi^{t+s\tau,t} x \right) + f_x(\dots) f(\dots) \right\vert \, \mathrm{d}s \le \\
+&\le \frac{\tau^2}{2} \max_{(s,z)\in K} \left\vert f_t(s,z) + f_x(s,z)f(s,z) \right\vert,
+\end{align}
+wobei $K\subset\Omega$ kompakt sei.
+
+\section*{Aufgabe 4}
+Gegeben seien eine offene Menge $\Omega\subset \mathbb{R}\times \mathbb{R}$, eine Funktion $f\in C^2(\Omega,\mathbb{R})$ und ein Punkt $(t_0,x_0)\in\Omega$.
+Betrachte das Anfangswertproblem
+\begin{align}
+x'(t) &= f(t,x(t)), \quad x(t_0) = x_0.
+\end{align}
+Das Runge-Verfahren ist gegeben durch
+\begin{align}
+\Psi^{t+\tau,t} x &= x + \tau f\kla\left( t + \frac{\tau}{2}, x + \frac{\tau}{2} f(t,x) \right).
+\end{align}
+Sei das Argument von $f$ im Folgenden implizit immer $t + \frac{\tau}{2}, x + \frac{\tau}{2} f(t,x)$.
+Für $\tau\ll 1$ können wir dann schreiben
+\begin{align}
+\Psi^{t+\tau,t} x &= \Psi^{t,t} x + \tau \frac{\tecxt\text{d}}{\tecxt\text{d}\tau} \Psi^{t+\tau,t} x \bigg\vert_{\tau=0} + \frac{\tau^2}{2} \frac{\tecxt\text{d}^2}{\tecxt\text{d}\tau^2} \Psi^{t+\tau,t}x \bigg\vert_{\tau=0} + \mathcal{O}(\tau^3) = \\
+&= x + \tau f(t,x) + \frac{\tau^2}{2} \frac{\tecxt\text{d}}{\tecxt\text{d}\tau} \klam\left[ f + \tau f_t \frac{1}{2} + \tau f_x \frac{f(t,x)}{2} \right] \bigg\vert_{\tau=0} + \mathcal{O}(\tau^3) = \\
+&= x + \tau f(t,x) + \frac{\tau^2}{2} \klam\left[ f_t(t,x) \frac{1}{2} + f_x(t,x) \frac{f(t,x)}{2} \right] \cdot 2 + \mathcal{O}(\tau^3).
+\end{align}
+Damit ergibt sich der Konsistenzfehler zu
+\begin{align}
+|\epsilon| &= \left\vert \Phi^{t+\tau,t}x - \Psi^{t+\tau,t}x \right\vert = \\
+&= \left\vert \frac{\tau^2}{2} \frac{\tecxt\text{d}^2}{\tecxt\text{d}\tau^2} \Phi^{t+\tau,t}x - \frac{\tau^2}{2} \klam\left[ f_t(t,x) + f_x(t,x) f(t,x) \right] + \mathcal{O}(\tau^3) \right\vert = \mathcal{O}(\tau^3).
+\end{align}
+Dabei haben wir ausgenutzt, dass der Term
+\begin{align}
+\frac{\tecxt\text{d}^2}{\tecxt\text{d}\tau^2} \Phi^{t+\tau,t}x &= f_t\kla\left( t + \tau, \Phi^{t+\tau,t}x \right) + f_x(\dots) f(\dots)
+\end{align}
+bereits bekannt ist, und für $\tau\rightarrow 0$ äquivalent zum $\tau^2$-Term der Entwicklung von $\Psi$ ist.
+Das Runge-Verfahren hat also die Konsistenzordnung 2.
+
+%\section*{Programmieraufgabe 4 (schriftlicher Teil)}
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

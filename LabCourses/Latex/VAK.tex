@@ -1,0 +1,410 @@
+\documentclass[german, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[ngerman]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrpage2}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\newcommand*{\titel}{Vakuumphysik 2}
+\newcommand*{\autor}{Joachim Schwardt und Ludwig Romstedt}
+\newcommand*{\abk}{VAK2}
+\newcommand*{\betreuer}{Mathias Dörr}
+\newcommand*{\messung}{17. Dezember 2020}
+\newcommand*{\ort}{REC/D116}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+\titlehead{F-Praktikum \abk \hfill TU Dresden}
+\subject{Versuchsprotokoll}
+\title{\titel}
+\author{Ludwig Romstedt und Joachim Schwardt}
+\date{\begin{tabular}{ll}
+Protokoll: & \today\\
+Messung: & \messung\\
+Betreuer: & \betreuer\\
+Ort: & \ort\\
+Versuchsplatz: & 2 und 5 \end{tabular}}
+
+\begin{document}
+
+\begin{titlepage}
+\maketitle  % Titel setzen
+\tableofcontents  % Inhaltsverzeichnis setzen
+\end{titlepage}
+
+\section{Totaldruckmessung}
+\subsection{Versuchsziel}
+Kennenlernen der Funktionsweise verschiedener Vakuummeter (VM) und eines Verfahrens zu deren Kalibrierung.
+\subsection{Vorbereitung des Experiments}
+Der schematische Versuchsaufbau ist in Abb. \ref{figure:Aufbau vak2} dargestellt. Die Vorbereitung wurde freundlicherweise von unserem Betreuer durchgeführt, hier seien die Schritte trotzdem noch einmal kurz aufgelistet:
+\begin{enumerate}
+\item[--] Hauptschalter auf ein und Ventil V7 öffnen (Drehschieberpumpe N2 läuft an)
+\item[--] Turbomolekularpumpe N1 und Wärmeleitungs-VM P6 einschalten, für $p<1\,$mbar Ventil V6 öffnen
+\item[--] Messgeräte für die Kalibrierung einschalten (P2, P3, P9 und PX)
+\item[--] Behälter C1 bis etwa 25\,mbar auffüllen und über V5 und N3 wieder auspumpen, um Gasreste wegzuspülen, danach wieder C1 füllen
+\end{enumerate}
+Damit das Reibungs-VM P3 richtig arbeitet, müssen Raumtemperatur (direkt an P3), molare Masse und Viskosität des Gases eingetragen werden; entsprechende Tabellen lagen am Versuchsplatz aus, die Werte finden sich auch in Tab. \ref{table:P3 Einstellung}.
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c}
+Gasart&$M_\tecxt\text{mol}\,/\,\frac{\tecxt\text{g}}{\tecxt\text{mol}}$&$\eta\,/\,\tecxt\text{Pa}\,\tecxt\text{s}$&$T_\tecxt\text{P3}\,/\,\degree$C\\ \hline
+(trockene) Luft&28.96&$18.2\cdot 10^{-6}$&23.0\\ \hline
+Helium&4.003&$19.6\cdot 10^{-6}$&26.2\\
+\end{tabular}
+\caption{Daten für die korrekte Verwendung des VM P3 für Luft und Helium.}
+\label{table:P3 Einstellung}
+\end{table} 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{VAK2_Aufbau.png}
+\caption{Schematischer Versuchsaufbau (abgeändert aus \cite{VAK Anleitung}, nur die verwendeten Geräte sind eingezeichnet)}
+\label{figure:Aufbau vak2}
+\end{figure}
+\subsection{Kalibrierung mittels direkten Vergleichs}
+Das VM P3 wurde als Referenz verwendet, da es das genaueste der zur Verfügung stehenden Geräte war. Bei geöffnetem Ventil V2 wurde V3 bei laufender Pumpe N1 schrittweise erhöht und die Werte der vier Messgeräte notiert. Danach wurden die Behälter wieder gespült und der Versuch für Helium wiederholt. Dafür mussten die Einstellungen von P3 an Helium angepasst werden. Da beide Versuchsteilnehmer beide Einzelversuche jeweils einmal für Luft und für Helium durchgeführt haben, werden die Ergebnisse auf mehrere Plots aufgeteilt. Dazu werden für die Messgeräte P2, PX und P9 jeweils die Daten mit der Referenz P3 verglichen. Die Unsicherheiten von P3 haben wir dabei mit etwa 10\,\% abgeschätzt -- die Genauigkeit von Druckmessungen ist im Allgemeinen schlechter als in vielen anderen Bereichen.
+\subsubsection{Kaltkathoden-VM P2}
+Zu den Messungen für Luft:\\
+Am unteren Ende der Skala knickt die Kalibrierungskurve leicht ab und die zwei Messungen unterscheiden sich klar voneinander, weshalb wir hier einen größeren Fehlerbalken eingetragen haben. In der doppelt-logarithmischen Darstellung kann man erkennen, dass P2 im Bereich von etwa $p_3=5\cdot 10^{-6}\dots 5\cdot 10^{-5}\,$mbar den Druck verglichen mit P3 grob um eine halbe Größenordnung unterschätzt. Im Bereich $p_3=5\cdot 10^{-5}\dots 10^{-3}\,$mbar stimmen die Messgeräte in der gegebenen Unsicherheit ganz gut überein, P2 überschätzt den Druck um weniger als 20\,\%. In diesem Bereich kann P2 ohne weitere Kalibrierung für die Druckmessung verwendet werden, allerdings ist die Genauigkeit verglichen mit den anderen VM deutlich schlechter. Bei $p_2\ge 10^{-3}\,$mbar scheint zudem eine obere Messgrenze erreicht zu sein, das Gerät zeigt hier immer denselben Wert an. Folglich kann P2 grundsätzlich nicht für größere Drücke verwendet werden.\\ \\
+Zu den Messungen für Helium:\\
+Hier wird deutlich, dass die Gasart einen enormen Einfluss auf den gemessenen Druck hat. Der Verlauf der Messkurve stimmt qualitativ mit der von Luft überein, ist in der logarithmischen Darstellung allerdings um einen Offset verschoben. Im Bereich $p_3= 10^{-5}\dots 10^{-4}\,$mbar weicht der Messwert um eine knappe Größenordnung von P3 ab, für $p_3\ge 10^{-4}\,$mbar wird der Abstand etwas kleiner. Da die Messwerte für Helium systematisch um einen näherungsweise konstante Faktor abweichen, könnte das Gerät auch für die Messung von Helium kalibriert werden. Die Ergebnisse sind in Abb. \ref{figure:p2plot} grafisch dargestellt.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.55]{P2_Plot.png}
+\caption{P2}
+\label{figure:p2plot}
+\end{figure}\\ \\
+\subsubsection{Glühkathoden-VM PX}
+Zu den Messungen für Luft:\\
+Die maximale Auflösung des Geräts ist bereits bei $p_x=10^{-5}\,$mbar erreicht, es können nur ganzzahlige Vielfache dieses Drucks angezeigt werden, was den stufenartigen Verlauf der Messkurve erklärt. Ab $p_3=10^{-4}\,$mbar bis zum höchsten gemessenen Druck von $p_3=3\cdot 10^{-3}\,$mbar stimmt der Anstieg der Messkurve mit P3 sehr gut überein, alle Messwerte liegen hier um etwa 30\,\% über der Referenz. In diesem Bereich könnte das Gerät nach Kalibrierung also verwendet werden.\\ \\
+Zu den Messungen für Helium:\\
+Das Verhalten der Messkurve stimmt sehr gut mit der Luftmessung überein. Dadurch dass der Druck grob um eine halbe Größenordnung unterschätzt wird, verlässt PX den stufenartigen Messbereich erst für $p_3\ge 10^{-4}\,$mbar. Ab hier könnte das Gerät nach Kalibrierung verwendet werden, allerdings ist die Genauigkeit schlechter als bei der Luftmessung. Das erkennt man qualitativ an der Abweichung des Anstiegs der Messkurve zu P3. Die Ergebnisse sind in Abb. \ref{figure:pxplot} grafisch dargestellt.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.55]{PX_Plot.png}
+\caption{PX}
+\label{figure:pxplot}
+\end{figure}
+\subsubsection{Kaltkathoden-VM P9}
+Zu den Messungen für Luft:\\
+Abgesehen von den ersten zwei bis drei Messpunkten stimmen die Werte bereits für kleine Drücke viel besser mit denen von P3 überein, als bei den anderen Geräten. Im Bereich von $p_3=10^{-5}\dots 10^{-4}\,$mbar kann P9 ohne Kalibrierung verwendet werden, die Abweichung ist in der logarithmischen Darstellung optisch kaum zu erkennen. Im Bereich $p_3\ge 10^{-4}\,$mbar überschätzt das Messgerät den Druck dann um einen kleinen, näherungsweise konstanten Faktor.\\ \\
+Zu den Messungen für Helium:\\
+Genau wie für Luft sind die Abweichungen der Messwerte untereinander für $p_9\ge 5\cdot 10^{-6}\,$mbar sehr klein. Auch hier wird der Druck wieder systematisch unterschätzt. Das gerät könnte allerdings gut für Helium kalibriert werden, da der Anstieg der Messkurve mit dem von P3 wieder gut übereinstimmt. Die Ergebnisse sind in Abb. \ref{figure:p9plot} grafisch dargestellt.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.55]{P9_Plot.png}
+\caption{P9}
+\label{figure:p9plot}
+\end{figure}
+\subsubsection{Relative Ionisierung}
+Wir haben für jedes Messgerät die drei Drücke $p_3$ ausgewählt, bei denen Fehlerkreuze in der Messung von Helium eingetragen sind. Die relative Ionisierung von Luft zu Helium kann über das Verhältnis $C^\tecxt\text{Luft}_\tecxt\text{Helium}=\frac{p_j^\tecxt\text{Luft}(p_3)}{p_j^\tecxt\text{Helium}(p_3)}$ abgeschätzt werden ($j=2,X,9$). Es ergeben sich die Werte aus Tab. \ref{table:relative Ionisierung}. Die Werte in eckigen Klammern liegen außerhalb desjenigen Messbereiches, in welchem das jeweilige Gerät für Luft gut kalibriert ist. Die Werte in runden Klammern liegen zudem noch in einem Messbereich, in welchem die Kalibrierungskurve Knicke oder Stufen zeigt. Dementsprechend unzuverlässig sind dann auch die entsprechenden Ionisierungen.
+\begin{table}[h!]
+\centering
+\begin{tabular}{c||c|c||c|c||c|c}
+$p_3\,/\,$mbar&$C_{2,Sch.}$&$C_{2,Rom.}$&$C_{X,Sch.}$&$C_{X,Rom.}$&$C_{9,Sch.}$&$C_{9,Rom.}$\\ \hline
+$10^{-5}$&[4.5]&[4.8]&[(2.0)]&[(2.0)]&[4.0]&[4.3]\\ \hline
+$10^{-4}$&6.7&7.1&[4.3]&[4.3]&5.5&5.5\\ \hline
+$10^{-3}$&[(3.8)]&[(3.8)]&5&5&5.2&5.7\\
+\end{tabular}
+\caption{Relative Ionisierung von Luft zu Helium bei drei verschiedenen Drücken.}
+\label{table:relative Ionisierung}
+\end{table}\\
+In \cite{VAK Anleitung} wird auf Seite 25 eine relative Ionisierung von Helium zu Luft mit $C=0.17$ angegeben. Abgesehen davon, konnten wir den Begriff nirgends finden, geschweige denn Zahlenwerte für verschiedene Gasarten. Um unsere Ergebnisse vergleichen zu können, muss der Kehrwert gebildet werden, also $C^\tecxt\text{lit.}=\frac{1}{C}=5.9$. Bildet man den Mittelwert über die nicht-eingeklammerten Werte, so erhält man $\overline{C}=5.7\pm 0.8$. Die Unsicherheit wurde dabei mit der üblichen Formel für die Standardabweichung abgeschätzt. Das Ergebnis ist also zumindest verträglich mit dem Wert aus der Anleitung (vorausgesetzt, letzterer bezieht sich tatsächlich auf die Ionisierung von Helium zu Luft).
+\subsection{Indirekte Volumenbestimmung}
+Das Volumen von C2 sollte über ein indirektes Verfahren bestimmt werden. Dabei füllt man C1 bei geöffnetem Ventil V2 auf, bis ein bestimmter Druck auf P1 angezeigt wird. Nach dem Schließen von V2 ist in C2 also der Druck $p_1$ vorhanden. Nun wird die Turbomolekularpumpe ausgeschaltet und sofort das Ventil V3 geöffnet, wodurch das kleine Gasvolumen aus C2 in C3 expandiert wird. Die ideale Gasgleichung liefert den Zusammenhang $p_1V_2+p_3V_3=p'(V_2+V_3)$, woraus eine Formel für das zu bestimmende Volumen in Abhängigkeit vom Druck $p'$ in C3 folgt:
+\begin{align*}
+V_2&=V_3\cdot\frac{p'-p_3}{p_1-p'}\numberthis\label{eqn:V2 von V3}
+\end{align*} 
+Gegeben sind die Volumina $V_1=(5.31\pm 0.06)\,$l und $V_3=(63.5\pm 0.7)\,$l. Eine geometrische Abschätzung des Volumens von C2 mit einer Zylinderlänge $L=(22\pm 1)\,$cm und einem Durchmesser $D=(1.5\pm 0.1)\,$cm liefert:
+\begin{align*}
+V_2&=\frac{\pi}{4}D^2L=38.9\,\tecxt\text{ml}\\
+\Delta V_2&=V_2\cdot\sqrt{\kla\left( {\frac{\Delta L}{L}} \right)^2+\kla\left( {\frac{2\Delta D}{D}} \right)^2}=5.5\,\tecxt\text{ml}
+\end{align*}
+C3 ist also grob 1000 Mal größer als C2. Dementsprechend ist $p'$ um denselben Faktor kleiner als $p_1$. Da wir in C3 höchstens im Bereich von wenigen $10^{-3}\,$mbar messen sollten, muss daher $p_1=1\dots 5\,$mbar sein. Die Expansion wurde zweimal für Helium und einmal für Luft durchgeführt, die Ergebnisse sind in Tab. \ref{table:Volumenbestimmung} aufgelistet. Die Volumina wurden mit der Näherung (\ref{eqn:V2 von V3}) berechnet.
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c|c}
+&$p_1\,/\,$mbar&$p_3\,/\,$mbar&$p_3^\tecxt\text{vor Exp.}\,/\,$mbar&$V_2\,/\,$ml\\ \hline
+Helium&2.65&$5.88\cdot 10^{-3}$&$1.0\cdot 10^{-5}$&141.0\\ \hline
+Helium&4.80&$7.48\cdot 10^{-3}$&$1.4\cdot 10^{-5}$&98.9\\ \hline
+Luft&5.00&$7.18\cdot 10^{-3}$&$3\cdot 10^{-6}$&91.3\\
+\end{tabular}
+\caption{Werte für $V_2$ aus drei indirekten Messungen.}
+\label{table:Volumenbestimmung}
+\end{table}\\
+Die Werte unterscheiden sich untereinander stark, wobei die Abweichung stark mit $p_1$ korreliert zu sein scheint. Irritierender ist allerdings die enorme Abweichung von dem geometrisch abgeschätzten Wert, der letztlich als obere Schranke für das Volumen von C2 fungiert. Ein Verhältnis von $\frac{V_2^\tecxt\text{indir.}}{V_2^\tecxt\text{geom.}}\approx 2.5\dots 3.5$ kann mit Idealisierungen und Messunsicherheiten nicht erklärt werden, sofern richtig gerechnet wurde, muss es hier einen unbekannten systematischen Effekt geben.
+\section{Partialdruckmessung}
+\subsection{Versuchsziel}
+Durchführen einer Analyse von Gaszusammensetzungen mittels Massenspektrometer und Einführung in die Ultrahochvakuumtechnik (UHV).
+\subsection{Vorbereitung des Experiments}
+Die Ionisationspumpe IZ darf nur für ein Vorvakuum von $p<10^{-2}\,$mbar eingeschaltet werden. Dafür ist eigentlich ein Aufbau mit Adsorptionspumpen vorgesehen gewesen, der Druck befand sich allerdings schon weit unter der Grenze. 
+\begin{table}[!htp]
+\centering
+\begin{tabular}{c|c|c|c|c}
+Uhrzeit&$p_\tecxt\text{BAG}\,/\,$mbar&$p_\tecxt\text{EXTR}\,/\,$mbar&$p_\tecxt\text{IZ120}\,/\,$mbar&$p_\tecxt\text{QUAD}\,/\,$torr\\ \hline
+12:20&$8.5\cdot 10^{-9}$&$2.9\cdot 10^{-9}$&$10^{-7}$&--\\
+12:40&$5.6\cdot 10^{-9}$&$2.22\cdot 10^{-9}$&$10^{-7}$&$3\cdot 10^{-8}$\\
+13:15&$4.8\cdot 10^{-9}$&$1.68\cdot 10^{-9}$&$10^{-7}$&$3\cdot 10^{-8}$\\
+13:41&$2.9\cdot 10^{-6}$&$1.12\cdot 10^{-6}$&$2\cdot 10^{-6}$&$1.5\cdot 10^{-6}$\\
+14:40&$4.2\cdot 10^{-8}$&$1.36\cdot 10^{-8}$&$2\cdot 10^{-7}$&$5.5\cdot 10^{-8}$\\ \hline
+15:35&$6.1\cdot 10^{-9}$&$1.94\cdot 10^{-9}$&$10^{-7}$&$4\cdot 10^{-8}$\\
+16:20&$4.0\cdot 10^{-9}$&$1.36\cdot 10^{-8}$&$10^{-7}$&$4\cdot 10^{-8}$\\
+16:25&$1.1\cdot 10^{-5}$&$1.36\cdot 10^{-8}$&$4\cdot 10^{-5}$&$5\cdot 10^{-6}$\\
+16:45&$1.2\cdot 10^{-5}$&--&$5\cdot 10^{-5}$&$6\cdot 10^{-6}$\\
+17:20&$5\cdot 10^{-6}$&$2.0\cdot 10^{-6}$&--&$3\cdot 10^{-6}$\\
+\end{tabular}
+\caption{Messwerte der vier Vakuummeter zu relevanten Zeitpunkten. Ab 15:35 Uhr gehören die Werte zur Messreihe von Herrn Schwardt.}
+\label{table:druckmessung vier vakuummeter}
+\end{table}
+Die tatsächliche Vorbereitung bestand also nur noch im Einschalten der Pumpe, der beiden Glühkathoden-VM und des Massenspektrometers.\\
+Auch dieser Versuch wurde von beiden Teilnehmern einzeln absolviert, die Daten werden im weiteren Verlauf also auch wieder miteinander verglichen werden. In Tab. \ref{table:druckmessung vier vakuummeter} sind die protokollierten Werte der Vakuummeter aufgelistet.
+\subsection{Restgasspektrum einer Ionenzerstäuberpumpe}
+Am Massenspektrometer stellt man zunächst die Betriebsparameter ein, wobei wir einzig die Beschleunigungsspannung auf $2\,$kV erhöht haben. Das Gerät kann das $\frac{m}{q}$ messen, woraus unter der Annahme einfacher Ionisation auf die Masse des Gasteilchens geschlossen werden kann. Das Spektrometer zeigt im Modus \texttt{Analog} ein Histogramm mit Peakhöhen je Massenzahl an. Ein Peak bei der Massenzahl $m=28$ \emph{könnte} also beispielsweise durch $\tecxt\text{N}_2$ hervorgerufen worden sein. Durch den Beschuss mit Elektronen können allerdings auch Bruchstücke von Molekülen auftreten, die dann bei anderen Massenzahlen auftreten. Andere Effekte sind etwa die zweifache Ionisierung von Argon, welches dann bei $m=20$ anstatt $m=40$ auftritt.\\
+Zunächst werden die relevanten Peakhöhen $I$ zusammen mit der entsprechenden Massenzahl $m$ notiert, wobei es keine feste Vorgabe über die Anzahl gab. Mit einer Tabelle von Bruchstückhäufigkeiten versucht man dann, den einzelnen Peaks bestimmte Gasarten zuzuordnen, wobei die Bestimmung des jeweiligen Anteils meist nicht eindeutig ist. Hier zeichnet sich bereits ab, dass dieser Versuch eher qualitativer Natur ist. In Tab. \ref{table:RestgasspektrumRomstedt} und Tab. \ref{table:RestgasspektrumSchwardt} sind die Ergebnisse dargestellt. Die Prozentzahl in Klammern gibt jeweils an, welcher Anteil des Peaks einer bestimmten Gasart zugeordnet werden kann.
+\begin{table}[!htp]
+\centering
+\begin{minipage}{0.5\textwidth}
+\centering
+\begin{tabular}{c|c|c}
+$m$&$I\,/\,$pA&Gasart\\ \hline
+28&200&$\tecxt\text{N}_2$\\ \hline
+2&35&$\tecxt\text{H}_2$\\ \hline
+14&25&$\tecxt\text{N}_2(56\,\%)$\\ \hline
+40&18&$\tecxt\text{Ar}$\\ \hline
+18&15&$\tecxt\text{H}_2\tecxt\text{O}$\\ \hline
+\multirow{2}{*}{17}&\multirow{2}{*}{7.0}&$\tecxt\text{H}_2\tecxt\text{O}(57\,\%)$\\ 
+&&$\tecxt\text{NH}_3(43\,\%)$\\ \hline
+\multirow{2}{*}{16}&\multirow{2}{*}{7.0}&$\tecxt\text{NH}_3(35\,\%)$\\ 
+&&$\tecxt\text{NO}_2(7\,\%)$\\ \hline
+\multirow{2}{*}{44}&\multirow{2}{*}{6.0}&$\tecxt\text{N}_2\tecxt\text{O}(80\,\%)$\\ 
+&&$\tecxt\text{CO}_2(20\,\%)$\\ \hline
+4&3.3&He\\ \hline
+\multirow{2}{*}{30}&\multirow{2}{*}{2.0}&$\tecxt\text{N}_2\tecxt\text{O}(75\,\%)$\\
+&&$\tecxt\text{NO}_2(25\,\%)$\\
+\end{tabular}
+\caption{Restgasspektrum (Romstedt)}
+\label{table:RestgasspektrumRomstedt}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+\begin{tabular}{c|c|c}
+$m$&$I\,/\,$pA&Gasart\\ \hline
+28&150&$\tecxt\text{N}_2$\\ \hline
+18&100&$\tecxt\text{H}_2\tecxt\text{O}$\\ \hline
+2&80&$\tecxt\text{H}_2$\\ \hline
+\multirow{2}{*}{17}&\multirow{2}{*}{40}&$\tecxt\text{H}_2\tecxt\text{O}(63\,\%)$\\ 
+&&$\tecxt\text{NH}_3(37\,\%)$\\ \hline
+\multirow{2}{*}{16}&\multirow{2}{*}{25}&$\tecxt\text{NH}_3(48\,\%)$\\ 
+&&$\tecxt\text{NO}_2(6\,\%)$\\ \hline
+\multirow{2}{*}{44}&\multirow{2}{*}{18}&$\tecxt\text{N}_2\tecxt\text{O}(90\,\%)$\\ 
+&&$\tecxt\text{CO}_2(10\,\%)$\\ \hline
+14&13&$\tecxt\text{N}_2(81\,\%)$\\ \hline
+40&11&$\tecxt\text{Ar}$\\ \hline
+\multirow{2}{*}{30}&\multirow{2}{*}{6.5}&$\tecxt\text{N}_2\tecxt\text{O}(77\,\%)$\\
+&&$\tecxt\text{NO}_2(23\,\%)$\\ \hline
+4&5.0&He\\
+\end{tabular}
+\caption{Restgasspektrum (Schwardt)}
+\label{table:RestgasspektrumSchwardt}
+\end{minipage}
+\end{table}
+Im Modus \texttt{Partial Pressure} gibt das Spektrometer die Partialdrücke aller Gase aus, deren Hauptmassenzahl man eingegeben hat. Zudem benötigte das Gerät pro Gasart einen Kalibrierungsparameter, welcher aus einer Tabelle abgelesen werden konnte. Dieser war allerdings unter der Annahme angegeben, dass die Gasart 100\,\% eines Peaks ausmacht. Für $\tecxt\text{NH}_3$ ist der Anteil an $m=17$ beispielsweise etwa 40\,\%, um diesen Faktor musste der Parameter also noch skaliert werden. Die berechneten Partialdrücke sind in Tab. \ref{table:RestgasspektrumPartialRomstedt} und Tab. \ref{table:RestgasspektrumPartialSchwardt} aufgelistet.
+\begin{table}[!htp]
+\centering
+\begin{minipage}{0.5\textwidth}
+\centering
+\begin{tabular}{c|c|c}
+\multirow{2}{*}{Gasart}&\multirow{2}{*}{$p\,/\,$mbar}&Anteil am \\ &&Totaldruck\\ \hline
+$\tecxt\text{N}_2\,/\,\tecxt\text{CO}$&$1.1\cdot 10^{-9}$&69.1\,\%\\ \hline
+$\tecxt\text{H}_2$&$2.4\cdot 10^{-10}$&15.1\,\%\\ \hline
+Ar&$1.0\cdot 10^{-10}$&6.3\,\%\\ \hline
+$\tecxt\text{H}_2\tecxt\text{O}$&$6.3\cdot 10^{-11}$&4.0\,\%\\ \hline
+$\tecxt\text{He}$&$4.1\cdot 10^{-11}$&2.6\,\%\\ \hline
+$\tecxt\text{N}_2\tecxt\text{O}$&$3.9\cdot 10^{-11}$&2.4\,\%\\ \hline
+$\tecxt\text{NH}_3$&$1.0\cdot 10^{-11}$&0.6\,\%\\
+\end{tabular}
+\caption{Partialdrücke (Romstedt)}
+\label{table:RestgasspektrumPartialRomstedt}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+\begin{tabular}{c|c|c}
+\multirow{2}{*}{Gasart}&\multirow{2}{*}{$p\,/\,$mbar}&Anteil am \\ &&Totaldruck\\ \hline
+$\tecxt\text{N}_2\,/\,\tecxt\text{CO}$&$8.1\cdot 10^{-10}$&37.5\,\%\\ \hline
+$\tecxt\text{H}_2$&$4.7\cdot 10^{-10}$&21.7\,\%\\ \hline
+Ar&$6.5\cdot 10^{-11}$&3.0\,\%\\ \hline
+$\tecxt\text{H}_2\tecxt\text{O}$&$5.4\cdot 10^{-10}$&25.0\,\%\\ \hline
+$\tecxt\text{He}$&$3.3\cdot 10^{-11}$&1.5\,\%\\ \hline
+$\tecxt\text{N}_2\tecxt\text{O}$&$1.7\cdot 10^{-10}$&7.9\,\%\\ \hline
+$\tecxt\text{NH}_3$&$7.3\cdot 10^{-11}$&3.4\,\%\\
+\end{tabular}
+\caption{Partialdrücke (Schwardt)}
+\label{table:RestgasspektrumPartialSchwardt}
+\end{minipage}
+\end{table}\\
+Die Summe der Partialdrücke und und der mit dem Ionisations-VM gemessene Totaldruck stehen in Tab. \ref{table:DaltonRestgas}. Nach dem \textsc{Dalton}schen Gesetz sollte die Summe dem Totaldruck entsprechen. Leichte Abweichungen nach unten sind einfach dadurch erklärt, dass nicht alle Gasarten berücksichtigt wurden. Im Rahmen der Unsicherheiten konnte das Gesetz erstaunlich gut bestätigt werden. Verwendet man allerdings das andere Ionisations-VM, das VM der Pumpe oder das VM des Spektrometers, so weicht der Totaldruck enorm ab. Wir begründen das allerdings einfach mit der höheren Ungenauigkeit dieser Geräte.
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c}
+&$\sum p_\tecxt\text{Part.}\,/\,$mbar&$p_\tecxt\text{EXTR}\,/\,$mbar\\ \hline
+Romstedt&$1.59\cdot 10^{-9}$&$1.68\cdot 10^{-9}$\\ \hline
+Schwardt&$2.16\cdot 10^{-9}$&$2.20\cdot 10^{-9}$\\
+\end{tabular}
+\caption{Summe der Partialdrücke im Vergleich zum Totaldruck.}
+\label{table:DaltonRestgas}
+\end{table}\\
+Interessant ist noch, dass sich die gemessenen Zusammensetzungen untereinander so stark unterscheiden. Gerade der Anteil an Wasser, Lachgas und Ammoniak ist bei der zeitlich späteren Messung um ein Vielfaches größer. Bei der Analyse von Luft stimmen die Ergebnisse deutlich besser überein. Eventuell ist die Abweichung darauf zurückzuführen, dass der Versuchsaufbau mehrere Tage unberührt war und dadurch bestimmte Bestandteile des Restgases stärker entschwunden sind.\newpage
+\subsection{Analyse des Spektrums für Luft}
+Der Versuch wurde für einen dynamischen Lufteinlass völlig analog wiederholt. In Tab. \ref{table:LuftspektrumRomstedt} und Tab. \ref{table:LuftspektrumSchwardt} sind die Ergebnisse dargestellt.
+\begin{table}[!htp]
+\centering
+\begin{minipage}{0.5\textwidth}
+\centering
+\begin{tabular}{c|c|c}
+$m$&$I\,/\,$nA&Gasart\\ \hline
+28&120&$\tecxt\text{N}_2$\\ \hline
+32&17.5&$\tecxt\text{O}_2$\\ \hline
+14&11.0&$\tecxt\text{N}_2(76\,\%)$\\ \hline
+40&4.5&$\tecxt\text{Ar}$\\ \hline
+\multirow{2}{*}{16}&\multirow{2}{*}{2.5}&$\tecxt\text{O}_2(77\,\%)$\\ 
+&&$\tecxt\text{NH}_3(3\,\%)$\\ \hline
+2&1.25&$\tecxt\text{H}_2$\\ \hline
+18&0.7&$\tecxt\text{H}_2\tecxt\text{O}$\\ \hline
+\multirow{2}{*}{30}&\multirow{2}{*}{0.53}&$\tecxt\text{NO}(92\,\%)$\\
+&&$\tecxt\text{N}_2\tecxt\text{O}(8\,\%)$\\ \hline
+4&0.38&He\\ \hline
+\multirow{2}{*}{17}&\multirow{2}{*}{0.25}&$\tecxt\text{H}_2\tecxt\text{O}(70\,\%)$\\ 
+&&$\tecxt\text{NH}_3(30\,\%)$\\ \hline
+\multirow{2}{*}{44}&\multirow{2}{*}{0.16}&$\tecxt\text{N}_2\tecxt\text{O}(80\,\%)$\\ 
+&&$\tecxt\text{CO}_2(20\,\%)$\\
+\end{tabular}
+\caption{Luftspektrum (Romstedt)}
+\label{table:LuftspektrumRomstedt}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+\begin{tabular}{c|c|c}
+$m$&$I\,/\,$nA&Gasart\\ \hline
+28&400&$\tecxt\text{N}_2$\\ \hline
+32&60&$\tecxt\text{O}_2$\\ \hline
+14&40&$\tecxt\text{N}_2(70\,\%)$\\ \hline
+40&15&$\tecxt\text{Ar}$\\ \hline
+\multirow{2}{*}{16}&\multirow{2}{*}{8.0}&$\tecxt\text{O}_2(83\,\%)$\\ 
+&&$\tecxt\text{NH}_3(6\,\%)$\\ \hline
+2&-?-&$\tecxt\text{H}_2$\\ \hline
+18&3.0&$\tecxt\text{H}_2\tecxt\text{O}$\\ \hline
+4&1.0&He\\ \hline
+\multirow{2}{*}{17}&\multirow{2}{*}{1.3}&$\tecxt\text{H}_2\tecxt\text{O}(58\,\%)$\\ 
+&&$\tecxt\text{NH}_3(42\,\%)$\\ \hline
+\multirow{2}{*}{44}&\multirow{2}{*}{0.5}&$\tecxt\text{N}_2\tecxt\text{O}(90\,\%)$\\ 
+&&$\tecxt\text{CO}_2(10\,\%)$\\
+\end{tabular}
+\caption{Luftspektrum (Schwardt)}
+\label{table:LuftspektrumSchwardt}
+\end{minipage}
+\end{table}\\
+Die berechneten Partialdrücke sind in Tab. \ref{table:LuftspektrumPartialRomstedt} und Tab. \ref{table:LuftspektrumPartialSchwardt} aufgelistet.
+\begin{table}[!htp]
+\centering
+\begin{minipage}{0.5\textwidth}
+\centering
+\begin{tabular}{c|c|c}
+\multirow{2}{*}{Gasart}&\multirow{2}{*}{$p\,/\,$mbar}&Anteil am \\ &&Totaldruck\\ \hline
+$\tecxt\text{N}_2\,/\,\tecxt\text{CO}$&$8.8\cdot 10^{-7}$&80.8\,\%\\ \hline
+$\tecxt\text{O}_2$&$1.4\cdot 10^{-7}$&12.9\,\%\\ \hline
+Ar&$4.0\cdot 10^{-8}$&3.7\,\%\\ \hline
+$\tecxt\text{He}$&$9.2\cdot 10^{-9}$&0.8\,\%\\ \hline
+$\tecxt\text{H}_2$&$6.5\cdot 10^{-9}$&0.6\,\%\\ \hline
+$\tecxt\text{H}_2\tecxt\text{O}$&$6.0\cdot 10^{-9}$&0.6\,\%\\ \hline
+$\tecxt\text{NO}$&$4.8\cdot 10^{-9}$&0.4\,\%\\ \hline
+$\tecxt\text{CO}_2$&$1.8\cdot 10^{-9}$&0.2\,\%\\ \hline
+$\tecxt\text{NH}_3$&$1.0\cdot 10^{-9}$&0.1\,\%\\
+\end{tabular}
+\caption{Partialdrücke für Luft\\ (Romstedt)}
+\label{table:LuftspektrumPartialRomstedt}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\centering
+\begin{tabular}{c|c|c}
+\multirow{2}{*}{Gasart}&\multirow{2}{*}{$p\,/\,$mbar}&Anteil am \\ &&Totaldruck\\ \hline
+$\tecxt\text{N}_2\,/\,\tecxt\text{CO}$&$2.7\cdot 10^{-6}$&80.1\,\%\\ \hline
+$\tecxt\text{O}_2$&$4.7\cdot 10^{-7}$&14.0\,\%\\ \hline
+Ar&$1.2\cdot 10^{-7}$&3.6\,\%\\ \hline
+$\tecxt\text{He}$&$2.7\cdot 10^{-8}$&0.8\,\%\\ \hline
+$\tecxt\text{H}_2$&$2.6\cdot 10^{-8}$&0.8\,\%\\ \hline
+$\tecxt\text{H}_2\tecxt\text{O}$&$2.1\cdot 10^{-8}$&0.6\,\%\\ \hline
+$\tecxt\text{CO}_2$&$4.7\cdot 10^{-9}$&0.1\,\%\\ 
+\end{tabular}
+\caption{Partialdrücke für Luft\\ (Schwardt)}
+\label{table:LuftspektrumPartialSchwardt}
+\end{minipage}
+\end{table}\\
+Die Summe der Partialdrücke und und der mit dem Ionisations-VM gemessene Totaldruck stehen wieder in Tab. \ref{table:DaltonLuft}. Beim Vergleich mit den Totaldrücken der anderen drei Messgeräten zeigen sich auch hier wieder enorme Abweichungen. Anders als beim Restgasspektrum stimmt das Ergebnis bei der Messreihe von Herrn Schwardt allerdings schlechter mit dem Totaldruck überein. Wir führen das auf die knappere Analyse zurück, bei der entsprechend manche Partialdrücke nicht berücksichtigt wurden (z.B. $\tecxt\text{NO}$).
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c}
+&$\sum p_\tecxt\text{Part.}\,/\,$mbar&$p_\tecxt\text{EXTR}\,/\,$mbar\\ \hline
+Romstedt&$1.09\cdot 10^{-6}$&$1.12\cdot 10^{-6}$\\ \hline
+Schwardt&$3.4\cdot 10^{-6}$&$3.8\cdot 10^{-6}$\\
+\end{tabular}
+\caption{Summe der Partialdrücke im Vergleich zum Totaldruck für Luft.}
+\label{table:DaltonLuft}
+\end{table}\\
+Abgesehen von der Konsistenz mit dem \textsc{Dalton}schen Gesetz spiegeln die gemessenen Werte nur sehr grob die tatsächliche Zusammensetzung der Luft wieder. Stickstoff wird hier mit 80\,\% anstatt 78\,\% noch gut abgeschätzt, der Sauerstoffanteil ist mit 14\,\% statt 21\,\% aber definitiv zu gering. Im Gegensatz dazu ist der Argonanteil mit 4\,\% deutlich größer als der Literaturwert von etwa 1\,\%. Der Anteil an Kohlenstoffdioxid liegt mit etwa 1500\,ppm ebenfalls deutlich über den üblichen 400\,ppm, wobei man an dieser Stelle hinsichtlich des prognostizierten Verlaufs sagen könnte, dass die Messung ihrer Zeit lediglich ein paar Jahrzehnte voraus ist.
+\subsection{Rückdiffusion der Ionenpumpe}
+Zuletzt sollte untersucht werden, wie groß der Anteil an Argon ist, der nach dem Abschalten der Pumpe zurück in den Rezipienten diffundiert. Für Edelgase erwartet man aufgrund des Funktionsprinzips der Pumpe einen relativ großen Anteil, da diese schlecht gebunden werden können. Zu diesem Zweck wurde die Dauer des Lufteinlasses $T_E$ notiert. Nach Abschalten von Luftzufuhr und Pumpe, sowie einer Wartezeit $T_G$ wurde der erreichte Enddruck $p_G$ gemessen. Weiterhin bezeichnet $p_E$ den Totaldruck vor Einstellen der Luftzufuhr, $S\approx 100\,\frac{\tecxt\text{l}}{\tecxt\text{s}}$ das Saugvermögen der Pumpe, $X_\tecxt\text{Ar}$ den Anteil von Argon am Gesamtdruck für Luft, $Y_\tecxt\text{Ar}$ den Peakhöhen-Anteil am gesamten Peakhöhenspektrum beim Druck $p_G$ und $V_\tecxt\text{Rez.}=12.6\,$l das Fassungsvermögen des Rezipienten. Es gilt näherungsweise:
+\begin{align*}
+Q_\tecxt\text{auf}&\approx X_\tecxt\text{Ar}\cdot S\cdot p_E\cdot T_P\\ 
+Q_\tecxt\text{ab}&\approx Y_\tecxt\text{Ar}\cdot p_G\cdot V_\tecxt\text{Rez.}
+\end{align*}
+In Tab. \ref{table:werte fuer argondiffusion} sind die relevanten Parameter und in Tab. \ref{table:argondiffusion} die Ergebnisse aufgeführt. Das die Rückdiffusion beschreibende Verhältnis sei $\beta:=\frac{Q_\tecxt\text{ab}}{Q_\tecxt\text{auf}}$.
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c|c|c|c}
+&$X_\tecxt\text{Ar}$&$Y_\tecxt\text{Ar}$&$T_E\,/\,$min&$T_W\,/\,$min&$p_E\,/\,$mbar&$p_G\,/\,$mbar\\ \hline
+Romstedt&3.7\,\%&$\approx 66$\,\%&60&30&$1.12\cdot 10^{-6}$&$5.74\cdot 10^{-7}$\\ \hline
+Schwardt&3.6\,\%&$\approx 55$\,\%&35&20&$3.8\cdot 10^{-6}$&$2.0\cdot 10^{-6}$\\
+\end{tabular}
+\caption{Benötigte Werte für die Bestimmung der Argon-Rückdiffusion.}
+\label{table:werte fuer argondiffusion}
+\end{table}
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c}
+&$Q_\tecxt\text{auf}\,/\,\tecxt\text{mbar}\cdot\tecxt\text{l}$&$Q_\tecxt\text{ab}\,/\,\tecxt\text{mbar}\cdot\tecxt\text{l}$&$\beta$\\ \hline
+Romstedt&0.015&$4.8\cdot 10^{-6}$&0.032\,\%\\ \hline
+Schwardt&0.029&$1.4\cdot 10^{-5}$&0.048\,\%\\
+\end{tabular}
+\caption{Berechnete Werte der Rückdiffusion von Argon.}
+\label{table:argondiffusion}
+\end{table}\\
+Beim Abschalten der Pumpe konnten wir im \texttt{Leak Check} Modus des Massenspektrometers den Verlauf der Peakhöhe von Argon verfolgen. Bereits nach wenigen Minuten stellte diese den dominanten Peak im Spektrum dar. Trotz des geringen Wertes von $\beta$ lässt sich der Anstieg über die Rückdiffusion erklären, da der Totaldruck vor dem Abschalten weit unter $p_E$ lag. Daher war die Restgasmenge deutlich kleiner als die gespeicherte Argonmenge, womit nur ein geringer Teil zurück diffundieren musste, um für einen hohen relativen Argonanteil zu sorgen.
+\begin{thebibliography}{9}
+\bibitem{VAK Anleitung} Versuchsanleitung zum \emph{Vakuumpraktikum} (VAK, 2020), \url{https://tu-dresden.de/mn/physik/ressourcen/dateien/studium/lehrveranstaltungen/praktika/fortgeschrittenenpraktikum/fp-anleitungen/VAK_ALL13_2020.pdf}, 20.\,Dez.~2020.
+\end{thebibliography}
+
+
+\end{document}

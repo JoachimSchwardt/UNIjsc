@@ -1,0 +1,243 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[ngerman]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+%\pagestyle{scrheadings}  % Stil für die Seite setzen
+%\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+%\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{siunitx}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{06 Verschiedene Runge-Kutta Verfahren}
+\newcommand*{\autor}{Joachim Schwardt und Julian Fleck}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Numerik II - Aufgaben}
+\title{\titel}
+%\author{\autor}
+\author{\begin{tabular}{l|l}
+Joachim Schwardt & 4768711 \\ 
+Julian Fleck & 4759587\\ 
+\end{tabular}}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Aufgabe 1}
+Gegeben ist ein explizites \textsc{Runge-Kutta}-Verfahren mit dem \textsc{Butcher}-Schema \autoref{table:butcher scheme order 4}.
+\begin{table}[!ht]
+\centering
+\begin{tabular}{c|cccc}
+0 & &&&\\[2pt]
+$\frac{1}{3}$ & $\frac{1}{3}$ &&&\\[2pt]
+$\frac{2}{3}$ & $-\frac{1}{3}$ & 1 &&\\[2pt]
+1 & 1 & -1 & 1 &\\[2pt] \hline\\[-10pt]
+& $\frac{1}{8}$ &$\frac{3}{8}$ &$\frac{3}{8}$ &$\frac{1}{8}$ \\[2pt]
+\end{tabular}
+\caption{Butcher-Schema für ein RK-Verfahren.}
+\label{table:butcher scheme order 4}
+\end{table}\\
+Ausführlich entspricht dies
+\begin{align}
+k_1 &= f\left( t, x \right),\\
+k_2 &= f\left( t + \frac{\tau}{3}, x + \tau \frac{k_1}{3} \right),\\
+k_3 &= f\left( t + \frac{2\tau}{3}, x + \tau \left[ k_2 - \frac{k_1}{3} \right] \right),\\
+k_4 &= f\left( t + \tau, x + \tau \left[ k_1 - k_2 + k_3 \right] \right),\\
+\Psi^{t+\tau,t}x &= x + \frac{\tau}{8} \klam\left[ k_1 + 3k_2 + 3k_3 + k_4 \right].
+\end{align}
+Beziehungsweise noch ausführlicher
+\begin{align*}
+\Psi^{t+\tau,t}x &= x + \frac{\tau}{8} \Bigg[ f\left( t, x \right) + 3f\left( t + \frac{\tau}{3}, x + \tau \frac{f\left( t, x \right)}{3} \right) + \\
+&\hspace{1.7cm} + 3f\left( t + \frac{2\tau}{3}, x + \tau \left[ f\left( t + \frac{\tau}{3}, x + \tau \frac{f\left( t, x \right)}{3} \right) - \frac{f\left( t, x \right)}{3} \right] \right) + \\
+&\hspace{1.7cm} + f\Bigg( t + \tau, \\
+&\hspace{2.7cm} x + \tau \bigg[ f\left( t, x \right) - f\left( t + \frac{\tau}{3}, x + \tau \frac{f\left( t, x \right)}{3} \right) + \\
+&\hspace{3.7cm}+ f\left( t + \frac{2\tau}{3}, x + \tau \left[ f\left( t + \frac{\tau}{3}, x + \tau \frac{f\left( t, x \right)}{3} \right) - \frac{f\left( t, x \right)}{3} \right] \right) \bigg] \\
+&\hspace{2.7cm} \Bigg) \\
+&\hspace{1.7cm} \Bigg].
+\end{align*}
+
+\section*{Aufgabe 2}
+Gegeben sei ein $s$-stufiges \textsc{Runge-Kutta}-Verfahren mit Koeffizienten $A,b,c$.
+Für ein Anfangswertproblem
+\begin{align}
+x'(t) &= f(t,x(t))
+\end{align}
+mit $x(t_0) = x_0$ lautet das Verfahren ausführlich dann
+\begin{align}
+k_j &= f\kla\left( t + c_j\tau, x + \tau\sum_{l=1}^{j-1} A_{jl}k_l \right),\\
+\Psi^{t+\tau,t}x &= x + \tau \sum_{j=1}^s b_jk_j.
+\end{align}
+Wir könnten die Differentialgleichung zuvor allerdings noch autonomisieren.
+Definiere dazu $s(t) := t$ und schreibe $z := (s,x)^\top \in\mathbb{R}^{d+1}$
+\begin{align}
+z'(t) &= \begin{pmatrix}
+s'(t) \\ x'(t)
+\end{pmatrix} = \begin{pmatrix}
+1 \\ f(s,x)
+\end{pmatrix} =: F(z).
+\end{align}
+Für diese Differentialgleichung lautet dasselbe Verfahren dann
+\begin{align}
+\tilde{k}_j &= F\kla\left( z + \tau\sum_{l=1}^{j-1} A_{jl} \tilde{k}_l \right) = \begin{pmatrix}
+1 \\ f\kla\left( s + \tau\sum_{l=1}^{j-1} A_{jl} (\tilde{k}_l)_1,\ x + \tau \sum_{l=1}^{j-1} A_{jl} (\tilde{k}_l)_2 \right)
+\end{pmatrix}.
+\end{align}
+Der erste Eintrag im Vektor jeder Stufe ist also immer gleich Eins.
+Damit vereinfacht sich das Verfahren zu $(\tilde{k}_j)_1 = 1$ und
+\begin{align}
+(\tilde{k}_j)_2 &= f\kla\left( s + \tau\sum_{l=1}^{j-1} A_{jl},\ x + \tau \sum_{l=1}^{j-1} A_{jl} (\tilde{k}_l)_2 \right).
+\end{align}
+Die Evolution ergibt dann
+\begin{align}
+\tilde{\Psi}^{t+\tau,t}z &= z + \tau \sum_{j=1}^s b_j\tilde{k}_j = \begin{pmatrix}
+s + \tau \sum_{j=1}^s b_j \\ x + \tau \sum_{j=1}^s b_j (\tilde{k}_j)_2
+\end{pmatrix}.
+\end{align}
+Zum Vergleich, zuvor hatten wir per Konstruktion $t \rightarrow t+\tau$ und
+\begin{align}
+\Psi^{t+\tau,t} x &= x + \tau \sum_{j=1}^s b_j k_j.
+\end{align}
+Damit das Verfahren invariant ist, müssen also die Stufen $k_j$ mit der zweiten Komponente der Stufen $\tilde{k}_j$ übereinstimmen.
+Wir fordern also
+\begin{align}
+f\kla\left( s + \tau\sum_{l=1}^{j-1} A_{jl},\ x + \tau \sum_{l=1}^{j-1} A_{jl} k_l \right) &\overset{!}{=} f \kla\left( t + \tau c_j,\ x + \tau\sum_{l=1}^{j-1}A_{jl} k_l \right),
+\end{align}
+woraus $\sum_{l=1}^{j-1} A_{jl} = c_j$ folgt.
+Außerdem muss allerdings die ``Transformation'' von $t$ mit der von $s$ übereinstimmen.
+Da $s \rightarrow s + \tau \sum_{j=1}^s b_j$ gilt, ist das also äquivalent zu $\sum_{j=1}^s b_j = 1$, was wiederum äquivalent dazu ist, dass das Verfahren konsistent ist.
+
+\section*{Aufgabe 3}
+Gegeben sei eine stetige Funktion $f : \mathbb{R} \rightarrow \mathbb{R}$ sowie ein Punkt $(t_0,x_0) \in \mathbb{R}^2$.
+Wir betrachten das Anfangswertproblem 
+\begin{align}
+x'(t) &= f(t), \quad x(t_0) = x_0.
+\end{align}
+In diesem Fall gilt
+\begin{align}
+\frac{\tecxt\text{d}}{\tecxt\text{d}\tau} \Phi^{t+\tau,t}x = \frac{\tecxt\text{d}}{\tecxt\text{d}\tau} x(t+\tau) = x'(t+\tau) = f(t+\tau).
+\end{align}
+Insbesondere vereinfacht sich die Taylor-Entwicklung der Evolution damit zu
+\begin{align}
+\Phi^{t+\tau,t} x &= x + \tau  f + \frac{\tau^2}{2} f' + \frac{\tau^3}{6} f'' + \dots
+\end{align}
+Es seien noch Gitterpunkte $t_0 < \dots < t_n$ gegeben.
+Zur Berechnung von Näherungswerten $x_h(t_j)$ für die exakten Funktionswerte $x(t_j)$ werde ein $s$-stufiges \textsc{Runge-Kutta}-Verfahren mit der Konsistenzordnung $p>0$ verwendet.
+\\
+Sei $f$ ein Polynom vom Grad höchstens $(p-1)$.
+Dann können wir schreiben
+\begin{align}
+f(t) &= \sum_{\rho=0}^{p-1} w_\rho t^\rho,
+\end{align}
+wobei $w_\rho$ nicht näher bestimmte Koeffizienten sind.
+Die exakte Lösung der Differentialgleichung ist dann einfach
+\begin{align}
+x(t) &= x(t_0) + \intx\int_{t_0}^{t} f(s)\, \mathrm{d}s = x_0 + \sum_{\rho=0}^{p-1} w_\rho \frac{t^{\rho + 1} - t_0^{\rho + 1}}{\rho + 1} \equiv \Phi^{t,t_0}x(t_0).
+\end{align}
+Die Evolution können wir also als
+\begin{align}
+\Phi^{t+\tau,t}x &= x + \sum_{\rho=0}^{p-1} w_\rho \frac{(t+\tau)^{\rho + 1} - t^{\rho + 1}}{\rho + 1}
+\end{align}
+schreiben.
+%Für die Evolution gilt dann exakt
+%\begin{align}
+%\Phi^{t+\tau,t} x &= x + \tau  f + \frac{\tau^2}{2} f' + \frac{\tau^3}{6} f'' + \dots + \frac{\tau^p}{p!}f^{(p-1)} = \\
+%&= x + \sum_{k=1}^p \frac{\tau^k}{k!} \frac{\tecxt\text{d}^{k-1}}{\tecxt\text{d}t^{k-1}} \sum_{\rho=0}^{p-1} w_{\rho} t^{\rho} = \\
+%&= x + \sum_{\rho = 0}^{p-1} \sum_{k=1}^p w_\rho \frac{\rho (\rho-1)\dots (\rho - k + 2)}{k!} \tau^k t^{\rho - k + 1} = \\
+%&= x + \sum_{\rho=0}^{p-1} w_\rho \sum_{k=1}^p \frac{\rho!}{k!(\rho - k + 1)!} \tau^k t^{\rho - k + 1}
+%\end{align}
+Der Induktionsanfang für $j=0$ ist trivial, da per Konstruktion
+\begin{align}
+x_h(t_0) &= x(t_0).
+\end{align}
+Angenommen es gilt $x_h(t_{j}) = x(t_{j})$ für ein $j\ge 0$.
+Dann folgt
+\begin{align}
+x_h(t_{j+1}) &= \Psi^{t_{j+1},t_{j}}x_h(t_{j}) = x(t_{j}) + \tau \sum_{l=1}^s b_lk_l,
+\end{align}
+wobei die Stufen durch
+\begin{align}
+k_m &= f\kla\left( t_j + c_m\tau \right)
+\end{align}
+in unserem Fall vollständig entkoppeln.
+%Es gilt
+%\begin{align}
+%\Psi^{t+\tau, t}x = x + \tau \sum_{l=1}^s b_lk_l,
+%\end{align}
+%wobei die Stufen durch
+%\begin{align}
+%k_l &= f\kla\left( t + c_l\tau \right)
+%\end{align}
+%gegeben sind, und somit in unserem Fall vollständig entkoppeln.
+Der neue Konsistenzfehler ist dann
+\begin{align}
+\epsilon_{j+1} &= x_h(t_{j+1}) - x(t_{j+1}) = \underbrace{\epsilon_{j}}_{=\,0} + \Phi^{t_{j+1},t_j} x(t_j) - \Psi^{t_{j+1},t_j} x(t_j).
+\end{align}
+Es gilt
+\begin{align}
+\kla\left( \Phi^{t+\tau, t} - \Psi^{t+\tau, t} \right)x &= \sum_{\rho=0}^{p-1} w_\rho \frac{(t+\tau)^{\rho + 1} - t^{\rho + 1}}{\rho + 1} - \tau \sum_{l=1}^s b_l \sum_{\rho = 0}^{p-1} w_\rho \kla\left( t + c_l \tau \right)^\rho = \\
+&= \sum_{\rho = 0}^{p-1} w_\rho \klam\left[ \frac{1}{\rho + 1} \sum_{m=0}^{\rho + 1} \binom{\rho+1}{m} t^m \tau^{\rho+1-m} - \frac{t^{\rho + 1}}{\rho + 1} - \tau \sum_{l=1}^s b_l (t + c_l\tau)^\rho \right].
+\end{align}
+Da die Koeffizienten beliebig sind, muss der Ausdruck in den eckigen Klammern für alle $\rho$ einzeln verschwinden.
+Wir können diesen zunächst noch etwas vereinfachen
+\begin{align}
+[\dots] &= \frac{\tau}{\rho+1} \sum_{m=0}^\rho \frac{(\rho + 1)!}{m!(\rho + 1 - m)!} t^m \tau^{\rho - m} - \tau \sum_{l = 1}^s b_l \sum_{m=0}^\rho \binom{\rho}{m} t^m (c_l\tau)^{\rho - m}  = \\
+&= \tau \rho! \sum_{m=0}^\rho \frac{t^m}{m!} \frac{\tau^{\rho - m}}{(\rho - m)!} \klam\left[ \frac{1}{\rho + 1 - m} - \sum_{l=1}^s b_l c_l^{\rho - m} \right].
+\end{align}
+Da die Schrittweite $\tau$ beliebig ist, und in jedem Term unterschiedliche Potenzen von $\tau$ auftreten, muss wieder jeder Summand verschwinden.
+Für alle $m=0,\dots,\rho < p$ muss also gelten
+\begin{align}
+\frac{1}{m+1} &= \sum_{l=1}^s b_l c_l^m.
+\end{align}
+Das entspricht gerade der Bedingung an eine Quadraturformel mit $s$ Gewichten bzw. Stützstellen, ein Polynom vom Grad $m$ exakt zu integrieren.
+Für $s\ge \frac{p}{2}$ sollte es möglich sein, entsprechende Koeffizienten zu finden.
+Damit ist allerdings nur gezeigt, dass prinzipiell ein \textsc{Runge-Kutta}-Verfahren exisitiert, was Polynom exakt ``integriert''.
+Das erscheint zum Einen nicht besonders beeindruckend (letztlich beruht das ja wieder auf der ``Magie'' der Quadraturformeln), und zum Anderen nicht wirklich die Aufgabe (wir sollten ja zeigen, dass das für beliebige RK-Verfahren funktioniert).
+\\
+Die Bedingung wird von den drei Verfahren aus dem Programmier-Teil erfüllt.
+Damit haben wir zumindest auch kein offensichtliches Gegenbeispiel zu der Behauptung, dass die Bedingung mit der Quadraturformel tatsächlich notwendig ist.
+ 
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

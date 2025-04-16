@@ -1,0 +1,91 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+
+\begin{document}
+
+\title{08 3-D Potentiale}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{3-dimensionaler Potentialtopf}
+Betrachte die Schrödingergleichung mit $\nabla^2=\frac{1}{r^2}\partial_r(r^2\partial_r)=\frac{1}{r}\partial_r^2r$ ($l=0$). Es ist $E<0$ (gebundene Zustände). Setze $k^2=\frac{2m(E+V_0)}{\hbar^2}$ und $\kappa^2=-\frac{2mE}{\hbar^2}$:
+\begin{align*}
+E\phi &=-\frac{\hbar^2}{2m}\nabla^2\phi -V_0\phi =-\frac{\hbar^2}{2mr}\partial_r^2(r\phi)-V_0\phi\\
+0&=k^2r\phi +\partial_r^2(r\phi)=:k^2u(r)+u''(r)\ \ \Rightarrow\ \ u(r)=Ae^{ikr} + B^{-ikr}\\
+E\phi &=-\frac{\hbar^2}{2m}\nabla^2\phi=-\frac{\hbar^2}{2mr}\partial_r^2(r\phi) \\
+0&=-\kappa^2u(r)+u''(r)\ \ \Rightarrow\ \ u(r)=Ce^{\kappa r}+De^{-\kappa r}
+\end{align*}
+Es ist $C=0$, da $\phi(r)=\frac{u(r)}{r}$ sonst divergiert für $r\rightarrow\infty$. Außerdem ist $B=-A$, da sonst $\phi(r)\rightarrow\infty$ für $r\rightarrow0$ (Durch diese Bedingung ist $\phi\propto\frac{\sin r}{r}$, und somit beschränkt). Es gilt also mit beliebigen Konstanten $A,D$:
+\begin{align*}
+\phi(r)&=\left\{\begin{matrix}
+\frac{A\sin kr}{kr} & r\le a \\
+\frac{De^{-\kappa r}}{\kappa r} & r> a
+\end{matrix}\right.
+\end{align*}
+Aus der Stetigkeit von $\phi$ und $\phi'$ an $r=a$ folgt:
+\begin{align*}
+A\sin ka&=D\frac{k}{\kappa} e^{-\kappa a}\ \ \ \ \ \tecxt\text{und }\ \ \ \ \ \frac{Ak\cos ka}{ka}-\frac{A\sin ka}{ka^2}=-\frac{D\kappa e^{-\kappa a}}{\kappa a}-\frac{De^{-\kappa a}}{\kappa a^2}\\
+D&=A\frac{\kappa}{k}e^{\kappa a}\sin ka\ \ \ \ \ \Rightarrow\ \ \ \ \  ka\cos ka-\sin ka+\kappa a\sin ka+\sin ka=0
+\end{align*}
+Eine mögliche Lösung für gebundene Zustände wird beschrieben durch $D\equiv 0$, was äquivalent zu $ka=n\pi$ ist. Daraus folgt $k_n^2=\frac{n^2\pi^2}{a^2}=\frac{2m(E_n+V_0)}{\hbar^2}$ und letztlich $E_n=-V_0+\frac{\hbar^2n^2\pi^2}{2ma^2}\overset{!}{\le}0$. Damit es zumindest einen gebundenen Zustand gibt, muss also $V_0\ge\frac{\hbar^2\pi^2}{2ma^2}$ gelten.
+\section{Deuteron}
+\subsection*{a)}
+Die radiale Schrödingergleichung für $l=0$ lautet:
+\begin{align*}
+E\phi&=-\frac{\hbar^2}{2\mu r}\partial_r^2(r\phi)-Ue^{-r/a}\phi \\
+0&=\frac{2\mu E}{\hbar^2}u(r)+\frac{2\mu U}{\hbar^2}e^{-r/a}u(r)+u''(r)
+\end{align*}
+\subsection*{b)}
+Setze $r=-2a\log \xi$. Dann gilt:
+\begin{align*}
+\partial_ru(r)&=\partial_\xi u(\xi)\partial_r\xi=-\frac{\xi}{2a} u'(\xi)\\
+\partial_r^2u(r)&=-\frac{1}{2a}\partial_r\xi u'(\xi)=\frac{\xi}{4a^2}u'(\xi)+\frac{\xi^2}{4a^2}u''(\xi)\\
+0&=\frac{2\mu E}{\hbar^2}u+\frac{2\mu U}{\hbar^2}\xi^2u+\frac{\xi}{4a^2}u'+\frac{\xi^2}{4a^2}u'' \\
+0&=u''(\xi)+\frac{u'(\xi)}{\xi}+\kla\left( {c^2-\frac{q^2}{\xi^2}} \right)u(\xi)
+\end{align*}
+Dabei ist $q^2= -\frac{8\mu a^2E}{\hbar^2}$ und $c^2= \frac{8\mu a^2U}{\hbar^2}$.
+\subsection*{c)}
+Mit den gegebenen Werten folgt für $U$:
+\begin{align*}
+U&=\frac{\hbar^2c^2}{8\mu a^2}=\underline{32,7445\,\tecxt\text{MeV}}
+\end{align*}
+\section{Virialsatz}
+\subsection*{a)}
+Stationäre Zustände, also $\psi(r,t)=\phi(r)e^{-iEt/\hbar}$. Sei $A$ ein zeitunabhängiger Operator:
+\begin{align*}
+\bra\langle {A}\rangle&=\intr\int_{\mathbb{R}^{4}}{\psi^\ast A\psi}\,\mathrm{d}^{3}r=\intr\int_{\mathbb{R}^{4}}{\phi^\ast e^{iEt/\hbar} A\phi e^{-iEt/\hbar}}\,\mathrm{d}^{3}r=\intr\int_{\mathbb{R}^{3}}{\phi^\ast A\phi}\,\mathrm{d}^{3}r\neq f(t)
+\end{align*}
+\subsection*{b)}
+Sei $f:\mathbb{R}^n\rightarrow\mathbb{R},\ f(tx)=t^\alpha f(x)$. Dann gilt:
+\begin{align*}
+\alpha f(x)&=\alpha t^{\alpha -1}f(x)\bigg\vert_{t=1}=\frac{d}{dt}t^\alpha f(x)\bigg\vert_{t=1}=\frac{d}{dt}f(tx)\bigg\vert_{t=1}=\sum_{k=1}^n\partial_{x_k}f(tx)\frac{d(tx_k)}{dt}\bigg\vert_{t=1}= \\
+&=\sum_{k=1}^nx_k\partial_{x_k}f(x)=r\cdot\nabla f\ \ \Rightarrow\ \ \underline{ r\cdot \nabla f=\alpha f}
+\end{align*}
+Da $A$ zeitunabhängig ist, folgt aus $2T=v\cdot p$ und $F=-\nabla V$:
+\begin{align*}
+0&=\partial_t\bra\langle {A}\rangle=\partial_t\bra\langle {r\cdot p+p\cdot r}\rangle=\bra\langle {v\cdot p+p\cdot v}\rangle+\bra\langle {r\cdot F+F\cdot r}\rangle=4\bra\langle {T}\rangle-2\bra\langle {r\cdot\nabla V}\rangle\\
+&\Rightarrow\ \ \bra\langle {T}\rangle=\frac{1}{2}\bra\langle {r\cdot\nabla V}\rangle
+\end{align*}
+Falls $V(\lambda r)=\lambda^nV(r)$ gilt $\bra\langle {T}\rangle=\frac{\lambda}{2}\bra\langle {V}\rangle$. Für das Oszillatorpotential bzw. \textsc{Coulomb}-Potential gilt dann:
+\begin{align*}
+\bra\langle {T}\rangle&=\bra\langle {V_{Osz}}\rangle &\bra\langle {T}\rangle&=-\frac{1}{2}\bra\langle {V_{Coul}}\rangle
+\end{align*}
+\end{document}

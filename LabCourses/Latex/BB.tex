@@ -1,0 +1,171 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+
+\begin{document}
+
+\title{\textsc{Brown}sche Bewegung}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Aufgabenstellung}
+In diesem Versuch sollen der Diffusionskoeffizient eines Kügelchen-Flüssigkeit-Gemisches sowie der Radius der Kügelchen bestimmt werden. Zudem ist nachzuweisen, dass der Diffusionskoeffizient über verschiedene Zeitintervalle konstant ist. 
+\section{Theorie}
+Man kann mit Hilfe der Theorie statistischer Schwankungen zeigen, dass der Diffusionkoeffizient $D$ bei unveränderter Temperatur konstant ist und gegeben ist durch:
+\begin{align*}
+D=\frac{\Delta x^2}{2\tau} \numberthis\label{D von tau}
+\end{align*}
+$D$ darf also nicht von der willkürlichen Wahl von $\tau$ abhängen. Hier soll für $n=3$ gezeigt werden, dass gilt:
+$$\frac{\Delta x_\tau^2}{\tau}=\dots =\frac{\Delta x_{n\tau}^2}{n\tau}$$
+Ich habe versucht die Herleitung aus dem Literaturhinweis [3] nachzuvollziehen. Die folgenden beiden Ausdrücke werde ich hier als gegeben annehmen, von dort ausgehend meine ich die Herleitung verstanden zu haben. Sei also $F$ die Kraft, $N$ die Teilchenzahl im Volumen $V$, $N_A$ die \textsc{Avogadro}-Konstante, $\nu=\frac{N}{V}$ die Teilchendichte, $R$ die allgemeine Gaskonstante, $U$ die innere Energie, $S$ die Entropie und $\delta U, \delta S$ die Variation dieser Größen. Dann gelten folgende Zusammenhänge, wobei in der zweiten Gleichung partiell integriert wurde (Randterme entfallen, da die Variation dort verschwindet):
+\begin{align*}
+\delta U&=-\intx\int_{0}^{l}F\nu \delta x\,\mathrm{d}x \numberthis\label{delta U} \\
+\delta S&=\intx\int_{0}^{l}\frac{R}{N_A}\nu\partial_x(\delta x)\,\mathrm{d}x=-\frac{R}{N_A}\intx\int_{0}^{l}\partial_x(\nu)\delta x\,\mathrm{d}x \numberthis\label{delta S}
+\end{align*}
+Es gilt für die freie Energie $A$ der Zusammenhang $A=U-T\cdot S$. Die Variation der freien Energie soll verschwinden, was unter Verwendung von (\ref{delta U}) und (\ref{delta S}) auf folgende Gleichung führt:
+\begin{align*}
+0&\overset{!}{=}\delta A=\delta U-T\delta S=\intx\int_{0}^{l}\klam\left[ {\frac{RT}{N_A}\partial_x\nu-F\nu} \right]\delta x\,\mathrm{d}x\overset{\delta x\ \mathrm{bel.}}{\ \ \Rightarrow\ \ }\partial_x\nu=\frac{FN_A}{RT}\nu\numberthis\label{dx nu von nu}
+\end{align*}
+Mit dem Radius $r$ der kugelförmigen Teilchen, der Boltzmannkonstanten $k$, der Temperatur $T$ und der Viskosität $\eta$ erteilt die Kraft $F$ nach \textsc{Stokes} einzelnen Teilchen die Geschwindigkeit:
+\begin{align*}
+v=\frac{F}{6\pi\eta r}
+\end{align*} 
+Man kann dann eine Stromdichte $j:=\nu\cdot v$ definieren, die die Anzahl an Teilchen pro Zeiteinheit beschreibt, die durch eine Querschnittsfläche treten. Aus der Definition des Diffusionkoeffizienten leitet sich auch eine durch $D$ bedingte Teilchenstromdichte $j_D:=-D\partial_x\nu$ ab. Unter der Bedingung eines dynamischen Gleichgewichtes folgt dann:
+\begin{align*}
+0&\overset{!}{=}j+j_D=\frac{\nu F}{6\pi\eta r}-D\partial_x \nu\overset{(\ref{dx nu von nu})}{=}\frac{\nu F}{6\pi\eta r}-D\frac{FN_A}{RT}\nu
+\end{align*}
+Der Diffusionkoeffizient lautet also unter Verwendung von $R=kN_A$:
+\begin{align*}
+D=\frac{kT}{6\pi\eta r}\numberthis\label{D von r}
+\end{align*} 
+\section{Messung}
+\subsection{Hauptversuch}
+Die Temperatur in meinem Zimmer beträgt $T=20,5\,\degree$C. Die Anzeige ist allerdings nicht besonders genau. Da die Temperaturmessung für den virtuellen Versuch ohnehin nicht wirklich relevant ist, werde ich einfach die in der Anleitung gegebene Unsicherheit von $\Delta T=0,2\,$K verwenden (noch durch $\sqrt{3}$ teilen). \\
+Es sollen jeweils die Messwerte für die $x$- und $y$-Richtung zusammengefasst werden, d.h. für $n=1,2,3$:
+$$\frac{\Delta x_{n}^2}{n\tau}=\sum_i \frac{(x_{i+n}-x_i)^2+(y_{i+n}-y_i)^2}{t_{i+n}-t_i}=:\sum_i\frac{\Delta x_{n,i}^2+\Delta y_{n,i}^2}{\tau_{n,i}}$$
+Dieser Wert soll nun für 10 verschieden Teilchen und mindestens 20 Positionen berechnet werden (verwendet wurden 31). Für die statistische Abweichung der Mittelwerte wurde folgende Formel verwendet, wobei $N=30, 29, 28$ für $n=1,2,3$ gilt:
+$$\Delta\frac{\Delta x_n^2}{\tau_{n,i}}=\sqrt{\frac{1}{N}\frac{1}{N-1}\sum_i\kla\left( {\frac{\Delta x_n^2}{n\tau}-\frac{\Delta x_{n,i}^2+\Delta y_{n,i}^2}{\tau_{n,i}}} \right)^2}$$
+Für die systematischen Unsicherheiten folgt mit den Angaben aus der Anleitung für $\Delta x=0,01\cdot x$ und $\Delta t=0,025\,$s und unter Berücksichtigung der Korrelation von $x$ und $y$:
+\begin{align*}
+\Delta\frac{\Delta x_n^2}{n\tau}&=\sqrt{\sum_i\kla\left(\bigg\vert  {\frac{2\Delta x_{n,i}\cdot 0,01\,\Delta x_{n,i}}{\tau_{n,i}}\bigg\vert +\bigg\vert}\frac{2\Delta y_{n,i}\cdot 0,01\,\Delta y_{n,i}}{\tau_{n,i}}\bigg\vert \right)^2+\kla\left( {\frac{\Delta x_{n,i}^2+\Delta y_{n,i}^2}{\tau_{n,i}^2}\cdot\Delta t} \right)^2}
+\end{align*}
+Mir ist nicht klar in welcher Form ich die Rohdaten mit in das Protokoll einbinden soll (immerhin fast 1000 Werte), deshalb beschränke ich mich hier auf die Angabe der jeweiligen Ergebnisse. Setze für $n=1,2,3$ als Abkürzung $f_n:=\frac{\Delta x_n^2}{n\tau}$. Die $D_i$ ergeben sich jeweils als Mittelwert der Summe über $f_n/2$. Die (hier triviale) Fehlerfortpflanzung ergibt dann die jeweiligen Unsicherheiten:
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c|c|c|c|c}
+$N$&$n$&$f_n\,/\,\frac{\mathrm{\mu m}^2}{\mathrm{s}}$&$\Delta f^{sys}\,/\,\frac{\mathrm{\mu m}^2}{\mathrm{s}}$&$\Delta f^{stat}\,/\,\frac{\mathrm{\mu m}^2}{\mathrm{s}}$&$D\,/\,\frac{\mathrm{\mu m}^2}{\mathrm{s}}$&$\Delta D^{sys}\,/\,\frac{\mathrm{\mu m}^2}{\mathrm{s}}$&$\Delta D^{stat}\,/\,\frac{\mathrm{\mu m}^2}{\mathrm{s}}$ \\ \hline
+ &1 &3,208 &0,322 &0,637 & & & \\ 
+0 &2 &3,792 &0,365 &0,73 &1,899 &0,181 &0,362 \\ 
+ &3 &4,393 &0,401 &0,804 & & & \\ \hline
+ &1 &2,545 &0,259 &0,52 & & & \\ 
+1 &2 &2,736 &0,251 &0,477 &1,366 &0,127 &0,243 \\ 
+ &3 &2,913 &0,25 &0,461 & & & \\ \hline
+  &1 &3,004 &0,324 &0,679  & & &\\ 
+2 &2 &2,807 &0,268 &0,532 &1,412 &0,141 &0,292 \\ 
+ &3 &2,663 &0,256 &0,541 & & & \\ \hline
+  &1 &3,406 &0,328 &0,623 & & & \\ 
+3 &2 &4,038 &0,369 &0,701 &1,991 &0,185 &0,358 \\ 
+ &3 &4,5 &0,411 &0,823 & & & \\ \hline
+  &1 &3,481 &0,353 &0,707 & & & \\ 
+4 &2 &3,482 &0,347 &0,716 &1,723 &0,166 &0,329 \\ 
+ &3 &3,378 &0,293 &0,553 & & & \\ \hline
+  &1 &2,768 &0,34 &0,764 & & & \\ 
+5 &2 &1,928 &0,202 &0,434 &1,08 &0,12 &0,264 \\ 
+ &3 &1,785 &0,177 &0,388 & & & \\ \hline
+  &1 &2,881 &0,287 &0,563 & & &\\ 
+6 &2 &2,992 &0,313 &0,674 &1,426 &0,142 &0,291 \\ 
+ &3 &2,684&0,25 &0,509 & & & \\ \hline
+  &1 &3,291 &0,296 &0,519 & & &\\ 
+7 &2 &3,698 &0,291 &0,423 &1,788 &0,147 &0,233 \\ 
+ &3 &3,737 &0,293 &0,456 & & & \\ \hline
+  &1 &4,695 &0,465 &0,91 & & &\\ 
+8 &2 &4,503 &0,463 &0,981 &2,152 &0,208 &0,416 \\ 
+ &3 &3,715 &0,322 & 0,605& & & \\ \hline
+  &1 &3,31 &0,295 &0,512 & & & \\ 
+9 &2 &3,523 &0,318 &0,593 &1,691 &0,148 &0,265 \\ 
+ &3 &3,31 &0,276 &0,487 & & & \\
+\end{tabular}
+\end{table}\\
+Es zeigt sich, dass die Messwerte für $n=1,2,3$ bei 6 Teilchen nah genug aneinander sind, dass sie noch in den Unsicherheitsintervallen der jeweils anderen liegen. Aus statistischer Sicht ist die Unabhängigkeit von der Zeitskala also bei 60\% der Teilchen gegeben: \\
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=1]{Statistische_Uebereinstimmung.png}
+\caption{$f_n$ als blaue X mit $\Delta f_n^{stat}$ Fehlerbalken für 10 Teilchen ($x$-Achse $\equiv$ Teilchenindex)}
+\end{figure}\\ \\ \\ \\ \\ \\ \\ \\ \\
+
+\subsection{Langzeitmessung}
+Die Langzeitmessung ergab:
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c|c}
+$\Delta x / $um& -7&-6&-5&-4&-3&-2&-1&0&1&2&3&4&5 \\ \hline
+$N$ & 1&9&10&18&30&68&63&63&49&41&26&10&8
+\end{tabular}
+\end{table}\\
+Es handelt sich also um eine Normalverteilung, auch wenn interessanterweise trotz einer Messzeit von 20 Minuten ein leichter "Linksdrall" zu erkennen ist:
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.8]{Langzeitmessung.png}
+\caption{Häufigkeit der $x$-Verschiebungen $-$ Histogramm der Langzeitmessung}
+\end{figure}\\ \\
+\section{Auswertung}
+Setze $p_i:=\frac{1}{\sigma_i^2}$ und $p:=\sum_i p_i$. Dann gilt gemäß Platzanleitung für das gewichtete Mittel des Diffusionskoeffizienten:
+$$D=\frac{1}{p}\sum_i p_i\cdot D_i=\underline{1,589\,\frac{\mathrm{\mu m}^2}{\mathrm{s}}}$$
+Für die statistische Unsicherheit wird gemäß Anleitung eine etwas umfangreichere Betrachtung gemacht. Für die innere und äußere Konsistenz gilt:
+\begin{align*}
+\Delta D^{int}&=\frac{1}{\sqrt{p}}=\underline{0,092\,\frac{\mathrm{\mu m}^2}{\mathrm{s}}} \\
+\Delta D^{ext}&=\sqrt{\frac{1}{N-1}\frac{1}{p}\sum_i p_i\cdot \kla\left( {D-D_i} \right)^2}=\underline{0,321\,\frac{\mathrm{\mu m}^2}{\mathrm{s}}}
+\end{align*}
+Der Wert von $\Delta D^{ext}$ wird dabei fast ausschließlich von den Teilchen 5 und 8 bestimmt, deren Mittelwerte um über 40\% abweichen. Hier ergibt sich für $Z$ ein viel zu großer Wert:
+\begin{align*}
+Z:=\frac{\Delta D^{ext}}{\Delta D^{int}}=3,49\gg 1\pm\frac{1}{\sqrt{2(N-1)}}=1\pm 0,236
+\end{align*} 
+Führt man die Betrachtung noch einmal nur unter Betrachtung der anderen 8 Teilchen durch erhält man:
+\begin{align*}
+D&=\underline{1,883\,\frac{\mathrm{\mu m}^2}{\mathrm{s}}}\\
+\Delta D^{int}&=\underline{0,101\,\frac{\mathrm{\mu m}^2}{\mathrm{s}}}\\
+\Delta D^{ext}&=\underline{0,125\,\frac{\mathrm{\mu m}^2}{\mathrm{s}}}
+\end{align*}
+Hier liegt $Z$ dann gerade noch im Intervall:
+$$Z=1,231\in [1-0,267,\ 1+0,267]$$
+Man wählt als statistische Unsicherheit den größeren der beiden Werte, hier also:
+$$\Delta D^{stat}=\mathrm{max}\klammer\left\{ {\Delta D^{int},\,\Delta D^{ext}} \right\}=\underline{0,125\,\frac{\mathrm{\mu m}^2}{\mathrm{s}}}$$
+Die Berechnung des mittleren Teilchenradius erfolgt mit Hilfe der hergeleiteten Formel. Die Anleitung gibt einen Wert von $\eta = 1,00\,$mPa\,s vor. Aus Gründen auf die ich in der Diskussion näher eingehen möchte, wird hier mit den Werten gerechnet, die sich aus der Betrachtung der 8 von 10 Teilchen ergeben:
+\begin{align*}
+r=\frac{kT}{6\pi\eta D}=\underline{114,225\,\mathrm{nm}}
+\end{align*}
+Die Unsicherheiten berechnen sich wieder mit der Fehlerfortpflanzung:
+\begin{align*}
+\Delta r&=r\sqrt{\kla\left( {\frac{\Delta T}{T}} \right)^2+\kla\left( {\frac{\Delta \eta}{\eta}} \right)^2+\kla\left( {\frac{\Delta D}{D}} \right)^2}
+\end{align*}
+Der Anleitung entnimmt man zudem die systematischen Unsicherheiten von Temperatur und Viskosität, $\Delta T=0,2\,$K und $\Delta \eta=0,05\,$mPa\,s. Man wählt im Sinne einer Abschätzung das Maximum der systematischen Unsicherheiten der Diffusionskoeffizienten, hier also $\Delta D^{sys}_{max}=0,208\,\frac{\mathrm{\mu m}^2}{\mathrm{s}}$:
+\begin{align*}
+\Delta r^{sys}&=\underline{13,041\,\mathrm{nm}}\\
+\Delta r^{stat}&=\underline{7,583\,\mathrm{nm}}
+\end{align*}
+\section{Diskussion}
+Vernachlässigt man die Teilchen 5 und 8, so liegen ist der Diffusionskoeffizient bei 75\% der Teilchen aus statistischer Sicht unabhängig von der Wahl des Zeitintervalls. Da im Praktikum immer mit  $1\sigma$ Genauigkeit gerechnet wird, gilt die Hypothese als bestätigt.\\
+Mir ist nicht ganz klar, wie ich aus dem Langzeithistogramm den Diffusionkoeffizienten "ablesen" soll, deshalb hier in der Diskussion mein "best-guess". Aufgrund meiner Behauptung, dass es sich um eine Normalverteilung handelt, könnte man den Wert für $D$ nehmen, der sich ergibt (Einheiten passen dann noch nicht), wenn man die Breite des Intervalls in dem etwa 68\% der Punkte liegen betrachtet. Nimmt man die mittleren 5 Teilintervalle kommt man auf $\frac{284}{396}$, also etwa 72\%. Man könnte also als Abschätzung $D\approx 1,9\,\frac{\mathrm{\mu m}^2}{\mathrm{s}}$ wählen. \\ \\
+Das Ergebnis der Auswertung unter Vernachlässigung der Teilchen 5 und 8 lautet:
+$$D=\underline{\kla\left( {1,88\pm 0,21\pm 0,13} \right)\,\frac{\mathrm{\mu m}^2}{\mathrm{s}}}$$
+und stimmt gut mit der Langzeitmessung überein (angenommen das Ergebnis dort geht in die richtige Richtung). Da die Abweichungen der ausgelassenen Teilchen statistisch nicht ansatzweise erklärbar sind, liegt der Schluss nahe diese als fehlerhafte Messungen zu betrachten und daher nicht weiter in der Auswertung zu berücksichtigen. Dann liefert einem der $Z$-Test mit einem Vertrauensniveau von 68\%, dass es keine unberücksichtigen systematischen Abweichungen gibt.\\ \\
+Der mittlere Teilchenradius ergibt sich zu:
+$$r=\underline{\kla\left( {11,4\pm 1,3\pm 0,8} \right)\cdot 10^{-8}\,\mathrm{m}}$$ \\
+Anmerkung: Ich habe eine Bestätigung / Bestanden-Stempel für den Versuch der ersten und dritten Woche, nicht aber der zweiten bekommen. Wäre es möglich eine Rückmeldung (z.B. per Mail) dafür zu bekommen, was dazu geführt hat?
+\end{document}

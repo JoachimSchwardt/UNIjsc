@@ -1,0 +1,169 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\def\I{\text{i}}
+
+\newcommand*{\titel}{02 Lorentz group}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+\subject{Quantum theory 2}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Questions}
+Three rotation generators and three boost generators.\\
+Let $x'^\mu=x^\mu +\omega^\mu_{\ \nu}x^\nu$ with $\omega^{\mu\nu}=-\omega^{\nu\mu}$. Then the scalar product is invariant:
+\begin{align*}
+x'^\mu x'_\mu&=x'^\mu g_{\mu\nu}x'^\nu=x^\mu g_{\mu\nu}x^\nu +\omega^\mu_{\ \rho}x^\rho g_{\mu\nu} x^\nu + x^\mu g_{\mu\nu}\omega^\nu_{\ \lambda}x^\lambda +\mathcal{O}(\omega^2)=\\
+&=x^\mu x_\mu+x^\mu \kla\left( {\omega_{\nu\mu}+\omega_{\mu\nu}} \right)x^\nu +\mathcal{O}(\omega^2)\simeq x^\mu x_\mu 
+\end{align*}
+Left handed and right handed 2-spinors have different generators and lead to problems with defining the parity operator. Need Dirac 4-spinor to define this.\\
+Let $\psi,\chi$ be Dirac spinors with $\overline{\psi}=\psi^\dagger\gamma^0$. Then their product is invariant.
+\section{Generators of the Lorentz group}
+We want to show that $\omega^\mu_{\ \nu}=-\frac{\I}{2}\omega^{\rho\sigma}(L_{\rho\sigma})^\mu_{\ \nu}$ for two specific cases.\\
+(a): Rotations around the $z$-axis with $\omega^{12}=-\omega^{21}=\epsilon$:
+\begin{align*}
+-\frac{\I}{2}\omega^{12}(L_{12})^\mu_{\ \nu}-\frac{\I}{2}\omega^{21}(L_{21})^\mu_{\ \nu}=-\I\epsilon (l_z)^\mu_{\ \nu}=\begin{pmatrix}
+0&0&0&0\\ 0&0&-\epsilon&0\\ 0&\epsilon&0&0\\ 0&0&0&0
+\end{pmatrix}=g_{\lambda\nu}\omega^{\mu\lambda}=\omega^\mu_{\ \nu}
+\end{align*}
+(b): Boosts along the $x$-axis with $\omega^{10}=-\omega^{01}=\beta$:
+\begin{align*}
+-\frac{\I}{2}\omega^{10}(L_{10})^\mu_{\ \nu}-\frac{\I}{2}\omega^{01}(L_{01})^\mu_{\ \nu}=-\I\beta (k_x)^\mu_{\ \nu}=\begin{pmatrix}
+0&\beta&0&0\\ \beta&0&0&0\\ 0&0&0&0\\ 0&0&0&0
+\end{pmatrix}=g_{\lambda\nu}\omega^{\mu\lambda}=\omega^\mu_{\ \nu}
+\end{align*}
+\section{Lorentz transformation of spinors}
+Let $\psi'=S(\Lambda)\psi$ with $S(\Lambda)=1-\frac{\I}{2}\omega^{\rho\sigma}S_{\rho\sigma}$. Then the following product is Lorentz invariant:
+\begin{align*}
+\overline{\psi}'\psi'&=(S\psi)^\dagger\gamma^0S\psi=\psi^\dagger S^\dagger\gamma^0S\psi=\overline{\psi}\psi
+\end{align*}
+For this, we need to show that $S^{-1}=\gamma^0S^\dagger\gamma^0$, or equivalently:
+\begin{align*}
+\gamma^0S^\dagger\gamma^0S&=\gamma^0\kla\left( {1+\frac{\I}{2}(\omega^{\rho\sigma})^\dagger S_{\rho\sigma}^\dagger} \right)\gamma^0S=\gamma^0\kla\left( {1+\frac{\I}{2}\omega^{\rho\sigma}\gamma^0S_{\rho\sigma}\gamma^0} \right)\gamma^0S=\\
+&=\kla\left( {1+\frac{\I}{2}\omega^{\rho\sigma}S_{\rho\sigma}} \right)\kla\left( {1-\frac{\I}{2}\omega^{\rho\sigma}S_{\rho\sigma}} \right)=1+\mathcal{O}(\omega^2)
+\end{align*}
+We can also proof the following equality for infinitesimal transformations using $\klam\left[ {A,BC} \right]=B\klammer\left\{{A,C} \right\}-\klammer\left\{{A,B} \right\}C$:
+\begin{align*}
+S^{-1}\gamma^\mu S&=\kla\left( {1+\frac{\I}{2}\omega^{\rho\sigma}S_{\rho\sigma}} \right)\gamma^\mu\kla\left( {1-\frac{\I}{2}\omega^{\rho\sigma}S_{\rho\sigma}} \right)=\gamma^\mu +\frac{\I}{2}\omega_{\rho\sigma}S^{\rho\sigma}\gamma^\mu - \gamma^\mu \frac{\I}{2}\omega_{\rho\sigma}S^{\rho\sigma}=\\
+&=\gamma^\mu -\frac{\omega_{\rho\sigma}}{8}\klam\left[ {\gamma^\mu, \klam\left[ {\gamma^\rho,\gamma^\sigma} \right]} \right]=\\
+&=\gamma^\mu -\frac{\omega_{\rho\sigma}}{8}\kla\left( {\gamma^\rho\klammer\left\{{\gamma^\mu,\gamma^\sigma} \right\}-\klammer\left\{{\gamma^\mu,\gamma^\rho} \right\}\gamma^\sigma - \gamma^\sigma\klammer\left\{{\gamma^\mu,\gamma^\rho} \right\}+\klammer\left\{{\gamma^\mu,\gamma^\sigma} \right\}\gamma^\rho} \right)=\\
+&=\gamma^\mu + \frac{\omega_{\rho\sigma}}{8}\cdot 4\gamma^\sigma\klammer\left\{{\gamma^\mu,\gamma^\rho} \right\}=\gamma^\mu +\omega_{\rho\sigma}\gamma^\sigma g^{\mu\rho}=\Lambda^\mu_{\ \nu}\gamma^\nu
+\end{align*}
+The quantity $\overline{\psi}\gamma^\mu\psi$ transforms as a 4-vector:
+\begin{align*}
+\overline{\psi}'\gamma^\mu\psi'&=\overline{\psi}S^{-1}\gamma^\mu S\psi=\overline{\psi}\Lambda^\mu_{\ \nu}\gamma^\nu\psi=\Lambda^\mu_{\ \nu}\overline{\psi}\gamma^\nu\psi
+\end{align*}
+\section{Commutator of Lorentz group operators}
+Let $S_z=S_{12}$, $K_x=S_{10}$ and $K_y=S_{20}$. With the relation
+\begin{align*}
+S_{\mu\nu}=\frac{\I}{4}\klam\left[ {\gamma_\mu,\gamma_\nu} \right]=\frac{\I}{4}\klammer\left\{{\gamma_\mu,\gamma_\nu} \right\}-\frac{\I}{2}\gamma_\mu\gamma_\nu=\frac{\I}{2}\kla\left( {g_{\mu\nu}-\gamma_\nu\gamma_\mu} \right)\kom\overset{\substack{{\mu\neq\nu} \\ |}}{=}\frac{\I}{2}\gamma_\mu\gamma_\nu
+\end{align*}
+we can then compute the commutator 
+\begin{align*}
+\klam\left[ {S_z,K_x} \right]&=-\frac{1}{4}\klam\left[ {\gamma_2\gamma_1,\gamma_0\gamma_1} \right]=-\frac{1}{4}\klam\left[ {\gamma_2,\gamma_0\gamma_1} \right]\gamma_1-\frac{1}{4}\gamma_2\klam\left[ {\gamma_1,\gamma_0\gamma_1} \right]=\\
+&=\I\gamma_0S_{12}\gamma_1+\I K_y+\I\gamma_2S_{10}\gamma_1=\I K_y+\frac{1}{2}\gamma_0\gamma_1\gamma_2\gamma_1+\frac{1}{2}\gamma_2\gamma_1\gamma_0\gamma_1=\\
+&=\I K_y +\frac{1}{2}\begin{pmatrix}
+-\sigma^1&0 \\ 0&\sigma^1
+\end{pmatrix}\begin{pmatrix}
+\I\sigma^3&0 \\ 0&\I\sigma^3
+\end{pmatrix}+\frac{1}{2}\begin{pmatrix}
+\I\sigma^3&0 \\ 0&\I\sigma^3
+\end{pmatrix}\begin{pmatrix}
+-\sigma^1&0 \\ 0&\sigma^1
+\end{pmatrix}=\I K_y
+\end{align*}
+or, do the same in explicit matrix formulation. The latter  turns out to be more elegant.
+\section{Commutators of the Dirac Hamiltonian with angular momenta}
+The Dirac equation is $(\I\gamma^\mu\partial_\mu-m)\psi=0$. Multiplying by $\gamma^0$ yields
+\begin{align*}
+0&=(\I\partial_0+\I\gamma^0\gamma^j\partial_j-\gamma^0m)\psi\\
+\Rightarrow\ \ \ \I\partial_t\psi&=\begin{pmatrix}
+I_2m&-\I\sigma^j\partial_j \\ -\I\sigma^j\partial_j & -I_2m
+\end{pmatrix}\psi=\begin{pmatrix}
+I_2m&\hat{\vec{\sigma}}\cdot\hat{\vec{p}} \\ \hat{\vec{\sigma}}\cdot\hat{\vec{p}} & -I_2m
+\end{pmatrix} =:H_\tecxt\text{D}\psi,
+\end{align*}
+where
+$$H_\tecxt\text{D}=\begin{pmatrix}
+m&0&-\I\partial_z&-\I\partial_x-\partial_y\\
+0&m&-\I\partial_x+\partial_y&\I\partial_z\\
+-\I\partial_z&-\I\partial_x-\partial_y&-m&0\\
+-\I\partial_x+\partial_y&\I\partial_z&0&-m
+\end{pmatrix}$$
+Let $S_{12}=\begin{pmatrix}
+\sigma^3&0\\ 0&\sigma^3
+\end{pmatrix} $ and $\hat{\vec{S}}=\begin{pmatrix}
+0&\hat{\vec{\sigma}} \\ \hat{\vec{\sigma}} & 0
+\end{pmatrix} $:
+\begin{align*}
+\klam\left[ {S_{12},H_\tecxt\text{D}} \right]&=\begin{pmatrix}
+\sigma^3&0\\ 0&\sigma^3
+\end{pmatrix}\begin{pmatrix}
+I_2m&\hat{\vec{\sigma}}\cdot\hat{\vec{p}} \\ \hat{\vec{\sigma}}\cdot\hat{\vec{p}} & -I_2m
+\end{pmatrix}-\begin{pmatrix}
+I_2m&\hat{\vec{\sigma}}\cdot\hat{\vec{p}} \\ \hat{\vec{\sigma}}\cdot\hat{\vec{p}} & -I_2m
+\end{pmatrix}\begin{pmatrix}
+\sigma^3&0\\ 0&\sigma^3
+\end{pmatrix}=\\
+&=\begin{pmatrix}
+0&\klam\left[ {\sigma^3,\sigma^j} \right]p^j \\ \klam\left[ {\sigma^3,\sigma^j} \right]p^j & 0
+\end{pmatrix}=\begin{pmatrix}
+0&\I\sigma^2p^1-\I\sigma^1p^2\\
+\I\sigma^2p^1-\I\sigma^1p^2&0
+\end{pmatrix}=\I (\hat{\vec{p}}\times\hat{\vec{S}})_3
+\end{align*}
+Let $L_{12}=\I(x_1\partial_2-x_2\partial_1)$. The only non-trivial entries of $\klam\left[ {L_{12},H_\tecxt\text{D}} \right]$ are FIXME:
+\begin{align*}
+\klam\left[ {L_{12},p_1\pm\I p_2} \right]&=\klam\left[ {\I x_1\partial_2,\I\partial_1} \right]\pm\klam\left[ {\I x_1\partial_2,\partial_2} \right]-\klam\left[ {\I x_2\partial_1,\I\partial_1} \right]\mp\klam\left[ {\I x_2\partial_1,\partial_2} \right]=\\
+&=-\partial_2\mp\I\partial_1\\
+\Rightarrow\ \ \ \klam\left[ {L_{12},H_\tecxt\text{D}} \right]&=\begin{pmatrix}
+0&0&0&-\partial_2-\I\partial_1\\
+0&0&-\partial_2+\I\partial_1&0\\
+0&-\partial_2-\I\partial_1&0&0\\
+-\partial_2+\I\partial_1&0&0&0
+\end{pmatrix}
+\end{align*}
+FIXME: I must have lost an i somewhere...\\
+As expected $\klam\left[ {J_{12},H_\tecxt\text{D}} \right]=0$ for $J_{12}=L_{12}+S_{12}$. Thus, the total angular momentum is a conserved quantity, whereas spin and orbital angular momentum are not necessarily time independent individually.
+\end{document}

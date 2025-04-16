@@ -1,0 +1,326 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[ngerman]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+%\pagestyle{scrheadings}  % Stil für die Seite setzen
+%\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+%\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{siunitx}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{04 Eigenwerte und Vektoriteration}
+\newcommand*{\autor}{Joachim Schwardt und Julian Fleck}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Numerik II - Aufgaben}
+\title{\titel}
+%\author{\autor}
+\author{\begin{tabular}{l|l}
+Joachim Schwardt & 4768711 \\ 
+Julian Fleck & 4759587\\ 
+\end{tabular}}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Aufgabe 1}
+Gegeben ist eine Tridiagonalmatrix $A\in\mathbb{R}^{n\times n}$ mit
+\begin{align}
+A_{ij} &= \begin{cases} a & \tecxt\text{für } i=j+1,\\
+b & \tecxt\text{für } i=j,\\
+c & \tecxt\text{für } i=j-1,\\
+0 & \tecxt\text{sonst}, \end{cases}
+\end{align}
+wobei $a,b,c\in\mathbb{R}$ und $ac > 0$.
+Die Eigenwerte seien $\lambda_k$ und die Eigenvektoren seien $v_k$ für $k=1,\dots,n$.
+Die Eigenwertgleichung lautet dann
+\begin{align}
+\begin{pmatrix}
+b & c & 0 & \dots \\
+a & b & c & \dots\\
+0 & a & b & \dots\\
+\vdots & \vdots & \vdots & \ddots
+\end{pmatrix} \begin{pmatrix}
+v_{k1} \\ v_{k2} \\ v_{k3} \\ \vdots
+\end{pmatrix} &= \begin{pmatrix}
+bv_{k1} + cv_{k2} \\ av_{k1} + bv_{k2} + cv_{k3} \\ av_{k2} + bv_{k3} + cv_{k4} \\ \vdots
+\end{pmatrix} = \lambda_k \begin{pmatrix}
+v_{k1} \\ v_{k2} \\ v_{k3} \\ \vdots
+\end{pmatrix}
+\end{align}
+Die erste Gleichung ergibt $v_{k1} = \frac{c}{\lambda_k - b} v_{k2}$.
+Einsetzen in die nächste Gleichung ergibt
+\begin{align}
+0 &= av_{k1} + (b-\lambda_k) v_{k2} + cv_{k3} = \frac{ac}{\lambda_k - b} v_{k2} - (\lambda_k - b) v_{k2} + cv_{k3},\\
+\Rightarrow\ \ \ v_{k2} &= \frac{c(b-\lambda_k)}{ac - (\lambda_k - b)^2} v_{k3}
+\end{align}
+Mit $j=2,\dots,n-1$ lauten die nächsten Gleichungen dann
+\begin{align}
+av_{k,j-1} + bv_{k,j} + cv_{k,j+1} &= \lambda_k v_{k,j},\\
+\Rightarrow\ \ \ v_{k,j+1} &= \frac{\lambda_k - b}{c} v_{k,j} - \frac{a}{c} v_{k,j-1}.
+\end{align}
+Hier ist es hilfreich zunächst allgemein die Iterationsvorschrift
+\begin{align}
+x_{j+1} &:= \beta x_j + \alpha x_{j-1}
+\end{align}
+zu betrachten.
+Wir führen eine weitere Variable $y_{j} := x_{j-1}$ und definieren $X_j := (x_j,y_j)^\top$.
+Dann lautet die Iteration
+\begin{align}
+X_{j+1} &= \underbrace{\begin{pmatrix}
+\beta & \alpha \\ 1 & 0
+\end{pmatrix}}_{=:\,C}  X_j
+\end{align}
+Das charakteristische Polynom ist $\chi_C(\mu) = \mu^2 - \beta\mu - \alpha$, die Eigenwerte lauten also $\mu_{1,2} = \frac{\beta}{2} \pm \sqrt{\frac{\beta^2}{4} + \alpha}$.
+Wir finden die Eigenvektoren $u_{1,2}$ über
+\begin{align}
+\beta u_{k,1} + \alpha u_{k,2} &= \mu_k u_{k,1},\\
+u_{k,1} &= \mu_k u_{k,2},
+\end{align}
+also $u_{k} = (\mu_k,1)^\top$.
+Die Transformationsmatrix lautet dann
+\begin{align}
+T &:= \begin{pmatrix}
+\mu_1 & \mu_2 \\ 1 & 1
+\end{pmatrix},
+\end{align}
+wobei $C = TDT^{-1}$ mit $D=\tecxt\text{diag\,}(\mu_1,\mu_2)$.
+Überprüfen:
+\begin{align}
+TDT^{-1} &= \begin{pmatrix}
+\mu_1 & \mu_2 \\ 1 & 1
+\end{pmatrix} \begin{pmatrix}
+\mu_1 & 0 \\ 0 & \mu_2
+\end{pmatrix} \frac{1}{\mu_1 - \mu_2} \begin{pmatrix}
+1 & -\mu_2 \\ -1 & \mu_1
+\end{pmatrix} = \\
+&= \frac{1}{\mu_2 - \mu_1} \begin{pmatrix}
+\mu_1 & \mu_2 \\ 1 & 1
+\end{pmatrix} \begin{pmatrix}
+\mu_1 & -\mu_1\mu_2 \\ -\mu_2 & \mu_1\mu_2
+\end{pmatrix} = \\
+&= \frac{1}{\mu_1 - \mu_2} \begin{pmatrix}
+\mu_1^2 - \mu_2^2 & \mu_1\mu_2(\mu_2 - \mu_1) \\
+\mu_1 - \mu_2 & 0
+\end{pmatrix} = \begin{pmatrix}
+\mu_1 + \mu_2 & -\mu_1\mu_2 \\ 1 & 0
+\end{pmatrix} = C.
+\end{align}
+Damit können wir die Lösung explizit angeben.
+Für $x_0=0$ ergibt sich
+%\begin{align}
+%X_{j} &= C^{j-2} X_2 = TD^jT^{-1} X_1 = T\begin{pmatrix}
+%\mu_1^{j-2} & 0 \\ 0 & \mu_2^{j-2}
+%\end{pmatrix} T^{-1} \begin{pmatrix}
+%x_2 \\ x_1
+%\end{pmatrix} = \\
+%&= \begin{pmatrix}
+%\mu_1 & \mu_2 \\ 1 & 1
+%\end{pmatrix} \begin{pmatrix}
+%\mu_1^{j-2} & 0 \\ 0 & \mu_2^{j-2}
+%\end{pmatrix} \frac{1}{\mu_1 - \mu_2} \begin{pmatrix}
+%1 & -\mu_2 \\ -1 & \mu_1
+%\end{pmatrix} \begin{pmatrix}
+%x_2 \\ x_1
+%\end{pmatrix} = \\
+%&= \frac{1}{\mu_1 - \mu_2} \begin{pmatrix}
+%\mu_1 & \mu_2 \\ 1 & 1
+%\end{pmatrix} \begin{pmatrix}
+%\mu_1^{j-2} (x_2 - \mu_2 x_1) \\ -\mu_2^{j-2} (x_2 - \mu_1 x_1)
+%\end{pmatrix} = \\
+%&= \frac{1}{\mu_1 - \mu_2} \begin{pmatrix}
+%(\mu_1^{j-1} - \mu_2^{j-1})x_2 - \mu_1^{j-1} \mu_2x_1 + \mu_2^{j-1} \mu_1x_1 \\
+%(\mu_1^{j-2} - \mu_2^{j-2}) x_2 - \mu_1^{j-2}\mu_2 x_1 + \mu_2^{j-2}\mu_1 x_1)
+%\end{pmatrix}
+%\end{align}
+\begin{align}
+X_{j} &= C^{j-1} X_1 = TD^{j-1}T^{-1} X_1 = T\begin{pmatrix}
+\mu_1^{j-1} & 0 \\ 0 & \mu_2^{j-1}
+\end{pmatrix} T^{-1} \begin{pmatrix}
+x_1 \\ x_0
+\end{pmatrix} = \\
+&= \begin{pmatrix}
+\mu_1 & \mu_2 \\ 1 & 1
+\end{pmatrix} \begin{pmatrix}
+\mu_1^{j-1} & 0 \\ 0 & \mu_2^{j-1}
+\end{pmatrix} \frac{1}{\mu_1 - \mu_2} \begin{pmatrix}
+1 & -\mu_2 \\ -1 & \mu_1
+\end{pmatrix} \begin{pmatrix}
+x_1 \\ 0
+\end{pmatrix} = \\
+&= \frac{1}{\mu_1 - \mu_2} \begin{pmatrix}
+\mu_1 & \mu_2 \\ 1 & 1
+\end{pmatrix} \begin{pmatrix}
+\mu_1^{j-1} x_1 \\ -\mu_2^{j-1} x_1
+\end{pmatrix} = \\
+&= \frac{1}{\mu_1 - \mu_2} \begin{pmatrix}
+(\mu_1^j - \mu_2^j)x_1 \\ (\mu_1^{j-1} - \mu_2^{j-1})x_1
+\end{pmatrix},
+\end{align}
+also insbesondere
+\begin{align}
+x_j &= \frac{\mu_1^j - \mu_2^j}{\mu_1 - \mu_2}x_1 = \sum_{k=0}^{j-1} \mu_2^k \mu_1^{j-k-1} x_1
+\end{align}
+Da die Eigenvektoren nur $n$ Einträge haben, fordern wir hier insbesondere noch $x_{n+1} = 0$.
+Daraus folgt die Bedingung
+\begin{align}
+\mu_1^{n+1} &= \mu_2^{n+1}.
+\end{align}
+Da insbesondere $\mu_1 \neq \mu_2$, muss also $\mu_{1,2}\in\mathbb{C}$ gelten.
+Wir schreiben daher $\mu_k = |\mu_k|\e^{\i\phi_k}$.
+Dann ist die Bedingung äquivalent zu $|\mu_1| = |\mu_2|$ und $(n+1)\phi_1 \equiv (n+1)\phi_2\,\tecxt\text{mod}\,2\pi$.
+Das ist nur möglich, wenn $\mu_{1,2} = R \pm \i I$ mit $R,I\in\mathbb{R}$ ist, also hier
+\begin{align}
+\mu_{1,2} &= \frac{\beta}{2} \pm \i\sqrt{-\alpha - \frac{\beta^2}{4}} \equiv R + \i I.
+\end{align}
+Betrag und Phase sind dann
+\begin{align}
+|\mu_{1,2}| &= \sqrt{-\alpha},\\
+\phi_{1,2} &= \pm \arctan\kla\left( \frac{\sqrt{-\alpha - \frac{\beta^2}{4}}}{\frac{\beta}{2}} \right).
+\end{align}
+Eine mögliche Lösung der ``Phasengleichung'' wäre dann
+\begin{align}
+(n+1)\phi_{1,2} &= \pm k\pi,\\
+\Rightarrow\ \ \ \frac{\sqrt{-\alpha - \frac{\beta^2}{4}}}{\frac{\beta}{2}} &= \tan\kla\left( \frac{k\pi}{n+1} \right),\\
+\Rightarrow\ \ \ \beta &= 2\sqrt{-\alpha} \cos\kla\left( \frac{k\pi}{n+1} \right).
+\end{align}
+%Wir finden auf dem selben Weg auch eine einfachere Darstellung für die Phasen $\cos\phi_{1,2} = \frac{\beta}{2\sqrt{-\alpha}}$.
+%\\
+In unserem Fall ist $\beta = \frac{\lambda_k - b}{c}$ und $\alpha = -\frac{a}{c}$.
+Die Eigenwerte sind also
+\begin{align}
+\lambda_k &= b + 2c\sqrt{\frac{a}{c}} \cos\kla\left( \frac{k\pi}{n+1} \right) = b + 2\tecxt\text{sgn\,}(c) \sqrt{ac} \cos\kla\left( \frac{k\pi}{n+1} \right),
+\end{align}
+wobei noch $\tecxt\text{sgn\,}(c) = \tecxt\text{sgn\,}(a)$ aus $ac > 0$ folgt.
+Die Eigenwerte von $C$ lauten dann
+\begin{align}
+\mu_{1,2} &= \sqrt{\frac{a}{c}} \exp\kla\left( \i \phi_{1,2} \right) =  \sqrt{\frac{a}{c}} \exp\kla\left( \pm\i \frac{k\pi}{n+1} \right) .
+\end{align}
+Die Komponenten der Eigenvektoren ergeben sich dann zu
+\begin{align}
+v_{k,j} &= \frac{\mu_1^j - \mu_2^j}{\mu_1 - \mu_2} = \frac{\sqrt{\frac{a}{c}}^j}{\sqrt{\frac{a}{c}}} \frac{\e^{\i \frac{k\pi}{n+1} j} - \e^{-\i \frac{k\pi}{n+1} j}}{\e^{\i \frac{k\pi}{n+1} } - \e^{-\i \frac{k\pi}{n+1} }} x_1 = \\
+&= \kla\left( \frac{a}{c} \right)^{\frac{j-1}{2}} \sin\kla\left( \frac{k\pi }{n+1}j \right) \frac{x_1}{\sin\kla\left( \frac{k\pi}{n+1} \right)} \equiv \kla\left( \frac{a}{c} \right)^{\frac{j-1}{2}} \sin\kla\left( \frac{k\pi}{n+1}j \right),
+\end{align}
+wobei wir $x_1 := \sin\kla\left( \frac{k\pi}{n+1} \right)$ definiert haben.
+\\
+Sei $b=2$ und $a=c=-1$.
+Dann lauten die Eigenwerte
+\begin{align}
+\lambda_k &= 2 - 2\cos\kla\left( \frac{k\pi}{n+1} \right) = 4\sin^2\kla\left( \frac{k\pi}{2(n+1)} \right).
+\end{align}
+Die Kondition kann hier über das Verhältnis der Eigenwerte berechnet werden, also
+%\begin{align}
+%\kappa &= \frac{\max_k \lambda_k}{\min_k \lambda_k} = \frac{4\sin^2\kla\left( \frac{n\pi}{2(n+1)} \right)}{4\sin^2\kla\left( \frac{\pi}{2(n+1)} \right)} = \kla\left\vert \frac{\e^{\i \frac{n\pi}{2(n+1)}} - \e^{-\i \frac{n\pi}{2(n+1)}}}{\e^{\i \frac{\pi}{2(n+1)}} - \e^{-\i \frac{\pi}{2(n+1)}}} \right\vert^2 = \\
+%&= \left\vert \frac{1 - \e^{-\i\frac{n\pi}{n+1}}}{1 - \e^{-\i\frac{\pi}{n+1}}} \right\vert^2 = \left\vert \sum_{k=0}^{n-1} \e^{-\i \frac{k\pi}{n+1}} \right\vert^2 = \\
+%&= \left\vert \sum_{k=0}^{n} \e^{-\i \frac{k\pi}{n+1}} - \e^{-\i \frac{n\pi}{n+1}}\right\vert^2 = \left\vert \frac{2}{1 - \e^{-\i\frac{\pi}{n+1}}} - \e^{-\i \frac{n\pi}{n+1}} \right\vert^2 
+%\end{align}
+\begin{align}
+\kappa &= \frac{\max_k \lambda_k}{\min_k \lambda_k} = \frac{4\sin^2\kla\left( \frac{n\pi}{2(n+1)} \right)}{4\sin^2\kla\left( \frac{\pi}{2(n+1)} \right)} = \\
+&= \frac{\sin^2\kla\left( \frac{\pi}{2} - \frac{\pi}{2} \frac{1}{n+1} \right)}{\sin^2\kla\left( \frac{\pi}{2} \frac{1}{n+1} \right)} = \frac{1}{\tan^2\kla\left( \frac{\pi}{2} \frac{1}{n+1} \right)} \approx \frac{4(n+1)^2}{\pi^2}.
+\end{align}
+Für $n=9^2$ ist $\kappa \approx \SI{2.72e3}{}$ und für $n=99^2$ ist $\kappa \approx \SI{3.89e7}{}$.
+
+\section*{Aufgabe 2}
+Sei $A\in\mathbb{R}^{n\times n}$ mit den Eigenwerten $|\lambda_1|>|\lambda_2|\ge |\lambda_3|\ge \dots\ge |\lambda_n|$ gegeben.
+Sei $v_1$ der Eigenvektor zum einfachen Eigenwert $\lambda_1$.
+Außerdem sei $x^0\in\mathbb{R}$ mit $\brak\langle x^0 | v_1 \rangle \neq 0$.
+Die Vektoriteration erzeugt Folgen $\kla\left( x^{(j)} \right)_{j\in\mathbb{N}}$ und $\kla\left( \lambda^{(j)} \right)_{j\in\mathbb{N}}$ mit
+\begin{align}
+x^{(j)} &:= A^j x^0, \quad \lambda^{(j)} &:= \frac{\braket\langle x^{(j)} | A | x^{(j)} \rangle}{\brak\langle x^{(j)} | x^{(j)} \rangle},
+\end{align}
+die gegen $v_1$ bzw. $\lambda_1$ konvergieren.
+Sei $A$ zusätzlich symmetrisch.
+Dann sind die Eigenvektoren orthonormal, also $\brak\langle v_j | v_k \rangle = \delta_{jk}$.
+Wir entwickeln den Startvektor in dieser Basis mit den Koeffizienten $c_j := \brak\langle v_j | x^0 \rangle$, wobei nach Voraussetzung $c_1\neq 0$.
+Dann gilt
+\begin{align}
+x^0 &= \sum_{k=1}^n c_kv_k,\\
+x^{(j)} &= A^jx^0 = \sum_{k=1}^n c_k\lambda_k^j v_k.
+\end{align}
+Damit gilt für die Eigenwerte
+\begin{align}
+\lambda^{(j)} &= \frac{\braket\langle \sum_{k=1}^n c_k\lambda_k^jv_k | A | \sum_{l=1}^n c_l\lambda_l^jv_l \rangle}{\brak\langle \sum_{k=1}^n c_k\lambda_k^jv_k  | \sum_{l=1}^n c_l\lambda_l^{j}v_k \rangle} \kom\overset{\substack{{\brak\langle v_k | v_l \rangle\,=\,\delta_{kl}} \\ |}}{=} \frac{\sum_{k=1}^n |c_k|^2|\lambda_k|^{2j}\lambda_k}{\sum_{k=1}^n |c_k|^2|\lambda_k|^{2j}} = \\
+&= \frac{\lambda_1 + \sum_{k=1}^n \left\vert \frac{c_k}{c_1}\right\vert^2 \left\vert \frac{\lambda_k}{\lambda_1} \right\vert^{2j}\lambda_k}{1 + \sum_{k=1}^n \left\vert \frac{c_k}{c_1} \right\vert^2 \left\vert \frac{\lambda_k}{\lambda_1} \right\vert^{2j}} \le \lambda_1 + \sum_{k=1}^n \left\vert \frac{c_k}{c_1}\right\vert^2 \left\vert \frac{\lambda_k}{\lambda_1} \right\vert^{2j}\lambda_k.
+\end{align}
+Damit finden wir
+\begin{align}
+|\lambda^{(j)} - \lambda_1| &\le \sum_{k=1}^n \left\vert \frac{c_k}{c_1}\right\vert^2 \left\vert \frac{\lambda_k}{\lambda_1} \right\vert^{2j}|\lambda_k| \in\mathcal{O}\kla\left( \left\vert \frac{\lambda_2}{\lambda_1} \right\vert^{2j} \right).
+\end{align}
+Im letzten Schritt nutzen wir aus, dass $|\lambda_2| \ge |\lambda_{k>2}|$, weshalb für $j\rightarrow\infty$ der Term mit $\left\vert \frac{\lambda_2}{\lambda_1} \right\vert$ gegenüber den anderen dominiert.
+
+\section*{Aufgabe 3}
+Gegeben ist das Anfanswertproblem $x'=f(x)$ mit $x(0)=1$.
+Die Lipschitz-Konstante einer differenzierbaren Funktion auf einer Definitionsmenge $D$ ist gegeben durch
+\begin{align}
+L(f) &= \sup_{x\in D} |f'(x)|.
+\end{align}
+Wir untersuchen im Folgenden alle Funktionen auf Lipschitz-Stetigkeit in einer Umgebung von $x=1$, also $D= (1-\epsilon, 1+\epsilon)$ für ein $\epsilon>0$.
+\subsection*{(a)} 
+Für $f(x)=1-x^2$ gilt 
+\begin{align}
+L &= \sup_{x\in D} |-2x| = 2|1+\epsilon|,
+\end{align}
+die Funktion ist also Lipschitz-stetig.
+\subsection*{(b)} 
+Für $f(x)=|1-x^2| = \sqrt{(1-x^2)^2}$ gilt 
+\begin{align}
+L &= \sup_{x\in D} \left\vert \frac{1}{2\sqrt{(1-x^2)^2}} 2(1-x^2)(-2x) \right\vert = 2\sup_{x\in D}  \left\vert \frac{1-x^2}{|1-x^2|} x \right\vert = 2(1+\epsilon),
+\end{align}
+die Funktion ist also Lipschitz-stetig.
+\subsection*{(c)} 
+Für $f(x)= \sqrt{|1-x^2|} = [(1-x^2)^2]^{1/4}$ gilt 
+\begin{align}
+L &= \sup_{x\in D} \left\vert \frac{1}{4[(1-x^2)^2]^{3/4}} 2(1-x^2)(-2x) \right\vert = \sup_{x\in D}  \left\vert \frac{x}{\sqrt{|1-x^2|}} \right\vert = \infty,
+\end{align}
+die Funktion ist also bei $x=1$ nicht Lipschitz-stetig.
+\\
+Die Bedingung für Picard-Lindelöf ist gerade, dass $f$ Lipschitz-stetig im ``zweiten Argument'', hier also $x$ ist.
+Damit kann man die eindeutige Lösbarkeit für (a) und (b) folgern.
+
+
+\section*{Programmieraufgabe 4 (schriftlicher Teil)}
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

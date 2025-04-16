@@ -1,0 +1,233 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\usepackage[compat=1.1.0]{tikz-feynman}
+
+\usepackage{mathtools}
+% use \abs for absolute values
+% use \abs for \left ... \right version and \abs[\bigg for \bigg version etc.
+\DeclarePairedDelimiter\kla{(}{)}
+\DeclarePairedDelimiter\klam{[}{]}
+\DeclarePairedDelimiter\klammer{\{}{\}}
+\let\bra\undefined
+\let\braket\undefined
+\DeclarePairedDelimiter\bra{\langle}{\rangle}
+\DeclarePairedDelimiterX\brak[2]{\langle #1}{\rangle}{\delimsize\vert #2 }
+\DeclarePairedDelimiterX\braket[3]{\langle #1}{\rangle}{\delimsize\vert #2 \delimsize\vert #3 }
+
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand{\kom}[1]{\overset{\substack{#1 \\ |}}{=}}
+\newcommand{\intx}[4]{\int_{#1}^{#2} #3 \,\mathrm{d}#4}
+\newcommand{\intr}[2]{\int_{\mathbb{R}} #1 \, \mathrm{d}#2}
+\newcommand{\intrnd}[3]{\int_{\mathbb{R}^{#1}} #2 \, \mathrm{d}^{#1}#3}
+\newcommand{\intrpi}[2]{\int_{\mathbb{R}} #1 \, \frac{\mathrm{d}#2}{2\pi}}
+\newcommand{\intrndpi}[3]{\int_{\mathbb{R}^{#1}} #2 \, \frac{\mathrm{d}^{#1}#3}{(2\pi)^{#1}}}
+\newcommand{\oper}[2]{\vert #1 \rangle \langle #2 \vert}
+\newcommand{\Text}[1]{\text{#1}}    % this is relevant because \text odes not autocomplete to the default '\text{@}' but rather '\textbf' etc.
+\newcommand{\powe}[1]{\e^{#1}}
+\newcommand{\pow}[2]{{#1}^{#2}}
+\newcommand{\Bra}[1]{\vert #1 \rangle}
+\newcommand{\Ket}[1]{\langle #1 \vert}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{5 Bosonization}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Quantum Many-Body Physics}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Commutation relations of the Fourier components of the density operator}
+Consider the density of fermions with chirality $r=L/R=\pm$ defined as $\rho_r(x) = c_r^\dagger(x) c_r(x)$ where the $c_r^\dagger(x)$ are the creation operators of $r$-fermions at position $x$.
+The Fourier components are defined by $\rho_r(x) = \frac{1}{L} \sum_k \e^{\i kx}\rho_{k,r}$ where $L$ is the length of the system and
+\begin{align}
+\rho_{k,r} &= \sum_q c^\dagger_{q-k,r}c_{q,r},
+\end{align}
+with creation operators $c^\dagger_{q,r}$ of $r$-fermions with momentum $q$.
+Let $c_{q,r} = \frac{1}{\sqrt{L}} \int_{0}^{L} c_r(x) \e^{-\i qx} \, \mathrm{d}x$.
+Then we can verify the given representation
+\begin{align}
+\rho_r(x) &= \frac{1}{L} \sum_{qq'} c_{q,r}^\dagger c_{q',r} \e^{-\i qx}\e^{\i q'x} = \frac{1}{L} \sum_k \e^{\i kx} \rho_{k,r},\\
+\rho_{k,r} &= \sum_q c^\dagger_{q,r} c_{q+k,r} = \sum_{q} c^\dagger_{q-k,r} c_{q,r}.
+\end{align}
+We also find
+\begin{align}
+\left\{ c_{q,r} , c_{q',r'}^\dagger  \right\} &= \frac{1}{L} \int_{0}^{L} \int_{0}^{L} \left\{ c_r(x), c_{r'}^\dagger(y) \right\} \e^{-\i qx} \e^{\i q'y} \, \mathrm{d}x \, \mathrm{d}y  = \\
+&= \delta_{rr'} \frac{1}{L} \int_{0}^{L} \e^{\i (q' - q) x} \, \mathrm{d}x = \delta_{rr'} \delta_{qq'}.
+\end{align}
+We compute the commutator by reshuffling terms as follows
+\begin{align}
+ \rho_{k,r} \rho^\dagger_{k',r'} &= \sum_{qq'} c^\dagger_{q-k,r} c_{q,r} c^\dagger_{q',r'} c_{q'-k',r'} = \\
+ &= \sum_{qq'} c^\dagger_{q-k,r} \left( \delta_{rr'} \delta_{qq'} - c^\dagger_{q',r'} c_{q,r} \right) c_{q'-k',r'} = \\
+ &= \delta_{rr'} \sum_{q} c^\dagger_{q-k,r} c_{q-k',r} + \sum_{qq'} c^\dagger_{q',r'} c^\dagger_{q-k,r} c_{q,r} c_{q'-k',r'} = \\
+ &= A - \sum_{qq'} c^\dagger_{q',r'} c^\dagger_{q-k,r} c_{q'-k',r'} c_{q,r} = \\
+ &= A - \sum_{qq'} c^\dagger_{q',r'} \left( \delta_{rr'} \delta_{q-k, q'-k'} - c_{q'-k',r'} c^\dagger_{q-k,r} \right) c_{q,r} = \\
+ &= A + \rho_{k',r'}^\dagger \rho_{k,r} - \delta_{rr'} \sum_{q} c^\dagger_{q-k+k',r} c_{q,r}.
+\end{align}
+Shifting $q \rightarrow q - k'$ cancels the third term with the first and yields
+\begin{align}
+\left[ \rho_{k,r}, \rho^\dagger_{k',r'} \right] &= 0.
+\end{align}
+Why is this incorrect? 
+Maybe the terms $A,A'$ are not quite identical due to the range of $q$ values. 
+Shifting $q$ may not give the same result, which would leave some residual term. 
+But then the transformation $q\rightarrow q-k$ used to derive $\rho_{k,r}$ in the first place would be incorrect, leaving me somewhat puzzled.
+
+%However, maybe the difference between those two terms is not quite as trivial.
+%More careful analysis yields
+%\begin{align}
+%A-A' &= \delta_{rr'} \sum_{q=q_1}^{q_2} c^\dagger_{q-k,r} c_{q-k',r} - \delta_{rr'} \sum_{q=q_1-k'}^{q_2 -k'} c^\dagger_{q-k,r} c_{q-k',r} = \\
+%&= \delta_{rr'} \sum_{q=q_2-k'+\Delta q}^{q_2} c^\dagger_{q-k,r} c_{q-k',r} - \delta_{rr'} \sum_{q=q_1-k'}^{q_1-\Delta q} c^\dagger_{q-k,r} c_{q-k',r}
+%\end{align}
+
+\section{Crucial identity for expectation values in bosonic systems}
+For the Hamiltonian $H := \sum_j \epsilon_j \left( b_j^\dagger b_j + \frac{1}{2} \right)$ consider linear combinations of bosonic operators of the form $B := \sum_j \left( \alpha_j b_j + \gamma_j b_j^\dagger \right)$.
+Then we want to show that 
+\begin{align}
+\left\langle e^B \right\rangle &= \e^{\frac{1}{2} \langle B^2 \rangle}
+\end{align}
+where the expectation values are given by thermal averages $\langle A  \rangle= \frac{1}{Z} \text{tr\,} \left( \e^{-\beta H}A \right) $.
+Since there are no terms mixing states $j$ and $j'$, it is sufficient to show this relation for a simple system $H=\epsilon \left(b^\dagger b+\frac{1}{2} \right)$ and $B=\alpha b + \gamma b^\dagger$.
+The algebraic prove of this intuitive idea will be given in \autoref{subsec:factorization}.
+The right hand side of the equation is readily evaluated.
+Note that amplitudes of the form $\langle n | b | n \rangle$ vanish, which greatly simplifies the expression
+\begin{align}
+\langle B^2 \rangle &= \bra*{\alpha^2b^2 + \gamma^2(b^\dagger)^2 + \alpha\gamma \kla*{bb^\dagger + b^\dagger b}}
+\end{align}
+as the first two terms drop out.
+Using the fundamental commutation relation the remaining term reduces to
+\begin{align}
+\langle B^2 \rangle &= 2\alpha\gamma \bra[\Big ]{ b^\dagger b + \frac{1}{2}} = 2\alpha\gamma \frac{-1}{\beta}\partial_\epsilon \log Z.
+\end{align}
+The partition function is given by
+\begin{align}
+Z &= \Text{tr\,} \e^{-\beta\epsilon \kla*{b^\dagger b + \frac{1}{2}}} = \sum_{n\ge 0} \braket*{n}{\e^{-\beta\epsilon \kla*{b^\dagger b + \frac{1}{2}}}}{n} = \\
+&= \e^{-\frac{\beta\epsilon}{2}} \sum_{n\ge 0} \e^{-\beta\epsilon n} = \frac{1}{2\sinh\kla*{\frac{\beta\epsilon}{2}}}.
+\end{align}
+Thus we find
+\begin{align}
+\powe{\frac{1}{2} \bra*{B^2}} &= \powe{\alpha\gamma \frac{1}{2} \coth\kla*{\frac{\beta\epsilon}{2}}}.
+\end{align}
+On the other hand
+\begin{align}
+\powe{B} &=  \powe{\gamma b^\dagger} \powe{\alpha b}\powe{\frac{1}{2}\alpha\gamma}
+\end{align}
+due to the Baker-Campbell-Hausdorff formula.
+The expectation value of this operator may then be written as\footnote{Again only expectation values involving equal counts of $b$ and $b^\dagger$ can contribute.}
+\begin{align}
+\bra*{\powe{B}} &= \powe{\frac{1}{2} \alpha\gamma} \sum_{jk} \frac{1}{j!k!} \bra*{\kla*{\gamma b^\dagger}^k \kla*{\alpha b}^j } = \\
+&= \powe{\frac{1}{2} \alpha\gamma} \sum_{k\ge 0} \frac{(\alpha\gamma)^k}{(k!)^2} \frac{1}{Z} \sum_{n\ge 0} \e^{-\beta\epsilon \kla*{n + \frac{1}{2}}} \braket*{n}{(b^\dagger)^k b^k }{n} = \\
+&= \powe{\frac{1}{2}\kla*{\alpha\gamma - \beta\epsilon}} \frac{1}{Z} \sum_{n\ge 0} \e^{-\beta\epsilon n} \sum_{k=0}^n \frac{(\alpha\gamma)^k}{(k!)^2} \sqrt{n}^2 \dots \sqrt{n - k + 1}^2 = \\
+&= \powe{\frac{1}{2}\kla*{\alpha\gamma - \beta\epsilon}} \frac{1}{Z} \sum_{n\ge 0} \e^{-\beta\epsilon n} \sum_{k=0}^n \frac{(\alpha\gamma)^k}{k!} \binom{n}{k}.
+\end{align}
+At this point we want to interchange the $n$ and $k$ summations. 
+To do this, realize that we are summing over a triangular grid of the form $f(n,k)$ where $n \ge k$.
+Thus we may equivalently write
+\begin{align}
+\bra*{\e^B} &= \powe{\frac{1}{2} \kla*{\alpha\gamma - \beta\epsilon}} \frac{1}{Z} \sum_{k\ge 0} \frac{(\alpha\gamma)^k}{k!} \sum_{n\ge k} \e^{-\beta\epsilon n} \binom{n}{k} = \\
+&= \powe{\frac{1}{2} \kla*{\alpha\gamma - \beta\epsilon}} \frac{1}{Z} \sum_{k\ge 0} \frac{(\alpha\gamma)^k}{k!} \e^{-\beta\epsilon k} \sum_{n\ge 0} \e^{-\beta\epsilon n} \binom{n+k}{k}.
+\end{align}
+At this point we make use of the formula 
+\begin{align}
+\sum_{n\ge 0} \e^{-nx} \binom{n+k}{k} = \frac{1}{\kla*{1 - \powe{-x}}^{k+1}}
+\end{align}
+that is derived in \autoref{subsec:modified geometric series}.
+This simplifies our result to
+\begin{align}
+\bra*{\e^B} &= \powe{\frac{1}{2} \kla*{\alpha\gamma - \beta\epsilon}} \frac{1}{Z}  \frac{1}{1 - \powe{-\beta\epsilon}} \sum_{k\ge 0} \frac{1}{k!} \kla*{\frac{\alpha\gamma \powe{-\beta\epsilon}}{1 - \powe{-\beta\epsilon}}}^k = \\
+&= \powe{\frac{1}{2} \kla*{\alpha\gamma - \beta\epsilon}} 2\sinh\kla*{\frac{\beta\epsilon}{2}} \frac{1}{\powe{\beta\epsilon} - 1} \exp\kla*{\frac{\alpha\gamma}{1 - \e^{-\beta\epsilon}}} = \\
+&= \exp\kla*{\frac{1}{2} \alpha\gamma \klam*{1 +  \frac{2}{\powe{\beta\epsilon} - 1}} } = \powe{\frac{1}{2}\alpha\gamma \coth\kla*{\frac{\beta\epsilon}{2}}} = \powe{\frac{1}{2} \bra*{B^2}}
+\end{align}
+which completes the prove.
+\subsection{Factorization of the expectation values}\label{subsec:factorization}
+Write $H=\sum_j H_j$ and $B=\sum_j B_j$ where $H_j$ and $B_j$ only contain bosonic annihilation and creation operators belonging to the mode $j$.
+We will also make use of the fact that $\klam*{b_j, b_k} = 0$ and $\klam*{b_j, b_k^\dagger} = 0$ for $j\neq k$.
+Then 
+\begin{align}
+Z &= \text{tr\,} \left( \e^{-\beta H} \right) = \sum_{ \{n_k\}} \dots \langle \{n_k\}  | \prod_j \e^{-\beta H_j} |  \{n_k\} \rangle = \\
+&= \sum_{ \{n_k\}} \left( \langle n_1 | \langle n_2 | \dots \right) \e^{-\beta H_1} \e^{-\beta H_2} \dots \left( \dots |n_2 \rangle | n_1 \rangle \right) = \\
+&= \sum_{n_1\ge 0}  \langle n_1  | \e^{-\beta H_1} | n_1 \rangle \sum_{n_2\ge 0} \langle n_2  | \e^{-\beta H_2} | n_2 \rangle \dots = \\
+&= \prod_j \sum_{n_j\ge 0} \langle n_j  | \e^{-\beta H_j} | n_j \rangle = \prod_j Z_j.
+\end{align}
+Similarly we may then show that
+\begin{align}
+\left\langle \e^B \right\rangle &= \frac{1}{Z} \text{tr\,} \left( \e^{-\beta H} \prod_j \e^{B_j} \right) = \\
+&= \frac{1}{Z} \sum_{\{n_k\}} \langle \{n_k\} | \prod_j \e^{-\beta H_j} \e^{B_j} | \{n_k\} \rangle = \prod_j \frac{1}{Z_j} \sum_{n_j\ge 0} \langle n_j  | \e^{-\beta H_j} \e^{B_j} | n_j \rangle.
+\end{align}
+On the other hand, using $\langle b_j \rangle = 0$ due to $\langle n | b | n \rangle = 0$ etc. we find
+\begin{align}
+\langle B^2 \rangle &= \sum_{jk} \langle \left( \alpha_jb_j + \gamma_jb_j^\dagger \right) \left( \alpha_kb_k + \gamma_kb_k^\dagger \right)  \rangle = \\
+&= \sum_{jk} \langle \alpha_j\alpha_k b_jb_k + \gamma_j\gamma_k b_j^\dagger b_k^\dagger + \alpha_j\gamma_k b_jb_k^\dagger + \alpha_k\gamma_j b_j^\dagger b_k \rangle = \\
+&= \sum_{jk} \delta_{jk} \alpha_j \gamma_j \langle b_jb_j^\dagger + b_j^\dagger b_j \rangle = \\
+&= \sum_j \alpha_j\gamma_k \langle 2b_j^\dagger b_j + 1 \rangle
+\end{align}
+and thus also $\e^{\frac{1}{2} \langle B^2 \rangle} = \prod_j \e^{\frac{1}{2} \langle B_j^2 \rangle}$.
+\subsection{Prove of the modified geometric series identity}\label{subsec:modified geometric series}
+First note that $\binom{n+k}{k}=\binom{n+k}{n}$ and thus the result is independent of the choice of the lower variable.
+The base case is simply the geometric series
+\begin{align}
+\sum_{n\ge 0} \e^{-nx} &= \frac{1}{1 - \powe{-x}}.
+\end{align}
+Now assume that for some $k\in\mathbb{N}$ we have
+\begin{align}
+\sum_{n\ge 0} \powe{-nx} \binom{n+k}{n} &= \frac{1}{\kla*{1 - \powe{-x}}^{k+1}}.
+\end{align}
+Then we may compute
+\begin{align}
+\sum_{n\ge 0} \powe{-nx} \binom{n+k+1}{n} &= \sum_{n\ge 0} \powe{-nx} \frac{(n+k+1)!}{(k+1)!n!} = \\
+&= \sum_{n\ge 1} \powe{-nx}\powe{x} \frac{(n+k)!}{(k+1)!(n-1)!} = \\
+&= \frac{1}{k+1} \powe{x} \sum_{n\ge 1} n\powe{-nx} \frac{(n+k)!}{k!n!} = \\
+&= \frac{1}{k+1} \e^x (-\partial_x) \sum_{n\ge 1} \powe{-nx} \binom{n+k}{n}.
+\end{align}
+At this point we may insert the $n=0$-term into the sum, because it is independent of $x$ and thus vanishes after differentiating.
+Thus we find
+\begin{align}
+\sum_{n\ge 0} \powe{-nx} \binom{n+k+1}{n} &= \frac{1}{k+1} \e^x (-\partial_x) \sum_{n\ge 0} \powe{-nx} \binom{n+k}{n} = \\
+&= \frac{1}{k+1} \e^x (-\partial_x) \frac{1}{\kla*{1 - \powe{-x}}^{k+1}} = \\
+&= \e^x \frac{1}{\kla*{1 - \powe{-x}}^{k+2}} \powe{-x} = \frac{1}{\kla*{1 - \powe{-x}}^{k+2}}.
+\end{align}
+which completes the prove via induction over $k$.
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,254 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{ll_scrarticle}
+
+\newcommand*{\titel}{Green's functions for simple systems}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Condensed Matter Physics}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Free fermionic systems}
+\subsection{Fermionic language}
+Consider the non-interacting Hamiltonian in momentum space
+\begin{align}
+H &= \sum_{k\sigma} \epsilon_{k\sigma} c_{k\sigma}^\dagger c_{k\sigma}
+\end{align}
+with the dispersion relation $\epsilon_{k\sigma}$ and the fermionic creation and annihilation operators $c_{k\sigma}^\dagger$ and $c_{k\sigma}$.
+Due to the Heisenberg equation the operators pick up a time dependence according to\footnote{$\klb*{a, bc} = \klc*{a,b}c - b\klc*{a,c}$}
+\begin{align}
+\i\partial_t c_{k\sigma} &= \klb*{c_{k\sigma}, H} = \sum_{k'\sigma'} \epsilon_{k'\sigma'} \klb*{c_{k\sigma}, c_{k'\sigma'}^\dagger c_{k'\sigma'}} = \epsilon_{k\sigma} c_{k\sigma}.
+\end{align}
+This equation yields $c_{k\sigma}(t) = c_{k\sigma} \powe{-\i\epsilon_{k\sigma} t}$ and hermitian conjugation gives $c_{k\sigma}^\dagger(t) = c_{k\sigma}^\dagger \powe{\i\epsilon_{k\sigma} t}$.
+The retarded and advanced Green's functions are defined as
+\begin{align}
+G^\r_{\sigma\sigma'}(x,t;x',t') &= -\i\Theta(t-t') \bra*{\klc*{c_{x\sigma}(t), c_{x'\sigma'}^\dagger(t')}},\\
+G^\a_{\sigma\sigma'}(x,t;x',t') &= \i\Theta(t'-t) \bra*{\klc*{c_{x\sigma}(t), c_{x'\sigma'}^\dagger(t')}}.
+\end{align}
+Performing a spatial Fourier transform in both arguments gives
+\begin{align}
+G^\r_{\sigma\sigma'}(k,t;k',t') &= \intr{\intr{\powe{-\i kx} \powe{\i k'x'} G^\r_{\sigma\sigma'}(x,t;x',t') }{x'}}{x} \\
+&= -\i\Theta(t-t') \bra*{\klc*{c_{k\sigma}, c_{k'\sigma'}^\dagger}} \powe{-\i\epsilon_{k\sigma}t} \powe{\i\epsilon_{k'\sigma'}t'} = -\i\Theta(t-t') \delta_{kk'} \delta_{\sigma\sigma'} \powe{-\i\epsilon_{k\sigma} (t-t')},\\
+G^\a_{\sigma\sigma'}(k,t;k',t') &= \i\Theta(t'-t) \delta_{kk'} \delta_{\sigma\sigma'} \powe{-\i\epsilon_{k\sigma} (t-t')}.
+\end{align}
+The diagonal structure allows us to lighten the notation a bit by writing
+\begin{align}
+G^\r_\sigma(k,t) &= -\i\Theta(t) \powe{-\i\epsilon_{k\sigma} t},\\
+G^\a_\sigma(k,t) &= \i\Theta(-t) \powe{-\i\epsilon_{k\sigma} t}.
+\end{align}
+The temporal Fourier transform now yields
+\begin{align}
+G^\r_\sigma(k,\omega) &= \intr{\powe{\i\omega t} G^\r_\sigma(k,t)}{t} = -\i\lim_{\eta\rightarrow 0} \intx{0}{\infty}{\powe{\i\omega t}\powe{-\i\epsilon_{k\sigma} t} \powe{-\eta t}}{t} = \frac{1}{\omega - \epsilon_{k\sigma} + \i 0^+},\\
+G^\a_\sigma(k,\omega) &= \intr{\powe{\i\omega t} G^\r_\sigma(k,t)}{t} = \i\lim_{\eta\rightarrow 0} \intx{-\infty}{0}{\powe{\i\omega t}\powe{-\i\epsilon_{k\sigma} t} \powe{\eta t}}{t} = \frac{1}{\omega - \epsilon_{k\sigma} - \i 0^+}.
+\end{align}
+These results are connected to the Matsubara Green's function which is defined by
+\begin{align}
+G^\M_{\sigma\sigma'}(x,\tau;x',\tau') &= -\bra*{\mathcal{T}_\tau c_{x\sigma}(\tau) c_{x'\sigma'}^\dagger(\tau')}.
+\end{align}
+As before the spatial transform gives
+\begin{align}
+G^\M_{\sigma\sigma'}(k,\tau;k',\tau') &= -\bra*{\mathcal{T}_\tau c_{k\sigma}(\tau) c_{k'\sigma'}^\dagger(\tau')} = -\bra*{c_{k\sigma} c_{k'\sigma'}^\dagger} \powe{-\epsilon_{k\sigma} \tau} \powe{\epsilon_{k'\sigma'} \tau'}.
+\end{align}
+where we assumed the imaginary time $\tau = \i t$ to be larger than $\tau'$.
+The expectation values now refer to thermal averages
+\begin{align}
+\bra*{c_{k\sigma} c_{k'\sigma'}^\dagger} &= \frac{1}{Z} \tr\klc*{\powe{-\beta H} c_{k\sigma} c_{k'\sigma'}^\dagger} = \delta_{kk'} \delta_{\sigma\sigma'} - \frac{1}{Z}\tr\klc*{\powe{-\beta H} c_{k'\sigma'}^\dagger c_{k\sigma}}.
+\end{align}
+Using the cyclic property of the trace and\footnote{$\klb*{n_{k\sigma}, n_{k'\sigma'}} = 0$ and $\klb*{n_{k\sigma}, c_{k'\sigma'}} = -\delta_{kk'}\delta_{\sigma\sigma'} c_{k\sigma}$}
+\begin{align}
+c_{k\sigma} \powe{-\beta H} &= c_{k\sigma} \prod_{k'\sigma'} \powe{-\beta \epsilon_{k'\sigma'} n_{k'\sigma'}} = \powe{-\beta H} \powe{\beta \epsilon_{k\sigma} n_{k\sigma}} c_{k\sigma} \powe{-\beta \epsilon_{k\sigma} n_{k\sigma}} \\
+&= \powe{-\beta H} \sum_{n\ge 0} \frac{1}{n!} \klb*{\beta \epsilon_{k\sigma} n_{k\sigma}, c_{k\sigma}}_n = \powe{-\beta H} \sum_{n\ge 0} \frac{(-1)^n}{n!} (\beta\epsilon_{k\sigma})^n c_{k\sigma} = \powe{-\beta H} \powe{-\beta \epsilon_{k\sigma}} c_{k\sigma}
+\end{align}
+we find the relation
+\begin{align}
+\bra*{c_{k\sigma} c_{k'\sigma'}^\dagger} &= \delta_{kk'} \delta_{\sigma\sigma'} - \frac{1}{Z} \tr\klc*{\powe{-\beta H} \powe{-\beta\epsilon_{k\sigma}} c_{k\sigma} c_{k'\sigma'}^\dagger} = \delta_{kk'} \delta_{\sigma\sigma'} - \powe{-\beta\epsilon_{k\sigma}} \bra*{c_{k\sigma} c_{k'\sigma'}^\dagger}.
+\end{align}
+Rearranging yields the well-known Fermi-Dirac statistics
+\begin{align}
+\bra*{c_{k\sigma} c_{k'\sigma'}^\dagger} &= \frac{\delta_{kk'} \delta_{\sigma\sigma'}}{\powe{-\beta\epsilon_{k\sigma}} + 1} = \delta_{kk'} \delta_{\sigma\sigma'} \kla*{1 - \frac{1}{\powe{\beta \epsilon_{k\sigma}} + 1}} = \delta_{kk'} \delta_{\sigma\sigma'} \kla*{1 - n^\F_{k\sigma}}.
+\end{align}
+Once again the Green's function is diagonal in $k$ and $\sigma$ so we abbreviate by writing
+\begin{align}
+G^\M_\sigma(k,\tau) &= -\kla*{1 - n_{k\sigma}^\F} \powe{-\epsilon_{k\sigma} \tau}.
+\end{align}
+To get the frequency representation we compute the Fourier transform with the fermionic Matsubara frequencies $\omega_n^\F = \frac{(2n+1)\pi}{\beta}$
+\begin{align}
+G^\M_\sigma(k,\i\omega_n^\F) &= \intx{0}{\beta}{\powe{\i\omega_n^\F \tau} G^\M_\sigma(k,\tau)}{\tau} = \kla*{n^\F_{k\sigma} - 1}\intx{0}{\beta}{\powe{\i\omega_n^\F \tau - \epsilon_{k\sigma} \tau}}{\tau} \\
+&= \kla*{n^\F_{k\sigma} - 1} \frac{\powe{\i\omega_n^\F \beta} \powe{-\beta \epsilon_{k\sigma}} - 1}{\i\omega_n^\F - \epsilon_{k\sigma}} = \frac{1}{\i\omega_n^\F - \epsilon_{k\sigma}}.
+\end{align}
+Thus we see that the retarded and advanced Green's function can be obtained from the Matsubara version by performing the analytic continuation $\i\omega_n^\F \rightarrow \omega \pm \i 0^+$.
+\subsection{Bosonized language}
+We now want to demonstrate that all of the above calculations can also be done within the formalism of Bosonization assuming that we are dealing with a linear dispersion $\epsilon_{k\sigma} = \vf\sigma k$, where $\sigma = \pm 1$ are the two possible states.
+In real space we make use of the operator identity
+\begin{align}
+c_{x\ell} &= \sqrt{a} \psi_\ell(x) = \sqrt{a} \frac{\eta_\ell}{\sqrt{2\pi\alpha}} \powe{-\i\varphi_\ell(x)}
+\end{align}
+which gives rise to the quadratic Hamiltonian
+\begin{align}
+H &= \frac{\vf}{2\pi} \intr{\klb*{\kla*{\partial_x\theta}^2 + \kla*{\partial_x\phi}^2}}{x}
+\end{align}
+where $\vf$ is the Fermi velocity -- which we will now set to unity -- and $\varphi_\ell(x) = \ell \phi(x) - \theta(x)$.
+Note that the fields $\phi$ and $\theta$ commute among themselves and satisfy
+\begin{align}
+\klb*{\phi(x),\theta(y)} &= \i\frac{\pi}{2} \sgn(x-y) = \klb*{\theta(x), \phi(y)}.
+\end{align}
+As before we start with the time evolution of the operators in momentum space
+\begin{align}
+\i\partial_t \psi_\ell(k,t) &= \intr{\powe{-\i kx} \i\partial_t\psi_\ell(x,t)}{x} = \intr{\powe{-\i kx} \klb*{\psi_\ell(x,t), H}}{x}\\
+&= \intr{\powe{-\i kx} \frac{1}{2\pi}\intr{ \klb*{\kla*{\partial_y\theta}^2 + \kla*{\partial_y\phi}^2, \psi_\ell(x,t)} }{y} }{x}\\
+&= \frac{1}{\pi} \intr{ \powe{-\i kx} \intr{ \klb[\big]{ \partial_y\klb*{\theta, \psi_\ell} \partial_y\theta + \partial_y\phi \klb*{\phi, \psi_\ell} } }{y} }{x}\\
+&= \frac{1}{\pi} \intr{\powe{-\i kx} \intr{ \klb*{\i\pi\delta(y-x)(-\i\ell) \psi_\ell \partial_y\theta + \i\pi\delta(y-x) \i \psi_\ell \partial_y\phi} }{y} }{x}\\
+&= -\ell \intr{\powe{-\i kx} \psi_\ell \partial_x\varphi_\ell}{x} = -\ell\i\intr{\powe{-\i kx} \partial_x\psi_\ell}{x} = \ell k \psi_\ell(k,t).
+\end{align}
+Solving this differential equation yields $\psi_\ell(k,t) = \psi_\ell(k) \powe{-\i\ell kt} \equiv \psi_\ell(k) \powe{-\i \epsilon_{\ell k} t}$.\\
+To proceed with the calculation of the Green's function we now need to consider the anti-commutator $\klc*{c_{k\ell}, c_{k',\ell'}^\dagger} = \delta_{kk'} \delta_{\ell\ell'}$.
+In our bosonized language this corresponds to\footnote{Note that the notation is a bit lose here because we do not pay close attention to discrete or continuous momenta. 
+The qualitative description is correct though, and the details are identical in the fermionic and the bosonic language.}
+\begin{align}
+\klc*{\psi_\ell(k), \psi_{\ell'}^\dagger(k')} &= \intr{\intr{\powe{-\i kx} \powe{\i k'x'} \klc*{\psi_\ell(x), \psi_{\ell'}^\dagger(x')} }{x'} }{x}\\
+&= \delta_{\ell\ell'} \intr{\powe{-\i x(k-k')}}{x} = \delta_{\ell\ell'} \delta_{kk'}.
+\end{align}
+Here we made use of $\klc*{\eta_\ell, \eta_{\ell'}} = \delta_{\ell\ell'}$ and of $\klb*{\varphi_\ell^{(+)}(x), \varphi_{\ell'}^{(-)}(x')} = \delta_{\ell\ell'} \log\klb*{\frac{2\pi}{L} \kla*{\alpha + \i\ell (x-x')}}$ to prove the anti-commutation relation\footnote{$\psi_\ell(x) = \frac{\eta_\ell}{\sqrt{2\pi\alpha}} \powe{-\i\varphi_\ell^{(+)} - \i\varphi_\ell^{(-)}} = \frac{\eta_\ell}{\sqrt{2\pi\alpha}} \normord{\powe{-\i\varphi_\ell}} \powe{-\frac{1}{2}\klb*{-\i\varphi_\ell^{(+)}, -\i\varphi_\ell^{(-)}} } = \frac{\eta_\ell}{\sqrt{L}} \normord{\powe{-\i\varphi_\ell}}$}
+\begin{align}
+\klc*{\psi_\ell(x), \psi_{\ell'}^\dagger(x')} &= \delta_{\ell\ell'} \frac{1}{L} \klc*{\normord{\powe{-\i\varphi_\ell(x)}}, \normord{\powe{\i \varphi_\ell(x')}}} \\
+&= \delta_{\ell\ell'} \frac{1}{L} \normord{\powe{-\i\varphi_\ell(x) + \i\varphi_\ell(x')}} \kla*{\powe{\klb*{-\i\varphi_\ell^{(-)}(x), \i\varphi_\ell^{(+)}(x')}} + \powe{\klb*{\i\varphi_\ell^{(+)}(x'), -\i\varphi_\ell^{(-)}(x)}}}\\
+&= \delta_{\ell\ell'} \frac{1}{L} \normord{\powe{-\i\varphi_\ell(x) + \i\varphi_\ell(x')}} \kla*{\frac{L}{2\pi} \frac{1}{\alpha - \i\ell(x-x')} + \frac{L}{2\pi} \frac{1}{\alpha + \i\ell(x-x')}}\\
+&= \delta_{\ell\ell'} \normord{\powe{-\i\varphi_\ell(x) + \i\varphi_\ell(x')}} \frac{1}{\pi} \frac{\alpha}{\alpha^2 + (x-x')^2} = \delta_{\ell\ell'} \delta(x-x').
+\end{align}
+\section{Interactions and perturbation theory}
+In this section we want to consider the same Hamiltonian as before, now denoted as $H_0$, and a simple bilinear interaction term $H_\Text{int} = \sum_{k\sigma} g c_{k\sigma}^\dagger c_{k,-\sigma}$.
+To keep calculations simple we assume a linear dispersion $\epsilon_{k\sigma} = \sigma k$.
+\subsection{Fermionic language}
+\subsubsection{Exact solution}
+Obviously this problem is exactly soluble due to the quadratic nature of the Hamiltonian.
+All we need to do is to diagonalize the matrix $M = k\sigma_z + g\sigma_x$ and one can check that
+\begin{align}
+M &= UDU^T
+\end{align}
+with $D = E\sigma_z$, $E=\sqrt{k^2 + g^2}$ and the transformation matrix
+\begin{align}
+U &= \frac{1}{\sqrt{2E(E-k)}} \begin{pmatrix}
+g & k-E \\ E-k & g
+\end{pmatrix}
+\end{align}
+%from green_toolkit import sigma_0, sigma_x, sigma_y, sigma_z
+%k=0.43; g=0.114
+%H=k*sigma_z + g*sigma_x
+%E=np.sqrt(k**2+g**2)
+%U=(g*sigma_0 + 1j*sigma_y*(k-E))/np.sqrt(2*E*(E-k))
+%D=E*sigma_z
+%H, U@D@U.T
+is the correct decomposition.
+This also gives rise to new operators
+\begin{align}
+d_{k\sigma} &= \frac{1}{\sqrt{2E(E-k)}} \kla*{gc_{k\sigma} + \sigma (E-k) c_{k,-\sigma}},\\
+c_{k\sigma} &= \frac{1}{\sqrt{2E(E-k)}} \kla*{gd_{k\sigma} - \sigma (E-k) d_{k,-\sigma}}
+\end{align}
+The full hamiltonian can then be written as $H=H_0+H_\Text{int} = \sum_{k\sigma} \sigma E d_{k\sigma}^\dagger d_{k\sigma}$.
+The retarded Green's function becomes
+\begin{align}
+G_{\sigma\sigma'}^\r(k,t) &= -\i\Theta(t) \bra*{\klc*{c_{k\sigma}(t) , c_{k\sigma'}^\dagger(0)}} \\
+&= -\i\Theta(t) \frac{1}{2E(E-k)} \bra*{ \klc*{gd_{k\sigma} \powe{-\i \sigma Et} - \sigma (E-k)d_{k,-\sigma} \powe{\i \sigma Et} , gd_{k\sigma'}^\dagger -\sigma' (E-k) d_{k,-\sigma'}^\dagger} }\\
+&= -\i\Theta(t) \frac{1}{2E(E-k)} \klc*{\delta_{\sigma\sigma'} \klb*{g^2 \powe{-\i\sigma Et} + (E-k)^2 \powe{\i\sigma Et}} - \delta_{\sigma,-\sigma'} g (E-k) 2\i\sin(Et)}.
+\end{align}
+The Fourier transform yields
+\begin{align}
+G_{\sigma\sigma}^\r(k,\omega) &= -\i \intx{0}{\infty}{\powe{\i\omega t} \powe{-\delta t} G_{\sigma\sigma'}^\r(k,t) }{t}\\
+&= \frac{1}{2E(E-k)} \klc*{\delta_{\sigma\sigma'} \klb*{\frac{g^2}{\omega - \sigma E + \i\delta} + \frac{(E-k)^2}{\omega + \sigma E + \i\delta}} - \delta_{\sigma,-\sigma'} \frac{2E g(E-k)}{E^2 - \omega^2 - 2\i\omega \delta}}\\
+&= \frac{1}{\omega^2 - E^2} \klc*{\delta_{\sigma\sigma'} \klb*{\omega + \sigma k} + \delta_{\sigma,-\sigma'} g}.
+\end{align}
+We can obtain the same result within the Matsubara formalism
+\begin{align}
+G_{\sigma\sigma'}^\M(k,t) &= -\mathcal{T} \bra*{c_{k\sigma}(\tau) c_{k\sigma'}^\dagger(0)} \\
+&= -\frac{1}{2E(E-k)} \bra*{ \kla*{gd_{k\sigma} \powe{- \sigma E\tau} - \sigma (E-k)d_{k,-\sigma} \powe{\sigma E\tau} } \kla*{gd_{k\sigma'}^\dagger -\sigma' (E-k) d_{k,-\sigma'}^\dagger} }\\
+&= -\frac{1}{2E(E-k)} \bsplit{\klc[\bigg]{&\delta_{\sigma\sigma'} \klb*{g^2 \powe{-\sigma E\tau} \frac{1}{1 + \powe{-\sigma E\beta}} + (E-k)^2\powe{\sigma E\tau} \frac{1}{1 + \powe{\sigma E\beta}} } \\
+&+\delta_{\sigma,-\sigma'} \sigma g(E-k) \klb*{\powe{-\sigma E\tau} \frac{1}{1 + \powe{-\sigma E\beta}} - \powe{\sigma E\tau} \frac{1}{1 + \powe{\sigma E\beta}}} }.}
+\end{align}
+The Fourier transform for the diagonal part yields
+\begin{align}
+G_{\sigma\sigma}^\M(k,\i\omega_n^\F) &= \intx{0}{\beta}{\powe{\i\omega_n^\F\tau} G_{\sigma\sigma}^\M(k,\tau)}{\tau}\\
+&= \frac{-1}{2E(E-k)} \klc*{\frac{g^2}{\i\omega_n^\F - \sigma E} \frac{-\powe{-\sigma E\beta} - 1}{1 + \powe{-\sigma E\beta}} + \frac{(E-k)^2}{\i\omega_n^\F + \sigma E} \frac{-\powe{\sigma E\beta} - 1}{1 + \powe{\sigma E\beta}}}\\
+&= \frac{1}{\kla*{\i\omega_n^\F}^2 - E^2} \klc*{\i\omega_n^\F + \sigma k}
+\end{align}
+and the one for the off-diagonal part gives
+\begin{align}
+G_{\sigma,-\sigma}^\M(k,\i\omega_n^\F) &= \intx{0}{\beta}{\powe{\i\omega_n^\F\tau} G_{\sigma,-\sigma}^\M(k,\tau)}{\tau}\\
+&= \frac{-\sigma g}{2E} \klc*{\frac{-1}{\i\omega_n^\F - \sigma E} - \frac{-1}{\i\omega_n^\F + \sigma E}} = \frac{g}{\kla*{\i\omega_n^\F}^2 - E^2}.
+\end{align}
+Performing the analytic continuation $\i\omega_n^\F \rightarrow \omega + \i\delta$ reproduces the result from the real-time calculation.
+Note that the Matsubara approach was quite a bit more cumbersome.
+\subsubsection{Perturbation theory}
+Taylor expanding the exact result to first order in $g$ gives
+\begin{align}
+G_{\sigma\sigma'}^\r(k,\omega) &\simeq \frac{\omega + k\sigma_z}{\omega^2 - k^2} + \frac{g\sigma_x}{\omega^2 - k^2} \equiv G_{0,\sigma\sigma'}^\r(k,\omega) - g G_{1,\sigma\sigma'}^\r(k,\omega).
+\end{align}
+The additional minus sign originates from the Taylor expansion of $\powe{-S_\Text{int}}$, which is the weighting function appearing the the path integral in imaginary time.
+The free Green's function can be obtained in a number of ways, some of which shown in the first section.
+We thus only need to understand how the correction term comes about.
+This time let us start with the Matsubara formalism and note that $\bra*{S_\Text{int}}_0 = 0$ due to the off-diagonal structure.
+Therefore the first order correction should be
+\begin{align}
+G_{1,\sigma\sigma'}^\M(k,t) &= - \sum_{qs} \intx{0}{\beta} {\mathcal{T} \bra*{c_{k\sigma}(\tau) c_{k\sigma'}^\dagger(0) c_{qs}^\dagger(\tau') c_{q,-s}(\tau')}_0}{\tau'}\\
+&= -\delta_{\sigma,-\sigma'} \powe{-\sigma k\tau} \klb[\bigg]{\bra*{c_{k\sigma} c_{k\sigma}^\dagger c_{k,-\sigma} c_{k,-\sigma}^\dagger}_0 \intx{0}{\tau}{ \powe{2\sigma k\tau'} }{\tau'} + \bra*{c_{k\sigma}^\dagger c_{k,-\sigma} c_{k\sigma} c_{k,-\sigma}^\dagger}_0 \intx{\tau}{\beta}{ \powe{2\sigma k\tau'} }{\tau'}}\\
+&= -\delta_{\sigma,-\sigma'} \powe{-\sigma k\tau} \klb*{\bra*{\kla*{1 - \hat{n}_{k\sigma}} \kla*{1 - \hat{n}_{k,-\sigma}}}_0 \frac{\powe{2\sigma k\tau} - 1}{2\sigma k} - \bra*{\hat{n}_{k\sigma} \kla*{1 - \hat{n}_{k,-\sigma}}}_0 \frac{\powe{2\sigma k\beta} - \powe{2\sigma k\tau}}{2\sigma k}}.
+\end{align}
+The expectation values are simple to evaluate if one realizes that
+\begin{align}
+\bra*{\hat{n}_{k\sigma} \hat{n}_{k,-\sigma}}_0 &= \frac{1}{\mathcal{Z}} \sum_{\klc*{n_{qs}}} \brc*{\klc*{n_{qs}}}{\hat{n}_{k\sigma} \hat{n}_{k,-\sigma} \powe{-\beta H_0}}{\klc*{n_{qs}}}\\
+&= \frac{1}{\mathcal{Z}_k} \sum_{n_{k,+}=0}^1 \sum_{n_{k,-}=0}^1 n_{k\sigma} n_{k,-\sigma} \powe{-\beta k n_{k,+} + \beta k n_{k,-}} = \bra*{\hat{n}_{k\sigma}}_0\bra*{\hat{n}_{k,-\sigma}}_0.
+\end{align}
+Using $\bra*{\hat{n}_{k\sigma}}_0 = \frac{1}{\powe{\sigma k\beta} + 1}$ and $\bra*{1 - \hat{n}_{k\sigma}} = \frac{1}{1 + \powe{-\sigma k\beta}}$ we then find
+\begin{align}
+G_{1,\sigma\sigma'}^\M(k,t) &=-\delta_{\sigma,-\sigma'} \powe{-\sigma k\tau} \klb*{\frac{1}{1 + \powe{-\sigma k\beta}} \frac{1}{1 + \powe{\sigma k\beta}} \frac{\powe{2\sigma k\tau} - 1}{2\sigma k} - \frac{1}{\powe{\sigma k\beta} + 1} \frac{1}{1 + \powe{\sigma k\beta}} \frac{\powe{2\sigma k\beta} - \powe{2\sigma k\tau}}{2\sigma k}}\\
+&= -\delta_{\sigma,-\sigma'} \frac{1}{4 k\cosh^2\kla*{\frac{k\beta}{2}}} \klb*{\sinh(k\tau) - \sinh(k\beta - k\tau)}.
+\end{align}
+Performing the Fourier transform yields
+\begin{align}
+G_{1,\sigma\sigma'}^\M(k,\i\omega_n^\F) &= \frac{-\delta_{\sigma,-\sigma'}}{4k\cosh^2\kla*{\frac{k\beta}{2}}} \intx{0}{\beta}{ \klb*{ \powe{\i\omega_n^\F \tau} \sinh(k\tau) - \powe{\i\omega_n^\F\tau} \sinh(k\beta - k\tau)}}{\tau}\\
+&= \frac{-\delta_{\sigma,-\sigma'}}{4k\cosh^2\kla*{\frac{k\beta}{2}}} \frac{1}{2} \klb*{\frac{-\powe{k\beta} - 1}{\i\omega_n^\F + k} - \frac{-\powe{-k\beta} - 1}{\i\omega_n^\F - k} - \powe{k\beta} \frac{-\powe{-k\beta} - 1}{\i\omega_n^\F - k} + \powe{-k\beta} \frac{-\powe{k\beta} - 1}{\i\omega_n^\F + k}}\\
+&= \frac{\delta_{\sigma,-\sigma'}}{4k\cosh^2\kla*{\frac{k\beta}{2}}} \frac{1}{2} \klb*{2k \frac{1 + \powe{k\beta}}{k^2 - \kla*{\i\omega_n^\F}^2} + 2k \frac{1 + \powe{-k\beta}}{k^2 - \kla*{\i\omega_n^\F}^2}}\\
+&= \frac{\delta_{\sigma,-\sigma'}}{k^2 - \kla*{\i\omega_n^\F}^2}
+\end{align}
+which is the expected result.
+Note that it is crucial to respect the time-ordering.\\
+In real time we would expect the calculation to be somewhat easier, but instead we encounter a conceptual problem right away.
+If we continue in analogy to the Matsubara calculation we will end up with zero, since the anti-commutator will not yield any off-diagonal term here.
+Instead, let us consider the causal Green's function for $t>0$ \TODO{TODO!}
+\begin{align}
+G_{1,\sigma\sigma'}^\F(k,t) &= (-\i)^2 \sum_{qs} \intr{ \mathcal{T} \bra*{c_{k\sigma}(t) c_{k,-\sigma}^\dagger(0) c_{qs}^\dagger(t') c_{q,-s}(t')}_0}{t'}\\
+&= -\delta_{\sigma,-\sigma'} \powe{-\i\sigma kt} \bra*{c_{k\sigma} c_{k,-\sigma}^\dagger c_{k\sigma}^\dagger c_{k,-\sigma}}_0 \intx{0}{t}{ \powe{2\i\sigma kt'} }{t'} + \dots\\
+&= \delta_{\sigma,-\sigma'} \powe{-\i \sigma kt} \frac{-1}{1 + \powe{-\sigma k\beta}} \frac{1}{\powe{-\sigma k\beta} + 1} \frac{\powe{2\i\sigma kt} - 1}{2\i\sigma k} + \dots\\
+&= \frac{\delta_{\sigma,-\sigma'}}{\kla*{1 + \powe{-\sigma k\beta}}^2} \frac{\sin(kt)}{k} + \dots
+\end{align}
+\QnA{Note that in full generality $G^\r(x,t) = \Theta(t) \klb*{G^\F(x,t) - \kla*{G^\F(-x,-t)}^\dagger}$ allows us to obtain the retarded Green function from the Feynman/causal/time-ordered version.}
+\subsection{Bosonized language}
+\subsubsection{Exact solution}
+Within bosonization the simple interaction term becomes a highly non-trivial sine-Gordon potential.
+Since we are dealing with an operator identity, an exact solution must still be possible along the lines of the fermionic calculation (\TODO{TODO: this looks nightmarish, but it \emph{must} be possible, right?})
+\subsubsection{Perturbation theory}
+TODO.
+
+
+
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

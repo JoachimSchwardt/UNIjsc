@@ -1,0 +1,481 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[ngerman]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Phononen in zweiter Quantisierung}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Theoretische Festkörperphysik}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Isotropie hexagonaler Kristalle}
+Für einen hexagonalen Kristall hat der elastische Tensor in Voigt'scher Notation die Form
+\begin{align}
+C &= \begin{pmatrix}
+C_{11} & C_{12} & C_{13} & 0 & 0 & 0 \\
+C_{12} & C_{11} & C_{13} & 0 & 0 & 0 \\
+C_{13} & C_{13} & C_{33} & 0 & 0 & 0 \\
+0 & 0 & 0 & C_{44} & 0 & 0 \\
+0 & 0 & 0 & 0 & C_{44} & 0 \\
+0 & 0 & 0 & 0 & 0 & C_{66} \\
+\end{pmatrix},
+\end{align}
+wobei $C_{66} = \frac{C_{11} - C_{12}}{2}$.
+Die Indizes stehen für $1\equiv xx, 2\equiv yy, 3\equiv zz, 4\equiv yz, 5\equiv xz, 6\equiv xy$.
+Die Christoffel-Gleichungen lauten
+\begin{align}
+0 &= \sum_{j'} \klam\left[ \tilde{D}_{jj'} - \rho c^2(\hat{q})\delta_{jj'} \right]e_{j'}(\vec{q}) && \tecxt\text{mit} & \tilde{D}_{jj'} &= \sum_{kk'} C_{jk,j'k'} \hat{q}_k \hat{q}_{k'}. 
+\end{align}
+Wir finden die sechs Komponenten
+\begin{align}
+\tilde{D}_{xx} &= C_{xx,xx}\hat{q}_x\hat{q}_x + C_{xy,xy}\hat{q}_y\hat{q}_y + C_{xz,xz}\hat{q}_z\hat{q}_z,\\
+\tilde{D}_{xy} &= C_{xx,yy}\hat{q}_x\hat{q}_y + C_{xy,yx}\hat{q}_y\hat{q}_x,\\
+\tilde{D}_{xz} &= C_{xx,zz}\hat{q}_x\hat{q}_z + C_{xz,zx}\hat{q}_z\hat{q}_x,\\
+\tilde{D}_{yy} &= C_{yx,yx}\hat{q}_x\hat{q}_x + C_{yy,yy}\hat{q}_y\hat{q}_y + C_{yz,yz}\hat{q}_z\hat{q}_z,\\
+\tilde{D}_{yz} &= C_{yy,zz}\hat{q}_y\hat{q}_z + C_{yz,zy}\hat{q}_z\hat{q}_y,\\
+\tilde{D}_{zz} &= C_{zx,zx}\hat{q}_x\hat{q}_x + C_{zy,zy}\hat{q}_y\hat{q}_y + C_{zz,zz}\hat{q}_z\hat{q}_z.
+\end{align}
+In Matrixschreibweise (symmetrische Einträge ausgelassen)
+\begin{align}
+\tilde{D} &= \begin{pmatrix}
+C_{11}\hat{q}_x^2 + C_{66}\hat{q}_y^2 + C_{44}\hat{q}_z^2 & (C_{12} + C_{66})\hat{q}_x\hat{q}_y & (C_{13} + C_{44}) \hat{q}_x\hat{q}_z \\
+& C_{66}\hat{q}_x^2 + C_{11} \hat{q}_y^2 + C_{44}\hat{q}_z^2 & (C_{13} + C_{44}) \hat{q}_y\hat{q}_z \\
+& & C_{44}\hat{q}_x^2 + C_{44}\hat{q}_y^2 + C_{33} \hat{q}_z^2
+\end{pmatrix}.
+\end{align}
+Mit den Komponenten $e_{x,y,z}$ der Polarisationsvektoren $\vec{e}(\vec{q})$ lauten die Christoffel-Gleichungen
+\begin{align}
+\rho c^2(\hat{q}) e_x &= \kla\left( C_{11}\hat{q}_x^2 + C_{66}\hat{q}_y^2 + C_{44}\hat{q}_z^2 \right)e_x + (C_{12} + C_{66})\hat{q}_x\hat{q}_y e_y + (C_{13} + C_{44}) \hat{q}_x\hat{q}_z e_z,\\
+\rho c^2(\hat{q}) e_y &= (C_{12} + C_{66})\hat{q}_x\hat{q}_y e_x + \kla\left( C_{66}\hat{q}_x^2 + C_{11} \hat{q}_y^2 + C_{44}\hat{q}_z^2 \right)e_y + (C_{13} + C_{44}) \hat{q}_y\hat{q}_z e_z,\\
+\rho c^2(\hat{q}) e_z &= (C_{13} + C_{44}) \hat{q}_x\hat{q}_z e_x + (C_{13} + C_{44}) \hat{q}_y\hat{q}_z e_y + \kla\left( C_{44}\hat{q}_x^2 + C_{44}\hat{q}_y^2 + C_{33} \hat{q}_z^2 \right) e_z.
+\end{align}
+Für $\hat{q}_z=0$ vereinfachen sich die Gleichungen zu
+\begin{align}
+\rho c^2(\hat{q}) e_x &= \kla\left( C_{11}\hat{q}_x^2 + C_{66}\hat{q}_y^2 \right)e_x + (C_{12} + C_{66})\hat{q}_x\hat{q}_y e_y,\\
+\rho c^2(\hat{q}) e_y &= (C_{12} + C_{66})\hat{q}_x\hat{q}_y e_x + \kla\left( C_{66}\hat{q}_x^2 + C_{11} \hat{q}_y^2 \right)e_y,\\
+\rho c^2(\hat{q}) e_z &= C_{44} \kla\left( \hat{q}_x^2 + \hat{q}_y^2 \right) e_z = C_{44} e_z.
+\end{align}
+Die letzte Gleichung liefert $e_z=0$ oder $c^2(\hat{q}) = C_{44}$.
+Da wir aber an der Phasengeschwindigkeit entlang der Basisfläche interessiert sind, wählen wir hier $e_z=0$.
+Umstellen der zweiten Gleichung ergibt
+\begin{align}
+e_y &= \frac{C_{12} + C_{66}}{\rho c^2(\hat{q}) - C_{66}\hat{q}_x^2 - C_{11} \hat{q}_y^2}\hat{q}_x\hat{q}_y e_x.
+\end{align}
+Einsetzen in die erste Gleichung ergibt
+\begin{align*}
+\rho c^2(\hat{q}) - C_{11}\hat{q}_x^2 - C_{66} \hat{q}_y^2 &= (C_{12} + C_{66}) \hat{q}_x \hat{q}_y \frac{C_{12} + C_{66}}{\rho c^2(\hat{q}) - C_{66}\hat{q}_x^2 - C_{11} \hat{q}_y^2}\hat{q}_x\hat{q}_y, \numberthis \\
+\Rightarrow\ \ \ (C_{12} + C_{66})^2\hat{q}_x^2 \hat{q}_y^2 &= \rho^2 c^4(\hat{q}) + C_{11}C_{66} (\hat{q}_x^4 + \hat{q}_y^4) - \\
+&\hspace{0.5cm} - \rho c^2(\hat{q}) \kla\left( C_{11} + C_{66} \right) (\hat{q}_x^2 + \hat{q}_y^2) + (C_{11}^2 + C_{66}^2) \hat{q}_x^2\hat{q}_y^2 . \numberthis
+\end{align*}
+Das ist eine quadratische Gleichung in $\rho c^2(\hat{q})$, wobei $\hat{q}_x^2 + \hat{q}_y^2 = 1$ und
+\begin{align}
+(C_{12} + C_{66})^2 - C_{11}^2 - C_{66}^2 &= \frac{(C_{11} + C_{12})^2}{4} - C_{11}^2 - \frac{(C_{11} - C_{12})^2}{4} = \\
+&= C_{11}C_{12} - C_{11}^2 = C_{11}(C_{12} - C_{11}) = -2C_{11}C_{66}
+\end{align}
+gelten.
+Wir lösen also die Gleichung
+\begin{align}
+0 &= \rho^2 c^4(\hat{q}) - \rho c^2(\hat{q}) (C_{11} + C_{66}) + C_{11}C_{66} (\hat{q}_x^4 + \hat{q}_y^4) + 2C_{11}C_{66} \hat{q}_x^2 \hat{q}_y^2,\\
+\Rightarrow\ \ \ \rho c^2(\hat{q}) &= \frac{C_{11} + C_{66}}{2} \pm \sqrt{\frac{(C_{11} + C_{66})^2}{4} - C_{11}C_{66} \kla\left(  \hat{q}_x^2 + \hat{q}_y^2 \right)^2} = \\
+&= \frac{C_{11} + C_{66}}{2} \pm \sqrt{\frac{(C_{11} - C_{66})^2}{4}} = \begin{cases} C_{11} \\ C_{66} \end{cases}.
+\end{align}
+Im letzten Schritt haben wir $C_{11} \ge C_{66}$ angenommen, andernfalls ist die Fallunterscheidung gerade andersherum.
+Unabhängig davon ist die Phasengeschwindigkeit aber isotrop entlang der Basisfläche, weil wir keine Abhängigkeit von $\hat{q}$ haben.
+\\
+Jetzt können wir die Polairsationsvektoren einfach über den Zusammenhang von $e_x$ und $e_y$ bestimmen
+\begin{align}
+\vec{e}(\vec{q}) &= \frac{1}{\mathcal{N}}\begin{pmatrix}
+\rho c^2 - C_{66} \hat{q}_x^2 - C_{11} \hat{q}_y^2 \\ 
+(C_{12} + C_{66} ) \hat{q}_x \hat{q}_y \\ 
+0
+\end{pmatrix} = \frac{1}{\mathcal{N}}\begin{pmatrix}
+\rho c^2 - C_{66} \hat{q}_x^2 - C_{11} \hat{q}_y^2 \\ 
+(C_{11} - C_{66} ) \hat{q}_x \hat{q}_y \\ 
+0
+\end{pmatrix}.
+\end{align}
+mit einer zunächst nicht näher bestimmten Normierung.
+Für $\rho c^2 = C_{11}$ ergibt sich
+\begin{align}
+\vec{e}_1(\vec{q}) &= \frac{(C_{11} - C_{66})}{\mathcal{N}} \begin{pmatrix}
+\hat{q}_x^2 \\ \hat{q}_x\hat{q}_y \\ 0
+\end{pmatrix} \equiv \vec{q},
+\end{align}
+und analog für $\rho c^2 = C_{66}$ 
+\begin{align}
+\vec{e}_2(\vec{q}) &= \frac{(C_{11} - C_{66})}{\mathcal{N}} \begin{pmatrix}
+-\hat{q}_y^2 \\ \hat{q}_x\hat{q}_y \\ 0
+\end{pmatrix} \equiv \begin{pmatrix}
+-\hat{q}_y \\ \hat{q}_x \\ 0
+\end{pmatrix}.
+\end{align}
+%Die Normierungskonstante ist
+%\begin{align}
+%\mathcal{N}^2 &= c^4 + C_{66}^2 \hat{q}_x^4 + C_{11}^2 \hat{q}_y^4 - 2C_{11}C_{66} \hat{q}_x^2 \hat{q}_y^2 - 2c^2 (C_{11}\hat{q}_x^2 + C_{66}\hat{q}_y^2) + (C_{11} - C_{66})^2 \hat{q}_x^2\hat{q}_y^2 = \\
+%&= c^4
+%\end{align}
+
+\section{Harmonische Näherung in zweiter Quantisierung}
+Gegeben sei ein $d$-dimensionaler kristall mit $N$ Gitterplätzen und einem Atom der Masse $M$ pro Elementarzelle.
+In harmonischer Näherung gilt
+\begin{align}
+\mathcal{H}_\tecxt\text{h} &= \sum_{\textbf{q} \lambda} \hbar\omega_\lambda (\textbf{q}) \kla\left( b^\dagger_{\textbf{q} \lambda} b_{\textbf{q} \lambda} + \frac{1}{2} \right).
+\end{align}
+Die Operatoren $\textbf{u}_n$ für die Auslenkung der Gitteratome lassen sich durch Phononen-Erzeugungs- und Vernichtungsoperatoren $b_{\textbf{q} \lambda}^\dagger$ und $b_{\textbf{q} \lambda}$ ausdrücken
+\begin{align}
+\textbf{u}_n &= \frac{1}{\sqrt{NM}} \sum_{\textbf{q} \in \tecxt\text{1.BZ}, \lambda} \sqrt{\frac{\hbar}{2\omega_\lambda(\textbf{q})}}  \e^{\i \textbf{q}\cdot \textbf{R}_n^0} \textbf{e}_{\textbf{q} \lambda} \kla\left( b_{\textbf{q} \lambda} + b^\dagger_{-\textbf{q} \lambda} \right).
+\end{align}
+\subsection*{(a) Mittlere thermische Auslenkung}
+Die Zustandssumme für diesen Hamiltonian ist
+\begin{align}
+Z &= \tecxt\text{tr\,} \e^{-\beta \mathcal{H}_\tecxt\text{h}} = \sum_{\{n_{\textbf{q} \lambda}\}} \langle \{ n_{\textbf{q} \lambda}\} | \prod_{\textbf{q} \lambda} \e^{-\beta\hbar\omega_\lambda (\textbf{q}) \kla\left( b^\dagger_{\textbf{q} \lambda} b_{\textbf{q} \lambda} + \frac{1}{2} \right)} | \{n_{\textbf{q} \lambda}\} \rangle = \\
+&= \prod_{\textbf{q} \lambda} \sum_{n_{\textbf{q} \lambda} = 0}^\infty  \e^{-\beta\hbar\omega_\lambda (\textbf{q}) \kla\left( n_{\textbf{q} \lambda} + \frac{1}{2} \right)} = \\
+&= \prod_{\textbf{q} \lambda} \frac{\e^{-\beta\hbar\omega_\lambda (\textbf{q}) / 2}}{1 - \e^{-\beta\hbar\omega_\lambda (\textbf{q})}} = \prod_{\textbf{q} \lambda} \frac{1}{2} \csch\kla\left( \frac{\beta\hbar\omega_\lambda (\textbf{q})}{2} \right).
+\end{align}
+Erwartungswerte können wir dann über $\bra\langle A \rangle = \tecxt\text{tr\,}A\hat{\rho}$ bestimmen.
+Hier benötigen wir
+\begin{align}
+\bra\langle b_{\textbf{q} \lambda} \rangle &= \sum_{\{n_{\textbf{q} \lambda}\}} \langle \{ n_{\textbf{q} \lambda}\} | b_{\textbf{q} \lambda} \hat{\rho} | \{n_{\textbf{q} \lambda}\} \rangle = \\
+&= \sum_{\{n_{\textbf{q} \lambda}\}} \langle \dots, n_{\textbf{q} \lambda} + 1, \dots | \sqrt{n_{\textbf{q} \lambda} + 1} \hat{\rho} | \{n_{\textbf{q} \lambda}\} \rangle = 0.
+\end{align}
+Daraus folgt für die mittlere thermische Auslekung dann
+\begin{align}
+\bra\langle \textbf{u}_n \rangle &= \dots \bra\langle b_{\textbf{q} \lambda} + b^\dagger_{-\textbf{q} \lambda} \rangle = 0.
+\end{align}
+\subsection*{(b) Mittlere Abweichung der Auslenkung}
+%Wir berechnen zunächst das Quadrat der Auslenkung, wobei wir $\textbf{e}_{-\textbf{q}\lambda} = \textbf{e}_{\textbf{q} \lambda}^\ast \equiv \textbf{e}_{\textbf{q} \lambda}$ und $\textbf{e}_{\textbf{q} \lambda} \cdot \textbf{e}_{\textbf{q} \mu} = \delta_{\lambda\mu}$ ausnutzen.
+%Die erste Relation gilt, weil wir eine einatomige Basis haben, weshalb die Polaritsationsvektoren reell gewählt werden können.
+Um die Erwartungswerte der Auslenkungsquadrate auszurechnen, nutzen wir $\textbf{e}_{-\textbf{q}\lambda} = \textbf{e}_{\textbf{q} \lambda}^\ast \equiv \textbf{e}_{\textbf{q} \lambda}$ und $\textbf{e}_{\textbf{q} \lambda} \cdot \textbf{e}_{\textbf{q} \mu} = \delta_{\lambda\mu}$.
+Die erste Relation gilt, weil wir eine einatomige Basis haben, weshalb die Polaritsationsvektoren reell gewählt werden können.
+%Insbesondere folgt dann mit $\textbf{u}_n^\dagger = \textbf{u}_n$, dass das Vorzeichen im Exponenten des Terms $\e^{\i \textbf{q}\cdot \textbf{R}_n^0}$ irrelevant ist.
+Damit lauten die Auslenkungsquadrate dann zunächst
+\begin{align}
+\textbf{u}_n^2 &= \frac{\hbar}{2NM} \sum_{\textbf{q}\textbf{q}' \lambda \lambda'} \frac{\textbf{e}_{\textbf{q} \lambda} \cdot \textbf{e}_{\textbf{q}' \lambda'} \e^{\i (\textbf{q} + \textbf{q}') \cdot \textbf{R}_n^0} }{\sqrt{\omega_\lambda(\textbf{q}) \omega_{\lambda'} (\textbf{q}')}}  \kla\left( b_{\textbf{q} \lambda} b_{\textbf{q}' \lambda'} + b_{\textbf{q} \lambda} b^\dagger_{-\textbf{q}' \lambda'} + b^\dagger_{-\textbf{q} \lambda} b_{\textbf{q}' \lambda'} + b^\dagger_{-\textbf{q} \lambda} b^\dagger_{-\textbf{q}' \lambda'} \right).
+\end{align}
+Die Erwartungswerte der Erzeuge und Vernichter vereinfachen sich zu
+\begin{align}
+\bra\langle b_{\textbf{q}\lambda}b_{\textbf{q}'\lambda'} &+ b_{\textbf{q}\lambda} b_{-\textbf{q}'\lambda'}^\dagger + b_{-\textbf{q}\lambda}^\dagger b_{\textbf{q}'\lambda'} + b_{-\textbf{q}\lambda}^\dagger b_{-\textbf{q}'\lambda'}^\dagger \rangle = \\
+&= \sum_{\{n_{\textbf{k}\mu} \}} \langle \{n_{\textbf{k}\mu} \} | \left(  b_{\textbf{q}\lambda} b_{-\textbf{q}'\lambda'}^\dagger + b_{-\textbf{q}\lambda}^\dagger b_{\textbf{q}'\lambda'} \right) \hat{\rho} | \{n_{\textbf{k}\mu}\} \rangle = \\
+&= \delta_{\textbf{q},-\textbf{q}'} \delta_{\lambda\lambda'} \sum_{\{n_{\textbf{k}\mu} \}} \langle \{n_{\textbf{k}\mu} \} | \left(  2b_{\textbf{q}\lambda}^\dagger b_{\textbf{q}\lambda} + 1 \right) \hat{\rho} | \{n_{\textbf{k}\mu}\} \rangle
+\end{align}
+Wir schreiben den Operator $\hat{n}_{\textbf{q}\lambda} + \frac{1}{2}$ im Erwartungswert als Ableitung von 
+\begin{align}
+\hat{\rho} = \frac{1}{Z} \exp\kla\left( -\sum_{\textbf{q}\lambda} \beta\hbar \omega_\lambda (\textbf{q}) \kla\left( \hat{n}_{\textbf{q}\lambda} + \frac{1}{2} \right)  \right),
+\end{align}
+womit sich der vorherige Ausdruck dann zu
+\begin{align}
+\dots &= 2\delta_{\textbf{q},-\textbf{q}'} \delta_{\lambda\lambda'} \frac{1}{Z} \left(-\frac{\partial_{\omega_\lambda (\textbf{q})}}{\hbar\beta} \right) Z = \frac{2}{\hbar\beta} \partial_{\omega_\lambda (\textbf{q})} \sum_{\textbf{k} \mu} \log \sinh\kla\left( \frac{\beta\hbar\omega_\mu (\textbf{k})}{2} \right) = \\
+&= \delta_{\textbf{q},-\textbf{q}'} \delta_{\lambda\lambda'} \coth\kla\left( \frac{\beta\hbar\omega_\lambda ( \textbf{q})}{2} \right)
+\end{align}
+vereinfacht.
+%Wir nutzen noch $\frac{1}{N}\sum_{\textbf{k}} \e^{\i (\textbf{q} + \textbf{k}) \cdot \textbf{R}_n^0} = \delta_{\textbf{q}, -\textbf{k}}$.
+%Dann gilt
+%\begin{align}
+%\textbf{u}_n^2 &= \frac{\hbar}{2NM} \sum_{\textbf{q},\textbf{k}, \lambda, \mu} \frac{\textbf{e}_{\textbf{q} \lambda} \cdot \textbf{e}_{\textbf{k} \mu}}{\sqrt{\omega_\lambda(\textbf{q}) \omega_\mu (\textbf{k})}} \e^{\i (\textbf{q} + \textbf{k})\cdot \textbf{R}_n^0}  \kla\left( b_{\textbf{q} \lambda} b_{\textbf{k} \mu} + b_{\textbf{q} \lambda} b^\dagger_{\textbf{k} \mu} + b^\dagger_{\textbf{q} \lambda} b_{\textbf{k} \mu} + b^\dagger_{\textbf{q} \lambda} b^\dagger_{\textbf{k} \mu} \right) = \\
+%&= \frac{\hbar}{2NM} \sum_{\textbf{q},\lambda} \frac{1}{\omega_\lambda (\textbf{q})} \kla\left( b_{\textbf{q} \lambda}^2 + b^{\dagger 2}_{\textbf{q} \lambda} + b_{\textbf{q} \lambda} b^\dagger_{\textbf{q} \lambda} + b^\dagger_{\textbf{q} \lambda} b_{\textbf{q} \lambda} \right) = \\
+%&= \frac{\hbar}{2NM} \sum_{\textbf{q} \lambda} \frac{1}{\omega_\lambda (\textbf{q}) } \kla\left( b_{\textbf{q} \lambda}^2 + b^{\dagger 2}_{\textbf{q} \lambda} + 2\hat{n}_{\textbf{q} \lambda} + 1 \right).
+%\end{align}
+%Die quadratischen Terme liefern im Erwartungswert wieder keinen Beitrag.
+%Die anderen beiden Terme lassen sich dann zusammen berechnen, da
+%\begin{align}
+%\bra\langle \hat{n}_{\textbf{q} \lambda} + \frac{1}{2} \rangle &= \sum_{\{n_{\textbf{k} \mu}\}} \braket\langle \{n_{\textbf{k} \mu}\} | \kla\left( \hat{n}_{\textbf{q} \lambda} + \frac{1}{2} \right) \hat{\rho} | \{n_{\textbf{k} \mu}\} \rangle = \\
+%&= \frac{1}{Z} \left(-\frac{\partial_{\omega_\lambda (\textbf{q})}}{\hbar\beta} \right) Z = \frac{1}{\hbar\beta} \partial_{\omega_\lambda (\textbf{q})} \sum_{\textbf{k} \mu} \log \sinh\kla\left( \frac{\beta\hbar\omega_\mu (\textbf{k})}{2} \right) = \\
+%&= \frac{1}{2} \coth\kla\left( \frac{\beta\hbar\omega_\lambda ( \textbf{q})}{2} \right).
+%\end{align}
+%Die mittlere quadratische Abweichung der Auslenkung ergibt sich dann zu
+%\begin{align}
+%\bra\langle \textbf{u}_n^2 \rangle &= \frac{\hbar}{NM} \sum_{\textbf{q} \lambda} \frac{1}{\omega_\lambda (\textbf{q})} \bra\langle \hat{n}_{\textbf{q} \lambda} + \frac{1}{2} \rangle = \\
+%&= \frac{\hbar}{2NM} \sum_{\textbf{q} \lambda} \frac{1}{\omega_\lambda( \textbf{q}) } \coth\kla\left( \frac{\beta\hbar\omega_\lambda (\textbf{q})}{2} \right).
+%\end{align}
+Die mittlere quadratische Abweichung der Auslenkung ergibt sich dann zu
+\begin{align}
+\bra\langle \textbf{u}_n^2 \rangle &= \frac{\hbar}{2NM} \sum_{\textbf{q} \lambda} \frac{1}{\omega_\lambda( \textbf{q}) } \coth\kla\left( \frac{\beta\hbar\omega_\lambda (\textbf{q})}{2} \right).
+\end{align}
+Die Phononen-Zustandsdichte ist definiert als
+\begin{align}
+n(\omega) &:= \frac{1}{N} \sum_{\textbf{q} \lambda} \delta\kla\left( \omega - \omega_\lambda ( \textbf{q}) \right).
+\end{align}
+Damit lässt sich die obige Gleichung auch als Integral über $\omega$ ausdrücken, da
+\begin{align}
+\bra\langle \textbf{u}_n^2 \rangle &= \frac{\hbar}{2NM} \sum_{\textbf{q} \lambda} \intx\int_{ }^{ } \delta \kla\left( \omega - \omega_\lambda (\textbf{q}) \right) \frac{1}{\omega} \coth\kla\left( \frac{\beta\hbar\omega}{2} \right) \, \mathrm{d}\omega = \\
+&= \frac{\hbar}{2M} \intx\int_{ }^{ }n(\omega) \frac{1}{\omega} \coth\kla\left( \frac{\beta\hbar\omega}{2} \right) \, \mathrm{d}\omega.
+\end{align}
+\subsection*{(c) Divergenz für $d<3$}
+Wir betrachten den Integranden zunächst für kleine $x := \frac{\beta\hbar\omega}{2} \ll 1$.
+Dann gilt $n(x) \sim x^{d-1}$ und wir finden die Entwicklung
+\begin{align}
+\frac{n(x)}{x} \coth(x) &\sim x^{d-2} \frac{1 + \frac{1}{2}x^2}{x + \frac{1}{6}x^3} \sim x^{d-3} \kla\left( 1 + \frac{x^2}{2} \right) \kla\left( 1 - \frac{x^2}{6} + \dots \right) \sim \\
+&\sim x^{d-3} \kla\left( 1 + \frac{x^2}{3} \right).
+\end{align}
+Für $d<3$ existiert also ein Term $\frac{1}{x^\alpha}$ mit $\alpha \ge 1$, womit das Integral an der unteren Grenze divergiert.
+\\
+Für $d=3$ bekommen wir hier keine Probleme. 
+Die einzige Möglichkeit für ein divergentes Integral wären dann Polstellen der Zustandsdichte.
+Da aber in drei Dimensionen in der Nähe kritischer Punkte $n(x) \sim |x - x_c|^{1/2}$ gilt, treten auch hier keine Divergenzen auf.
+%{\color{red}FIXME}: Konsequenzen?
+Die Divergenz für $d<3$ erscheint physikalisch wenig sinnvoll, da die Auslenkungen (zumindest intuitiv) beschränkt sein sollten.
+Sonst könnten sich einzelne Atome mit nicht zu vernachlässigender Wahrscheinlichkeit beliebig weit von ihrer Ruheposition entfernen.
+Zumindest einmal kann das Lindemann'sche Schmelzkriterium nicht mehr sinnvoll sein, da solche Kristalle dann nie schmelzen könnten (bei Graphen scheint das mit dem ``schmelzen'' auch nicht so einfach zu sein, aber einen vergleichbaren Vorgang gibt es wohl).
+\subsection*{(d) Tieftemperatur-Limes im Debye-Modell}
+Im Debye-Modell ist die Dispersion streng linear, also $\omega(q) = \bar{c} q$.
+Die 1. BZ wird mit einer Kugel im $\textbf{q}$-Raum ersetzt, deren Radius über $\omega_D \equiv \bar{c}q_D$ mit der Debye-Frequenz verknüpft ist.
+Daraus folgt dann $n(\omega) = \frac{9}{\omega_D^3}\omega^2 \Theta(\omega_D - \omega)$ mit $\omega_D=\bar{c} \sqrt[3]{\frac{6\pi}{V_\tecxt\text{EZ}}}$.
+Einsetzen in das Integral liefert
+\begin{align}
+\bra\langle \textbf{u}_n^2 \rangle &= \frac{\hbar}{2M} \intx\int_{0}^{\omega_D} \frac{9\omega}{\omega_D^3} \coth\kla\left( \frac{\beta\hbar\omega}{2} \right) \, \mathrm{d}\omega.
+\end{align}
+Für $\beta \rightarrow \infty$ vereinfacht sich das Integral zu
+\begin{align}
+\bra\langle \textbf{u}_n^2 \rangle &\longrightarrow \frac{9\hbar}{2M\omega_D^3} \intx\int_{0}^{\omega_D}\omega \, \mathrm{d}\omega = \frac{9\hbar}{4M\omega_D}.
+\end{align}
+\subsection*{(e) Hochtemperatur-Limes im Debye-Modell}
+Wir substituieren $x := \beta\hbar\omega$ und erhalten
+\begin{align}
+\bra\langle \textbf{u}_n^2 \rangle &= \frac{9\hbar}{2M\omega_D} \intx\int_{0}^{x_D} \frac{x}{x_D^2} \coth\kla\left( \frac{x}{2} \right)  \, \mathrm{d}x
+\end{align}
+Für hohe Temperaturen geht $\beta$ gegen 0, wir können also den Integranden für $x\ll 1$ entwickeln
+\begin{align}
+x\coth\kla\left( \frac{x}{2} \right) &\sim x \frac{1 + \frac{(x/2)^2}{2}}{(x/2) + \frac{(x/2)^3}{6}} \sim 2\kla\left( 1 + \frac{(x/2)^2}{2} \right)\kla\left( 1 - \frac{(x/2)^2}{6} \right) \sim 1 + \frac{x^2}{12} .
+\end{align}
+Damit erhalten wir
+\begin{align}
+\bra\langle \textbf{u}_n^2 \rangle &\sim \frac{9k_BT}{2M\omega_D^2} \kla\left( 1 + \frac{1}{36} \kla\left( \frac{\hbar\omega_D}{k_BT} \right)^2 \right).
+\end{align}
+\subsection*{(f) Schmelztemperatur}
+Nach dem Lindemann'schen Schmelzkriterium schmilzt ein Kristall, wenn $\bra\langle \textbf{u}_n^2 \rangle = x_Sa^2$.
+Wir finden also 
+\begin{align}
+x_Sa^2 &= \frac{9k_BT_S}{2M\omega_D^2} \kla\left( 1 + \frac{1}{36} \kla\left( \frac{\hbar\omega_D}{k_BT_S} \right)^2 \right),\\
+\Rightarrow\ \ \ 0 &= T_S^2 - \frac{2M\omega_D^2x_Sa^2}{9k_B} T_S + \frac{\hbar^2\omega_D^2}{36k_B^2}.
+\end{align}
+Daraus folgt dann
+\begin{align}
+T_S &= \frac{M\omega_D^2x_Sa^2}{9k_B} \pm \sqrt{\kla\left( \frac{M\omega_D^2x_Sa^2}{9k_B} \right)^2 - \frac{\hbar^2\omega_D^2}{36k_B^2}} = \\
+&= \frac{M\omega_D^2x_Sa^2}{9k_B}\klam\left[ 1 \pm \sqrt{1 - \frac{9\hbar^2}{4\omega_D^2M^2x_S^2a^4}} \right].
+\end{align}
+
+\section{Anharmonische Korrekturen der Gitterschwingungen}
+Wir betrachten einen Oszillator beschrieben durch den Hamiltonoperator $\mathcal{H}_h = \frac{p^2}{2M} + \frac{k}{2}x^2$ unter dem Einfluss einer kleinen anharmonischen Störung $V_\tecxt\text{ah} = -sx^3 - cx^4$.
+\subsection*{(a) Störungsrechnung in der Quantentheorie}
+Allgemein schreiben wir in der Störungstheorie die Zustände als Reihe
+\begin{align}
+\Ket | n \rangle &= \sum_{k\ge 0} \epsilon^k \Ket | n_k \rangle,
+\end{align}
+wobei üblicherweise $\epsilon\ll 1$ gelten sollte.
+Der Erwartungswert eines (hermitischen) Operators $\hat{A}$ ergibt sich dann zu
+\begin{align}
+\bra\langle \hat{A} \rangle &= \braket\langle n | \hat{A} | n \rangle = \braket\langle n_0 | \hat{A} | n_0 \rangle + 2\epsilon \braket\langle n_0 | \hat{A} | n_1 \rangle + \mathcal{O}(\epsilon^2).
+\end{align}
+In unserem Fall ist
+\begin{align}
+\bra\langle x \rangle &= \braket\langle n_0 | x | n_0 \rangle = x_0 \braket\langle n_0 | b + b^\dagger | n_0 \rangle = 0.
+\end{align}
+Für die niedrigste nicht-verschwindende Ordnung ist der Term $\braket\langle n_0 | \hat{x} | n_1 \rangle$ hinreichend, da er nicht verschwindet -- das ist a priori allerdings nicht klar.
+Wir benötigen also die erste Korrektur zu den Zuständen, wobei wir die Terme einzeln betrachten.
+Da wir außerdem nur den Erwartungswert von $\hat{x}$ bestimmen wollen, für den $\Bra\langle n_0 |\hat{x} \propto \Bra\langle n_0+1 |\sqrt{n+1} + \Bra\langle n_0-1 |\sqrt{n}$ gilt, und für $V\propto x^4$ nur Terme der Form $\Ket | n_0\pm 2k \rangle$ für $k\in\mathbb{N}$ vorkommen, müssen wir nur den kubischen Term berücksichtigen\footnote{Da mir erst später aufgefallen ist, dass man das in dieser Ordnung gar nicht braucht, ist die Rechnung für $V\propto x^4$ weiter unten noch mit angegeben}.
+Für $V\sim x^3$ finden wir 
+\begin{align*}
+\Ket | n_1 \rangle &= \sum_{m\neq n} \frac{\braket\langle m_0 | x^3 | n_0 \rangle}{E_{n0} - E_{m0}} \Ket | m_0 \rangle = \frac{x_0^3}{\hbar\omega} \sum_{m\neq n} \frac{\braket\langle m_0 | \kla\left( b+b^\dagger \right)^3 | n_0 \rangle}{ n - m } \Ket | m_0 \rangle = \numberthis \\
+%&= \frac{x_0^3}{\hbar\omega} \sum_{m\neq n} \frac{\Ket | m_0 \rangle}{n-m} \braket\langle m_0 | b^3 + b^2b^\dagger + bb^\dagger b + b^\dagger b^2 + b^{\dagger 2}b + b^\dagger b b^\dagger + bb^{\dagger 2} + b^{\dagger 3} | n_0 \rangle = \numberthis  \\
+&= \frac{x_0^3}{\hbar\omega} \sum_{m\neq n} \frac{\Ket | m_0 \rangle}{n-m} \braket\langle m_0 | b^3 + b^2b^\dagger + bb^\dagger b + b^\dagger b^2 + \tecxt\text{h.c.} | n_0 \rangle =  \numberthis \\
+&= \dots \sqrt{(m+1)(m+2)(m+3)}\delta_{n,m+3} + \\
+&\hspace{0.5cm} + \kla\left( \sqrt{(m+1)(m+2)(n+1)} + \sqrt{(m+1)}n + m\sqrt{n} \right) \delta_{n,m+1} + (n\leftrightarrow m) =  \numberthis \\
+%&\hspace{0.5cm} + \kla\left( \sqrt{mn} + \sqrt{m(n+1)} + \sqrt{(m+1)(n+1)(n+2)} \right) \delta_{n,m-1} + \\
+%&\hspace{0.5cm} + \sqrt{(n+1)(n+2)(n+3)} \delta_{n,m-3} =  \numberthis \\
+&= \frac{x_0^3}{\hbar\omega} \bigg[ \sqrt{n(n-1)(n-2)} \frac{\Ket | n_0-3 \rangle}{3} - \sqrt{(n+1)(n+2)(n+3)} \frac{\Ket | n_0+3 \rangle}{3}\\
+&\hspace{1.5cm} + \kla\left( \sqrt{n}(n+1) + n\sqrt{n} + (n-1)\sqrt{n} \right) \Ket | n_0-1 \rangle - \\
+&\hspace{1.5cm} - \kla\left( \sqrt{n+1}(n+2) + \sqrt{n+1}(n+1) + n\sqrt{n+1} \right) \Ket | n_0+1 \rangle \bigg] =  \numberthis \\
+&= \frac{x_0^3}{\hbar\omega} \bigg[ \sqrt{n(n-1)(n-2)} \frac{\Ket | n_0-3 \rangle}{3} - \sqrt{(n+1)(n+2)(n+3)} \frac{\Ket | n_0+3 \rangle}{3} + \\
+&\hspace{1.5cm} + 3n\sqrt{n} \Ket | n_0 - 1 \rangle - 3(n+1)\sqrt{n+1} \Ket | n_0 + 1 \rangle \bigg]. \numberthis 
+\end{align*}
+Der Erwartungswert lautet dann
+\begin{align}
+\bra\langle \hat{x} \rangle &= 2\braket\langle n_0 | \hat{x} | -sn_1^{(x^3)} \rangle = -2sx_0\braket\langle n_0 | b + b^\dagger | n_1^{(x^3)} \rangle = \\
+&= -2sx_0 \kla\left( \Bra\langle n_0+1 |\sqrt{n+1} + \Bra\langle n_0-1 |\sqrt{n} \right) \Ket | n_1^{(x^3)} \rangle = \\
+&= -\frac{2sx_0^4}{\hbar\omega} \klam\left[ 3n^2 - 3(n+1)^2 \right] = \frac{12sx_0^4}{\hbar\omega} \klam\left[ n + \frac{1}{2} \right].
+\end{align}
+Dabei ist $x_0=\sqrt{\frac{\hbar}{2m\omega}}$, also $\bra\langle \hat{x} \rangle = \frac{3s\hbar}{m^2\omega^3} \kla\left( n+\frac{1}{2} \right)$.
+\subsection*{(b) Thermodynamische Betrachtung}
+Der thermodynamische Erwartungswert ergibt sich zu
+\begin{align}
+\bra\langle \hat{x} \rangle &= \sum_{n\ge 0} \bra\langle \hat{x} \rangle_n \e^{-\beta\hbar\omega \kla\left( n+\frac{1}{2} \right)} = \frac{3s\hbar}{m^2\omega^3} \sum_{n\ge 0} \frac{-\partial_\beta}{\hbar\omega} \e^{-\beta\hbar\omega\kla\left( n+\frac{1}{2} \right)} = \\
+&= \frac{-3s\hbar}{m^2\omega^3} \frac{\partial_\beta}{\hbar\omega} \frac{1}{2\sinh\kla\left( \frac{\beta\hbar\omega}{2} \right)} = \frac{3s\hbar}{4m^2\omega^3} \frac{\cosh\kla\left( \frac{\beta\hbar\omega}{2} \right)}{\sinh\kla\left( \frac{\beta\hbar\omega}{2} \right)^2}.
+\end{align}
+Für $z\ll 1$ gilt
+\begin{align}
+\frac{\cosh(z)}{\sinh(z)^2} &\sim \frac{1 + \frac{z^2}{2}}{\kla\left( z + \frac{z^3}{6} \right)^2} \sim \frac{1}{z^2}\kla\left( 1 + \frac{z^2}{2} \right) \kla\left( 1 - \frac{z^2}{6} \right)^2 \sim\\
+&\sim \frac{1}{z^2} \kla\left( 1 + \frac{z^2}{2} \right) \kla\left( 1 - \frac{z^2}{3} \right) \sim \frac{1}{z^2} \kla\left( 1 + \frac{z^2}{6} \right).
+\end{align}
+Im Hochtemperaturlimes $\beta\rightarrow 0$ gilt dann näherungsweise
+\begin{align}
+\bra\langle \hat{x} \rangle &\sim \frac{3s}{m^2\beta^2 \hbar\omega^5}  \kla\left( 1 + \frac{(\beta\hbar\omega)^2}{24} \right).
+\end{align}
+Um den thermodynamischen Erwartungswert zu berechnen, könnten wir zudem auch noch die Energiekorrektur in erster Ordnung berücksichtigen.
+Für diese ist nur der $x^4$-Term relevant, und dort nur die Terme mit gleicher Anzahl an Erzeugern und Vernichtern.
+Man findet
+\begin{align}
+E_{n1} &= \braket\langle n_0 | V | n_0 \rangle = -cx_0^4 \braket\langle n_0 | (b+b^\dagger)^4 | n_0 \rangle = \\
+&= -cx_0^4 \braket\langle n_0 | b^2b^{\dagger 2} + bb^\dagger bb^\dagger + bb^{\dagger 2}b + b^{\dagger 2} b^2 + b^\dagger bb^\dagger b + b^\dagger b^2 b^\dagger | n_0 \rangle = \\
+&= -cx_0^4 \klam\left[ (n+1)(n+2) + (n+1)^2 + (n+1)n + n(n-1) + n^2 + n(n+1) \right] = \\
+&= -cx_0^4 \klam\left[ 6n^2 + 6n + 3 \right] = -6cx_0^4 \kla\left( n+\frac{1}{2} \right)^2 - \frac{3cx_0^4}{2}.
+\end{align}
+Damit verändert sich allerdings auch der Erwartungswert in der thermodynamischen Betrachtung, da
+\begin{align}
+\bra\langle \hat{x} \rangle &= \sum_{n\ge 0} \bra\langle \hat{x} \rangle_n \e^{-\beta\hbar\omega\kla\left( n+\frac{1}{2} \right) + \beta \frac{3c\hbar^2}{2m^2\omega^2} \kla\left( n+\frac{1}{2} \right)^2 + \beta \frac{3c\hbar^2}{8m^2\omega^2}}.
+\end{align}
+Diese Summe ist allerdings nicht mehr analytisch berechenbar.
+Problematisch ist vor allem, dass die Reihe jetzt divergiert.
+Das ist darauf zurückzuführen, dass die Störungstheorie nur für kleine $n$ gültig ist -- sicherlich nicht für $n\rightarrow\infty$.
+Insofern bringt auch die Betrachtung des Hochtemperaturlimes $\beta\rightarrow 0$ hier keine neue Erkenntnis.
+\subsection*{Anhang}
+%Anwenden der Erzeuger und Vernichter nach links ergibt $\Bra\langle n_0-1 |\sqrt{n} + \Bra\langle n_0+1 |\sqrt{n+1}\dots $, weshalb nur der $n_1^{(x^3)}$-Term beiträgt.
+%Wir erhalten also
+%\begin{align}
+%\bra\langle x \rangle &= \frac{2sx_0^4}{\hbar\omega} \klam\left[ 3n^2 - 3(n+1)^2 \right] = -\frac{24x_0^4}{\hbar\omega} \klam\left[ n + \frac{1}{2} \right].
+%\end{align}
+%%%%%%% BEGIN HORRIBLE CALCULATION OF THE NEXT ORDER
+%In erster Ordnung Störungsrechnung ergibt sich
+%\begin{align}
+%\bra\langle x \rangle_1 &= \braket\langle n_0 | x | n_0 \rangle = x_0 \braket\langle n_0 | b + b^\dagger | n_0 \rangle = 0.
+%\end{align}
+%Wir müssen also zur zweiten Ordnung gehen.
+%Dafür benötigen wir die Korrekturen zu den Zuständen, wobei wir die Terme einzeln betrachten.
+%Für $V\sim x^3$ finden wir
+%\begin{align*}
+%\Ket | n_1 \rangle &= \sum_{m\neq n} \frac{\braket\langle m_0 | x^3 | n_0 \rangle}{E_{n0} - E_{m0}} \Ket | m_0 \rangle = \frac{x_0^3}{\hbar\omega} \sum_{m\neq n} \frac{\braket\langle m_0 | \kla\left( b+b^\dagger \right)^3 | n_0 \rangle}{ n - m } \Ket | m_0 \rangle = \numberthis \\
+%%&= \frac{x_0^3}{\hbar\omega} \sum_{m\neq n} \frac{\Ket | m_0 \rangle}{n-m} \braket\langle m_0 | b^3 + b^2b^\dagger + bb^\dagger b + b^\dagger b^2 + b^{\dagger 2}b + b^\dagger b b^\dagger + bb^{\dagger 2} + b^{\dagger 3} | n_0 \rangle = \numberthis  \\
+%&= \frac{x_0^3}{\hbar\omega} \sum_{m\neq n} \frac{\Ket | m_0 \rangle}{n-m} \braket\langle m_0 | b^3 + b^2b^\dagger + bb^\dagger b + b^\dagger b^2 + \tecxt\text{h.c.} | n_0 \rangle =  \numberthis \\
+%&= \dots \sqrt{(m+1)(m+2)(m+3)}\delta_{n,m+3} + \\
+%&\hspace{0.5cm} + \kla\left( \sqrt{(m+1)(m+2)(n+1)} + \sqrt{(m+1)}n + m\sqrt{n} \right) \delta_{n,m+1} + (n\leftrightarrow m) =  \numberthis \\
+%%&\hspace{0.5cm} + \kla\left( \sqrt{mn} + \sqrt{m(n+1)} + \sqrt{(m+1)(n+1)(n+2)} \right) \delta_{n,m-1} + \\
+%%&\hspace{0.5cm} + \sqrt{(n+1)(n+2)(n+3)} \delta_{n,m-3} =  \numberthis \\
+%&= \frac{x_0^3}{\hbar\omega} \bigg[ \sqrt{n(n-1)(n-2)} \frac{\Ket | n_0-3 \rangle}{3} - \sqrt{(n+1)(n+2)(n+3)} \frac{\Ket | n_0+3 \rangle}{3}\\
+%&\hspace{1.5cm} + \kla\left( \sqrt{n}(n+1) + n\sqrt{n} + (n-1)\sqrt{n} \right) \Ket | n_0-1 \rangle - \\
+%&\hspace{1.5cm} - \kla\left( \sqrt{n+1}(n+2) + \sqrt{n+1}(n+1) + n\sqrt{n+1} \right) \Ket | n_0+1 \rangle \bigg] =  \numberthis \\
+%&= \frac{x_0^3}{\hbar\omega} \bigg[ \sqrt{n(n-1)(n-2)} \frac{\Ket | n_0-3 \rangle}{3} - \sqrt{(n+1)(n+2)(n+3)} \frac{\Ket | n_0+3 \rangle}{3} + \\
+%&\hspace{1.5cm} + 3n\sqrt{n} \Ket | n_0 - 1 \rangle - 3(n+1)\sqrt{n+1} \Ket | n_0 + 1 \rangle \bigg]. \numberthis 
+%\end{align*}
+%Für $V\sim x^4$ tragen nur die Terme mit asymmetrischer Zahl an $b$ bzw. $b^\dagger$ bei, da die Summe über $m\neq n$ läuft.
+%Wir finden
+%\begin{align*}
+%\Ket | n_1 \rangle &= \sum_{m\neq n} \frac{\braket\langle m_0 | x^4 | n_0 \rangle}{E_{n0} - E_{m0}} \Ket | m_0 \rangle = \frac{x_0^4}{\hbar\omega} \sum_{m\neq n} \frac{\braket\langle m_0 | \kla\left( b+b^\dagger \right)^4 | n_0 \rangle}{ n - m } \Ket | m_0 \rangle = \numberthis \\
+%&= \frac{x_0^4}{\hbar\omega} \sum_{m\neq n} \frac{\Ket | m_0 \rangle}{n - m} \braket\langle m_0 | b^4 + b^3b^\dagger + b^2b^\dagger b + bb^\dagger b^2 + b^\dagger b^3 + \tecxt\text{h.c.} | n_0 \rangle = \numberthis \\
+%&= \dots \sqrt{(m+1)(m+2)(m+3)(m+4)} \delta_{n,m+4} + \\
+%&\hspace{0.5cm} + \Big( \sqrt{(m+1)(m+2)(m+3)(n+1)} + \sqrt{(m+1)(m+2)} n + \\
+%&\hspace{1.5cm} + \sqrt{(m+1)n}(n-1) + m\sqrt{n(n-1)} \Big) \delta_{n,m+2} + (n\leftrightarrow m) = \numberthis \\
+%&= \frac{x_0^4}{\hbar\omega} \bigg[ \sqrt{n(n-1)(n-2)(n-3)} \frac{\Ket | n_0 - 4 \rangle}{4} - \\
+%&\hspace{1.5cm} - \sqrt{(n+1)(n+2)(n+3)(n+4)} \frac{\Ket | n_0 + 4 \rangle}{4} + \\
+%&\hspace{1.5cm} + \Big( \sqrt{(n-1)n}(n+1) + \sqrt{(n-1)n}n + \\
+%&\hspace{2.5cm} + \sqrt{(n-1)n}(n-1) + (n-2)\sqrt{n(n-1)} \Big) \frac{\Ket | n_0-2 \rangle}{2} - \\
+%&\hspace{1.5cm} - \Big( \sqrt{(n+1)(n+2)}(n+3) + \sqrt{(n+1)(n+2)}(n+2) + \\
+%&\hspace{2.5cm} + \sqrt{(n+1)(n+2)}(n+1) + n\sqrt{(n+1)(n+2)} \Big) \frac{\Ket | n_0 + 2 \rangle}{2} \bigg] =  \numberthis \\
+%&= \frac{x_0^4}{\hbar\omega} \bigg[ \sqrt{n(n-1)(n-2)(n-3)} \frac{\Ket | n_0 - 4 \rangle}{4} - \\
+%&\hspace{1.5cm} - \sqrt{(n+1)(n+2)(n+3)(n+4)} \frac{\Ket | n_0 + 4 \rangle}{4} + \\
+%&\hspace{1.5cm} + \sqrt{n(n-1)}(2n-1)\Ket | n_0 - 2 \rangle - \sqrt{(n+1)(n+2)} (2n+3)\Ket | n_0 + 2 \rangle \bigg]. \numberthis
+%\end{align*}
+%Insgesamt erhalten wir dann die Korrektur
+%\begin{align}
+%\bra\langle x \rangle_2 &= \braket\langle n_0 + n_1 | x | n_0 + n_1 \rangle = 2\braket\langle n_0 | x | n_1 \rangle + \braket\langle n_1 | x | n_1 \rangle = \\
+%&= 2x_0 \braket\langle n_0 | b + b^\dagger | sn_1^{(x^3)} + cn_1^{(x^4)} \rangle + x_0\braket\langle sn_1^{(x^3)} + cn_1^{(x^4)} | b + b^\dagger | sn_1^{(x^3)} + cn_1^{(x^4)} \rangle.
+%\end{align}
+%Im ersten Teil haben wir $\Bra\langle n_0-1 |\sqrt{n} + \Bra\langle n_0+1 |\sqrt{n+1}\dots $, weshalb nur der $n_1^{(x^3)}$-Teil beiträgt.
+%Hier bekommen wir also
+%\begin{align}
+%\bra\langle x \rangle_2 &= \frac{2x_0^4}{\hbar\omega} \klam\left[ 3n^2 - 3(n+1)^2 \right] = -\frac{6x_0^4}{\hbar\omega} \klam\left[ 2n + 1 \right].
+%\end{align}
+%Auch hier tragen nur die gemischten Terme bei, also
+%\begin{align*}
+%\bra\langle x \rangle_2 &= 2x_0sc \braket\langle n_1^{(x^3)} | b + b^\dagger | n_1^{(x^4)} \rangle = \numberthis \\
+%&= \frac{2x_0^8sc}{\hbar^2\omega^2} \bigg[ \sqrt{n(n-1)(n-2)} \frac{\Bra\langle n_0 - 3 |}{3} - \sqrt{(n+1)(n+2)(n+3)} \frac{\Bra\langle n_0 + 3 |}{3} + \\
+%&\hspace{1.5cm} + 3n\sqrt{n} \Bra\langle n_0 - 1 | - 3(n+1)\sqrt{n+1} \Bra\langle n_0 + 1 | \bigg] (b+b^\dagger) \\
+%&\hspace{1.5cm}\bigg[ \sqrt{n(n-1)(n-2)(n-3)} \frac{\Ket | n_0 - 4 \rangle}{4} - \\
+%&\hspace{1.5cm} - \sqrt{(n+1)(n+2)(n+3)(n+4)} \frac{\Ket | n_0 + 4 \rangle}{4} + \\
+%&\hspace{1.5cm} + \sqrt{n(n-1)}(2n-1)\Ket | n_0 - 2 \rangle - \sqrt{(n+1)(n+2)} (2n+3)\Ket | n_0 + 2 \rangle \bigg] =  \numberthis \\
+%&= \frac{2x_0^8sc}{\hbar^2\omega^2} \bigg[  \frac{n(n-1)(n-2)}{3} (2n-1) +  \frac{n(n-1)(n-2)(n-3)}{12} + \\
+%&\hspace{1.5cm} + \frac{(n+1)(n+2)(n+3)(n+4)}{12} +  \frac{(n+1)(n+2)(n+3)}{3} (2n+3) + \\
+%&\hspace{1.5cm} + 3n^2(n-1) (2n-1) + 3(n+1)(n+1)(n+2) (2n+3) \bigg] =  \numberthis \\
+%&= \frac{2x_0^8sc}{\hbar^2\omega^2} \bigg[ n^4\kla\left( \frac{4}{3} + \frac{2}{12} + 12 \right) + n^3\kla\left( -\frac{7}{3} - \frac{6}{12} + \frac{10}{12} + \frac{15}{3} - 9 + 33 \right) + \\
+%&\hspace{1.5cm} + n^2 \kla\left( \frac{7}{3} + \frac{11}{12} + \frac{35}{12} + \frac{40}{3} + 3 + 22 \right) + n\kla\left( \frac{-2}{3} - \frac{6}{12} + \frac{50}{12} + \frac{39}{3} + 57 \right) + \\
+%&\hspace{1.5cm} + \frac{24}{12} + \frac{18}{3} + 18 \bigg] = \numberthis \\
+%&= \frac{2x_0^8sc}{\hbar^2\omega^2} \bigg[ \frac{27n^4}{2} + 21n^3 + \frac{58n^2}{3} + 73n + 26 \bigg]  \numberthis 
+%\end{align*}
+%Insgesamt erhalten wir also
+%\begin{align}
+%\bra\langle x \rangle_2 &= -\frac{6x_0^4}{\hbar\omega} \klam\left[ 2n + 1 \right] + \frac{x_0^8sc}{\hbar^2\omega^2} \bigg[ 27n^4 + 42n^3 + \frac{116n^2}{3} + 146n + 52 \bigg].
+%\end{align}
+%%%%%%% END HORRIBLE CALCULATION OF THE NEXT ORDER
+Hier noch die Rechnung für $V\sim x^4$.
+Es tragen nur die Terme mit asymmetrischer Zahl an $b$ bzw. $b^\dagger$ bei, da die Summe über $m\neq n$ läuft.
+Wir finden
+\begin{align*}
+\Ket | n_1 \rangle &= \sum_{m\neq n} \frac{\braket\langle m_0 | x^4 | n_0 \rangle}{E_{n0} - E_{m0}} \Ket | m_0 \rangle = \frac{x_0^4}{\hbar\omega} \sum_{m\neq n} \frac{\braket\langle m_0 | \kla\left( b+b^\dagger \right)^4 | n_0 \rangle}{ n - m } \Ket | m_0 \rangle = \numberthis \\
+&= \frac{x_0^4}{\hbar\omega} \sum_{m\neq n} \frac{\Ket | m_0 \rangle}{n - m} \braket\langle m_0 | b^4 + b^3b^\dagger + b^2b^\dagger b + bb^\dagger b^2 + b^\dagger b^3 + \tecxt\text{h.c.} | n_0 \rangle = \numberthis \\
+&= \dots \sqrt{(m+1)(m+2)(m+3)(m+4)} \delta_{n,m+4} + \\
+&\hspace{0.5cm} + \Big( \sqrt{(m+1)(m+2)(m+3)(n+1)} + \sqrt{(m+1)(m+2)} n + \\
+&\hspace{1.5cm} + \sqrt{(m+1)n}(n-1) + m\sqrt{n(n-1)} \Big) \delta_{n,m+2} + (n\leftrightarrow m) = \numberthis \\
+&= \frac{x_0^4}{\hbar\omega} \bigg[ \sqrt{n(n-1)(n-2)(n-3)} \frac{\Ket | n_0 - 4 \rangle}{4} - \\
+&\hspace{1.5cm} - \sqrt{(n+1)(n+2)(n+3)(n+4)} \frac{\Ket | n_0 + 4 \rangle}{4} + \\
+&\hspace{1.5cm} + \Big( \sqrt{(n-1)n}(n+1) + \sqrt{(n-1)n}n + \\
+&\hspace{2.5cm} + \sqrt{(n-1)n}(n-1) + (n-2)\sqrt{n(n-1)} \Big) \frac{\Ket | n_0-2 \rangle}{2} - \\
+&\hspace{1.5cm} - \Big( \sqrt{(n+1)(n+2)}(n+3) + \sqrt{(n+1)(n+2)}(n+2) + \\
+&\hspace{2.5cm} + \sqrt{(n+1)(n+2)}(n+1) + n\sqrt{(n+1)(n+2)} \Big) \frac{\Ket | n_0 + 2 \rangle}{2} \bigg] =  \numberthis \\
+&= \frac{x_0^4}{\hbar\omega} \bigg[ \sqrt{n(n-1)(n-2)(n-3)} \frac{\Ket | n_0 - 4 \rangle}{4} - \\
+&\hspace{1.5cm} - \sqrt{(n+1)(n+2)(n+3)(n+4)} \frac{\Ket | n_0 + 4 \rangle}{4} + \\
+&\hspace{1.5cm} + \sqrt{n(n-1)}(2n-1)\Ket | n_0 - 2 \rangle - \sqrt{(n+1)(n+2)} (2n+3)\Ket | n_0 + 2 \rangle \bigg]. \numberthis
+\end{align*}
+
+\end{document}

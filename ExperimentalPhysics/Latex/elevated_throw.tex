@@ -1,0 +1,139 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Various Problems from Experimental Physics I}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Experimental Physics}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Elevated angled throw}
+Let the units of measurement be such that $g=1=v_0$ and consider the elevated angled throw, i.e. $v_{x0} = \cos\alpha$, $v_{y0} = \sin\alpha$ and  $y(t_0) = h$.
+Then we find
+\begin{align}
+x(t) &= t\cos\alpha,\\
+y(t) &= -\frac{t^2}{2} + t\sin\alpha + h.
+\end{align}
+The curve $y(x)$ is thus given by
+\begin{align}
+y(x) &= -\frac{x^2}{2\cos^2\alpha} + \frac{\sin\alpha}{\cos\alpha} t + h.
+\end{align}
+The throwing distance is determined by $y(x_g) = 0$ which is a quadratic equation where the positive solution is given by
+%%% WOLFRAMALPHA :: Following commands are both understood and yield the correct result :: 
+%%% root (\sin\alpha\cos\alpha + \sqrt{\sin^2(\alpha)\cos^2(\alpha) + 2pi\cos^2(\alpha)})'
+%%% root (\sqrt{1 + pi - u} ( \sqrt{u - pi} + \sqrt{u + pi}))'
+\begin{align}
+x_g &= \sin\alpha\cos\alpha + \sqrt{\sin^2\alpha\cos^2\alpha + 2h\cos^2\alpha} = \\
+&= \cos\alpha \kla\left( \sin\alpha + \sqrt{\sin^2\alpha + 2h} \right).
+\end{align}
+Now letting $z := \sin\alpha$ yields
+\begin{align}
+x_g(z) &= \sqrt{1 - z^2} \kla\left( z + \sqrt{z^2 + 2h} \right).
+\end{align}
+It is useful to introduce yet another variable $u := z^2 + h$ 
+\begin{align}
+x_g(u) &= \sqrt{1 + h - u} \kla\left( \sqrt{u - h} + \sqrt{u + h} \right).
+\end{align}
+Differentiating with respect to $u$ gives
+\begin{align}
+x_g'(u) &= -\frac{\sqrt{u - h} + \sqrt{u + h}}{2\sqrt{1 + h - u}} + \sqrt{1 + h - u} \kla\left( \frac{1}{2\sqrt{u - h}} + \frac{1}{2\sqrt{u + h}} \right).
+\end{align}
+To find the optimal throwing angle we have to differentiate with respect to $\alpha$. 
+Due to our transformations this condition becomes
+\begin{align}
+0 &= \frac{\tecxt\text{d} x_g(u(z(\alpha)))}{\tecxt\text{d}\alpha} = \frac{\tecxt\text{d}x(u)}{\tecxt\text{d}u} \frac{\tecxt\text{d}u(z)}{\tecxt\text{d}z} \frac{\tecxt\text{d}z(\alpha)}{\tecxt\text{d}\alpha} = x_g'(u) 2z \cos\alpha.
+\end{align}
+Since we assume $\alpha \in (0, \frac{\pi}{2})$ this is equivalent to $x_g'(u) = 0$ or
+\begin{align}
+\sqrt{u - h} + \sqrt{u + h} &= \kla\left( 1 + h - u \right) \left( \frac{1}{\sqrt{u - h}} + \frac{1}{\sqrt{u + h}} \right) = \\
+&= (1 + h - u) \frac{\sqrt{u - h} + \sqrt{u + h}}{\sqrt{(u - h)(u + h)}}.
+\end{align}
+Dividing through by $\sqrt{u + h} + \sqrt{u - h}$ reduces this to
+\begin{align}
+1 &= \frac{1 + h - u}{\sqrt{u^2 - h^2}}
+\end{align}
+which is readily transformed to 
+\begin{align}
+u^2 - h^2 &= (1 + h)^2 + u^2 - 2(1+h)u,\\
+\Rightarrow\ \ \ 0 &= 2h^2 + 2h + 1 - 2(1+h)u.
+\end{align}
+This linear equation has the straight-forward solution
+\begin{align}
+u &= \frac{2h^2 + 2h + 1}{2 + 2h}.
+\end{align}
+Thus we find $z=\sqrt{u - h} = \sqrt{\frac{2h^2 + 2h + 1}{2 + 2h} - h}$ and finally the optimal angle
+\begin{align}
+\alpha &= \arcsin \kla\left( \frac{1}{\sqrt{2 + 2h}} \right).
+\end{align}
+We may transform back to SI-units by $h\rightarrow h \frac{g}{v_0^2}$ giving
+\begin{align}
+\alpha  &= \arcsin \kla\left( \frac{v_0}{\sqrt{2v_0^2 + 2gh}} \right).
+\end{align}
+Using the identity $\tan^2\alpha = \frac{1}{\cos^2\alpha} - 1 = \frac{1}{1 - \sin^2\alpha} - 1$ we may also write this as
+\begin{align}
+\alpha &= \arctan \kla\left( \frac{v_0}{\sqrt{v_0^2 + 2gh}} \right) \equiv \arctan \kla\left( \frac{v_0}{v_g} \right).
+\end{align}
+Here we used that the energy of the projectile hitting the ground is $\frac{m}{2}v_0^2 + mgh = \frac{m}{2} v_g^2$, i.e. $v_g = \sqrt{v_0^2 + 2gh}$.
+This suggests that there might be a more elegant, presumably geometric approach to reach the final answer.
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

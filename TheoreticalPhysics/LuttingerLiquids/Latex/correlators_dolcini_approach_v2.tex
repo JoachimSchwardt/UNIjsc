@@ -1,0 +1,518 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{ll_scrarticle}
+
+\newcommand*{\titel}{Correlation functions without path integrals and analytic continuations}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+%\subject{SUBJECT}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+
+\section{Bosonization identities}
+We will make use of the identities
+\begin{align}
+H &= \vf \sum_k |k| b_k^\dagger b_k,\\
+\klb*{b_k, b_{k'}^\dagger} &= \delta_{kk'},\\
+b_k(t) &= b_k\powe{-\i |k|\vf t},\\
+\bra*{b_k^\dagger b_{k'}} &= \delta_{kk'} \frac{1}{\powe{\beta \vf |k|} - 1},\\
+\bra*{b_k b_{k'}} &= 0,\\
+\phi(x,t) &= -\frac{\i}{2} \sqrt{\frac{2\pi}{L}} \sum_k \frac{\sqrt{|k|}}{k} \powe{-\alpha \frac{|k|}{2}} \kla*{b_k^\dagger \powe{\i (|k|\vf t - kx)} - b_k \powe{-\i (|k|\vf t - kx)}},\\
+\theta(x,t) &= \frac{\i}{2} \sqrt{\frac{2\pi}{L}} \sum_k \frac{\sqrt{|k|}}{|k|} \powe{-\alpha \frac{|k|}{2}} \kla*{b_k^\dagger \powe{\i (|k|\vf t - kx)} - b_k \powe{-\i (|k|\vf t - kx)}}
+\end{align}
+valid in the limit $L\rightarrow \infty$.
+To lighten the notation we set $\vf = 1$ for now.
+Since there is no other constant with the dimension of a velocity reinserting it at the end will be simple.
+There are several ways to compute the Green's functions, but following the path integral approach we construct all complicated correlators from the fundamental building blocks
+\begin{align}
+\bra*{\klb*{\phi(x,t) - \phi(0,0)}^2} &= F_1(x,t),\\
+2\bra*{\phi(x,t)\theta(0,0) - \phi(0,0)\theta(0,0)} &= F_2(x,t),\\
+\bra*{\klb*{\theta(x,t) - \theta(0,0)}^2} &= F_3(x,t),\\
+2\bra*{\theta(x,t)\phi(0,0) - \theta(0,0)\phi(0,0)} &= F_4(x,t).
+\end{align}
+%\section{Computing the fundamental correlators}
+%Exploiting translational invariance in space and time allows us to write
+%\begin{align}
+%\bra*{F(x,t)F(x',t')} &= \bra*{F(x-x',t-t')F(0,0)}
+%\end{align}
+%for any operator $F$.
+%This simplifies some of the following calculations and is also the reason we can restrict ourselves to functions of only one variable in both space and time.
+%\subsection{$F_1(x,t)$}
+%The calculations splits into two parts
+%\begin{align}
+%F_1(x,t) &= 2\bra*{\phi(0,0)^2 - \phi(x,t)\phi(0,0)} \\
+%&= 2 \frac{-1}{4} \frac{2\pi}{L} \sum_{k,k'} \frac{\sqrt{|kk'|}}{kk'} \powe{-\frac{\alpha}{2} \kla*{|k| + |k'|}} \bra*{-b_k^\dagger b_{k'} \kla*{1 - \powe{\i (|k|t-kx)}} - b_k b_{k'}^\dagger \kla*{1 - \powe{-\i (|k|t-kx)}}},\\
+%&= \frac{1}{2} \intr{ \frac{|k|}{k^2} \powe{-\alpha |k|} \klb*{\frac{1 - \powe{\i (|k|t-kx)}}{\powe{\beta |k|} - 1} + \frac{1 - \powe{-\i (|k|t-kx)}}{\powe{\beta |k|} - 1} + \kla*{1 - \powe{-\i (|k|t-kx)}}} }{k}\\
+%&= \intr{\frac{1}{|k|}\powe{-\alpha |k|} \frac{1 - \cos\kla*{|k|t - kx}}{\powe{\beta |k|} - 1}}{k} + \frac{1}{2} \intr{\frac{1}{|k|} \powe{-\alpha |k|} \klb*{1 - \powe{-\i (|k|t-kx)}}}{k}\\
+%&= \intx{0}{\infty}{\frac{1}{k} \powe{-\alpha k} \frac{1 - \cos\kla*{kt-kx}}{\powe{\beta k} - 1}}{k} + (x\rightarrow -x) + \intx{0}{\infty}{\frac{1}{k} \powe{-\alpha k} \klb*{1 - \powe{-\i kt} \cos(kx)}}{k}.
+%\end{align}
+%The second integral is somewhat easier and gives\footnote{$\frac{1}{k} = \intx{0}{\infty}{\powe{-bk}}{b}$}
+%\begin{align}
+%\text{II} &= \intx{0}{\infty}{\intx{0}{\infty}{\powe{-bk} \powe{-\alpha k} \klb*{1 - \frac{1}{2} \powe{\i k(x-t)} - \frac{1}{2} \powe{-\i k(x+t)}}}{k}}{b}\\
+%&= \intx{0}{\infty}{\klb*{\frac{1}{\alpha + b} - \frac{1}{2} \frac{1}{\alpha + b + \i (t-x)} - \frac{1}{2} \frac{1}{\alpha + b + \i (t+x)}}}{b}\\
+%&= \lim_{B\rightarrow \infty} \klb*{\log \kla*{\frac{\alpha + B}{\alpha}} - \frac{1}{2} \log\kla*{\frac{\alpha + \i (t-x) + B}{\alpha + \i(t-x)}} - \frac{1}{2} \log\kla*{\frac{\alpha + \i(t+x) + B}{\alpha + \i (t+x)}}}\\
+%&= \frac{1}{2} \log\kla*{\frac{(\alpha + \i t)^2 + x^2}{\alpha^2}}.
+%\end{align}
+%The first integral can be done using a similar approach.
+%The part depending on $z=t-x$ gives
+%\begin{align}
+%\text{I}_z &= \sum_{n\ge 1} \intx{0}{\infty}{ \intx{0}{\infty}{\powe{-bk} \powe{-\alpha k} \klb*{1 - \frac{1}{2} \powe{\i k z} - \frac{1}{2} \powe{-\i kz}} \powe{-\beta kn}}{k} }{b}\\
+%&= \sum_{n\ge 1} \intx{0}{\infty}{\klb*{\frac{1}{\alpha + b + \beta n} - \frac{1}{2} \frac{1}{\alpha + b + \beta n - \i z} - \frac{1}{2} \frac{1}{\alpha + b + \beta n + \i z}}}{b}\\
+%&= -\sum_{n\ge 1} \klb*{\log\kla*{\alpha + \beta n} - \frac{1}{2} \log\kla*{\alpha + \beta n - \i z} - \frac{1}{2} \log \kla*{\alpha + \beta n + \i z}}\\
+%&= -\frac{1}{2} \sum_{n\ge 1} \log\klb[\bigg]{\frac{(\alpha + \beta n)^2}{(\alpha + \beta n)^2 + z^2}} \simeq -\frac{1}{2} \log\klb[\Bigg]{\prod_{n\ge 1} \frac{n^2}{n^2 + \kla*{z/\beta}^2}}\\
+%&= -\frac{1}{2} \log \klb[\bigg]{\Gamma\kla*{1 + \i \frac{z}{\beta}} \Gamma\kla*{1 - \i \frac{z}{\beta}}} = \frac{1}{2} \log\klb*{\frac{\beta}{\pi z}\sinh\kla*{\frac{\pi}{\beta} z}}.
+%\end{align}
+%%alpha=1e-1; beta=2.6; t=0.78; x=0.43
+%%print(c_quad(lambda k: 1/k * np.exp(-alpha * k) * (1 - np.exp(-1j*k*t) *np.cos(k*x)), 0, np.inf), 1/2 * np.log(((alpha + 1j*t)**2 + x**2) / alpha**2))
+%%print(integrate.quad(lambda k: 1/k * np.exp(-alpha * k) * (1 - np.cos(k*t - k*x)) / (1 - np.exp(-beta*k)) * np.exp(-beta*k), 0, np.inf), 1/2 * np.log(beta/(np.pi * (t-x)) * np.sinh(np.pi/beta * (t-x))))
+%%alpha=1e-3
+%%c_quad(lambda k: 1/k * np.exp(-alpha * k) * (1 - np.exp(-1j*k*t) *np.cos(k*x)) + 1/k * np.exp(-alpha * k) * (1 - np.cos(k*t - k*x)) / (1 - np.exp(-beta*k)) * np.exp(-beta*k) + 1/k * np.exp(-alpha * k) * (1 - np.cos(k*t + k*x)) / (1 - np.exp(-beta*k)) * np.exp(-beta*k), 0, np.inf, limit=10000), -np.log(np.pi*alpha/beta) + 1/2*np.log(np.cosh(2*np.pi/beta*t)/2 - np.cosh(2*np.pi/beta*x)/2 + 0j) + np.pi/2 * 1j
+%In the limit $\alpha\rightarrow 0$ we can thus write
+%\begin{align}
+%F_1(x,t) &= \frac{1}{2} \log\kla*{\frac{x^2 - t^2}{\alpha^2}} - \frac{1}{2} \log\kla*{\frac{\pi^2 \kla*{x^2 - t^2}}{\beta^2}} + \frac{1}{2} \log\klb*{\sinh\kla*{\frac{\pi}{\beta} (x-t)} \sinh\kla*{\frac{\pi}{\beta} (x+t)}}\\
+%&= \log\klb*{\frac{\beta }{\pi\alpha}} + \frac{1}{2} \log\klb*{\sinh^2\kla*{\frac{\pi x}{\beta}} - \sinh^2\kla*{\frac{\pi t}{\beta}} }.
+%\end{align}
+%\subsection{$F_2(x,t)$}
+%The calculation again splits into two parts
+%\begin{align}
+%F_2(x,t) &= 2\bra*{\phi(x,t)\theta(0,0) - \phi(0,0)\theta(0,0)}\\
+%&= 2 \frac{1}{4} \frac{2\pi}{L} \sum_{k,k'} \frac{\sqrt{|kk'|}}{k|k'|} \powe{-\frac{\alpha}{2} (|k|+|k'|)} \bra*{-b_k^\dagger b_{k'} \kla*{\powe{\i (|k|t - kx)} - 1} - b_k b_{k'}^\dagger \kla*{\powe{-\i (|k|t - kx)} - 1}}\\
+%&= \frac{1}{2} \intr{\frac{|k|}{k|k|} \powe{-\alpha |k|} \klb*{\frac{1-\powe{\i (|k|t - kx)}}{\powe{\beta |k|} - 1} + \frac{1-\powe{-\i (|k|t - kx)}}{\powe{\beta |k|} - 1} + \kla*{1 - \powe{-\i (|k|t - kx)}}}}{k}\\
+%&= \intr{\frac{1}{k} \powe{-\alpha |k|} \frac{1 - \cos\kla*{|k|t - kx}}{\powe{\beta |k|} - 1}}{k} - \frac{1}{2} \intr{\frac{\powe{\i kx}}{k} \powe{-\alpha |k|} \powe{-\i |k| t}}{k}\\
+%&= \intx{0}{\infty}{\frac{1}{k} \powe{-\alpha k} \frac{1 - \cos(kt-kx)}{\powe{\beta k} - 1}}{k} - (x\rightarrow -x) - \i \intx{0}{\infty}{\frac{\sin(kx)}{k} \powe{-\alpha k} \powe{-\i kt}}{k}.
+%\end{align}
+%We already calculated the first integral previously.
+%The second integral gives
+%\begin{align}
+%\text{II} &= -\frac{1}{2} \intx{0}{\infty}{\intx{0}{\infty}{\powe{-bk} \powe{-\alpha k} \powe{\i k(x-t)}}{k}}{b} - (x\rightarrow -x)\\
+%&= -\frac{1}{2} \intx{0}{\infty}{\frac{1}{\alpha + b + \i (t-x)}}{b} - (x\rightarrow - x)\\
+%&= -\frac{1}{2} \intx{0}{\infty}{\frac{2\i x}{\kla*{\alpha + b + \i t}^2 + x^2}}{b}\\
+%&= -\i \arctan\kla*{\frac{\alpha + \i t + b}{x}}\bigg\vert_{b=0}^{b=\infty}\\
+%&= -\i \frac{\pi}{2} + \i \arctan\kla*{\frac{\alpha + \i t}{x}} \simeq -\i \frac{\pi}{2} + \frac{1}{2} \log\klb*{\frac{x-t}{x+t}}.
+%\end{align}
+%%c_quad(lambda k: np.sin(k*x)/k * np.exp(-alpha*k) * np.exp(-1j*k*t), 0, np.inf, limit=10000), np.pi/2 - np.arctan((alpha + 1j*t)/x)
+%Combining all terms yields
+%\begin{align}
+%F_2(x,t) &\simeq \frac{1}{2} \log\klb*{\sinh\kla*{\frac{\pi}{\beta}(x-t)}} - \frac{1}{2} \log\klb*{\sinh\kla*{\frac{\pi}{\beta}(x+t)}} -\i \frac{\pi}{2}.
+%\end{align}
+%\subsection{$F_3(x,t)$}
+%Inserting the field yields
+%\begin{align}
+%F_3(x,t) &= 2\bra*{\theta(0,0)^2 - \theta(x,t)\theta(0,0)}\\
+%&= 2 \frac{-1}{4} \frac{2\pi}{L} \sum_{k,k'} \frac{\sqrt{|kk'|}}{|kk'|} \powe{-\frac{\alpha}{2} \kla*{|k| + |k'|}} \bra*{-b_k^\dagger b_{k'} \kla*{1 - \powe{\i (|k|t-kx)}} - b_k b_{k'}^\dagger \kla*{1 - \powe{-\i (|k|t-kx)}}} \\
+%&= F_1(x,t).
+%\end{align}
+%\subsection{$F_4(x,t)$}
+%Inserting the fields yields
+%\begin{align}
+%F_4(x,t) &= 2\bra*{\theta(x,t)\phi(0,0) - \theta(0,0)\phi(0,0)}\\
+%&= 2 \frac{1}{4} \frac{2\pi}{L} \sum_{k,k'} \frac{\sqrt{|kk'|}}{|k|k'} \powe{-\frac{\alpha}{2} (|k|+|k'|)} \bra*{-b_k^\dagger b_{k'} \kla*{\powe{\i (|k|t - kx)} - 1} - b_k b_{k'}^\dagger \kla*{\powe{-\i (|k|t - kx)} - 1}}\\
+%&= F_2(x,t).
+%\end{align}
+\section{Computing the fundamental correlators}
+Exploiting translational invariance in space and time allows us to write
+\begin{align}
+\bra*{F(x,t)F(x',t')} &= \bra*{F(x-x',t-t')F(0,0)}
+\end{align}
+for any operator $F$.
+This simplifies some of the following calculations and is also the reason we can restrict ourselves to functions of only one variable in both space and time.
+\subsection{$F_1(x,t)$}
+The calculations splits into two parts
+\begin{align}
+F_1(x,t) &= 2\bra*{\phi(0,0)^2 - \phi(x,t)\phi(0,0)} \\
+&= 2 \frac{-1}{4} \frac{2\pi}{L} \sum_{k,k'} \frac{\sqrt{|kk'|}}{kk'} \powe{-\frac{\alpha}{2} \kla*{|k| + |k'|}} \bra*{-b_k^\dagger b_{k'} \kla*{1 - \powe{\i (|k|t-kx)}} - b_k b_{k'}^\dagger \kla*{1 - \powe{-\i (|k|t-kx)}}},\\
+&= \frac{1}{2} \intr{ \frac{|k|}{k^2} \powe{-\alpha |k|} \klb*{\frac{1 - \powe{\i (|k|t-kx)}}{\powe{\beta |k|} - 1} + \frac{1 - \powe{-\i (|k|t-kx)}}{\powe{\beta |k|} - 1} + \kla*{1 - \powe{-\i (|k|t-kx)}}} }{k}\\
+&= \intr{\frac{1}{|k|}\powe{-\alpha |k|} \frac{1 - \cos\kla*{|k|t - kx}}{\powe{\beta |k|} - 1}}{k} + \frac{1}{2} \intr{\frac{1}{|k|} \powe{-\alpha |k|} \klb*{1 - \powe{-\i (|k|t-kx)}}}{k}\\
+&= \intx{0}{\infty}{\frac{1}{k} \powe{-\alpha k} \frac{1 - \cos\kla*{kt-kx}}{\powe{\beta k} - 1}}{k} + (x\rightarrow -x) + \intx{0}{\infty}{\frac{1}{k} \powe{-\alpha k} \klb*{1 - \powe{-\i kt} \cos(kx)}}{k}.
+\end{align}
+The second integral is somewhat easier and gives\footnote{$\frac{1}{k} = \intx{0}{\infty}{\powe{-bk}}{b}$}
+\begin{align}
+\text{II} &= \intx{0}{\infty}{\intx{0}{\infty}{\powe{-bk} \powe{-\alpha k} \klb*{1 - \frac{1}{2} \powe{\i k(x-t)} - \frac{1}{2} \powe{-\i k(x+t)}}}{k}}{b}\\
+&= \intx{0}{\infty}{\klb*{\frac{1}{\alpha + b} - \frac{1}{2} \frac{1}{\alpha + b + \i (t-x)} - \frac{1}{2} \frac{1}{\alpha + b + \i (t+x)}}}{b}\\
+&= \lim_{B\rightarrow \infty} \klb*{\log \kla*{\frac{\alpha + B}{\alpha}} - \frac{1}{2} \log\kla*{\frac{\alpha + \i (t-x) + B}{\alpha + \i(t-x)}} - \frac{1}{2} \log\kla*{\frac{\alpha + \i(t+x) + B}{\alpha + \i (t+x)}}}\\
+&= \frac{1}{2} \log\kla*{\frac{(\alpha + \i t)^2 + x^2}{\alpha^2}}.
+\end{align}
+The first integral can be done using a similar approach.
+The part depending on $z=t-x$ gives
+\begin{align}
+\text{I}_z &= \sum_{n\ge 1} \intx{0}{\infty}{ \intx{0}{\infty}{\powe{-bk} \powe{-\alpha k} \klb*{1 - \frac{1}{2} \powe{\i k z} - \frac{1}{2} \powe{-\i kz}} \powe{-\beta kn}}{k} }{b}\\
+&= \sum_{n\ge 1} \intx{0}{\infty}{\klb*{\frac{1}{\alpha + b + \beta n} - \frac{1}{2} \frac{1}{\alpha + b + \beta n - \i z} - \frac{1}{2} \frac{1}{\alpha + b + \beta n + \i z}}}{b}\\
+&= -\sum_{n\ge 1} \klb*{\log\kla*{\alpha + \beta n} - \frac{1}{2} \log\kla*{\alpha + \beta n - \i z} - \frac{1}{2} \log \kla*{\alpha + \beta n + \i z}}\\
+&= -\frac{1}{2} \sum_{n\ge 1} \log\klb[\bigg]{\frac{(\alpha + \beta n)^2}{(\alpha + \beta n)^2 + z^2}}\\
+&= -\frac{1}{2} \log \klb[\bigg]{\Gamma\kla*{1 + \frac{\alpha}{\beta} + \i \frac{z}{\beta}} \Gamma\kla*{1 + \frac{\alpha}{\beta} - \i \frac{z}{\beta}}} + \log \klb*{\Gamma\kla*{1+ \frac{\alpha}{\beta}}}.
+\end{align}
+Combining all terms yields\footnote{$\Gamma(1+\i z)\Gamma(1-\i z) = \i z \pi \csc(\pi\i z) = \pi z \csch(\pi z)$ and $\sinh(a-b)\sinh(a+b) = \sinh^2(a) - \sinh^2(b)$}
+\begin{align}
+F_1(x,t) &= \bsplit{&\frac{1}{2} \log \klb[\bigg]{ \Gamma\kla*{1 + \frac{\alpha}{\beta}}^4 \frac{(\alpha + \i t)^2 + x^2}{\alpha^2}} \\
+&- \frac{1}{2} \log \klb[\bigg]{\Gamma\kla*{1 + \frac{\alpha}{\beta} + \i \frac{x-t}{\beta}} \Gamma\kla*{1 + \frac{\alpha}{\beta} - \i \frac{x-t}{\beta}}}\\
+&- \frac{1}{2} \log \klb[\bigg]{\Gamma\kla*{1 + \frac{\alpha}{\beta} + \i \frac{x+t}{\beta}} \Gamma\kla*{1 + \frac{\alpha}{\beta} - \i \frac{x+t}{\beta}}}}\\
+&\simeq \frac{1}{2} \log\klb*{\frac{(\alpha + \i t)^2 + x^2}{\alpha^2}} - \frac{1}{2} \log\klb*{\frac{\pi^2}{\beta^2} \kla*{x^2 - t^2}} + \frac{1}{2} \log\klb*{\sinh^2\kla*{\frac{\pi x}{\beta}} - \sinh^2\kla*{\frac{\pi t}{\beta}}}\\
+&= \log\klb*{\frac{\beta}{\pi\alpha}} + \frac{1}{2} \log\klb*{\frac{x^2 - t^2 + \alpha^2 + 2\i\alpha t}{x^2 - t^2}} + \frac{1}{2} \log\klb*{\sinh^2\kla*{\frac{\pi x}{\beta}} - \sinh^2\kla*{\frac{\pi t}{\beta}}}.
+\end{align}
+\subsection{$F_2(x,t)$}
+The calculation again splits into two parts
+\begin{align}
+F_2(x,t) &= 2\bra*{\phi(x,t)\theta(0,0) - \phi(0,0)\theta(0,0)}\\
+&= 2 \frac{1}{4} \frac{2\pi}{L} \sum_{k,k'} \frac{\sqrt{|kk'|}}{k|k'|} \powe{-\frac{\alpha}{2} (|k|+|k'|)} \bra*{-b_k^\dagger b_{k'} \kla*{\powe{\i (|k|t - kx)} - 1} - b_k b_{k'}^\dagger \kla*{\powe{-\i (|k|t - kx)} - 1}}\\
+&= \frac{1}{2} \intr{\frac{|k|}{k|k|} \powe{-\alpha |k|} \klb*{\frac{1-\powe{\i (|k|t - kx)}}{\powe{\beta |k|} - 1} + \frac{1-\powe{-\i (|k|t - kx)}}{\powe{\beta |k|} - 1} + \kla*{1 - \powe{-\i (|k|t - kx)}}}}{k}\\
+&= \intr{\frac{1}{k} \powe{-\alpha |k|} \frac{1 - \cos\kla*{|k|t - kx}}{\powe{\beta |k|} - 1}}{k} - \frac{1}{2} \intr{\frac{\powe{\i kx}}{k} \powe{-\alpha |k|} \powe{-\i |k| t}}{k}\\
+&= \intx{0}{\infty}{\frac{1}{k} \powe{-\alpha k} \frac{1 - \cos(kt-kx)}{\powe{\beta k} - 1}}{k} - (x\rightarrow -x) - \i \intx{0}{\infty}{\frac{\sin(kx)}{k} \powe{-\alpha k} \powe{-\i kt}}{k}.
+\end{align}
+We already calculated the first integral previously.
+The second integral gives
+\begin{align}
+\text{II} &= -\frac{1}{2} \intx{0}{\infty}{\intx{0}{\infty}{\powe{-bk} \powe{-\alpha k} \powe{\i k(x-t)}}{k}}{b} - (x\rightarrow -x)\\
+&= -\frac{1}{2} \intx{0}{\infty}{\frac{1}{\alpha + b + \i (t-x)}}{b} - (x\rightarrow - x)\\
+&= -\frac{1}{2} \intx{0}{\infty}{\frac{2\i x}{\kla*{\alpha + b + \i t}^2 + x^2}}{b}\\
+&= -\i \arctan\kla*{\frac{\alpha + \i t + b}{x}}\bigg\vert_{b=0}^{b=\infty}\\
+&= -\i \frac{\pi}{2} + \i \arctan\kla*{\frac{\alpha + \i t}{x}} = -\i\frac{\pi}{2} + \frac{1}{2} \log\kla*{\frac{x - t + \i\alpha}{x + t - \i\alpha}}.
+\end{align}
+%c_quad(lambda k: np.sin(k*x)/k * np.exp(-alpha*k) * np.exp(-1j*k*t), 0, np.inf, limit=10000), np.pi/2 - np.arctan((alpha + 1j*t)/x)
+Combining all terms yields
+\begin{align}
+F_2(x,t) &= \bsplit{&\frac{1}{2} \log\klb*{\frac{t-x - \i\alpha}{t+x - \i\alpha}} \\
+&- \frac{1}{2} \log \klb[\bigg]{\Gamma\kla*{1 + \frac{\alpha}{\beta} + \i \frac{x-t}{\beta}} \Gamma\kla*{1 + \frac{\alpha}{\beta} - \i \frac{x-t}{\beta}}}\\
+&+ \frac{1}{2} \log \klb[\bigg]{\Gamma\kla*{1 + \frac{\alpha}{\beta} + \i \frac{x+t}{\beta}} \Gamma\kla*{1 + \frac{\alpha}{\beta} - \i \frac{x+t}{\beta}}}}\\
+&\simeq \frac{1}{2} \log\klb*{\frac{x-t + \i\alpha}{x-t} \frac{t+x}{t+x - \i\alpha}} - \frac{1}{2} \log \klb*{\sinh\kla*{\frac{\pi}{\beta} [x-t]}} + \frac{1}{2} \log \klb*{\sinh\kla*{\frac{\pi}{\beta} [x+t]}}.
+\end{align}
+\subsection{$F_3(x,t)$}
+Inserting the field yields
+\begin{align}
+F_3(x,t) &= 2\bra*{\theta(0,0)^2 - \theta(x,t)\theta(0,0)}\\
+&= 2 \frac{-1}{4} \frac{2\pi}{L} \sum_{k,k'} \frac{\sqrt{|kk'|}}{|kk'|} \powe{-\frac{\alpha}{2} \kla*{|k| + |k'|}} \bra*{-b_k^\dagger b_{k'} \kla*{1 - \powe{\i (|k|t-kx)}} - b_k b_{k'}^\dagger \kla*{1 - \powe{-\i (|k|t-kx)}}} \\
+&= F_1(x,t).
+\end{align}
+\subsection{$F_4(x,t)$}
+Inserting the fields yields
+\begin{align}
+F_4(x,t) &= 2\bra*{\theta(x,t)\phi(0,0) - \theta(0,0)\phi(0,0)}\\
+&= 2 \frac{1}{4} \frac{2\pi}{L} \sum_{k,k'} \frac{\sqrt{|kk'|}}{|k|k'} \powe{-\frac{\alpha}{2} (|k|+|k'|)} \bra*{-b_k^\dagger b_{k'} \kla*{\powe{\i (|k|t - kx)} - 1} - b_k b_{k'}^\dagger \kla*{\powe{-\i (|k|t - kx)} - 1}}\\
+&= F_2(x,t).
+\end{align}
+\section{Free single-particle Green's function}
+%We want to compute the Green's function
+%\begin{align}
+%G^\r_{\ell\ell'}(x,t) &= -\i\Theta(t) \bra*{\klc*{\psi_\ell(x,t), \psi_{\ell'}^\dagger(0,0)}} \\
+%&= -\i\Theta(t) \frac{\eta_\ell\eta_{\ell'}}{2\pi\alpha} \bra*{\powe{-\ell\i \phi(x,t) + \i\theta(x,t)} \powe{\ell'\i \phi(0,0) - \i\theta(0,0)} + \powe{\ell'\i \phi(0,0) - \i\theta(0,0)} \powe{-\ell\i \phi(x,t) + \i\theta(x,t)} }\\
+%&= -\i\Theta(t) \frac{\delta_{\ell\ell'}}{2\pi\alpha} \klb*{\powe{\frac{1}{2} (-\ell)\ell' F_1(x,t) + \frac{1}{2} (-1)F_1(x,t) - \ell F_2(x,t)} + (x,t\rightarrow -x,-t)}\\
+%&= -\i\Theta(t) \frac{\delta_{\ell\ell'}}{\pi\alpha} \powe{-F_1(x,t) - \ell F_2(x,t)}\\
+%&= -\i\Theta(t) \frac{\delta_{\ell\ell'}}{\beta} \klb*{\sinh\kla*{\frac{\pi}{\beta}(x-t)}}^{-\frac{1+\ell}{2}} \klb*{\sinh\kla*{\frac{\pi}{\beta}(x+t)}}^{-\frac{1-\ell}{2}} \powe{\ell\i \frac{\pi}{2}}\\
+%&= \ell\Theta(t) \frac{\delta_{\ell\ell'}}{\beta} \csch\kla*{\frac{\pi}{\beta}(x - \ell t)}.
+%\end{align}
+%The exact expression is more complicated but avoids a lot of problems
+In the previous section we have found the exact correlation functions and their approximate forms.
+Introducing the coordinates $\xi_\pm := t \pm \ell x$ we can rewrite them as
+\begin{align}
+F_1(x,t) &= \frac{1}{2} \log \klb[\bigg]{ \Gamma\kla*{1 + \frac{\alpha}{\beta}}^4 \frac{\kla*{\alpha + \i \xi_+} \kla*{\alpha + \i \xi_-}}{\alpha^2}} - \log \abs*{\Gamma\kla*{1 + \frac{\alpha}{\beta} + \i \frac{\xi_+}{\beta}} \Gamma\kla*{1 + \frac{\alpha}{\beta} + \i \frac{\xi_-}{\beta}}},\\
+F_2(x,t) &= \frac{\ell}{2} \log\kla*{\frac{\alpha + \i\xi_-}{\alpha + \i\xi_+}} - \log \abs*{\Gamma\kla*{1 + \frac{\alpha}{\beta} + \i \frac{\xi_-}{\beta}}} + \log \abs*{\Gamma\kla*{1 + \frac{\alpha}{\beta} + \i \frac{\xi_+}{\beta}}}.
+\end{align}
+It is useful to compute the combinations
+\begin{align}
+F_\ell(x,t) &= F_1(x,t) - \ell F_2(x,t) \\
+&= 2\log\Gamma\kla*{1 + \frac{\alpha}{\beta}} - \log(\alpha) + \log\klb*{\alpha + \i\xi_\ell} - 2\log \abs*{\Gamma\kla*{1 + \frac{\alpha}{\beta} + \i \frac{\xi_\ell}{\beta}}} = F(\xi_\ell).
+\end{align}
+Note that these functions satisfy $F_\ell^\ast(-x,-t) = F_\ell(x,t)$ or equivalently $F^\ast(-\xi) = F(\xi)$.
+Using a shifted version of the Pochhammer symbol $P(a,b) \equiv (1+a)_b  = \frac{\Gamma(1+a+b)}{\Gamma(1+a)}$ we can express the correlation functions in the compact form
+\begin{align}
+F(\xi) &= \log\klb*{\frac{\alpha + \i\xi}{\alpha}} - 2\log\abs*{P\kla*{\frac{\alpha}{\beta}, \frac{\i\xi}{\beta}}},\\
+F_1(x,t) &= \frac{1}{2} \log\klb*{\frac{\alpha + \i\xi_+}{\alpha} \frac{\alpha + \i\xi_-}{\alpha}} - \log\abs*{P\kla*{\frac{\alpha}{\beta}, \frac{\i \xi_+}{\beta}} P\kla*{\frac{\alpha}{\beta}, \frac{\i \xi_-}{\beta}}}.
+\end{align}
+The Green's function can then be readily evaluated as
+\begin{align}
+G^\r_{\ell\ell'}(x,t) &= -\i\Theta(t) \bra*{\klc*{\psi_\ell(x,t), \psi_{\ell'}^\dagger(0,0)}} \\
+&= -\i\Theta(t) \frac{\eta_\ell\eta_{\ell'}}{2\pi\alpha} \bra*{\powe{-\ell\i \phi(x,t) + \i\theta(x,t)} \powe{\ell'\i \phi(0,0) - \i\theta(0,0)} + \powe{\ell'\i \phi(0,0) - \i\theta(0,0)} \powe{-\ell\i \phi(x,t) + \i\theta(x,t)} }\\
+&= -\i\Theta(t) \frac{\delta_{\ell\ell'}}{2\pi\alpha} \klb*{\powe{\frac{1}{2} (-\ell)\ell' F_1(x,t) + \frac{1}{2} (-1)F_1(x,t) - \ell F_2(x,t)} + (x,t\rightarrow -x,-t)}\\
+&= -\i\Theta(t) \frac{\delta_{\ell\ell'}}{2\pi\alpha} \klb*{\powe{-F\kla*{\xi_{-\ell}}} + \powe{-F\kla*{-\xi_{-\ell}}}}\\
+&= -\i\Theta(t) \frac{\delta_{\ell\ell'}}{2\pi} \abs*{P\kla*{\frac{\alpha}{\beta}, \frac{\i\xi_{-\ell}}{\beta}}}^2 2\Re \frac{1}{\alpha + \i\xi_{-\ell}} \\
+&= -\i\Theta(t) \delta_{\ell\ell'} \delta\kla*{\xi_{-\ell}}.
+\end{align}
+Let us now switch on interactions in the form of a Luttinger parameter $K\neq 1$ and a renormalized Fermi velocity $u\neq \vf$ that transforms the Hamiltonian to
+\begin{align}
+H &= \frac{u}{2\pi} \intr{\klb*{K \kla*{\partial_x\theta}^2 + \frac{1}{K} \kla*{\partial_x\phi}^2}}{x}.
+\end{align}
+Note that we can rescale the fields in the Hamiltonian like $\phi \rightarrow \sqrt{K} \phi$ and $\theta \rightarrow\frac{1}{\sqrt{K}} \theta$ to recover the quadratic form
+\begin{align}
+H &= \frac{u}{2\pi} \intr{\klb*{\kla*{\partial_x\theta}^2 + \kla*{\partial_x\phi}^2}}{x}.
+\end{align}
+On the surface it looks like the only remaining change is the adjusted Fermi velocity, but of course we also have to make this transformation in the bosonization identity.
+This leads to the new chiral fields $\varphi_\ell \rightarrow \varphi_\ell = \ell \sqrt{K} \phi - \frac{1}{\sqrt{K}} \theta$.
+The relevant expectation value then becomes
+\begin{align}
+\bra*{\psi_\ell(x,t)\psi_{\ell'}^\dagger(0,0)} &= \frac{\eta_\ell\eta_{\ell'}}{2\pi\alpha} \bra*{\powe{-\ell \i\sqrt{K}\phi(x,t) + \i \frac{1}{\sqrt{K}} \theta(x,t)} \powe{\ell'\i\sqrt{K} \phi(0,0) - \i \frac{1}{\sqrt{K}} \theta(0,0)}}\\
+&= \frac{\delta_{\ell\ell'}}{2\pi\alpha} \powe{\frac{1}{2} \klb*{-K - \frac{1}{K}} F_1(x,t) - \ell F_2(x,t)}\\
+&= \frac{\delta_{\ell\ell'}}{2\pi\alpha} \powe{-F(\xi_{-\ell})} \powe{-MF_1(x,t)}\\
+&= \frac{\delta_{\ell\ell'}}{2\pi} \abs*{P\kla*{\frac{\alpha}{\beta u}, \frac{\i\xi_{-\ell}}{\beta u}}}^{2+M} \abs*{P\kla*{\frac{\alpha}{\beta u}, \frac{\i\xi_{\ell}}{\beta u}}}^M \frac{\alpha^M}{\kla*{\alpha + \i\xi_{-\ell}}^{\frac{2+M}{2}} \kla*{\alpha + \i\xi_\ell}^\frac{M}{2}}
+\end{align}
+where we introduced $M = \frac{1}{2} \klb*{K + \frac{1}{K} - 2} > 0$.
+Note that the Green's function contains an additional factor of $\Theta(t)$ and thus the Fourier transform takes the form
+\begin{align}
+G^\r(k,\omega) &= \intrnd{2}{\powe{\i\omega t - \i kx} G^\r(x,t)}{(x,t)} = \frac{1}{2u} \intx{0}{\infty}{\intx{0}{\infty}{\powe{\i\omega \frac{\xi_+ + \xi_-}{2u} - \i k\frac{\xi_+ - \xi_-}{2}} G^\r(\xi_-,\xi_+)}{\xi_-}}{\xi_+}.
+\end{align}
+If we define $k_\pm = \frac{\omega \pm uk}{2u}$ we can express the Green's function as
+\begin{align}
+G_{\ell\ell'}^\r(k,\omega) &= -\i\frac{\delta_{\ell\ell'} \alpha^M}{4\pi u} \klc*{I\kla*{k_\ell, \frac{2+M}{2}} I\kla*{k_{-\ell}, \frac{M}{2}} + I^\ast\kla*{-k_\ell, \frac{2+M}{2}} I^\ast\kla*{-k_{-\ell}, \frac{M}{2}}}
+\end{align}
+where we introduced the regularized integrals
+\begin{align}
+I(z,N) &= \lim_{\delta\rightarrow 0} \intx{0}{\infty}{\powe{\i x z} \powe{-\delta x} \abs*{P\kla*{\frac{\alpha}{\beta u}, \frac{\i x}{\beta u}}}^{2N} \frac{1}{\kla*{\alpha + \i x}^N}}{x}.
+\end{align}
+%alpha=1e-3; z=0.452; beta=1.3; u=1; N=1.2
+%integrand = lambda x: np.exp(1j*x*z) * np.abs(special.gamma(1 + alpha/(beta*u) + 1j*x/(beta*u)) / special.gamma(1 + alpha/(beta*u)))**(2*N) * (1 / (alpha + 1j*x))**N
+%cschc = lambda x: np.pi * x / np.sinh(np.pi*x) if x != 0 else 1
+%integrand_approx = lambda x: np.exp(1j*x*z) * cschc(x/(beta*u))**N * (1 / (alpha + 1j*x))**N
+%c_quad(integrand, 0, np.inf), c_quad(integrand_approx, 0, np.inf)
+The function $P$ is well-behaved for small $\alpha$ and we can safely take the limit to get
+\begin{align}
+\abs*{P\kla*{\frac{\alpha}{\beta u}, \frac{\i x}{\beta u}}}^2 &\longrightarrow \abs*{\Gamma\kla*{1 + \frac{\i x}{\beta u}}}^2 = \frac{\pi x}{\beta u} \csch\kla*{\frac{\pi x}{\beta u}}.
+\end{align}
+Going back to the free case of $K=1$ we find
+\begin{align}
+G_{\ell\ell'}^\r(k,\omega) &= -\i\frac{\delta_{\ell\ell'}}{4\pi u} \klc*{I\kla*{k_\ell, 1} I(k_{-\ell}, 0) + I^\ast\kla*{-k_\ell, 1} I^\ast(-k_{-\ell}, 0)}.
+\end{align}
+Notice that here the integrals reduce to
+\begin{align}
+I(k_\ell, 1) &= \intx{0}{\infty}{\powe{ \i x k_\ell} \frac{\pi x}{\beta u} \csch\kla*{\frac{\pi x}{\beta u}} \frac{1}{\alpha + \i x} }{x},\\
+I(k_{-\ell}, 0) &= \frac{1}{0^+ - \i k_{-\ell}}.
+\end{align}
+The second integral is identical in both terms and the sum of the first integrals is
+\begin{align}
+I(k_\ell, 1) + I^\ast(-k_\ell,1) &= \intx{0}{\infty}{\powe{\i xk_\ell} \frac{\pi x}{\beta u} \csch\kla*{\frac{\pi x}{\beta u}} \frac{2\alpha}{\alpha^2 + x^2}}{x} \\
+&= 2\pi \intx{0}{\infty}{\powe{\i xk_\ell} \frac{\pi x}{\beta u} \csch\kla*{\frac{\pi x}{\beta u}} \delta(x)}{x} = 2\pi
+\end{align}
+which finally yields the correct Green's function
+\begin{align}
+G_{\ell\ell'}^\r (k,\omega) &= -\i \frac{\delta_{\ell\ell'}}{4\pi u} 2\pi \frac{1}{0^+ - \i k_{-\ell}} = \frac{1}{2u} \frac{\delta_{\ell\ell'}}{k_{-\ell} + \i 0^+} = \frac{\delta_{\ell\ell'}}{\omega - \ell uk + \i 0^+}.
+\end{align}
+The fact that we can recover the exact result known from simple free fermionic theory using our bosonization identity is encouraging.
+To deal with the interacting case we now need to analyse the integrals.
+We can make a little bit of progress by substituting $v = 1 - \powe{-\frac{2\pi x}{\beta u}}$ or equivalently $x = -\frac{\beta u}{2\pi} \log(1 - v)$ which leads to
+\begin{align}
+I(z,N) &= \kla*{\frac{2\pi}{\beta u}}^{N-1} \intx{0}{1}{ (1-v)^{\frac{N}{2} - \frac{\i \beta u z}{2\pi}-1} v^{-N} \klb*{\frac{-\log(1-v)}{ \frac{2\pi\alpha}{\beta u} - \i \log(1-v) }}^N }{v}\\
+&\simeq \kla*{\frac{2\pi}{\beta u}}^{N-1} \klc*{(-\i)^N B_{1-\epsilon}\kla*{1-N, \frac{N}{2} - \frac{\i\beta uz}{2\pi}} + J_\epsilon\kla*{z, 1-N, \frac{N}{2} - \frac{\i\beta uz}{2\pi}, \frac{2\pi\alpha}{\beta u}}}.
+\end{align}
+%alpha=1e-4; z=0.452; beta=1.3; u=1; N=0.3
+%cschc = lambda x: np.pi * x / np.sinh(np.pi*x) if x != 0 else 1
+%integrand_approx = lambda x: np.exp(1j*x*z) * cschc(x/(beta*u))**N * (1 / (alpha + 1j*x))**N
+%c_quad(integrand_approx, 0, np.inf), c_quad(lambda v: (2*np.pi/(beta*u))**(N-1) * v**(-N) * (1-v)**(N/2-1 - 1j*beta*u*z/(2*np.pi)) * (-np.log(1-v) / (2*np.pi*alpha/(beta*u) - 1j*np.log(1-v)))**N, 0, 1)
+Here we made use of the incomplete Beta function $B_\epsilon(x,y) = \intx{0}{\epsilon}{v^{x-1} (1-v)^{y-1}}{v}$ and set $\alpha=0$ in the integrand, since $\log(1-v) \gtrsim \epsilon > \frac{2\pi\alpha}{\beta u}$ suffices to safely execute the limit.
+We also defined
+\begin{align}
+J_\epsilon(z,x,y,\delta) &= \intx{1-\epsilon}{1}{v^{x-1} \kla*{1 - v}^{y-1} \klb*{\frac{-\log(1-v)}{\delta - \i \log(1-v)}}^{1-x}}{v}\\
+&= \intx{0}{\epsilon}{(1-v)^{x-1} v^{y-1} \klb*{\frac{-\log(v)}{\delta - \i\log(v)}}^{1-x}}{v}.
+\end{align}
+%%% DECISION :: Keep \alpha finite, we can not get a regular result apparently..
+At this point one can numerically check that for small $\alpha$ we can set $\epsilon=0$ yielding the approximation
+\begin{align}
+I(z,N) &\simeq (-\i)^N \kla*{\frac{2\pi}{\beta u}}^{N-1} B\kla*{1 - N, \frac{N}{2} - \frac{\i\beta uz}{2\pi}}
+\end{align}
+%alpha=1e-8; z=0.452; beta=1.3; u=1; N=1.3; eps=1e-3; delta=2*np.pi*alpha/(beta*u); x=1-N; y=N/2 - 1j*beta*u*z/(2*np.pi)
+%cschc = lambda x: np.pi * x / np.sinh(np.pi*x) if x != 0 else 1
+%mbeta = lambda x,y: special.gamma(x) * special.gamma(y) / special.gamma(x+y)
+%integrand_approx = lambda x: np.exp(1j*x*z) * cschc(x/(beta*u))**N * (1 / (alpha + 1j*x))**N
+%c_quad(integrand_approx, 0, np.inf), c_quad(lambda v: (2*np.pi/(beta*u))**(N-1) * v**(x-1) * (1-v)**(y-1) * (-np.log(1-v) / (delta - 1j*np.log(1-v)))**N, 0, 1), (delta/alpha)**(-x) * ((-1j)**N * mbeta(x,y) + 0)
+where the complete Beta function can be represented using Gamma functions via as $B(x,y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}$.
+The Green's function then simplifies to
+\begin{align}
+G_{\ell\ell'}^\r(k,\omega) &= \i\frac{\delta_{\ell\ell'}\alpha^M \sin\kla*{\frac{\pi M}{2}} }{2\pi u} \kla*{\frac{2\pi}{\beta u}}^{M-1} B\kla*{-\frac{M}{2}, \frac{2+M}{4} - \frac{\i\beta uk_\ell}{2\pi}} B\kla*{1 - \frac{M}{2}, \frac{M}{4} - \frac{\i\beta uk_{-\ell}}{2\pi}}.
+\end{align}
+%def green_order_0(k_vals, omega=0.0, beta=1.1, K=0.6, u=1.0, alpha=1e-3, variant="real"):
+%    M = (K + 1/K - 2) / 2
+%    prefactor = 1j*alpha**M * np.sin(np.pi*M/2) * (2*np.pi/(beta*u))**(M-1) / (2*np.pi*u)
+%    k_p = (omega + u*k) / (2*u)
+%    k_m = (omega - u*k) / (2*u)
+%    my_beta = lambda x,y: special.gamma(x) * special.gamma(y) / special.gamma(x+y)
+%    g_rr = prefactor * my_beta(-M/2, (2+M)/4 - 1j * beta*u * k_p / (2*np.pi)) * my_beta(1-M/2, M/4 - 1j * beta*u * k_m / (2*np.pi))
+%    g_ll = prefactor * my_beta(-M/2, (2+M)/4 - 1j * beta*u * k_m / (2*np.pi)) * my_beta(1-M/2, M/4 - 1j * beta*u * k_p / (2*np.pi))
+%    green = np.array([np.array([[g_rr[i], 0], [0, g_ll[i]]])
+%                      for i in range(k_vals.size)])
+%    return green
+Using $\lim_{x\rightarrow 0} \sin(\pi x) B(x,y) = \pi$ also recovers the correct limit
+\begin{align}
+G_{\ell\ell'}^\r(k,\omega) &= \i\frac{\delta_{\ell\ell'}}{2\pi u} \frac{\beta u}{2\pi} (-\pi) B\kla*{1, -\frac{\i\beta uk_{-\ell}}{2\pi}} = \i\frac{\delta_{\ell\ell'}}{2\pi u} \frac{\beta u}{2\pi} (-\pi) \frac{2\pi}{-\i\beta uk_{-\ell}} = \frac{\delta_{\ell\ell'}}{\omega - \ell uk}.
+\end{align}
+We are merely missing the regularization, but since we explicitly dropped it for $M>0$ this is no surprise either.\\
+Before we embark on the calculation of the perturbation series, let us recapitulate the ``rules'' that we discovered thus far.
+Accepting that we can not get rid of the cut-off in the final result, but still thinking of it as a small quantity, we can write down approximations for the correlation functions
+\begin{align}
+F(\xi) &\simeq \log\klb*{\frac{\i\beta u}{\pi\alpha}} - \log\klb*{\csch\kla*{\frac{\pi \xi}{\beta u}}},\\
+F_1(x,t) &\simeq \log\klb*{
+\frac{\i\beta u}{\pi\alpha}} - \frac{1}{2}\log\klb*{ \csch\kla*{\frac{\pi \xi_-}{\beta u}} \csch\kla*{\frac{\pi \xi_+}{\beta u}}}.
+\end{align}
+Note that to be precise we should replace the argument of the hyperbolic cosecant functions by $x-\i 0^+$, which takes care of the ambiguity when computing complex powers of negative quantities.
+For convenience of notation we will instead just define $\csch(z) \equiv \csch(z - \i 0^+)$.
+In most circumstances this does not make a difference anyway, and when it becomes important, we will explicitly mention it.
+In this formulation the calculation becomes significantly more straight-forward, explicitly
+\begin{align}
+G_{\ell\ell'}^\r(x,t) &= -\i\Theta(t) \frac{\delta_{\ell\ell'}}{2\pi\alpha} 2\Re \klc*{\powe{-F(\xi_{-\ell})} \powe{-MF_1(x,t)}}\\
+&= -\i\Theta(t) \frac{\delta_{\ell\ell'}}{\pi\alpha} \Re \klc*{ \csch\kla*{\frac{\pi\xi_{-\ell}}{\beta u}}^\frac{2+M}{2} \csch\kla*{\frac{\pi\xi_{\ell}}{\beta u}}^\frac{M}{2} \kla*{\frac{\pi\alpha}{\i \beta u}}^{M+1}}\\
+&= \i\Theta(\xi_+) \Theta(\xi_-) \frac{\delta_{\ell\ell'} \sin\kla*{\frac{\pi M}{2}} }{\beta u} \kla*{\frac{\pi\alpha}{\beta u}}^{M} \csch\kla*{\frac{\pi\xi_{-\ell}}{\beta u}}^\frac{2+M}{2} \csch\kla*{\frac{\pi\xi_{\ell}}{\beta u}}^\frac{M}{2}.
+\end{align}
+%alpha=1e-4; M=0.3; beta=1.1; u=1; ell=1; xi_m=0.45; xi_p=0.53
+%-1j * np.heaviside(xi_m+xi_p, 1/2) /(np.pi*alpha) * np.real((np.pi*alpha / (1j*beta*u))**(M+1) / np.sinh(np.pi*xi_m / (beta*u) - 1e-16j)**((1+ell)/2 + M/2) / np.sinh(np.pi*xi_p / (beta*u) - 1e-16j)**((1-ell)/2 + M/2))
+\section{Single-particle Green's function of the sine-Gordon model}
+In this section we want to extend our Hamiltonian by the sine-Gordon perturbation
+\begin{align}
+H_\Text{int} &= g\intr{\cos\kla*{2\sqrt{K} \phi}}{x}.
+\end{align}
+The model is said to be integrable, but thus far the problem of obtaining the exact two-point correlation functions has resisted a great many attempts.
+Here we want to take a more modest approach and merely treat the term in the first few orders of a perturbation series.
+Recall that given some Hamiltonian $H=H_0+H_\Text{int}$ we calculate expectation values via
+\begin{align}
+\bra*{\mathcal{O}} &= \frac{1}{\mathcal{Z}} \int \mathcal{O} \powe{\i S[\Phi]}\,\mathcal{D}\Phi
+\end{align} 
+where $\mathcal{Z} = \int \powe{\i S[\Phi]}\,\mathcal{D}\Phi$ is the full partition function, $\mathcal{O}$ is some operator and $\Phi$ represents the fields appearing in the action.
+Since the action decomposes into  a free and an interacting part via $S=S_0 + S_\Text{int}$ we find
+\begin{align}
+\mathcal{Z} &= \int \powe{\i S_0[\Phi]} \powe{\i S_\Text{int}[\Phi]}\,\mathcal{D}\Phi = \mathcal{Z}_0 \bra*{\powe{\i S_\Text{int}[\Phi]}}_0
+\end{align}
+where $\bra*{\mathcal{O}}_0$ denotes the average with respect to $S_0$.
+Similarly
+\begin{align}
+\bra*{\mathcal{O}} &= \frac{1}{\mathcal{Z}}\int \mathcal{O} \powe{\i S_\Text{int}[\Phi]} \powe{\i S_0[\Phi]} \,\mathcal{D}\Phi = \frac{\mathcal{Z}_0 \bra*{\mathcal{O}\powe{\i S_\Text{int}}}_0}{\mathcal{Z}_0 \bra*{\powe{\i S_\Text{int}}}_0} = \frac{1}{\bra*{\powe{\i S_\Text{int}}}_0} \bra*{\mathcal{O}\powe{\i S_\Text{int}}}_0.
+\end{align}
+Expanding into a power series then yields
+\begin{align}
+\bra*{\mathcal{O}} &= \frac{1}{1 + \i \bra*{S_\Text{int}}_0 + \frac{\i^2}{2} \bra*{S_\Text{int}^2}_0 + \dots} \klc*{\bra*{\mathcal{O}}_0 + \i\bra*{\mathcal{O}S_\Text{int}}_0 + \frac{\i^2}{2} \bra*{\mathcal{O} S_\Text{int}^2} + \dots}\\
+&= \bra*{\mathcal{O}}_0 + \i\bra*{\mathcal{O}S_\Text{int}}_0^c + \frac{\i^2}{2} \bra*{\mathcal{O}S_\Text{int}^2}_0^c - \i^2 \bra*{\mathcal{O}S_\Text{int}}_0^c \bra*{S_\Text{int}}_0 + \dots
+\end{align}
+where $\bra*{AB}^c = \bra*{AB} - \bra*{A}\bra*{B}$ denotes the connected average.
+While we have converted the calculation of a single expectation value into a somewhat complicated series expansion, we only ever evaluated averages with respect to the free action $S_0$.
+In our context of bosonization and the single-particle Green's function we can even go one step further and write down an explicit formula for the most general kind of expectation value we will encounter.
+Assuming that $\phi(x,t)$ and $\theta(x,t)$ have $\mathbb{C}$-valued commutators for any $x$ and $t$ and that both $\bra*{\phi(0,0)^2}_0$ and $\bra*{\theta(0,0)^2}_0$ diverge one has
+\begin{align}
+\bra[\Big]{\prod_j \powe{\i A_j\phi(x_j,t_j) + \i B_j\theta(x_j,t_j)}} &= \powe{\frac{1}{2} \sum_{j<k} \klb*{\kla*{A_jA_k + B_jB_k} F_1(x_j-x_k,t_j-t_k) - \kla*{A_jB_k + A_kB_j} F_2(x_j-x_k,t_j-t_k)}}
+\end{align}
+under the neutrality condition $\sum_jA_j=0=\sum_jB_j$.
+If this condition is not met, the expectation value gives zero.
+Note that we can express all quantities and integrals in terms of $\xi_\pm$ via
+\begin{align}
+S_\Text{int} &= \frac{g}{u}\intrnd{2}{\cos\kla*{2\sqrt{K}\phi}}{\xi},\\
+\psi_\ell &= \frac{1}{\sqrt{2\pi\alpha}} \powe{-\i\varphi_\ell} = \frac{1}{\sqrt{2\pi\alpha}} \powe{-\i \ell \sqrt{K} \phi + \i\frac{1}{\sqrt{K}} \theta},\\
+F(\xi) &= \log\klb*{\frac{\i\beta u}{\pi\alpha}} - \log\klb*{\csch\kla*{\frac{\pi \xi}{\beta u}}},\\
+F_1(\xi) &= \log\klb*{
+\frac{\i\beta u}{\pi\alpha}} - \frac{1}{2}\log\klb*{ \csch\kla*{\frac{\pi \xi_-}{\beta u}} \csch\kla*{\frac{\pi \xi_+}{\beta u}}}.
+\end{align}
+The general formula for the expectation value admits a recursion relation.
+Writing $V_j = \powe{\i A_j\phi(\xi_j) + \i B_j \theta(\xi_j)}$ and $\Sigma_{jk} = \kla*{A_jA_k + B_jB_k}F_1(\xi_j-\xi_k) - \kla*{A_jB_k + A_kB_j}F_2(\xi_j-\xi_k)$ we have
+\begin{align}
+\bra[\Big]{\prod_{j=1}^{N+1} V_j } &= \powe{\frac{1}{2} \sum_{k=2}^{N+1} \sum_{j=1}^{k-1} \Sigma_{jk}} = \powe{\frac{1}{2} \sum_{k=2}^N \sum_{j=1}^{k-1} \Sigma_{jk} + \frac{1}{2}\sum_{j=1}^N \Sigma_{j,N+1} } = \bra[\Big]{\prod_{j=1}^NV_j} \powe{\frac{1}{2} \sum_{j=1}^N \Sigma_{j,N+1}}.
+\end{align}
+Another interesting observation is that swapping $V_1$ and $V_2$ only leads to the sign change $\xi_1 - \xi_2 \rightarrow \xi_2 - \xi_1$, leaving everything else unchanged.
+Since $F^\ast(-\xi)=F(\xi)$ and $F_1^\ast(-\xi) = F_1(\xi)$ it follows that
+\begin{align}
+\bra[\Big]{\klc*{V_1, V_2} \prod_{j=3}^NV_j} &= 2\Re \klc*{\powe{\frac{1}{2} \Sigma_{12}}} \powe{\frac{1}{2} \sum_{j<k} \kla*{1 - \delta_{j1} \delta_{k2}} \Sigma_{jk}}.
+\end{align}
+Using these tools we will calculate the single-particle Green's function, i.e. we set $\mathcal{O} = \klc*{\psi_\ell(\xi), \psi_{\ell'}(0)^\dagger}$.
+Since the perturbation only contains $\phi$ we can simply our general formula a bit\footnote{$A_{1} = -\ell \sqrt{K}$, $B_{1} = \frac{1}{\sqrt{K}}$, $\xi_{1} = \xi$ and $A_{2} = \ell' \sqrt{K}$, $B_{2} = -\frac{1}{\sqrt{K}}$, $\xi_{2} = 0$}
+\begin{align}
+\mathcal{E} &= \bra[\Big]{\klc*{\psi_\ell(\xi), \psi_{\ell'}(0)^\dagger} \prod_{j=3}^N \powe{\i A_j\phi(\xi_j)} }_0 \\
+&= \frac{1}{2\pi\alpha} 2\Re \klc*{\powe{-\frac{1}{2} \klb*{\ell\ell' K + \frac{1}{K}}F_1(\xi) - \ell F_2(\xi)}} \powe{\frac{1}{2} \sum_{k=2}^{N} \sum_{j=1}^{k-1} \kla*{1 - \delta_{j1} \delta_{k2}} \Sigma_{jk}}.
+\end{align}
+We can also write down the expectation value more explicitly as
+\begin{align}
+\mathcal{E} &= \mathcal{C}_0 \mathcal{C} \powe{\frac{1}{2} \sum_{k=4}^N \sum_{j=3}^{k-1} A_jA_kF_1(\xi_j-\xi_k)},\\
+\mathcal{C}_0 &= \frac{1}{\pi\alpha} \Re \klc*{\powe{-\frac{1}{2} \klb*{\ell\ell' K + \frac{1}{K}}F_1(\xi) - \frac{1}{2} \klb*{\ell + \ell'} F_2(\xi)}},\\
+\mathcal{C} &= \prod_{k=3}^N \powe{-\frac{1}{2} \ell \sqrt{K} A_k F_1(\xi - \xi_k) - \frac{1}{2\sqrt{K}} A_k F_2(\xi - \xi_k)} \powe{\frac{1}{2} \ell' \sqrt{K} A_k F_1(-\xi_k) + \frac{1}{2\sqrt{K}} A_k F_2(-\xi_k)}
+\end{align}
+where the only relevant neutrality condition is $0=\frac{1}{\sqrt{K}}\sum_jA_j = -\ell + \ell' + \frac{1}{\sqrt{K}} \sum_{j=3}^N A_j$ since the one for the $B_j$ is met by construction.
+Finally, we can replace $F_2$ by $F$ via
+\begin{align}
+\mathcal{C}_0 &= \frac{\delta_{\ell\ell'}}{\pi\alpha} \Re\klc*{\powe{- F(\xi_{-\ell})} \powe{-\frac{1}{2} \klb*{K + \frac{1}{K} - 2}F_1(\xi)}} + \frac{\delta_{\ell,-\ell'}}{\pi\alpha} \Re\klc*{\powe{\frac{1}{2} \klb*{K - \frac{1}{K}} F_1(\xi)}},\\
+\mathcal{C} &= \prod_{k=3}^N \powe{-\frac{1}{2\sqrt{K}} \ell A_k F\kla{\xi_{-\ell} - \xi_{k,-\ell}}} \powe{\frac{1}{2\sqrt{K}} \ell'A_k F\kla{-\xi_{k,-\ell'}}} \powe{-\frac{1}{2} \ell \frac{K-1}{\sqrt{K}} A_k F_1(\xi - \xi_k)} \powe{\frac{1}{2} \ell' \frac{K-1}{\sqrt{K}} F_1(-\xi_k)}.
+\end{align}
+Note that we made use of the abbreviations $\xi = (\xi_+,\xi_-)$ and that $\xi_{k,\pm} \equiv ut_k \pm x_k \equiv \kla*{\xi_k}_\pm$.
+\subsection{Zeroth order and first order}
+We expand the Green's function into a power series of the form
+\begin{align}
+G_{\ell\ell'}^\r(\xi) &= \sum_{p\ge 0} \frac{\kla*{\i g}^p}{p!} G_{p,\ell\ell'}^\r(\xi).
+\end{align}
+The free contribution to the Green's function is
+\begin{align}
+G_{0,\ell\ell'}^\r(\xi) &= -\i\Theta(t) \mathcal{C}_0\\
+&= -\i\Theta(t) \frac{\delta_{\ell\ell'}}{\pi\alpha} \Re \klc*{\powe{-F(\xi_{-\ell}) - MF_1(\xi)}}\\
+&= -\i\Theta(t) \frac{\delta_{\ell\ell'}}{\pi\alpha} \Re \klc*{\csch\kla*{\frac{\pi\xi_{-\ell}}{\beta u}}^\frac{2+M}{2} \csch\kla*{\frac{\pi\xi_\ell}{\beta u}}^\frac{M}{2} \kla*{\frac{\pi\alpha}{\i\beta u}}^{1+M}}\\
+&= \i\Theta(\xi_+)\Theta(\xi_-) \frac{\delta_{\ell\ell'} \sin\kla*{\frac{\pi M}{2}}}{\beta u} \kla*{\frac{\pi\alpha}{\beta u}}^{M} \csch\kla*{\frac{\pi\xi_{-\ell}}{\beta u}}^\frac{2+M}{2} \csch\kla*{\frac{\pi\xi_\ell}{\beta u}}^\frac{M}{2}
+\end{align}
+where we defined $M = \frac{1}{2} \klb*{K + \frac{1}{K} - 2}\ge 0$.
+The Fourier transform gives
+\begin{align}
+G_{0,\ell\ell'}^\r(k,\omega) &= \i \delta_{\ell\ell'} \frac{\beta \sin\kla*{\frac{\pi M}{2}}}{2\pi^2} \kla*{\frac{\pi\alpha}{\beta u}}^{M} J_0\kla*{\frac{\beta u}{\pi} k_\ell, \frac{2 + M}{2}} J_0\kla*{\frac{\beta u}{\pi} k_{-\ell}, \frac{M}{2}}.
+\end{align}
+%prefactor = 1j*np.sin(np.pi*M/2) * (np.pi * alpha /(beta*u))**M * beta / (2*np.pi**2)
+%k_p = (omega + u*k_vals) / (2*u)
+%k_m = (omega - u*k_vals) / (2*u)
+%j_0 = lambda z, K: 2**(K-1) * special.gamma(1-K) * special.gamma(K/2 - 1j * z/2) / special.gamma(1-K/2 - 1j * z/2)
+%g_rr = prefactor * j_0(beta*u * k_p / np.pi, 1 + M/2) * j_0(beta*u * k_m / np.pi, M/2)
+%g_ll = prefactor * j_0(beta*u * k_m / np.pi, 1 + M/2) * j_0(beta*u * k_p / np.pi, M/2)
+where we defined $k_\pm = \frac{\omega \pm uk}{2u}$ and the integral
+\begin{align}
+J_0(z,K) &= \intx{0}{\infty}{\powe{\i zx} \csch^K(x)}{x} = 2^{K-1} B\kla*{1 - K, \frac{K - \i z}{2}}.
+\end{align}
+As shown above the first order correction only consists of the connected average $\bra*{\klc*{\psi_\ell, \psi_{\ell'}^\dagger} S_\Text{int}}_0^c$.
+The neutrality condition immediately gives $\bra*{S_\Text{int}}_0 = 0$ so we are left with
+\begin{align}
+G_{1,\ell\ell'}^\r(\xi) &= -\i\Theta(t) \frac{1}{u} \sum_{s=\pm 1} \intrnd{2}{ \mathcal{E} }{\xi'},\\
+\mathcal{E} &= \bra*{\klc*{\psi_\ell(\xi), \psi_{\ell'}(0)^\dagger} \powe{2s\i\sqrt{K} \phi(\xi')}}_0 = \mathcal{C}_0 \mathcal{C} \delta_{0, -\ell + \ell' + 2s}.
+\end{align}
+The Kronecker delta decomposes into $\delta_{\ell,-\ell'} \delta_{s,\ell}$ which simplifies the components to
+\begin{align}
+\mathcal{C}_0 &= \frac{1}{\pi\alpha} \Re\klc*{\powe{\frac{1}{2} \klb*{K - \frac{1}{K}} F_1(\xi)}} = \frac{1}{\pi\alpha} \Re \klc*{ \kla*{\frac{\pi\alpha}{\i\beta u}}^N \csch\kla*{\frac{\pi\xi_-}{\beta u}}^\frac{N}{2} \csch\kla*{\frac{\pi\xi_+}{\beta u}}^\frac{N}{2} }\\
+&= \frac{\cos\kla*{\frac{\pi N}{2}}}{\pi\alpha} \kla*{\frac{\pi\alpha}{\beta u}}^N \Theta(\xi_- \xi_+) \csch\kla*{\frac{\pi\xi_-}{\beta u}}^\frac{N}{2} \csch\kla*{\frac{\pi\xi_+}{\beta u}}^\frac{N}{2},\\
+\mathcal{C} &= \powe{-F(\xi_{-\ell} - \xi'_{-\ell})} \powe{-F(-\xi'_{\ell})} \powe{-(K-1) F_1(\xi - \xi')} \powe{-(K-1) F_1(-\xi')}\\
+&= \kla*{\frac{\pi\alpha}{\i\beta u}}^{2K} \csch\kla*{\frac{\pi [\xi_{-\ell} + \xi_{-\ell}']}{\beta u}}^{K_+} \csch\kla*{\frac{\pi [\xi_{\ell} + \xi_{\ell}']}{\beta u}}^{K_-} \csch\kla*{\frac{\pi \xi_{\ell}'}{\beta u}}^{K_+} \csch\kla*{\frac{\pi \xi_{-\ell}'}{\beta u}}^{K_-} 
+\end{align}
+where we defined $N=\frac{1}{2} \klb*{\frac{1}{K} - K}\ge 0$ and $K_\pm = \frac{K \pm 1}{2}$.
+Note that we replaced $\xi'\rightarrow -\xi'$ which is valid under the integral.
+At this point we realize that the two-dimensional integral once again decomposes into the product of one-dimensional integrals, this time of the type
+\begin{align}
+I_1(x,K) &= \intr{\csch^\frac{K+1}{2}\kla*{x+x' - \i\delta} \csch^\frac{K-1}{2}\kla*{x' - \i\delta}}{x'}
+\end{align}
+%integrate csch(0.3+x - I/10)^1.1 csch(x - I/10)^0.1 from x=-inf to inf = -0.855449 + 2.6328 i
+%x=0.3; K=1.0; delta=1e-1
+%c_quad(lambda xp: 1/np.sinh(x+xp-1j*delta)**(1.1) * 1/np.sinh(xp-1j*delta)**(0.1), -50, 50, limit=300)
+%#OUT: ((-0.8554485+2.6327998j), 3.85e-09)
+where we have reinserted a regularization to ensure convergence.
+One can numerically check that
+\begin{align}
+I_1(x,K) &\approx \kla*{1 - \powe{\pi\i (K-1)}} \frac{8^\frac{K-1}{2} B\kla*{\frac{K}{2}, 1-K} \sech^\frac{K-1}{2}(x)}{1 + \kla*{2^\frac{K-1}{2} - 1} \sech^\frac{K+7}{10}(x)}
+\end{align}
+%K=0.1; delta=1e-1
+%x=2.3
+%c_quad(lambda xp: 1/np.sinh(xp+x-1j*delta)**((K+1)/2) * 1/np.sinh(xp-1j*delta)**((K-1)/2), -50, 50), (1 - np.exp(np.pi*1j*(K-1))) * 8**((K-1)/2) * special.beta(K/2, 1-K) / np.cosh(x)**((K-1)/2) / (1 + (2**((K-1)/2)-1) / np.cosh(x)**((K+7)/10))
+is a very good approximation.
+Thus the correlation function becomes
+\begin{align}
+G_{1,\ell\ell'}^\r(\xi) &= \bsplit{&-\i\Theta(\xi_+)\Theta(\xi_-) \frac{\delta_{\ell,-\ell'}\cos\kla*{\frac{\pi N}{2}}}{\pi\alpha u} \kla*{\frac{\pi\alpha}{\beta u}}^{N+2K} \powe{-\i\pi K} \csch\kla*{\frac{\pi \xi_-}{\beta u}}^\frac{N}{2} \csch\kla*{\frac{\pi \xi_+}{\beta u}}^\frac{N}{2}\\
+&\times \frac{\beta u}{\pi} I_1\kla*{\frac{\pi\xi_{-\ell}}{\beta u}, K} \frac{\beta u}{\pi} I_1\kla*{\frac{\pi\xi_\ell}{\beta u}, K} }\\
+&\approx \bsplit{&-\i\Theta(\xi_+)\Theta(\xi_-) \frac{\delta_{\ell,-\ell'}\beta \cos\kla*{\frac{\pi N}{2}}}{\pi^2} \kla*{\frac{\pi\alpha}{\beta u}}^{N+2K-1} \powe{-\i\pi K} \kla*{1 - \powe{\pi\i (K-1)}}^2 8^{K-1} \\
+&\times \frac{\csch\kla*{\frac{\pi \xi_-}{\beta u}}^\frac{N}{2} \sech^\frac{K-1}{2}\kla*{\frac{\pi\xi_{-}}{\beta u}}}{1 + \kla*{2^\frac{K-1}{2} - 1} \sech^\frac{K+7}{10}\kla*{\frac{\pi\xi_{-}}{\beta u}}} \frac{\csch\kla*{\frac{\pi \xi_+}{\beta u}}^\frac{N}{2} \sech^\frac{K-1}{2}\kla*{\frac{\pi\xi_{+}}{\beta u}}}{1 + \kla*{2^\frac{K-1}{2} - 1} \sech^\frac{K+7}{10}\kla*{\frac{\pi\xi_{+}}{\beta u}}} B\kla*{\frac{K}{2}, 1-K}^2. }
+\end{align}
+The Fourier transform is given by
+\begin{align}
+G_{1,\ell\ell'}^\r(k,\omega) &= -\i \delta_{\ell,-\ell'} \frac{2^{3K-1} \beta^3u \cos\kla*{\frac{\pi N}{2}}}{2\pi^4} \kla*{\frac{\pi\alpha}{\beta u}}^{N+2K-1} J_1\kla*{\frac{\beta u}{\pi}k_+, K} J_1\kla*{\frac{\beta u}{\pi}k_-, K}
+\end{align}
+where we defined the integral
+\begin{align}
+J_1(z,K) &= \cos\kla*{\frac{\pi K}{2}} B\kla*{\frac{K}{2}, 1-K} \intx{0}{\infty}{\powe{\i zx} \frac{\csch(x)^{\frac{1}{2} \kla*{\frac{1}{K} - K}} \sech(x)^\frac{K-1}{2}}{1 + \kla*{2^\frac{K-1}{2} - 1} \sech(x)^\frac{K+7}{10}} }{x}.
+\end{align}
+\TODO{WARNING: The SG model does not yield exceptional points, but Klein factors kind of disappeared into thin air. Correct treatment \emph{probably} replaces $\Re\klc*{\dots}$ by $-\i\Im\klc*{\dots}$ in $\mathcal{C}_0$ of the first order term.}
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

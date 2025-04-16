@@ -1,0 +1,312 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{ll_scrarticle}
+
+\newcommand*{\titel}{Operator Product Expansion}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{General Theory}
+In this section we want to present the RG approach based on the Operator Product Expansion (OPE) following Fradkin \TODO{[ref book and lecture notes; slight differences between each]}.
+There are a several ways one can interpret and use this RG approach.
+The fundamental starting point here will always be to introduce some notion of a short-distance cut-off $\alpha$ that regulates the UV divergences and can be thought of as generating a finite band-width $\Lambda\sim \frac{1}{\alpha}$.
+Starting from an initial $\alpha_0$ that might for example correspond to the validity regime of the bare theory one then seeks to increase $\alpha\rightarrow \alpha + \d \alpha$ while keeping the partition function constant.
+The resulting RG flow may then be terminated by some minimal bandwidth, e.g. thermal fluctuations $\Lambda_\text{thermal} = \frac{1}{\beta v}$ with some typical velocity $v$ and the inverse temperature $\beta=\frac{1}{T}$.
+\subsection{Perturbative Renormalization Group and OPE}
+With the previous discussion in mind let us now consider a set of operators $\mathcal{O}$ that are functions of some real scalar field $\phi$ in $D$-dimensional space-time ; later we will always use $D=2$.
+Then the scaling dimension $\Delta_{\mathcal{O}}$ of an operator is defined by the asymptotic relation
+\begin{align}
+\bra*{\mathcal{O}(x_1) \mathcal{O}(x_2)} \overset{x_1\rightarrow x_2}{\sim} \frac{C_{\mathcal{O}}^2}{|x_1-x_2|^{2\Delta_{\mathcal{O}}}}
+\end{align}
+where $C_\mathcal{O}$ is some normalization of the operator.
+We can then define a general action via
+\begin{align}
+S[\phi] &= S_0[\phi] + \sum_j g_j \alpha^{\Delta_{j} - D} \int \mathcal{O}_j(x)\,\d^Dx
+\end{align}
+where $g_j$ are by construction dimensionless couplings and $S_0$ is an action corresponding to a fixed point (e.g. a kinetic term $(\nabla\phi)^2$).
+The partition function can then be written as
+\begin{align}
+Z &= \tr \klb*{\powe{S[\phi]}} = \tr \klb*{\powe{-S_0[\phi]} \powe{\sum_j g_j \alpha^{\Delta_{j} - D} \int \mathcal{O}_j(x)\,\d^Dx}}
+\end{align}
+where the trace runs over all configurations and may for example be given by a path integral.
+Defining the expectation value $\bra*{\mathcal{O}} = \frac{1}{Z_0} \tr \klb*{ \powe{S_0} \mathcal{O}}$ with respect to the fixed point action $S_0$ allows us to formally rewrite this as
+\begin{align}
+\frac{Z}{Z_0} &=1 + \sum_j \frac{g_j}{\alpha^{D-\Delta_{j}}} \int \bra*{\mathcal{O}_j(x)}\,\d^Dx + \frac{1}{2} \sum_{j,k} \frac{g_j g_k}{\alpha^{2D-\Delta_{j}-\Delta_{k}}} \int \bra*{\mathcal{O}_j(x_1) \mathcal{O}_k(x_2)}\,\d^Dx_1\,\d^Dx_2 + \dots 
+\end{align}
+where $Z_0=\tr \powe{S_0}$ and we expanded the exponential containing the perturbations to the action $S_0$.\\
+All of the equations here contain the short-distance cut-off $\alpha$ we alluded to in the introduction -- but how does it enter into the calculation?
+The answer to this is that we restrict all of the integrations in the series expansion such that $|x_j - x_k| > \alpha$ for any combination of coordinates.
+To implement this idea we now write $\alpha'=s\alpha$ where $s=\powe{\d l} = 1 + \d l$ describes an infinitesimal change and try to adjust the couplings $g_j$ such that the new theory looks structurally identical.
+Equivalently we have $\alpha(l)=\alpha_0\powe{l}$ and the condition $\frac{\d}{\d l} \frac{Z}{Z_0} = 0$.
+Let us see what happens when we differentiate the $N$-th order term in the expansion.
+For that purpose we will introduce the multi-index notations $j = (j_1,\dots,j_N)$, $g!=g_{j_1} \dots g_{j_N}$ and $|g|=g_{j_1} + \dots + g_{j_N}$ which allows us to write $\frac{Z}{Z_0} = \sum_{N\ge 0} \frac{1}{N!} Z_N$ where
+\begin{align}
+Z_N &= \sum_j \frac{g!}{\alpha^{ND - |\Delta_j|}} I_N(j) = \sum_j \frac{g!}{\alpha^{ND - |\Delta_j|}} \int_{|x_\mu - x_\nu|>\alpha} \bra*{\mathcal{O}_{j_1}(x_1) \dots \mathcal{O}_{j_N}(x_N)}\,\d^Dx_1 \dots \d^Dx_N.
+\end{align}
+Using $\frac{\d}{\d l} \alpha(l) = \alpha(l)$ we then find
+\begin{align}
+\frac{\d}{\d l}Z_N &= \sum_{j} \klb*{ \frac{\frac{\d}{\d l} g!}{\alpha^{ND- |\Delta_{j}|}} + \kla*{|\Delta_j| - ND} \frac{g!}{\alpha^{ND - |\Delta_j|}} }I_N + \sum_j \frac{g!}{\alpha^{ND-|\Delta_j|}} \frac{\d }{\d l} I_N(j).
+\end{align}
+Note that the only $l$-dependence of the integral is contained in the boundary conditions $|x_\mu-x_\nu|>\alpha(l)$ for $\mu,\nu = 1,\dots,N$ with $\mu<\nu$.
+For the derivative it is therefore sufficient to only consider
+\begin{align}
+\frac{\d}{\d l}\int_{|x_\mu - x_\nu|>\alpha} &= \frac{\d}{\d l} \int \prod_{\mu<\nu} \Theta\kla*{|x_\mu-x_\nu|-\alpha} \\
+&= -\alpha \int \sum_{\mu'<\nu'} \delta\kla*{|x_{\mu'}-x_{\nu'}| - \alpha} \prod_{ \mu<\nu , (\mu,\nu)\neq (\mu',\nu')} \Theta\kla*{|x_\mu-x_\nu|-\alpha}\\
+&= -\alpha \sum_{\mu'<\nu'} \int_{|x_\mu - x_\nu|>\alpha,(\mu,\nu)\neq (\mu',\nu')} \delta\kla*{|x_{\mu'}-x_{\nu'}| - \alpha}.
+\end{align}
+After substituting $x_{\mu'}=x+x_{\nu'}$ and switching to $D$-dimensional spherical coordinates for the integration on $x$ this expression simplifies to
+\begin{align}
+-\alpha \sum_{\mu'<\nu'} \int_{|x_\mu - x_\nu|>\alpha,(\mu,\nu)\neq (\mu',\nu')} \delta\kla*{|x| - \alpha} S_D|x|^{D-1}
+\end{align}
+where we made the assumption that the angular dependence of the integrand is negligible for the small magnitude $|x|=\alpha$.
+The boundary conditions are either $|x_\mu-x_\nu|>\alpha$ for $\mu,\nu \neq \mu'$ or $|x+x_{\nu'}-x_\nu|>\alpha$ for $\mu=\mu'$ and $\nu\neq \nu'$.
+Here we will make the approximation to neglect $x$ in the second type of boundary condition.
+On the one hand this is a bit brutal because $|x|=\alpha$ and thus ignoring this term when the RHS is of identical magnitude might seem dangerous.
+On the other hand we know that averaged over the angles $x=0$ and also $\alpha$ only serves as a minimal distance between the coordinates.
+Essentially for most of the parameter space neglecting a shift of $x$ does not matter.
+However, the more honest motivation for this approximation is that it leads to a very simple structure that we can work with; potentially a better treatment here could even lead so slightly modified flow equations, but we will not consider this at any higher level of rigour.\\
+Let us for now tentatively accept this and note that it leads to
+\begin{align}
+\frac{\d}{\d l}\int_{|x_\mu - x_\nu|>\alpha} &\approx -S_D\alpha^D \sum_{\mu'<\nu'} \int_{|x_\mu - x_\nu|>\alpha,\mu\neq \mu'}.
+\end{align}
+Inserting back into our integral gives
+\begin{align}
+\frac{\d}{\d l} I_N(j) &= -S_D\alpha^D \sum_{\mu'<\nu'} \int \bra*{\mathcal{O}_{j_1}(x_1) \dots \mathcal{O}_{j_{\mu'}}(x_{\nu'}+\alpha)\dots \mathcal{O}_{j_{\nu'}}(x_{\nu'}) \dots \mathcal{O}_{j_{N}}(x_{N})}\\
+&=-S_D\alpha^D \sum_{\mu'<\nu'} \sum_{j'} \frac{C_{j_{\mu'}, j_{\nu'}, j'}}{\alpha^{\Delta_{j_{\mu'}} + \Delta_{j_{\nu'}} - \Delta_{j'}}} \int \bra*{\mathcal{O}_{j_1}(x_1) \dots \mathcal{O}_{j'}(x_{\nu'}) \dots \mathcal{O}_{j_{N}}(x_{N})}\\
+&=-S_D\alpha^D \sum_{\mu'<\nu'} \sum_{j'} \frac{C_{j_{\mu'}, j_{\nu'}, j'}}{\alpha^{\Delta_{j_{\mu'}} + \Delta_{j_{\nu'}} - \Delta_{j'}}} I_{N-1}(j_1,\dots, j',\dots, j_N). \label{eqn:1loop shell integral OPE}
+\end{align}
+Here we made use of the operator product expansion
+\begin{align}
+\mathcal{O}_j(x_1) \mathcal{O}_k(x_2) &\overset{x_1\rightarrow x_2}{\sim} \sum_m \frac{C_{j,k,m}}{|x_1-x_2|^{\Delta_{j} + \Delta_{k} - \Delta_{m}}} \mathcal{O}_m\kla*{\frac{x_1+x_2}{2}}
+\end{align}
+where the $C$'s are the so-called \emph{structure coefficients} of the OPE.
+One should be somewhat careful with this identity in the sense that there are a few implicit assumptions behind this asymptotic limit.
+It is generally only valid inside an expectation value and it may generate operators not previously contained in the set we started with; this is the sense in which one usually assumes the $\mathcal{O}_j$ to be complete, i.e. all of their OPE's do not lead to any new terms.
+The former is more of a mathematical subtlety that is presumably safe to ignore outside special cases while the latter is potentially a problem for the RG as this may generate entire families of operators that quickly make any high order calculation completely infeasible.
+An argument that is somewhat symptomatic of RG is therefore to use the tree-level scaling as a justification for throwing away highly irrelevant terms that appear in this way without looking at their contributions at higher orders.\\
+Plugging our result back into the derivative of the $N$-term partition function yields
+\begin{align}
+\frac{\d}{\d l} Z_N &= \bsplit{&\sum_j \frac{g!}{\alpha^{ND-|\Delta_j|}} \klb*{ \abs*{\frac{g'}{g}} + |\Delta_j| - ND }I_N(j) \\
+&- \sum_j \frac{g!}{\alpha^{ND - |\Delta_j|}} S_D\alpha^D \sum_{\mu'<\nu'} \sum_{j'} \frac{C_{j_{\mu'}, j_{\nu'}, j'}}{\alpha^{\Delta_{j_{\mu'}} + \Delta_{j_{\nu'}} - \Delta_{j'}}} I_{N-1}(j',j\setminus \klc*{j_{\mu'}, j_{\nu'}}).}
+\end{align}
+Let us write out the condition $\frac{\d}{\d l} \frac{Z}{Z_0} = 0$ explicitly to better understand the structure.
+To order $N=3$ one finds
+\begin{align}
+0 &= \bsplit{&\sum_{j_1} \frac{g_{j_1}}{\alpha^{D-\Delta_{j_1}}} \klb*{\frac{g_{j_1}'}{g_{j_1}} + \Delta_{j_1} - D} I_1(j_1)\\
+& + \frac{1}{2}\sum_{j_1,j_2} \frac{g_{j_1}g_{j_2}}{\alpha^{2D-\Delta_{j_1} - \Delta_{j_2}}} \klb*{\frac{g_{j_1}'}{g_{j_1}} + \frac{g_{j_2}'}{g_{j_2}} + \Delta_{j_1} + \Delta_{j_2} - 2D} I_2(j_1,j_2)\\
+&\qquad - \frac{1}{2}\sum_{j_1,j_2} \frac{g_{j_1}g_{j_2}}{\alpha^{2D-\Delta_{j_1} - \Delta_{j_2}}} S_D\alpha^D \sum_{j'} \frac{C_{j_{1}, j_{2}, j'}}{\alpha^{\Delta_{j_{1}} + \Delta_{j_{2}} - \Delta_{j'}}} I_{1}(j')\\
+& + \frac{1}{6}\sum_{j_1,j_2,j_3} \frac{g_{j_1}g_{j_2}g_{j_3}}{\alpha^{3D-\Delta_{j_1} - \Delta_{j_2} - \Delta_{j_3}}} \klb*{\frac{g_{j_1}'}{g_{j_1}} + \frac{g_{j_2}'}{g_{j_2}} + \frac{g_{j_3}'}{g_{j_3}} + \Delta_{j_1}+ \Delta_{j_2} + \Delta_{j_3} - 3D} I_3(j_1,j_2,j_3)\\
+&\qquad - \frac{1}{6}\sum_{j_1,j_2,j_3} \frac{g_{j_1}g_{j_2}g_{j_3}}{\alpha^{3D-\Delta_{j_1} - \Delta_{j_2} - \Delta_{j_3}}} S_D\alpha^D \sum_{j'} \sum_{\mu'=1}^2 \sum_{\nu'=\mu'+1}^3 \frac{C_{j_{\mu'}, j_{\nu'}, j'}}{\alpha^{\Delta_{j_{\mu'}} + \Delta_{j_{\nu'}} - \Delta_{j'}}} I_{2}(j',j\setminus \klc*{j_{\mu'}, j_{\nu'}}).}
+\end{align}
+If we go through these terms order by order we first find the condition
+\begin{align}
+\frac{g_{j}}{\alpha^{D-\Delta_{j}}} \klb*{\frac{g_{j}'}{g_{j}} + \Delta_{j} - D} &=  \frac{1}{2} \sum_{j_1,j_2} \frac{g_{j_1}g_{j_2}}{\alpha^{2D-\Delta_{j_1} - \Delta_{j_2}}} S_D\alpha^D \frac{C_{j_{1}, j_{2}, j}}{\alpha^{\Delta_{j_{1}} + \Delta_{j_{2}} - \Delta_{j}}}
+\end{align}
+which can be rewritten as
+\begin{align}
+g_j' &= (D-\Delta_j)g_j + \frac{S_D}{2} \sum_{j_1,j_2} C_{j_1,j_2,j} g_{j_1} g_{j_2}.
+\end{align}
+Note the summations on $j_1$ and $j_2$ only run over the perturbations while the coupling $g_j$ corresponding to an operator $\mathcal{O}_j$ may also be present in the fixed point action $S_0$.\\
+The second order terms demand that
+\begin{align}
+\sum_{j_1,j_2} &\frac{g_{j_1}g_{j_2}}{\alpha^{2D-\Delta_{j_1} - \Delta_{j_2}}} \klb*{\frac{g_{j_1}'}{g_{j_1}} + \frac{g_{j_2}'}{g_{j_2}} + \Delta_{j_1} + \Delta_{j_2} - 2D} I_2(j_1,j_2) \\
+&= \frac{1}{3}\sum_{j_1,j_2,j_3} \frac{g_{j_1}g_{j_2}g_{j_3}}{\alpha^{3D-\Delta_{j_1} - \Delta_{j_2} - \Delta_{j_3}}} S_D\alpha^D \sum_{j'} \bsplit{&\frac{C_{j_{1}, j_{2}, j'}}{\alpha^{\Delta_{j_{1}} + \Delta_{j_{2}} - \Delta_{j'}}} I_{2}(j',j_3)\\
+&+\frac{C_{j_{1}, j_{3}, j'}}{\alpha^{\Delta_{j_{1}} + \Delta_{j_{3}} - \Delta_{j'}}} I_{2}(j',j_2)\\
+&+ \frac{C_{j_{2}, j_{3}, j'}}{\alpha^{\Delta_{j_{2}} + \Delta_{j_{3}} - \Delta_{j'}}} I_{2}(j',j_1)}\\
+&= \sum_{j_1',j_2',j_3'} \frac{g_{j_1'}g_{j_2'}g_{j_3'}}{\alpha^{3D-\Delta_{j_1'} - \Delta_{j_2'} - \Delta_{j_3'}}} S_D\alpha^D \sum_{j'}\frac{C_{j_{1}', j_{2}', j'}}{\alpha^{\Delta_{j_{1}'} + \Delta_{j_{2}'} - \Delta_{j'}}} I_{2}(j',j_3')
+\end{align}
+i.e. $(j_1,j_2)=(j',j_3')$ and thus upon symmetrizing
+\begin{align}
+\frac{g_{j_1}g_{j_2}}{\alpha^{2D-\Delta_{j_1} - \Delta_{j_2}}} \klb*{\frac{g_{j_1}'}{g_{j_1}} + \frac{g_{j_2}'}{g_{j_2}} + \Delta_{j_1} + \Delta_{j_2} - 2D} &= \frac{1}{2}\sum_{j_1',j_2'}\bsplit{& \frac{g_{j_1'}g_{j_2'}g_{j_2}}{\alpha^{3D-\Delta_{j_1'} - \Delta_{j_2'} - \Delta_{j_2}}} S_D\alpha^D \frac{C_{j_{1}', j_{2}', j_1}}{\alpha^{\Delta_{j_{1}'} + \Delta_{j_{2}'} - \Delta_{j_1}}}\\
+&+ \frac{g_{j_1'}g_{j_2'}g_{j_1}}{\alpha^{3D-\Delta_{j_1'} - \Delta_{j_2'} - \Delta_{j_1}}} S_D\alpha^D \frac{C_{j_{1}', j_{2}', j_2}}{\alpha^{\Delta_{j_{1}'} + \Delta_{j_{2}'} - \Delta_{j_2}}}}
+\end{align}
+which then reduces to
+\begin{align}
+g_{j_1}'g_{j_2} + g_{j_2}'g_{j_1} &= (2D-\Delta_{j_1} - \Delta_{j_2})g_{j_1} g_{j_2} + \frac{S_D}{2} \sum_{j_1',j_2'} \klb*{C_{j_1',j_2',j_1} g_{j_1'} g_{j_2'} g_2 + C_{j_1',j_2',j_2} g_{j_1'} g_{j_2'} g_1}.
+\end{align}
+This is not equivalent to the much simpler condition found at first order, but it nevertheless automatically satisfied if the first condition holds.
+Thus we do not find any modification at this level and although it is a combinatoric nightmare the author is convinced that this pattern continues to arbitrary order.
+As such the RG approach presented here appears to be insufficient to generate corrections beyond the 1-loop order -- which may be perfectly sufficient for our use case -- but still makes for an interesting observation.
+\TODO{It is certainly possible that something was missed that would break this argument. Perhaps the brutal approximation with the boundary conditions is at fault, since that only starts to become relevant for $N\ge 3$.
+Additionally there might be some subtlety to the condition $\frac{\d}{\d l} \frac{Z}{Z_0} = 0$ that only allows for first order corrections; maybe a more careful approach would be required.}\\
+To this one-loop level we thus obtain a structurally identical action where the new couplings are
+\begin{align}
+\frac{\d g_j}{\d l} &= (D - \Delta_j)g_j + \frac{1}{2} S_D \sum_{k,m} C_{k,m,j} g_k g_m.\label{eqn:beta function 1loop}
+\end{align}
+Thus all one has to do to this level is to identify the scaling dimensions of all operators in the theory and then compute the structure coefficients of the OPE.\\
+Let us finish with a rather subtle but important point.
+While the set of operators only contains the perturbations, the OPE may also involve terms contained in $S_0$.
+By construction the scaling dimension of anything contained in $S_0$ must always be given by $\Delta=D$ because otherwise $S_0$ would not correspond to a fixed point.
+For a simple example say that $\mathcal{O}_0$ is the operator describing $S_0$.
+Under the RG there can now be a change of $g_0$ due to a feedback of the OPE of the form $C_{j,k,0}$.
+Note however, that even if $C_{0,0,0} \neq 0$ this would \emph{not} appear in beta function!
+This may be somewhat confusing so let us elaborate on this point.
+The original summation in the expansion of the partition function only contains the perturbations, thus $j,k,m,\dots\neq 0$.
+The OPE however can also produce an $m=0$-term and thus the sum in \autoref{eqn:1loop shell integral OPE} generally runs over more indices.
+The sums in the beta function in \autoref{eqn:beta function 1loop} once again come from the expansion though, so they \emph{are} restricted to $j,k\neq 0$.
+\section{Model Hamiltonian}
+The full model is given by the Hamiltonian $H=H_0+H_1+H_2 + H_3 + H_4$
+\begin{align}
+H_0 &= \frac{v}{2\pi} \intx{ }{ }{\klb*{K\kla*{\partial_x\theta(x)}^2 + \frac{1}{K} \kla*{\partial_x\phi(x)}^2}}{x},\\
+H_1 &= \frac{vg_1}{\alpha} \sum_{s_a=\pm 1} \intx{ }{ }{\sin\kla*{2\phi(x)} \partial_x\phi(x+s_aa)}{x},\\
+H_2 &= \sum_{s_a=\pm 1} \frac{vg_2}{\alpha^2} \intx{ }{ }{\cos\kla*{2\phi(x) - 2\phi(x+s_aa)}}{x},\\
+H_3 &= \sum_{s_a=\pm 1} \frac{vg_3}{\alpha^2} \intx{ }{ }{\cos\kla*{2\phi(x) + 2\phi(x+s_aa)}}{x},\\
+H_4 &= \sum_{s_a=\pm 1} vg_4 \intx{ }{ }{\partial_x\phi(x) \partial_x\phi(x+s_aa)}{x}.
+\end{align}
+The integrations are restricted to $[-L/2, L/2]$ and $a$ is a lattice spacing assumed to satisfy $a<\alpha$.\\
+We work in $(1+1)$ dimensions and the field conjugate momentum $\Pi = \frac{1}{\pi} \partial_x \theta$ leads to $\partial_x\theta = \frac{\i}{Kv} \partial_\tau\phi$ where $\tau=\i t$ is the imaginary time.
+The action formulation is thus $S=S_0 + S_1 + S_2 + S_3 + S_4$ where
+\begin{align}
+S_0 &= -\intx{0}{\beta}{\klb*{\Pi \i\partial_\tau\phi - H_0} }{\tau} = \frac{1}{2\pi K} \intx{0}{\beta}{\intx{ }{ }{\klb*{\frac{1}{v} \kla*{\partial_\tau \phi}^2 + v \kla*{\partial_x \phi}^2}}{x}}{\tau}
+\end{align}
+and $S_j = \intx{0}{\beta}{H_j}{\tau}$ for $j\in\klc*{1,2,3,4}$.
+It is more convenient to express everything in terms of the euclidean coordinates $r = (x,y)$ with $y=v\tau$ which leads to
+\begin{align}
+S_0 &= \frac{1}{2\pi K} \int \kla*{\nabla\phi(r)}^2 \,\d^2r,\\
+S_1 &= \frac{g_1}{\alpha} \sum_{s_a=\pm 1} \int \sin \kla*{2 \phi(r)} \partial_x \phi(r+s_aa) \,\d^2r,\\
+S_2 &= \frac{g_2}{\alpha^2} \sum_{s_a=\pm 1} \int \cos\kla*{2\phi(r) - 2\phi(r+s_aa)}\,\d^2r,\\
+S_3 &= \frac{g_3}{\alpha^2} \sum_{s_a=\pm 1} \int \cos\kla*{2\phi(r) + 2\phi(r+s_aa)}\,\d^2r,\\
+S_4 &= g_4 \sum_{s_a=\pm 1} \int \partial_x\phi(r) \partial_x\phi(r+s_aa)\,\d^2r
+\end{align}
+where $g_1,g_2,g_3,g_4,K$ are dimensionless parameters and $\kla*{\nabla\phi}^2 = \kla*{\partial_x\phi}^2 + \kla*{\partial_y\phi}^2$.
+Keep in mind that $\phi$ is a real bosonic scalar field given by a linear combination of bosonic operators $b_q$ and can therefore be split into two parts $\phi^{(\pm)}$ containing creation and annihilation operators respectively.
+Their commutator satisfies
+\begin{align}
+\klb*{\phi^{(+)}(r), \phi^{(-)}(0)} &= \frac{K}{2} \log\klb*{\frac{2\pi}{L} \sqrt{\alpha^2 + r^2}}
+\end{align}
+and the fundamental correlation function is asymptotically given by
+\begin{align}
+\Phi(r) &= \bra*{\klb*{\phi(r) - \phi(0)}^2} = -2 \bra*{\kla*{\phi(r) - \phi(0)} \phi(0)} \overset{r\rightarrow 0}{\sim} \frac{K}{2} \log\kla*{\frac{r^2 + \alpha^2}{\alpha^2}}.
+\end{align}
+We also give the general formula for products of vertex operators
+\begin{align}
+\bra*{\prod \powe{\i A_j\phi(r_j)}} &= \powe{-\frac{1}{2} \sum A_j A_k \bra*{\phi(r_j-r_k) \phi(0)}} = \powe{-\frac{1}{2} \kla*{\sum A_j}^2 \bra*{\phi(0)^2}} \powe{\frac{1}{2} \sum_{j<k} A_jA_k \Phi(r_j-r_k)}.
+\end{align}
+Formally $\bra*{\phi(0)^2}=\infty$ for an infinite system giving rise to the neutrality condition $\sum_j A_j =0$.
+We will see that minor violations of this condition via source terms can be dealt with by delaying the thermodynamic limit.
+\subsection{Scaling dimensions and normalization}
+Let us now analyse the operators present in our perturbation.
+We will often make use of the formulas
+\begin{align}
+\lim_{J_1,J_2\rightarrow 0} \partial_{J_1} \partial_{J_2} \powe{A_{11}J_1^2 + A_{22}J_2^2 + A_{12} J_1J_2 + B_1J_1 + B_2J_2} &= A_{12} + B_1B_2,\\
+\lim_{J_1,J_2,J_3,J_4\rightarrow 0} \partial_{J_1} \partial_{J_2} \partial_{J_3} \partial_{J_4} \powe{\sum_{j\le k} A_{jk} J_jJ_k} &= A_{12} A_{34} + A_{13}A_{24} + A_{14}A_{23}.
+\end{align}
+%J1,J2,J3,J4,A12,A13,A14,A23,A24,A34,B1,B2,B3,B4,A11,A22,A33,A44=sy.symbols("J_1 J_2 J_3 J_4 A_12 A_13 A_14 A_23 A_24 A_34 B_1 B_2 B_3 B_4 A_11 A_22 A_33 A_44")
+%expr1=sy.exp(J1**2*A11 + J2**2*A22+J1*J2*A12+J1*B1+J2*B2)
+%expr2=sy.exp(J1**2*A11 + J2**2*A22+ J3**2*A33+ J4**2*A44+J1*J2*A12+J1*J3*A13+J1*J4*A14+J2*J3*A23+J2*J4*A24+J3*J4*A34+J1*B1+J2*B2+J3*B3+J4*B4)
+%expr1.diff(J1).diff(J2).subs(J1,0).subs(J2,0)
+%expr2.diff(J1).diff(J2).diff(J3).diff(J4).subs(J1,0).subs(J2,0).subs(J3,0).subs(J4,0)
+Also for convenience of notation limits will often by implicit.
+The standard replacement rule for the shifted operators is
+\begin{align}
+\partial_x\phi(x+s_aa,y) &= \partial_{x_1} \phi(x_1,y) = -\i\partial_{x_1} \partial_{J_1} \powe{\i J_1 \phi(r_1)}
+\end{align}
+where $x_1=x+s_aa$ and $r_1=(x_1,y)$.\\
+Let us start by considering
+\begin{align}
+\sum_{s_a,s_a'}&\bra*{\partial_x\phi(r) \partial_x \phi(r+s_aa) \partial_x\phi(r+\epsilon) \partial_x\phi(r+\epsilon + s_a'a)} \\
+&= \sum_{x_2=x_1\pm a}\sum_{x_4=x_3\pm a} \partial_x^4 \partial_J^4 \bra*{ \powe{\i J_1\phi(r_1)} \powe{\i J_2\phi(r_2)} \powe{\i J_3\phi(r_3)} \powe{\i J_4\phi(r_4)}} \\
+&= \sum \partial^4 \powe{-\frac{1}{2} \kla*{\sum J}^2 \bra*{\phi(0)^2}} \powe{\frac{1}{2} \sum_{j<k} J_jJ_k \Phi(r_j-r_k)}\\
+&= \sum \partial_x^4 \frac{1}{2} \klb*{\Phi(r_1-r_2) \Phi(r_3-r_4) + \Phi(r_1-r_3) \Phi(r_2-r_4) + \Phi(r_2-r_3) \Phi(r_1-r_4)}\\
+&= \frac{K}{2} \sum \partial_x^4 \klb*{\log|r_1-r_2|\log |r_3-r_4| + \log|r_1-r_3|\log |r_2-r_4| + \log|r_2-r_3|\log |r_1-r_4|}\\
+&= \frac{K}{2} \sum \klb*{\frac{-1}{(r_1-r_2)^2} \frac{-1}{(r_3-r_4)^2} + \frac{-1}{(r_1-r_3)^2} \frac{-1}{(r_2-r_4)^2} + \frac{-1}{(r_2-r_3)^2} \frac{-1}{(r_1-r_4)^2}}\\
+&= \frac{K}{2} \sum \klb*{ \frac{1}{a^2} \frac{1}{a^2} + \frac{1}{\epsilon^2} \frac{1}{\kla*{\epsilon+s_aa + s_a'a}^2} + \frac{1}{\kla*{\epsilon + s_aa}^2} \frac{1}{\kla*{\epsilon + s_a'a}^2}}.
+\end{align}
+A few details were left out here for efficiency.
+First, we just write $\partial_x^4$ for $\partial_{x_1}\dots \partial_{x_4}$ and likewise the derivatives with respect to $J$ and the summations are condensed too.
+Also, we automatically enumerate the arguments with $r_1,\dots,r_4$ from left to right so $r_1=(x,y)$, $r_2=(x+s_aa,y)$, $r_3=(x+\epsilon_x,y+\epsilon_y)$ and $r_4=(x+s_aa+\epsilon_x,y+\epsilon_y)$.
+Additionally the terms $A_jk$ are of the form $\Phi(r_jk) - \bra*{\phi(0)^2}$ and we have dropped the constant since it vanishes upon differentiation anyway.
+It is clear that this has to be the case for we would otherwise run into divergences when taking the thermodynamic limit.\\
+The previous result still requires some work because we have to discuss the hierarchy of $\epsilon$ and $a$.
+One could argue that we only ever use the expansion for $\epsilon \approx \alpha > a$ and thus should neglect $a$ in comparison to $\epsilon$.
+%For the purpose of analysing the scaling dimension and structure coefficients we should really think of $\epsilon\rightarrow 0$ though.
+%While this is a bit inconsistent with the later use it avoids a lot of ambiguity with interpreting the OPE itself.
+%Essentially we could hardly read of the scaling dimension from a term like $\frac{1}{\epsilon^2} + \frac{1}{a^2}$ unless we assume that the dominant, singular part is the one containing $\epsilon$.
+\QnA{This is a little bit concerning because this essentially means we consider $\epsilon\gg a$ while simultaneously ignoring this offset of $\epsilon$ in the derivation of the kinetic term of the Luttinger Liquid.
+This justifies later neglecting the shift in the argument of $H_4$ but at the same time makes it rather awkward to claim that the shift by $a$ in all the sine-Gordon-like terms is somehow essential.
+I do not see a way to avoid all of the problems though, so there seems to be some kind of minimal ``voodoo-magic'' part associated with the entire LL thing.
+In defence of my approach it has to be said that it avoids quite a lot of other issues present -- but usually just ignored -- in other people's research. So I suppose I am at least not significantly more hand-wavy than everyone else.}\\
+%With this approximation we can then reduce the expression to
+%\begin{align}
+%\frac{K}{2} \klb*{\frac{8}{a^4} + \frac{2}{\epsilon^2a^2} + \frac{2}{\epsilon^4}} \sim \frac{K}{\epsilon^4}.
+%\end{align}
+%Thus the scaling dimension of this operator is 2, which is not too surprising as it coincides with the simple approach of ``power-counting'', and the normalization is $\frac{1}{\sqrt{K}}$.
+%The first type of operator we define is therefore
+%\begin{align}
+%P(r) &= \frac{1}{\sqrt{K}} \sum_{s_a=\pm 1} \partial_x\phi(r) \partial_x\phi(r+s_aa).
+%\end{align}
+With this approximation we can then reduce the expression to
+\begin{align}
+\frac{K}{2} \klb*{\frac{4}{a^4} + \frac{8}{\epsilon^4}}.
+\end{align}
+Thus the scaling dimension of this operator is 2, which is not too surprising as it coincides with the simple approach of ``power-counting'', and the normalization is $\frac{1}{\sqrt{4K}}$.
+The first type of operator we define is therefore
+\begin{align}
+P(r) &= \frac{1}{\sqrt{4K}} \sum_{s_a=\pm 1} \partial_x\phi(r) \partial_x\phi(r+s_aa).
+\end{align}
+(\TODO{choice of hierarchy ends up being a factor of two here; check consequence for RG flow later})\\
+Next we consider
+\begin{align}
+\sum_{s_a,s_a'} &\bra*{\powe{\i n\phi(r)} \partial_x\phi(r+s_aa) \powe{\i m\phi(r+\epsilon)} \partial_x\phi(r+s_a'a+\epsilon)}\\
+&= \sum \partial^2 \bra*{\powe{\i n\phi(r_1)}\powe{\i J_1\phi(r_2)}\powe{\i m\phi(r_3)}\powe{\i J_2\phi(r_4)}}\\
+&= \sum \partial^2 \powe{\frac{1}{2} \klb*{nJ_1 \Phi_{12} + nm \Phi_{13} + nJ_2 \Phi_{14} + J_1m\Phi_{23} + J_1J_2 \Phi_{24} + mJ_2 \Phi_{34}}} \delta_{n,-m}\\
+&= \sum \powe{\frac{1}{2} nm \Phi_{13}} \partial_x^2 \klb*{\Phi_{24} + \kla*{n\Phi_{12} + m\Phi_{23}} \kla*{m\Phi_{34} + n\Phi_{14}}}\\
+&= K \powe{-\frac{1}{2}n^2 \Phi(\epsilon)} \sum \partial_x^2 \klb*{\log |r_2-r_4| + Kn^2 \kla*{\log |r_1-r_2| - \log |r_2-r_3|} \kla*{\log|r_1-r_4| - \log|r_3-r_4|}}\\
+&= K \powe{-\frac{1}{2}n^2 \Phi(\epsilon)} \sum \klb*{ \frac{-1}{(r_2-r_4)^2} + Kn^2 \kla*{\frac{\sgn(x_2-x_1)}{|r_2-r_1|} -\frac{\sgn(x_2-x_3)}{|r_2-r_3|}} \kla*{\frac{\sgn(x_4-x_3)}{|r_4-r_3|} - \frac{\sgn(x_4-x_1)}{|r_4-r_1|}}}.
+\end{align}
+Once again this is as far as we can go without making a choice for the hierarchy.
+As before we will take the practical point of view and put $\epsilon>\alpha>a$ leading to
+\begin{align}
+K \kla*{\frac{\alpha}{\epsilon}}^{\frac{K}{2}n^2} \klb*{\frac{-4}{\epsilon^2} + Kn^2 \frac{2}{\epsilon} \frac{-2}{\epsilon}} = -4K (1+Kn^2) \frac{1}{\epsilon^{\frac{K}{2}n^2+2}} \alpha^{\frac{K}{2}n^2}.
+\end{align}
+(\TODO{choice of hierarchy is 1 vs. $1+Kn^2$})\\
+The scaling dimension is $\Delta^W_n = \frac{K}{4}n^2+1$ and we thus define the operators
+\begin{align}
+W_n(r) &= \frac{1}{2\i} \frac{1}{\sqrt{K \kla*{1 + Kn^2}}} \frac{1}{\alpha^{\Delta^W_n-1}} \sum_{s_a=\pm 1} \powe{\i n\phi(r)} \partial_x\phi(r+s_aa).
+\end{align}
+Note that the factor of $\frac{1}{2\i}$ corresponds to the complex representation of $\sin(2\phi)$.\\
+Note that using the commutation relations laid out before we have
+\begin{align}
+\powe{\i n\phi(r) + \i ns\phi(r')} &= \powe{\i n\phi(r)}\powe{\i ns\phi(r')} \powe{-\frac{1}{2} \klb*{\i n\phi(r), \i ns\phi(r')}} \\
+&= \powe{\i n\phi(r)}\powe{\i ns\phi(r')} \powe{\frac{n^2s}{2} \klb*{\phi^{(+)}(r) + \phi^{(-)}(r), \phi^{(+)}(r') + \phi^{(-)}(r')}}\\
+&= \powe{\i n\phi(r)}\powe{\i ns\phi(r')} \powe{\frac{n^2s}{2} \klb*{\phi^{(-)}(r), \phi^{(+)}(r')} + \klb*{\phi^{(+)}(r), \phi^{(-)}(r')}} = \powe{\i n\phi(r)}\powe{\i ns\phi(r')}.
+\end{align}
+Next we consider 
+\begin{align}
+\sum_{s_a,s_a'}& \bra*{\powe{\i n\phi(r) + \i n s\phi(r+s_aa)}\powe{\i m\phi(r+\epsilon) + \i m s \phi(r+\epsilon+s_a'a)}}\\
+&= \delta_{n(1+s),-m(1+s)} \sum \powe{\frac{1}{2} \klb*{n^2s\Phi_{12} + nm\Phi_{13} + nms \Phi_{14} + nsm\Phi_{23} + nsms\Phi_{24} + m^2s\Phi_{34}}}.
+\end{align}
+Once again let $\epsilon>\alpha>a$ and rewrite as
+\begin{align}
+4\delta_{n(1+s),-m(1+s)} \kla*{\frac{\epsilon}{\alpha}}^{\frac{K}{2}\klb*{nm(1+s)^2}}.
+\end{align}
+Evidently this can only be correct for $s=+1$.
+Otherwise we should go back to the general result and expand
+\begin{align}
+\sum &\powe{-\frac{1}{2} \klb*{n^2\Phi_{12} - nm\Phi_{13} + nm \Phi_{14} + nm\Phi_{23} - nm\Phi_{24} + m^2\Phi_{34}}}\\
+&\sim \sum \powe{\frac{K}{2}nm \klb*{\log|\frac{r_1-r_3}{r_1-r_4}| + \log|\frac{r_2-r_3}{r_2-r_4}|}} = \sum \powe{\frac{K}{2}nm \klb*{\log|\frac{\epsilon}{\epsilon + s_a'a}| + \log|\frac{\epsilon + s_aa}{\epsilon}|}}\\
+&\sim \sum \abs*{\frac{1 + s_aa/\epsilon}{1 + s_a'a/\epsilon}}^{\frac{K}{2}nm} \sim \sum \abs*{ 1 + (s_a - s_a') \frac{a}{\epsilon} + \frac{a^2}{\epsilon^2} }^{\frac{K}{2}nm} (???)
+\end{align}
+\QnA{Maybe I can just set $a=0$ for the RG? That would just make everything much less horrible looking and probably also avoids getting lost in unnecessary details.
+Then again we have very good arguments \emph{against} $a=0$ as this would for example eliminate the $H_1$-term.
+Of course we could just take the stance that we know that this is not quite a total derivative and thus argue the problem away; the RG frankly does not seem to care one bit about this particular point.}
+\subsection{OPE}
+
+
+
+\end{document}

@@ -1,0 +1,154 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\newcommand{\I}{\text{i}}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Variants on Formulae for Frequency Analysis}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+%\subject{subject}
+\title{\titel}
+%\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Cosine weights}
+
+Consider weights defined by a sum of $K$ $\cos$-functions via
+\begin{align}
+w_t &\propto \sum_{k=0}^{K-1} a_k\cos \kla\left( {2\pi k \frac{t}{N}} \right),
+\end{align}
+for a set of coefficients $a_k\in\mathbb{R}$.
+Let the proportionality constant be $\frac{1}{C}$, such that the weights are normalized.
+Explicitly one finds $C=Na_0$, where $N$ is the signal length.
+Then the Fourier coefficients are
+\begin{align}
+F_j &= \sum_{t=0}^{N-1} c_1\e^{2\pi\i \nu t} w_t \e^{-2\pi\i j\frac{t}{N}} = \\
+&= \frac{c_1}{C} \sum_{k=0}^{K-1} \frac{a_k}{2} \sum_{t=0}^{N-1} \e^{2\pi\i\frac{t}{N}(\nu N - j)} \kla\left( {\e^{2\pi\i k \frac{t}{N}} + \e^{-2\pi\i k \frac{t}{N}}} \right) \simeq \\
+&\simeq \frac{Nc_1}{2C} \sum_{k=-K+1}^{K-1} a_{|k|}  \intx\int_{0}^{1} \e^{2\pi\i x(\nu N - j - k)} \,\mathrm{d}x = \\
+&= \frac{c_1}{4\pi\i a_0} \sum_{k=-K+1}^{K-1} a_{|k|} \frac{\e^{2\pi\i \nu N} - 1}{\nu N - j - k} = \\
+&= \frac{c_1}{4\pi\i a_0} \kla\left( {\e^{2\pi\i \nu N} - 1} \right) \sum_{k=-K+1}^{K-1} a_{|k|} \frac{1}{\nu N - j - k}.
+\end{align}
+Note that the summation must count the $k=0$ term twice! 
+The notation is somewhat questionable.
+
+Writing $\nu = \frac{j}{N} + \epsilon$ -- where $j$ is implicitly chosen close enough to the fundamental frequency, such that $\epsilon$ is small --, we obtain the ratio of consecutive coefficients as
+\begin{align}
+R &:= \frac{F_j}{F_{j+1}} = \frac{\sum_{k=-K+1}^{K-1} a_{|k|} \frac{1}{\epsilon - \frac{k}{N}}}{\sum_{k=-K+1}^{K-1} a_{|k|} \frac{1}{\epsilon - \frac{k+1}{N}}}.
+\end{align}
+With an FFT one may now numerically evaluate $R$ and solve this equation for $\epsilon$.
+Due to the structure of the above, this may become highly unstable if $\epsilon\simeq 0$ or $\epsilon\simeq \frac{1}{N}$.
+%We may expand the fraction with the product of all individual terms, i.e.
+%\begin{align}
+%R &= \frac{\prod_{|m|<K}\sum_{|k|<K} a_{|k|} \frac{\epsilon - m/N}{\epsilon - k/N} }{\prod_{|m|<K}\sum_{|k|<K} a_{|k|} \frac{\epsilon - m/N}{\epsilon - (k+1)/N}}.
+%\end{align}
+We may expand the fraction with the three critical terms
+\begin{align}
+R &= \frac{\epsilon - \frac{2}{N}}{\epsilon + \frac{1}{N}} \frac{\epsilon \kla\left( {\epsilon - \frac{1}{N}} \right)  \kla\left( {\epsilon + \frac{1}{N}} \right) \sum_{|k|<K} a_{|k|} \frac{1}{\epsilon - k/N} }{\epsilon \kla\left( {\epsilon - \frac{1}{N}} \right)  \kla\left( {\epsilon - \frac{2}{N}} \right) \sum_{|k|<K} a_{|k|} \frac{1}{\epsilon - (k+1)/N}} = \\
+&= \frac{\epsilon - \frac{2}{N}}{\epsilon + \frac{1}{N}} \frac{2a_0 \kla\left( {\epsilon^2 - \frac{1}{N^2}} \right) + 2a_1 \epsilon^2 + \epsilon \kla\left( {\epsilon - \frac{1}{N}} \right)  \kla\left( {\epsilon + \frac{1}{N}} \right)\sum_{1<|k|<K} a_{|k|} \frac{1}{\epsilon - k/N}}{2a_0 \epsilon\kla\left( {\epsilon - \frac{2}{N}} \right) + 2a_1 \kla\left( {\epsilon - \frac{1}{N}} \right)^2 +  \epsilon \kla\left( {\epsilon - \frac{1}{N}} \right)  \kla\left( {\epsilon - \frac{2}{N}} \right) \sum_{1<|k|<K} a_{|k|} \frac{1}{\epsilon - (k+1)/N}}
+\end{align}
+
+\subsection{Offset correction}
+We may want to correct a median offset of our signal.
+This corresponds to $\nu=0$ and therefore gives
+\begin{align}
+F_j^{(0)} &= \frac{c_0}{Na_0} \sum_{k=0}^{K-1} \frac{a_k}{2} \sum_{t=0}^{N-1} \e^{-2\pi\i j\frac{t}{N}} \kla\left( \e^{2\pi\i k\frac{t}{N}} + \e^{-2\pi\i k\frac{t}{N}} \right) = \\
+&= \frac{c_0}{Na_0}  \sum_{k=0}^{K-1} \frac{a_k}{2} \frac{1 - \e^{2\pi\i (k-j)}}{1 - \e^{2\pi\i \frac{k-j}{N}}}
+\end{align}
+or
+\begin{align}
+F_j^{(0)} &= \frac{c_0}{Na_0} \sum_{k=0}^{K-1} \frac{a_k}{2} \sum_{t=0}^{N-1} \e^{-2\pi\i j\frac{t}{N}} \kla\left( \e^{2\pi\i k\frac{t}{N}} + \e^{-2\pi\i k\frac{t}{N}} \right) \simeq \\
+&\simeq \frac{c_0}{Na_0}  \sum_{|k|<K} \frac{a_{|k|}}{2} \intx\int_{0}^{1} \e^{2\pi\i (k-j)x}\, \mathrm{d}x = \\
+&= \frac{c_0}{Na_0}  \sum_{|k|<K} \frac{a_{|k|}}{4\pi\i} \frac{\e^{2\pi\i (k-j)} - 1}{k-j} = 0\quad (\tecxt\text{for } j\neq k).
+\end{align}
+So let $j=k$.
+Then we find the terms
+\begin{align}
+F_k^{(0)} &= \frac{c_0a_k}{a_0}
+\end{align}
+Assuming that we are given non-normalized Fourier-coefficients by an algorithm, the proper way to remove this constant offset is by executing the following pseudo-code for all $0<|k|<K$
+\begin{align}
+|F_k| &\rightarrow |F_k| - |F_0|\cdot\frac{|a_{|k|}|}{2a_0},\\
+|F_0| &\rightarrow 0.
+\end{align}
+The (complex) offset can be computed via $c_0 = \frac{F_0}{Na_0}$
+
+\subsection{Removing peaks}
+If we want to extract more than one frequency from a given signal, we need to be able to also remove non-constant peaks.
+The complex coefficient for a signal with he frequency $\nu$ and the factor $\epsilon = \nu - \frac{j}{N}$ is given by
+\begin{align}
+c_1 &= F_j\cdot \frac{4\pi\i}{\e^{2\pi\i\nu N} - 1} \frac{1}{\sum_{k=0}^{K-1} a_k \kla\left( \frac{1}{\epsilon - \frac{k}{N}} + \frac{1}{\epsilon + \frac{k}{N}} \right)} = \\
+&= F_j\cdot \frac{4\pi\i}{\e^{2\pi\i N\epsilon} - 1} \frac{\epsilon}{2a_0 + \epsilon\sum_{k=1}^{K-1} a_k \kla\left( \frac{1}{\epsilon - \frac{k}{N}} + \frac{1}{\epsilon + \frac{k}{N}} \right)}.
+\end{align}
+But in order to remove a peak from the absolute FFT-spectrum, we need to reconstruct the values around the peak-index $j_\tecxt\text{max}$.
+This can be done by
+\begin{align}
+|F_{j_\tecxt\text{max} + j}| &\simeq \left\vert \frac{c_1}{2a_0} \frac{\e^{2\pi\i \nu N} - 1}{2\pi\i} \sum_{k=0}^{K-1} a_k \kla\left( \frac{1}{\epsilon - \frac{k+j}{N}} + \frac{1}{\epsilon + \frac{k-j}{N}} \right) \right\vert = \\
+&= \frac{|c_1|\sin( \pi N\epsilon) }{2\pi\epsilon a_0} \left\vert \frac{2a_0\epsilon}{\epsilon - \frac{j}{N}} + a_{|j|} + \sum_{k=-K+1;\, k\neq -j}^{K-1} \frac{\epsilon a_{|k|}}{\epsilon - \frac{k+j}{N}} \right\vert.
+%&= \frac{|c_1|\sin( \pi N\epsilon) }{2\pi\epsilon a_0} \left\vert \frac{a_0\epsilon}{\epsilon - \frac{j}{N}} + a_j + \sum_{|k-j|<K;\, k\neq 0} \frac{\epsilon a_{k-j}}{\epsilon - \frac{k}{N}} \right\vert .
+\end{align}
+
+
+
+%where the $k=0$-term should be counted twice. 
+%The magnitude of the coefficients is
+%\begin{align}
+%|F_j(\nu)| &= \frac{c_1}{2C}\sin\kla\left( {\pi\nu N} \right) \left\vert \sum_{k=-K+1}^{K-1} a_{|k|} \frac{\e^{-\pi\i \frac{k}{N}}}{\sin \klam\left[ {\pi (\nu - \frac{j}{N} + \frac{k}{N})} \right] } \right\vert.
+%\end{align}
+%Their derivative is
+%\begin{align}
+%|F_j(\nu)|' &= \pi N\cot (\pi\nu N) F_j +  \frac{c_1}{2C}\sin\kla\left( {\pi\nu N} \right) \left\vert \sum_{k=-K+1}^{K-1} a_{|k|} \frac{\e^{-\pi\i \frac{k}{N}}}{\cos \klam\left[ {\pi (\nu - \frac{j}{N} + \frac{k}{N})} \right] } \right\vert
+%\end{align}
+%Their derivative is
+%\begin{align}
+%F_j'(\nu) &= -\pi\i F_j - \frac{2\pi\i N \e^{2\pi\i\nu N}}{1 - \e^{2\pi\i\nu N}}F_j - \frac{c_1}{4C} \dots \sum_{k=-K+1}^{K-1} a_{|k|} \pi \e^{-\pi\i\frac{k}{N}} \frac{\cos \klam\left[ {\pi (\nu - \frac{j}{N} + \frac{k}{N})} \right]}{\sin^2 \klam\left[ {\pi (\nu - \frac{j}{N} + \frac{k}{N})} \right]}.
+%\end{align}
+%The peak-frequency is the solution to the equation $|F_j'(\nu)| = 0$.
+
+\end{document}

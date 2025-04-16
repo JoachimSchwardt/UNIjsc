@@ -1,0 +1,204 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\kom}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{01 Das Gauss-Seidel-Verfahren}
+\newcommand*{\autor}{Joachim Schwardt und Julian Fleck}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+\subject{Numerik II - Aufgaben}
+\title{\titel}
+\author{\begin{tabular}{l|l}
+Joachim Schwardt & 4768711 \\ 
+Julian Fleck & 4759587\\ 
+\end{tabular}}
+\date{\today}
+
+\begin{document}
+
+\maketitle  % Titel setzen
+
+\section*{Aufgabe 1}
+Gegeben ist das lineare Gleichungssystem $Ax = b$ mit $b=(9,6,4)^\top$, $x=(x_1, x_2, x_3)^\top$ und
+\begin{align}
+A &= \begin{pmatrix}
+8&2&1 \\ 2&6&2 \\ 2&1&4
+\end{pmatrix}
+\end{align}
+mit dem Startwert $x^0 = (0,0,0)^\top$.
+Die Iterationsvorschrift des Gauss-Seidel-Verfahrens lautet hier explizit
+\begin{align}
+x^{k+1}_1 &= \frac{1}{a_{11}} \left( b_1 - a_{12}x^k_2 - a_{13}x^k_3 \right),\\
+x^{k+1}_2 &= \frac{1}{a_{22}} \left( b_2 - a_{21}x^{k+1}_1 - a_{23}x^k_3 \right),\\
+x^{k+1}_3 &= \frac{1}{a_{33}} \left( b_3 - a_{31}x^{k+1}_1 - a_{32}x^{k+1}_2 \right).
+\end{align}
+Für den gegebenen Startwert erhält man damit
+\begin{align}
+x^1_1 &= \frac{1}{8} \left( 9 \right) = \frac{9}{8},\\
+x^1_2 &= \frac{1}{6} \left( 6 - 2\cdot\frac{9}{8} \right) = \frac{5}{8},\\
+x^1_3 &= \frac{1}{4} \left( 4 - 2\cdot\frac{9}{8} - 1\cdot\frac{5}{8} \right) = \frac{9}{32}.
+\end{align}
+Der zweite Iterationsschritt lautet
+\begin{align}
+x^2_1 &= \frac{1}{8} \left( 9 - 2\cdot \frac{5}{8} - 1\cdot\frac{9}{32} \right) = \frac{239}{256},\\
+x^2_2 &= \frac{1}{6} \left( 6 - 2\cdot \frac{239}{256} - 2\cdot \frac{9}{32} \right) = \frac{457}{768},\\
+x^2_3 &= \frac{1}{4} \left( 4 - 2\cdot \frac{239}{256} - 1\cdot \frac{457}{768} \right) =  \frac{1181}{3072}.
+\end{align}
+
+
+
+
+\section*{Aufgabe 2}
+Sei $T_\text{GS} := I - CA$ die Iterationsmatrix des Gauss-Seidel-Verfahrens.
+Dann gilt 
+\begin{align}
+(C^{-1})_{jk} &= \begin{cases} a_{jk} & j \ge k \\ 0 & j < k \end{cases}.
+\end{align}
+Insbesondere gilt dann für die Matrix $M := C^{-1} - A$ 
+\begin{align}
+\det(M) &= 0,
+\end{align}
+da $(M)_{Nk} = 0 \quad (\forall k = 1,\dots,N)$.
+Insbesondere gilt dann
+\begin{align}
+\det (T_\text{GS}) &= \det(CC^{-1}) \det(I - CA) = \\
+&=  \det(C) \det (C^{-1} - A) = \det(C) \det(M) = 0.
+\end{align}
+Es muss also mindestens ein Eigenwert von $T_\text{GS}$ gleich Null sein.
+
+
+\section*{Aufgabe 3}
+Gegeben sind die Matrizen
+\begin{align}
+A_1 &= \begin{pmatrix}
+1 & 0 & -2 \\ 0 & 2 & -4 \\ 4 & 2 & 2
+\end{pmatrix}&&\text{und}& A_2 &= \begin{pmatrix}
+1 & 2 & -2 \\ 1 & 1 & 1 \\ 2 & 2 & 1
+\end{pmatrix}
+\end{align}
+und ein Vektor $b\in\mathbb{R}^3$.
+Für das Gauss-Seidel-Verfahren ist $C = (D+L)^{-1}$, wobei $D$ nur die Diagonalelemente und $L$ die Elemente unterhalb der Diagonalen von $A$ enthält.
+\subsection*{Für $A_1$:}
+Invertieren: 
+\begin{align}
+D+L = \begin{pmatrix}
+1 & 0 & 0 \\ 0 & 2 & 0 \\ 4 & 2 & 2
+\end{pmatrix} &\Bigg\vert \begin{pmatrix}
+1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1
+\end{pmatrix},\\
+\begin{pmatrix}
+1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 2
+\end{pmatrix} &\Bigg\vert \begin{pmatrix}
+1 & 0 & 0 \\ 0 & \frac{1}{2} & 0 \\ -4 & -1 & 1
+\end{pmatrix},\\
+\begin{pmatrix}
+1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1
+\end{pmatrix} &\Bigg\vert \begin{pmatrix}
+1 & 0 & 0 \\ 0 & \frac{1}{2} & 0 \\ -2 & -\frac{1}{2} & \frac{1}{2}
+\end{pmatrix} = C.
+\end{align}
+Die Iterationsmatrix $T\equiv T_\text{GS}$ lautet damit
+\begin{align}
+T &= I - CA = I - \begin{pmatrix}
+1 & 0 & 0 \\ 0 & \frac{1}{2} & 0 \\ -2 & -\frac{1}{2} & \frac{1}{2}
+\end{pmatrix}\begin{pmatrix}
+1 & 0 & -2 \\ 0 & 2 & -4 \\ 4 & 2 & 2
+\end{pmatrix} = I - \begin{pmatrix}
+1 & 0 & -2 \\ 0 & 1 & -2 \\ 0 & 0 & 7
+\end{pmatrix} = \\
+&= \begin{pmatrix}
+0 & 0 & 2 \\ 0 & 0 & 2 \\ 0 & 0 & -6
+\end{pmatrix}.
+\end{align}
+Wir wollen die Eigenwerte bestimmen, und lösen dafür das Gleichungssystem $Tx = \lambda x$.
+Explizit lautet dieses hier
+\begin{align}
+\begin{pmatrix}
+2x_3 \\ 2x_3 \\ -6x_3
+\end{pmatrix} &= \lambda\begin{pmatrix}
+x_1 \\ x_2 \\ x_3
+\end{pmatrix}.
+\end{align}
+Eine mögliche Lösung ist $\lambda = -6$ mit dem Eigenvektor $x = (1,1,-3)^\top$.
+Damit ist der Spektralradius $\rho(T) \le |\lambda| = 6$, insbesondere also größer 1.
+Die Iteration konvergiert daher nicht für beliebige Startwerte.
+
+\subsection*{Für $A_2$:}
+Invertieren: 
+\begin{align}
+D+L = \begin{pmatrix}
+1 & 0 & 0 \\ 1 & 1 & 0 \\ 2 & 2 & 1
+\end{pmatrix} &\Bigg\vert \begin{pmatrix}
+1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1
+\end{pmatrix},\\
+\begin{pmatrix}
+1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 2 & 1
+\end{pmatrix} &\Bigg\vert \begin{pmatrix}
+1 & 0 & 0 \\ -1 & 1 & 0 \\ -2 & 0 & 1
+\end{pmatrix},\\
+\begin{pmatrix}
+1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1
+\end{pmatrix} &\Bigg\vert \begin{pmatrix}
+1 & 0 & 0 \\ -1 & 1 & 0 \\ 0 & -2 & 1
+\end{pmatrix} = C.
+\end{align}
+Die Iterationsmatrix $T\equiv T_\text{GS}$ lautet damit
+\begin{align}
+T &= I - CA = I - \begin{pmatrix}
+1 & 0 & 0 \\ -1 & 1 & 0 \\ 0 & -2 & 1
+\end{pmatrix}\begin{pmatrix}
+1 & 2 & -2 \\ 1 & 1 & 1 \\ 2 & 2 & 1
+\end{pmatrix} = I - \begin{pmatrix}
+1 & 2 & -2 \\ 0 & -1 & 3 \\ 0 & 0 & -1
+\end{pmatrix} = \\
+&= \begin{pmatrix}
+0 & -2 & 2 \\ 0 & 2 & -3 \\ 0 & 0 & 2
+\end{pmatrix}.
+\end{align}
+Wir wollen die Eigenwerte bestimmen, und lösen dafür das Gleichungssystem $Tx = \lambda x$.
+Explizit lautet dieses hier
+\begin{align}
+\begin{pmatrix}
+-2x_2 + 2x_3 \\ 2x_2 - 3x_3 \\ 2x_3
+\end{pmatrix} &= \lambda\begin{pmatrix}
+x_1 \\ x_2 \\ x_3
+\end{pmatrix}.
+\end{align}
+Eine mögliche Lösung ist $\lambda = 2$ mit dem Eigenvektor $x = (-1,1,0)^\top$.
+Damit ist der Spektralradius $\rho(T) \le |\lambda| = 2$, insbesondere also größer 1.
+Die Iteration konvergiert daher nicht für beliebige Startwerte.
+
+
+
+    
+
+
+
+    
+
+
+
+\end{document}

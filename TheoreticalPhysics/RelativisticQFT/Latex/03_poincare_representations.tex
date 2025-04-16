@@ -1,0 +1,202 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Representations of the Poincar\'e group}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Relativistic Quantum Field Theory}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\renewcommand{\tilde}{\bar}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Poincar\'e representations on fields}
+Consider two different assignments of a mapping $U(\Lambda, a)$ of functions $f \mapsto f'$ on some space of functions of $x=(x^\mu)$
+\begin{align}
+\tecxt\text{Alice:} && f &\mapsto f' = U(\Lambda, a)f && \tecxt\text{with} & f'(\Lambda x + a) &= f(x),\\
+\tecxt\text{Bob:} && f &\mapsto f' = U(\Lambda, a)f && \tecxt\text{with} & f'(x) &= f(\Lambda x + a).
+\end{align}
+The group relation of the Poincar\'e group is $U(\Lambda, a) U(\tilde{\Lambda}, \tilde{a}) = U(\Lambda\tilde{\Lambda}, \Lambda \tilde{a} + a)$.
+Let $f' := U(\tilde{\Lambda}, \tilde{a})f$, $f'' := U(\Lambda, a)f'$ and $f''' := U(\Lambda\tilde{\Lambda}, \Lambda \tilde{a} + a)f$.
+Then for Alice' assignment we find
+\begin{align}
+f(x) &= f'(\tilde{\Lambda}x + \tilde{a}) = f''\kla\left( \Lambda \klam\left[ \tilde{\Lambda}x + \tilde{a} \right] + a \right) = f''(\Lambda\tilde{\Lambda} x + \Lambda \tilde{a} + a),\\
+f(x) &= f'''(\Lambda\tilde{\Lambda} x + \Lambda \tilde{a} + a).
+\end{align}
+From this it follows that $f''(x) = f'''(x) (\forall x)$ and thus $f'' \equiv f'''$ -- the functions are identically equal.
+Since the equality holds for any starting function $f$, we obtain the equality 
+\begin{align}
+U(\Lambda, a) U(\tilde{\Lambda}, \tilde{a}) &= U(\Lambda\tilde{\Lambda}, \Lambda \tilde{a} + a).
+\end{align} 
+of the operators on the space of functions.
+Therefore Alice' representation is valid.
+For Bob's assignment we find
+\begin{align}
+f''(x) &= f'(\Lambda x + a) = f\kla\left( \tilde{\Lambda} \klam\left[ \Lambda x + a \right] + \tilde{a} \right) = f(\tilde{\Lambda}\Lambda x + \tilde{\Lambda} a + \tilde{a}),\\
+f'''(x) &= f(\Lambda\tilde{\Lambda} x + \Lambda \tilde{a} + a).
+\end{align}
+Since in general $f''(x) \neq f'''(x)$, this does not respect the required representation property of the Poincar\'e group and is therefore invalid.
+However, note that Bob's assignment is actually compatible with the group relation
+\begin{align}
+U(\tilde{\Lambda}, \tilde{a}) U(\Lambda, a) &= U(\Lambda\tilde{\Lambda}, \Lambda \tilde{a} + a)
+\end{align} 
+Now consider an infinitesimal Poincar\'e transformation
+\begin{align}
+U(\delta + \omega, a) &= 1 + \i a_\mu P^\mu - \frac{\i}{2}\omega_{\rho\sigma} J^{\rho\sigma}.
+\end{align}
+Then for Alice' representation $f'(x + \omega x + a) = f(x)$ and since $\omega, a$ are assumed to be infinitesimal
+\begin{align}
+f'(x) &= f(x - \omega x - a) = f(x) - a_\mu \partial^\mu f(x) - \omega_{\rho\sigma} x^\sigma \partial^\rho f(x) + \mathcal{O}(\omega^2, a^2),\\
+f' &= U(\delta + \omega, a) f = f + \i a_\mu P^\mu f - \frac{\i}{2}\omega_{\rho\sigma} J^{\rho\sigma}.
+\end{align}
+Write $\omega_{\rho\sigma} x^\sigma \partial^\rho = \frac{-1}{2} \omega_{\rho\sigma} \kla\left( x^\rho \partial^\sigma - x^\sigma \partial^\rho \right)$ exploiting the anti-symmetry of $\omega$. 
+Then comparing coefficients of these two expressions for $f'$ yields
+\begin{align}
+P^\mu &= \i\partial^\mu,\\
+J^{\rho\sigma} &= \i \kla\left( x^\rho \partial^\sigma - x^\sigma \partial^\rho \right).
+\end{align}
+\section{Poincar\'e representations on quantum fields}
+Consider a unitary operator representation $\hat{U}(\Lambda, a)$ on the Hilbert space of quantum states of a finite dimensional matrix representation $D_{AB}(\Lambda)$.
+Define two different behaviours of the quantum field operator $\hat{\psi}_A(x)$
+\begin{align}
+\tecxt\text{Adam:} && \hat{\psi}_A'(\Lambda x + a) &:= \hat{U}(\Lambda, a)^{-1} \hat{\psi}_A(\Lambda x + a) \hat{U}(\Lambda, a) = D_{AB}(\Lambda) \hat{\psi}_B(x),\\
+\tecxt\text{Eve:} && \hat{\psi}_A'(\Lambda x + a) &:= \hat{U}(\Lambda, a) \hat{\psi}_A(\Lambda x + a) \hat{U}(\Lambda, a)^{-1} = D_{AB}(\Lambda) \hat{\psi}_B(x).
+\end{align}
+%\begin{align}
+%\Ket | \tilde{i} \rangle &= \hat{U}\Ket | i \rangle,\\
+%F'(\Lambda x +a) &:= \braket\langle \tilde{f} | \hat{\psi}_A (\Lambda x + a) | \tilde{i} \rangle = \braket\langle f | D_{AB}\hat{\psi}_B(x) | i \rangle = F(x) ,Adam\\
+%F'(\Lambda x + a) &:= \braket\langle f | \hat{\psi}_A (\Lambda x + a) | i \rangle = \braket\langle \tilde{f} | D_{AB}\hat{\psi}_B(x) | \tilde{i} \rangle = F(x) Eve
+%\end{align}
+Note that in either representation the identity
+\begin{align}
+D_{AB}(\Lambda\bar{\Lambda}) \hat{\psi}_B(x) &= D_{AB}(\Lambda) D_{BC}(\bar{\Lambda}) \hat{\psi}_C(x) \label{eqn:D AB repr identity}
+\end{align}
+holds.
+In Adam's representation the left hand side can also be written as
+\begin{align}
+D_{AB}(\Lambda\bar{\Lambda}) \hat{\psi}_B(x) &= \hat{U}(\Lambda\bar{\Lambda}, \Lambda \bar{a} + a)^\dagger \hat{\psi}_A(\Lambda\bar{\Lambda} x + \Lambda\bar{a} + a) \hat{U}(\Lambda\bar{\Lambda}, \Lambda \bar{a} + a) = \\
+&= \klam\left[ \hat{U}(\Lambda, a) \hat{U}(\bar{\Lambda}, \bar{a}) \right]^\dagger \hat{\psi}_A(\Lambda\bar{\Lambda} x + \Lambda\bar{a} + a) \hat{U}(\Lambda, a) \hat{U}(\bar{\Lambda}, \bar{a}) = \\
+&= \hat{U}(\bar{\Lambda}, \bar{a})^\dagger \hat{U}(\Lambda, a)^\dagger \hat{\psi}_A\kla\left( \Lambda (\bar{\Lambda} x + \bar{a}) + a \right) \hat{U}(\Lambda, a)  \hat{U}(\bar{\Lambda}, \bar{a}) = \\
+&= \hat{U}(\bar{\Lambda}, \bar{a})^\dagger D_{AB}(\Lambda) \hat{\psi}_B\left( \bar{\Lambda} x + \bar{a} \right) \hat{U}(\bar{\Lambda}, \bar{a}) = \\
+&= D_{AB}(\Lambda) \hat{U}(\bar{\Lambda}, \bar{a})^\dagger \hat{\psi}_B\left( \bar{\Lambda} x + \bar{a} \right) \hat{U}(\bar{\Lambda}, \bar{a}) = \\
+&= D_{AB}(\Lambda) D_{BC}(\bar{\Lambda}) \hat{\psi}_C(x).
+\end{align}
+This is consistent with \autoref{eqn:D AB repr identity}.
+In Eve's representation we would instead arrive at
+\begin{align}
+D_{AB}(\Lambda\bar{\Lambda}) \hat{\psi}_B(x) &= \hat{U}(\Lambda\bar{\Lambda}, \Lambda \bar{a} + a)^\dagger \hat{\psi}_A(\Lambda\bar{\Lambda} x + \Lambda\bar{a} + a) \hat{U}(\Lambda\bar{\Lambda}, \Lambda \bar{a} + a) = \\
+&= \hat{U}(\Lambda, a) \hat{U}(\bar{\Lambda}, \bar{a}) \hat{\psi}_A(\Lambda\bar{\Lambda} x + \Lambda\bar{a} + a) \klam\left[ \hat{U}(\Lambda, a) \hat{U}(\bar{\Lambda}, \bar{a}) \right]^\dagger = \\
+&= \hat{U}(\Lambda, a)  \hat{U}(\bar{\Lambda}, \bar{a}) \hat{\psi}_A\kla\left( \Lambda (\bar{\Lambda} x + \bar{a}) + a \right) \hat{U}(\bar{\Lambda}, \bar{a})^\dagger \hat{U}(\Lambda, a)^\dagger.
+\end{align}
+At this point we can continue in the same way, since the order of $\Lambda$ and $\bar{\Lambda}$ in $\hat{U}$ (or in $\hat{\psi}$) is reversed.
+But letting $y := \Lambda (\bar{\Lambda} x + \bar{a}) + a$ we can write
+\begin{align}
+D_{AB}(\Lambda\bar{\Lambda}) \hat{\psi}_B(x) &= \hat{U}(\Lambda, a) D_{AB}(\bar{\Lambda}) \hat{\psi}_B \kla\left( \bar{\Lambda}^{-1} (y - \bar{a}) \right) \hat{U}(\Lambda, a)^\dagger = \\
+&= D_{AB}(\bar{\Lambda}) D_{BC}(\Lambda) \hat{\psi}_C\kla\left( \Lambda^{-1} (z - a) \right)
+\end{align}
+with $z := \bar{\Lambda}^{-1} (y - \bar{a})$.
+However, in general $x \neq \Lambda^{-1} (z - a)$ and also the order of the $D(\Lambda)$-terms is reversed. 
+Thus the representation is invalid.
+\section{Pauli-Lubanski operator}
+Consider
+\begin{align}
+W_\mu &:= \frac{1}{2} \epsilon_{\mu\nu\rho\sigma} P^\nu J^{\rho\sigma}.
+\end{align}
+For $(P^\nu) = (m,0,0,0)^\top$ we find
+\begin{align}
+W_\mu &= \frac{m}{2} \epsilon_{\mu 0 \rho \sigma} J^{\rho\sigma} = \frac{m}{2} \begin{pmatrix}
+0 \\ -\epsilon_{jkl} J^{kl}
+\end{pmatrix} = m \begin{pmatrix}
+0 \\ -\textbf{J}
+\end{pmatrix}.
+\end{align}
+Thus $W^0=0$ and $W^k = mJ_k$.
+For $(P^\nu) = (k,0,0,k)^\top$ we find
+\begin{align}
+W_\mu &= \frac{k}{2} \kla\left( \epsilon_{\mu 0 \rho \sigma} + \epsilon_{\mu 3 \rho \sigma} \right) J^{\rho\sigma}.
+\end{align}
+Thus $W_0 = - W_3$ and
+\begin{align}
+W_0 &= \frac{k}{2} \epsilon_{03 \rho \sigma} J^{\rho\sigma} = k\epsilon_{0312}J^{12} = kJ_z.
+\end{align}
+For $\mu=1,2$ we find
+\begin{align}
+W_1 &= \frac{k}{2} \left( \epsilon_{1 0 \rho \sigma} + \epsilon_{1 3 \rho \sigma} \right) J^{\rho\sigma} = \\
+&= k\kla\left( \epsilon_{1023} J^{23} + \epsilon_{1302}J^{02} \right) = -k \kla\left( J^{23} + J^{02} \right),\\
+W_2 &= \frac{k}{2} \left( \epsilon_{2 0 \rho \sigma} + \epsilon_{2 3 \rho \sigma} \right) J^{\rho\sigma} = \\
+&= k\kla\left( \epsilon_{2013} J^{13} + \epsilon_{2301}J^{01} \right) = -k \kla\left( J^{31} - J^{01} \right).
+\end{align}
+Thus $(W^\mu) = k(J_z, B, A, J_z)^\top$ with $A := J^{31} - J^{01}$ and $B := J^{23} + J^{02}$.
+Note that after lowering the indices we find $A = J_{31} + J_{01}$ and $B = J_{23} + J_{20}$.
+Using
+\begin{align}
+\left[ J^{\mu\nu}, J^{\rho\sigma} \right] &= \i\left( g^{\nu\rho} J^{\mu\sigma} - g^{\mu\rho} J^{\nu\sigma} + g^{\mu\sigma} J^{\nu\rho} - g^{\nu\sigma} J^{\mu\rho} \right).
+\end{align}
+the following commutation relations are readily calculated
+\begin{align}
+\left[ A, B \right] &= \left[ J^{31}, J^{23} \right] + \left[ J^{31}, J^{02} \right] + \left[ -J^{01}, J^{23} \right] + \left[ -J^{01}, J^{02} \right] = \\
+&=  -\i J^{12} + 0 - 0 + \i J^{12} = 0,\\
+\left[ J_z, A \right] &= \klam\left[ J^{12}, J^{31} \right] + \klam\left[ J^{12}, -J^{01} \right] = -\i J^{23} + \i J^{20} = -\i B.
+\end{align}
+Similarly one can show $\klam\left[ J_z, B \right] = \i A$.
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

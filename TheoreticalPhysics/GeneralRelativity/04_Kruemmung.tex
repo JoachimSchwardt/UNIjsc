@@ -1,0 +1,165 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[landscape=true]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{04 Krümmung}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 9: Krümmung der Kugeloberfläche}
+\subsection*{a)}
+Allgemein gilt für die Komponenten von $R^d_{abc}$ bzw. $R_{dabc}$
+\begin{align*}
+R^d_{abc}&=g^{de}R_{eabc}=\Gamma^d_{ac,b}-\Gamma^d_{ab,c}+\Gamma^d_{be}\Gamma^e_{ac}-\Gamma^d_{ce}\Gamma^e_{ab}\numberthis\label{eqn:R dabc}\\
+R_{dabc}&=g_{df}R^f_{abc}=g_{df}\kla\left( {\Gamma^f_{ac,b}-\Gamma^f_{ab,c}+\Gamma^f_{be}\Gamma^e_{ac}-\Gamma^f_{ce}\Gamma^e_{ab}} \right)\numberthis\label{eqn:R d abc}
+\end{align*}
+Aus Aufgabe 6 kennen wir bereits die Christoffel-Symbole $\Gamma^1_{22}=-\sin\theta\cos\theta$ und $\Gamma^2_{12}=\cot\theta$.\\ Für den Krümmungstensor $R_{dabc}$ gelten die Relationen 
+\begin{align*}
+\begin{matrix}
+R_{dabc}&=&-R_{dacb} &(a) \\ R_{dabc}&=&R_{bcda} &(b)
+\end{matrix}\hspace{0.5cm}\left\}\hspace{0.4cm}\Longrightarrow\hspace{0.4cm}\begin{matrix}
+R_{dabc}&=&-R_{adbc} &(c) \\ R_{dabc}&=&R_{adcb} &(d)
+\end{matrix}\right.
+\end{align*}
+Von den $2^4=16$ Komponenten in zwei Dimensionen sind allerdings die meisten gleich null. Dazu gehören z.B. die $2\cdot 2^2=8$ Komponenten mit $a=d$ ($c$). Letztlich gibt es nur eine unabhängige Komponente:
+\begin{align*}
+R_{1212}&\kom\overset{\substack{{(a)} \\ |}}{=}-R_{1221}\kom\overset{\substack{{(b)} \\ |}}{=}-R_{2112}\kom\overset{\substack{{(a)} \\ |}}{=}R_{2121}
+\end{align*}
+Diese kann man mit (\ref{eqn:R dabc}) berechnen:
+\begin{align*}
+R_{1212}&=g_{11}\kla\left( {\Gamma^1_{22,1}-0+0-\Gamma^1_{2e}\Gamma^e_{21}} \right)=l^2\kla\left( {-\cos^2\theta+\sin^2\theta-(-\sin\theta\cos\theta)\cot\theta} \right)=l^2\sin^2\theta
+\end{align*}
+Die Komponenten $R^d_{abc}=g^{de}R_{eabc}\equiv\frac{1}{g(d)}R_{dabc}$ lauten dann:
+\begin{align*}
+R^1_{212}&=\frac{1}{l^2}\cdot R_{1212}=\sin^2\theta\\
+R^1_{221}&=-R^1_{212}=-\sin^2\theta\\
+R^2_{121}&=\frac{1}{l^2\sin^2\theta}\cdot R_{2121}=1\\
+R^2_{112}&=-R^2_{121}=-1
+\end{align*}
+Daraus folgt der Ricci-Tensor zu
+\begin{align*}
+R_{ac}&=R^b_{abc}=\begin{pmatrix}
+1&0 \\ 0&\sin^2\theta
+\end{pmatrix}
+\end{align*}
+und das Ricci-Skalar zu
+\begin{align*}
+R&=g^{ac}R_{ac}=\frac{1}{l^2}\kla\left( {1+\csc^2\theta\sin^2\theta} \right)=\frac{2}{l^2}
+\end{align*}\newpage
+\subsection*{b)}
+Die Parametrisierung sei $\vec{r}=l\kla\left( {\cos\phi\sin\theta ,\, \sin\phi\sin\theta ,\, \alpha\cos\theta} \right)^\top$. Da sich im Vergleich zur Kugel nur die $z$-Komponente des Vektors ändert, und diese nicht von $\phi$ abhängig ist, bleibt die Metrik fast gleich. Nur die $g_{11}$-Komponente muss neu berechnet werden:
+\begin{align*}
+g_{11}&=\partial_\theta\vec{r}\cdot\partial_\theta\vec{r}=l^2\kla\left( {\cos^2\theta+(-\alpha\sin\theta)^2} \right)=l^2+l^2(\alpha^2-1)\sin^2\theta\\
+\Rightarrow\ \ \ g_{ab}&=l^2\begin{pmatrix}
+1+(\alpha^2-1)\sin^2\theta & 0 \\ 0 & \sin^2\theta
+\end{pmatrix}
+\end{align*}
+Die Christoffel-Symbole kann man wieder aus den Euler-Lagrange-Gleichungen der kinetischen Energie\\
+$T=\frac{ml^2}{2}\klam\left[ {(1+\beta\sin^2\theta)\dot{\theta}^2+\sin^2\theta\dot{\phi}^2} \right]$ ablesen, wobei $\beta:=\alpha^2-1$.
+\begin{align*}
+0&=\frac{\tecxt\text{d}}{\tecxt\text{d}t}\frac{\partial T}{\partial \dot{\theta}}-\frac{\partial T}{\partial\theta}\propto \ddot{\theta}(1+\beta\sin^2\theta)+2\beta\sin\theta\cos\theta\dot{\theta}^2-\beta\sin\theta\cos\theta\dot{\theta}^2-\sin\theta\cos\theta\dot{\phi}^2
+\end{align*}
+Also ist $\Gamma^1_{11}=\frac{\beta\sin\theta\cos\theta}{1+\beta\sin^2\theta}$ und $\Gamma^1_{22}=-\frac{\sin\theta\cos\theta}{1+\beta\sin^2\theta}$. An der $\phi$-Gleichung ändert $\beta$ nichts, also gilt weiterhin $\Gamma^2_{12}=\cot\theta$ mit allen anderen $\Gamma^a_{bc}=0$.\\
+Diesmal ist die Berechnung von $R_{1212}$ etwas aufwändiger:
+\begin{align*}
+R_{1212}&=g_{11}\kla\left( {\Gamma^1_{22,1}-0+\Gamma^1_{1e}\Gamma^e_{22}-\Gamma^1_{2e}\Gamma^e_{21}} \right)=\\
+&=l^2(1+\beta\sin^2\theta)\kla\left( {\frac{-\cos^2\theta+\sin^2\theta}{1+\beta\sin^2\theta}+\frac{2\beta\sin^2\theta\cos^2\theta}{(1+\beta\sin^2\theta)^2}-\frac{\beta\sin^2\theta\cos^2\theta}{(1+\beta\sin^2\theta)^2}+\frac{\sin\theta\cos\theta}{1+\beta\sin^2\theta}\cot\theta} \right)=\\
+&=l^2\kla\left( {-\cos^2\theta+\sin^2\theta+\sin\theta\cos\theta\cot\theta+\frac{\beta\sin^2\theta\cos^2\theta}{1+\beta\sin^2\theta}} \right)=\\
+&=l^2\sin^2\theta\kla\left( {1+\frac{\beta\cos^2\theta}{1+\beta\sin^2\theta}} \right)=l^2\sin^2\theta\frac{1+\beta}{1+\beta\sin^2\theta}
+\end{align*}
+Damit ergeben sich nun wieder die Komponenten von $R^d_{abc}\equiv\frac{R_{dabc}}{g(d)}$:
+\begin{align*}
+R^1_{212}&=\frac{R_{1212}}{g_{11}}=\frac{\sin^2\theta(1+\beta)}{(1+\beta\sin^2\theta)^2}\\
+R^1_{221}&=-R^1_{212}\\
+R^2_{121}&=\frac{R_{2121}}{g_{22}}=\frac{1+\beta}{1+\beta\sin^2\theta}\\
+R^2_{112}&=-R^2_{121}
+\end{align*}
+Damit ergeben sich die nicht-verschwindenden Komponenten des Ricci-Tensors mit $R_{ac}=R^b_{abc}$ zu:
+\begin{align*}
+R_{11}&=R^2_{121}&\tecxt\text{und}&&R_{22}&=R^1_{212}
+\end{align*}
+Daraus folgt der Ricci-Skalar:
+\begin{align*}
+R&=g^{ac}R_{ac}=\frac{1}{g_{11}}R^2_{121}+\frac{1}{g_{22}}R^1_{212}=\\
+&=\frac{1+\beta}{l^2(1+\beta\sin^2\theta)^2}+\frac{\sin^2\theta(1+\beta)}{l^2\sin^2\theta\cdot (1+\beta\sin^2\theta)^2}=\frac{2(1+\beta)}{l^2(1+\beta\sin^2\theta)^2}
+\end{align*}\newpage
+\section*{Aufgabe 10: Ricci-Skalar in 4D}
+Die Christoffel-Symbole der Metrik $\tecxt\text{d}s^2=f(r)\tecxt\text{d}r^2+r^2\tecxt\text{d}\theta^2+r^2\sin^2\theta\tecxt\text{d}\phi^2+h(r)\tecxt\text{d}\tau^2$ waren $\Gamma^1_{11}=\frac{f'}{2f}$, $\Gamma^1_{22}=-\frac{r}{f}$, $\Gamma^1_{33}=-\frac{r\sin^2\theta}{f}$, $\Gamma^1_{44}=-\frac{h'}{2f}$ und $\Gamma^2_{12}=\frac{1}{r}$, $\Gamma^2_{33}=-\sin\theta\cos\theta$ und $\Gamma^3_{13}=\frac{1}{r}$, $\Gamma^3_{23}=\cot\theta$ und $\Gamma^4_{14}=\frac{h'}{2h}$.\\
+Wir benötigen für den Ricci-Skalar $R=g^{ab}R_{ab}$ aufgrund der diagonalen Metrik nur die Komponenten $R_{aa}=R^b_{aba}$ des Ricci-Tensors. Diese lauten
+\begin{align*}
+R_{11}&=R^b_{1b1}=\Gamma^b_{11,b}-\Gamma^b_{1b,1}+\Gamma^b_{bc}\Gamma^c_{11}-\Gamma^b_{1c}\Gamma^c_{1b}=\\
+&=-\Gamma^2_{12,1}-\Gamma^3_{13,1}-\Gamma^4_{14,1}+\Gamma^b_{b1}\Gamma^1_{11}\big\vert_{b\neq 1}-\Gamma^b_{12}\Gamma^2_{1b}-\Gamma^b_{13}\Gamma^3_{1b}-\Gamma^b_{14}\Gamma^4_{1b}=\\
+&=\frac{2}{r^2}-\frac{h''}{2h}+\frac{(h')^2}{2h^2}+\frac{2f'}{2rf}+\frac{f'h'}{4fh}-\frac{2}{r^2}-\frac{(h')^2}{4h^2}=\\
+&=\frac{f'}{rf}+\frac{f'h'}{4fh}+\frac{(h')^2}{4h^2}-\frac{h''}{2h}\\
+R_{22}&=R^b_{2b2}=\Gamma^b_{22,b}-\Gamma^b_{2b,2}+\Gamma^b_{bc}\Gamma^c_{22}-\Gamma^b_{2c}\Gamma^c_{2b}=\\
+&=\Gamma^1_{22,1}-\Gamma^3_{23,2}+\Gamma^b_{b1}\Gamma^1_{22}-\Gamma^b_{21}\Gamma^1_{2b}-\Gamma^b_{22}\Gamma^2_{2b}-\Gamma^b_{23}\Gamma^3_{2b}=\\
+&=\frac{rf'}{f^2}-\frac{1}{f}+\csc^2\theta-\frac{rf'}{2f^2}-\frac{2}{f}-\frac{rh'}{2fh}+\frac{1}{f}+\frac{1}{f}-\cot^2\theta=\\
+&=1+\frac{rf'}{2f^2}-\frac{1}{f}-\frac{rh'}{2fh}\\
+R_{33}&=R^b_{3b3}=\Gamma^b_{33,b}-\Gamma^b_{3b,3}+\Gamma^b_{bc}\Gamma^c_{33}-\Gamma^b_{3c}\Gamma^c_{3b}=\\
+&=\Gamma^1_{33,1}+\Gamma^2_{33,2}+\Gamma^b_{b1}\Gamma^1_{33}+\Gamma^b_{b2}\Gamma^2_{33}-\Gamma^b_{31}\Gamma^1_{3b}-\Gamma^b_{32}\Gamma^2_{3b}-\Gamma^b_{33}\Gamma^3_{3b}=\\
+&=\frac{rf'\sin^2\theta}{f^2}-\frac{\sin^2\theta}{f}+\sin^2\theta-\frac{rf'\sin^2\theta}{2f^2}-\frac{2\sin^2\theta}{f}-\frac{rh'\sin^2\theta}{2fh}+\frac{\sin^2\theta}{f}+\frac{\sin^2\theta}{f}=\\
+&=\sin^2\theta\kla\left( {1+\frac{rf'}{2f}-\frac{1}{f}-\frac{rh'}{2fh}} \right)=R_{22}\sin^2\theta
+\end{align*}\,\newpage
+\begin{align*}
+R_{44}&=R^b_{4b4}=\Gamma^b_{44,b}-\Gamma^b_{4b,4}+\Gamma^b_{bc}\Gamma^c_{44}-\Gamma^b_{4c}\Gamma^c_{4b}=\\
+&=\Gamma^1_{44,1}+\Gamma^b_{b1}\Gamma^1_{44}-\Gamma^b_{41}\Gamma^1_{4b}-\Gamma^b_{44}\Gamma^4_{4b}=\\
+&=\frac{f'h'}{2f^2}-\frac{h''}{2f}-\frac{f'h'}{4f^2}-\frac{h'}{rf}-\frac{(h')^2}{4fh}+\frac{(h')^2}{4fh}+\frac{(h')^2}{4fh}=\\
+&=\frac{f'h'}{4f^2}-\frac{h'}{rf}-\frac{h''}{2f}+\frac{(h')^2}{4fh}=\frac{h}{f}R_{11}-\frac{hf'}{rf^2}-\frac{h'}{rf}
+\end{align*}
+Damit lässt sich dann der Ricci-Skalar bestimmen:
+\begin{align*}
+R&=\frac{1}{g_{11}}R_{11}+\dots=\frac{R_{11}}{f}+\frac{R_{44}}{h}+\frac{R_{22}}{r^2}+\frac{R_{33}}{r^2\sin^2\theta}=\\
+&=\frac{2R_{22}}{r^2}+\frac{2R_{11}}{f}-\frac{f'}{rf^2}-\frac{h'}{rfh}=\\
+&=\frac{2}{r^2}-\frac{2}{r^2f}-\frac{2h'}{rfh}+\frac{2f'}{rf^2}+\frac{f'h'}{2f^2h}+\frac{(h')^2}{2fh^2}-\frac{h''}{fh}
+\end{align*}\newpage
+\section*{Aufgabe 11: Transformation auf lokal kartesische Koordinaten}
+Die Metrik transformiert sich über
+\begin{align*}
+\tilde{g}_{ab}&=\frac{\partial x^c}{\partial\tilde{x}^a}\frac{\partial x^d}{\partial\tilde{x}^b}g_{cd}
+\end{align*}
+Die Taylor-Entwicklung von $x^a(\tilde{x})$ um den Punkt $x_P^a$ hat zunächst die allgemeine Form
+\begin{align*}
+x^c(\tilde{x})&=x^c_P+\frac{\partial x^c}{\partial\tilde{x}^e}\Big\vert_P(\tilde{x}^e-\tilde{x}^e_P)+\frac{1}{2}\frac{\partial^2x^c}{\partial\tilde{x}^e\partial\tilde{x}^f}\Big\vert_P(\tilde{x}^e-\tilde{x}^e_P)(\tilde{x}^f-\tilde{x}^f_P)+\mathcal{O}\klam\left[ {(\tilde{x}-\tilde{x}_P)^3} \right]
+\end{align*}
+Daraus folgt für die Ableitung:
+\begin{align*}
+\frac{\partial x^c}{\partial\tilde{x}^a}&=\frac{\partial x^c}{\partial\tilde{x}^e}\Big\vert_P\frac{\partial \tilde{x}^e}{\partial\tilde{x}^a}+\frac{1}{2}\frac{\partial^2x^c}{\partial\tilde{x}^e\partial\tilde{x}^f}\Big\vert_P\kla\left( {\frac{\partial \tilde{x}^e}{\partial\tilde{x}^a}(\tilde{x}^f-\tilde{x}^f_P)+\frac{\partial \tilde{x}^f}{\partial\tilde{x}^a}(\tilde{x}^e-\tilde{x}^e_P)} \right)+\mathcal{O}\klam\left[ {(\tilde{x}-\tilde{x}_P)^2} \right]=\\
+&=\frac{\partial x^c}{\partial\tilde{x}^a}\Big\vert_P+\frac{\partial^2x^c}{\partial\tilde{x}^e\partial\tilde{x}^a}\Big\vert_P(\tilde{x}^e-\tilde{x}^e_P)+\mathcal{O}\klam\left[ {(\tilde{x}-\tilde{x}_P)^2} \right]
+\end{align*}
+Einsetzen in die Transformation liefert dann:
+\begin{align*}
+\tilde{g}_{ab}&=g_{cd}\kla\left( {\frac{\partial x^c}{\partial\tilde{x}^a}\Big\vert_P+\frac{\partial^2x^c}{\partial\tilde{x}^e\partial\tilde{x}^a}\Big\vert_P(\tilde{x}^e-\tilde{x}^e_P)} \right)\kla\left( {\frac{\partial x^d}{\partial\tilde{x}^b}\Big\vert_P+\frac{\partial^2x^d}{\partial\tilde{x}^e\partial\tilde{x}^b}\Big\vert_P(\tilde{x}^e-\tilde{x}^e_P)} \right)+\mathcal{O}\klam\left[ {(\tilde{x}-\tilde{x}_P)^2} \right]=\\
+&=g_{cd}\kla\left( {\frac{\partial x^c}{\partial\tilde{x}^a}\Big\vert_P\frac{\partial x^d}{\partial\tilde{x}^b}\Big\vert_P+\frac{\partial x^c}{\partial\tilde{x}^a}\Big\vert_P\frac{\partial^2x^d}{\partial\tilde{x}^e\partial\tilde{x}^b}\Big\vert_P(\tilde{x}^e-\tilde{x}^e_P)+\frac{\partial x^d}{\partial\tilde{x}^b}\Big\vert_P\frac{\partial^2x^c}{\partial\tilde{x}^e\partial\tilde{x}^a}\Big\vert_P(\tilde{x}^e-\tilde{x}^e_P)} \right)+\mathcal{O}\klam\left[ {(\tilde{x}-\tilde{x}_P)^2} \right]=\\
+&=g_{cd}\frac{\partial x^c}{\partial\tilde{x}^a}\Big\vert_P\frac{\partial x^d}{\partial\tilde{x}^b}\Big\vert_P+\kla\left( {\frac{\partial x^c}{\partial\tilde{x}^a}\Big\vert_P\frac{\partial^2x^d}{\partial\tilde{x}^e\partial\tilde{x}^b}\Big\vert_P+\frac{\partial x^d}{\partial\tilde{x}^b}\Big\vert_P\frac{\partial^2x^c}{\partial\tilde{x}^e\partial\tilde{x}^a}\Big\vert_P} \right)g_{cd}(\tilde{x}^e-\tilde{x}^e_P)+\mathcal{O}\klam\left[ {(\tilde{x}-\tilde{x}_P)^2} \right]
+\end{align*}
+Der Term nullter Ordnung soll nun folgende Bedingung erfüllen:
+\begin{align*}
+\delta_{ab}&\overset{!}{=}g_{cd}\frac{\partial x^c}{\partial\tilde{x}^a}\Big\vert_P\frac{\partial x^d}{\partial\tilde{x}^b}\Big\vert_P
+\end{align*}
+Der Term erster Ordnung soll außerdem verschwinden:
+\begin{align*}
+0&\overset{!}{=}\frac{\partial x^c}{\partial\tilde{x}^a}\Big\vert_P\frac{\partial^2x^d}{\partial\tilde{x}^e\partial\tilde{x}^b}\Big\vert_P+\frac{\partial x^d}{\partial\tilde{x}^b}\Big\vert_P\frac{\partial^2x^c}{\partial\tilde{x}^e\partial\tilde{x}^a}\Big\vert_P
+\end{align*}
+
+\end{document}

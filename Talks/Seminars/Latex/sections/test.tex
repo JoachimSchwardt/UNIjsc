@@ -1,0 +1,548 @@
+\begin{frame}{Supraleiter}
+    \begin{columns}[t]
+        \begin{column}{0.6\linewidth}
+            \begin{table}
+                \begin{tabular}{ll}
+                    1911 & Supraleitung in Quecksilber bei $T_C \approx \SI{4}{\kelvin}$ \\
+                    &durch H. Kamerlingh-Onnes \\
+                    1933 & Meissner-Ochsenfeld-Effekt: Der Supraleiter \\
+                    &ist ein perfekter Diamagnet                 \\
+                    1950 & Ginzburg-Landau-Theorie                                                                 \\
+                    1957 & BCS-Theorie                                                                             \\
+                    1986 & Erster Hochtemperatursupraleiter LaBaCuO \\
+                    & (Lathanium-Barium-Kupfer-Oxid) bei $T_C \approx \SI{35}{\kelvin}$
+                \end{tabular}
+            \end{table}
+            Nach \cite{klausslecture}.
+        \end{column}
+    \end{columns}       
+\end{frame}
+
+\begin{frame}{Motivation}
+    \begin{columns}
+        \begin{column}{0.3\linewidth}
+            Identische Einheitszelle
+            \begin{itemize}
+                \item Blau: Strontium bzw. Lanthanum/Barium
+                \item Rot: Ruthenium bzw. Kurper
+                \item Grün: Sauerstoff
+            \end{itemize}
+            Beobachtungen beim  ermöglichen Verbesserungen bei Hochtemperatursupraleitern
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Strontiumruthanat - }
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \item Zuerst 1994 durch Yoshiteru Maeno gewachsen \cite{Maeno1994}
+                \item $T_C \approx \SI{1.5}{\kelvin}$ \cite{Mackenzie2020}
+                \item Von 1998 \cite{Ishida1998} bis 2019 \cite{Pustogow2019,Ishida_2020} vermuteter Spin-Triplettsupraleiter
+                \item Entdecken einer variablen kritischen Temperatur unter Druck \cite{doi:10.1126/science.1248292}
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.25\textwidth}
+            Die Einheitszelle von Strontium-Ruthanat (SrRuO). Strontium-Ionen sind rot, Ruthenium-Ionen blau und Sauerstoff-Ionen grün. \cite{wiki:Sr2_Ru_O4}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{s-Wellen Supraleiter}
+    \begin{itemize}
+        \item Supraleiter werden nach der BCS-Theorie beschrieben
+        \item Ordnungsparameter $\Delta$ beschreibt die Energielücke an der Fermifläche
+        \item Für Gitterwechselwirkung ergibt sich eine s-Wellen ähnliche Fermifläche
+    \end{itemize}
+    \begin{columns}
+%        \begin{column}[]{0.5\linewidth}
+%            \begin{figure}
+%                \centering
+%                \begin{tikzpicture}[
+%                        declare  function = {
+%                                fx(\t, \p) = cos(p) * sin(t);
+%                                fy(\t, \p) = sin(p) * sin(t);
+%                                fz(\t, \p) = cos(t);
+%                                r_s(\t, \p) = 1;
+%                                r_py(\t, \p) = fy(t, p);
+%                                r_pz(\t, \p) = fz(t, p);
+%                                r_px(\t, \p) = fx(t, p);
+%                                r_dxy(\t, \p) = fx(t,p)*fy(t,p);
+%                                r_dyz(\t, \p) = fy(t,p)*fz(t,p);
+%                                r_dz2(\t,\p) = 3*fz(t,p)^2 - 1;
+%                                r_dxz(\t,\p) = fx(t,p)*fz(t,p);
+%                                r_dx2my2(\t,\p) = fx(t,p)^2-fy(t,p)^2;
+%                                fr(\t, \p) = r_s(t, p);
+%                            }
+%                    ]
+%                    \begin{axis}[
+%                            hide axis,
+%                            trig format=deg, view={45}{10},
+%                            xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
+%                        ]
+%                        \addplot3[
+%                            surf, z buffer=sort,
+%                            domain=-180:180, samples=60, variable=\p,
+%                            y domain=0:180, samples y=60, variable y=\t,
+%                            % point meta={fr(t,p)}
+%                        ] (
+%                        {abs(fr(t, p))*fx(t, p)},
+%                        {abs(fr(t, p))*fy(t, p)},
+%                        {abs(fr(t, p))*fz(t, p)}
+%                        );
+%                    \end{axis}
+%                \end{tikzpicture}
+%            \end{figure}
+%        \end{column}
+        \begin{column}{0.5\linewidth}
+%            \begin{figure}
+%                \centering
+%                \begin{tikzpicture}
+%                    \begin{axis}[hide axis, axis equal, width=1.2\linewidth]
+%                        \addplot[domain=0:360, samples=100] ({sin(x)}, {cos(x)});
+%                        \addplot[domain=0:360, samples=100, dashed] ({1.2*sin(x)}, {1.2*cos(x)});
+%                        \legend {$E_f$, $E_f + \hbar \omega_D$};
+%                    \end{axis}
+%                \end{tikzpicture}
+%            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+%\begin{frame}{p-Wellen Supraleiter}
+%    \begin{columns}
+%        \begin{column}[]{0.5\linewidth}
+%            \begin{figure}
+%                \centering
+%                \begin{tikzpicture}[
+%                        declare  function = {
+%                                fx(\t, \p) = cos(p) * sin(t);
+%                                fy(\t, \p) = sin(p) * sin(t);
+%                                fz(\t, \p) = cos(t);
+%                                r_s(\t, \p) = 1;
+%                                r_py(\t, \p) = fy(t, p);
+%                                r_pz(\t, \p) = fz(t, p);
+%                                r_px(\t, \p) = fx(t, p);
+%                                r_dxy(\t, \p) = fx(t,p)*fy(t,p);
+%                                r_dyz(\t, \p) = fy(t,p)*fz(t,p);
+%                                r_dz2(\t,\p) = 3*fz(t,p)^2 - 1;
+%                                r_dxz(\t,\p) = fx(t,p)*fz(t,p);
+%                                r_dx2my2(\t,\p) = fx(t,p)^2-fy(t,p)^2;
+%                                fr(\t, \p) = r_pz(t, p);
+%                            }
+%                    ]
+%                    \begin{axis}[
+%                            hide axis,
+%                            trig format=deg, view={45}{10},
+%                            xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
+%                        ]
+%                        \addplot3[
+%                            surf, z buffer=sort,
+%                            domain=-180:180, samples=60, variable=\p,
+%                            y domain=0:180, samples y=60, variable y=\t,
+%                            % point meta={fr(t,p)}
+%                        ] (
+%                        {abs(fr(t, p))*fx(t, p)},
+%                        {abs(fr(t, p))*fy(t, p)},
+%                        {abs(fr(t, p))*fz(t, p)}
+%                        );
+%                    \end{axis}
+%                \end{tikzpicture}
+%            \end{figure}
+%        \end{column}
+%        \begin{column}{0.5\linewidth}
+%            \begin{figure}
+%                \centering
+%                \begin{tikzpicture}
+%                    \begin{axis}[hide axis, axis equal, width=1.2\linewidth]
+%                        \addplot[domain=0:360, samples=100] ({sin(x)}, {cos(x)});
+%                        \addplot[domain=0:360, samples=100, dashed] ({1.2*sin(x)}, {1.2*cos(x)});
+%                        \addplot[domain=0:360, samples=100, thick] ({sin(x)*(1+0.2*abs(cos(x)))}, {cos(x)*abs(1+0.2*abs(cos(x)))});
+%                        \legend {$E_f$, $E_f + \hbar \omega_D$, $\Delta$};
+%                    \end{axis}
+%                \end{tikzpicture}
+%            \end{figure}
+%        \end{column}
+%    \end{columns}
+%\end{frame}
+%
+%\begin{frame}{Chirale Symmetrie}
+%    \begin{itemize}
+%        \item Kombination zweier Lösungen der Energielücke, um den mittleren Abstand zu maximieren
+%    \end{itemize}
+%    \begin{columns}
+%        \begin{column}{0.3\linewidth}
+%            \begin{figure}
+%                \centering
+%                \begin{tikzpicture}
+%                    \begin{axis}[hide axis, axis equal, width=2\linewidth]
+%                        \addplot[domain=0:360, samples=100] ({sin(x)}, {cos(x)});
+%                        \addplot[domain=0:360, samples=100, dashed] ({1.2*sin(x)}, {1.2*cos(x)});
+%                        \addplot[domain=0:360, samples=100, thick] ({sin(x)*(1+0.2*abs(cos(x)))}, {cos(x)*abs(1+0.2*abs(cos(x)))});
+%                        \node[anchor=center] at (0,0) { $\ket{\Psi_1}$ };
+%                    \end{axis}
+%                \end{tikzpicture}
+%            \end{figure}
+%        \end{column}
+%        \begin{column}{0.3\linewidth}
+%            \begin{figure}
+%                \centering
+%                \begin{tikzpicture}
+%                    \begin{axis}[hide axis, axis equal, width=2\linewidth]
+%                        \addplot[domain=0:360, samples=100] ({sin(x)}, {cos(x)});
+%                        \addplot[domain=0:360, samples=100, dashed] ({1.2*sin(x)}, {1.2*cos(x)});
+%                        \addplot[domain=0:360, samples=100, thick] ({sin(x)*(1+0.2*abs(sin(x)))}, {cos(x)*abs(1+0.2*abs(sin(x)))});
+%                        \node[anchor=center] at (0,0) { $\ket{\Psi_2}$ };
+%                    \end{axis}
+%                \end{tikzpicture}
+%            \end{figure}
+%        \end{column}
+%        \begin{column}{0.3\linewidth}
+%            \begin{figure}
+%                \centering
+%                \begin{tikzpicture}
+%                    \begin{axis}[hide axis, axis equal, width=2\linewidth]
+%                        \addplot[domain=0:360, samples=100] ({sin(x)}, {cos(x)});
+%                        \addplot[domain=0:360, samples=100, dashed] ({1.2*sin(x)}, {1.2*cos(x)});
+%                        \addplot[domain=0:360, samples=100, thick] ({sin(x)*(2+0.2*abs(cos(x))+0.2*abs(sin(x)))/2}, {cos(x)*abs(2+0.2*abs(cos(x))+0.2*abs(sin(x)))/2});
+%                        \node[anchor=center] at (0,0) { $\ket{\Psi_1} + i \ket{\Psi_2}$ };
+%                    \end{axis}
+%                \end{tikzpicture}
+%            \end{figure}
+%        \end{column}
+%    \end{columns}
+%\end{frame}
+%
+%\begin{frame}{Chirale Symmetrie}
+%    \begin{itemize}
+%        \item Bestimmte Stoffe benötigen einen mehrdimesionalen Ordnungsparameter \[\Delta = \Delta_x \pm i \Delta_y \propto \exp(i\theta)\]
+%    \end{itemize}
+%    \begin{columns}
+%        \begin{column}{0.5\linewidth}
+%            \begin{figure}
+%                \begin{tikzpicture}
+%                    \shade[shading=color wheel,shading angle=-45, shift={(0.5,0)}] [even odd rule]
+%                    (0,0) arc (0:360:0.5) (1,0) arc (0:360:1.5);
+%                    \node at (0,0) {$-$};
+%                    \node[anchor=center] at (0,1) {$1$};
+%                    \node[anchor=center] at (0,-1) {$-1$};
+%                    \node[anchor=center] at (1,0) {$i$};
+%                    \node[anchor=center] at (-1,0) {$-i$};
+%                \end{tikzpicture}
+%            \end{figure}
+%        \end{column}
+%        \begin{column}{0.5\linewidth}
+%            \begin{figure}
+%                \begin{tikzpicture}
+%                    \useasboundingbox (-1.5, -1.5) rectangle (1.5,1.5);
+%                    \begin{scope}[transform canvas={xscale=-1, shift={(0.5,0)}}]
+%                        \shade[shading=color wheel,shading angle=-45, shift={(0,0)}] [even odd rule]
+%                        (0,0) arc (0:-360:0.5) (1,0) arc (0:-360:1.5);
+%                    \end{scope}
+%                    \node at (0,0) {$+$};
+%                    \node[anchor=center] at (0,1) {$1$};
+%                    \node[anchor=center] at (0,-1) {$-1$};
+%                    \node[anchor=center] at (1,0) {$-i$};
+%                    \node[anchor=center] at (-1,0) {$i$};
+%                \end{tikzpicture}
+%            \end{figure}
+%        \end{column}
+%    \end{columns}
+%    \begin{itemize}
+%        \item Unter Zeitumkehr \[\Psi \xrightarrow{\mathcal{T}} \Psi' \neq \Psi e^{i\phi}\]
+%    \end{itemize}
+%\end{frame}
+%
+%\begin{frame}{Herkunft der Ordnungsparameter}
+%    \begin{columns}
+%        \begin{column}{0.35\textwidth}
+%            \begin{center}
+%                $p_y$
+%            \end{center}
+%            \begin{figure}
+%                \begin{tikzpicture}[
+%                        declare  function = {
+%                                fx(\t, \p) = cos(p) * sin(t);
+%                                fy(\t, \p) = sin(p) * sin(t);
+%                                fz(\t, \p) = cos(t);
+%                                r_s(\t, \p) = 1;
+%                                r_py(\t, \p) = fy(t, p);
+%                                r_pz(\t, \p) = fz(t, p);
+%                                r_px(\t, \p) = fx(t, p);
+%                                r_dxy(\t, \p) = fx(t,p)*fy(t,p);
+%                                r_dyz(\t, \p) = fy(t,p)*fz(t,p);
+%                                r_dz2(\t,\p) = 3*fz(t,p)^2 - 1;
+%                                r_dxz(\t,\p) = fx(t,p)*fz(t,p);
+%                                r_dx2my2(\t,\p) = fx(t,p)^2-fy(t,p)^2;
+%                                fr(\t, \p) = r_py(t, p);
+%                            },
+%                        scale=0.9
+%                    ]
+%                    \begin{axis}[
+%                            hide axis,
+%                            trig format=deg, view={45}{10},
+%                            xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
+%                        ]
+%                        \addplot3[
+%                            surf, z buffer=sort,
+%                            domain=-180:180, samples=60, variable=\p,
+%                            y domain=0:180, samples y=60, variable y=\t,
+%                            point meta={fr(t,p)}
+%                        ] (
+%                        {abs(fr(t, p))*fx(t, p)},
+%                        {abs(fr(t, p))*fy(t, p)},
+%                        {abs(fr(t, p))*fz(t, p)}
+%                        );
+%                    \end{axis}
+%                \end{tikzpicture}
+%            \end{figure}
+%        \end{column}
+%        \begin{column}{0.35\textwidth}
+%            \begin{center}
+%                $p_x$
+%            \end{center}
+%            \begin{figure}
+%                \begin{tikzpicture}[
+%                        declare  function = {
+%                                fx(\t, \p) = cos(p) * sin(t);
+%                                fy(\t, \p) = sin(p) * sin(t);
+%                                fz(\t, \p) = cos(t);
+%                                r_s(\t, \p) = 1;
+%                                r_py(\t, \p) = fy(t, p);
+%                                r_pz(\t, \p) = fz(t, p);
+%                                r_px(\t, \p) = fx(t, p);
+%                                r_dxy(\t, \p) = fx(t,p)*fy(t,p);
+%                                r_dyz(\t, \p) = fy(t,p)*fz(t,p);
+%                                r_dz2(\t,\p) = 3*fz(t,p)^2 - 1;
+%                                r_dxz(\t,\p) = fx(t,p)*fz(t,p);
+%                                r_dx2my2(\t,\p) = fx(t,p)^2-fy(t,p)^2;
+%                                fr(\t, \p) = r_px(t, p);
+%                            },
+%                        scale=0.9
+%                    ]
+%                    \begin{axis}[
+%                            hide axis,
+%                            trig format=deg, view={45}{10},
+%                            xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
+%                        ]
+%                        \addplot3[
+%                            surf, z buffer=sort,
+%                            domain=-180:180, samples=60, variable=\p,
+%                            y domain=0:180, samples y=60, variable y=\t,
+%                            point meta={fr(t,p)}
+%                        ] (
+%                        {abs(fr(t, p))*fx(t, p)},
+%                        {abs(fr(t, p))*fy(t, p)},
+%                        {abs(fr(t, p))*fz(t, p)}
+%                        );
+%                    \end{axis}
+%                \end{tikzpicture}
+%            \end{figure}
+%        \end{column}
+%        \begin{column}{0.25\textwidth}
+%            \begin{figure}
+%                \includegraphics[width=\linewidth]{images/Sr_2_Ru_O_4_Layered_Perovskite_Structure.pdf}
+%            \end{figure}
+%        \end{column}
+%    \end{columns}
+%\end{frame}
+%
+%\begin{frame}{Herkunft der Ordnungsparameter}
+%    \begin{columns}
+%        \begin{column}{0.35\textwidth}
+%            \begin{center}
+%                $d_{xz}$
+%            \end{center}
+%            \begin{figure}
+%                \begin{tikzpicture}[
+%                        declare  function = {
+%                                fx(\t, \p) = cos(p) * sin(t);
+%                                fy(\t, \p) = sin(p) * sin(t);
+%                                fz(\t, \p) = cos(t);
+%                                r_s(\t, \p) = 1;
+%                                r_py(\t, \p) = fy(t, p);
+%                                r_pz(\t, \p) = fz(t, p);
+%                                r_px(\t, \p) = fx(t, p);
+%                                r_dxy(\t, \p) = fx(t,p)*fy(t,p);
+%                                r_dyz(\t, \p) = fy(t,p)*fz(t,p);
+%                                r_dz2(\t,\p) = 3*fz(t,p)^2 - 1;
+%                                r_dxz(\t,\p) = fx(t,p)*fz(t,p);
+%                                r_dx2my2(\t,\p) = fx(t,p)^2-fy(t,p)^2;
+%                                fr(\t, \p) = r_dxz(t, p);
+%                            },
+%                        scale=0.9
+%                    ]
+%                    \begin{axis}[
+%                            hide axis,
+%                            trig format=deg, view={45}{10},
+%                            xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
+%                        ]
+%                        \addplot3[
+%                            surf, z buffer=sort,
+%                            domain=-180:180, samples=60, variable=\p,
+%                            y domain=0:180, samples y=60, variable y=\t,
+%                            point meta={fr(t,p)}
+%                        ] (
+%                        {abs(fr(t, p))*fx(t, p)},
+%                        {abs(fr(t, p))*fy(t, p)},
+%                        {abs(fr(t, p))*fz(t, p)}
+%                        );
+%                    \end{axis}
+%                \end{tikzpicture}
+%            \end{figure}
+%        \end{column}
+%        \begin{column}{0.35\textwidth}
+%            \begin{center}
+%                $d_{yz}$
+%            \end{center}
+%            \begin{figure}
+%                \begin{tikzpicture}[
+%                        declare  function = {
+%                                fx(\t, \p) = cos(p) * sin(t);
+%                                fy(\t, \p) = sin(p) * sin(t);
+%                                fz(\t, \p) = cos(t);
+%                                r_s(\t, \p) = 1;
+%                                r_py(\t, \p) = fy(t, p);
+%                                r_pz(\t, \p) = fz(t, p);
+%                                r_px(\t, \p) = fx(t, p);
+%                                r_dxy(\t, \p) = fx(t,p)*fy(t,p);
+%                                r_dyz(\t, \p) = fy(t,p)*fz(t,p);
+%                                r_dz2(\t,\p) = 3*fz(t,p)^2 - 1;
+%                                r_dxz(\t,\p) = fx(t,p)*fz(t,p);
+%                                r_dx2my2(\t,\p) = fx(t,p)^2-fy(t,p)^2;
+%                                fr(\t, \p) = r_dyz(t, p);
+%                            },
+%                        scale=0.9
+%                    ]
+%                    \begin{axis}[
+%                            hide axis,
+%                            trig format=deg, view={45}{10},
+%                            xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
+%                        ]
+%                        \addplot3[
+%                            surf, z buffer=sort,
+%                            domain=-180:180, samples=60, variable=\p,
+%                            y domain=0:180, samples y=60, variable y=\t,
+%                            point meta={fr(t,p)}
+%                        ] (
+%                        {abs(fr(t, p))*fx(t, p)},
+%                        {abs(fr(t, p))*fy(t, p)},
+%                        {abs(fr(t, p))*fz(t, p)}
+%                        );
+%                    \end{axis}
+%                \end{tikzpicture}
+%            \end{figure}
+%        \end{column}
+%        \begin{column}{0.25\textwidth}
+%            \begin{figure}
+%                \includegraphics[width=\linewidth]{images/Sr_2_Ru_O_4_Layered_Perovskite_Structure.pdf}
+%            \end{figure}
+%        \end{column}
+%    \end{columns}
+%\end{frame}
+
+\begin{frame}{Chirale Symmetriebrechung}
+    \begin{columns}
+        \begin{column}{0.75\linewidth}
+            \begin{itemize}
+                \item Wir können die Symmetrie $\Delta_x = \Delta_y$ durch einen Stress brechen, der nur eine der beiden Achsen betrifft.
+            \end{itemize}
+%            \begin{figure}
+%                \includegraphics[width=.44\linewidth]{images/setup.png}
+%                \caption{Vorrichtung, um den Kristall zu verformen. \cite{klauss}}
+%            \end{figure}
+        \end{column}
+%        \begin{column}{0.25\textwidth}
+%            \begin{figure}
+%                \includegraphics[width=\linewidth]{images/Sr_2_Ru_O_4_Layered_Perovskite_Structure.pdf}
+%            \end{figure}
+%        \end{column}
+    \end{columns}
+\end{frame}
+
+
+%\begin{frame}{Chirale Symmetriebrechung}
+%    \begin{columns}
+%        \begin{column}{0.75\linewidth}
+%            \begin{itemize}
+%                \item Wir können die Symmetrie $\Delta_x = \Delta_y$ durch einen Stress brechen, der nur eine der beiden Achsen betrifft.
+%            \end{itemize}
+%            \begin{figure}
+%                \begin{tikzpicture}[scale=0.9]
+%                    \path [fill=blue!60] (-2.5,-2.5) node (v4) {} -- (2.5,-2.5) node (v5) {} --  (2.5,-1.5) -- (0,0.5) node (v7) {}  -- (-2.5,-1.5) node (v8) {} -- cycle;
+%
+%                    \path [fill=blue!30] (0,0.5) --  (-2.5,-1.5)  -- (-2.5,1);
+%                    \path [fill=blue!30] (0,0.5) --  (2.5,-1.5)  -- (2.5,1);
+%                    \draw [solid, thick] (-2.5,1) node (v9) {} -- (0,0.5) node (v1) {} -- (2.5,1);
+%                    \draw [dashed, thick] (-2.5,-1.5) node (v3) {} -- (v1) -- (2.5,-1.5) node (v2) {};
+%                    \draw [dashed] (0,-2.5) -- (0,2);
+%                    \node at (-2,0) {$\Delta_y$};
+%                    \node at (2,0) {$\Delta_x$};
+%                    \node [fill=blue!60] at (0,-2) {$\Delta_x \pm i \Delta_y$};
+%                    \node [anchor=west] at (-1.5,1.2) {$T_c$};
+%                    \node [anchor=north west] at (-1.5,-0.6) {$T_{TRSB}$};
+%                    \draw (-2.5,2) --  (-2.5,-2.5) -- (2.5,-2.5) -- (2.5,2) -- (-2.5,2);
+%
+%                    \node at (0,-3.2) {Uniaxialer Stress};
+%                    \node [anchor=north] at (0,-2.5) {0};
+%                    \node [rotate=90] at (-3,-0.5) {Temperatur};
+%                \end{tikzpicture}
+%            \end{figure}
+%        \end{column}
+%        \begin{column}{0.25\textwidth}
+%            \begin{figure}
+%                \includegraphics[width=\linewidth]{images/Sr_2_Ru_O_4_Layered_Perovskite_Structure.pdf}
+%            \end{figure}
+%        \end{column}
+%    \end{columns}
+%\end{frame}
+
+\begin{frame}{Folge der Chiralen Symmetriebrechung}
+    \begin{itemize}
+        \item Ginzburg-Landau Funktional \[ F[\psi, \vec{A}] = \int \dd^3 r \left( \alpha |\psi|^2 + \frac{\beta}{2} |\psi|^4 + \frac{1}{2m} \left|\left(\frac{\hbar}{i} - \frac{q}{c} \vec{A} \right)\psi\right|^2 + \frac{B^2}{8\pi} \right) \]
+        \item Ergibt supraleitenden Strom
+              \[\vec{j} = \textcolor{red}{\underbrace{i \frac{q\hbar}{2m^*} ((\nabla \psi^*)\psi - \psi^*\nabla\psi)}_{\text{Erzeugt Strom um Bezirkswände}}}-\underbrace{\frac{q^2}{m^*c} |\psi|^2\vec{A}}_{\text{Verdrängt Magnetfeld}}\]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Chirale Bezirke (Domänen)}
+    \[\vec{j} = i \frac{q\hbar}{2m^*} ((\nabla \psi^*)\psi - \psi^*\nabla\psi)-\frac{q^2}{m^*c} |\psi|^2\vec{A}\]
+    \[\downarrow\]
+    \begin{align*}
+        \vec{j} = & \sum_i \frac{2 e \hbar}{m_i} |\Psi_{i0}^2| (\nabla \phi_i + 2 \delta_i \nabla \phi_i) - \frac{4e^2}{c} \sum_i \frac{|\Psi_{i0}^2|}{m_i} \vec{A}                                                         \\
+                  & + \frac{\hbar e}{m_c} |\Psi_{10} \Psi_{20}| (\nabla \delta_2 + \delta_1 \nabla \delta_2 + \phi_1 \nabla \phi_2 - \nabla \delta_1 - \delta_2 \nabla \delta_1 - \phi_2 \nabla \phi_1) \text{\cite{KLA20}}
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Chirale Bezirke (Domänen)}
+    \[\vec{j} = i \frac{q\hbar}{2m^*} ((\nabla \psi^*)\psi - \psi^*\nabla\psi)-\frac{q^2}{m^*c} |\psi|^2\vec{A}\]
+    \begin{columns}
+%        \begin{column}{0.3\linewidth}
+%            \begin{figure}
+%                \begin{tikzpicture}[scale=2]
+%                    \path[draw, solid] (-1,1) -- (1,1) -- (1,-1) -- (-1,-1) -- cycle;
+%                    \begin{scope}[decoration={
+%                                    markings,
+%                                    mark=at position 0.5 with {\arrow{latex}}}
+%                        ]
+%                        \draw [thick, postaction={decorate}] (0.6,-1) .. controls (0.4,0.2) .. (-1,0.8);
+%                    \end{scope}
+%                    \node at (-0.6,-0.6) {$-$};
+%                    \node at (0.6,0.6) {$+$};
+%                \end{tikzpicture}
+%            \end{figure}
+%        \end{column}
+        \begin{column}{0.7\linewidth}
+            Herkunft der Zeitsymmetriebrechung:
+            \begin{itemize}
+                \item Ströme erzeugen Magnetfelder
+                \item Unter Zeitumkehr fließen Ströme ``rückwärts''
+                \item Magnetfeld wird umgekehrt
+                \item Zuordnung der Chiralität muss umgekehrt werden
+                \item Zeitsymmetrie ist gebrochen
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+

@@ -1,0 +1,79 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\kla}{}
+
+\begin{document}
+
+\title{03 Wahrscheinlichkeitsdichten}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 7: H-Atom}
+Zu zeigen ist, dass $\psi_{n,l,m}(r,\vartheta ,\varphi )=R_{n,l}(r)Y_{l,m}(\vartheta, \varphi)$ für $n=1,\, m=0,\, l=0$ eine Lösung der Schrödingergleichung ist:
+\begin{align*}
+E\psi &=\hat{H}\psi =-\frac{\hbar^2}{2m}\nabla^2\psi -\frac{V_0}{r}\psi=\\
+&=-\frac{\hbar^2}{2mr}\partial_r^2\kla\left( {r\cdot 2(Z/a_0)^{3/2}e^{-Zr/a_0}} \right) \frac{1}{\sqrt{4\pi}}-\frac{V_0}{r}\cdot 2(Z/a_0)^{3/2}e^{-Zr/a_0}\frac{1}{\sqrt{4\pi}}=\\
+&=-\frac{{2(Z/a_0)}^{3/2}}{2mr\sqrt{4\pi}}e^{-Zr/a_0}\kla\left( {\hbar^2\Big(\frac{Z^2r}{a_0^2}-\frac{2Z}{a_0}\Big)+\frac{2m\cdot Ze^2}{4\pi\epsilon_0}} \right)  \\
+&\Rightarrow\ \ E=-\frac{Z^2\hbar^2}{2ma_0^2}-\frac{Z}{2mr}\kla\left( {\frac{me^2}{2\pi\epsilon_0}-\frac{2\hbar^2}{a_0}} \right)  =-\frac{\hbar^2}{2ma_0^2}\ \ \ \mathrm{mit }\ \ \ a_0=\frac{4\pi\epsilon_0\hbar^2}{me^2}
+\end{align*}
+Sowohl die Kugelflächenfunktionen $Y_{lm}(\vartheta,\varphi)$ als auch die radialen Komponenten der Wellenfunktion $R_{nl}(r)$ bilden ein vollständiges Orthonormalsystem. Die Wahrscheinlichkeit, das Elektron in einem bestimmten Raumsektor zu finden berechnet sich wie folgt:
+\begin{align*}
+\mathrm{ONS}:\ &\Rightarrow\ \ \int_\Omega Y_{lm}^\ast Y_{l'm'}\,\mathrm{d}\Omega = \delta_{ll'}\delta_{mm'}\ \ \ \ \mathrm{und }\ \ \ \ \intx\int_{0}^\infty {R_{nl}^\ast R_{n'l'}\, r^2}\mathrm{d}^{ }r=\delta_{nn'}\delta_{ll'}\\
+P(\mathcal{S})&=\intx\int_{\mathcal{S}}{\psi_{nlm}^\ast \psi_{nlm}}\,\mathrm{d}^{3}x=\intx\int_{\mathcal{S}}{Y_{00}^\ast Y_{00}}\,\mathrm{d}^{ }\Omega =\frac{1}{4\pi}\int_0^{\pi /2}\int_0^{\pi /2}\sin\vartheta\,\mathrm{d}\vartheta\mathrm{d}\varphi = \frac{1}{8}
+\end{align*}
+Für die Wahrscheinlichkeit, das Elektron in einem gewissen Abstand zu finden, gilt eine analoge Rechnung:
+\begin{align*}
+P(\mathcal{R})&=\int_\mathcal{R}R_{10}^\ast R_{10}\,r^2\mathrm{d}r=\frac{4Z^3}{a_0^3}\int_{a_0}^{a_0+\Delta r} r^2e^{-2Zr/a_0}\,\mathrm{d}r\kom\overset{\substack{{2Zr=:a_0x} \\ |}}{=}\frac{1}{2}\int_{2Z}^{2Z+2Z\Delta r/a_0}x^2e^{-x}\,\mathrm{d}x=\\
+&=-\frac{1}{2}e^{-x}\kla\left( {x^2+2x+2} \right)\bigg\vert_{2Z}^{2Z+2Z\Delta r/a_0}=\\
+&=\frac{e^{-2Z}}{2}\kla\left( {(2Z+1)^2+1-e^{-2Z\Delta r/a_0}((2Z+\frac{2Z\Delta r}{a_0}+1)^2+1)} \right) \approx \underline{1.02\,\%} 
+\end{align*}
+\section*{Aufgabe 8: Radiale Wahrscheinlichkeitsdichte}
+Für die Wahrscheinlichkeitsdichte $P(r)=Cr^2e^{-2Zr/a_0}$ der Ort des Maximums bestimmt:
+\begin{align*}
+0&\overset{!}{=} P'(r_m)=2r_mCe^{-2Zr_m/a_0}(1-\frac{Zr_m}{a_0})\ \ \Rightarrow\ \ r_m=\frac{a_0}{Z}
+\end{align*}
+\section*{Aufgabe 9: Klassische Spin-Bahn-Wechselwirkung im H-Atom}
+Fasst man die Bahn des Elektrons als Kreis auf, so lässt sich die Geschwindigkeit wie folgt berechnen:
+\begin{align*}
+\frac{mv^2}{r}&\overset{!}{=}\frac{Ze^2}{4\pi\epsilon_0r^2}\kom\overset{\substack{{mrv=L=\hbar n} \\ |}}{\Rightarrow}v_n=\frac{Ze^2}{4\pi\epsilon_0\hbar n}\kom\overset{\substack{{n=1,\, Z=1} \\ |}}{=}\underline{2.19\cdot 10^6\,\mathrm{\frac{m}{s}}}
+\end{align*}
+Die Bahnradien lauten also:
+\begin{align*}
+r_n&=\frac{\hbar n}{mv}=\frac{4\pi\epsilon_0\hbar^2n^2}{Zme^2}
+\end{align*}
+Für das magnetische Moment $\mu $ gilt ein Zusammenhang mit dem Spin:
+\begin{align*}
+\mu&=IA=\frac{e}{T}A=\frac{ev_n}{2\pi r_n}\pi r_n^2=\frac{ev_nr_n}{2}\kom\overset{\substack{{mrv=\hbar n} \\ |}}{=}\frac{e\hbar n}{2m}
+\end{align*}
+Das Magnetfeld kann mit $\vv{j}=e\dot{\vv{R}}(t)\delta(\vv{r}-\vv{R}(t))$ und $\vv{R}(t)=\cos\omega te_x+\sin\omega te_y$ folgendermaßen bestimmt werden:
+\begin{align*}
+\vv{A}&=\frac{\mu_0}{4\pi}\intx\int_{\mathbb{R}^{4}}{\frac{\vv{j}(\vv{r}',t')}{|\vv{r}-\vv{r}'|}\delta(t-t'-|\vv{r}-\vv{r}'|/c)}\,\mathrm{d}^{4}r'=\\
+&=\frac{e\mu_0}{4\pi}\intx\int_{\mathbb{R}^{ }}{\dot{\vv{R}}(t')\frac{\delta(t-t'-|\vv{r}-\vv{R}(t')|/c)}{|\vv{r}-\vv{R}(t')|}}\,\mathrm{d}^{ }t'
+\end{align*}
+Dies führt allerdings auf sehr umständliche Formeln, deren Aufwand durch diese klassische Näherung nicht gerechtfertigt ist. Einfacher ist die Betrachtung einer homogenen Stromdichte $\vv{j}=I\delta(z)\delta(r-R)e_\varphi$ im \textsc{Biot-Savart}-Gesetz:
+\begin{align*}
+\vv{B}&=-\frac{I\mu_0}{4\pi}\int_0^{2\pi}\frac{e_{\varphi'}\times (re_r+ze_z-Re_{r'})}{\sqrt{r^2+z^2+R^2-2rR\cos\varphi'}^3}\,R\mathrm{d}\varphi'\kom\overset{\substack{{z=0,\, r=R} \\ |}}{=}\frac{I\mu_0e_z}{8\pi R}\int_0^{2\pi}\frac{\mathrm{d}\varphi}{\sin^3\varphi/2}=\\
+&=\frac{I\mu_0e_z}{8\pi R}\int_0^\pi \frac{\mathrm{d}x}{\sin^3x}\rightarrow\infty
+\end{align*}
+Vielleicht funktioniert ja eine Beschreibung über die \textsc{Lorentz}-Transformation, auch wenn die Kreisbahn eigentlich eine beschleunigte Bewegung beschreibt. Es gilt für das $E$-Feld des Protons:
+\begin{align*}
+E_n&=\frac{Ze}{4\pi\epsilon_0r_n^2}e_r\ \ \ \mathrm{und}\ \ \ \ B_n'=\gamma (B_n+\frac{v_n}{c^2}\times E_n)\\
+&\Rightarrow\ \ B_n'=\gamma \frac{Zev_n}{4\pi\epsilon_0c^2r_n^2}e_z=\gamma\frac{Z\mu_0e}{4\pi}\frac{Ze^2}{4\pi\epsilon_0\hbar n}\frac{Z^2m^2e^4}{16\pi^2\epsilon_0^2\hbar^4 n^4} e_z=\gamma\frac{Z^4\mu_0e\hbar}{4\pi a_0^3m n^5}e_z
+\end{align*}
+Unter Vernachlässigung der Relativität geht es noch einfacher:
+$$B=\frac{\mu_0I}{2r}e_z=\frac{\mu_0}{2r}\cdot\frac{Ze}{2\pi r/v}e_z=\frac{Z\mu_0ev_n}{4\pi r_n^2}e_z$$
+Die Energie in Abhängigkeit von der Orientierung des Dipolmoments ist $E=-\vv{\mu}\cdot\vv{B}$. Für die Differenz zwischen parallel und antiparallel gilt also:
+$$\Delta E_n =2\mu B_n=\frac{e\hbar n}{m}\frac{\gamma Z^4\mu_0e\hbar}{4\pi a_0^3mn^5}=\frac{\gamma Z^4\mu_0e^2\hbar^2}{4\pi a_0^3m^2n^4}\kom\overset{\substack{{v=\hbar /ma_0} \\ |}}{=}\frac{\hbar^4}{m^3c^2a_0^4}\frac{1}{\sqrt{1-\frac{\hbar^2}{m^2c^2a_0^2}}}=\underline{0.00145\,\mathrm{eV}}$$
+\end{document}

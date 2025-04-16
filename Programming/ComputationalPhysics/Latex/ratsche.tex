@@ -1,0 +1,113 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Hamiltonian Ratchet}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Stochastic processes}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Definition}
+We have a potential of the form 
+\begin{align}
+V(x) &= V_0 \klam\left[ \sin\kla\left( \frac{2\pi x}{L} \right) + a\cos\kla\left( \frac{4\pi x}{L} \right) \right],
+\end{align}
+and execute the equation
+\begin{align}
+x_{n+1} &= x_n - V'(x_n) \Delta t + \sqrt{2D\Delta t} \xi_n
+\end{align}
+for many iterations of $n$.
+Here $\xi_n$ is ``white noise'' and $D$ is the diffusion constant.
+Note that we run for $N_\tau$ periods of length $\tau$, and we discretize each $\tau$ with $S$ steps.
+This means that $\Delta t = \frac{1}{S}$.
+%Now let us transform to new units, in which $\tau' := 1$. 
+%Then we have to shift $S' = \tau S$ and $\Delta t' = \frac{1}{\tau} \Delta t$.
+%Let us also fix $L' := 1$.
+%Then
+%\begin{align}
+%V(x') &= V_0 \klam\left[ \sin (2\pi x') + a\cos (2\pi x') \right]
+%\end{align}
+%and the derivative becomes $\partial_{x'} = L\partial_x$.
+%Thus the iteration now reads
+%\begin{align}
+%x'_{n+1} &= x'_n - L V'(x_n') \Delta t' + \sqrt{\frac{2D\tau\Delta t'}{L^2}} \xi_n.
+%\end{align}
+%This allows us to identify $V_0' = L V_0$ and $D' = \frac{\tau}{L^2} D$.
+%FIXME: can we not just say that $\partial_{x'}= L\partial_x$ and $D' = \frac{\tau}{L^2} D$ follow trivially from the dimensional analysis?
+%Also, $\Delta t$ is really an invariant of this transformation.
+%This is because we adjust the number of steps in order to keep it constant on purpose, so the arguments above fail.
+Now let us transform to new units, in which $\tau' := 1$. 
+Then we have to shift $S' = \tau S$ and $\Delta t' = \frac{1}{\tau} \Delta t$.
+This means, that we have to adjust $V_0$ and $D$ slightly differently.
+Let us also fix $L' := 1$.
+Then
+\begin{align}
+V(x') &= V_0 \klam\left[ \sin (2\pi x') + a\cos (2\pi x') \right]
+\end{align}
+and the derivative becomes $\partial_{x'} = L\partial_x$.
+Diving through by $L$, the iteration now reads
+\begin{align}
+x'_{n+1} &= x'_n - \tau V'(x_n') \Delta t' + \sqrt{\frac{2D\tau\Delta t'}{L^2}} \xi_n.
+\end{align}
+This allows us to identify $V_0' = \tau V_0$ and $D' = \frac{\tau}{L^2} D$.
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

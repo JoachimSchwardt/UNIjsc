@@ -1,0 +1,35 @@
+    S = zustand.spins    # 'S' ist uebersichtlicher als 'zustand.spins'
+    # Kopien des Zustandes fuer Berechnung von 'H', siehe docstring
+    Sx1, Sx2 = np.roll(S, 1, axis=1), np.roll(S, -1, axis=1)
+    Sy1, Sy2 = np.roll(S, 1, axis=0), np.roll(S, -1, axis=0)
+    
+    # Arrays mit Indizes und Zufallszahlen (funktioniert)
+    index_array = np.random.randint(0, n, size=(2, n*n))
+    random_array = np.random.uniform(0, 1, size=n*n)
+    # n**2 zufaellige Eintraege auf Spinflip pruefen
+    for count in range(n*n):
+        i, j = index_array[:, count]
+        # Berechnung von 'H' fuer den ausgewaehlten Spin
+        H = S[i, j] * (Sx1[i, j] + Sx2[i, j] + Sy1[i, j] + Sy2[i, j])
+        # Wahrscheinlichkeit fuer Spinflip
+        W = np.exp(-2 * H / zustand.tau)  
+        
+        # Spinflip mit 'Wuerfel'
+        if W > random_array[count]:
+            S[i, j] *= -1
+         
+    # alle Eintraege, aber zufaellige Reihenfolge (funktioniert nicht?)
+    index_array = np.ones((n+1, n), dtype=int) * np.arange(0, n, 1)
+    random_array = np.random.uniform(0, 1, size=(n, n))
+    # np.apply_along_axis(np.random.shuffle, 1, index_array)
+    for i in index_array[n]:
+        for j in index_array[i]:
+            # Berechnung von 'H' fuer den ausgewaehlten Spin
+            H = S[i, j] * (Sx1[i, j] + Sx2[i, j] + Sy1[i, j] + Sy2[i, j])
+            # Wahrscheinlichkeit fuer Spinflip
+            W = np.exp(-2 * H / zustand.tau)  
+            # Spinflip mit 'Wuerfel'
+            if W > random_array[i, j]:
+                S[i, j] *= -1   
+                
+    return S

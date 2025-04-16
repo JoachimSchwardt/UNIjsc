@@ -1,0 +1,37 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\begin{document}
+
+\title{Nabla Operator}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Fingerübungen mit dem Nabla-Operator}
+\subsection*{a)} Betrachtung in Kugelkoordinaten: $\nabla = e_r\partial_r+e_\theta\frac{1}{r}\partial_\theta+e_\phi\frac{1}{r\sin(\theta)}\partial_\phi$.
+\begin{align*}
+\vv{E}&=-\nabla \varphi=-e_r\partial_r\frac{q}{r}=\frac{q}{r^2}e_r \\
+\vv{E}&=-\nabla \frac{\vv{p}\cdot \vv{r}}{r^3}=-(\vv{p}\cdot\vv{r})\nabla\frac{1}{r^3}-\frac{1}{r^3}\nabla (\vv{p}\cdot\vv{r})=\frac{3\vv{p}\cdot\vv{r}}{r^4}\nabla r-\frac{1}{r^3}\nabla(xp_x+yp_y+zp_z)= \\
+&=\frac{3\vv{r}(\vv{p}\cdot\vv{r})}{r^5}-\frac{1}{r^3}(p_xe_x+p_ye_y+p_ze_z)=\frac{3\vv{r}(\vv{p}\cdot\vv{r})}{r^5}-\frac{\vv{p}}{r^3} \\
+\vv{E}&=-\nabla\frac{q}{|\vv{r}-\vv{r}'|}\overset{\substack{\vv{r}\rightarrow\vv{m}+\vv{r}'\\|}}{=}-\nabla\frac{q}{m}=\frac{q}{m^3}\vv{m}=q\frac{(\vv{r}-\vv{r}')}{|\vv{r}-\vv{r}'|^3}
+\end{align*}Divergenz und Rotation:
+\begin{align*}
+\nabla(\nabla\frac{1}{r})&=-\nabla\frac{\vv{r}}{r^3}=
+\end{align*}
+\subsection*{b)}
+\section{Fingerübungen mit dem Nabla-Operator}
+\subsection*{a)}
+\subsection*{b)}
+\subsection*{c)}
+\subsection*{d)}
+\section{Quellen und Wirbel von Vektorfeldern}
+\section{Laplace-Operator}
+
+\end{document}

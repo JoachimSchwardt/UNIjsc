@@ -1,0 +1,115 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{02 Informationstheorie}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 2.1: Entropie}
+Die Entropie sei definiert als $S=-\sum_{i\in\Omega}p(i)\log_2[p(i)]$. Setze $p(0)=p_0$ und $p(1)=p_1$, wobei natürlich $p_0+p_1=1$ gilt. 
+\subsection*{a)}Hier ist $\Omega=\{0,1\}$ mit $|\Omega|=2$:
+\begin{align*}
+S_a&=-p_0\log_2p_0-p_1\log_2p_1\kom\overset{\substack{{p_0=1/2} \\ |}}{=}1\numberthis\label{S aus a}
+\end{align*}
+\subsection*{b)}Hier ist $\Omega=\{\{0,0\},\{0,1\},\{1,0\},\{1,1\}\}$ mit $|\Omega|=4$:
+\begin{align*}
+S_b&=-p_0^2\log_2p_0^2-2p_0p_1\log_2p_0p_1-p_1^2\log_2p_1^2=\\
+&=-(p_0+p_1)2p_0\log_2p_0-(p_0+p_1)2p_1\log_2p_1=2S_a\kom\overset{\substack{{p_0=1/2} \\ |}}{=}2\numberthis\label{S aus b}
+\end{align*}
+\subsection*{c)}Hier ist $\Omega=\{\{0,0\},\{0,1\},\{1,1\}\}$ mit $|\Omega|=3$:
+\begin{align*}
+S_c&=-p_0^2\log_2p_0^2-2p_0p_1\log_22p_0p_1-p_1^2\log_2p_1^2=\\
+&=S_b-2p_0p_1\log_22=S_b-2p_0p_1\kom\overset{\substack{{p_0=1/2} \\ |}}{=}\frac{3}{2}\numberthis\label{S aus c}
+\end{align*}
+\subsection*{d)}Hier ist $\Omega=\{\{0,\dots,0,0\},\{0,\dots,0,1\},\{0,\dots,1,0\},\dots,\{1,\dots,1,1\}\}^n$ mit $|\Omega|=2^n$:
+\begin{align*}
+S_d&=-\sum_{k=0}^n\binom{n}{k}p_0^kp_1^{n-k}\log_2p_0^kp_1^{n-k}=\\
+&=-\log_2p_0\sum_{k=0}^n\binom{n}{k}kp_0^kp_1^{n-k}-\log_2p_1\sum_{k=0}^n\binom{n}{k}(n-k)p_0^kp_1^{n-k}=\\
+&=-np_0\log_2p_0-np_1\log_2p_1=nS_a\kom\overset{\substack{{p_0=1/2} \\ |}}{=}n\numberthis\label{S aus d}
+\end{align*}
+\subsection*{e)}Hier ist $\Omega=\{\{0,\dots,0,0\},\{0,\dots,0,1\},\{0,\dots,1,1\},\dots,\{1,\dots,1,1\}\}$ mit $|\Omega|=n+1$:
+\begin{align*}
+S_e&=-\sum_{k=0}^n\binom{n}{k}p_0^kp_1^{n-k}\log_2\binom{n}{k}p_0^kp_1^{n-k}=S_d-\sum_{k=0}^n\binom{n}{k}p_0^kp_1^{n-k}\log_2\binom{n}{k}\kom\overset{\substack{{p_0=1/2} \\ |}}{=}\\
+&=n-\frac{1}{2^n}\sum_{k=0}^n\binom{n}{k}\log_2\binom{n}{k}\numberthis\label{S aus e}
+\end{align*}
+\subsection*{f)}
+Sei $p(X_{1,2})=p_{1,2}$ und $X_{1,2}$ unabhängige Ereignisse. Dann gilt $p(X_1,X_2)=p_1(X_1)p_2(X_2)$, woraus für die Entropie folgt:
+\begin{align*}
+S_{1,2}&=-\sum_{ij}p_1(i)p_2(j)\log_2p_1(i)p_2(j)=\\
+&=-\sum_ip_1(i)\log_2p_1(i)\sum_jp_2(j)-\sum_jp_2(j)\log_2p_2(j)\sum_ip_1(i)=S_1+S_2
+\end{align*}
+\section*{Aufgabe 2.2: Entropie einer unfairen Münze}
+\subsection*{a)}Sei $p(0)=p$. Dann erwarten wir folgende Anzahl an Bits:
+\begin{align*}
+N&=p^2\cdot 1+p(1-p)\cdot 2+(1-p)p\cdot 3+(1-p)^2\cdot 3=3-p-p^2
+\end{align*}
+Um im Mittel weniger als 2 Bits zu benötigen, fordern wir also $N<2$. Das führt auf die Bedingung $p>\frac{\sqrt{5}-1}{2}=\frac{1}{\phi}\approx0.618$.
+\subsection*{b)}
+Bei $n$ Münzwürfen ergibt sich die mittlere Anzahl $n_0$ an Nullen gemäß
+\begin{align*}
+n_0=\sum_{k=0}^nkp^k(1-p)^{n-k}=np
+\end{align*} 
+Die Standardabweichung erhält man aus $\sigma=\sqrt{\tecxt\text{Var}}$
+\begin{align*}
+\tecxt\text{Var}&=\sum_{k=0}^n(k-n_0)^2k^p(1-p)^{n-k}=n_0p(1-p)
+\end{align*}
+Es gibt $\binom{n}{n_0}$ verschiedene Konfigurationen mit genau $n_0$ Nullen. Für große $n$ steigt der Rechenaufwand allerdings enorm, weshalb die Stirling-Näherung verwendet werden soll:
+\begin{align*}
+N(p)&=\frac{n!}{np!(n-np)!}\approx\frac{(\frac{n}{e})^n}{\sqrt{2\pi p(n-np)}(\frac{np}{e})^{np}(\frac{n-np}{e})^{n-np}}=\frac{p^{-np}(1-p)^{-n(1-p)}}{\sqrt{2\pi np(1-p)}}\numberthis\label{equation:N von p}
+\end{align*}
+Damit folgt für das Produkt $\sigma N(p)$
+\begin{align*}
+\sigma N&\approx \frac{1}{\sqrt{2\pi}}p^{-np}(1-p)^{-n(1-p)}\numberthis\label{equation: sigma N von p}
+\end{align*}
+Zuletzt betrachten wird das Verhältnis $\alpha:=\frac{\sigma N}{2^{nS(p)}}$:
+\begin{align*}
+\alpha &=\sigma N \klam\left[ {2^{p\log_2p+(1-p)\log_2(1-p)}} \right]^n=\sigma Np^{np}(1-p)^{n(1-p)}=\frac{1}{\sqrt{2\pi}}
+\end{align*}
+\section*{Aufgabe 2.3: Kombinatorik, Entropie und Sudoku}
+\subsection*{a)}Jede Konfiguration hat die gleiche Wahrscheinlichkeit $p(i)=\frac{1}{N_0}$. Damit folgt für die Entropie (zur Basis 9):
+\begin{align*}
+S_a&=-\sum_ip(i)\log_9p(i)=\log_9N_0\approx 22,87
+\end{align*}
+\subsection*{b)}Ich rate $S=1$, da ja genau ein Bit (also ein Bit mit neun möglichen Konfigurationen; Logarithmus zur Basis 9) benötigt wird, um die Information zu speichern.
+\subsection*{c)}
+Durch die Regeln von Sudoku ist es egal, ob in einer Reihe 8 oder 9 Zahlen vorgegeben werden, da sich die "fehlende" einfach bestimmen lässt.
+\subsection*{d)}
+Die Entropie ist in beiden Fällen einfach 0, da die Lösung hier eindeutig ist. Folglich gibt es überhaupt keine fehlende Information mehr, womit es auch keine Entropie gibt. 
+\section*{Aufgabe 2.4: Ideales Gas, thermisches Gleichgewicht}
+Die Ideale Gasgleichung ist $pV=k_BNT$. Wir betrachten zwei Systeme mit gegebenen $p_i,T_i,V_i$, die allerdings das gleiche ideale Gas enthalten.
+\subsection*{a)}Wärmeaustausch mit einem Wärmebad $T_0$, also gilt $T_i'=T_0$. Die Systeme können nach Voraussetzung allerdings nur Wärme tauschen, weshalb hier nur noch die Interaktion mit dem Wärmebad relevant ist. Es genügt also, nur ein System zu betrachten.
+\begin{align*}
+\frac{p'V'}{pV}&=\frac{T_0}{T}
+\end{align*}
+Ohne einen weiteren Zusammenhang zwischen $p$ und $V$ zu kennen, kann aber nichts weiter bestimmt werden. Es gilt für die Änderung der Temperatur einfach $\Delta U_i=k_B(T_0-T_i)$.
+\subsection*{b)}
+Hier haben beide Systeme bereits die gleiche Temperatur $T_1=T_2$, sie können aber Volumen austauschen. Damit erhält das System einen weiteren Freiheitsgrad, denn die einzige Gleichung enthält nun drei Unbekannt:
+\begin{align*}
+\frac{p'V'}{pV}&=\frac{N'}{N}
+\end{align*}
+\subsection*{c)}
+
+\end{document}

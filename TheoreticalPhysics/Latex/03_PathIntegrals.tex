@@ -1,0 +1,295 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{03 Path Integrals}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Theoretical Physics (Master)}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Problem 1: \normalfont\textit{\large{Propagator for a constant force}}}
+We want to calculate the one-dimensional propagator for a particle subject to a constant force $F =$ const, using different approaches.
+\subsection*{a)}
+Let us start directly from the path integral representation, where $x_0:=x_\tecxt\text{in}$, $t_0:=t_\tecxt\text{in}\equiv 0$, $x_N:=x_\tecxt\text{out}$ and $t_N:=t_\tecxt\text{out}\equiv t$
+\begin{align}
+G(x_N,t|x_0,0) &= \lim_{N\rightarrow\infty} \intr\int_{\mathbb{R}^{N-1}} \intr\int_{\mathbb{R}^{N}} \e^{\i\mathcal{A}} \, \frac{\mathrm{d}^{ }p_0}{2\pi}\dots\frac{\mathrm{d}^{ }p_{N-1}}{2\pi} \, \mathrm{d}^{ }x_1\dots\mathrm{d}^{ } x_{N-1},
+\end{align}
+where the action is defined as
+\begin{align}
+\mathcal{A} &:= \frac{t}{N}\sum_{j=0}^{N-1} p_j\frac{x_{j+1} - x_j}{t/N} - \frac{p_j^2}{2m} + x_jF = \\
+&= \frac{t}{N}\sum_{j=0}^{N-1} x_j\kla\left( F - \frac{Np_j}{t} \right) + x_{j+1}\frac{Np_j}{t} - \frac{p_j^2}{2m} = \\
+&= x_0\frac{Ft}{N} + x_Np_{N-1} - x_0p_0 + \sum_{j=1}^{N-1} x_j\kla\left( \frac{Ft}{N} - (p_j - p_{j-1}) \right) - \frac{t}{N}\sum_{j=0}^{N-1} \frac{p_j^2}{2m}.
+\end{align}
+Note that integrating over all the $x_j$ for $j=1,\dots,N-1$ is now simple.
+More precisely, we find
+\begin{align}
+\intr\int_{\mathbb{R}^{N-1}} &\exp\kla\left( \i\sum_{j=1}^{N-1} x_j\kla\left( \frac{Ft}{N} - (p_j - p_{j-1}) \right) \right) \, \mathrm{d}^{ }x_1,\dots\mathrm{d}x_{N-1} = \\
+&= \prod_{j=1}^{N-1} \intr\int_{\mathbb{R}^{ }} \exp\kla\left( \i x_j\kla\left( \frac{Ft}{N} - (p_j - p_{j-1}) \right) \right) \, \mathrm{d}^{ }x_j = \\
+&= \prod_{j=1}^{N-1} 2\pi\delta \kla\left( \frac{Ft}{N} - (p_j - p_{j-1}) \right).
+\end{align}
+Thus we can eliminate all $p_j$ integrations, except the one over $p_0$, where we the delta-distributions will recursively add a factor of $\frac{Ft}{N}$.
+Thus we find $p_j = p_{j-1} + \frac{Ft}{N}$, and can split the propagator into two terms 
+\begin{align}
+G =: \lim_{N\rightarrow \infty } \intr\int_{\mathbb{R}^{ }} G_1G_2 \,\frac{ \mathrm{d}^{ }p_0}{2\pi},
+\end{align}
+where 
+\begin{align}
+G_1 &= \exp\kla\left( \i\klam\left[ x_0\frac{Ft}{N} + x_N\kla\left( p_0 + Ft\frac{N-1}{N} \right) - x_0p_0 \right]\right),\\
+G_2 &=  \exp\kla\left( -\i\frac{t}{2mN}\sum_{j=0}^{N-1}\klam\left[ p_0 + Ft\frac{j}{N} \right]^2 \right).
+\end{align}
+The first term gives a contribution with linear exponent $p_0$, as well as a factor that is independent of the integral.
+Thus we may split
+\begin{align}
+G_1 &= \e^{\i x_NFt}\e^{\i (x_0 - x_N) Ft/N} \exp\kla\left( \i p_0 (x_N - x_0) \right),
+\end{align}
+and similarly we find for the second factor
+\begin{align}
+G_2 &= \exp\kla\left( -\i\frac{t}{2mN}\sum_{j=0}^{N-1}p_0^2 + 2p_0 Ft\frac{j}{N} + F^2t^2\frac{j^2}{N^2} \right) = \\
+&= \e^{-\i\frac{p_0^2}{2m}t} \exp\kla\left( -\i \frac{p_0Ft^2}{2m}\frac{N-1}{N} \right)\exp\kla\left( -\i\frac{F^2t^3}{12m}\frac{(N-1)(2N - 1)}{N^2} \right).
+\end{align}
+Putting everything together and taking the limit $N\rightarrow\infty$, we finally end up with
+\begin{align}
+G &= \e^{\i x_N Ft}\e^{-\i\frac{F^2t^3}{6m}}\intr\int_{\mathbb{R}^{ }} \exp\kla\left( -\frac{\i t}{2m}p_0^2 + \i p_0\klam\left[ x_N - x_0 - \frac{Ft^2}{2m} \right] \right) \,\frac{ \mathrm{d}^{ }p_0}{2\pi} = \\
+&= \e^{\i x_N Ft}\e^{-\i\frac{F^2t^3}{6m}} \sqrt{\frac{m}{2\pi\i t}} \exp\kla\left( \frac{-\klam\left[ x_N - x_0 - \frac{Ft^2}{2m} \right]^2}{2\i t / m} \right) = \\
+&= \sqrt{\frac{m}{2\pi\i t}} \exp\kla\left( \frac{\i m}{2t}\klam\left[ x_N - x_0 - \frac{Ft^2}{2m} \right]^2 + \i x_NFt - \i\frac{F^2t^3}{6m}\right).
+\end{align}
+
+\subsection*{b)}
+Let $x(t) = x_\tecxt\text{cl}(t) + \delta x(t)$, where the classical path $x_\tecxt\text{cl}$ gives the classical action, i.e.
+\begin{align}
+\mathcal{A}_\tecxt\text{cl} &= \intr\int_{0}^t \frac{m}{2}\dot{x}_\tecxt\text{cl}^2 - V(x_\tecxt\text{cl}) \, \mathrm{d}^{ }s.
+\end{align}
+Then we can use the Euler-Lagrange equations to find the classical solution.
+They give
+\begin{align}
+0 &= \frac{\partial L}{\partial x_\tecxt\text{cl}} - \frac{\tecxt\text{d}}{\tecxt\text{d}t}\frac{\partial L}{\partial \dot{x}_\tecxt\text{cl}} = -F(x_\tecxt\text{cl}) - m\ddot{x}_\tecxt\text{cl}.
+\end{align}
+In our case the force is constant, thus we find
+\begin{align}
+x_\tecxt\text{cl}(t) &= \frac{Ft^2}{2m} + v_0t + x_0.
+\end{align}
+Then the classical action becomes
+\begin{align}
+\mathcal{A}_\tecxt\text{cl} &= \intr\int_{0}^t \frac{m}{2}\kla\left( \frac{F}{m}s + v_0 \right)^2 + Fx_0 + Fv_0s + \frac{F^2s^2}{2m} \, \mathrm{d}^{ }s = \\
+&= \frac{F^2t^3}{3m} + Ftx_0 + \frac{m}{2}v_0^2t + Fv_0 t^2. 
+\end{align}
+%We may assume $v_0\equiv 0$, since our trajectories can have different initial positions, but arbitrary velocities.
+%Assuming $v_0 = \frac{\Delta x}{\Delta t} = \frac{x - x_0}{t}$
+Note that with $x_N := x_\tecxt\text{cl}$ we find $v_0 = \frac{1}{t}\klam\left[ x_N - x_0 - \frac{Ft^2}{2m} \right]$.
+Inserting this, we find
+\begin{align}
+\mathcal{A}_\tecxt\text{cl} &= \frac{F^2t^3}{3m} + Ftx_0 + \frac{m}{2t}\klam\left[ x_N - x_0 - \frac{Ft^2}{2m} \right]^2 + Ft \klam\left[ x_N - x_0 - \frac{Ft^2}{2m} \right] = \\
+&= -\frac{F^2t^3}{6m} + Ftx_N + \frac{m}{2t}\klam\left[ x_N - x_0 - \frac{Ft^2}{2m} \right]^2.
+\end{align}
+Thus the propagator becomes
+\begin{align}
+G &\simeq \sqrt{\frac{m}{2\pi\i \det\mathcal{D}}} \e^{\i\mathcal{A}_\tecxt\text{cl}} = \\
+&= \sqrt{\frac{1}{2\pi\i \det\mathcal{D}}} \exp\kla\left( -\i \frac{F^2t^3}{6m} + \i Ftx_N + \frac{\i m}{2t}\klam\left[ x_N - x_0 - \frac{Ft^2}{2m} \right]^2 \right),
+\end{align}
+where $\mathcal{D} = m\frac{\tecxt\text{d}^2}{\tecxt\text{d}t^2} + V''(x_\tecxt\text{cl}) \equiv m\frac{\tecxt\text{d}^2}{\tecxt\text{d}t^2}$.
+%The eigenvalues of this operator are found by $\mathcal{D}f(t) = \lambda f(t)$, i.e. by solving the equation
+%\begin{align}
+%f''(t) &= \underbrace{\frac{\lambda}{m}}_{=:\,k^2}f(t).
+%\end{align}
+%This gives $f(t) = \e^{\pm kt}$
+We may compute the determinant from the path-integral definition
+\begin{align}
+\frac{1}{\sqrt{\mathcal{D}}} &= \intx\int_{}^{}\exp\kla\left( \pi \intx\int_{0}^{t} \delta x(s)\mathcal{D}\delta x(s) \, \mathrm{d}s \right)\, \mathrm{D}\delta x(t) = \\
+&= \lim_{N\rightarrow\infty} \intx\int_{ }^{ }\exp\kla\left( \pi m\sum_{j=1}^{N-1}\delta x_j \frac{\delta x_{j+1} - 2\delta x_j + \delta x_{j-1}}{\Delta t^2} \Delta t \right)\, \mathrm{D}\delta x(t) = \\
+&= \lim_{N\rightarrow\infty} \sqrt{\frac{\pi m}{\Delta t\det D_N}},
+\end{align}
+where 
+\begin{align}
+D_N &:= \begin{pmatrix}
+2 & -1 & \dots & 0 \\ 
+-1 & 2 & \dots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \dots & 2
+\end{pmatrix}
+\end{align}
+is the matrix used for representing discrete second order derivatives.
+Note that the determinant is simply $\det D_N = N$, and thus $N\Delta t = t$ leads to
+\begin{align}
+G &=\sqrt{\frac{m}{2\pi\i t}}\e^{\i\mathcal{A}_\tecxt\text{cl}}.
+\end{align}
+
+
+\subsection*{c)}
+The Gelfand-Yaglom theorem states, that the determinant of the differential operator $\mathcal{D}$ is given by $\det\mathcal{D} = f(t)$, where
+\begin{align}
+\mathcal{D}f(t) = 0,
+\end{align}
+and the initial conditions are $f(0) = 0$ and $f'(0) = 1$.
+In our case this differential equation is of course trivial, and has the solution $f(t) = t$.
+This gives the expected result for the prefactor of the propagator.
+
+\subsection*{d)}
+The full propagator for the harmonic oscillator is given by
+\begin{align}
+G &= \sqrt{\frac{m\omega}{2\pi\i\sin (\omega t)}}\exp\kla\left( \frac{\i m\omega}{2\sin (\omega t)}\klam\left[ (x_N^2 + x_0^2)\cos(\omega t) - 2x_Nx_0 \right] \right).
+\end{align}
+If we expand the harmonic potential $V(x) = \frac{m}{2}\omega^2x^2$ around $x=x_0$, we find
+\begin{align}
+V(x) &\simeq V(x_0) + (x-x_0)V'(x_0) = \frac{m}{2}\omega^2x_0^2 + (x-x_0)m\omega^2 x_0 = Fx - \frac{m}{2}\omega^2x_0^2,
+\end{align}
+where the constant force is $F := m\omega^2 x_0$.
+Thus we want to consider frequencies $\omega = \sqrt{\frac{F}{mx_0}}$ in the limit $\omega t \ll 1$.
+This allows us to approximate the propagator by expanding $\sin(\omega t)\simeq \omega t$ and $\cos(\omega t) \simeq 1 - \frac{\omega^2t^2}{2}$
+\begin{align}
+G &\simeq \sqrt{\frac{m\omega}{2\pi\i (\omega t)}} \exp\kla\left( \frac{\i m\omega}{2(\omega t)}\klam\left[ (x_N^2 + x_0^2)\kla\left( 1 - \frac{\omega^2t^2}{2} \right) - 2x_Nx_0 \right] \right) = \\
+&= \sqrt{\frac{m}{2\pi\i t}} \exp\kla\left( \frac{\i m}{2t}\klam\left[ (x_N - x_0)^2 - (x_N^2 + x_0^2)\frac{Ft^2}{2mx_0} \right] \right) = \\ 
+&=  \sqrt{\frac{m}{2\pi\i t}} \exp\kla\left( \frac{\i m}{2t}(x_N - x_0)^2 \right)•
+\end{align}
+$\omega^2 = \frac{2F}{m}\frac{x_N + x_0}{x_N^2 + x_0^2}$.
+\begin{align}
+I &= -\frac{\i m\omega^2t}{4}(x_N^2 + x_0^2)\\
+I &= -\i \frac{F^2t^3}{24m} + \frac{\i}{2} Ft(x_N + x_0) 
+\end{align}
+
+
+\subsection*{e)}
+From quantum mechanics we know that the propagator can be interpreted as the Green's function for the Schrödinger equation, which means that we consider
+\begin{align}
+\i\partial_t G(x,t) &= -\frac{\partial_x^2}{2m}G(x,t) + V(x)G(x,t).
+\end{align}
+In general, using a Fourier transformation does not allow us to easily compute $G$ using this approach.
+However, since the potential in this case is simply $V(x) = -Fx$, we find
+\begin{align}
+-\omega\hat{G}(k,\omega) &= \frac{k^2}{2m}\hat{G}(k,\omega) + \i\partial_k F\hat{G}(k,\omega)\\
+\Rightarrow\ \ \ \i F\partial_k\log\hat{G} &= -\omega - \frac{k^2}{2m}.
+\end{align}
+This equation can be solved by integrating both sides directly
+\begin{align}
+\i F\log\hat{G} &= -\omega k + \frac{k^3}{6m} + \tecxt\text{const}\\
+\Rightarrow\ \ \ \hat{G} &= C\exp\kla\left( \i\frac{\omega k}{F} - \i\frac{k^3}{6mF} \right).
+\end{align}
+The inverse Fourier transform is also simple, since
+\begin{align}
+G(x,t) &= \frac{C}{(2\pi)^2}\intr\int_{\mathbb{R}^{ }} \intr\int_{\mathbb{R}^{ }} \exp\kla\left( \i\frac{\omega k}{F} - \i\frac{k^3}{6mF} \right)\e^{\i (kx - \omega t)} \, \mathrm{d}^{ }\omega \, \mathrm{d}^{ }k = \\
+&= \frac{C}{2\pi}\intr\int_{\mathbb{R}^{ }} F\delta (k - Ft)\e^{\i kx} \exp\kla\left( - \i\frac{k^3}{6mF} \right) \, \mathrm{d}^{ }k = \\
+&= \frac{CF}{2\pi}\exp\kla\left( \i xFt - \i\frac{F^2t^3}{6m} \right).
+\end{align}
+This result has similarities to the exact solution, but is not really equivalent. 
+We can choose the constant as $C := \sqrt{\frac{2\pi m}{\i F^2}}$, to at least almost match the prefactor.
+
+\newpage
+\section*{Problem 2: \normalfont\textit{\large{Properties of the propagator}}}
+\subsection*{a)}
+The one-dimensional propagator for a free non-relativistic particle is given by
+\begin{align}
+G_0 &= \sqrt{\frac{m}{2\pi\i t}}\exp\kla\left( \frac{\i m}{2t}(x - x_0)^2 \right).
+\end{align}
+This propagator obeys the free Schrödinger equation, since
+\begin{align}
+\partial_t G_0 &= -\frac{1}{2t} G_0 - \frac{\i m}{2t^2}(x-x_0)^2G_0,\\
+\partial_x^2 G_0 &= \partial_x\kla\left( \frac{\i m}{t}(x-x_0) G_0 \right) = \frac{\i m}{t}G_0 - \frac{m^2}{t^2}(x-x_0)^2G_0.
+\end{align}
+Now it is evident that $\i\partial_t G_0 = -\frac{1}{2m}\partial_x^2 G_0$.
+
+\subsection*{b)}
+The propagator for the case of a linear potential $V(x) = -Fx$ was found to be 
+\begin{align}
+G &= \sqrt{\frac{m}{2\pi\i t}} \exp\kla\left( \frac{\i m}{2t}\klam\left[ x - x_0 - \frac{Ft^2}{2m} \right]^2 + \i x Ft - \i\frac{F^2t^3}{6m}\right) = \\
+&= G_0 \exp\kla\left( \frac{\i Ft}{2}(x+x_0) - \i\frac{F^2t^3}{24m}  \right) =: G_0 G_F.
+\end{align}
+in the first problem. 
+This propagator also satisfies the Schrödinger equation, since
+\begin{align}
+\partial_t G &= G_0\partial_t G_F + G_F\partial_t G_0 = \kla\left( \frac{\i F}{2}(x+x_0) - \i\frac{F^2t^2}{8m} \right)G  + G_F\partial_t G_0,\\
+\partial_x^2 G &= G_0\partial_x^2 G_F + 2(\partial_xG_0)(\partial_xG_F) + G_F\partial_x^2G_0 = \\
+&= \kla\left( -\frac{F^2t^2}{4} + 2\frac{\i m}{t}(x-x_0)\frac{\i Ft}{2} \right)G + G_F\partial_x^2G_0.
+\end{align}
+Inserting into the Schrödinger equation and using the result from a), we now obtain
+\begin{align}
+\i\partial_t G + \frac{1}{2m}\partial_x^2 G &= \kla\left( -\frac{F(x+x_0)}{2} + \frac{F^2t^2}{8m} - \frac{1}{2m}\frac{F^2t^2}{4} -\frac{F(x-x_0)}{2} \right)G = \\
+&= -FxG = VG,
+\end{align}
+which is the expected result.
+
+\subsection*{c)}
+Let $V(x)$ be a general scalar potential.
+The wave-function can be written as
+\begin{align}
+\psi(x,t) &= \intr\int_{\mathbb{R}^{ }} G(x,t|x_0,0)\psi(x_0,0) \, \mathrm{d}^{ }x_0,
+\end{align}
+where we may use the short-time propagator
+\begin{align}
+G &\simeq \sqrt{\frac{m}{2\pi\i t}} \exp\kla\left( \frac{\i m}{2t}(x-x_0)^2 \right)\kla\left( 1 - \i V(x)t \right).
+\end{align}
+We want to Taylor-expand $\psi(x_0,0)$ up to linear order in $t$ and second order in $x$.
+This can be done in two steps.
+Identify $\psi\equiv\psi(x,t)$, to save some writing for the arguments of the wave-function, i.e.
+\begin{align}
+\psi(x_0,0) &= \psi(x_0,t) + (0 - t)\partial_t\psi(x_0,t) + \mathcal{O}(t^2) = \\
+&= \psi + (x_0 - x)\partial_x\psi  + \frac{1}{2} (x_0 - x)^2\partial_x^2\psi - t\partial_t\psi - t (x_0 - x)\partial_t\partial_x\psi - \\
+&\hspace{0.7cm} - \frac{t}{2}(x_0-x)^2\partial_t\partial_x^2\psi  + \mathcal{O}\kla\left( t^2,(x_0-x)^3 \right).
+\end{align}
+Note that we can neglect all terms linear in $x_0-x$, since their integral over all $x_0$ will vanish due to the anti-symmetry.
+Let $a := \frac{m}{2\i t}$ and substitute $y := x_0 - x$ in the integral.
+Then we obtain the asymptotic equation
+\begin{align}
+\psi&\sim \sqrt{\frac{\pi}{a}}\kla\left( 1 - \i Vt \right)\intr\int_{\mathbb{R}^{ }} \e^{-ay^2}\kla\left( \psi + \frac{y^2}{2}\partial_x^2\psi - t\partial_t\psi - \frac{ty^2}{2}\partial_t\partial_x^2\psi \right) \, \mathrm{d}^{ }y = \\
+&= \kla\left( 1 - \i Vt \right)\kla\left( \psi + \frac{\i t}{2m}\partial_x^2\psi - t\partial_t\psi - \frac{\i t^2}{2m}\partial_t\partial_x^2\psi \right) \sim \\
+&\sim \psi - \i tV\psi + \frac{\i t}{2m}\partial_x^2\psi - t\partial_t\psi.
+\end{align}
+We can cancel the term $\psi(x,t)$ on both sides, which is effectively of order $t^0$, and divide by $\i t$ to obtain the Schrödinger equation
+\begin{align}
+\i\partial_t&\sim -\frac{1}{2m}\partial_x^2\psi + V\psi.
+\end{align}
+This is an asymptotic relation, which is valid for $t\rightarrow 0$.
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

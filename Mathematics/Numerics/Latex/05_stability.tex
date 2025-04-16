@@ -1,0 +1,485 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+%\pagestyle{scrheadings}  % Stil für die Seite setzen
+%\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+%\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{05 Kondition und Stabilität}
+\newcommand*{\autor}{Joachim Schwardt und Julian Fleck}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Numerik I - Aufgaben}
+\title{\titel}
+%\author{\autor}
+\author{\begin{tabular}{l|l}
+Joachim Schwardt & 4768711 \\ 
+Julian Fleck & 4759587\\ 
+\end{tabular}}
+%\author{\begin{tabular}{|l|l|}
+%\hline
+%Joachim Schwardt & 4768711 \\ \hline
+%Julian Fleck & 4759587\\ \hline
+%\end{tabular}}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Aufgabe 1}
+Wir wollen die Fläche $A$ eines Dreiecks mit den Eckpunkten $\vec{r}_j := (x_j,y_j)\in\mathbb{R}^2$ für $j=1,2,3$ berechnen.
+Eine Möglichkeit dafür ist $A=\frac{1}{2} |d|$, wobei 
+\begin{align}
+d &= \det\begin{pmatrix}
+x_1 & y_1 & 1 \\ 
+x_2 & y_2 & 1 \\
+x_3 & y_3 & 1 
+\end{pmatrix} = x_1y_2 + x_3y_1 + x_2y_3 - x_3y_2 - x_1y_3 - x_2y_1.
+\end{align}
+Der Eingabefehler jedes Punktes sei durch $\delta$ in der $\|\cdot\|_\infty$ beschränkt, also
+\begin{align}
+\|\vec{r}_j - \vec{\tilde{r}}_j \|_\infty &= \max\klammer\left\{ |x_j - \tilde{x}_j|, |y_j - \tilde{y}_j| \right\} \le \delta.
+\end{align}
+Hierbei seien $\tilde{x}_j, \tilde{y}_j$ jeweils die gestörten Eingaben.
+Um eine Abschätzung für den absoluten Fehler zu erhalten, können wir die absolute Kondition verwenden.
+Diese ist
+\begin{align}
+\kappa_\tecxt\text{abs} &= \left\| \begin{pmatrix}
+\frac{\partial d}{\partial x_1} & \frac{\partial d}{\partial y_1} & \dots
+\end{pmatrix} \right\|_\infty = \max\klammer\left\{ \left\vert \frac{\partial d}{\partial x_1} \right\vert, \left\vert \frac{\partial d}{\partial y_1} \right\vert, \dots \right\} = \\
+&= \max\klammer\left\{ |y_2 - y_3|, |x_2-x_3|, \dots \right\}.
+\end{align}
+Anmerkung: Hier geht irgendetwas schief, weiter unten haben wir einen anderen Ansatz verfolgt. 
+Die Abschätzung ist nicht mit em numerischen Experiment kompatibel, aber wir wissen nicht so genau, an welcher Stelle der Fehler steckt... 
+\\
+Insbesondere gilt dann
+\begin{align}
+|d - \tilde{d}| &\le \kappa_\tecxt\text{abs} \left\| \begin{pmatrix}
+x_1 - \tilde{x}_1 & y_1 - \tilde{y}_1 & \dots
+\end{pmatrix}^\top \right\|_\infty = \\
+&= \kappa_\tecxt\text{abs} \max \klammer\left\{ |x_1 - \tilde{x}_1|, |y_1 - \tilde{y}_1|, \dots \right\} \le \kappa_\tecxt\text{abs}\delta .
+\end{align}
+Für die Fläche finden wir daher die Abschätzung
+\begin{align}
+|A - \tilde{A}| &= \frac{1}{2}\left\vert |d| - |\tilde{d}| \right\vert \le \frac{1}{2}|d - \tilde{d}| \le \frac{1}{2}\kappa_\tecxt\text{abs}\delta.
+\end{align}
+Der Ausgabefehler skaliert also linear mit dem Eingabefehler.
+Zudem ist er proportional zur maximalen Differenz zweier Eckpunkte, was für einen absoluten Fehler zu erwarten war (?).
+\\
+Auch ohne ``Ausprobieren'' erkennt man aber, dass die Abschätzung nicht für beliebige $\delta$ funktionieren kann.
+Sei $y_1=x_2=x_3=y_3=0$:
+\begin{align}
+d &= x_1y_2,\\
+\tilde{d} &= \kla\left( x_1 + \delta_x \right) \kla\left( y_2 + \delta_y \right) = d + y_2\delta_x + x_1\delta_y + \delta_x\delta_y.\\
+|d-\tilde{d}| &= |y_2\delta_x + x_1\delta_y + \delta_x\delta_y| %\le |y_2\delta_x + x_1\delta_y| + \delta^2
+\end{align}
+Für $\delta_x=-\delta$ und $\delta_y=\delta$ ist dann
+\begin{align}
+|d-\tilde{d}| &= |y_2-x_1 + \delta|\delta,
+\end{align}
+der Fehler skalliert also wie $\delta^2$, was nicht mit der Abschätzung über die absolute Kondition vereinbar ist.  
+Das erklärt auch, warum die Fehlerschranke im numerischen Experiment überschritten wird.
+\\ \\
+Ein ganz anderer Ansatz nutzt $\vec{1} := (1,1,1)^\top$ und die Abschtzäung von Vektorprodukten über
+\begin{align}
+A &= \frac{1}{2}|d| = \frac{1}{2} \left\vert \vec{x}\cdot \kla\left( {\vec{y}\times \vec{1}} \right)  \right\vert \le  \frac{1}{2} \|\vec{x}\|_2 \|\vec{y}\|_2 \|\vec{1}\|_2 = \\
+&= \frac{1}{2} \sqrt{x_1^2 + x_2^2 + x_3^3} \sqrt{y_1^2 + y_2^2 + y_3^3} \sqrt{3}.
+\end{align}
+Für $\tilde{x}_j = x_j + \delta_{x_j}$ mit $|\delta_{x_j}| \le \delta$ folgt dann $\|\vec{\delta}_x\|_2 \le \sqrt{3} \delta$, und somit
+\begin{align}
+|A-\tilde{A}| &\le \frac{1}{2}|d - \tilde{d}|  \frac{1}{2} \left\vert \vec{x}\cdot \kla\left( {\vec{y}\times \vec{1}} \right) -  [\vec{x} + \vec{\delta}_x ]\cdot \kla\left( {[\vec{y} + \vec{\delta}_x]\times \vec{1}} \right) \right\vert = \\
+&= \frac{1}{2} \left\vert \vec{\delta}_x\cdot \kla\left( {\vec{\delta}_y\times\vec{1}} \right) + \vec{\delta}_x\kla\left( { \vec{y} \times\vec{1}} \right) + \vec{x}\cdot\kla\left( {\vec{\delta}_y \times\vec{1}} \right) \right\vert \le \\
+&=\frac{\sqrt{3}}{2} \kla\left( {\|\vec{x}\|_2 \|\vec{\delta}_y\|_2 + \|\vec{y}\|_2 \|\vec{\delta}_x\|_2 + \|\vec{\delta}_x\|_2 \|\vec{\delta}_y\|_2}  \right) \le \\
+&\le \frac{3\delta}{2} \kla\left( {\|\vec{x}\|_2 + \|\vec{y}\|_2 + \sqrt{3}\delta} \right).
+\end{align}
+Für große $\delta$ deutet sich im numerischen Experiment an, dass diese Abschätzung tatsächlich scharf ist.
+Für $\delta\ll |x_j|\dots$ ist in Abbildung \ref{figure:determinant error} allerdings eine große Abweichung zu erkennen.
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=\linewidth]{Determinant_delta_error2.png}
+\caption{Die Abschätzung des Fehlers bei der Flächenberechnung von Dreiecken mittels Determinante ist für $N=20000$ Werte von $\delta$ für ein bestimmtes Dreieck dargestellt.
+Hierbei sind die Koordinaten $x_j,y_j$ von der Größenordnung 10 ($x_1 = 15$, $y_1 = 25$, $x_2 = 30$, $y_2 = 25$, $x_3 = 20$ und $y_3 = 40$).
+Für $\delta \gtrsim 10$ ergibt sich dann wie zu erwarten ein quadratisches Fehlerverhalten.}
+\label{figure:determinant error}
+\end{figure}
+\\
+Das quadratische Fehlerverhalten ist aber natürlich nicht besonders interessant, weil die Eingabefehler im Allgemeinen (vermutlich) kleiner als die tatsächlich Eingabe sein werden.
+Eigentlich interessiert uns also eher eine Abschätzung unter der Bedingung $\delta \ll |x_j|,\dots$.
+Oben hatten wir für die absolute Kondition die $\|\cdot\|_\infty$-Norm angenommen. 
+Tatsächlich scheint der richtige Ansatz aber
+\begin{align}
+\kappa_\tecxt\text{abs} &= \left\| \begin{pmatrix}
+\frac{\partial d}{\partial x_1} & \frac{\partial d}{\partial y_1} & \dots
+\end{pmatrix} \right\|_1 = \\
+&= \left\vert \frac{\partial d}{\partial x_1} \right\vert + \left\vert \frac{\partial d}{\partial y_1} \right\vert + \dots = \\
+&= |y_2 - y_3| + |x_2 - x_3| + \dots 
+\end{align}
+zu sein.
+Betrachte zur Rechtfertigung der Verwendung der $\|\cdot\|_1$-Norm einige Extremfälle.
+Zunächst sei ausschließlich $\delta_{x_1}\neq 0$, also
+\begin{align}
+|d - \tilde{d}| &= |\delta_{x_1}||y_2 - y_3| \le \delta |y_2-y_3| \le \delta \kappa_\tecxt\text{abs}.
+\end{align}
+Sei nun auch $\delta_{x_2}\neq 0$, also
+\begin{align}
+|d - \tilde{d}| &\le |\delta_{x_1}||y_2 - y_3| + |\delta_{x_2}||y_3 - y_1| \le \delta (|y_2-y_3| + |y_3 - y_1|) \le \delta \kappa_\tecxt\text{abs} .
+\end{align}
+Hier zeigt sich die Struktur der $\|\cdot\|_1$-Norm für die absolute Kondition.
+Die Fehlerabschätzung ist dann wieder
+\begin{align}
+|A - \tilde{A}| &\le \frac{1}{2}\kappa_\tecxt\text{abs} \delta.
+\end{align}
+Abbildung \ref{figure:determinant error small delta} bestätigt (bzw. widerlegt zumindest nicht) diese Abschätzung.
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=\linewidth]{Determinant_delta_error3.png}
+\caption{Identische Parameter wie in Abbildung \ref{figure:determinant error}, aber für $\delta\ll 10$.
+Es ergibt sich das erwartete lineare Fehlerverhalten.}
+\label{figure:determinant error small delta}
+\end{figure}
+
+
+%import matplotlib.pyplot as plt
+%from matplotlib import special
+%special.setup(UseTex=0)
+%from numba import njit
+%
+%@njit
+%def get_data(N=10000, dmin=-8, dmax=5):
+%    x1 = 15.0
+%    y1 = 25.0
+%    x2 = 30.0
+%    y2 = 25.0
+%    x3 = 20.0
+%    y3 = 40.0
+%    x = np.array([x1, x2, x3])
+%    y = np.array([y1, y2, y3])
+%    
+%    M = np.array([[x1, y1, 1], [x2, y2, 1], [x3, y3, 1]], dtype=np.float64)
+%    d = np.linalg.det(M)
+%    A = np.abs(d)/2
+%    delta_arr = 10.0**np.linspace(dmin, dmax, N)
+%    error = np.zeros(N, dtype=np.float64)
+%    estimate = np.zeros(N, dtype=np.float64)
+%    kappa = np.linalg.norm(np.array([x1 - x2, x1 - x3, x2 - x3, y1 - y2, y1 - y3, y2 - y3]), ord=1)
+%
+%    xnorm = np.linalg.norm(x, ord=2)
+%    ynorm = np.linalg.norm(y, ord=2)
+%
+%    for i in range(delta_arr.shape[0]):
+%        delta = delta_arr[i]
+%        x1bar = x1 + np.random.uniform(-delta, delta)
+%        x2bar = x2 + np.random.uniform(-delta, delta)
+%        x3bar = x3 + np.random.uniform(-delta, delta)
+%        y1bar, y2bar, y3bar = np.array([y1, y2, y3]) + np.random.uniform(-delta, delta, 3)
+%
+%        Mbar = np.array([[x1bar, y1bar, 1], [x2bar, y2bar, 1], [x3bar, y3bar, 1]])
+%        dbar = np.linalg.det(Mbar)
+%
+%        
+%        Abar = np.abs(dbar)/2
+%        error[i] = np.abs(A - Abar)
+
+%        ### two options: small delta vs. all delta
+%        #estimate[i] = kappa * delta / 2
+%        estimate[i] = 0.5*np.sqrt(3) *delta * (delta + xnorm + ynorm)
+%    return delta_arr, error, estimate
+%
+%colors = special.Colors()
+%
+%fig, ax = plt.subplots()
+%ax.set_xscale('log')
+%ax.set_yscale('log')
+%ax.set_xlabel(r"$\delta$")
+%ax.set_ylabel(r"$\Delta A$")
+%ax.set_xlim(delta[0], delta[-1])
+%ax.plot(delta, error, ls='', marker='o', ms=1, mew=1, c=colors.get_color(), label="samples")
+%ax.plot(delta, estimate, c=colors.get_color(), label="estimate")
+%ax.legend()
+%special.polish(fig, ax)
+
+
+%for delta in 10**np.linspace(-8, 1, 10):
+%    x1 = 15
+%    y1 = 25
+%    x2 = 30
+%    y2 = 25
+%    x3 = 20
+%    y3 = 40
+%    M = np.array([[x1, y1, 1], [x2, y2, 1], [x3, y3, 1]])
+%    d = np.linalg.det(M)
+%    
+%    x1bar = x1 + np.random.uniform(-delta, delta)
+%    x2bar = x2 + np.random.uniform(-delta, delta)
+%    x3bar = x3 + np.random.uniform(-delta, delta)
+%    
+%    deltay1 = delta - np.abs(x1 - x1bar)
+%    y1bar = y1 + np.random.uniform(-deltay1, deltay1)
+%    deltay2 = delta - np.abs(x2 - x2bar)
+%    y2bar = y2 + np.random.uniform(-deltay2, deltay2)
+%    deltay3 = delta - np.abs(x3 - x3bar)
+%    y3bar = y3 + np.random.uniform(-deltay3, deltay3)
+%    
+%    Mbar = np.array([[x1bar, y1bar, 1], [x2bar, y2bar, 1], [x3bar, y3bar, 1]])
+%    dbar = np.linalg.det(Mbar)
+%    
+%    kappa = np.max(np.abs([x1 - x2, x1 - x3, x2 - x3, y1 - y2, y1 - y3, y2 - y3]))
+%    A = np.abs(d)/2
+%    Abar = np.abs(dbar)/2
+%    error = np.abs(A - Abar)
+%    estimate = kappa * delta / 2
+%        
+%    print(f"{delta = :.2e} : {error = :.4e} and {estimate = :.4e}")
+
+ 
+\newpage
+\section*{Aufgabe 2}
+Wir betrachten eine Funktion $f : [0,\infty) \rightarrow \mathbb{R}$ mit $f(x) = \sqrt{x+1} - \sqrt{x}$.
+\subsection*{a)}
+Da $f$ differenzierbar ist, können wir die absolute Kondition über 
+\begin{align}
+\kappa_\tecxt\text{abs} &= |f'(x)| = \frac{1}{2} \left\vert\frac{1}{\sqrt{x+1}} - \frac{1}{\sqrt{x}} \right\vert
+\end{align}
+berechnen.
+Für große $x$ gilt
+\begin{align}
+\kappa_\tecxt\text{abs} &\overset{x\,\rightarrow\,\infty }{\longrightarrow} 0,
+\end{align}
+die Funktion ist dann also gut konditioniert.
+
+\subsection*{b)}
+Die Funktion $g : [0,\infty) \rightarrow \mathbb{R}$ mit $g(x) = \kla\left( \sqrt{x+1} + \sqrt{x} \right)^{-1} $.
+Dann gilt
+\begin{align}
+g(x) &= \frac{1}{\sqrt{x+1} + \sqrt{x}} = \frac{\sqrt{x+1} - \sqrt{x}}{\kla\left( \sqrt{x+1} + \sqrt{x} \right)\kla\left( \sqrt{x+1} - \sqrt{x} \right) } = \\
+&= \frac{\sqrt{x+1} - \sqrt{x}}{x+1 - x} = \sqrt{x+1} - \sqrt{x} = f(x).
+\end{align}
+
+
+\subsection*{c)}
+Für große $x$ ist $f(x)$ zwar gut (absolut) konditioniert, aber bei der Differenzbildung zwischen $\sqrt{x+1}\approx\sqrt{x}$ tritt zunehmend Auslöschung statt.
+Bei $g(x)$ werden die Terme allerdings addiert, was numerisch stabil ist.
+%Bei der anschließenden Division kann mit voller Genauigkeit gerechnet werden.
+
+\newpage
+\section*{Aufgabe 3}
+Eine Gleitkommazahl $f$ wird im Computer als
+\begin{align}
+f &= s\cdot 2^e\cdot \sum_{j=1}^m b_j 2^{-j}
+\end{align}
+dargestellt, wobei $s\in\{\pm 1\}$ das Vorzeichen angibt, $e$ den Exponenten und die Bits $b_j\in\{0,1\}$ die Mantisse.
+
+\subsection*{a)}
+Um eine Dezimalzahl in eine Gleitkommazahl zu überführen, teilen wir diese zunächst in einen ganzzahligen und und fraktionellen Anteil, und dividieren beide wiederholt durch 2.
+Der Rest des Ergebnisses ist dabei gerade das Komplement des Bits.
+Für die Zahl $125,25$ erhalten wir dabei
+\begin{table}[!ht]
+\centering
+\begin{tabular}{ccccc|c}
+Zahl & : & 2 & $=$ & \dots  & Rest\\ \hline
+125 & : & 2 & $=$ & 62 & 1\\
+62 & : & 2 & $=$ & 31 & 0\\
+31 & : & 2 & $=$ & 15 & 1\\
+15 & : & 2 & $=$ & 7 & 1\\
+7 & : & 2 & $=$ & 3 & 1\\
+3 & : & 2 & $=$ & 1 & 1\\
+1 & : & 2 & $=$ & 0 & 1\\
+\end{tabular}
+\end{table}
+\\
+In Binärdarstellung ist also $125_\tecxt\text{d} = 1111101_\tecxt\text{b}$, wobei die Bits in der Tabelle von unten nach oben ausgelesen werden.
+In diesem Fall hätte man auch einfacher darauf kommen können, da $127_\tecxt\text{d} = 1111111_\tecxt\text{b}$, also $125_\tecxt\text{d} = 127_\tecxt\text{d} - 2_\tecxt\text{d} = 1111101_\tecxt\text{b}$.
+\\
+Für den fraktionellen Anteil multiplizieren wir stattdessen mit 2 modulo 1.
+Wir notieren hier als ``Rest'' eine 0 bzw. 1, je nachdem ob das Ergebnis nach der Multiplikation größer als 1 war.
+Man findet also
+\begin{table}[!ht]
+\centering
+\begin{tabular}{lcccl|c}
+Zahl & $\cdot$ & 2 & $=$ & \dots\ mod 1  & Rest\\ \hline
+0,25 & $\cdot$ & 2 & $=$ & 0,5 mod 1 & 0\\
+0,5 & $\cdot$ & 2 & $=$ & 0,0 mod 1 & 1\\
+\end{tabular}
+\end{table}
+\\
+In Binärdarstellung ist also $0,25_\tecxt\text{d} = 0,01_\tecxt\text{b}$, und damit insgesamt $125,25_\tecxt\text{d} = 1111101,01_\tecxt\text{b}$.
+Das können wir auch als
+\begin{align}
+125,25_\tecxt\text{d} &= 1\cdot 2^6 + 1\cdot 2^5 + 1\cdot 2^4 + 1\cdot 2^3 + 1\cdot 2^2 + 1\cdot 2^0 + 1\cdot 2^{-2} = \\
+&= 2^7\cdot\kla\left( 1\cdot 2^{-1} + 1\cdot 2^{-2} + 1\cdot 2^{-3} + 1\cdot 2^{-4} + 1\cdot 2^{-5} + 1\cdot 2^{-7} + 1\cdot 2^{-9}  \right)
+\end{align}
+schreiben.
+Da der führende Term allerdings immer eine 1 sein muss, können wir stattdessen auch
+\begin{align}
+125,25_\tecxt\text{d} &= 2^6\cdot\kla\left( {\color{blue}{1\cdot 2^{0}}} + 1\cdot 2^{-1} + 1\cdot 2^{-2} + 1\cdot 2^{-3} + 1\cdot 2^{-4} + 1\cdot 2^{-6} + 1\cdot 2^{-8}  \right)
+\end{align}
+schreiben, aber die blaue $\color{blue}{1}$ nicht speichern.
+Es sind also $s=+1$, $e=6$ und $(b_j) = (1,1,1,1,0,1,0,1,0,0,\dots )^\top$.
+In IEEE 754 ist eigentlich sogar $e=2^{9} - 1 + 6 = 1000000101_\tecxt\text{b}$.
+\\
+Dasselbe können wir natürlich auch für die Zahl $0,004150390625$ probieren.
+Python kann die Darstellung einfach ausgeben, wir ``schummeln'' aber stattdessen nur ein bisschen, indem wir es für die Divisionen (und den Latex-Code) verwenden.
+\begin{table}[!ht]
+\centering
+\begin{tabular}{lccclc|c}
+Zahl & $\cdot$ & 2 & $=$ & \dots & mod 1  & Rest\\ \hline
+0.004150390625 & $\cdot$ & 2 & $=$ & 0.00830078125 & mod 1 & 0\\
+0.00830078125 & $\cdot$ & 2 & $=$ & 0.0166015625 & mod 1 & 0\\
+0.0166015625 & $\cdot$ & 2 & $=$ & 0.033203125 & mod 1 & 0\\
+0.033203125 & $\cdot$ & 2 & $=$ & 0.06640625 & mod 1 & 0\\
+0.06640625 & $\cdot$ & 2 & $=$ & 0.1328125 & mod 1 & 0\\
+0.1328125 & $\cdot$ & 2 & $=$ & 0.265625 & mod 1 & 0\\
+0.265625 & $\cdot$ & 2 & $=$ & 0.53125 & mod 1 & 0\\
+0.53125 & $\cdot$ & 2 & $=$ & 0.0625 & mod 1 & 1\\
+0.0625 & $\cdot$ & 2 & $=$ & 0.125 & mod 1 & 0\\
+0.125 & $\cdot$ & 2 & $=$ & 0.25 & mod 1 & 0\\
+0.25 & $\cdot$ & 2 & $=$ & 0.5 & mod 1 & 0\\
+0.5 & $\cdot$ & 2 & $=$ & 0.0 & mod 1 & 1\\
+\end{tabular}
+\end{table}
+\\
+Also ist
+\begin{align}
+0,004150390625_\tecxt\text{d} &= 2^{-8} + 2^{-12} = 2^{-8}\cdot \kla\left( 2^{0} + 2^{-4} \right),
+\end{align}
+womit $s=+1$, $e=-8$ und $(b_j) = (0,0,0,1,0,0,\dots)^\top$.
+
+
+
+%import struct
+%def binary(num):
+%    return ''.join('{:0>8b}'.format(c) for c in struct.pack('!f', num))
+
+
+
+%def latex_dec_bin(dec, m=52, round_digits=16):
+%    f = dec % 1
+%    i = int(dec // 1)
+%    bits = []
+%    while i:
+%        r = i % 2
+%        bits.append(r)
+%        print(f"{i} & : & 2 & " + r"$=$ & " + f"{i // 2} & {r}\\\\")
+%        i //= 2
+%    bits = bits[::-1]
+%    
+%    for ctr in range(m - len(bits)):
+%        fn = f * 2
+%        r = int(fn // 1)
+%        bits.append(r)
+%        if f:
+%            print(f"{f:.{round_digits}f} & $\\cdot$ & 2 & " + r"$=$ & " + f"{fn % 1:.{round_digits}f} & mod 1 & {r}\\\\")
+%        f = (2*f) % 1
+%
+%    return bits
+
+% string = "".join([str(b) for b in bits])
+
+\newpage
+\subsection*{b)}
+Um zu zeigen, dass $\frac{1}{10}$ nicht exakt in doppelter Genauigkeit darstellbar ist, können wir wieder die ``Multiplikations-Tabelle'' aufstellen. 
+%Hier seit man am Python-Output bereits experimentell, dass der Algorithmus tatsächlich alle 52 Bits berechnet, also nie auf die Abbruchbedingung stößt. 
+%Insbesondere kann Python die $\frac{1}{10}$ natürlich selbst nicht darstellen, es entstehen also zunehmend Rundungsfehler -- der Latex-Code ist also nicht mehr so einfach zu erzeugen...
+\begin{table}[!ht]
+\centering
+\begin{tabular}{lccclc|c}
+Zahl & $\cdot$ & 2 & $=$ & \dots & mod 1  & Rest\\ \hline
+0.1 & $\cdot$ & 2 & $=$ & 0.2 & mod 1 & 0\\
+0.2 & $\cdot$ & 2 & $=$ & 0.4 & mod 1 & 0\\
+0.4 & $\cdot$ & 2 & $=$ & 0.8 & mod 1 & 0\\
+\color{blue}0.8 & $\cdot$ & 2 & $=$ & 0.6 & mod 1 & \color{blue}1\\
+0.6 & $\cdot$ & 2 & $=$ & 0.2 & mod 1 & 1\\
+0.2 & $\cdot$ & 2 & $=$ & 0.4 & mod 1 & 0\\
+0.4 & $\cdot$ & 2 & $=$ & 0.8 & mod 1 & 0\\
+\color{blue}0.8 & $\cdot$ & 2 & $=$ & 0.6 & mod 1 & \color{blue}1\\
+0.6 & $\cdot$ & 2 & $=$ & 0.2 & mod 1 & 1\\
+0.2 & $\cdot$ & 2 & $=$ & 0.4 & mod 1 & 0\\
+0.4 & $\cdot$ & 2 & $=$ & 0.8 & mod 1 & 0\\
+%0.8 & $\cdot$ & 2 & $=$ & 0.6 & mod 1 & 1\\
+%0.6 & $\cdot$ & 2 & $=$ & 0.2 & mod 1 & 1\\
+%0.2 & $\cdot$ & 2 & $=$ & 0.4 & mod 1 & 0\\
+%0.4 & $\cdot$ & 2 & $=$ & 0.8 & mod 1 & 0\\
+%0.8 & $\cdot$ & 2 & $=$ & 0.6 & mod 1 & 1\\
+%0.6 & $\cdot$ & 2 & $=$ & 0.2 & mod 1 & 1\\
+%0.2 & $\cdot$ & 2 & $=$ & 0.4 & mod 1 & 0\\
+%0.4 & $\cdot$ & 2 & $=$ & 0.8 & mod 1 & 0\\
+%0.8 & $\cdot$ & 2 & $=$ & 0.6 & mod 1 & 1\\
+%0.6 & $\cdot$ & 2 & $=$ & 0.2 & mod 1 & 1\\
+%0.2 & $\cdot$ & 2 & $=$ & 0.4 & mod 1 & 0\\
+%0.4 & $\cdot$ & 2 & $=$ & 0.8 & mod 1 & 0\\
+%0.8 & $\cdot$ & 2 & $=$ & 0.6 & mod 1 & 1\\
+%0.6 & $\cdot$ & 2 & $=$ & 0.2 & mod 1 & 1\\
+%0.2 & $\cdot$ & 2 & $=$ & 0.4 & mod 1 & 0\\
+%0.4 & $\cdot$ & 2 & $=$ & 0.8 & mod 1 & 0\\
+%0.8 & $\cdot$ & 2 & $=$ & 0.6 & mod 1 & 1\\
+\end{tabular}
+\end{table}
+\\
+Nach den ersten drei Nullen wiederholt sich die Tabelle periodisch, also ist $0,1_\tecxt\text{d} = 0,000\overline{1100}_\tecxt\text{b}$.
+Genau wie im Dezimalsystem benötigt diese Darstellung aber natürlich unendlich viele Stellen, und damit deutlich mehr als 52.
+
+
+\subsection*{c)}
+Jede Zahl in doppelter Genauigkeit kann mit endlich vielen Stellen als Dezimalzahl dargestellt werden.
+Das liegt daran, dass wir nur Linearkombinationen von $b_j\cdot 2^{-j}$ betrachten, wobei $b_j\in\{0,1\}$ natürlich unproblematisch sind.
+Die Frage ist also äquivalent dazu, ob die Terme $2^{-j}$ für alle $j=1,\dots,m$ exakt darstellbar sind.
+Hierfür gibt es sicherlich viele Beweise, wir versuchen hier einen über Induktion.
+Sei $d < 1$ eine Dezimalzahl, sodass 
+\begin{align}
+d &= \sum_{j=1}^k d_j\cdot 10^{-j},
+\end{align}
+die Zahl also mit endlich vielen Stellen darstellbar ist, wobei $d_j\in\mathbb{Z}$.
+Dann gilt 
+\begin{align}
+\frac{d}{2} &= \sum_{j=0}^k d_j\cdot 10^{-j-1} \cdot 5 = 5\cdot \sum_{l=1}^{k+1} d_{l-1}\cdot 10^{-l} = 5\cdot \sum_{l=1}^{k+1} \tilde{d}_{l}\cdot 10^{-l} ,
+\end{align}
+wobei $\tilde{d}_l\in\mathbb{Z}$.
+Damit ist $\frac{d}{2}$ also auch exakt darstellbar.
+Für $d=\frac{1}{2}=0,5_\tecxt\text{d}$ folgt daraus also induktiv, dass alle $2^{-j}$ für $j=1,\dots,m$ exakt darstellbar sind.
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

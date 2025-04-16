@@ -1,0 +1,252 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{5 Radius of Gyration}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Soft Condensed Matter}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+
+The Radius of Gyration is defined as
+\begin{align}
+R_g^2 &= \frac{1}{N} \sum_{n=1}^N \kla\left( \vec{r}_n - \bra\langle \vec{r} \rangle \right)^2 && \tecxt\text{where} & \bra\langle \vec{r} \rangle &= \frac{1}{N} \sum_{n=1}^N \vec{r}_n
+\end{align}
+is the center of mass assuming that each particle has mass $m$.
+In the continuous case we simply replace the sum by an integral (and the number of particles $N$ by the volume of the shape $V$).
+\\
+For a sphere of radius $R$ and with constant density this results in
+\begin{align}
+R_g^2 &= \frac{1}{V} \intx\int_{V}^{ } r^2\, \mathrm{d}^3r = \frac{1}{\frac{4}{3}\pi R^3} \intx\int_{0}^{R} r^2 \, 4\pi r^2\mathrm{d}r = \frac{3}{5} R^2.
+\end{align}
+For a rod of length $L$, we position ourselves on the midpoint.
+Then we find
+\begin{align}
+R_g^2 &= \frac{1}{L} \intx\int_{-L/2}^{L/2} x^2 \, \mathrm{d}x = \frac{2}{L} \frac{1}{3} \kla\left( \frac{L}{2} \right)^3 = \frac{L^2}{12}.
+\end{align}
+The more interesting equation is that of a 3-star, i.e. a polymer with a fixed center and three arms representing linear chains.
+\\
+Let us first consider a very general star with $f$ arms, each containing $n_j$ Kuhn-monomers of length $b$ ($j=1,\dots,f$).
+%We will make use of the formula
+%\begin{align}
+%R_g^2 &= \frac{1}{2N^2} \sum_{j,k=1}^f \int_{0}^{n_k} \int_{0}^{n_j} \langle \left( \vec{R}_j(u) - \vec{R}_k(v) \right)^2 \rangle \, \mathrm{d}u\mathrm{d}v.
+%\end{align}
+%For a linear chain, we know that $\langle \left( \vec{R}_j(u) - \vec{R}_j(v) \right)^2 \rangle = |u-v|b^2$.
+%This is not quite as simple in the general case.
+%However, we may introduce a very specific zero into this quantity
+%\begin{align}
+%\langle &\left( \vec{R}_j(u) - \vec{R}_k(v) \right)^2 \rangle = \langle \left( \vec{R}_j(u) - \langle \vec{R} \rangle + \langle \vec{R} \rangle - \vec{R}_k(v) \right)^2 \rangle = \\
+%&\quad = \langle \left( \vec{R}_j(u) - \langle \vec{R} \rangle \right)^2 \rangle + \langle \left( \vec{R}_k(v) - \langle \vec{R} \rangle \rangle \right)^2 \rangle - 2\langle \left( \vec{R}_k(v) - \langle \vec{R} \rangle \right) \left( \vec{R}_j(u) - \langle \vec{R} \rangle \right) \rangle.
+%\end{align} 
+%If we parametrize the arms such that $\vec{R}_j(0) = \langle \vec{R} \rangle \equiv 0$, this simplifies to
+%\begin{align}
+%\dots &= ub^2 + vb^2 - 2 \bra\langle \vec{R}_j(u) \cdot \vec{R}_k(v) \rangle.
+%\end{align}
+%
+%%%%%% BEGIN FIRST ATTEMPT
+%
+%If we choose the base of our polymer to be the origin, and ensure that we parametrize the arms such that $\vec{R}_j(0) = 0$, we may write
+%\begin{align}
+%\langle &\left( \vec{R}_j(u) - \vec{R}_k(v) \right)^2 \rangle = \bra\langle \vec{R}_j^2(u) \rangle + \bra\langle \vec{R}_k^2(v) \rangle - 2\bra\langle \vec{R}_j(u) \cdot \vec{R}_k(v) \rangle = \\
+%&= (u+v)b^2 - 2\bra\langle \vec{R}_j(u) \cdot \vec{R}_k(v) \rangle
+%\end{align} 
+%Now we will make use of a very important fact about our star -- the angles between each arm are the same.
+%Thus we know that for $j\neq k$
+%\begin{align}
+%\langle \vec{R}_j \cdot \vec{R}_k \rangle &= R_j R_k \cos \kla\left( \frac{2\pi}{f} (j-k) \right) = uvb^2 \cos \kla\left( \frac{2\pi}{f} (j-k) \right).
+%\end{align}
+%Inserting into our original formula we find
+%\begin{align}
+%R_g^2 &= \frac{b^2}{2N^2} \sum_{j\neq k=1}^f \intx\int_{0}^{n_k} \int_0^{n_j} (u+v) - 2uv \cos \kla\left( \frac{2\pi}{f}(j-k) \right) \, \mathrm{d}u \mathrm{d}v + (j=k)\tecxt\text{-term} = \\
+%&= \frac{b^2}{2N^2} \sum_{j\neq k=1}^f \intx\int_{0}^{n_k} \frac{n_j^2}{2} + vn_j - n_j^2 v \cos \kla\left( \frac{2\pi}{f} (j-k) \right) \, \mathrm{d}v + \frac{Nb^2}{6} = \\
+%&= \frac{b^2}{2N^2} \sum_{j\neq k=1}^f \klam\left[ \frac{n_j^2}{2} n_k + \frac{n_k^2}{2} n_j - \frac{1}{2} n_j^2n_k^2 \cos \kla\left( \frac{2\pi}{f}(j-k) \right) \right]  + \frac{Nb^2}{6} = \\
+%&= \frac{b^2}{2N^2} \klam\left[ \sum_{j=1}^f n_j^2 (N - n_j) - \frac{1}{2} \sum_{j=1}^f \sum_{k=1,k\neq j}^f n_j^2n_k^2 \cos \kla\left( 2\pi \frac{j-k}{f} \right)  \right] + \frac{Nb^2}{6} = \\
+%&= Nb^2 \klam\left[ \frac{1}{2N^2} \sum_{j=1}^f n_j^2 - \frac{1}{2N^3} \sum_{j=1}^f n_j^3 + \frac{1}{6} - \frac{1}{2N^3} \sum_{j=1}^f \sum_{k=j+1}^f n_j^2n_k^2 \cos \kla\left( 2\pi \frac{k-j}{f} \right) \right].
+%\end{align}
+%Let us take a moment to evaluate the double sum.
+%Note that due to the symmetric form we may write
+%\begin{align}
+%\frac{1}{2} \sum_{j=1}^f \sum_{k=1,k\neq j}^f & n_j^2n_k^2 \cos \kla\left( 2\pi \frac{j-k}{f} \right) = \sum_{j=1}^f n_j^2 \sum_{k>j} n_k^2 \cos \kla\left( 2\pi \frac{k-j}{f} \right).
+%\end{align}
+%Note that
+%%\begin{align}
+%%\sum_{j=1}^f \sum_{k>j}^f &\cos \kla\left( 2\pi \frac{j-k}{f} \right) = \tecxt\text{Re\,} \sum_{j=1}^f \e^{2\pi\i \frac{j}{f}} \sum_{k>j}^f \e^{2\pi\i \frac{-k}{f}} = \\
+%%&= \tecxt\text{Re\,} \e^{2\pi\i \frac{1}{f}} \sum_{j=0}^{f-1} \e^{2\pi\i \frac{j}{f}} \sum_{k>j+1}^f \e^{-2\pi\i \frac{k}{f}} = \\
+%%&= \tecxt\text{Re\,} \e^{2\pi\i \frac{1}{f}} \sum_{j=0}^{f-1} \e^{2\pi\i \frac{j}{f}} \e^{-2\pi\i \frac{j+1}{f}} \sum_{k=0}^{f-j-2} \e^{-2\pi\i \frac{k}{f}} = \\
+%%&= 
+%%\end{align}
+%\begin{align}
+%\sum_{j=1}^f \sum_{k>j}^f &\cos \kla\left( 2\pi \frac{j-k}{f} \right) = \tecxt\text{Re\,} \sum_{j=1}^f \sum_{k>j}^f \e^{2\pi\i \frac{k-j}{f}} = \\
+%&= \tecxt\text{Re\,} \sum_{j=1}^f \sum_{k=1}^{f-j} \e^{2\pi\i \frac{k}{f}} = \tecxt\text{Re\,} \sum_{j=1}^f \e^{2\pi\i \frac{1}{f}} \frac{1 - \e^{2\pi\i \frac{f-j}{f}}}{1 - \e^{2\pi\i \frac{1}{f}}} = \\
+%&= \tecxt\text{Re\,} \frac{f}{\e^{-2\pi\i \frac{1}{f}} - 1} - \tecxt\text{Re\,} \frac{\e^{2\pi\i \frac{1}{f}}}{\e^{2\pi\i\frac{1}{f}} - 1} \sum_{j=1}^f \e^{-2\pi\i \frac{j}{f}} = \\
+%&= \tecxt\text{Re\,} \frac{f}{\e^{-2\pi\i \frac{1}{f}} - 1} - \tecxt\text{Re\,} \frac{1}{\e^{2\pi\i\frac{1}{f}} - 1} \frac{1 - \e^{-2\pi\i}}{1 - \e^{-2\pi\i \frac{1}{f}}}.
+%\end{align}
+%The second term vanishes due to $\e^{-2\pi\i} = 1$.
+%Thus we are left with
+%\begin{align}
+%\sum_{j=1}^f \sum_{k>j}^f \cos \kla\left( 2\pi \frac{j-k}{f} \right) &= f \frac{\cos (2\pi/f) - 1}{\klam\left[  \cos (2\pi/f) - 1 \right]^2 + \sin (2\pi/f)^2} = -\frac{f}{2}.
+%\end{align}
+%Since $n_j=\frac{N}{f}$, we find
+%\begin{align}
+%\frac{1}{2} \sum_{j=1}^f \sum_{k=1,k\neq j}^f n_j^2n_k^2 \cos \kla\left( 2\pi \frac{j-k}{f} \right) &= - \frac{N^4}{2f^3}.
+%\end{align}
+%
+%%%%%% END FIRST ATTEMPT
+%
+%%%%%% BEGIN SECOND ATTEMPT
+%
+%If we choose the base of our polymer to be the origin, and ensure that we parametrize the arms such that $\vec{R}_j(0) = 0$, we may write
+%\begin{align}
+%\langle &\left( \vec{R}_j(u) - \vec{R}_k(v) \right)^2 \rangle = \bra\langle \vec{R}_j^2(u) \rangle + \bra\langle \vec{R}_k^2(v) \rangle - 2\bra\langle \vec{R}_j(u) \cdot \vec{R}_k(v) \rangle = \\
+%&= (u+v)b^2 - 2\bra\langle \vec{R}_j(u) \cdot \vec{R}_k(v) \rangle
+%\end{align} 
+%Now we will make use of a very important fact about our star -- the angles between each arm are the same.
+%Thus for $j\neq k$ and $u>v$
+%\begin{align}
+%\langle \vec{R}_j \cdot \vec{R}_k \rangle &= vb^2 \cos \kla\left( \frac{2\pi}{f} (j-k) \right).
+%\end{align}
+%NOTE: This is most likely the point where I went wrong. 
+%The final result turns out to be reasonably close to the one found in literature, but I do not know how to proceed otherwise.
+%\\
+%Inserting into our original formula we find
+%\begin{align}
+%R_g^2 &= \frac{b^2}{N^2} \sum_{j\neq k=1}^f \intx\int_{0}^{n_j} \int_u^{n_k} (u+v) - 2v \cos \kla\left( \frac{2\pi}{f}(j-k) \right) \, \mathrm{d}v \mathrm{d}u + (j=k)\tecxt\text{-term} = \\
+%&= \frac{b^2}{N^2} \sum_{j\neq k=1}^f \intx\int_{0}^{n_j} \frac{n_k^2 - u^2}{2} + u(n_k - u)  - (n_k^2 - u^2) \cos \kla\left( \frac{2\pi}{f} (j-k) \right) \, \mathrm{d}v + \frac{Nb^2}{6} = \\
+%&= \frac{b^2}{N^2} \sum_{j\neq k=1}^f \klam\left[ \frac{n_k^2}{2} n_j - \frac{n_j^3}{2} + \frac{n_j^2}{2} n_k - \kla\left( n_jn_k^2 - \frac{n_j^3}{3} \right) \cos \kla\left( \frac{2\pi}{f}(j-k) \right) \right]  + \frac{Nb^2}{6}.
+%\end{align}
+%Now we  will assume that each arm has the same length, i.e. $n_j = \frac{N}{f}$.
+%Then the expression simplifies to
+%\begin{align}
+%R_g^2 &= \frac{Nb^2}{f^3} \sum_{j\neq k=1}^f \klam\left[ \frac{1}{2} - \frac{2}{3} \cos \kla\left( 2\pi \frac{k - j}{f} \right) \right] = \\
+%&= \frac{Nb^2}{f^3} \klam\left[ \frac{f(f-1)}{2} - \frac{4}{3} \sum_{j=1}^f \sum_{k>j}^f \cos \kla\left( 2\pi \frac{k-j}{f} \right) \right].
+%\end{align}
+%Note that
+%\begin{align}
+%\sum_{j=1}^f \sum_{k>j}^f &\cos \kla\left( 2\pi \frac{k-j}{f} \right) = \tecxt\text{Re\,} \sum_{j=1}^f \sum_{k>j}^f \e^{2\pi\i \frac{k-j}{f}} = \\
+%&= \tecxt\text{Re\,} \sum_{j=1}^f \sum_{k=1}^{f-j} \e^{2\pi\i \frac{k}{f}} = \tecxt\text{Re\,} \sum_{j=1}^f \e^{2\pi\i \frac{1}{f}} \frac{1 - \e^{2\pi\i \frac{f-j}{f}}}{1 - \e^{2\pi\i \frac{1}{f}}} = \\
+%&= \tecxt\text{Re\,} \frac{f}{\e^{-2\pi\i \frac{1}{f}} - 1} - \tecxt\text{Re\,} \frac{\e^{2\pi\i \frac{1}{f}}}{\e^{2\pi\i\frac{1}{f}} - 1} \sum_{j=1}^f \e^{-2\pi\i \frac{j}{f}} = \\
+%&= \tecxt\text{Re\,} \frac{f}{\e^{-2\pi\i \frac{1}{f}} - 1} - \tecxt\text{Re\,} \frac{1}{\e^{2\pi\i\frac{1}{f}} - 1} \frac{1 - \e^{-2\pi\i}}{1 - \e^{-2\pi\i \frac{1}{f}}}.
+%\end{align}
+%The second term vanishes due to $\e^{-2\pi\i} = 1$.
+%Thus we are left with
+%\begin{align}
+%\sum_{j=1}^f \sum_{k>j}^f \cos \kla\left( 2\pi \frac{j-k}{f} \right) &= f \frac{\cos (2\pi/f) - 1}{\klam\left[  \cos (2\pi/f) - 1 \right]^2 + \sin (2\pi/f)^2} = -\frac{f}{2}.
+%\end{align}
+%Inserting into the radius of gyration gives
+%\begin{align}
+%R_g^2 &= \frac{Nb^2}{f^3} \klam\left[ \frac{f(f-1)}{2} + \frac{2f}{3} \right] = \frac{N}{f} b^2 \klam\left[ \frac{1}{2} + \frac{1}{6f} \right].
+%\end{align}
+%NOTE: Apparently the correct result has $-\frac{1}{3f}$ instead of $+\frac{1}{6f}$.
+%\\
+%For $f=3$ my version reduces to
+%\begin{align}
+%R_g^2 &= \frac{5Nb^2}{27},
+%\end{align}
+%the expected result was $R_g^2 = \frac{7Nb^2}{54}$, which is smaller by a factor of $\frac{7}{10}$.
+%
+%%%%%%% END SECOND ATTEMPT
+%
+%%%%%% BEGIN THIRD ATTEMPT
+%
+%Consider a star polymer with $f$ arms.
+Then we claim that
+\begin{align}
+R_g^2 &= Nb^2 \klam\left[ \frac{1}{2N^2} \sum_{j=1}^f n_j^2 - \frac{1}{3N^3} \sum_{j=1}^f n_j^3 \right]
+\end{align}
+where $n_j$ is the number of Kuhn-monomers in the respective arm.
+For $f=1$ we already know that this formula is correct, since this corresponds to the linear chain with $R_g^2 = \frac{Nb^2}{6}$.
+We will make use of Kramers theorem\footnote{Since I did not come up with a proof of the Kramers theorem myself, I did not want to simply replicate it here from one of the many books and articles}, which states that
+%\footnote{Of course I did not come up with a proof of the Kramers theorem myself, so I see little point in simply copying from one of the many books and articles}
+\begin{align}
+R_g^2 &= b^2 \sum_{j=1}^N \alpha(j) \klam\left[ 1 - \alpha(j) \right],
+\end{align}
+where $\alpha(j)$ is the percentage of monomers in one part remaining after dividing the polymer at the $j$-th bond.
+Let us enumerate the bonds starting from the origin and going up the arms (e.g. the bond $j=n_2 + 3$ corresponds to the third bond in the second arm).
+If the cut happens along the $k$-th arm, then the outer part of the arm is left with $n_k - (j - n_{k-1} - \dots - n_1)$ monomers, i.e. 
+\begin{align}
+\alpha(j) &= \frac{1}{N} \klam\left[ \sum_{l=1}^k n_l - j \right].
+\end{align}
+Note that $k$ has to be the smallest possible number for which $\alpha \ge 0$.
+For example, $j=n_1$ gives $k=1$ but $j=n_1 + 1$ gives $k=2$, since the cut now happens at the second arm.
+Effectively $\alpha$ is just giving us the ratio $\frac{n_k - c(j)}{N}$, where $c(j)$ is the number of monomers along the $k$-th arm up to the cut.
+%We can express the function $c(j)$ as
+%\begin{align}
+%c(j) &= \begin{cases} j & j \le n_1 \\ j - n_1 & n_1 < j \le n_2 \\ \dots \\ j - n_1 - \dots - n_{f-1} & n_{f-1} < j \le n_f \end{cases}
+%\end{align}
+Inserting into our formula yields
+\begin{align}
+\frac{R_g^2}{Nb^2} &= \frac{1}{N} \sum_{j=1}^N \frac{n_{k(j)} - c(j)}{N} \kla\left( 1 - \frac{n_{k(j)} - c(j)}{N} \right) = \\
+&= \frac{1}{N} \sum_{j=1}^{n_1} \frac{n_1 - j}{N} \kla\left( 1 - \frac{n_1 - j}{N} \right) + \dots + \sum_{j=1}^{n_f} \frac{n_f - j}{N} \kla\left( 1 - \frac{n_f - j}{N} \right) \simeq \\
+&\simeq \frac{1}{N} \sum_{k=1}^f \intx\int_{0}^{n_k} \frac{n_k - x}{N} \kla\left( 1 - \frac{n_k - x}{N} \right) \, \mathrm{d}x = \\
+&= \sum_{k=1}^f \intx\int_{0}^{n_k / N} y (1-y) \, \mathrm{d}y = \sum_{k=1}^f \frac{n_k^2}{2N^2} - \sum_{k=1}^f \frac{n_k^3}{3N^3}.
+\end{align}
+For equal arm lengths this simplifies to
+\begin{align}
+R_g^2 &= Nb^2 \klam\left[ \frac{1}{2f} - \frac{1}{3f^2} \right] = \frac{N}{f} b^2 \klam\left[ \frac{1}{2} - \frac{1}{3f} \right].
+\end{align}
+For the special case of $f=3$ we find
+\begin{align}
+R_g^2 &= \frac{7Nb^2}{54}.
+\end{align}
+
+
+%%%%%% END THIRD ATTEMPT
+
+
+
+\end{document}

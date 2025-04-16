@@ -1,0 +1,121 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+
+\begin{document}
+
+\title{Millikan Versuch}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Aufgabenstellung}
+Bestimmung der Elementarladung $e$ mittels des Öltröpfchenversuchs nach Millikan.
+\section{Versuchsaufbau und Hintergrund}
+Es werden für fünf Öltröpfchen unterschiedlicher Größe und Ladung jeweils fünf Steig- bzw. Fallzeiten zwischen den Markierungen mit Abstand $s=3$\,mm gemessen, wobei die Bewegung mit einer sinnvoll gewählten Spannung umgekehrt werden soll. Die aktuellen Werte für Luftdruck $p$, Temperatur $\vartheta$ und relative Luftfeuchtigkeit $\varphi$ sind:\\ \\
+\begin{tabular}{c|c|c}
+$p\,/\,$ Pa & $\vartheta\,/\,$\degree C & $\varphi$ \\ \hline
+1,016$\,\cdot\, 10^5$ & 18 & 0,21
+\end{tabular} \\ \\
+Nach den Formeln aus der Platzanleitung ergeben sich damit folgende Werte für die Viskosität der Luft $\eta$, die Dichte der Luft $\rho_L$ und des Paraffinöls $\rho_K$:
+\begin{align*}
+\eta (\vartheta)&=\left(0,001133\cdot (\vartheta /\degree \mathrm{C})+ 1,76536\right)\cdot 10^{-5}\,\mathrm{Pa}\,\mathrm{s}=\underline{1.78575\cdot 10^{-5}\,\mathrm{Pa}\,\mathrm{s}}\\
+\rho_L(\vartheta, p, \varphi )&= \rho_{L, \mathrm{trocken}} + \varphi\cdot A = \underline{1,21415\,\mathrm{kg}/\mathrm{m}^3}\\
+\rho_K(\vartheta)&=\left(0,92- 0,000611\cdot (\vartheta /\degree \mathrm{C})\right)\,\mathrm{kg}/\mathrm{m}^3=\underline{909\,\mathrm{kg}/\mathrm{m}^3}
+\end{align*}
+Hierbei ergeben sich $A$ und $\rho_{L, \mathrm{trocken}}$ aus Interpolation der Tabelle in der Versuchsanleitung. Genauer:
+\begin{align*}
+A&=\underline{-9,30\cdot 10^{-3}\,\mathrm{kg}/\mathrm{m}^3} \\
+\rho_{L,\mathrm{trocken}}&=\left(1,2089+\frac{6}{10}(1,2209-1,2089)\right)\,\mathrm{kg}/\mathrm{m}^3=\underline{1,2161\,\mathrm{kg}/\mathrm{m}^3}
+\end{align*}
+Die Bestimmung der unkorrigierten Ladung $e_n'$ eines Öltröpfchens mit Radius $r$ erfolgt mit Hilfe eines Kräftegleichgewichts bei eingeschaltetem elektrischen Feld unter Berücksichtigung der Stokes'schen Reibung. Hierbei bezeichnen zudem $d$ den Plattenabstand, $U$ die Spannung und $v_{F, S}$ die Fall- bzw. Steiggeschwindigkeit des Tröpfchens:
+\begin{align*}
+0&\overset {!}{=}ma=\sum_i F_i=(\rho_K-\rho_L)g\,\frac{4\pi r^3}{3}-e_n'\frac{U}{d}+6\pi\eta v_Sr\numberthis\label{EFeld 1}\\
+0&\overset {!}{=}(\rho_K-\rho_L)g\,\frac{4\pi r^3}{3}-6\pi\eta v_Fr\ \ \Rightarrow\ \ r=\sqrt{\frac{9\eta v_F}{2 g(\rho_K-\rho_L)}}\numberthis\label{Radius}\\
+&\overset {(\ref{Radius})\ \mathrm{in }\ (\ref{EFeld 1})}{\Rightarrow} e_n'=\frac{\pi r d}{U}\left(\frac{4r^2}{3}(\rho_K - \rho_L)g+6\eta v_S\right)=\frac{18\pi\eta d}{U}\sqrt{\frac{\eta v_F}{2g(\rho_K-\rho_L)}} (v_F+v_S)\numberthis\label{e_n'}
+\end{align*}
+Da der Radius der Öltröpfchen $r\approx 1\,\mu$m etwa in der Größenordnung der freien Weglänge $l\approx 0,1\mu$m der Gasmoleküle liegt, muss die Stokes'sche Reibung korrigiert werden. Nach Cunningham ergibt sich für dann für die korrigierte Ladung eines Öltröpfchens mit der Konstanten $K\approx 0,86$:
+\begin{align*}
+e_n=e_n'\left(1+\frac{Kl}{r}\right)^{-3/2}
+\end{align*}
+Aus der Proportionalität von $l\propto \frac{1}{p}$ ergibt sich mit einer neuen Konstanten $B$ (siehe Anleitung):
+\begin{align*}
+e_n&\overset {(\ref{e_n'})}{=}\frac{18\pi\eta d}{U}\sqrt{\frac{\eta v_F}{2g(\rho_K-\rho_L)}} (v_F+v_S)\left(1+\frac{B}{pr}\right)^{-3/2}\\
+0&=r^2+\frac{B}{p}r-\frac{9\eta v_F}{2g(\rho_K-\rho_L)}\ \ \Rightarrow\ \ r=-\frac{B}{2p}+\sqrt{\frac{B^2}{4p^2}+\frac{9\eta v_F}{2g(\rho_K-\rho_L)}}\\
+B&\approx \left(833,2625+3,5997\cdot (\vartheta /\degree\mathrm{C}-23)\right)\cdot 10^{-5}\,\mathrm{Pa}\,\mathrm{m}=\underline{815,264\cdot 10^{-5}\,\mathrm{Pa}\,\mathrm{m}}
+\end{align*}
+\section{Messung}
+Je fünf Fall- bzw. Steigzeiten für fünf verschieden Öltröpfchen unter Angabe der jeweils verwendeten Spannung:\\ \\
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c}
+N&$T_{F1}/s$& $T_{S1}/s$&$T_{F2}/s$& $T_{S2}/s$&$T_{F3}/s$& $T_{S3}/s$&$T_{F4}/s$& $T_{S4}/s$&$T_{F5}/s$& $T_{S5}/s$\\ \hline
+1&20,3  & 31,5 &26,5  &23,4  &20,2  &7,8& 15,1 &10,5  &17,9  &13,4   \\ \hline
+2& 20,3 & 31,4 &26,5  &23,9  &20,1  &7,9 &15,1&10,5  &18  &13,6    \\ \hline
+3&  20,5& 31,2 &26,4  &23,6  &20,3  &7,9  &15,1  &10,6  &18  &13,5   \\ \hline
+4& 20,6 &31,2  &26,7  &23,3  &20,4  &7,8  &15,3  &10,5  &18,1  &13,7   \\ \hline
+5& 20,7 &31,5  &26,8  &23,4  & 20,1 &7,8  &15,2  &10,4  &18,1  &13,6 \\ \hline
+$U\,/\,$V & 0 & 400 & 0 & 800 & 0 & 400 & 0 & 400 & 0 & 800
+
+\end{tabular}\\ \\
+\section{Auswertung}
+\subsection{Berechnung der Messunsicherheiten}
+Eine Berücksichtigung der systematischen Abweichungen von $\vartheta, p, \varphi, s$ und $d$ ist aufgrund der relativ kleinen Unsicherheit und der unhandlichen Formel überaus aufwendig, aber eben nicht unbedingt sinnvoll. Auch die Abweichung des Korrekturfaktors ist vernachlässigbar gering. Es wird nun die \textsc{Gauss}'sche Fehlerfortpflanzung bezüglich $T_F, T_S$ und $U$ berechnet unter Berücksichtigung der Korrelation zwischen den Zeitmessungen durch Maximalfehlerabschätzung:
+\begin{align*}
+\Delta e_n&\approx e_n\sqrt{\left(\frac{\Delta U}{U}\right)^2+\left(\bigg\vert\frac{\Delta T_S}{\frac{T_S^2}{T_F}+T_S}\bigg\vert+\bigg\vert\frac{\Delta T_F}{T_F+\frac{T_F^2}{T_S}}+\frac{\Delta T_F}{2T_F}\bigg\vert\right)^2}
+\end{align*}
+Aus der Anleitung ergibt sich $\Delta U=0,01\cdot U$ (noch mit $\frac{1}{\sqrt{3}}$ multiplizieren). Für die systematischen Abweichungen der Messzeit nehmen wir $\Delta T_{F,S}=0,01\cdot T_{F,S}$ an. 
+Die Mittelwerte und ihre statistischen Abweichungen lassen sich mit den üblichen Formeln bestimmen:
+\begin{align*}
+\overline{e}_n=\frac{1}{5}\sum_{i=1}^5e_{n,i}\ \ \ \ \mathrm{und }\ \ \ \ \Delta \overline{e}_n=\sqrt{\frac{1}{5}\cdot\frac{1}{4}\sum_{i=1}^5(\overline{e}_n-e_{n,i})^2}
+\end{align*}
+Für die Mittelwerte von Radius und Ladung der einzelnen Öltröpfchen, sowie die statistischen und systematischen Unsicherheiten der Ladung ergibt sich:\\ \\
+\begin{tabular}{c|c|c|c|c}
+$N$ & $e_n\,/\,$As &$\Delta e_n^{sys}\,/\,$ As &  $\Delta e_n^{stat} \,/\,$As & $r\,/\,\mu$m \\ \hline
+1 & $3,3762\cdot 10^{-18}$ & $3,0052\cdot 10^{-20}$ & $1,4861\cdot 10^{-20}$ & $1,1103$\\ \hline
+2 & $1,4499\cdot 10^{-18}$ & $1,2476\cdot 10^{-20}$& $3,5915\cdot 10^{-21}$ & $0,9699$\\ \hline
+3 & $7,4561\cdot 10^{-18}$ & $6,2778\cdot 10^{-20}$& $2,2713\cdot 10^{-20}$ & $1,1177$\\ \hline
+4 & $7,9521\cdot 10^{-18}$ & $6,772\cdot 10^{-20}$& $1,9322\cdot 10^{-20}$ & $1,2968$\\ \hline
+5 & $2,9002\cdot 10^{-18}$ & $2,4776\cdot 10^{-20}$& $1,1813\cdot 10^{-20}$ & $1,1862$
+\end{tabular}\\ \\
+\subsection{$\chi^2$-Auswertung}
+Zur Bestimmung der Elementarladung wird $\chi^2(e)$ aufgestellt und für Werte von $e$ im Intervall $[1,00,\, 3,00]\cdot 10^{-19}\,$As mit Abständen von $0,1\cdot 10^{-19}\,$As berechnet:
+\begin{align*}
+\chi^2(e)&=\sum_{n=1}^5\frac{(e_{n}-e\cdot N_n(e))^2}{(\Delta e_n^{stat})^2}\ \ \ \mathrm{mit }\ \ \ N_n(e)=\left\lfloor \frac{e_n}{e}+0,5\right\rfloor
+\end{align*}
+Die Unsicherheiten werden wieder über die Fehlerfortpflanzung bestimmt:
+\begin{align*}
+\Delta \chi^2(e)^{stat}&=\sqrt{\sum_{n=1}^5\left(\frac{2(e_n-e\cdot N_n(e))}{(\Delta e_n^{stat})^2}\Delta e_n^{stat}\right)^2}=2\sqrt{\chi^2(e)}\\
+\Delta \chi^2(e)^{sys}&=\sum_{n=1}^5\bigg\vert\frac{2(e_n-e\cdot N_n(e))}{(\Delta e_n^{stat})^2}\Delta e_n^{sys}\bigg\vert
+\end{align*}
+\newpage
+Der Plot von $\chi^2(e)$ lässt allerdings kein eindeutiges Minimum erkennen:
+\begin{figure}[h!]
+\label{ChiQuad_1,0_3,0}
+\centering
+\includegraphics[width=1\textwidth]{ChiQuad_1,0_3,0.png}
+\caption{$\chi^2(e)$ im Intervall $[1,00,\, 3,00]\cdot 10^{-19}\,$As}
+\end{figure}\\
+Betrachtet man den Bereich um den Wert der tatsächlichen Elementarladung etwas genauer, so kommt das Ergebnis zumindest in die richtige Richtung, ist allerdings dennoch überaus ungenau:
+\begin{figure}[h!]
+\centering
+\includegraphics[width=1\textwidth]{ChiQuad_1,5_1,7.png}
+\caption{$\chi^2(e)$ im Intervall $[1,5,\, 1,7]\cdot 10^{-19}\,$As}
+\end{figure}\\
+Hier kann man für den Wert und die Messunsicherheit der Elementarladung die fünf Punkte mit den kleinsten Werten für $\chi^2(e)$ verwenden. Dann ergibt sich etwa:
+$$e=\underline{(1,61\pm 0,02\cdot 10^{-19})\,\mathrm{As}}$$
+\section{Diskussion}
+Betrachtet man nur das eben angegebene Endergebnis, so liegt der tatsächliche Wert gut in den Fehlergrenzen. Allerdings gibt es streng genommen aus Sicht dieses Protokolls keinerlei Begründung dafür, gerade das Intervall um das Minimum aus Abbildung (\ref{ChiQuad_1,0_3,0}) bei $1,6\cdot 10^{-19}\,$As näher zu untersuchen.\\
+Die Messwerte selbst erscheinen aus meiner Sicht auch vernünftig. An der Messwerttabelle kann man auch erkennen, dass die Abweichungen zwischen den einzelnen Werten im hinteren Teil deutlich kleiner werden, was auf die Gewöhnung einer Messung "per Mausklick" zurückzuführen ist.\\
+Ich habe weder einen Fehler in der Rechnung, noch in den Messwerten finden können; das heißt, es gab immer wieder Öltröpfchen mit ähnlichen Werten für Fall- bzw. Steigzeit. Allerdings sind die berechneten Ladungen nicht immer ein Vielfaches der Elementarladung. Gerade bei Tröpfchen Nummer 3 und 4 ergab sich ein Faktor von $46,6$ bzw. $49,7$. Die Zwischenergebnisse für die Radien liegen auch in der richtigen Größenordnung von etwa $1\,\mu$m.
+
+
+
+\end{document}

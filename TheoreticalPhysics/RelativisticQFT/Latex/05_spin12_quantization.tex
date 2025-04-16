@@ -1,0 +1,142 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage[most]{tcolorbox}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\usepackage{slashed}
+\usepackage{bbm}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{05 Spin-$\frac{1}{2}$ Quantization}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Relativistic Quantum Field Theory}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Spin-$\frac{1}{2}$ Quantization: Filling in the gaps}
+\subsection{$(\frac{1}{2},\frac{1}{2}) \ \hat{=} \text{ 4-vectors}$}
+From the lecture we know that $\phi \rightarrow \psi' = S(\Lambda)\psi$ where for infinitesimal Lorentz transformations $\Lambda = \delta + \omega$ 
+\begin{align}
+S(\Lambda) &= 1 - \frac{\i}{2} \omega_{\rho\sigma}S^{\rho\sigma}
+\end{align}
+and $S^{\rho\sigma} = \frac{\i}{4} \klam\left[ \gamma^\rho, \gamma^\sigma \right]$.
+Note that
+\begin{align}
+\overline{\psi} &\longrightarrow \overline{S(\Lambda) \psi} = \psi^\dagger S(\Lambda)^\dagger \gamma^0 = \overline{\psi} S^{-1}(\Lambda)
+\end{align}
+where $S^{-1}(\Lambda) = \gamma^0 S(\Lambda)^\dagger \gamma^0$.
+To verify that this expression is indeed the inverse, first note that $(S^{\rho\sigma})^\dagger = \gamma^0 S^{\rho \sigma} \gamma^0$ follows directly from $(\gamma^\mu)^\dagger = \gamma^0 \gamma^\mu \gamma^0$.
+Using this we get
+\begin{align}
+S^{-1}(\Lambda) S(\Lambda) &= \gamma^0 \kla\left( 1 + \frac{\i}{2} \omega_{\rho\sigma} (S^{\rho\sigma})^\dagger \right) \gamma^0 \kla\left( 1 - \frac{\i}{2} \omega_{\mu\nu} S^{\mu\nu} \right) = \\
+&= \kla\left( 1 + \frac{\i}{2} \omega_{\rho\sigma} S^{\rho\sigma} \right) \kla\left( 1 - \frac{\i}{2} \omega_{\mu\nu} S^{\mu\nu} \right) = 1.
+\end{align}
+We want to evaluate the expression $\overline{\psi}_2 S^{-1}(\Lambda) \gamma^\mu S(\Lambda) \psi_1$.
+For this it will be useful to compute
+\begin{align}
+S^{\rho\sigma} \gamma^\mu &= \frac{\i}{4} \kla\left( \gamma^\rho\gamma^\sigma\gamma^\mu - (\rho \leftrightarrow \sigma) \right) = \\
+&= \frac{\i}{4}\kla\left( \gamma^\rho \klam\left[ 2g^{\sigma \mu} - \gamma^0\gamma^\sigma \right] - (\rho \leftrightarrow \sigma) \right) = \\
+&= \frac{\i}{4} \kla\left( \gamma^\mu\gamma^\rho \gamma^\sigma - 2g^{\rho \mu} \gamma^\sigma + 2g^{\sigma \mu} \gamma^\rho - (\rho \leftrightarrow \sigma) \right) = \gamma^\mu S^{\rho\sigma} + \i g^{\sigma \mu} \gamma^\rho - \i g^{\rho \mu} \gamma^\sigma.
+\end{align}
+Thus we find the commutation relation $\klam\left[ S^{\rho\sigma} , \gamma^\mu  \right] = \i g^{\sigma\mu} \gamma^\rho - \i g^{\rho\mu} \gamma^\sigma $ and using it
+\begin{align}
+\overline{\psi}_1 \gamma^\mu \psi_2 &\longrightarrow \overline{\psi}_2 S^{-1}(\Lambda) \gamma^\mu S(\Lambda) \psi_1 = \\
+&= \overline{\psi}_2 \left( 1 + \frac{\i}{2} \omega_{\rho\sigma}S^{\rho\sigma} \right) \gamma^\mu \kla\left( 1 - \frac{\i}{2} \omega_{\kappa\lambda} S^{\kappa\lambda} \right) \psi_1 = \\
+&= \overline{\psi}_2 \kla\left( \gamma^\mu + \frac{\i}{2} \omega_{\rho\sigma} \klam\left[ S^{\rho\sigma} \gamma^\mu - \gamma^\mu S^{\rho \sigma} \right] \right) \psi_1 = \\
+&= \overline{\psi}_2 \kla\left( \gamma^\mu - \frac{1}{2} \omega_{\rho\sigma} \klam\left[ g^{\sigma\mu}\gamma^\rho - g^{\rho\mu} \gamma^\sigma \right] \right) \psi_1 = \\
+&= \overline{\psi}_2 \kla\left( \gamma^\mu + \omega_{\ \nu}^\mu \gamma^\nu \right) \psi_1 = \\
+&= \Lambda^\mu_{\ \nu} \kla\left( \overline{\psi}_2 \gamma^\nu \psi_1 \right).
+\end{align}
+This is the expected transformation behaviour of a 4-vector.
+\subsection{Heisenberg equation}
+The Lagrange density for the Dirac field is $\mathcal{L} = \overline{\psi} (\i\slashed{\partial} - m) \psi = \overline{\psi} \kla\left( \i \gamma^0\partial_0 + \i\gamma^j\partial_j - m \right) \psi$.
+The conjugate momentum for $\psi$ is $\pi = \frac{\partial \mathcal{L}}{\partial \dot{\psi}} = \overline{\psi} \i \gamma^0 = \i \psi^\dagger$.
+The Hamiltonian can then be written as
+\begin{align}
+\hat{H} &= \intr\int_{\mathbb{R}^{3}} \mathcal{H} \, \mathrm{d}^{3}x = \intr\int_{\mathbb{R}^{3}} \hat{\pi} \dot{\hat{\psi}} - \mathcal{L} \, \mathrm{d}^{3}x = \\
+&= \intr\int_{\mathbb{R}^{3}} \kla\left( m\hat{\psi}^\dagger \gamma^0 \hat{\psi} - \i\hat{\psi}^\dagger \gamma^0 \gamma^j \partial_j \hat{\psi} \right) \, \mathrm{d}^{3}x.
+\end{align}
+Using the commutation relation $\klam\left[ \hat{\psi}(\textbf{x}), \hat{\psi}^\dagger(\textbf{y}) \right] = \delta^{(3)}(\textbf{x} - \textbf{y})$ we find
+\begin{align}
+\dot{\hat{\psi}}(\textbf{x}) &= \i\klam\left[ \hat{H}, \hat{\psi}(\textbf{x}) \right] = \i \intr\int_{\mathbb{R}^{3}} \klam\left[ m\hat{\psi}(\textbf{y})^\dagger \gamma^0 \hat{\psi}(\textbf{y}) - \i\hat{\psi}(\textbf{y})^\dagger \gamma^0 \gamma^j \partial_j \hat{\psi}(\textbf{y}), \hat{\psi}(\textbf{x}) \right]  \, \mathrm{d}^{3}y = \\
+&= -\i m\gamma^0\hat{\psi}(\textbf{x}) - \gamma^0 \gamma^j \partial_j \hat{\psi}(\textbf{x}) = \\
+&= -\i \gamma^0 \kla\left( -\i\gamma^j\partial_j + m \right)\hat{\psi}(\textbf{x}).
+\end{align}
+\subsection{Fermionic and bosonic commutation relation}
+We want to show that $\klam\left[ \hat{\psi}(t, \textbf{x}), \hat{\psi}(t, \textbf{y})^\dagger \right]_\pm = \delta^{(3)} (\textbf{x} - \textbf{y})$ assuming the commutation relations $\klam\left[ \hat{a}(\textbf{p}, s), \hat{a}(\textbf{p}', s')^\dagger \right] =  \delta_{ss'} 2p^0 (2\pi)^3 \delta^{(3)} (\textbf{p} - \textbf{p}') = \left[ \hat{b}(\textbf{p}, s)^\dagger, \hat{b}(\textbf{p}', s') \right]$
+\begin{align*}
+\Big[ \hat{\psi}(t, &\textbf{x}), \hat{\psi}(t, \textbf{y})^\dagger \Big]_\pm = \\
+&= \sum_{ss'} \intr\int_{\mathbb{R}^{6}} \Big[ \e^{-\i p\cdot x} u(\textbf{p},s) \hat{a}(\textbf{p},s) + \e^{\i p\cdot x} v(\textbf{p},s) \hat{b}(\textbf{p},s)^\dagger, \\
+& \hspace{2.1cm} \e^{\i p'\cdot y} u(\textbf{p}',s')^\dagger \hat{a}(\textbf{p}',s')^\dagger + \e^{-\i p'\cdot y} v(\textbf{p}',s')^\dagger \hat{b}(\textbf{p}',s') \Big] \, \mathrm{d}\tilde{p}\, \mathrm{d}\tilde{p}' = \numberthis \\
+&= \sum_{ss'} \delta_{ss'} \intr\int_{\mathbb{R}^{6}} \Big( \e^{-\i p\cdot x + \i p'\cdot y} u(\textbf{p},s) u(\textbf{p}',s')^\dagger + \e^{\i p\cdot x - \i p'\cdot y} v(\textbf{p},s) v(\textbf{p}',s')^\dagger \Big) \times \\
+&\hspace{2.1cm} \times 2p^0 (2\pi)^3 \, \mathrm{d}\tilde{p} \,\frac{1}{2{p'}^0} \frac{\mathrm{d}^3p'}{(2\pi)^3} = \numberthis \\
+&= \sum_s \intr\int_{\mathbb{R}^{3}} \Big( \e^{-\i \textbf{p}\cdot (\textbf{x} - \textbf{y}) } u(\textbf{p},s) u(\textbf{p},s)^\dagger + \e^{\i \textbf{p}\cdot (\textbf{x} - \textbf{y}) } v(\textbf{p},s) v(\textbf{p},s)^\dagger \Big) \, \mathrm{d}\tilde{p} = \numberthis \\
+&= \intr\int_{\mathbb{R}^{3}} \Big( \e^{-\i \textbf{p}\cdot (\textbf{x} - \textbf{y}) } \kla\left( \slashed{p} + m \right) \gamma^0 + \e^{\i \textbf{p}\cdot (\textbf{x} - \textbf{y}) } \left( \slashed{p} - m \right) \gamma^0 \Big)  \, \frac{1}{2p^0} \frac{ \mathrm{d}^{3}p}{(2\pi)^3} = \numberthis \\
+&= \intr\int_{\mathbb{R}^{3}} \Big( \e^{-\i \textbf{p}\cdot (\textbf{x} - \textbf{y}) } \kla\left( \gamma^0 p_0 + \gamma^j p_j + m \right) \gamma^0 + \e^{\i \textbf{p}\cdot (\textbf{x} - \textbf{y}) } \left(  \gamma^0 p_0 + \gamma^j p_j - m \right) \gamma^0 \Big) \times\\
+&\hspace{2.1cm} \times \, \frac{1}{2p^0} \frac{ \mathrm{d}^{3}p}{(2\pi)^3} = \numberthis \label{eqn:psi psid comm one integral} \\
+&= \mathbbm{1}_4\intr\int_{\mathbb{R}^{3}} \e^{-\i \textbf{p}\cdot (\textbf{x} - \textbf{y})} \, \frac{ \mathrm{d}^{3}p}{(2\pi)^3} + \intr\int_{\mathbb{R}^{3}} \e^{-\i \textbf{p}\cdot (\textbf{x} - \textbf{y})} \kla\left( \gamma^j p_j + m \right)\gamma^0 \, \frac{1}{2p^0} \frac{ \mathrm{d}^{3}p}{(2\pi)^3} + \\
+& \color{white} = \mathbbm{1}_4\intr\int_{\mathbb{R}^{3}} \e^{-\i \textbf{p}\cdot (\textbf{x} - \textbf{y})} \, \frac{ \mathrm{d}^{3}p}{(2\pi)^3} \color{black} + \int_{\mathbb{R}^{3}} \e^{\i \textbf{p}\cdot (\textbf{x} - \textbf{y})} \kla\left( \gamma^j p_j - m \right)\gamma^0 \, \frac{1}{2p^0} \frac{ \mathrm{d}^{3}p}{(2\pi)^3} = \numberthis \label{eqn:psi psid comm three integrals}\\
+&= \mathbbm{1}_4 \delta^{(3)} (\textbf{x} - \textbf{y}). \numberthis 
+\end{align*}
+Here we made use of the substitution $\textbf{p} \rightarrow -\textbf{p}$ in the third integral of \autoref{eqn:psi psid comm three integrals} in order to cancel it with the second one, and in the $ \e^{\i \textbf{p}\cdot (\textbf{x} - \textbf{y})} \gamma^0p_0$-term of the second part of the integral in \autoref{eqn:psi psid comm one integral} to combine the $p^0$-terms.
+The $4\times 4$-identity matrix may be dropped in favour of a more concise notation, but one should not forget that the (anti-)commutator is in fact a matrix (i.e. it has two Lorentz indices).
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

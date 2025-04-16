@@ -1,0 +1,305 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Lagrangian for electrodynamics and applications}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Theoretical Electrodynamics}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Lagrangian formulation of electrodynamics}
+We want to start our presentation on electrodynamics by postulating the Lagrangian $\mathcal{L}_\tecxt\text{ED} = \mathcal{L}_0 + \mathcal{L}_\tecxt\text{int}$ where
+\begin{align}
+\mathcal{L}_0 &:= -\frac{1}{2} F^{\mu\nu}F_{\mu\nu},\\
+\mathcal{L}_\tecxt\text{int} &:= \mu_0 J^\mu A_\mu
+\end{align}
+and $F^{\mu\nu} = \partial^\mu A^\nu - \partial^\nu A^\mu$.
+Here $(A^\mu) = (\phi, \textbf{A})^\top$ is the four-vector potential, and $(J^\mu) = (\rho, \mathbf{j})^\top$ is the four-vector current density.
+The continuity equation can be written as $\partial_\mu J^\mu =0$, and the Lorenz-gauge is given by $\partial_\mu A^\mu=0$.
+Expanding the free Lagrangian leads to
+\begin{align}
+\mathcal{L}_0 &= -\frac{1}{2} \kla\left( \partial^\mu A^\nu - \partial^\nu A^\mu \right) \kla\left( \partial_\mu A_\nu - \partial_\nu A_\mu \right) = \\
+&= -\frac{1}{2}\kla\big( \partial^\mu A^\nu\partial_\mu A_\nu - \partial^\nu A^\mu \partial_\mu A_\nu + (\mu\leftrightarrow\nu) \big) = \\
+&= -A^\nu \partial^\mu \partial_\mu A_\nu - \kla\left( \partial^\mu A^\nu \right) \partial_\mu A_\nu + A^\mu \partial_\mu \underbrace{\partial^\nu A_\nu}_{=\,0} + \kla\left( \partial^\nu A^\mu  \right) \partial_\mu A_\nu = \\
+&= -A^\nu \square A_\nu - \kla\left( \partial^\mu \phi \right) \partial_\mu \phi + \kla\left( \partial^\mu \textbf{A} \right) \cdot \partial_\mu \textbf{A} + \kla\left( \partial^\nu\phi \right)\partial_t A_\nu + \kla\left( \partial^\nu \textbf{A} \right) \cdot \nabla A_\nu = \\
+&= -A^\nu \square A_\nu  - \kla\left( \partial^\mu \phi \right) \partial_\mu \phi + \kla\left( \partial^\mu \textbf{A} \right) \cdot  \partial_\mu \textbf{A} + (\partial_t\phi)^2 + 2(\nabla \phi)  \cdot \partial_t\textbf{A} + \nabla \cdot \kla\left( \textbf{A}\cdot\nabla \right) \textbf{A}.
+\end{align}
+We may now derive the free field equation for the electrostatic potential $\phi$ 
+\begin{align}
+0 &= \frac{\partial\mathcal{L}_0}{\partial\phi} - \partial_\mu \frac{\partial \mathcal{L}_0}{\partial \partial_\mu \phi} = -\square \phi + 2\partial_\mu \kla\left( \partial^\mu \phi \right) - \underbrace{2\partial_t \kla\left( \partial_t\phi \right) - 2\nabla \cdot \partial_t\textbf{A}}_{=\, 2\partial_t \partial_\mu A^\mu\,=\,0} =  \square \phi
+\end{align}
+and that for the vector potential $\textbf{A}$
+\begin{align}
+0 &= \frac{\partial\mathcal{L}_0}{\partial\textbf{A}} - \partial_\mu \frac{\partial \mathcal{L}_0}{\partial \partial_\mu \textbf{A}} = \square \textbf{A} - 2\partial_\mu \kla\left( \partial^\mu \textbf{A} \right) -2\partial_t (\nabla\phi) - \textbf{e}_j \partial_m \frac{\partial \kla\left( \partial_k A_l\partial_l A_k \right)}{\partial (\partial_m A_j)} = \\
+&= -\square \textbf{A} - 2\nabla \kla\left( \partial_t\phi \right) - \textbf{e}_j \partial_m \kla\left( \partial_k A_l \delta_{ml}\delta_{jk} + \partial_l A_k \delta_{mk}\delta_{jl} \right) = \\
+&= -\square \textbf{A} - 2\nabla (\partial_t\phi) - 2\textbf{e}_j\partial_j (\nabla\cdot \textbf{A}) = -\square \textbf{A}.
+\end{align}
+We may combine the two equations into $\square A^\mu = 0$.
+Adding the interaction then simply yields
+\begin{align}
+\square A^\mu &= \mu_0 J^\mu. \label{eqn:four potential PDE}
+\end{align}
+
+
+\section{Green's function for the d'Alembert operator}
+Since \autoref{eqn:four potential PDE} is an inhomogeneous equation, we can solve it using Green's method.
+Assume that
+\begin{align}
+\square G(\textbf{r},t) &= \delta (\textbf{r})\delta (t). \label{eqn:dAlembert Green PDE}
+\end{align}
+Then, for a given charge density $J^\mu$, we may write the solution to \autoref{eqn:four potential PDE} as 
+\begin{align}
+A^\mu(\textbf{r},t) &= \mu_0 \intr\int_{\mathbb{R}^{4}} J^\mu(\textbf{r}',t') G(\textbf{r}-\textbf{r}', t-t')\, \mathrm{d}^{3}\textbf{r}'\,\tecxt\text{d}t'.
+\end{align}
+This is obvious from the definition of $G$ in \autoref{eqn:dAlembert Green PDE}.
+\\
+In order to compute the Green's function, we take the Fourier transformation of the PDE.
+This yields
+\begin{align}
+1 &= \F\klam\left[ \square G(\textbf{r},t) \right](\textbf{k},\omega) =  \klam\left[ (\i\omega)^2 - (\i\textbf{k})^2 \right] G(\textbf{k},\omega),\\
+\Rightarrow\ \ \ G(\textbf{k},\omega) &= \frac{1}{\textbf{k}^2 - \omega^2}.
+\end{align}
+Note that we use the same letter for $G(\textbf{r},t)$ and its Fourier transformation, but we avoid possible confusion by explicitly writing out the arguments.
+We may now solve this equation by the inverse Fourier transformation
+\begin{align}
+G(\textbf{r},t) &= \frac{1}{(2\pi)^4} \intr\int_{\mathbb{R}^{4}} \frac{\e^{-\i (\omega t - \textbf{k}\cdot \textbf{r})} }{\textbf{k}^2 - \omega^2} \, \mathrm{d}^{3}\textbf{k}\, \tecxt\text{d}\omega = \\
+&= \frac{1}{(2\pi)^4} \intr\int_{\mathbb{R}^{ }} \intx\int_{0}^{\infty} \intx\int_{0}^{2\pi} \intx\int_{0}^{\pi} \frac{\e^{-\i\omega t} \e^{\i kr\cos\theta}}{k^2 - \omega^2} \, \sin\theta\mathrm{d}\theta\, \mathrm{d}\phi\, k^2\mathrm{d}k \, \mathrm{d}^{ }\omega = \\
+&= \frac{1}{(2\pi)^3} \intr\int_{\mathbb{R}^{ }} \e^{-\i\omega t} \intx\int_{0}^{\infty} \frac{k^2}{k^2 - \omega^2} \frac{\e^{\i kr \cos\theta}}{-\i kr}\bigg\vert_{\theta=0}^{\theta=\pi}\, \mathrm{d}k \, \mathrm{d}^{ }\omega = \\
+&= \frac{-\i}{(2\pi)^3 r} \intr\int_{\mathbb{R}^{ }} \e^{-\i\omega t} \intx\int_{0}^{\infty} \frac{k}{k^2 - \omega^2} \kla\left( \e^{\i kr} - \e^{-\i kr} \right) \, \mathrm{d}k \, \mathrm{d}^{ }\omega = \\
+&= \frac{-\i}{(2\pi)^3 r} \intr\int_{\mathbb{R}^{ }} \e^{-\i\omega t} \intr\int_{\mathbb{R}^{ }} \frac{k\e^{\i kr}}{k^2 - \omega^2} \, \mathrm{d}^{ }k \, \mathrm{d}^{ }\omega . \label{eqn:dAlembert Green partial result}
+\end{align}
+We may solve the $k$-integration with the residual theorem.
+Let $\epsilon > 0$ be some small quantity, in the sense that we want to later take the limit $\epsilon \rightarrow 0$.
+Define the integral
+\begin{align}
+I_\epsilon &:= \intr\int_{\mathbb{R}^{ }} \frac{k\e^{\i kr}}{k^2 - \omega^2 + \i\epsilon} \, \mathrm{d}^{ }k.
+\end{align}
+Note that the denominator may be factorized as $(k-k_+)(k-k_-)$, where $k_\pm = \pm\sqrt{\omega^2 - \i\epsilon}$.
+Note that for $\epsilon> 0$ only $k_-$ has a positive imaginary part.
+\autoref{figure:tikz contour for integration} shows the contour $\Gamma$ along which we want to integrate.
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}[scale=1]    
+    \pgfmathsetmacro{\omega}{1.0}
+    \pgfmathsetmacro{\eps}{0.3}
+    \pgfmathsetmacro{\r}{0.03}
+    \pgfmathsetmacro{\R}{3}
+    
+    
+    \coordinate (o) at (0,0);
+    \coordinate (xmax) at (5,0);
+    \coordinate (xmin) at (-5,0);
+    \coordinate (ymax) at (0,3.5);
+    \coordinate (ymin) at (0,-1);
+    
+    \coordinate (kmax) at (\R,0);
+    \coordinate (kmin) at (-\R,0);
+    \coordinate (knorthwest) at (45:\R);
+    
+    \coordinate (k+) at (\omega,-\eps);
+    \coordinate (k-) at (-\omega,\eps);
+    
+    \node[anchor=north] at (xmax) {Re\,$k$};
+    \node[anchor=west] at (ymax) {Im\,$k$};
+    
+%    \draw[fill, color=black!35!white] (o) circle (\R);
+%    \draw (o) circle (\R);
+%    \node[below=0.5cm, right] at (0,\R) {$R$};
+%    \draw[color=black, -{Stealth[length=1.5mm,width=1.5mm]}] (o) to (0,\R);
+%    \node[below=0.5cm, left] at (o) {$M$};
+%    
+    \draw[fill] (k+) circle (\r);
+    \node[below] at (k+) {$k_+$};
+    
+    \draw[fill] (k-) circle (\r);
+    \node[above] at (k-) {$k_-$};
+    
+    \draw[thick, -{Stealth[length=1.5mm,width=1.5mm]}] (kmin) arc (180:30:\R);
+    \draw[thick] (knorthwest) arc (45:0:\R);
+    \node[right=0.3cm] at (knorthwest) {$\Gamma$};
+    \draw[thick, -{Stealth[length=1.5mm,width=1.5mm]}] (kmax) to (o);
+    \draw[thick] (o) to (kmin);
+    
+    \draw[thick, color=blue, -{Stealth[length=1.0mm,width=1.0mm]}] (o) to (knorthwest);
+    \node[above=0.2cm, left=0.1cm, color=blue] at (45:0.5*\R) {$R$};
+    
+%    
+%    \draw[color=black, thick=0.05cm, -{Stealth[length=1mm,width=1mm]}] (r0) .. controls (r1) and (r2)  .. (r3);
+%    \draw[color=blue, thick=0.05cm, -{Stealth[length=1.5mm,width=1.5mm]}] (r0) to (r0right); 
+%    \node[above, color=blue] at (r0right) {$\vec{v}_0$};      
+%    
+    
+    \draw[color=black, -{Stealth[length=1.5mm,width=1.5mm]}] (xmin) to (xmax);
+    \draw[color=black, -{Stealth[length=1.5mm,width=1.5mm]}] (ymin) to (ymax);
+\end{tikzpicture}
+\caption{For $\epsilon> 0$ only the pole at $k=k_-$ is inside the contour $\Gamma$.}
+\label{figure:tikz contour for integration}
+\end{figure}
+From the residual theorem we have
+\begin{align}
+I_\Gamma &:= \intx\int_{\Gamma }^{ } \frac{k\e^{\i kr}}{(k-k_+)(k-k_-)} \, \mathrm{d}k = 2\pi\i \lim_{k\rightarrow k_-} \frac{k\e^{\i kr}}{k - k_+} = 2\pi\i \frac{k_-\e^{\i k_-r}}{k_- - k_+} \overset{\epsilon\,\rightarrow\,0}{\longrightarrow} \pi\i\e^{-\i\omega r}.
+\end{align}
+Define the integral along the arc as $I_R$ and substitute $k=R\e^{\i t}$ for $t\in (0,\pi)$
+\begin{align}
+I_R &:= \intx\int_{0}^{\pi} \frac{R\e^{\i t} \e^{\i rR\e^{\i t}}}{R^2\e^{2\i t} - \omega^2 + \i \epsilon}\, R\i\e^{\i t}\mathrm{d}t.
+\end{align}
+We want to show that this integral vanishes for $R\rightarrow\infty$.
+Consider the absolute value
+\begin{align}
+|I_R| &\le \intx\int_{0}^{\pi} \frac{R^2\e^{-rR\sin(t)}}{|R^2\e^{2\i t} - \omega^2 + \i\epsilon |}\, \mathrm{d}t \le \intx\int_{0}^{\pi} \frac{R^2\e^{-rR\sin (t)}}{R^2 - |\omega^2 + \i\epsilon|}\, \mathrm{d}t = \\
+&= \frac{2R^2}{R^2 - |\omega^2 + \i\epsilon|} \intx\int_{0}^{\pi/2} \e^{-rR\sin(t)}\, \mathrm{d}t \le \frac{2R^2}{R^2 - |\omega^2 + \i\epsilon|} \intx\int_{0}^{\pi/2}\e^{-rR \frac{2}{\pi} t}\, \mathrm{d}t = \\
+&= \frac{2R^2}{R^2 - |\omega^2 + \i\epsilon|} \frac{\e^{-rR} - 1}{-rR\frac{2}{\pi}} \overset{R\,\rightarrow\,\infty}{\longrightarrow} 0.
+\end{align}
+Since $I_\Gamma = I_\epsilon + I_R$, we now find
+\begin{align}
+I_\epsilon &= I_\Gamma = \pi\i\e^{-\i \omega r}. \label{eqn:residual integral I eps}
+\end{align}
+One may easily repeat this calculation for $\epsilon < 0$, which merely amounts to a different sign in the exponent of  \autoref{eqn:residual integral I eps}.
+\\
+Inserting our results into \autoref{eqn:dAlembert Green partial result} leads to
+\begin{align}
+G(\textbf{r},t) &= \lim_{\epsilon\rightarrow 0} \frac{-\i}{(2\pi)^3 r} \intr\int_{\mathbb{R}^{ }} \e^{-\i\omega t} \intr\int_{\mathbb{R}^{ }} \frac{k\e^{\i kr}}{k^2 - \omega^2 \pm \i\epsilon} \, \mathrm{d}^{ }k \, \mathrm{d}^{ }\omega = \frac{\pi }{(2\pi)^3 r} \intr\int_{\mathbb{R}^{ }} \e^{-\i\omega t} \e^{\pm\i\omega r} \, \mathrm{d}^{ }\omega = \\
+&= \frac{1}{4\pi r} \frac{1}{2\pi} \intr\int_{\mathbb{R}^{ }} \e^{-\i \omega\kla\left( t \mp r \right)} \, \mathrm{d}^{ }\omega = \frac{\delta (t\mp r)}{4\pi r}. \label{eqn:dAlembert Green solution}
+\end{align}
+Here we found two qualitatively different Green's functions.
+For our purposes the so called \emph{retarded} solution $G=\frac{1}{4\pi r}\delta (t-r)$ will be sufficient -- the other solution is usually referred to as \emph{advanced}.
+
+\section{Exact electromagnetic field of a moving point charge}
+Using \autoref{eqn:dAlembert Green solution}, we may now write down the general solution for the four-vector potential 
+\begin{align}
+A^\mu (\textbf{r},t) &= \frac{\mu_0}{4\pi} \intr\int_{\mathbb{R}^{4}} \frac{J^\mu (\textbf{r}',t') \delta (t - t' - |\textbf{r} - \textbf{r}'|)}{|\textbf{r} - \textbf{r}'|} \, \mathrm{d}^{3}\textbf{r}'\,\tecxt\text{d}t' =  \label{eqn:A mu Greens x4 integral}\\
+&= \frac{\mu_0}{4\pi} \intr\int_{\mathbb{R}^{3}} \frac{J^\mu (\textbf{r}', t - |\textbf{r} - \textbf{r}'|)}{|\textbf{r} - \textbf{r}'|} \, \mathrm{d}^{3}\textbf{r}'. \label{eqn:A mu Greens r3 integral}
+\end{align}
+The second form is often useful, since it already eliminates one of the integrals.
+However, for the discussion of a point charge, we will find it easier to work with the form in \autoref{eqn:A mu Greens x4 integral}.
+\\
+Let $\rho(\textbf{r}, t) = q \delta (\textbf{r} - \textbf{R}(t))$ be the charge density for a given -- but arbitrary -- trajectory $\textbf{R}(t)$.
+Then we also have $\textbf{j} = \dot{\textbf{R}} \rho$.
+We can compute the electrostatic potential by first integrating over the spatial coordinates
+\begin{align}
+\phi(\textbf{r},t) &= \frac{\mu_0}{4\pi} \intr\int_{\mathbb{R}^{ }} \intr\int_{\mathbb{R}^{3}} \frac{q\delta (\textbf{r}' - \textbf{R}(t')) \delta (t - t' - |\textbf{r} - \textbf{r}'|)}{|\textbf{r} - \textbf{r}'|} \, \mathrm{d}^{3}\textbf{r}' \, \mathrm{d}^{ }t' = \\
+&= \frac{\mu_0 q}{4\pi} \intr\int_{\mathbb{R}^{ }} \frac{\delta \big(f(t')\big)}{|\textbf{r} - \textbf{R}(t')|} \, \mathrm{d}^{ }t'.
+\end{align}
+Here we defined the scalar function $f(t') := t - t' - |\textbf{r} - \textbf{R}(t')|$.
+Note that $f$ is monotonically decreasing, since
+\begin{align}
+f'(t') &= -1 - \frac{\textbf{r} - \textbf{R}(t')}{|\textbf{r} - \textbf{R}(t')|} \cdot \kla\left(  - \dot{\textbf{R}}(t') \right) \equiv -1 + \textbf{n}\cdot \beta < 0,
+\end{align}
+where we introduced the unit-vector $\textbf{n} := \frac{\textbf{r} - \textbf{R}(t')}{|\textbf{r} - \textbf{R}(t')|}$ and the velocity $\beta := \dot{\textbf{R}}(t')$ of our particle, for which obviously $|\beta| < 1$.
+Also note that $f(t'\rightarrow \pm \infty) \rightarrow \mp \infty$.
+Together with the monotony we can conclude that there must exist exactly one $t_r$ such that $f(t_r) = 0$.
+With this knowledge, we may now rewrite
+\begin{align}
+\delta\big(f(t')\big) &= \frac{\delta (t' - t_r)}{|f'(t_r)|} = \frac{\delta (t' - t_r)}{1 - \textbf{n} \cdot \beta}.
+\end{align}
+Thus the electrostatic potential is given by
+\begin{align}
+\phi(\textbf{r},t) &= \frac{\mu_0 q}{4\pi} \frac{1}{x - \textbf{x} \cdot \beta}.
+\end{align}
+Here $\textbf{x} := \textbf{r} - \textbf{R}(t_r)$ and $x := |\textbf{x}|$.
+Thus we also have $\textbf{n} = \frac{\textbf{x}}{x}$.
+The so called \emph{retarded time} $t_r$ is the solution to the implicit equation $f(t_r) = 0$, which is equivalent to
+\begin{align}
+t_r &= t - x(t_r).
+\end{align}
+The vector potential is simply given by $\textbf{A} = \beta \phi$.
+\\
+To compute the electromagnetic field, we need to compute the derivatives of $t_r$
+\begin{align}
+\partial_t t_r &= 1 - \partial_t x = 1 - \frac{\textbf{x}}{x} \kla\left( -\beta \right) \partial_t t_r &&\Rightarrow & \partial_tt_r &= \frac{x}{x - \textbf{x}\cdot\beta},\\
+\partial_j t_r &= -\partial_j x = -\frac{\textbf{x}}{x} \cdot \kla\left( \textbf{e}_j - \beta \partial_jt_r \right) &&\Rightarrow & \partial_j t_r &= -\frac{\textbf{x}_j}{x - \textbf{x}\cdot \beta}.
+\end{align}
+From the second equation it also follows that 
+\begin{align}
+\nabla t_r &= -\frac{\textbf{x}}{x - \textbf{x} \cdot \beta}.
+\end{align}
+Defining the acceleration $\textbf{a} := \dot{\beta}$ we may now calculate
+\begin{align}
+-\partial_j \frac{1}{x - \textbf{x}\cdot\beta} &= \frac{1}{\kla\left( x - \textbf{x}\cdot\beta \right)^2} \kla\left( \partial_j x - \partial_j x_k\beta_k  \right) = \frac{-\partial_jt_r - \beta_k \partial_j \textbf{x}_k - \textbf{x}_k \partial_j\beta_k}{(x - \textbf{x}\cdot\beta)^2} = \\
+&= \frac{-\partial_j t_r - \beta_k (\delta_{jk} - \beta_k \partial_j t_r) - \textbf{x}_k \textbf{a}_k \partial_j t_r }{(x - \textbf{x}\cdot\beta)^2} = \\
+&= \frac{-\beta_j}{(x - \textbf{x}\cdot\beta)^2} + \frac{\textbf{x}_j \kla\left( 1 + \textbf{x}\cdot\textbf{a} - \beta^2 \right)}{(x - \textbf{x}\cdot\beta)^3}. \label{eqn:LW partial j 1 over x}
+\end{align}
+On the other hand, the time derivative of the same quantity amounts to
+\begin{align}
+\partial_t \frac{1}{x - \textbf{x} \cdot \beta} &= \frac{\partial_t \textbf{x}_k \beta_k }{\kla\left( x - \textbf{x}\cdot\beta \right)^2} =  \frac{\textbf{x}_k \textbf{a}_k \partial_t t_r + \beta_k (-\beta_k)\partial_tt_r}{\kla\left( x - \textbf{x}\cdot\beta \right)^2}  =  \frac{x \kla\left( \textbf{x}\cdot\textbf{a} - \beta^2 \right)}{\kla\left( x - \textbf{x}\cdot\beta \right)^3}. \label{eqn:LW partial t 1 over x}
+\end{align}
+Now we have everything ready to compute the electric field
+\begin{align}
+\textbf{E} &= -\nabla\phi - \partial_t \textbf{A} = \\
+&= -\frac{\mu_0 q}{4\pi} \nabla\frac{1}{x - \textbf{x}\cdot \beta} - \beta \frac{\mu_0 q}{4\pi} \partial_t\frac{1}{x - \textbf{x}\cdot \beta} - \frac{\mu_0 q}{4\pi} \frac{1}{x - \textbf{x}\cdot \beta} \textbf{a} \partial_t t_r = \\
+&= \frac{\mu_0 q}{4\pi} \klam\left[ \frac{-\beta - x\textbf{a}}{(x - \textbf{x}\cdot \beta)^2} + \frac{\textbf{x}\kla\left( 1 + \textbf{x}\cdot\textbf{a} - \beta^2 \right)}{(x - \textbf{x}\cdot \beta)^3} - \frac{\beta x \kla\left( \textbf{x}\cdot\textbf{a} - \beta^2 \right)}{(x - \textbf{x}\cdot \beta)^3} \right] = \\
+&= \frac{\mu_0 q}{4\pi x^2} \klam\left[ -\frac{\beta + x\textbf{a}}{(1 - \textbf{n} \cdot \beta)^2} + \frac{\textbf{n}}{(1 - \textbf{n}\cdot \beta)^3} + \frac{ (\textbf{n} - \beta)\kla\left( \textbf{x}\cdot\textbf{a} - \beta^2 \right)}{(1 - \textbf{n}\cdot \beta)^3} \right].
+\end{align}
+Note that
+\begin{align}
+\textbf{n} \times \textbf{E} &= \frac{\mu_0 q}{4\pi} \klam\left[ -\frac{\textbf{n} \times \beta + x\textbf{n} \times \textbf{a}}{(1 - \textbf{n}\cdot \beta)^2} - \frac{\textbf{n}\times \beta \kla\left( \textbf{x}\cdot \textbf{a} - \beta^2 \right)}{(1 - \textbf{n}\cdot \beta)^3} \right] = \\
+&= \frac{\mu_0 q}{4\pi} \klam\left[ \frac{\textbf{a}\times \textbf{x}}{(1 - \textbf{n}\cdot \beta)^2} - \frac{\textbf{n}\times\beta \kla\left( 1 - \textbf{n}\cdot\beta + \textbf{x}\cdot \textbf{a} - \beta^2 \right)}{(1 - \textbf{n}\cdot \beta)^3} \right].
+\end{align}
+Similarly, we may express the magnetic field as
+\begin{align}
+\textbf{B} &= \nabla\times \textbf{A} = \phi \nabla\times\beta + \nabla\phi \times\beta = \\
+&= \phi \kla\left( \nabla t_r \times \textbf{a} \right) + \frac{\mu_0 q}{4\pi } \klam\left[ \frac{\beta}{(x - \textbf{x}\cdot \beta)^2} - \frac{\textbf{x} \kla\left( 1 + \textbf{x}\cdot \textbf{a} - \beta^2 \right)}{(x - \textbf{x}\cdot \beta)^3} \right] \times \beta = \\
+&= \frac{\mu_0 q}{4\pi x^2} \klam\left[ \frac{\textbf{a}\times \textbf{x}}{(1 - \textbf{n} \cdot \beta)^2} - \frac{\textbf{n} \times \beta \kla\left( 1 + \textbf{x}\cdot \textbf{a} - \beta^2 \right)}{(1 - \textbf{n}\cdot\beta)^3}  \right] = \\
+&= ??? \textbf{n} \times \textbf{E}.
+\end{align}
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

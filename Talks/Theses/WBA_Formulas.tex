@@ -1,0 +1,203 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb, slashed}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{dsfont}
+
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\def\I{\text{i}}
+\def\E{\text{e}}
+
+\newcommand*{\titel}{Formulas for Impress Presentation}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+\subject{Bachelor thesis}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Frequency analysis}
+\begin{align*}
+w_{n,N}&=\frac{1}{S}g\kla\left( {\frac{n}{N}} \right)&\tecxt\text{with}&&S&=\sum_{n=0}^{N-1}g\kla\left( {\frac{n}{N}} \right),
+\end{align*} 
+using an infinitely smooth function $g\in C^\infty_c (\mathbb{R})$ with compact support
+\begin{align*}
+g(n)&=\begin{cases}
+\exp\kla\left( {-\klam\left[ {n(1-n)} \right]^{-1}} \right)&\tecxt\text{for}\ 0<n<1,\\
+0&\tecxt\text{else}
+\end{cases}
+\end{align*}
+By construction, these weights are normalized, i.e. $$\sum_{n=0}^{N-1}w_{n,N}=1$$
+Then the weighted Birkhoff average can be defined as
+\begin{align*}
+\tecxt\text{WA}_N(X_N)&=\sum_{n=0}^{N-1}w_{n,N}x_n
+\end{align*}
+Naff
+\begin{align*}
+z_n&\approx\sum_{k= 1}^m a_k\E^{2\pi\I\nu_k n}
+\end{align*}
+\begin{align*}
+\phi(\nu)&=\sum_{n=0}^{N-1}\chi_n z_n \E^{-2\pi\I\nu n}
+\end{align*}
+That is, $\nu_1=\tecxt\text{argmax\,}\vert\phi(\nu)\vert$.
+Here the 
+$$\chi_n=\frac{2}{N}\sin^2\kla\left( {\frac{\pi n}{N}} \right)$$ 
+are normalized weights, similar to the $w_n$ used for the WBA.
+\section{Two dimensions}
+$$f_\nu(q)=q+\nu\,\tecxt\text{mod}\, 1$$ 
+for 
+$$q\in [0,1)$$ 
+with a frequency 
+$$\nu\in [0,1)$$
+Input coordinate for WBA
+$$x_n=(q_{n+1}-q_n)\, \tecxt\text{mod}\, 1$$
+Oscillatory signal for $n=0,\dots,N-1$ and $R>0$ and $A<1$
+\begin{align*}
+z_n&=R\E^{2\pi\I\nu n}=q_n+\I p_n\\
+z_n&=R\E^{2\pi\I\nu_1 n}+A\cdot R\E^{2\pi\I\nu_2 n}
+\end{align*}
+Complex signal
+\begin{align*}
+z_n&=q_n+\I p_n
+\end{align*}
+Polar angle
+\begin{align*}
+\phi_n&=\frac{1}{2\pi}\tecxt\text{arctan2}(q_n,p_n)
+\end{align*} 
+Angle differences
+\begin{align*}
+\Delta\phi_n&=\phi_{n+1}-\phi_n
+\end{align*} 
+and new input coordinate for WBA 
+$$x_n=\Delta\phi_n\,\tecxt\text{mod}\,1$$
+Number of correct digits
+\begin{align*}
+\tecxt\text{dig}_N&=-\log_{10}|\nu-\nu_N|
+\end{align*}
+Chirikov´s two dimensional standard map
+\begin{align*} 
+q_{n+1}&=q_{n}+p_{n}\\
+p_{n+1}&=p_{n}+\frac{K}{2\pi}\sin (2\pi q_{n+1})
+\end{align*}
+Here $K=0.9$.
+Chaos indicator
+\begin{align*}
+\Delta\nu (N) &=|\nu_{[0,N-1]}-\nu_{[N,2N-1]}|
+\end{align*} 
+Time-dependent frequency of trapped orbit
+\begin{align*}
+(\nu_n)&=\klammer\left\{\nu_{[n\sigma,n\sigma + L-1]}\,\middle\vert\,n=0,1,2,\dots,\left\lfloor\frac{N-L}{\sigma}\right\rfloor \right\}
+\end{align*}
+\section{Four dimensions}
+Four dimensional standard map
+\begin{align*}
+q_{1,n+1}&=q_{1,n}+p_{1,n}\\
+p_{1,n+1}&=p_{1,n}+\frac{K_1}{2\pi}\sin\kla\left( {2\pi q_{1,n+1}} \right)+C\\
+q_{2,n+1}&=q_{2,n}+p_{2,n}\\
+p_{2,n+1}&=p_{2,n}+\frac{K_2}{2\pi}\sin\kla\left( {2\pi q_{2,n+1}} \right)+C\\
+C&=\frac{K}{2\pi}\sin\kla\left( {2\pi[q_{1,n+1}+q_{2,n+1}]} \right)
+\end{align*}
+Set of points
+$$X_N=\{\mathbf{x}_n\in\mathbb{R}^d\,\vert\,n=0,\dots,N-1\}$$
+Inertia tensor
+\begin{align*}
+I_d(X_N)&=\sum_{n=0}^{N-1}\mathbf{x}_n\cdot \mathbf{x}_n \mathds{1}_{d\times d}-\mathbf{x}_n\otimes \mathbf{x}_n. \numberthis\label{eqn:InertiaTensor}
+\end{align*}
+Orthogonal transformation matrix 
+$$U\in \text{O}(d)$$
+satisfying 
+$$I_d=U DU^\top$$
+Transformed points
+\begin{align*}
+\mathbf{x}'_n&=U\mathbf{x}_n
+\end{align*}
+Ratio test
+\begin{align*}
+r_{jk}&=\frac{\tecxt\text{min}\klammer\left\{ \sqrt{x_{j,n}^2+x_{k,n}^2} \,\middle\vert\,n=0,\dots,N-1 \right\}}{\tecxt\text{max}\klammer\left\{\sqrt{x_{j,n}^2+x_{k,n}^2} \,\middle\vert\,n=0,\dots,N-1 \right\}}
+\end{align*}
+Resonance condition for integers $m_1,m_2,l\in\mathbb{Z}$
+\begin{align*}
+m_1\nu_1+m_2\nu_2&=l
+\end{align*}
+Uni-modular transformation
+\begin{align*}
+\begin{pmatrix}
+\nu_1 \\ \nu_2
+\end{pmatrix}&\longrightarrow\begin{pmatrix}
+1&0 \\ 4& -1
+\end{pmatrix}\begin{pmatrix}
+\nu_1 \\ \nu_2
+\end{pmatrix}, \numberthis\label{eqn:UnimodularTransformation}
+\end{align*}
+for all black points $(\nu_1,\nu_2)$ on the $3:1:1$ resonance.\\
+Frequency space $10^8$ random initial conditions with $q\in [0.2, 0.8]$ and $p\in [-0.3, 0.3]$.
+$N=2048$ or $N=4096$ with $K_1=2.25, K_2=3$ and $K=1$.
+\section{Appendix}
+parameterized transformation
+\begin{align*}
+\Delta\phi_n&\longrightarrow\klam\left[ {\kla\left( {\Delta\phi_n+\alpha} \right)\,\tecxt\text{mod}\,1} \right]-\alpha
+\end{align*}
+WBA for dual frequency signals
+Angle differences
+\begin{align*}
+\hat{\Delta}\phi_n&=\Delta\phi_n -k_n
+\end{align*}
+for integers $k_n\in\mathbb{Z}$ such that
+$\hat{\Delta}\phi_n$ lie within an interval of length one.
+Visual splitting now described by $k_n\neq k_m$ for some $n,m$.
+\\
+Angle difference $\Delta\phi_m$ as point of reference, i.e. choose $k_m=0$.
+Differences
+\begin{align*}
+\delta_{nm}&=\Delta\phi_n - \Delta\phi_m&\tecxt\text{and}&&\hat{\delta}_{nm}&=\hat{\Delta}\phi_n - \hat{\Delta}\phi_m
+\end{align*}
+related by
+\begin{align*}
+\delta_{nm}&=\hat{\delta}_{nm}+k_n
+\end{align*}
+Compute $k_n$ based on rules
+\begin{align*}
+k_n&=\begin{cases}
++1&\tecxt\text{if}\ \delta_{nm}>1/2 \\
+-1&\tecxt\text{if}\ \delta_{nm}<-1/2 \\
+\ 0 &\tecxt\text{else}
+\end{cases}
+\end{align*}
+\end{document}

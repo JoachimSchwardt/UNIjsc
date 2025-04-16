@@ -1,0 +1,411 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+%\pagestyle{scrheadings}  % Stil für die Seite setzen
+%\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+%\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{01 Lagrange Interpolation}
+\newcommand*{\autor}{Joachim Schwardt und Julian Fleck}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Numerik I - Aufgaben}
+\title{\titel}
+%\author{\autor}
+\author{\begin{tabular}{l|l}
+Joachim Schwardt & 4768711 \\ 
+Julian Fleck & 4759587\\ 
+\end{tabular}}
+%\author{\begin{tabular}{|l|l|}
+%\hline
+%Joachim Schwardt & 4768711 \\ \hline
+%Julian Fleck & 4759587\\ \hline
+%\end{tabular}}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Aufgabe 1}
+\subsection*{a)}
+Gegeben sind die Punkte $P_0(-1,3)$, $P_1(0,2)$, $P_2(1,-3)$ und $P_3(2,18)$.
+Sei $p(x)=a_0+a_1x+a_2x^2+a_3x^3$ das Interpolationspolynom vom geringst möglichen Grad 3.
+Einsetzen von $P_1$ gibt zunächst die einfache Bedingung $a_0=2$.
+Dann müssen die restlichen Koeffizienten das Gleichungssystem 
+\begin{align}
+\begin{pmatrix}
+3-a_0 \\ -3-a_0 \\ 18-a_0
+\end{pmatrix}&=\begin{pmatrix}
+-1&(-1)^2&(-1)^3 \\
+1&1^2&1^3 \\
+2&2^2&2^3 
+\end{pmatrix}\begin{pmatrix}
+a_1\\ a_2\\ a_3
+\end{pmatrix}\\
+\Rightarrow\ \ \begin{pmatrix}
+1 \\ -5 \\ 16
+\end{pmatrix}&=\begin{pmatrix}
+-1&1&-1 \\
+1&1&1 \\
+2&4&8 
+\end{pmatrix}\begin{pmatrix}
+a_1\\ a_2\\ a_3
+\end{pmatrix}
+\end{align}
+erfüllen.
+Dafür kann das Inverse der Matrix bestimmt werden.
+\begin{align}
+\begin{pmatrix}
+-1&1&-1 \\
+1&1&1 \\
+2&4&8 
+\end{pmatrix}&&&\Bigg\vert&&\begin{pmatrix}
+1&0&0\\
+0&1&0\\
+0&0&1
+\end{pmatrix}&&\begin{matrix}
+& \\
+\vert&+\tecxt\text{I}\\
+\vert&+2\tecxt\text{I}\\
+\end{matrix} \\
+\begin{pmatrix}
+-1&1&-1 \\
+0&2&0 \\
+0&6&6 
+\end{pmatrix}&&&\Bigg\vert&&\begin{pmatrix}
+1&0&0\\
+1&1&0\\
+2&0&1
+\end{pmatrix}&&\begin{matrix}
+\vert& -\frac{1}{2}\tecxt\text{II}\\
+& \\
+\vert&-3\tecxt\text{II}\\
+\end{matrix}\\
+\begin{pmatrix}
+-1&0&-1 \\
+0&2&0 \\
+0&0&6 
+\end{pmatrix}&&&\Bigg\vert&&\begin{pmatrix}
+\frac{1}{2}&-\frac{1}{2}&0\\
+1&1&0\\
+-1&-3&1
+\end{pmatrix}&&\begin{matrix}
+\vert& +\frac{1}{6}\tecxt\text{III} \\
+\vert& \cdot\frac{1}{2}\\
+&
+\end{matrix}\\
+\begin{pmatrix}
+-1&0&0 \\
+0&1&0 \\
+0&0&6 
+\end{pmatrix}&&&\Bigg\vert&&\frac{1}{2}\begin{pmatrix}
+\frac{2}{3}&-2&\frac{1}{3}\\
+1&1&0\\
+-2&-6&2
+\end{pmatrix}&&\begin{matrix}
+\vert& \cdot -1 \\
+& \\
+\vert& \cdot \frac{1}{6}
+\end{matrix}\\
+\begin{pmatrix}
+1&0&0 \\
+0&1&0 \\
+0&0&1 
+\end{pmatrix}&&&\Bigg\vert&&\frac{1}{6}\begin{pmatrix}
+-2&6&-1\\
+3&3&0\\
+-1&-3&1
+\end{pmatrix}
+\end{align}
+
+
+Damit können die restlichen Koeffizienten über
+\begin{align}
+\begin{pmatrix}
+a_1 \\ a_2 \\ a_3
+\end{pmatrix}&=\frac{1}{6}\begin{pmatrix}
+-2&6&-1\\
+3&3&0\\
+-1&-3&1
+\end{pmatrix}\begin{pmatrix}
+1\\ -5 \\ 16
+\end{pmatrix}=\begin{pmatrix}
+-8 \\ -2 \\ 5
+\end{pmatrix}
+\end{align}
+bestimmt werden. 
+Das vollständige Polynom lautet demnach
+\begin{align}
+p(x)&=2-8x-2x^2+5x^3.
+\end{align}
+Überprüfen der Koeffizienten liefert wie zu erwarten die gegebenen Punkte
+\begin{align}
+p(-1)&=2-8(-1)-2(-1)^2+5(-1)^3=3\\
+p(0)&=2-8(0)-2(0)^2+5(0)^3=2\\
+p(1)&=2-8(1)-2(1)^2+5(1)^3=-3\\
+p(2)&=2-8(2)-2(2)^2+5(2)^3=18.
+\end{align}
+
+
+\subsection*{b)}
+Die \textsc{Newton}-Form lässt sich deutlich einfacher bestimmen.
+Das Polynom nimmt hier die Form
+\begin{align}
+p(x)&=c_0+c_1(x-x_0)+c_2(x-x_0)(x-x_1)+c_3(x-x_0)(x-x_1)(x-x_2)
+\end{align}
+an.
+Hierbei sind $x_0,x_1,x_2,x_3$ die Stützstellen.
+Einsetzen von $x_0=-1$ ergibt
+\begin{align}
+p(x_0)=p_0=3=c_0.
+\end{align}
+Die weiteren Koeffizienten lassen sich iterativ bestimmen:
+\begin{align}
+c_1&=\frac{p_1-c_0}{x_1-x_0}=\frac{2-3}{0-(-1)}=-1\\
+c_2&=\frac{p_2-c_0-c_1(x_2-x_0)}{(x_2-x_0)(x_2-x_1)}=\frac{-3-3+2}{2}=-2\\
+c_3&=\frac{p_3-c_0-c_1(x_3-x_0)-c_2(x_3-x_0)(x_3-x_1)}{(x_3-x_0)(x_3-x_1)(x_3-x_2)}=\frac{18-3+3+12}{6}=5
+\end{align}
+Das Polynom lautet also
+\begin{align}
+p(x)&=3-(x+1)-2(x+1)x+5(x+1)x(x-1).
+\end{align}
+\subsection*{c)}
+Ausmultiplizieren der \textsc{Newton}-Form führt wieder auf die in a) bestimmte Form
+\begin{align}
+p(x)&=\kla\left( 3-1 \right)+\kla\left( -1-2-5 \right)x+\kla\left( -2 \right)x^2+\kla\left( 5 \right)x^3=2-8x-2x^2+5x^3.
+\end{align}
+\newpage
+\section*{Aufgabe 2}
+Die \textsc{Vandermonde}sche Matrix ist gegeben durch
+\begin{align}
+V&=V(x_0,...,x_n):=\begin{pmatrix}
+1&x_0&x_0^2&\dots&x_0^n \\ 
+1&x_1&x_1^2&\dots&x_1^n \\ 
+\vdots&\vdots&\vdots &\ddots&\vdots\\
+1&x_n&x_n^2&\dots&x_n^n \\ 
+\end{pmatrix}
+\end{align}
+Für die Berechnung der Determinante kann eine Kombination aus dem \textsc{Gauss}schen Eliminierungsverfahren und der \textsc{Laplace} Entwicklung verwendet werden. 
+Die erste Zeile von $V_n$ wird von allen anderen abgezogen, was die Determinante nicht verändert.
+Also gilt
+\begin{align}
+\det V&=\det\begin{pmatrix}
+1&x_0&x_0^2&\dots&x_0^n \\ 
+0&x_1-x_0&x_1^2-x_0^2&\dots&x_1^n-x_0^n\\
+\vdots&\vdots&\vdots &\ddots&\vdots\\
+0&x_n-x_0&x_n^2-x_0^2&\dots&x_n^n-x_0^n\\
+\end{pmatrix}=\\
+&=1\cdot\det\begin{pmatrix}
+x_1-x_0&x_1^2-x_0^2&\dots&x_1^n-x_0^n\\
+\vdots&\vdots &\ddots&\vdots\\
+x_n-x_0&x_n^2-x_0^2&\dots&x_n^n-x_0^n\\
+\end{pmatrix}-0\cdot\dots
+\end{align}
+Aus der $j$-ten Zeile lässt sich nun der jeweilige Faktor $x_j-x_0$ ``ausklammern'', wobei die Identität 
+\begin{align}
+x^n-y^n&=(x-y)\sum_{k=0}^{n-1}x^ky^{n-1-k}\label{eqn:telescoping polynomial}
+\end{align}
+gilt. 
+Betrachte zum Verifizieren von Gleichung (\ref{eqn:telescoping polynomial}) einfach
+\begin{align}
+(x-y)\sum_{k=0}^{n-1}x^ky^{n-1-k}&=\sum_{k=0}^{n-1}\kla\left( x^{k+1}y^{n-1-k}-x^ky^{n-k} \right)=\\
+&=\sum_{k=1}^{n}x^{k}y^{n-k}-\sum_{k=0}^{n-1}x^ky^{n-k}=x^n-y^n.
+\end{align} 
+Insbesondere folgt daraus
+\begin{align}
+\frac{x_j^n-x_0^n}{x_j-x_0}&=\sum_{k=0}^{n-1}x_j^kx_0^{n-1-k},
+\end{align}
+und somit
+\begin{align}
+\det V&=\prod_{j=1}^n (x_j-x_0)\cdot\det\begin{pmatrix}
+1&x_1+x_0&\dots&\sum_{k=0}^{n-1}x_1^kx_0^{n-1-k}\\
+1&x_2+x_0&\dots&\sum_{k=0}^{n-1}x_2^kx_0^{n-1-k}\\
+\vdots&\vdots &\ddots&\vdots\\
+1&x_n+x_0&\dots&\sum_{k=0}^{n-1}x_n^kx_0^{n-1-k}\\
+\end{pmatrix}.
+\end{align}
+Jetzt kann die erste Zeile wieder von allen anderen abgezogen werden, womit man
+\begin{align}
+\det V&=\prod_{j=1}^n (x_j-x_0)\cdot\det\begin{pmatrix}
+1&x_1+x_0&\dots&\sum_{k=0}^{n-1}x_1^kx_0^{n-1-k}\\
+0&x_2-x_1&\dots&\sum_{k=1}^{n-1}(x_2^k-x_1^k)x_0^{n-1-k}\\
+\vdots&\vdots &\ddots&\vdots\\
+0&x_n-x_1&\dots&\sum_{k=1}^{n-1}(x_n^k-x_1^k)x_0^{n-1-k}\\
+\end{pmatrix}
+\end{align}
+erhält. 
+Dabei fallen alle Terme mit $k=0$ heraus, weshalb die Summe bei $k=1$ anfängt.
+Entwicklung nach der ersten Spalte und ausklammern der gemeinsamen Faktoren liefert dann
+\begin{align}
+\det V&=\prod_{j=1}^n (x_j-x_0)\cdot\det\begin{pmatrix}
+x_2-x_1&\dots&\sum_{k=1}^{n-1}(x_2^k-x_1^k)x_0^{n-1-k}\\
+\vdots &\ddots&\vdots\\
+x_n-x_1&\dots&\sum_{k=1}^{n-1}(x_n^k-x_1^k)x_0^{n-1-k}\\
+\end{pmatrix}=\\
+&=\prod_{j=1}^n (x_j-x_0)\prod_{j=2}^n (x_j-x_1)\cdot\det\begin{pmatrix}
+1&\dots&\sum_{k=1}^{n-1}x_0^{n-1-k}\sum_{j=0}^{k-1}x_2^jx_1^{k-1-j}\\
+\vdots &\ddots&\vdots\\
+1&\dots&\sum_{k=1}^{n-1}x_0^{n-1-k}\sum_{j=0}^{k-1}x_n^jx_1^{k-1-j}\\
+\end{pmatrix}.
+\end{align}
+Dieses Muster lässt sich fortsetzen, wobei die Größe der Matrix in jedem Schritt um 1 verringert wird. 
+Im obigen liegt bereits nur noch eine $(n-1)\times(n-1)$-Matrix vor.
+Nach weiteren $n-2$ Schritten besteht der letzte Term nur noch aus $\det (1)=1$, und die gesammelten Vorfaktoren sind
+\begin{align}
+\det V&=\prod_{j=1}^n (x_j-x_0)\prod_{j=2}^n (x_j-x_1)\dots\prod_{j=n}^n (x_j-x_{n-1})=\\
+&=\prod_{k=0}^{n-1}\prod_{j=k+1}^n(x_j-x_k)=\prod_{0\le k<j\le n}(x_j-x_k).\label{eqn:Vandermande determinant}
+\end{align}
+%Im Fall $n=1$ lässt sich die Determinante einfach als $x_1-x_0$ ablesen.
+%Dieses Ergebnis erhält man auch mit \eqref{eqn:Vandermande determinant}, da
+%\begin{align}
+%\prod_{0\le k<j\le 1}(x_j-x_k)=\prod_{k=0}^{0}\prod_{j=k+1}^1(x_j-x_k)=\prod_{j=1}^1x_j-x_0=x_1-x_0.
+%\end{align}
+\newpage
+\section*{Aufgabe 3}
+Es gilt
+\begin{align}
+L&:=\underset{0\le x\le 1}{\tecxt\text{max}}\left\vert\kla\left( x-\frac{k}{n} \right)\kla\left( x-\frac{n-k}{n} \right)\right\vert=\underset{0\le x\le 1}{\tecxt\text{max}}\left\vert\kla\left( x-\frac{k}{n} \right)\kla\left( x+\frac{k}{n}-1 \right)\right\vert=\\
+&=\underset{0\le x\le 1}{\tecxt\text{max}}\left\vert\kla\left( x^2-\frac{k^2}{n^2} \right)-\kla\left( x-\frac{k}{n} \right)\right\vert=\underset{0\le x\le 1}{\tecxt\text{max}}\bigg\vert \underbrace{\kla\left( x-\frac{1}{2} \right)^2}_{\in [0,\frac{1}{4}]}-\underbrace{\kla\left( \frac{k}{n}-\frac{1}{2} \right)^2}_{\in [0,\frac{1}{4}]}\bigg\vert \le \frac{1}{4}.
+\end{align}
+Gemäß dem Satz über Interpolationsfehler aus der Vorlesung gilt
+\begin{align}
+\underset{0\le x\le 1}{\tecxt\text{max}}\left\vert e^x-p_n(x)\right\vert\le\frac{1}{(n+1)!}\|\partial_x^{n+1}e^x\|_\infty\|\omega(x)\|_\infty=\frac{e}{(n+1)!}\cdot\underset{0\le x\le 1}{\tecxt\text{max}}\left\vert\omega(x)\right\vert.
+\end{align}
+Dabei ist das Hilfspolynom $\omega$ als
+\begin{align}
+\omega(x)&:=\prod_{k=0}^n (x-x_k)
+\end{align}
+definiert.
+Mit den Stützstellen $x_k=\frac{k}{n}$ kann dieses auch anders aufgeschrieben werden:
+\begin{align}
+\omega(x)&=\prod_{k=0}^n \kla\left( x-\frac{k}{n} \right)\kom\overset{\substack{{n\,=\,2m+1} \\ |}}{=}\prod_{k=0}^{m} \kla\left( x-\frac{k}{n} \right)\kla\left( x-\frac{n-k}{n} \right)\\
+\tecxt\text{bzw.}\ \ \omega(x)&=\prod_{k=0}^n \kla\left( x-\frac{k}{n} \right)\kom\overset{\substack{{n\,=\,2m} \\ |}}{=}\kla\left( x-\frac{1}{2} \right)\prod_{k=0}^{m-1} \kla\left( x-\frac{k}{n} \right)\kla\left( x-\frac{n-k}{n} \right).
+\end{align}
+Da der Betrag jedes Faktors im jeweiligen Produkt $\prod_{k=0}\dots$ gemäß dem obigen Beweis $\le\frac{1}{4}$ ist, gilt 
+\begin{align}
+&\underset{0\le x\le 1}{\tecxt\text{max}}\left\vert\omega(x)\right\vert \kom\overset{\substack{{n\,=\,2m+1} \\ |}}{\le}\frac{1}{4^{m+1}}=\frac{1}{2\cdot 2^n}\\
+\tecxt\text{bzw.}\ \ &\underset{0\le x\le 1}{\tecxt\text{max}}\left\vert\omega(x)\right\vert \kom\overset{\substack{{n\,=\,2m} \\ |}}{\le}\frac{1}{4^{m}}\underset{0\le x\le 1}{\tecxt\text{max}}\left\vert x-\frac{1}{2}\right\vert = \frac{1}{2\cdot 2^n}.
+\end{align}
+Insgesamt erhält man also die Abschätzung
+\begin{align}
+\underset{0\le x\le 1}{\tecxt\text{max}}\left\vert e^x-p_n(x)\right\vert\le\frac{e}{(n+1)!}\frac{1}{2^{n+1}}.
+\end{align}
+Mit einem Fehler von $\simeq 2.6\cdot 10^{-7}$ ist $n=7$ das erste $n$, für das der Fehler kleiner als $10^{-6}$ ist. 
+Für $n=6$ ist dieser noch $\simeq 4.2\cdot 10^{-6}$.
+
+\newpage
+\section*{Aufgabe 4}
+\subsection*{a)}
+Das $n$-te \textsc{Tschebyschow}-Polynom ist gegeben durch
+\begin{align}
+T_n(x)&:=\cos\kla\left( n\cdot\arccos (x) \right).
+\end{align}
+Offensichtlich sind dabei
+\begin{align}
+T_0(x)&=\cos(0)=1&\tecxt\text{und}&&T_1(x)&=\cos(\arccos (x))=x.
+\end{align}
+Man findet mit den Additionstheoremen
+\begin{align}
+\cos(a\pm b)&=\cos(a)\cos(b)\mp\sin(a)\sin(b)\label{eqn:cos a pm b}\\
+2\sin(a)\sin(b)&=\cos(a-b)-\cos(a+b)\label{eqn:2sin a sin b}
+\end{align}
+dann die Rekursionsvorschrift
+\begin{align}
+T_{n+1}(x)&=\cos\kla\left( n\arccos(x) \right)\cos(\arccos(x))-\sin\kla\left( n\arccos(x) \right)\sin(\arccos(x))=\\
+&=T_{n}(x)T_1(x)-\frac{1}{2}\klam\left[ T_{n-1}(x)-T_{n+1}(x) \right].
+\end{align}
+Umstellen nach $T_{n+1}$ liefert
+\begin{align}
+T_{n+1}&=2x(x)T_n(x)-T_{n-1}(x).
+\end{align}
+Das Theorem \eqref{eqn:cos a pm b} lässt sich mit Hilfe von $\e^{\i x}=\cos(x)+\i\sin(x)$ zeigen, da
+\begin{align}
+\e^{\i (a\pm b)}&=\e^{\i a}\e^{\i \pm b}\\
+\cos(a\pm b) + \i\sin(a\pm b)&=\kla\left( \cos(a)+\i\sin(a) \right)\kla\left( \cos(b)\pm \i\sin(b) \right)=\\
+&=\cos(a)\cos(b)\mp\sin(a)\sin(b)+\\
+&\hspace*{.5cm}+\i\kla\left( \sin(a)\cos(b)\pm\cos(a)\sin(b) \right).
+\end{align}
+Vergleich von Real- und Imaginärteil führt dann zu den bekannten Theoremen.
+Durch Einsetzen findet man auch
+\begin{align}
+\cos(a-b)-\cos(a+b)&=\cos(a)\cos(b)+\sin(a)\sin(b)-\\
+&\hspace*{.5cm}-\cos(a)\cos(b)-(-\sin(a)\sin(b))=\\
+&=2\sin(a)\sin(b).
+\end{align}
+\subsection*{b)}
+$T_1$ erfüllt beide Induktionsvoraussetzungen, da $2^{1-1}=1$ und $T_1(x)=x$ vom Grad 1 ist.
+Sei also $T_n(x)$ ein Polynom vom Grad $n$ mit führendem Vorfaktor $2^{n-1}$.
+Anders aufgeschrieben ist also bekannt, dass
+\begin{align}
+T_n(x)&=2^{n-1}x^n + \sum_{k=0}^{n-1}t(k;n)x^k
+\end{align}
+ist. 
+Hierbei sei $t(k;n)$ der zum $x^k$-Term zugehörige Koeffizient des $n$-ten \textsc{Tschebyschow}-Polynoms.
+Dann folgt aus der Rekursionsvorschrift
+\begin{align}
+T_{n+1}(x)&=2x\klam\left[ 2^{n-1}x^n + \sum_{k=0}^{n-1}t(k;n)x^k \right]-2^{n-2}x^{n-1} - \sum_{k=0}^{n-2}t(k;n-1)x^k=\\
+&=2^nx^{n+1}+\sum_{k=0}^nt(k;n+1)x^k.
+\end{align}
+Die Terme mit Grad kleiner $n+1$ wurden dabei alle in den neuen Koeffizienten $t(k;n+q)$ absorbiert.
+\subsection*{c)}
+Die Nullstellen des $(n+1)$-ten \textsc{Tschebyschow}-Polynoms seien $x_k$ ($k=0,\dots,n$).
+Nach dem Fundamentalsatz der Algebra lässt sich das Polynom $T_{n+1}(x)$ dann als Produkt 
+\begin{align}
+T_{n+1}(x)&=\alpha\cdot\prod_{k=0}^{n}(x-x_k)
+\end{align}
+schreiben, wobei der konstante Vorfaktor noch einen Freiheitsgrad darstellt.
+Da in b) allerdings bereits gezeigt wurde, dass der führende Koeffizient den Wert $2^n$ hat, und das ausmultiplizieren der obigen Formel auf $\alpha x^n+\dots$ führt, findet man $\alpha=2^n$.\\
+Damit ist der geforderte Beweis offensichtlich, da
+\begin{align}
+\underset{x\in [-1,1]}{\max}\left\vert\prod_{k=0}^n(x-x_k)\right\vert&=\underset{x\in [-1,1]}{\max}\left\vert\frac{1}{2^n}T_{n+1}(x)\right\vert=\frac{1}{2^n}.
+\end{align}
+Hierbei wurde ausgenutzt, dass $\vert T_{n+1}(x)\vert\le 1$ und $T_{n+1}(1)=1$, woraus 
+\begin{align}
+\underset{x\in [-1,1]}{\max}\left\vert T_{n+1}(x)\right\vert&=1
+\end{align}
+folgt.
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

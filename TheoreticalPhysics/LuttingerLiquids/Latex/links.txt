@@ -1,0 +1,41 @@
+https://stackoverflow.com/questions/68775869/message-support-for-password-authentication-was-removed-please-use-a-personal
+git clone https://github.com/JoachimSchwardt/MasterThesisLL
+
+https://physics.stackexchange.com/questions/442145/the-correct-definition-of-klein-factor
+https://physics.stackexchange.com/questions/341022/relation-between-greens-function-and-its-hamiltonian
+
+https://eduardo.physics.illinois.edu/phys583/physics583.html (RG, Advanced QFT)
+
+
+https://prefetch.eu/know/concept/matsubara-greens-function/
+
+
+https://mathworld.wolfram.com/GeneralizedHypergeometricFunction.html
+https://de.wikipedia.org/wiki/Gradshteyn-Ryzhik
+https://www.taylorfrancis.com/books/mono/10.1201/9780203750643/integrals-series-prudnikov
+https://dlmf.nist.gov/
+https://functions.wolfram.com/HypergeometricFunctions/Hypergeometric3F2/03/02/03/0007/
+https://arxiv.org/pdf/math/0603096.pdf
+https://arxiv.org/pdf/1102.3003.pdf     # numerical evaluation
+
+
+
+https://www.researchgate.net/publication/225878997_The_Green%27s_Function_for_the_Two-Dimensional_Helmholtz_Equation_in_Periodic_Domains
+https://www.math.kit.edu/ianmip/~schmitt/media/ewald-periodic.pdf
+
+
+https://physics.stackexchange.com/questions/345898/how-exactly-is-normal-ordering-an-operator-defined (very good)
+
+
+https://physics.stackexchange.com/questions/233736/self-energy-of-a-fermi-liquid
+
+
+https://physics.stackexchange.com/questions/372306/what-is-the-wilsonian-definition-of-renormalizability
+https://www.sciencedirect.com/science/article/pii/0370157374900234?ref=pdf_download&fr=RR-2&rr=83050761ee036a77 #Wilson Kogut RG
+
+
+https://tex.stackexchange.com/questions/36039/automatic-size-adjustment-for-nested-parentheses
+https://tex.stackexchange.com/questions/102157/sloppy-left-and-right
+https://tex.stackexchange.com/questions/113988/less-aggressive-automatic-paren-stretching-with-left
+
+https://tex.stackexchange.com/questions/191376/autoref-and-braces-around-equation-number

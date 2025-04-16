@@ -1,0 +1,108 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+
+\begin{document}
+
+\title{03 Kurzzeitpropagator}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Zeitabhängige Schrödingergleichung}
+Sei $K(x,\Delta t;y,0):=A^{-1}\exp\kla\left( {\frac{i}{\hbar}\kla\left[ {\frac{m(x-y)^2}{2\Delta t}-V\kla\left( {\frac{x+y}{2}} \right) \Delta t} \right]  } \right)  $ der Kurzzeitpropagator um eine beliebige Wellenfunktion $\psi(x,t)$ mit folgender Vorschrift zu propagieren:
+$$\psi(x, t+\Delta t)=\int K(x, \Delta t;y,0)\psi(y,t)\,\mathrm{d}y$$
+Daraus kann die zeitabhängige \textsc{Schrödinger}-Gleichung hergeleitet werden. Man findet $A=B\sqrt{2\pi i\hbar\Delta t/m}$ und $B=1$:
+\begin{align*}
+i\hbar\partial_t\psi&=\frac{i\hbar}{A\Delta t}\intx\int_{\mathbb{R}^{ }}{\exp\kla\left( {\frac{i}{\hbar}\kla\left[ {\frac{m(x-y)^2}{2\Delta t}-V\kla\left( {\frac{x+y}{2}} \right) \Delta t} \right]  } \right)\psi(y,t)}\,\mathrm{d}^{ }y-\frac{i\hbar\psi}{\Delta t}\kom\overset{\substack{{\eta\,:=\,y-x} \\ |}}{=} \\
+&=\frac{i\hbar}{A\Delta t} {\int_{\mathbb{R}} \exp\kla\left( {\frac{i}{\hbar}\kla\left[ {\frac{m\eta^2}{2\Delta t}-V\kla\left( x+{\frac{\eta}{2}} \right) \Delta t} \right]  } \right)\psi(x+\eta,t)}\,\mathrm{d}\eta-\frac{i\hbar\psi}{\Delta t}\kom\overset{\substack{{V\approx V(x),\, \textsc{Taylor}\ \psi} \\ |}}{=} \\
+&=\frac{i\hbar}{A\Delta t}e^{\frac{\Delta tV}{i\hbar}}\intx\int_{\mathbb{R}^{ }}{e^{-\frac{m\eta^2}{2i\hbar\Delta t}}}\left(\psi+\frac{\eta^2}{2}\psi''\right)\,\mathrm{d}^{}\eta-\frac{i\hbar\psi}{\Delta t}\kom\overset{\substack{{e^{\Delta t}\approx 1+\Delta t} \\ |}}{=} \\
+&=\frac{i\hbar}{A\Delta t}\kla\left( {1+\frac{\Delta tV}{i\hbar}} \right)  \kla\left( {\psi\sqrt{\frac{2\pi i\hbar\Delta t}{m}}+\psi''\frac{2i\hbar\Delta t}{4m}\sqrt{\frac{2\pi i\hbar\Delta t}{m}}} \right) -\frac{i\hbar\psi}{\Delta t}=\\
+&=\frac{i\hbar}{B}\kla\left( {1+\frac{\Delta tV}{i\hbar}} \right) \kla\left( \frac{\psi}{\Delta t}+\psi''\frac{i\hbar}{2m} \right) -\frac{i\hbar\psi}{\Delta t} =\\
+&=\frac{1}{B}\kla\left( {\frac{i\hbar\psi}{\Delta t}+V\psi-\frac{\hbar^2}{2m}\psi''+\frac{i\hbar\Delta tV\psi''}{2m}} \right) -\frac{i\hbar\psi}{\Delta t}\kom\overset{\substack{{B=1} \\ |}}{=}\\
+&=\cancel{\frac{i\hbar\psi}{\Delta t}}+V\psi-\frac{\hbar^2}{2m}\psi''+\frac{i\hbar\Delta tV\psi''}{2m}-\cancel{\frac{i\hbar\psi}{\Delta t}}\overset{\Delta t\rightarrow 0}{\longrightarrow}H\psi
+\end{align*}
+\section{Energieeigenwerte}
+Sei $V(x)=-V_0\delta(x)$ und $k^2=2mE/\hbar^2$. Für $x\neq 0$ erhält man:
+\begin{align*}
+E\phi &=-\frac{\hbar^2}{2m}\phi''\ \ \Rightarrow\ \ \phi''+k^2\phi=0\ \ \Rightarrow\ \ \phi(x)=\left\{\begin{matrix}
+Ae^{ikx}+Be^{-ikx}, & x>0 \\
+Ce^{ikx}+De^{-ikx}, & x<0
+\end{matrix}\right.
+\end{align*}
+Aus der Stetigkeit von $\phi$ folgt $A+B=C+D$. Für $\psi'$ wird das Integral über eine $\epsilon$-Umgebung um $x=0$ betrachtet:
+\begin{align*}
+0&=\lim_{\epsilon\rightarrow 0} E\int_{-\epsilon}^\epsilon \phi\,\mathrm{d}x=-\frac{\hbar^2}{2m}\lim_{\epsilon\rightarrow 0}\int_{-\epsilon}^\epsilon \phi''\,\mathrm{d}x-V_0\phi(0)\\
+&\Rightarrow\ \ \lim_{\epsilon\rightarrow 0}\phi'(\epsilon)-\phi'(-\epsilon)=-\frac{2mV_0}{\hbar^2}\phi(0)\\
+&\Rightarrow\ \ ik(A-B)-ik(C-D)=-\frac{2mV_0}{\hbar^2}(A+B)\\
+&\Rightarrow\ \ k=\frac{2miV_0(A+B)}{\hbar^2(A-B-C+D)}\ \ \Rightarrow\ \ E=-\frac{2mV_0^2}{\hbar^2}\kla\left( {\frac{A+B}{A-B-C+D}} \right) ^2
+\end{align*}
+Da $k$ scheinbar komplex ist, muss $B=C=0$ gelten, damit $\phi$ für $x\rightarrow \pm\infty$ beschränkt bleibt. Also gilt $A=D$:
+\begin{align*}
+E&=\underline{-\frac{mV_0^2}{2\hbar^2}}\ \ \ \ \mathrm{und}\ \ \ \ \phi(x)=Ae^{ik|x|}=Ae^{-\frac{mV_0}{\hbar^2}|x|}\overset{(a)}{=}\underline{\frac{\sqrt{mV_0}}{\hbar}e^{-\frac{mV_0}{\hbar^2}|x|}}\\
+&(a):\ 1\overset{!}{=}\brak\langle {\phi}| {\phi}\rangle =|A|^2\intx\int_{0}^{\infty}2e^{-2mV_0x/\hbar^2}\,\mathrm{d}x =|A|^2\frac{\hbar^2}{mV_0}\ \ \Rightarrow\ \ A=\frac{\sqrt{mV_0}}{\hbar}
+\end{align*}
+\section{Potentialkasten}
+Sei $V(x)=\left\{\begin{matrix}
+0,& |x|\le a/2 \\ \infty,& |x|>a/2
+\end{matrix}\right.$\, und $k^2=2mE/\hbar^2$:
+\begin{align*}
+0&=\phi''(x)+\frac{2mE}{\hbar^2}\phi(x)\ \ \Rightarrow\ \ \phi(x)=Ae^{ikx}+Be^{-ikx}\\
+\phi (a/2)&=Ae^{ika/2}+Be^{-ika/2}\overset{!}{=}0 \ \ \Rightarrow\ \ B=-Ae^{ika} \\ 
+\phi (-a/2)&=Ae^{-ika/2}-Ae^{ika}e^{ika/2}\overset{!}{=}0 \ \ \Rightarrow\ \ 2ka=2\pi n\\
+&\Rightarrow\ \ E_n=\frac{\hbar^2k^2}{2m}=\frac{h^2n^2}{8ma^2}\ \ \ \ \mathrm{und}\ \ \ \ \phi_n(x)=\sqrt{\frac{2}{a}}\sin\kla\left( {\frac{\pi nx}{a}+\frac{\pi n}{2}} \right)  
+\end{align*}
+Die Eigenfunktionen sind orthogonal. Sei $n, m\in \mathbb{N}$:
+\begin{align*}
+\brak\langle {\phi_n}| {\phi_m}\rangle &= \frac{2}{a}\intx\int_{-a/2}^{a/2}\sin\kla\left( {\frac{\pi nx}{a}+\frac{\pi n}{2}} \right)\sin\kla\left( {\frac{\pi mx}{a}+\frac{\pi m}{2}} \right)\,\mathrm{d}x \kom\overset{\substack{{\cos(x-y)-\cos(x+y)\, =\, 2\sin x\sin y} \\ |}}{=} \\
+&=\frac{1}{a}\intx\int_{-a/2}^{a/2}\cos\kla\left( {\frac{\pi x(n-m)}{a}+\frac{\pi(n-m)}{2}} \right) -\cos\kla\left( {\frac{\pi x(n+m)}{a}+\frac{\pi (n+m)}{2}} \right) \,\mathrm{d}x \kom\overset{\substack{{ua\,=\,\pi x} \\ |}}{=}\\
+&=\frac{1}{\pi}\intx\int_{-\pi/2}^{\pi/2}\cos\kla\left( {(u+\frac{\pi}{2})(n-m)} \right) -\cos\kla\left( {(u+\frac{\pi}{2})(n+m)} \right) \,\mathrm{d}u \kom\overset{\substack{{y\,=\,u+\pi/2} \\ |}}{=}\\
+&=\frac{1}{\pi}\intx\int_{0}^{\pi}\cos\kla\left( {y(n-m)} \right) \,\mathrm{d}y =\delta_{nm}
+\end{align*}
+Aus der Orthonormalität folgt für die Entwicklungskoeffizienten einer beliebigen Wellenfunktion $\phi=\sum_nc_n\phi_n$:
+$$P=\brak\langle {\phi}| {\phi}\rangle =\brak\langle {\sum_n c_n\phi_n}| {\sum_m c_m\phi_m}\rangle =\sum_{n,m}c_n^\ast c_m\brak\langle {\phi_n}| {\phi_m}\rangle =\sum_n |c_n|^2\overset{!}{=}1\\$$
+Es gilt $k_n=2\pi n/a$. Setze $\phi=\kappa\phi_1+\sqrt{1-\kappa^2}\phi_2$. Für die Wahrscheinlichkeit, das Teilchen in der rechten Hälfte des Kastens zu finden gilt dann:
+\begin{align*}
+P_R(\kappa)&=\intx\int_{0}^{a/2}(\kappa\phi_1+\sqrt{1-\kappa^2}\phi_2)^2\,\mathrm{d}x  = \\
+&=\frac{2}{a}\intx\int_{0}^{a/2}\kappa^2\cos^2\frac{\pi x}{a}+(1-\kappa^2)\sin^2\frac{2\pi x}{a}+2\kappa\sqrt{1-\kappa^2}\cos\frac{\pi x}{a}\sin\frac{2\pi x}{a}\,\mathrm{d}x \kom\overset{\substack{{ua\,=\,\pi x} \\ |}}{=}\\
+&=\frac{1}{\pi}\intx\int_{0}^{\pi/2}\kappa^2(1+\cos 2u)+(1-\kappa^2)(1-\cos 2u)+8\kappa\sqrt{1-\kappa^2}\cos^2u\sin u\,\mathrm{d}u\kom\overset{\substack{{y\,=\,\cos u} \\ |}}{=}\\
+&=\frac{\kappa^2}{2}+\frac{1-\kappa^2}{2}-8\kappa\sqrt{1-\kappa^2}\intx\int_{0}^{1}y^2\,\mathrm{d}y=\frac{1}{2}-\frac{8\kappa\sqrt{1-\kappa^2}}{3}\\
+0&\overset{!}{=}\partial_\kappa P_R(\kappa)=-\frac{8}{3}\kla\left( {\sqrt{1-\kappa^2}-\frac{\kappa^2}{\sqrt{1-\kappa^2}}} \right)=-\frac{8}{3\sqrt{1-\kappa^2}}\kla\left( {1-2\kappa^2} \right)\ \ \Rightarrow\ \ \kappa=\frac{1}{\sqrt{2}}\\
+&\Rightarrow\ \ \phi=\frac{1}{\sqrt{a}}\kla\left( {\cos\frac{\pi x}{a}+\sin\frac{2\pi x}{a}} \right) 
+\end{align*}
+Für die Zeitentwicklung gilt $\psi_n(x,t)=\phi_n(x)e^{-iE_nt/\hbar}$:
+\begin{align*}
+\psi(x,t)&=\frac{1}{\sqrt{a}}\kla\left( {\cos\frac{\pi x}{a}e^{-\frac{i\pi ht}{4ma^2}}+\sin\frac{2\pi x}{a}e^{-\frac{i\pi ht}{ma^2}}} \right) \\
+\psi^\ast\psi&=\frac{1}{a}\kla\left( {\cos^2\frac{\pi x}{a}+\sin^2\frac{2\pi x}{a}+2\cos\frac{\pi x}{a}\sin\frac{2\pi x}{a}\cos\frac{3\pi ht}{4ma^2}} \right) \\
+&\Rightarrow\ \ P_R(\kappa)=\frac{1}{2}-\frac{8\kappa\sqrt{1-\kappa^2}}{8}\cos\frac{3\pi ht}{4ma^2}
+\end{align*}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=1]{Oscillating_wavefunction.png}
+\caption{Plot von $|\psi|^2\ $ (Zeit $\equiv$ Farbe) }
+\end{figure}\\
+Die Stromdichte berechnet sich nach $j(x,t)=\frac{1}{m}\mathrm{Re}\,\psi^\ast\hat{p}\psi$:
+\begin{align*}
+j(x,t)&=\frac{1}{ma}\mathrm{Re}\,\kla\left( {\cos\frac{\pi x}{a}e^{\frac{i\pi ht}{4ma^2}}+\sin\frac{2\pi x}{a}e^{\frac{i\pi ht}{ma^2}}} \right)\frac{\hbar}{i}\partial_x\kla\left( {\cos\frac{\pi x}{a}e^{-\frac{i\pi ht}{4ma^2}}+\sin\frac{2\pi x}{a}e^{-\frac{i\pi ht}{ma^2}}} \right)= \\
+&=\frac{\pi\hbar}{ma^2}\mathrm{Im}\,\kla\left( {\cos\frac{\pi x}{a}e^{\frac{i\pi ht}{4ma^2}}+\sin\frac{2\pi x}{a}e^{\frac{i\pi ht}{ma^2}}} \right)\kla\left( {\sin\frac{\pi x}{a}e^{-\frac{i\pi ht}{4ma^2}}-2\cos\frac{2\pi x}{a}e^{-\frac{i\pi ht}{ma^2}}} \right)= \\
+&=\frac{h}{2ma^2}\mathrm{Im}\,\kla\left( {\sin\frac{\pi x}{a}\sin\frac{2\pi x}{a}e^{\frac{3i\pi ht}{4ma^2}}-2\cos\frac{\pi x}{a}\cos\frac{2\pi x}{a}e^{-\frac{3i\pi ht}{4ma^2}}} \right)= \\
+&=\frac{h}{2ma^2}\kla\left( {\sin\frac{\pi x}{a}\sin\frac{2\pi x}{a}+2\cos\frac{\pi x}{a}\cos\frac{2\pi x}{a}} \right)\sin{\frac{3\pi ht}{4ma^2}} =\\
+&=\frac{h}{2ma^2}\kla\left( {\cos\frac{\pi x}{a}+\cos\frac{\pi x}{a}\cos\frac{2\pi x}{a}} \right) \sin{\frac{3\pi ht}{4ma^2}}=\\
+&=\frac{h}{ma^2}\cos^3\frac{\pi x}{a}\sin{\frac{3\pi ht}{4ma^2}}
+\end{align*}
+
+\end{document}

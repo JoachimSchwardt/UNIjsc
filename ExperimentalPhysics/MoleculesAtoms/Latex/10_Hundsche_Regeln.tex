@@ -1,0 +1,52 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{10 Hundsche Regeln}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 28: Elektronenkonfigurationen}
+Der Hauptquantenzahl $n$ sind Schalen für $n=1,2,3,\dots$ zugeordnet. Diese werden auch als $K-,L-,M-,\dots$Schalen bezeichnet. Es gibt für ein bestimmtes $L$ immer $2L+1$ Möglichkeiten für $|M_L|\le L$, zusammen mit Spin hoch oder runter also $2(2L+1)$ erlaubte Zustände zu einem $L$ ($2,6,10,\dots)$. Aus $L<n$ folgt dann, dass es $\sum_{L=0}^{n-1}2(2L+1)=2n^2$ Elektronen in einer Schale geben kann ($2,8,18,\dots$). \\
+Das erste Element hat also $2+8+2+3=15$ Elektronen, was Phosphor entspricht. Das zweite Element hat $2+8+18+2+6+10=46$ Elektronen, was Palladium entspricht.\\
+Zur magnetischen Quantenzahl $M$ liefern volle Schalen keinen Beitrag, da es genau gleich viele Elektronen mit Spin hoch bzw. runter gibt. Und jetzt???\\
+Es werden nach und nach die Schalen aufgefüllt, gemäß den Hundschen Regeln. Bei den Übergangselementen ergeben sich durch die elektromagnetische Interaktion der Elektronen untereinander dabei Situationen, in denen die energetische günstigste Variante nicht im Auffüllen der "nächsten" Schale besteht. Es gibt hier also Ausnahmen zu den Regeln. 
+\section*{Aufgabe 29: Hundsche Regeln und Eisen}
+Fe: Die 4s${}^2$ Schale ist voll und liefert daher keinen Beitrag zu $S$ oder $L$. Es werden in einer Schale möglichst viele Spins parallel ausgerichtet, also gibt es in der 3d${}^6$ Schale 5 Spin hoch und 1 Spin runter, insgesamt also $S=2$. Es ergibt sich dabei $L=2+1+0+(-1)+(-2)+2=2$ in der Reihenfolge, in der die Schale befüllt wird. Da sie mehr as halbvoll ist, erhalten wir $J=L+S=4$.\\
+Fe${}^{2+}$: Da nur die zwei Elektronen aus der 4s${}^2$ Schale fehlen, ändert sich nichts an den Quantenzahlen.\\
+Fe${}^{4+}$: Hier gibt es nun in der 3d${}^4$ Schale 4 Spins nach oben ($S=2$) und es ergibt sich daraus $L=2+1+0+(-1)=2$. Insgesamt folgt also wieder $J=L+S=4$.
+\section*{Aufgabe 30: Einfachanregungszustände in Beryllium}
+Aufschlüsselung der Quantenzahlen als Tabelle (\ref{Quantenzahlen Beryllium a}):
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c|c}
+Zustand&$n$&$l$&$m_l$&$m_s$\\ \hline
+1s${}^2$&1&0&0&$\pm\frac{1}{2}$ \\ \hline
+2s${}^2$&2&0&0&$\pm\frac{1}{2}$
+\end{tabular}
+\caption{Quantenzahlen für eine Elektronenkonfiguration}
+\label{Quantenzahlen Beryllium a}
+\end{table}
+
+\end{document}

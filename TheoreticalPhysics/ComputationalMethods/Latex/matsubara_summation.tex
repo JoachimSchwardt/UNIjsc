@@ -1,0 +1,182 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{myscrarticle}
+
+\newcommand*{\titel}{Matsubara Summation}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Mathematical Methods}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+
+\section{Formalism}
+Let $g(z)$ be a complex function satisfying the asymptotic relation $|g(z)| \sim \frac{1}{|z|^{1+\epsilon}}$ for $\epsilon > 0$ and let $z_k$ for $k=1,\dots,K$ denote the $K$ poles of $g$.
+Then for $f_\text{F}(z) = \frac{\powe{\beta z} - 1}{\powe{\beta z} + 1}$ and $f_\text{B}(z) = \frac{\powe{\beta z} + 1}{\powe{\beta z} - 1}$ we have the identities
+\begin{align}
+0 &= \frac{1}{2\pi\i} \oint_{|z| \rightarrow\infty} g(z) f_{\text{F,B}} \,\mathrm{d}z = \frac{2}{\beta} \sum_{n\in\mathbb{Z}} g(\i\omega_n^\Text{F,B}) + \frac{1}{2\pi\i}\sum_{k=1}^K \Res\klb*{g\circ f_\text{F,B} }(z_k)
+\end{align}
+where $\omega_n^\text{F} = \frac{(2n+1)\pi}{\beta}$ and $\omega_n^\text{B} = \frac{2\pi n}{\beta}$ are the fermionic and bosonic Matsubara frequencies.
+\section{List of problems}
+\subsection{Basel problem}
+We want to solve the generalized Basel problem
+\begin{align}
+S_{N} &= \sum_{n\ge 1} \frac{1}{n^{N}}.
+\end{align}
+We can not immediately translate this into a Matsubara sum, since the $n=0$-term diverges.
+\subsubsection{Higher-order pole}
+Introducing a regularization $\epsilon > 0$ we may define
+\begin{align}
+S_N(\epsilon) &= \frac{-1}{2(-\epsilon)^N} + \frac{1}{2}\sum_{n\in\mathbb{Z}} \frac{1}{(n - \epsilon)^N}
+\end{align}
+where $S_N(0) = S_N$ for even $N$.
+We will choose the bosonic frequencies for $\beta = 2$ and define
+\begin{align}
+g(z) &= \frac{1}{(z - \epsilon)^N}.
+\end{align}
+This function has an $N$-th order pole at $z=\epsilon$ and thus
+\begin{align}
+-\sum_{n\in\mathbb{Z}} g(\i\omega_n^\text{B}) &= \frac{1}{(N-1)!} \lim_{z\rightarrow \epsilon} \partial_z^{N-1} (z-\epsilon)^N g(z) f_\text{B}(z) = \frac{1}{(N-1)!} \lim_{z\rightarrow \epsilon} \partial_z^{N-1} f_\text{B}(z).
+\end{align}
+Again assuming even $N$ and as $\epsilon\rightarrow 0$ the left hand side simplifies to
+\begin{align}
+- \frac{1}{(-\epsilon)^N} - 2 \sum_{n\ge 1} \frac{1}{\kla*{\pi\i n}^N} = -\frac{1}{(-\epsilon)^N} - 2\kla*{\frac{1}{\pi\i}}^N S_N.
+\end{align}
+Collecting terms gives
+\begin{align}
+S_N &= -\lim_{\epsilon \rightarrow 0} \kla*{\pi\i}^N \frac{1}{2} \klb*{ \frac{1}{(-\epsilon)^N} +  \frac{1}{(N-1)!} f_\text{B}^{(N-1)}(\epsilon)  }.
+\end{align}
+Using $f_\text{B}(z) = 1 + \frac{2}{\powe{2 z} - 1} = \coth(z)$ simplifies the derivatives a bit.
+However, applying this formula for general $N$ is still somewhat involved.
+Note that we can rewrite the expression as
+\begin{align}
+S_N &= -\frac{(\pi\i)^N}{2(N-1)!} \lim_{\epsilon \rightarrow 0} \partial_\epsilon^{N-1} \klb*{ \coth(\epsilon) - \frac{1}{\epsilon} }.
+\end{align}
+In this form it becomes obvious that given a series representation $\coth(z) = \frac{1}{z} + \sum_{n\ge 1} a_n z^{2n-1}$ for small $z$ results in
+\begin{align}
+S_N &= -\frac{(\pi\i)^N}{2(N-1)!} \lim_{\epsilon \rightarrow 0} \partial_\epsilon^{N-1} \sum_{n\ge 0} a_n \epsilon^{2n-1} = \pi^N \frac{-(-1)^\frac{N}{2} a_{\frac{N}{2}}}{2(N-1)!}.
+\end{align}
+According to literature the coefficients are $a_n = \frac{4^n B_{2n}}{(2n)!}$.\\
+For the simplest case of $N=2$ we find
+\begin{align}
+S_N &= -\lim_{\epsilon \rightarrow 0} \kla*{\pi\i}^N \frac{1}{2} \klb*{ \frac{1}{\epsilon^2} -\frac{1}{\sinh^2 (\epsilon)} } = \frac{\pi^2}{2} \lim_{\epsilon\rightarrow 0} \klb*{\frac{1}{\epsilon^2} - \frac{1}{\epsilon^2 + \frac{\epsilon^4}{3}}} = \frac{\pi^2}{2} \lim_{\epsilon\rightarrow 0} \frac{\frac{\epsilon^4}{3}}{\epsilon^2 \kla*{\epsilon^2 + \frac{\epsilon^4}{3}} } = \frac{\pi^2}{6}.
+\end{align}
+It is interesting how this approach fails for odd $N$. 
+If one replaces $z$ with $|z|$ in the definition of $g(z)$, the positive and negative indices would no longer cancel each other out, and one would indeed get a result.
+The problem is, however, that the resulting complex function does not have a simple pole at $z=\epsilon$ but rather a continuum of poles with $|z|=\epsilon$, i.e. it is not analytic.
+Solving this problem would require a different contour, or somehow including another scaling factor to suppress the negative Matsubara frequencies.
+\subsubsection{Multiple simple poles}
+Another way to introduce a regularization is to define
+\begin{align}
+S_N(\epsilon) &= \frac{1}{2\epsilon^N} + \frac{1}{2} \sum_{n\in\mathbb{Z}} \frac{1}{n^N - \epsilon^N}.
+\end{align}
+Instead of a single pole of $N$-th order we will instead have to treat $N$ simple poles.
+Inspired by this formulation we define
+\begin{align}
+g(z) &= \frac{1}{z^N - \epsilon^N}
+\end{align}
+which has poles at $z_k=\epsilon \powe{2\pi\i \frac{k}{N}}$ for $k=0,\dots,N-1$.
+For $\beta = 2$ we find
+\begin{align}
+-\sum_{n\in\mathbb{Z}} g(\i\omega_n^\text{B}) &= \sum_{k=0}^{N-1} \lim_{z\rightarrow z_k} f_\text{B}(z) \frac{z - z_k}{z^N - \epsilon^N} = \sum_{k=0}^{N-1} \coth (z_k) \frac{1}{N z_k^{N-1}}.
+\end{align}
+The left hand side gives
+\begin{align}
+\frac{1}{\epsilon^N} - 2\sum_{n\ge 1} \frac{1}{(\pi\i n)^N - \epsilon^N} &\sim \frac{1}{\epsilon^N} - \frac{2}{(\pi\i)^N} S_N
+\end{align}
+as $\epsilon\rightarrow 0$.
+Rearranging then yields
+\begin{align}
+S_N &= \frac{(\pi\i)^N}{2} \lim_{\epsilon \rightarrow 0} \klb*{\frac{1}{\epsilon^N} - \frac{1}{N} \sum_{k=0}^{N-1} \frac{\coth(z_k)}{z_k^{N-1}} }.
+\end{align}
+More explicitly the second term becomes
+\begin{align}
+\frac{1}{N} \sum_{k=0}^{N-1} \frac{\coth \kla*{\epsilon \powe{2\pi\i \frac{k}{N}}} }{\epsilon^{N-1} \powe{-2\pi\i \frac{k}{N}} } &= \frac{1}{N\epsilon^N} \sum_{k=0}^{N-1} \epsilon \powe{2\pi\i \frac{k}{N}} \coth \kla*{\epsilon \powe{2\pi\i \frac{k}{N}}}.
+\end{align}
+Working out this expression is even more involved than before, and ultimately again results in computing the $N$-th derivative of $\coth$ at zero.
+\subsection{Asymptotically discontinuous functions}
+\subsubsection{Step function}
+Let us consider again the Basel problem
+\begin{align}
+S_2 &= \sum_{n\ge 1} \frac{1}{n^2}.
+\end{align}
+One obvious way of formally rewriting this as a sum over all integers is to introduce a step function
+\begin{align}
+S_2 &= \sum_{n\in\mathbb{Z}} \Theta(n - a) \frac{1}{n^2}
+\end{align}
+where $a\in (0,1)$.
+Unfortunately the Matsubara trick does require an analytic function, which the step function is obviously not.
+However, we can for example write it as the limit
+\begin{align}
+\Theta(z) &= \lim_{\epsilon\rightarrow 0} \Theta_\epsilon(z) = \lim_{\epsilon\rightarrow 0} \klb*{\frac{1}{2} + \frac{1}{\pi} \arctan \kla*{\frac{z}{\epsilon}}}.
+\end{align}
+This representation is useful since it does not introduce any additional poles.
+Thus the parametrized version of our series corresponds to 
+\begin{align}
+g(z) &= \frac{\Theta_\epsilon\kla*{\frac{-\i z}{2\pi}} }{z^2}.
+\end{align}
+Note that this function does have a second-order pole at $z=0$.
+Applying the fermionic Matsubara summation for $\beta=2$ gives
+\begin{align}
+-\sum_{n\in\mathbb{Z}} g(\i\omega_n^\text{F}) &= \sum_{n\in\mathbb{Z}} \frac{4}{\pi^2} \frac{\Theta_\epsilon \kla*{n + \frac{1}{2}} }{(2n+1)^2} =  \lim_{z\rightarrow 0} \partial_z \tanh(z) \Theta_\epsilon\kla*{\frac{-\i z}{2\pi}}.
+\end{align}
+We can safely take the limit on the left hand side 
+\begin{align}
+\frac{4}{\pi^2}\sum_{n\ge 1} \frac{1}{(2n - 1)^2} &= \lim_{\epsilon \rightarrow 0} \lim_{z\rightarrow 0} \partial_z \klb*{\frac{1}{2} \tanh(z) + \frac{1}{\pi} \tanh(z) \arctan\kla*{\frac{-\i z}{2\pi\epsilon}}  }.
+\end{align}
+The term in brackets is analytic near the origin, and since we only take the first derivative, it is sufficient to compute the Taylor expansion to linear order.
+This gives
+\begin{align}
+\frac{4}{\pi^2} \sum_{n\ge 1} \frac{1}{(2n-1)^2} &= \lim_{\epsilon \rightarrow 0} \lim_{z\rightarrow 0} \partial_z \klb*{\frac{1}{2} z + \frac{1}{\pi} z \frac{-\i z}{2\pi\epsilon} } = \frac{1}{2}
+\end{align}
+and thus $\sum_{n\ge 1} \frac{1}{(2n-1)^2} = \frac{\pi^2}{8}$.
+We can rewrite the general Basel problem using
+\begin{align}
+\sum_{n\ge 1} \frac{1}{n^N} &= \sum_{n\ge 1} \frac{1}{(2n-1)^N} + \sum_{n\ge 1} \frac{1}{(2n)^N} = \sum_{n\ge 1} \frac{1}{(2n-1)^N} + \frac{1}{2^N} \sum_{n\ge 1} \frac{1}{n^N}.
+\end{align}
+Solving for the term of interest gives $\sum_{n\ge 1} \frac{1}{n^N} = \frac{2^N}{2^N - 1} \sum_{n\ge 1} \frac{1}{(2n-1)^N} $.
+In our case $N=2$ and therefore $\sum_{n\ge 1} \frac{1}{n^2} = \frac{4}{3} \sum_{n\ge 1} \frac{1}{(2n-1)^2} = \frac{4}{3} \frac{\pi^2}{8} = \frac{\pi^2}{6} $.\\
+The interesting point to note here is that we did not have to make the explicit restriction to even $N$.
+In fact, for $N=3$ the same procedure for a analogous $g(z)$ gives
+\begin{align}
+-\sum_{n\in\mathbb{Z}} \kla*{\frac{2}{\pi\i}}^3 \frac{\Theta_\epsilon\kla*{n + \frac{1}{2}} }{(2n+1)^3} &= \frac{1}{2} \lim_{z\rightarrow 0} \partial_z^2 \tanh(z) \Theta_\epsilon\kla*{\frac{-\i z}{2\pi}}.
+\end{align}
+Rearranging yields
+\begin{align}
+-\frac{8\i}{\pi^3} \sum_{n\ge 1} \frac{1}{(2n-1)^3} &= \frac{1}{2} \lim_{\epsilon \rightarrow 0} \lim_{z\rightarrow 0} \partial_z^2 \klb*{\frac{1}{2} \tanh(z) + \frac{1}{\pi} \tanh(z) \arctan\kla*{\frac{-\i z}{2\pi\epsilon}} }.
+\end{align}
+This time we have to expand the term to second order, which coincidentally is completely equivalent to the previous expansion
+\begin{align}
+-\frac{8\i}{\pi^3} \sum_{n\ge 1} \frac{1}{(2n-1)^3} &= \frac{1}{2} \lim_{\epsilon \rightarrow 0} \lim_{z\rightarrow 0} \partial_z^2 \klb*{\frac{1}{2} z + \frac{1}{\pi} z \arctan\kla*{\frac{-\i z}{2\pi\epsilon}} } = \frac{1}{2\pi} \lim_{\epsilon \rightarrow 0} \frac{2 \frac{-\i}{2\pi\epsilon}}{\kla*{\frac{-\i 0^+}{2\pi\epsilon}}^2 + 1} = ???
+\end{align}
+NEW ATTEMPT:\\
+Consider 
+\begin{align}
+\Theta(z) &= \lim_{\epsilon \rightarrow 0} \Theta_\epsilon(z) = \lim_{\epsilon \rightarrow 0} \frac{1}{2} \klb*{1 + \frac{z}{\sqrt{z^2 + \epsilon^2}}}.
+\end{align}
+Then we have
+\begin{align}
+-\sum_{n\in\mathbb{Z}} \kla*{\frac{2}{\pi\i}}^3 \frac{\Theta_\epsilon\kla*{n + \frac{1}{2}} }{(2n+1)^3} &= ...
+\end{align}
+also not analytic, same problem as before...\\
+END ATTEMPT.
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

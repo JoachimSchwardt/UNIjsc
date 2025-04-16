@@ -1,0 +1,68 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+
+\begin{document}
+
+\title{Rotierende Bezugssysteme}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 20: Gezeitenkräfte}
+\subsection*{a)}
+Für $\vv{R_s}$ und $\vv{r_{12}}$ gelten:
+\begin{align*}
+\vv{R_s}&=\frac{m_1\vv{r_1}+m_2\vv{r_2}}{m_1+m_2}\overset{\substack{ m_1=m_2\\|}}{=} \frac12 (\vv{r_1}+\vv{r_2})\\
+\vv{r_1}_2&=\vv{r_1}-\vv{r_2}
+\end{align*}
+Damit können die entsprechenden Bewegungsgleichungen aufgestellt werden:
+\begin{align*}
+2m\ddot{\vv{R_s}}&=\vv{F}^{ext}=-k(\vv{r_1}+\vv{r_2})\ \ \Rightarrow\ \ \ddot{\vv{R_s}}+\frac{k}{m}\vv{R_s}=0\\
+&\Rightarrow\ \ \vv{R_s}(t)=\begin{pmatrix} R_{x0}\cos(\Omega t+\Phi_x) \\ R_{y0}\cos(\Omega t+\Phi_y) \\ R_{z0}\cos(\Omega t+\Phi_z)  \end{pmatrix}\ \mathrm{mit\ \Omega = \sqrt{\frac{k}{m}}}\\
+\ddot{\vv{r}}_{12}&=\ddot{\vv{r_1}}-\ddot{\vv{r_2}}=\vv{F}_{12}\left(\frac{1}{m_1}+\frac{1}{m_2}\right)\overset{\substack{m_1=m_2\\|}}{=}\frac{2}{m}\vv{F}_{12}\ \ \Rightarrow\ \ddot{\vv{r}}_{12}+\frac{2\kappa}{m}\vv{r_1}_2=0\\
+&\Rightarrow\ \vv{r_1}_2(t)=\begin{pmatrix} r_{x0}\cos(\omega t +\phi_x) \\ r_{y0}\cos(\omega t +\phi_y) \\r_{z0}\cos(\omega t +\phi_z) \end{pmatrix}\ \mathrm{mit\ \omega = \sqrt{\frac{2\kappa}{m}}}
+\end{align*}
+\subsection*{b)}
+Für $\vv{r_1}$ und $\vv{r_2}$ gilt dann:
+\begin{align*}
+\vv{r_1}(t)&=\vv{R_s}+\frac12 \vv{r_1}_2\\
+\vv{r_2}(t)&=\vv{R_s}-\frac12 \vv{r_1}_2
+\end{align*}
+
+\section*{Aufgabe 21: Kugelkoordinaten}
+Die Einheitsvektoren in Kugelkoordinaten lauten:
+\begin{align*}
+\vv{e_r}=\begin{pmatrix} \sin(\theta)\cos(\varphi)\\\sin(\theta)\sin(\varphi) \\ \cos(\theta) \end{pmatrix}\ ,\ \ \vv{e_{\theta}}=\begin{pmatrix} \cos(\theta)\cos(\varphi)\\\cos(\theta)\sin(\varphi) \\ -\sin(\theta) \end{pmatrix}\ ,\ \ \vv{e_{\varphi}}=\begin{pmatrix} -\sin(\varphi)\\ \cos(\varphi) \\ 0 \end{pmatrix}
+\end{align*}
+Somit ergibt sich für die Ableitungen:
+\begin{align*}
+\dot{\vv{e_r}}&=\begin{pmatrix} \dot{\theta}\cos(\theta)\cos(\varphi)-\dot{\varphi}\sin(\theta)\sin(\varphi)\\ \dot{\theta}\cos(\theta)\sin(\varphi)+\dot{\varphi}\sin(\theta)\cos(\varphi) \\ -\dot{\theta}\sin(\theta) \end{pmatrix} = \dot{\theta}\vv{e_{\theta}}+\dot{\varphi}\sin(\theta)\vv{e_{\varphi}}\\
+\dot{\vv{e_{\theta}}}&=\begin{pmatrix} -\dot{\theta}\sin(\theta)\cos(\varphi)-\dot{\varphi}\cos(\theta)\sin(\varphi)\\ -\dot{\theta}\sin(\theta)\sin(\varphi)+\dot{\varphi}\cos(\theta)\cos(\varphi) \\ -\dot{\theta}\cos(\theta) \end{pmatrix}=-\dot{\theta}\vv{e_r}+\dot{\varphi}\cos(\theta)\vv{e_{\varphi}}\\
+\dot{\vv{e_{\varphi}}}&=\begin{pmatrix} -\dot{\varphi}\cos(\varphi)\ \color{blue}{\cdot\ (\sin^2(\theta)+\cos^2(\theta))}\\ -\dot{\varphi}\sin(\varphi)\ \color{blue}{\cdot\ (\sin^2(\theta)+\cos^2(\theta))} \\ 0\ \color{blue}{\cdot\ (\sin^2(\theta)+\cos^2(\theta))} \end{pmatrix} =  -\dot{\varphi}\sin(\theta)\vv{e_r}-\dot{\varphi}\cos(\theta)\vv{e_{\theta}}
+\end{align*}
+Damit können nun $\dot{\vv{r}}$ und $\ddot{\vv{r}}$ berechnet werden:
+\begin{align*}
+\dot{\vv{r}}&=\frac{d}{dt}\left(r\vv{e_r}\right)=\dot{r}\vv{e_r}+r\dot{\theta}\vv{e_{\theta}} + r\dot{\varphi}\sin(\theta)\vv{e_{\varphi}}\\
+\ddot{\vv{r}}&=\frac{d}{dt}(\dot{\vv{r}}) = \ddot{r}\vv{e_r}+2\dot{r}\dot{\theta}\vv{e_{\theta}} + 2\dot{r}\dot{\varphi}\sin(\theta)\vv{e_{\varphi}}+r\ddot{\theta}\vv{e_{\theta}}-r\dot{\theta}^2\vv{e_r}+2r\dot{\theta}\dot{\varphi}\cos(\theta)\vv{e_{\varphi}}+r\ddot{\varphi}\sin(\theta)\vv{e_{\varphi}}\\
+&\ \ \ -r\dot{\varphi}^2\sin(\theta)^2\vv{e_r}-r\dot{\varphi}^2\sin(\theta)\cos(\theta)\vv{e_{\theta}}\ =\\
+&= \left(\ddot{r}-r\dot{\theta}^2-r\dot{\varphi}^2\sin(\theta)^2\right)\vv{e_r}+\left(2\dot{r}\dot{\varphi}\sin(\theta)+2r\dot{\theta}\dot{\varphi}\cos(\theta)+r\ddot{\varphi}\sin(\theta)\right)\vv{e_{\varphi}}\\
+&\ \ \ +\left(2\dot{r}\dot{\theta}+r\ddot{\theta}-r\dot{\varphi}^2\sin(\theta)\cos(\theta)\right)\vv{e_{\theta}}
+\end{align*}
+\section*{Aufgabe 22: Trägheitstensor}
+Es sei $x=x^1,\ y=x^2,\ z=x^3$. Dann gilt für die Komponenten von $\underline{J}$:
+\begin{align*}
+J^{\alpha\beta}=\iiint_V \varrho(\vv{r})\left(\delta^{\alpha\beta}\vv{r}^2-x^{\alpha}x^{\beta}\right)dV
+\end{align*}
+Für einen Zylinder homogener Dichte mit Höhe H und Radius R bedeutet das:
+\begin{align*}
+\underline{J}&=\varrho_0 \cdot \mathrm{diag}\left(\int_0^R\int_0^H \pi r^3+2\pi rz^2\ dzdr,\ \int_0^R\int_0^H \pi r^3+2\pi rz^2\ dzdr,\ \frac12 \pi HR^4\right)\\
+&=\varrho_0 \cdot\mathrm{diag}\left(\frac{\pi}{4}R^4H+\frac{\pi}{3}R^2H^3,\ \frac{\pi}{4}R^4H+\frac{\pi}{3}R^2H^3, \frac12 \pi R^4H\right)\\
+&= m\cdot \mathrm{diag}\left(\frac{R^2}{4}+\frac{H^2}{3},\ \frac{R^2}{4}+\frac{H^2}{3},\ \frac{R^2}{2}\right)
+\end{align*}
+
+\end{document}

@@ -1,0 +1,843 @@
+\chapter{Appendix}\label{chap:app}
+\section{Algebraic Manipulations}\label{sec:algebra}
+\subsection{Bogoliubov transformation for an interacting \texorpdfstring{\acrshort{ll}}{LL}}\label{sec:app:bogoliubov_transform_interacting_LL} % presentation_bosonization sec 3
+In this section, we properly derive the ``replacement rule'' used in \autoref{sec:ell:gf:preliminaries} to calculate the fundamental correlations functions of an interacting \gls{ll}, i.e. $K\neq 1$.
+The argument loosely corresponds to \cite[\ssec 10.B.2]{Bosonization_DelftSchoeller_1998} and \cite[\spage 16]{Bosonization_Rao_2001}, but both of these presentations are very brief and the notation is somewhat different.\\
+To start, rewrite the Hamiltonian of the interacting \gls{ll} in terms of the bosonic operators.
+Recall that $\varphi_\ell\eminus(x) = -\sum_{q>0} \frac{1}{\sqrt{n_q}} \powe{-\alpha q/2} \powe{\i q\ell x} b_{q,\ell}$ and $\varphi_\ell=\varphi_\ell\eplus + \varphi_\ell\eminus = \ell\phi - \theta$.
+Inserting these relations, dropping additive constants and setting $\alpha=0$ yields
+\begin{align*}
+H &= \frac{v}{2\pi} \intx{ }{ }{ \sum_{\ell,\ell'} \frac{1}{4} \klb*{K + \frac{\ell\ell'}{K}} \varnormord{\partial_x\varphi_\ell \partial_x\varphi_{\ell'}} }{x}\\
+%&= \frac{v}{2\pi} \sum_{\ell,\ell',q,q'} \frac{-qq'\ell\ell'}{4} \klb*{K + \frac{\ell\ell'}{K}} \intx{ }{ }{ \varnormord{\kla*{ \powe{\i q\ell x}b_{q,\ell} - \powe{-\i q\ell x}b_{q,\ell}^\dagger } \kla*{ \powe{\i q'\ell' x}b_{q',\ell'} - \powe{-\i q'\ell' x}b_{q',\ell'}^\dagger }} }{x}\\
+%&= v \sum_{\ell,\ell',q>0} \frac{-q\ell\ell'}{4} \powe{-\alpha q} \klb*{K + \frac{\ell\ell'}{K}} \varnormord{\klb*{ \delta_{\ell,-\ell'} \kla*{b_{q,\ell} b_{q,\ell'} + b_{q,\ell}^\dagger b_{q,\ell'}^\dagger} - \delta_{\ell,\ell'} \kla*{b_{q,\ell}^\dagger b_{q,\ell'} + b_{q,\ell} b_{q,\ell'}^\dagger} }}\\
+&= \sum_{q>0,\ell} vq \klc*{\frac{1}{2} \klb*{K + \frac{1}{K}} b_{q,\ell}^\dagger b_{q,\ell} - \frac{1}{4} \klb*{K - \frac{1}{K}} \kla*{b_{q,\ell} b_{q,-\ell} + b_{q,\ell}^\dagger b_{q,-\ell}^\dagger}}.
+\end{align*}
+In this form it becomes clear that the situation for $K\neq 1$ is significantly less simple than the Hamiltonian expressed in terms of $\phi$ and $\theta$ leads on.
+In particular, it is no longer diagonal, and in order to compute expectation values we therefore first want to diagonalize it via a Bogoliubov transformation.
+With the ansatz $d_{q,\ell} = c_q b_{q,\ell} + s_q b_{q,-\ell}^\dagger$ and requiring that the transform preserves the canonical commutation relations, it then becomes a straight-forward task to find the coefficients that eliminate the off-diagonal terms in the Hamiltonian.
+Skipping the algebra, one can check that $c_q = \frac{K_+}{\sqrt{K}}$ and $s_q = \frac{K_-}{\sqrt{K}}$ with $K_\pm = \frac{K\pm 1}{2}$ gives $H=\sum_{q>0,\ell} vqd_{q,\ell}^\dagger d_{q,\ell}$.
+%\begin{align*}
+%%H &= \sum_{q>0,\ell} vq \klc*{\frac{1}{2} \klb*{K + \frac{1}{K}} \kla*{c_q d_{q,\ell}^\dagger - s_q d_{q,-\ell}} \kla*{c_q d_{q,\ell} - s_q d_{q,-\ell}^\dagger} - \frac{1}{4} \klb*{K - \frac{1}{K}} \kla*{\kla*{c_q d_{q,\ell} - s_q d_{q,-\ell}^\dagger} \kla*{c_q d_{q,-\ell} - s_q d_{q,\ell}^\dagger} + \kla*{c_q d_{q,\ell}^\dagger - s_q d_{q,-\ell}} \kla*{c_q d_{q,-\ell}^\dagger - s_q d_{q,\ell}}}}
+%%H &= \sum_{q>0,\ell} vq \klc{\frac{1}{2} \klb*{K + \frac{1}{K}} \kla*{c_q^2 d_{q,\ell}^\dagger d_{q,\ell} + s_q^2 d_{q,-\ell} d_{q,-\ell}^\dagger - c_qs_q d_{q,-\ell} d_{q,\ell} - c_qs_q d_{q,\ell}^\dagger d_{q,-\ell}^\dagger} \\
+%%&\qquad- \frac{1}{4} \klb*{K - \frac{1}{K}} \kla{\kla*{c_q^2 d_{q,\ell}d_{q,-\ell} + s_q^2 d_{q,-\ell}^\dagger d_{q,\ell}^\dagger - c_qs_q d_{q,\ell} d_{q,\ell}^\dagger - c_qs_q d_{q,-\ell}^\dagger d_{q,-\ell}} \\
+%%&\qquad\qquad + \kla*{c_q^2 d_{q,\ell}^\dagger d_{q,-\ell}^\dagger + s_q^2 d_{q,-\ell} d_{q,\ell} - c_qs_q d_{q,\ell}^\dagger d_{q,\ell} - c_qs_q d_{q,-\ell} d_{q,\ell}^\dagger} }}
+%H &= \sum_{q>0,\ell} vq \klc*{d_{q,\ell}^\dagger d_{q,\ell} \klb*{\frac{c_q^2 + s_q^2}{2} \kla*{K + \frac{1}{K}} - c_qs_q \kla*{K - \frac{1}{K}}} }
+%\end{align*}
+As usual, the imaginary time-evolution results in $d_{q,\ell}(\tau) = d_{q,\ell} \powe{-qv\tau}$ and $d_{q,\ell}^\dagger(\tau) = d_{q,\ell}^\dagger \powe{qv\tau}$, and consequently the bilinear expectation values of the original operators take the form
+\begin{align*}
+\bra[\big]{\varnormord{b_{q,\ell}^\dagger(\tau) b_{q',\ell'}}} &= \frac{1}{K} \bra[\big]{\varnormord{\kla[\big]{K_+ d_{q,\ell}^\dagger (\tau) - K_- d_{q,-\ell}(\tau)} \kla[\big]{K_+ d_{q',\ell'} - K_- d_{q',-\ell'}^\dagger}}}\\
+&= \delta_{q,q'} \delta_{\ell,\ell'} \frac{1}{K} \kla[\big]{K_+^2 \powe{qv\tau} + K_-^2 \powe{-qv\tau}} n_\B(qv\beta) = \bra[\big]{\varnormord{b_{q,\ell}(-\tau) b_{q',\ell'}^\dagger}},\\
+\bra[\big]{\varnormord{b_{q,\ell}(\tau) b_{q',\ell'}}} &= \frac{1}{K} \bra[\big]{\varnormord{\kla[\big]{K_+ d_{q,\ell} \powe{-qv\tau} - K_- d_{q,-\ell}^\dagger \powe{qv\tau}} \kla[\big]{K_+ d_{q',\ell'} - K_- d_{q',-\ell'}^\dagger}}}\\
+&= -\delta_{q,q'} \delta_{\ell,-\ell'} \frac{2K_+K_-}{K} \cosh(qv\tau) n_\B(qv\beta) = \bra[\big]{\varnormord{b_{q,\ell}^\dagger(\tau) b_{q',\ell'}^\dagger}}.
+\end{align*}
+The bosonic correlators from \autoref{sec:bos:correlators} then evaluate to
+\begin{align*}
+\tilde{\Phi}_{\ell,\ell'} &= \sum_{q,q'>0} \frac{1}{\sqrt{n_qn_{q'}}} \bra*{\varnormord{\kla*{\powe{-\i q\ell x} b_{q,\ell}^\dagger(\tau) + \powe{\i q\ell x} b_{q,\ell}(\tau)} \kla*{b_{q',\ell'}^\dagger + b_{q',\ell'}}}}\\
+&= \sum_{q>0} \frac{2n_\B(qv\beta)}{n_q} \sum_{s=\pm 1} \klc[\bigg]{\delta_{\ell,\ell'} \frac{K_s^2}{K} \cos\kla*{qx + \i \ell s qv\tau} - \delta_{\ell,-\ell'} \frac{K_+K_-}{K} \cos(qx) \cosh(qv\tau)}.
+\end{align*} %\bra*{\normord{\varphi_\ell(x,\tau) \varphi_{\ell'}(0,0)}}
+Note that in contrast to the original definition, we here normal-order before taking the expectation value.
+This has the effect of removing the second, simpler part of the expression that does not involve the distribution function $n_\B$, but this is sufficient for the sake of discussing the replacement rule.
+In the thermodynamic limit $L\rightarrow \infty$, we once again regularize the correlator by subtracting the constant $\tilde{\Phi}_{\ell,\ell'}(0)$.
+For $\ell=\ell'$ this yields
+\begin{align*}
+\Phi_{\ell,\ell}(x,\tau) &= \sum_{s=\pm 1} \frac{(K+s)^2}{2K} \intx{0}{\infty}{\frac{1}{q} \frac{\cos(qx + \i\ell sqv\tau)}{\powe{qv\beta} - 1}}{q}\\
+&= \dots = \sum_{s=\pm 1} \frac{(K+s)^2}{4K} \log\klb*{\frac{\pi (v\tau - \i\ell sx)}{\beta v} \csc\kla*{\frac{\pi (v\tau - \i\ell sx)}{\beta v}}}
+\end{align*}
+where we skip the algebraic manipulations analogous to those in \autoref{sec:bos:correlators}.
+For $\ell=-\ell'$ we instead obtain
+\begin{align*}
+\Phi_{\ell,-\ell}(x,\tau) &= \frac{1-K^2}{K} \intx{0}{\infty}{\frac{1}{q} \frac{\cos(qx) \cosh(qv\tau) - 1}{\powe{qv\beta}}}{q}\\
+&= \frac{1-K^2}{4K} \sum_{s,s'=\pm 1} \sum_{m\ge 1} \intx{0}{\infty}{\klb*{\frac{1}{p + \beta vm + sv\tau + \i\ell s'x} - \frac{1}{p + \beta vm}}}{p}\\
+&= \frac{1-K^2}{4K} \sum_{s=\pm 1} \log\klb*{\frac{\pi (v\tau - \i\ell sx)}{\beta v} \csc\kla*{\frac{\pi (v\tau - \i\ell sx)}{\beta v}}}.
+\end{align*}
+Putting it all together, we then find
+\begin{align*}
+&\bra*{\varnormord{\kla*{\phi(x,\tau) - \phi(0,0)} \phi(0,0)}} = \frac{1}{4} \sum_{\ell,\ell'} \ell\ell'\Phi_{\ell,\ell'} = \frac{1}{4} \sum_{\ell} \kla*{\Phi_{\ell,\ell} - \Phi_{\ell,-\ell}}\\
+&\qquad= \frac{1}{4} \sum_{s=\pm 1} \log\klb*{\frac{\pi (v\tau - \i sx)}{\beta v} \csc\kla*{\frac{\pi (v\tau - \i sx)}{\beta v}}} \sum_\ell \klc*{\frac{(K+\ell s)^2}{4K} - \frac{1-K^2}{4K}}.
+\end{align*}
+The summation on $\ell$ evaluates to $K$ and thus, keeping in mind the missing term due to normal-ordering, the result then corresponds to exactly $K$ times the original correlator for $K=1$.
+Similarly,
+\begin{align*}
+&\bra*{\varnormord{\kla*{\theta(x,\tau) - \theta(0,0)} \theta(0,0)}} = \frac{1}{4} \sum_{\ell,\ell'} \Phi_{\ell,\ell'} = \frac{1}{4} \sum_{\ell} \kla*{\Phi_{\ell,\ell} + \Phi_{\ell,-\ell}}
+\end{align*}
+gives rise to a factor of $\sum_\ell \klc[\big]{\frac{(K+\ell s)^2}{4K} + \frac{1-K^2}{4K}} = \frac{1}{K}$, while the mixed terms remain unchanged since $\sum_\ell \frac{-\ell}{4} \frac{(K+\ell s)^2}{4K} = 1$.
+All of these results are in line with the replacement rule that consists of substituting $\phi\rightarrow \sqrt{K} \phi$ as well as $\theta\rightarrow \frac{1}{\sqrt{K}}\theta$ (see also \cite[\spage 76]{Giamarchi_2004}).\\
+With the transformation from $b_{q,\ell}$ to $d_{q,\ell}$ in mind, we should also reconsider the normal-ordering itself.
+The usual notion of shuffling all annihilation operators to the right of an expression is basis dependent and, for the sake of precision, we now include the basis in the notation, e.g. $\normord{(\dots)}_b$.
+To avoid divergences, let us reinstate the regularization $\alpha$ and consider the bosonization identity in \autoref{eqn:bos:bosonization identity},
+\begin{align*}
+\psi_\ell(x) &= \frac{\eta_\ell}{\sqrt{L}} \normord{\powe{-\i\varphi_\ell(x)}}_b = \frac{\eta_\ell}{\sqrt{L}} \powe{\i\sum_{q>0} \frac{1}{\sqrt{n_q}} \powe{-\alpha q/2} \powe{-\i q\ell x} b_{q,\ell}^\dagger} \powe{\i\sum_{q>0} \frac{1}{\sqrt{n_q}} \powe{-\alpha q/2} \powe{\i q\ell x} b_{q,\ell}}\\
+&= \frac{\eta_\ell}{\sqrt{L}} \powe{\i\sum_{q>0} \frac{1}{\sqrt{n_q}} \powe{-\alpha q/2} \powe{-\i q\ell x} \klb*{\frac{K+1}{2\sqrt{K}} d_{q,\ell}^\dagger - \frac{K-1}{2\sqrt{K}} d_{q,-\ell}} } \powe{\i\sum_{q>0} \frac{1}{\sqrt{n_q}} \powe{-\alpha q/2} \powe{\i q\ell x} \klb*{\frac{K+1}{2\sqrt{K}} d_{q,\ell} - \frac{K-1}{2\sqrt{K}} d_{q,-\ell}^\dagger} }\\
+&= \frac{\eta_\ell}{\sqrt{L}} \normord{\powe{-\i\varphi_\ell(x)}}_d \powe{-\sum_{q>0} \frac{1}{n_q} \powe{-\alpha q} \frac{(K-1)^2}{4K}} = \frac{\eta_\ell}{\sqrt{L}} \normord{\powe{-\i\varphi_\ell(x)}}_d \klb*{\frac{2\pi\alpha}{L}}^M,
+\end{align*}
+where $M=\frac{1}{4} \klb*{K + \frac{1}{K} - 2}$.
+Evidently, normal-ordering with respect to the new basis no longer properly regularizes the result.
+This makes the replacement rule all the more appealing, as we are essentially forced to keep working in the original basis anyway.
+\myparagraph{Commutator for \gls{ope}}
+To evaluate the commutator underlying the \glspl{ope} in \autoref{sec:ell:rg:ope_vertex_operators}, first note that $\phi = \frac{1}{2} \sum_\ell \ell \varphi_\ell$.
+Recall that we implicitly normal-order with respect to the $d$-basis, and thus
+\begin{align*}
+\klb*{\phi\eplus(x), \phi\eminus(0)} &= \frac{1}{4} \sum_{\ell,\ell'} \ell \ell' \klb*{\varphi_\ell\eplus(x), \varphi_{\ell'}\eminus (0)} = \frac{1}{4} \sum \ell \ell' \frac{1}{\sqrt{n_qn_q'}} \powe{-\frac{\alpha}{2}(q+q')} C
+\end{align*}
+where
+\begin{align*}
+C&=\klb*{\powe{-\i q\ell x} \frac{K_+}{\sqrt{K}} d_{q,\ell}^\dagger - \powe{\i q\ell x} \frac{K_-}{\sqrt{K}} d_{q,-\ell}^\dagger, \frac{K_+}{\sqrt{K}} d_{q',\ell'}- \frac{K_-}{\sqrt{K}} d_{q',-\ell'}}\\
+&= -\frac{1}{K} \delta_{q,q'} \klb*{ \kla*{\powe{-\i q\ell x} K_+^2 + \powe{\i q\ell x} K_-^2} \delta_{\ell,\ell'} - K_+K_- \kla*{\powe{-\i q\ell x} + \powe{\i q\ell x}} \delta_{\ell,-\ell'}}.
+\end{align*}
+Inserting this into the commutator yields
+\begin{align*}
+\klb*{\phi\eplus(x), \phi\eminus(0)} &= \frac{-1}{4K} \sum_{\ell,s,n_q} \frac{K_s^2 + K_+K_-}{n_q} \powe{-\alpha q} \powe{\i q\ell sx} \\
+& \asymeq{L\rightarrow \infty} \frac{1}{4K} \sum_{\ell, s} \kla*{K_s^2 + K_+K_-} \log\klb*{\frac{2\pi}{L} \kla*{\alpha + \i \ell sx}} \\
+&= \frac{1}{2K} \log\klb*{\frac{2\pi}{L}\sqrt{\alpha^2+x^2}} \sum_s \frac{2K^2 + 2Ks}{4} = \frac{K}{2} \log\klb*{\frac{2\pi}{L}\sqrt{\alpha^2+x^2}}. \numberthis \label{eqn:app:phi_plus_phi_minus_K}
+\end{align*}
+This is again equivalent to the additional prefactor of $K$ obtained via the replacement rule.
+\subsection{Normal-ordering of vertex operators}\label{sec:app:normal_ordering_vertex_op}
+By using the commutation relation\footnote{This is for the non-interacting \gls{ll}; in terms of the previous section, normal-ordering is in the $b$-basis.}
+\begin{align*}
+\klb*{\phi\eplus(x+a), \phi\eminus(x)} &= \frac{1}{4} \sum_{\ell,\ell'} \ell\ell' \klb*{\varphi_\ell\eplus(x+a), \varphi_{\ell'}\eminus(x)} = \frac{1}{2} \log\klb*{\frac{2\pi}{L} \sqrt{\alpha^2+a^2}},
+\end{align*}
+we can normal-order the product of vertex operators $\normord{\powe{\i m\phi}}$ via
+\begin{align*}
+\normord{\powe{\i m\phi(x)}} \normord{\powe{\i m'\phi(x+a)}} &= \powe{\i m\phi\eplus(x)} \powe{\i m\phi\eminus(x)} \powe{\i m'\phi\eplus(x+a)} \powe{\i m'\phi\eminus(x+a)} \\
+&= \normord{\powe{\i m\phi(x) + \i m'\phi(x+a)}} \powe{\klb*{\i m\phi\eminus(x),\, \i m'\phi\eplus(x+a)}} \\
+&= \normord{\powe{\i m\phi(x) + \i m'\phi(x+a)}} \klb*{\frac{2\pi}{L} \sqrt{\alpha^2+a^2} }^{\frac{mm'}{2}}.
+\end{align*}
+To normal-order $H_-$, first note that\footnote{$\klb*{A, \powe{B}} = C\powe{B}$ for $C=\klb*{A,B} \in\mathbb{C}$}
+\begin{align*}
+\klb*{\phi\eplus(x'), \powe{\i m\phi\eminus(x)}} &= \frac{\i m}{2} \log\klb*{\frac{2\pi}{L}\sqrt{\alpha^2+(x-x')^2}} \powe{\i m\phi\eminus(x)}.
+\end{align*}
+This commutator can then be used to rewrite
+\begin{align*}
+\normord{\powe{\i m\phi(x)}} \partial_x\phi\eplus(x+a) &= \normord{\powe{\i m\phi(x)} \partial_x\phi\eplus(x+a)} + \powe{\i m\phi\eplus(x)} \partial_a \klb*{\powe{\i m\phi\eminus(x)}, \phi\eplus(x+a)}\\
+%&= \normord{\powe{\i m\phi(x)} \partial_x \phi\eplus(x+a)} - \frac{\i m}{2a} \normord{\powe{\i m\phi(x)}}.
+&= \normord{\powe{\i m\phi(x)} \partial_x \phi\eplus(x+a)} - \frac{\i m}{2} \frac{a}{a^2+\alpha^2}  \normord{\powe{\i m\phi(x)}}.
+\end{align*}
+The similar expression for $\phi\eminus(x+a)$ is already normal-ordered and, since we sum on $\pm a$, this leads to
+\begin{align*}
+\sum_{x'=x\pm a} \normord{\powe{\i m\phi(x)}} \partial_{x'} \phi(x') &= \sum_{x'=x\pm a} \normord{\powe{\i m\phi(x)}\partial_{x'}\phi(x')}.
+\end{align*}
+\subsection{General expectation value}\label{sec:app:expval_ABZ_general}
+Using \autoref{eqn:bos:expval_prod_powe_iAj_varphi} we can compute the general expectation value from \autoref{sec:ell:gf:preliminaries}.
+With the notation of the aforementioned section and $\Phi$ from \autoref{eqn:ell:gf:Phi_ell_ellp_of_z} we have
+\begin{align*}
+\bra*{\abx{A}{B}{Z}} &= \bsplit{&\powe{-\sum_{j<k} \klb*{A_jA_k \bra*{\phi(z_j)\phi(z_k)} + B_jB_k \bra*{\theta(z_j)\theta(z_k)} + \kla*{A_jB_k + A_kB_j} \bra*{\phi(z_j)\theta(z_k)}} }\\
+&\times \powe{-\frac{1}{2} \sum_j \klb*{A_j^2 \bra*{\phi(0)^2} + B_j^2 \bra*{\theta(0)}^2 + 2A_jB_j \bra*{\phi(0)\theta(0)}}}}\\
+&= \bsplit{&\powe{-\sum_{j<k} \klb*{A_jA_k \bra*{\klb*{\phi(z_j-z_k) - \phi(0)}\phi(0)} +  B_jB_k \bra*{\klb*{\theta(z_j-z_k) - \theta(0)}\theta(0)}}}\\
+&\times \powe{-\sum_{j<k} \kla*{A_jB_k + A_kB_j} \bra*{\klb*{\phi(z_j-z_k) - \phi(0)}\theta(0)}}}\\
+&= \powe{-\frac{1}{4} \sum_\ell \sum_{j<k} \klb*{A_jA_k K\Phi(z_{jk,-\ell}) +  B_jB_k \frac{1}{K} \Phi(z_{jk,-\ell}) - \kla*{A_jB_k + A_kB_j} \ell \Phi(z_{jk,-\ell})}}\\
+&= \prod_{j<k} \prod_\ell \powe{-\frac{1}{4} \klb*{KA_jA_k + \frac{1}{K} B_jB_k + \ell \kla*{A_jB_k + A_kB_j}} \Phi(z_{jk,\ell})}.
+\end{align*}
+Here, $z_{jk} = z_j - z_k$ and $z=(z_+,z_-)$, see \autoref{sec:ell:gf:preliminaries}.
+\subsection{Retarded \texorpdfstring{\acrshort{gf}}{GF} in real time}\label{sec:app:ret_gf_real_time}
+Here, we compute the retarded \gls{gf} of an interacting \gls{ll} in real time.
+Similar to the calculation for the Matsubara \gls{gf} in \autoref{sec:ell:gf:interacting_LL}, we have
+\begin{align*}
+\bra*{\psi_\ell(\xi_+, \xi_-) \psi_{\ell'}^\dagger(0)} &= \frac{2\delta_{\ell,\ell'}}{2\pi\alpha} \prod_{s=\pm 1} \powe{-\frac{1}{4} \klb*{-K - \frac{1}{K} + 2\ell s} \Phi(\xi_s)} = \frac{2\delta_{\ell,\ell'}}{2\pi\alpha} \prod_{s=\pm 1} \klb*{-\i w \csch(\xi_s)}^{M+\delta_{-\ell,s}} \\
+&\asymeq{\alpha\rightarrow 0} \frac{\delta_{\ell,\ell'} w^{2M}}{\beta v\i} \powe{-\i\pi M} \csch(\xi_{-\ell})^{M+1} \csch(\xi_{\ell})^M.
+\end{align*}
+The retarded \gls{gf} also contains a similar term from the anti-commutator that we can obtain from the above by substituting $\xi_\pm \rightarrow - \xi_\pm$.
+This replacement has a rather subtle consequence that originates from the fractional exponentiation of real numbers.
+In our case, this leads to the phase factors
+\begin{align*}
+\sinh(-\xi_{-\ell})^{M+1} \sinh(-\xi_\ell)^M &= \powe{\i\pi (M+1) \sgn(\xi_{-\ell})} \sinh(\xi_{-\ell})^{M+1} \powe{\i\pi M \sgn(\xi_{\ell})} \sinh(\xi_{\ell})^M,
+\end{align*}
+%t=1.0; x=-1.5; xi_p = t + x; xi_m = t - x
+%sinh_pp = np.sinh(xi_p + 0j); sinh_mp = np.sinh(xi_m + 0j)
+%sinh_pm = np.sinh(-xi_p + 0j); sinh_mm = np.sinh(-xi_m + 0j)
+%print(sinh_pp**(b+1) * sinh_mp**b, sinh_pm**(b+1) * sinh_mm**b)
+%print(sinh_pp * sinh_pp**b * sinh_mp**b, sinh_pm * sinh_pm**b * sinh_mm**b)
+%print(sinh_pp * (sinh_pp * sinh_mp)**b, sinh_pm * (sinh_pm * sinh_mm)**b)
+%#essentially boils down to this :: 
+%y=-0.5; print(np.sinh(-y+0j)**b, np.sinh(y+0j)**b * np.exp(1j*np.pi*b*np.sign(y)))
+and hence a global minus sign if $\xi_+\xi_- < 0$.
+Combining the two terms is thus equivalent to multiplication by an additional factor of the form
+\begin{align*}
+1 + \powe{\i\pi (M+1) \sgn(\xi_{-\ell}) + \i\pi M \sgn(\xi_{\ell})} &= \Theta(\xi_+\xi_-) \klc*{1 - \powe{\i 2\pi M \sgn(\xi_{-\ell}) }} = -\powe{\i \pi M} 2\i\sin(\pi M)
+\end{align*}
+for $\xi_\pm\ge 0$.
+The latter is a valid assumption, because the retarded \gls{gf} contains a factor of $\Theta(t) = \Theta(\xi_++\xi_-)$ and thus
+\begin{align*}
+G^\ret_{0,\ell,\ell'}(\xi_+, \xi_-) &= -\i\Theta(t) \bra*{\klc*{\psi_\ell(\xi_+, \xi_-), \psi_{\ell'}^\dagger(0)}} \\
+&= \i\Theta(\xi_+ + \xi_-) \Theta(\xi_+\xi_-) \frac{\delta_{\ell,\ell'} w^{2M}}{\beta v} 2\sin(\pi M) \csch(\xi_{-\ell})^{M+1} \csch(\xi_{\ell})^M.
+\end{align*}
+\subsection{Evaluation of \texorpdfstring{$f_{1,\ell}$}{f1ell}}\label{sec:app:algebra:eval_f_1_ell}
+In \autoref{sec:ell:gf:sine_Gordon_perturbation}, we define the function
+\begin{align*}
+f_{1,\ell}(z,z') &= \sum_{s_a=\pm 1} \ell s_a\partial_a \partial_J \bra*{\abx{-\ell&J}{1&0}{z&\tilde{z}'}} \bra*{\abx{2\ell&J}{0&0}{z'&\tilde{z}'}} \bra*{\abx{J&-\ell}{0&-1}{\tilde{z}'&0}}\\
+&= \sum_{s_a=\pm 1} \ell s_a\partial_a \partial_J \prod_{s=\pm 1} \powe{-\frac{1}{4} \klb*{-K\ell J + sJ} \Phi(z_{s} - \tilde{z}_{s}')}  \powe{-\frac{1}{2} K\ell J \Phi(z_{s}' - \tilde{z}_{s}')} \powe{-\frac{1}{4} \klb*{-K\ell J - s J} \Phi(\tilde{z}_{s}')}
+\end{align*}
+%import sympy as sy
+%alpha, beta, a, v, x, xp, tau, taup, K, J = sy.symbols(r"alpha beta a v x x' tau \tau' K J")
+%ell = +1
+%subs = {alpha : 0.134, beta : 4.2, v : 1.3, x : 0.78, xp : 0.94, tau : 0.43, taup : 1.353, a : 1.6, K : 2.3}
+%w = sy.pi*alpha/beta/v
+%Phi = lambda z: sy.log(w*sy.csc(z))
+%Phi1 = lambda z1,z2: (Phi(z1) + Phi(z2))/2
+%def exp_expval2(a1, a2, b1, b2, z1, z2):
+%    exponent = 0.0
+%    for i, sign in enumerate([+1, -1]):
+%        exponent += -1/4 * (K*a1*a2 + 1/K * b1*b2 - sign * (a1*b2 + a2*b1)) * Phi(z1[i] - z2[i])
+%    return sy.exp(exponent)
+%z_p = sy.pi/beta/v * (v*tau + sy.I*x)
+%z_m = sy.pi/beta/v * (v*tau - sy.I*x)
+%z = (z_p, z_m)
+%zp_p = sy.pi/beta/v * (v*taup + sy.I*xp)
+%zp_m = sy.pi/beta/v * (v*taup - sy.I*xp)
+%zp = (zp_p, zp_m)
+%res = 0
+%for s_a in [+1, -1]:
+%    zp_tilde_p = sy.pi/beta/v * (v*taup + sy.I*(xp + s_a*a))
+%    zp_tilde_m = sy.pi/beta/v * (v*taup - sy.I*(xp + s_a*a))
+%    zp_tilde = (zp_tilde_p, zp_tilde_m)
+%    expr = exp_expval2(-ell, J, 1, 0, z, zp_tilde) * exp_expval2(2*ell, J, 0, 0, zp, zp_tilde) * exp_expval2(J, -ell, 0, -1, zp_tilde, [0,0])
+%    res += sy.I * s_a * expr.diff(J).diff(a).subs(J,0)
+%print(res.subs(subs).evalf())
+%res = 0
+%for s_a in [+1, -1]:
+%    for s in [+1, -1]:
+%        z_s = sy.pi/beta/v * (v*tau + sy.I*s*x)
+%        zp_s = sy.pi/beta/v * (v*taup + sy.I*s*xp)
+%        zp_tilde_s = sy.pi/beta/v * (v*taup + sy.I*s*(xp + s_a*a))
+%        expr = sy.exp(J*(K*ell+s)/4 * Phi(z_s - zp_tilde_s) - K*ell*J/2 * Phi(zp_s - zp_tilde_s) + J*(K*ell-s)/4 * Phi(zp_tilde_s))
+%        res += sy.I * s_a * expr.diff(J).diff(a).subs(J,0)
+%print(res.subs(subs).evalf())
+%res = 0
+%for s_a in [+1, -1]:
+%    for s in [+1, -1]:
+%        z_s = sy.pi/beta/v * (v*tau + sy.I*s*x)
+%        zp_s = sy.pi/beta/v * (v*taup + sy.I*s*xp)
+%        zp_tilde_s = sy.pi/beta/v * (v*taup + sy.I*s*(xp + s_a*a))
+%        expr = -(K*ell+s)/4 * sy.log(sy.sin(z_s - zp_tilde_s)) - (K*ell-s)/4 * sy.log(sy.sin(zp_tilde_s))
+%        res += sy.I * s_a * expr.diff(a)
+%print(res.subs(subs).evalf())
+%res = 0
+%for s_a in [+1, -1]:
+%    for s in [+1, -1]:
+%        z_s = sy.pi/beta/v * (v*tau + sy.I*s*x)
+%        zp_s = sy.pi/beta/v * (v*taup + sy.I*s*xp)
+%        zp_tilde_s = sy.pi/beta/v * (v*taup + sy.I*s*(xp + s_a*a))
+%        expr = -(K*ell+s)/4 * sy.cot(z_s - zp_tilde_s) * (-sy.I*s*s_a*sy.pi/beta/v) - (K*ell-s)/4 * sy.cot(zp_tilde_s) * (sy.I*s*s_a*sy.pi/beta/v)
+%        res += sy.I * s_a * expr
+%print(res.subs(subs).evalf())
+%res = 0
+%for s_a in [+1, -1]:
+%    for s in [+1, -1]:
+%        z_s = sy.pi/beta/v * (v*tau + sy.I*s*x)
+%        zp_s = sy.pi/beta/v * (v*taup + sy.I*s*xp)
+%        zp_tilde_s = sy.pi/beta/v * (v*taup + sy.I*s*(xp + s_a*a))
+%        res += sy.pi/beta/v/4 * (-(K*ell*s+1) * sy.cot(z_s - zp_tilde_s) + (K*ell*s-1) * sy.cot(zp_tilde_s))
+%print(res.subs(subs).evalf())
+%res = 0
+%for s_a in [+1, -1]:
+%    for s in [+1, -1]:
+%        z_ell_s = sy.pi/beta/v * (v*tau + ell*sy.I*s*x)
+%        zp_tilde_ell_s = sy.pi/beta/v * (v*taup + ell* sy.I*s*(xp + s_a*a))
+%        zp_tilde_mell_s = sy.pi/beta/v * (v*taup - ell* sy.I*s*(xp + s_a*a))
+%        res += -sy.pi * (1+K*s)/(4*beta*v) * (sy.cot(z_ell_s - zp_tilde_ell_s) + sy.cot(zp_tilde_mell_s))
+%print(res.subs(subs).evalf())
+%res = 0
+%for s_a in [+1, -1]:
+%    for s in [+1, -1]:
+%        z_ell_s = sy.pi/beta/v * (v*tau + ell*sy.I*s*x)
+%        zp_ell_s = sy.pi/beta/v * (v*taup + ell* sy.I*s*xp)
+%        zp_mell_s = sy.pi/beta/v * (v*taup - ell* sy.I*s*xp)
+%        res += -sy.pi * (1+K*s)/(4*beta*v) * (sy.cot(z_ell_s - zp_ell_s - sy.pi/beta/v * ell* sy.I*s*s_a*a) + sy.cot(zp_mell_s - sy.pi/beta/v * ell* sy.I*s*s_a*a))
+%print(res.subs(subs).evalf())
+where $z_\pm = \frac{\pi}{\beta v} (v\tau \pm \i x)$ and similarly $\tilde{z}_\pm = \frac{\pi}{\beta v} (v\tau \pm \i (x + s_aa))$.
+The term $\Phi(z_s' - \tilde{z}_s')$ becomes proportional to $s=\pm 1$ after differentiation with respect to $a$, and thus drops out due to the summation.
+This leaves us with
+\begin{align*}
+f_{1,\ell}(z,z') &= \sum_{s_a,s=\pm 1} \ell s_a\partial_a \klb*{\frac{(K\ell - s)}{4} \Phi(z_s - \tilde{z}_s') + \frac{(K\ell + s)}{4} \Phi(\tilde{z}_s')}\\
+&= \sum_{s_a,s=\pm 1} \ell s_a\klb*{\frac{-(K\ell - s)}{4} \cot(z_s - \tilde{z}_s') \frac{-\i s_a s\pi}{\beta v} - \frac{(K\ell + s)}{4} \cot(\tilde{z}_s') \frac{\i s_a s\pi}{\beta v}}.
+\end{align*}
+Relabelling the summation variables then brings this into the form
+\begin{align*}
+f_{1,\ell}(z,z') &= \sum_{s_a,s=\pm 1} \frac{-\i\ell \pi}{\beta v} \klb*{\frac{-(-K\ell s + 1)}{4} \cot(z_s - \tilde{z}_s') + \frac{(-K\ell s - 1)}{4} \cot(\tilde{z}_s')}\\
+&= \sum_{s_a,s=\pm 1} \frac{\i\ell \pi (1-Ks)}{4\beta v} \klb*{\cot(z_{\ell s} - \tilde{z}_{\ell s}') + \cot(\tilde{z}_{-\ell s}')}\\
+&= \sum_{s_a,s=\pm 1} \frac{\i\ell \pi (1-Ks)}{4\beta v} \klb*{\cot(z_{\ell s} - z_{\ell s}' - \i\ell s_a s \frac{\pi a}{\beta v}) + \cot(z_{-\ell s}' - \i\ell s_a s \frac{\pi a}{\beta v})},
+\end{align*}
+which is the result stated in \autoref{sec:ell:gf:sine_Gordon_perturbation}.
+\subsection{Chiral symmetry and retarded \texorpdfstring{\acrshort{gf}}{GF}}\label{sec:app:chiral_symmetry_gf}
+Chiral symmetry is a combination of time reversal and particle-hole exchange, i.e. $\chs = \trs \circ \phs$.
+Here, we discuss a general consequence of chiral symmetry for the retarded single-particle \gls{gf} mentioned in \autoref{sec:ell:ep:eps_in_our_model}.\\
+Under $\chs$, fermionic operators transform as
+\begin{align}
+\chs c_j \chs^{-1} &= \kla*{U_S^\ast}_{jj'} c_{j'}^\dagger \quad \text{and} \quad \chs c_j^\dagger \chs^{-1} = \kla*{U_S}_{jj'} c_{j'}, \label{eqn:app:chiral_cj_transform}
+\end{align}
+where repeated indices are implicitly summed over \cite[\ssec II.C]{NHT_Classification_Chiu_2016}.
+Since $\chs$ contains time reversal, it is anti-unitary, and can therefore be written as $\chs = \hat{U} \ccg$ where $\ccg$ denotes complex conjugation and $\hat{U}$ is unitary.
+With $\ccg A \ccg = A^\ast$ for some operator $A$, we have
+\begin{align*}
+\tr\klb*{\chs^{-1} A \chs} &= \tr\klb*{\ccg \hat{U}^\dagger A \hat{U} \ccg} = \tr\klb*{\kla*{\hat{U}^\dagger A \hat{U}}^\ast \ccg^2} = \kla*{ \tr\klb*{A \hat{U}}}^\ast = \kla*{\tr A}^\ast.
+\end{align*}
+Assuming that the Hamiltonian $H$ describing the system is invariant under chiral symmetry, i.e. $\chs H \chs^{-1} = H$, then yields\footnote{$\klc*{\chs^{-1} A \chs, B} = \chs^{-1}A\chs B \chs^{-1} \chs + \chs^{-1} \chs B \chs^{-1} A \chs = \chs^{-1} \klc*{A, \chs B \chs^{-1}} \chs$}
+\begin{align*}
+\klc*{c_j(t), c_l^\dagger(0)} &= \klc*{ \powe{\i Ht} c_j \powe{-\i Ht}, c_l^\dagger} = \klc*{\chs^{-1} \chs \powe{\i Ht} \chs^{-1} \chs c_j \chs^{-1} \chs \powe{-\i Ht} \chs^{-1} \chs, c_l^\dagger} \\
+&= \klc*{\chs^{-1} \powe{-\i Ht} \kla{U_S^\ast}_{jj'} c_{j'}^\dagger \powe{\i Ht} \chs, c_l^\dagger} = \chs^{-1} \klc*{\powe{-\i Ht} \kla{U_S^\ast}_{jj'} c_{j'}^\dagger \powe{\i Ht}, \chs c_l^\dagger \chs^{-1}} \chs\\
+&= \kla{U_S}_{jj'} \kla{U_S^\ast}_{ll'} \chs^{-1} \klc*{\powe{-\i Ht} c_{j'}^\dagger \powe{\i Ht}, c_{l'}} \chs.
+\end{align*}
+%Within a trace we allowed to perform cyclic permutations and thus
+%\begin{align*}
+%\tr \klc*{\chs^{-1} A \chs, B} &= \tr \klb*{A\chs B \chs^{-1} + \chs B \chs^{-1} A} = \tr \klc*{A, \chs B \chs^{-1}}.
+%\end{align*}
+%Using this property we can then rewrite the retarded single-particle \gls{gf} as
+Using the cyclic property of the trace, we can rewrite the retarded single-particle \gls{gf} as
+\begin{align*}
+G^\ret_{jl}(t) &= -\i\Theta(t) \tr \klb*{\powe{-\beta H} \klc*{c_j(t), c_l^\dagger(0)}} = -\i\Theta(t) \kla{U_S}_{jj'} \kla{U_S^\ast}_{ll'} \tr \klb*{\klc*{\powe{-\i Ht} c_{j'}^\dagger \powe{\i Ht}, c_{l'}}}^\ast\\
+&= -\i\Theta(t) \kla{U_S}_{jj'} \kla{U_S^\ast}_{ll'} \tr \klb*{\klc*{c_{l'}(t), c_{j'}^\dagger(0)}}^\ast = -\kla{U_S}_{jj'} \kla{U_S^\ast}_{ll'} G^\ret_{l'j'}(t)^\ast \\
+&= -\kla*{U_S^\ast G^\ret(t)^\ast U_S^\transpose}_{lj},
+\end{align*}
+which in matrix notation reads $G^\ret(t) = - U_S G^\ret(t)^\dagger U_S^\dagger$.
+The temporal \gls{ft} then yields
+\begin{align*}
+G^\ret(\omega) &= \intx{ }{ }{\powe{-\i\omega t} G^\ret(t)}{t} = - U_S \intx{ }{ }{\powe{-\i\omega t} G^\ret(t)^\dagger }{t}\ U_S^\dagger = - U_S \kla*{G^\ret(-\omega)}^\dagger U_S^\dagger,
+\end{align*}
+and, since $H_\eff(\omega) = \omega - \kla*{G^\ret(\omega)}^{-1}$ from \autoref{eqn:ep:g_ret_from_h_eff}, we finally obtain the relation
+\begin{align}
+U_S^\dagger H_\eff^\dagger(\omega) U_S &= \omega - U_S^\dagger \kla*{G^\ret(\omega)^\dagger}^{-1} U_S = - \kla*{-\omega - G^\ret(-\omega)^\dagger}^{-1} = -H_\eff(-\omega). \label{eqn:app:H_eff_chiral_symmetry}
+\end{align}
+In our case, the model admits chiral symmetry for $U_S=\sigma_z$ \cite{EP_DynamicInduced_Quenched_Lehmann_2021}.
+To see why this is the case, first note that \autoref{eqn:app:chiral_cj_transform} simplifies to $c_s \rightarrow sc_s^\dagger$ where once again $s\in\klc{\A,\B}$ is identified with $s=\pm 1$.
+Since the Bloch Hamiltonian $h(k)$ only contains $\sigma_x$ and $\sigma_y$, we have $\klc{\sigma_z, h(k)} = 0$, which is equivalent to chiral invariance for quadratic Hamiltonians \cite[\seqn 2.14]{NHT_Classification_Chiu_2016}.
+Another way to see this is to note that $H_0$ consists of products $c_\A^\dagger c_\B$, which transform to
+\begin{align*}
+\chs c_\A^\dagger c_\B \chs^{-1} &= \chs c_\A^\dagger \chs^{-1} \chs c_\B \chs^{-1} = - c_\A c_\B^\dagger = c_\B^\dagger c_\A.
+\end{align*}
+Together with the Hermitian conjugate, all of the terms then reproduce the original.\\
+A density term transforms as
+\begin{align*}
+\chs \kla[\Big]{n_s - \frac{1}{2}} \chs^{-1} &= \chs c_s^\dagger \chs^{-1} \chs c_s \chs^{-1} - \frac{1}{2} = sc_s sc_s^\dagger - \frac{1}{2} = \frac{1}{2} - c_s^\dagger c_s = - \kla[\Big]{n_s - \frac{1}{2}}.
+\end{align*}
+Since the interaction $H_\tint$ contains a product of two such terms the minus sign drops out and therefore the full Hamiltonian is invariant under $\chs$.
+Note that the value $\frac{1}{2}$ is critical here, so the chiral symmetry is only satisfied at half-filling \cite{EP_DynamicInduced_Quenched_Lehmann_2021}.
+\subsection{\tMs{} \texorpdfstring{\acrshort{rg}}{RG} one-loop corrections}\label{sec:app:ms_one_loop}
+Here, we compute the one-loop \gls{rg} corrections for the \gls{ell} involving the \gls{sg}-like perturbation $H_2$.
+In the \tms{} scheme, we have
+\begin{align*}
+\bra*{\sact_2 \sact_b}_\f^\c &= \frac{g_2}{\alpha} \i\eta_\L\eta_\R \frac{g}{\alpha^2} \sum_{s,s',s_a=\pm 1} \int \powe{2\i s\phi_\s(\textbf{r}_1)} \powe{\i bs' \phi_\s(\textbf{r}_2)} \bra*{\powe{2\i s\phi_\f(\textbf{r}_1)} \partial_{x_3} \kla*{\phi_\s(\textbf{r}_3) + \phi_\f(\textbf{r}_3)} ;\powe{\i bs' \phi_\f(\textbf{r}_2)}}_\f^\c
+\end{align*}
+where $\textbf{r}_3= \textbf{r}_1 + s_aa$.
+The first part of this expression evaluates to\footnote{$\bra*{\powe{2\i s\phi_\f(\textbf{r}_1)} ;\powe{\i bs' \phi_\f(\textbf{r}_2)}}_\f^\c = \powe{-2bss' \Phi_\f(\textbf{r})} - 1 = Kb \d l (-ss') \tilde{\Phi}_\f(\textbf{r})$}
+\begin{align*}
+\textbf{I} &= \frac{g_2g \i\eta_\L\eta_\R}{\alpha^3} \sum \int \powe{2\i s\phi_\s(\textbf{r}_1) + \i bs' \phi_\s(\textbf{r}_2)} \partial_{x_3} \phi_\s(\textbf{r}_3) Kb \d l (-ss') \tilde{\Phi}_\f(\textbf{r})\\
+&\overset{s'=-s}{\approx} \frac{g_2g \i\eta_\L\eta_\R}{\alpha^3} Kb \d l \sum \int \powe{2\i s\phi_\s(\textbf{r}_1) - \i bs \phi_\s(\textbf{r}_2)} \partial_{x_3} \phi_\s(\textbf{r}_3) \tilde{\Phi}_\f(\textbf{r})
+\end{align*}
+where $\textbf{r} = \textbf{r}_1 - \textbf{r}_2$, and we ignored the terms with $s'=s$ due to their lower operator relevance.
+For $b=4$, we can simplify this further to
+\begin{align*}
+\textbf{I} &\approx \frac{g_2g \i\eta_\L\eta_\R}{\alpha^3} Kb \d l \sum \int \powe{-2\i s\phi_\s(\textbf{R})} \partial_{X} \phi_\s(\textbf{R}) \tilde{\Phi}_\f(\textbf{r}) \\
+&= \frac{g_2g \i\eta_\L\eta_\R}{\alpha^3} Kb \d l \frac{4\pi}{\Lambda^2} \sum \int \powe{-2\i s\phi_\s(\textbf{R})} \partial_{X} \phi_\s(\textbf{R}) \tilde{\Phi}_\f(\textbf{r}) = \frac{16\pi K g}{(\Lambda\alpha)^2} \d l \sact_{2}[\phi_\s].
+\end{align*}
+The second part reduces to\footnote{$\partial_J \bra*{\powe{2\i s\phi_\f(\textbf{r}_1)} \powe{J\phi_\f(\textbf{r}_3)} ;\powe{\i bs' \phi_\f(\textbf{r}_2)}}_\f^\c = \partial_J \powe{-2bss' \Phi_\f(\textbf{r}) + \i bs'J\Phi_\f(\textbf{r}_3 - \textbf{r}_2)} = \i bs' \frac{K}{2} \d l \tilde{\Phi}_\f(\textbf{r} + s_aa)$}
+\begin{align*}
+\textbf{II} &= \frac{g_2g \i\eta_\L\eta_\R}{\alpha^3} \sum \int \powe{2\i s\phi_\s(\textbf{r}_1) + \i bs' \phi_\s(\textbf{r}_2)} \i bs' \frac{K}{2} \d l \partial_{x} \tilde{\Phi}_\f(\textbf{r} + s_aa)\\
+&\overset{s'=-s}{\approx} \frac{g_2g \i\eta_\L\eta_\R}{\alpha^3} \sum \int \powe{\i s (2-b) \phi_\s(\textbf{R})} (-\i bs) \frac{K}{2} \d l \partial_{x} \tilde{\Phi}_\f(\textbf{r} + s_aa) = 0.
+\end{align*}
+One can expand the exponent to a higher order, but the only surviving terms have less operator relevance than the ones we are already keeping.\\
+The pure $\sact_2$-correction is given by
+\begin{align*}
+\bra*{\sact_2^2}_\f^\c &= \frac{g_2^2}{\alpha^2} \sum_{s,s',s_a,s_a'=\pm 1} \int \powe{2\i s\phi_\s(\textbf{r}_1)} \powe{2\i s' \phi_\s(\textbf{r}_2)} C,\\
+C &= \bra*{\powe{2\i s\phi_\f(\textbf{r}_1)} \partial_{x_3} \kla*{\phi_\s(\textbf{r}_3) + \phi_\f(\textbf{r}_3)} ;\powe{\i 2s' \phi_\f(\textbf{r}_2)} \partial_{x_4} \kla*{\phi_\s(\textbf{r}_4) + \phi_\f(\textbf{r}_4)}}_\f^\c
+\end{align*}
+where $\textbf{r}_4=\textbf{r}_2 + s_a'a$.
+The first part is\footnote{$\bra*{\powe{2\i s\phi_\f(\textbf{r}_1)} \powe{\i 2s' \phi_\f(\textbf{r}_2)} }_\f^\c = \powe{-4ss' \Phi_\f(\textbf{r})} - 1 = -2Kss' \d l \tilde{\Phi}_\f(\textbf{r})$}
+\begin{align*}
+\textbf{I} &= \frac{g_2^2}{\alpha^2} 2K\d l \sum \int \powe{2\i s\phi_\s(\textbf{r}_1)} \powe{2\i s' \phi_\s(\textbf{r}_2)} \partial_{x_3} \partial_{x_4} \phi_\s(\textbf{r}_3) \phi_\s(\textbf{r}_4) (-ss') \tilde{\Phi}_\f(\textbf{r})\\
+&\overset{s'=-s}{\approx} \frac{g_2^2}{\alpha^2} 2K\d l \sum \int \powe{2\i s \textbf{r} \cdot \nabla_\textbf{R} \phi_\s(\textbf{R})} \kla*{\partial_{X} \phi_\s(\textbf{R})}^2 \tilde{\Phi}_\f(\textbf{r}) \\
+&\approx \frac{g_2^2}{\alpha^2} 2K\d l \sum \int \kla*{\partial_{X} \phi_\s}^2 \frac{4\pi}{\Lambda^2} = \frac{64\pi K g_2^2}{(\Lambda\alpha)^2} \d l \int \kla*{\partial_{X} \phi_\s}^2.
+\end{align*}
+Within our approximation, the second part yields\footnote{$\partial_J \bra*{\powe{2\i s\phi_\f(\textbf{r}_1)}; \powe{2\i s' \phi_\f(\textbf{r}_2)} \powe{J\phi_\f(\textbf{r}_4)}}_\f^\c = \partial_J \powe{-4ss' \Phi_\f(\textbf{r}) + 2\i sJ\Phi_\f(\textbf{r}_1 - \textbf{r}_4)} = \i s K \d l \tilde{\Phi}_\f(\textbf{r} - s_a'a)$}
+\begin{align*}
+\textbf{II} &= \frac{g_2^2}{\alpha^2} \i K \d l \sum \int \powe{2\i s\phi_\s(\textbf{r}_1) + 2\i s'\phi_\s(\textbf{r}_2)} \partial_{x_3} \phi_\s(\textbf{r}_3) (-s) \partial_x \tilde{\Phi}_\f(\textbf{r} - s_a'a)\\
+&\overset{s'=-s}{\approx} \frac{g_2^2}{\alpha^2} \i K \d l \sum \int \powe{2\i s \textbf{r}\cdot \nabla_\textbf{R} \phi_\s(\textbf{R})} \partial_X\phi_\s(\textbf{R}) (-s) \partial_x\tilde{\Phi}_\f(\textbf{r}-s_a'a)\\
+&\approx \frac{g_2^2}{\alpha^2} 2K\d l \sum \int \kla*{\partial_X\phi_\s}^2 x \partial_x\tilde{\Phi}_\f(\textbf{r}-s_a'a) = \frac{64\pi Kg_2^2}{(\Lambda\alpha)^2} \d l \int \kla*{\partial_X\phi_\s}^2.
+\end{align*}
+The third part is structurally identical, except for an additional minus sign due to the chain rule; hence, $\textbf{III} = -\textbf{II}$.
+Finally, the fourth contribution splits into\footnote{$\partial_{J_1} \partial_{J_2} \bra*{\powe{2\i s\phi_\f(\textbf{r}_1)} \powe{J_1\phi_\f(\textbf{r}_3)}; \powe{2\i s' \phi_\f(\textbf{r}_2)} \powe{J_2\phi_\f(\textbf{r}_4)}}_\f^\c = \partial_{J_1} \partial_{J_2} \powe{J_1J_2 \Phi_\f(\textbf{r}_3 - \textbf{r}_4)} = \frac{K}{2} \d l \tilde{\Phi}_\f (\textbf{r}_3 - \textbf{r}_4)$}
+\begin{align*}
+\textbf{IV} &= \frac{g_2^2}{\alpha^2} \frac{K}{2} \d l \sum \int \powe{2\i s\phi_\s(\textbf{r}_1) + 2\i s'\phi_\s (\textbf{r}_2)} \partial_{x_3} \partial_{x_4}\tilde{\Phi}_\f (\textbf{r}_3 - \textbf{r}_4) = \textbf{IV}_1 + \textbf{IV}_2.
+\end{align*}
+The first term corresponds to $s'=s$ and is given by
+\begin{align*}
+\textbf{IV}_1 &\approx -\frac{g_2^2}{\alpha^2} \frac{K}{2} \d l \sum \int \powe{2\i s \phi_\s(\textbf{R})} \partial_{x}^2 \tilde{\Phi}_\f (\textbf{r} + s_aa-s_a'a) = 0.
+\end{align*}
+Note that here the neglected terms only involve second order derivatives, and are thus presumably not as irrelevant as the higher order \gls{sg}-terms.
+The second contribution is
+\begin{align*}
+\textbf{IV}_2 &\approx - \frac{g_2^2}{\alpha^2} \frac{K}{2} \d l \sum \int \powe{2\i s\textbf{r}\cdot \nabla_\textbf{R}\phi_\s(\textbf{R})} \partial_x^2\tilde{\Phi}_\f(\textbf{r} + s_aa-s_a'a)\\
+&\approx \frac{g_2^2}{\alpha^2} \frac{K}{2} \d l \sum \int 2\kla*{\textbf{r}\cdot \nabla_\textbf{R}\phi_\s(\textbf{R})}^2 \partial_x^2\tilde{\Phi}_\f(\textbf{r} + s_aa-s_a'a)\\
+&= \frac{g_2^2}{\alpha^2} K\d l \sum \int \kla*{\partial_X\phi_\s}^2 2 \tilde{\Phi}_\f(\textbf{r}) = \frac{64\pi Kg_2^2}{(\Lambda\alpha)^2} \d l \int \kla*{\partial_X \phi_\s}^2.
+\end{align*}
+\subsection{\texorpdfstring{\acrshortpl{ope}}{OPE} involving \texorpdfstring{$W_n$}{Wn}}\label{sec:app:ope_Wn}
+In preparation for the \gls{sg}-like perturbation $\sact_2$, consider the expectation value
+\begin{align*}
+\sum_{s_a,s_a'} &\bra*{\powe{\i n\phi(\textbf{r})} \partial_x\phi(\textbf{r}+\s_aa) \powe{\i m\phi(\textbf{r}+\bm{\epsilon})} \partial_x\phi(\textbf{r}+s_a'a+\bm{\epsilon})}.
+\end{align*}
+The calculations are a bit cumbersome, so we introduce the shorthand notations
+\begin{align*}
+\textbf{r}_1 &= \textbf{r}, \quad \textbf{r}_2 = \textbf{r}+s_aa, \quad \textbf{r}_3 = \textbf{r}+\bm{\epsilon} \quad\text{and}\quad \textbf{r}_4 = \textbf{r}+s_a'a + \bm{\epsilon}, \numberthis\label{eqn:ell:rg:r_1234_def}
+\end{align*}
+as well as $F_{14} = F(\textbf{r}_{14}) = F(\textbf{r}_1 - \textbf{r}_4)$ etc. (see \autoref{eqn:ell:rg:F_r} for $F$).
+Furthermore, in the following limits such as $J\rightarrow 0$ are implied, and we make heavy use of \autoref{eqn:bos:expval_prod_powe_Cj} as well as the relations in \autoref{sec:ell:rg:ope_vertex_operators}.
+The expectation value can then be written as
+\begin{align*}
+\sum_{s_a,s_a'} &\partial_{x_2} \partial_{x_4} (-\i) \partial_{J_1} (-\i) \partial_{J_2} \bra*{\powe{\i n\phi(\textbf{r}_1)} \powe{\i J_1\phi(\textbf{r}_2)} \powe{\i m\phi(\textbf{r}_3)} \powe{\i J_2\phi(\textbf{r}_4)}}\\
+&= -\delta_{n,-m} \sum_{s_a,s_a'} \partial_{x_2} \partial_{x_4} \partial_{J_1} \partial_{J_2} \powe{\frac{1}{2} \klb*{nJ_1 F_{12} + nm F_{13} + nJ_2F_{14} + J_1mF_{23} + J_1J_2 F_{24} + mJ_2 F_{34}}}\\
+&= -\delta_{n,-m} \powe{\frac{1}{2}nm F_{13}} \sum_{s_a,s_a'} \partial_{x_2} \partial_{x_4} \klb*{\frac{1}{2} F_{24} + \frac{1}{4} \kla*{nF_{12} + mF_{23}} \kla*{mF_{34} + nF_{14}}}\\
+&= -\delta_{n,-m} \frac{K}{4} \powe{-\frac{1}{2}n^2 F(\bm{\epsilon})} \sum_{s_a,s_a'} \partial_{x_2} \partial_{x_4} \bsplit{\klb[\bigg]{&2 \log\sqrt{\kla*{(x_2 - x_4)^2 + \epsilon_y^2}} \\
+&+ Kn^2 \kla*{\log |x_2-x_1| - \log \sqrt{(x_2-x_3)^2 + \epsilon_y^2}}\\
+&\quad \times \kla*{\log |x_4-x_3| - \log \sqrt{(x_4-x_1)^2 + \epsilon_y^2}} }}\\
+&= -\delta_{n,-m} \frac{K}{4} \powe{-\frac{1}{2} n^2F(\bm{\epsilon})} \klb*{\frac{-8}{\epsilon^2} + \frac{16\epsilon_x^2}{\epsilon^4} + Kn^2 \frac{2\epsilon_x}{\epsilon^2} \frac{2\epsilon_x}{\epsilon^2}}.
+\end{align*}
+Performing the average over $\bm{\epsilon}$-orientations simplifies this to $-\delta_{n,-m} \frac{K^2n^2}{2} \alpha^{\frac{K}{2}n^2} \epsilon^{-\Delta^W_n}$, where the scaling dimension $\Delta^W_n = \frac{K}{4} n^2 + 1$ is consistent with the expectation from naive power counting (an extra derivative compared to the usual vertex operators should increase the scaling dimension by one). % REF
+We can now define the normalized operators
+\begin{align}
+W_n(\textbf{r}) &= \frac{\sqrt{2}}{Kn\alpha^{\Delta^W_n - 1}} \sum_{s_a=\pm 1} \powe{\i n\phi(\textbf{r})} \partial_x\phi(\textbf{r}+ s_aa). \label{eqn:app:W_n_def}
+\end{align}
+With the abbreviations $r_{1,\dots,4}$ from \autoref{eqn:ell:rg:r_1234_def}, the \gls{ope} of the $W_n$ is
+\begin{align*}
+W_n(\textbf{r}_1) W_m(\textbf{r}_3) &= \frac{2}{K^2nm} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \sum_{s_a,s_a'} \normord{\powe{\i n\phi(\textbf{r}_1)} \partial_x\phi(\textbf{r}_2)} \normord{\powe{\i m\phi(\textbf{r}_3)} \partial_x\phi(\textbf{r}_4)}\\
+&= \sum \partial_{x_2} \partial_{x_4} \partial_{J_1} \partial_{J_2} \frac{-2}{K^2nm} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \normord{\powe{\i n\phi(\textbf{r}_1)} \powe{\i J_1\phi(\textbf{r}_2)}} \normord{\powe{\i m\phi(\textbf{r}_3)} \powe{\i J_2\phi(\textbf{r}_4)}}\\
+&= \sum \bsplit{& \partial_{x_2} \partial_{x_4} \partial_{J_1} \partial_{J_2} \frac{-2}{K^2nm} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \normord{\powe{\i n\phi(\textbf{r}_1)} \powe{\i J_1\phi(\textbf{r}_2)} \powe{\i m\phi(\textbf{r}_3)} \powe{\i J_2\phi(\textbf{r}_4)}} \\
+&\times \powe{\klb*{m\phi\eplus(\textbf{r}_3) + J_2 \phi\eplus(\textbf{r}_4),\, n\phi\eminus(\textbf{r}_1) + J_1 \phi\eminus(\textbf{r}_2)}}}\\
+&= \sum \bsplit{& \partial_{x_2} \partial_{x_4} \partial_{J_1} \partial_{J_2} \frac{-2}{K^2nm} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m}  \normord{\powe{\i n\phi(\textbf{r}_1) + \i J_1\phi(\textbf{r}_2) + \i m\phi(\textbf{r}_3) + \i J_2\phi(\textbf{r}_4)}} \\
+&\times \powe{\frac{K}{2} nm \log \klb*{\frac{2\pi}{L} \textbf{r}_{13}} + \frac{K}{2} J_1J_2 \log \klb*{\frac{2\pi}{L} \textbf{r}_{24}} + \frac{K}{2} nJ_2 \log \klb*{\frac{2\pi}{L} \textbf{r}_{14}} + \frac{K}{2} mJ_1 \log \klb*{\frac{2\pi}{L} \textbf{r}_{23}} }}\\
+&= \bsplit{&\sum \frac{-2}{K^2nm} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \kla*{\frac{2\pi\epsilon}{L}}^{\frac{K}{2}nm} \normord{\powe{\i n\phi(\textbf{r}_1) + \i m\phi(\textbf{r}_3)}} \\
+&\times \partial_{x_2} \partial_{x_4} \klb*{\frac{K}{2} \log |\textbf{r}_{24}| + \kla*{\i \phi(\textbf{r}_2) + \frac{K}{2} m\log |\textbf{r}_{23}|} \kla*{\i \phi(\textbf{r}_4) + \frac{K}{2} n\log |\textbf{r}_{14}|}} }
+\end{align*}
+%sy.log(sy.sqrt(epsy**2+(x2 - x4)**2) ).diff(x2).diff(x4).subs(x2, x1+s*a).subs(x4, x1+epsx+sp*a).simplify()
+and defining $P_0(\textbf{r}) = \sum_{s_a=\pm 1} \partial_x\phi(\textbf{r}+s_aa)$ then allows us to rewrite this as
+\begin{align*}
+\dots &= \bsplit{&\frac{-2}{K^2nm} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \kla*{\frac{2\pi\epsilon}{L}}^{\frac{K}{2}nm} \normord{\powe{\i n\phi(\textbf{r}_1) + \i m\phi(\textbf{r}_3)}} \\
+&\times \klb[\bigg]{2K \frac{\epsilon_x^2-\epsilon_y^2}{\epsilon^4} + \kla[\Big]{\i P_0(\textbf{r}_1) + K m \frac{-\epsilon_x}{\epsilon^2}} \kla[\Big]{\i P_0(\textbf{r}_3) + K n \frac{\epsilon_x}{\epsilon^2}}}. }
+%&= \bsplit{&\frac{-2}{K^2nm} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \kla*{\frac{2\pi\epsilon}{L}}^{\frac{K}{2}nm} \normord{\powe{\i n\phi(\textbf{r}) + \i m\phi(\textbf{r}+\bm{\epsilon})}} \\
+%&\times \klb*{2K \frac{\epsilon_x^2-\epsilon_y^2}{\epsilon^4} - P_0(\textbf{r})P_0(\textbf{r}+\bm{\epsilon}) - K^2nm \frac{\epsilon_x^2}{\epsilon^4} + \i Kn P_0(\textbf{r}) \frac{\epsilon_x}{\epsilon^2} - \i Km P_0(\textbf{r}+\bm{\epsilon}) \frac{\epsilon_x}{\epsilon^2} }.}
+\end{align*}
+For $n\neq -m$, we can approximate the result as usual, and perform the average to get
+\begin{align*}
+\dots &= \frac{2}{K^2nm} \kla*{\frac{2\pi}{L}}^{\Delta^V_{n+m}} \frac{1}{\epsilon^{\Delta^V_{n} + \Delta^V_{m} - \Delta^V_{n+m}}} \normord{\powe{\i (n+m)\phi(\textbf{r})}} \klb*{P_0(\textbf{r})^2 + \frac{K^2nm}{2\epsilon^2}} \\
+&= \frac{1}{\epsilon^{\Delta^V_{n} + \Delta^V_{m} - \Delta^V_{n+m}}} V_{n+m}(\textbf{r}) \klb*{\frac{1}{\epsilon^2} + \frac{2}{K^2nm} P_0(\textbf{r})^2}.
+\end{align*}%\bsplit{&\frac{-2}{K^2nm} \kla*{\frac{2\pi}{L}}^{\Delta^V_{n+m}} \frac{1}{\epsilon^{\Delta^V_{n} + \Delta^V_{m} - \Delta^V_{n+m}}} \normord{\powe{\i (n+m)\phi(\textbf{r})}} \\&\times \klb*{2K \frac{\epsilon_x^2-\epsilon_y^2}{\epsilon^4} - P_0(\textbf{r})^2 - K^2nm \frac{\epsilon_x^2}{\epsilon^4} + \i K(n-m) P_0(\textbf{r}) \frac{\epsilon_x}{\epsilon^2} }}\\
+At this point, we drop the higher order term $V_{n+m}P_0^2$ that corresponds to a combination of a second order derivative and a vertex operator.
+While this is mostly for practical reasons -- including this term would generate an entire hierarchy of similar ones -- it is also reasonable to assume that the additional derivative makes the operators less relevant than $W_n$.
+Within this approximation, we are left with the \gls{ope} coefficient $C^{W,W,V}_{n,m,n+m} = 1$.\\
+Due to cancellation in the exponent for $n=-m$, we ought to be more careful, and write
+\begin{align*}
+\dots &\simeq \frac{2}{K^2n^2} \frac{1}{\epsilon^{\frac{K}{2}n^2}} \normord{\powe{- \i n\bm{\epsilon}\cdot \nabla \phi - \i \frac{1}{2} n\kla*{\bm{\epsilon}\cdot\nabla }^2\phi}} \klb[\bigg]{2K \frac{\epsilon_x^2-\epsilon_y^2}{\epsilon^4} - P_0(\textbf{r})^2 + K^2n^2 \frac{\epsilon_x^2}{\epsilon^4} + \i 2Kn P_0(\textbf{r}) \frac{\epsilon_x}{\epsilon^2} }\\
+&\simeq \frac{2}{K^2n^2} \frac{1}{\epsilon^{2\Delta^W_n - 2}} \bsplit{&\klb*{1 - \i n\bm{\epsilon}\cdot \nabla \phi - \i \frac{1}{2} n\kla*{\bm{\epsilon}\cdot\nabla }^2\phi - \frac{n^2}{2} \kla*{\bm{\epsilon}\cdot \nabla\phi}^2} \\
+&\times \klb[\bigg]{-P_0^2 + K \frac{(2 + Kn^2)\epsilon_x^2-2\epsilon_y^2}{\epsilon^4} + 2\i Kn P_0 \frac{\epsilon_x}{\epsilon^2}}}\\
+&= \frac{2}{K^2n^2} \frac{1}{\epsilon^{2\Delta^W_n - 2}} \klb[\bigg]{-P_0^2 - \frac{Kn^2}{2} \frac{(2+Kn^2)\epsilon_x^2 - 2\epsilon_y^2}{\epsilon^4} \kla*{\bm{\epsilon}\cdot\nabla\phi}^2 + 2Kn^2 \frac{\epsilon_x}{\epsilon^2} P_0 \bm{\epsilon}\cdot \nabla\phi}
+\end{align*}
+where we dropped constants, total derivatives and higher order terms.
+Approximating $P_0 \approx 2\partial_x\phi$ then yields
+\begin{align*}
+\dots &\simeq \frac{2}{K^2n^2} \frac{1}{\epsilon^{2\Delta^W_n - 2}} \bsplit{\klb[\bigg]{ & -4 (\partial_x\phi)^2 - \frac{Kn^2}{2} \frac{(2+Kn^2)\epsilon_x^2 - 2\epsilon_y^2}{\epsilon^4} \kla*{\epsilon_x \partial_x\phi + \epsilon_y \partial_y\phi}^2 \\
+& + 2Kn^2 \frac{\epsilon_x}{\epsilon^2} 2\partial_x\phi \kla*{\epsilon_x \partial_x\phi + \epsilon_y \partial_y\phi}}.}
+\end{align*}
+The averages $\bra*{\epsilon_x^4}_\vartheta = \frac{3\epsilon^4}{8} = \bra*{\epsilon_y^4}_\vartheta$ and $\bra*{\epsilon_x^2\epsilon_y^2}_\vartheta = \frac{\epsilon^4}{8}$ lead to
+\begin{align*}
+\dots &= \frac{2}{K^2n^2} \frac{1}{\epsilon^{2\Delta^W_n - 2}} \klb[\bigg]{-4 X_0 - \frac{Kn^2}{2} \frac{\bra*{\kla*{(2+Kn^2)\epsilon_x^2 - 2\epsilon_y^2} \kla*{\epsilon_x^2 X_0 + \epsilon_y^2 Y_0}}_\vartheta}{\epsilon^4} + 2Kn^2 X_0}\\
+%&= \frac{-2}{K^2n^2} \frac{1}{\epsilon^{2\Delta^W_n - 2}} \klb*{2(2-Kn^2) X_0^2 + \frac{Kn^2}{2} \kla*{\frac{3}{8} (2+Kn^2)X_0^2 - 2Y_0^2 \frac{3}{8} - 2 \frac{1}{8} X_0^2 + \frac{1}{8} (2+Kn^2) Y_0^2}}\\
+%&= \frac{-2}{K^2n^2} \frac{1}{\epsilon^{2\Delta^W_n - 2}} \klb*{X_0^2 \kla*{4-2Kn^2 + \frac{3Kn^2}{16} (2+Kn^2) - \frac{Kn^2}{8}} + Y_0^2 \kla*{-\frac{3Kn^2}{8} + \frac{Kn^2}{16}(2+Kn^2)}}\\
+&= \frac{2}{K^2n^2} \frac{1}{\epsilon^{2\Delta^W_n - 2}} \klb*{X_0 \kla*{-4 + \frac{7}{4}Kn^2 - \frac{3}{16} K^2n^4} + Y_0 \kla*{\frac{1}{4}Kn^2 - \frac{1}{16}K^2n^4}}\\
+&= \frac{1}{\epsilon^{2\Delta^W_n - 2}} \klb*{X_0 \kla*{\frac{-8}{K^2n^2} + \frac{7}{2K} - \frac{3}{8} n^2} + Y_0 \kla*{\frac{1}{2K} - \frac{1}{8}n^2}}.
+\end{align*}
+Here, we can read off the coefficients $C^{W,W,X}_{n,-n,0} = \frac{-8}{K^2n^2} + \frac{7}{2K} - \frac{3}{8} n^2$ and $C^{W,W,Y}_{n,-n,0} = \frac{1}{2K} - \frac{1}{8}n^2$, which neatly factorize into
+\begin{align*}
+C^{W,W,X}_{n,-n,0} &= - \frac{Kn^2-4}{8K} \frac{3Kn^2 - 16}{Kn^2} \quad\text{and} \quad C^{W,W,Y}_{n,-n,0} = - \frac{Kn^2-4}{8K}.
+\end{align*}
+Evidently, the coefficients vanish for $K=1$ and $n=2$, which corresponds to the fact that without the $H_4$-perturbation the \gls{rg} flow does not directly generate a non-trivial $K$.\\
+We also need to evaluate the \gls{ope} of the mixed terms
+\begin{align*}
+W_n(\textbf{r}_1) V_m(\textbf{r}_3) &= \sum_{s_a} \frac{\sqrt{2}}{Kn} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \normord{\powe{\i n\phi(\textbf{r}_1)} \partial_x\phi(\textbf{r}_2)} \normord{\powe{\i m\phi(\textbf{r}_3)}}\\
+&= \sum \partial_{x_2} \partial_J \frac{-\i \sqrt{2}}{Kn} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \normord{\powe{\i n\phi(\textbf{r}_1)} \powe{\i J\phi(\textbf{r}_2)}} \normord{\powe{\i m\phi(\textbf{r}_3)}}.
+\end{align*}
+The evaluation essentially uses the same tricks as the one for the $W_n$-product and leads to
+\begin{align*}
+\dots &= \sum \partial_{x_2} \partial_J \frac{-\i \sqrt{2}}{Kn} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \normord{\powe{\i n\phi(\textbf{r}_1)} \powe{\i J\phi(\textbf{r}_2)} \powe{\i m\phi(\textbf{r}_3)}} \powe{ \frac{K}{2}nm \log\klb*{\frac{2\pi}{L}\textbf{r}_{13}} + \frac{K}{2}mJ \log \klb*{\frac{2\pi}{L} \textbf{r}_{23}} }\\
+&= \sum \frac{-\i \sqrt{2}}{Kn} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \kla*{\frac{2\pi\epsilon}{L}}^{\frac{K}{2}nm}  \normord{\powe{\i n\phi(\textbf{r}_1)+\i m\phi(\textbf{r}_3)}} \partial_{x_2} \klb*{\frac{Km}{2} \log \klb*{\frac{2\pi}{L} \textbf{r}_{23}} + \i \phi(\textbf{r}_2)} \\
+&= \sum \bsplit{&\frac{-\i \sqrt{2}}{Kn} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \kla*{\frac{2\pi\epsilon}{L}}^{\frac{K}{2}nm}  \normord{\powe{\i n\phi(\textbf{r}_1)+\i m\phi(\textbf{r}_3)}}\\
+&\times\partial_{x_2} \klb*{ \frac{Km}{2} \frac{s_aa - \epsilon_x}{(s_aa - \epsilon_x)^2 + \epsilon_y^2} + \i \partial_x\phi(\textbf{r} + s_aa)}} \\
+&\simeq \frac{-\i \sqrt{2}}{Kn} \kla*{\frac{2\pi}{L}}^{\Delta^V_n + \Delta^V_m} \kla*{\frac{2\pi\epsilon}{L}}^{\frac{K}{2}nm} \normord{\powe{\i n\phi(\textbf{r}_1)+\i m\phi(\textbf{r}_3)}} \klb*{ \frac{Km}{2} \frac{-2\epsilon_x}{\epsilon^2} + \i P_0}.
+\end{align*}
+Averaging over $\vartheta$ yields $\frac{\sqrt{2}}{Kn} \kla*{\frac{2\pi}{L}}^{\Delta_{n+m}^V} \epsilon^{-\frac{K}{2}nm} \normord{\powe{\i (n+m)\phi}} P_0 = \frac{n+m}{n} \epsilon^{\Delta^V_n + \Delta^W_m - \Delta^W_{n+m}}  W_{n+m}$, and thus the \gls{ope} coefficient $C^{W,V,W}_{n,m,n+m} = \frac{n+m}{n}$.
+The other permutation $V_n(\textbf{r}_1) W_m(\textbf{r}_3)$ can be evaluated in a similar fashion and leads to the structure coefficient $C^{V,W,W}_{n,m,n+m} = \frac{n+m}{m}$.
+The case of $n=-m$ is also interesting, but we do not discuss it here, as there are no corresponding terms in our model.
+\section{Integration}\label{sec:integrals}
+\subsection{Generalized hyperbolic cosecant \texorpdfstring{\acrshort{ft}}{FT}}\label{sec:app:general_csch_FT}
+In \autoref{sec:ell:gf:interacting_LL}, we use the integral
+\begin{align*}
+I_M(k) &= \intx{0}{\infty}{\powe{\i 2kx} \csch(x)^M }{x} = 2^M \intx{0}{\infty}{\powe{\i 2kx} \klb*{1 - \powe{-2x}}^{-M} \powe{-Mx} }{x}.
+\end{align*}
+Substituting $y=\powe{-2x}$ with $\d y = -2 y \d x$ gives
+\begin{align*}
+I_M(k) &= 2^M \intx{1}{0}{\powe{\i 2k \frac{-1}{2} \log(y)} \kla*{1 - y}^{-M} \powe{-M \frac{-1}{2} \log(y)} \frac{-1}{2y} }{y}\\
+&= 2^{M-1} \intx{0}{1}{\kla*{1-y}^{-M} y^{\frac{M}{2} - \i k - 1}}{y} = 2^{M-1} B\kla*{1 - M, \frac{M}{2} - \i k} \numberthis\label{eqn:app:general_csch_FT_res}
+\end{align*}
+where $B(x,y) = \intx{0}{1}{\kla*{1-t}^{x-1} t^{y-1}}{t} = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x,y)}$ is the complete Beta function \cite[\spage 68]{GelfandShilov_1964} and $\Gamma(x)$ is the usual Euler Gamma function \cite[\spage 52]{GelfandShilov_1964}.
+\subsection{Generalized cosecant product \texorpdfstring{\acrshort{ft}}{FT}}\label{sec:app:J_bN_function}
+In \autoref{sec:ell:gf:interacting_LL} and \autoref{sec:app:ret_gf_real_time} we derive\footnote{or, for the rigorous reader, at least make an educated guess} that the special function
+\begin{align*}
+J_{b,1}(k,\omega) &= -\i \sin(\pi b) I_b\kla*{\frac{\omega + k}{4}} I_{b+1} \kla*{\frac{\omega - k}{4}} %2^{2b-1} B\kla*{1 - b, \frac{b}{2} - \i \frac{\omega - k}{4}} B\kla*{- b, \frac{b}{2} - \i \frac{\omega + k}{4}}
+\end{align*}
+admits the integral representation\footnote{Of course the derivation is the other way around, but it is more useful to think of these functions as a generalization of the integral.}
+\begin{align}
+\intx{0}{\pi}{\intr{\powe{\omega \tau - \i k x} \csc\kla*{\tau + \i x}^{b+1} \csc\kla*{\tau - \i x}^b }{x} }{\tau} \label{eqn:app:j_bn_integral_repr}
+\end{align}
+where $\omega=\i (2n+1)$ for any $n\in\mathbb{Z}$.
+We now take this a step further and define the generalized function (see \autoref{fig:app:special_func_of_k} for a visualization)
+\begin{align*}
+J_{b,N}(k,\omega) &= \powe{-\i \frac{\pi}{2}N} \sin(\pi b) I_b\kla*{\frac{\omega + k}{4}} I_{b+N}\kla*{\frac{\omega - k}{4}} \\
+%2^{2b-2+N} B\kla*{1-b, \frac{b}{2} - \i \frac{\omega + k}{4}} B\kla*{1-b-N, \frac{b+N}{2} - \i\frac{\omega-k}{4}}\\
+&= \pi \powe{\i \frac{\pi}{2}N} 2^{2b-2+N} \frac{\Gamma(1-b)}{\Gamma(b+N)} \frac{\Gamma\kla*{ \frac{b}{2} - \i \frac{\omega + k}{4}}\Gamma\kla*{\frac{b+N}{2} - \i \frac{\omega - k}{4}}}{\Gamma\kla*{1-\frac{b}{2} - \i \frac{\omega + k}{4}}\Gamma\kla*{1-\frac{b+N}{2} - \i \frac{\omega - k}{4}}} \numberthis\label{eqn:app:J_bN_function}
+\end{align*}
+which for any $N\in\mathbb{N}_0$ corresponds to an integral of the form
+\begin{align*}
+\intx{0}{\pi}{\intr{\powe{\omega\tau - \i kx} \csc(\tau + \i x)^{b+N} \csc(\tau - \i x)^b}{x} }{\tau}
+\end{align*}
+%N=2; n = 1; om = 1j * (2*n + (N % 2)); k=0.43; L=5; b=0.3
+%print(c_quad(lambda tau: np.exp(om*tau) * c_quad(lambda x: np.exp(-1j*k*x) / np.sin(tau+1j*x)**(b+N) / np.sin(tau-1j*x)**b,-L, L)[0], 0, np.pi))
+%print(_j_bn(k, om, b, N))
+where $\omega = \i 2n$ for even $N$ and $\omega = \i (2n+1)$ for odd $N$\footnote{Despite the elegance of the final formula and the apparent factorization reminiscent of \autoref{sec:ell:gf:interacting_LL}, there does not seem to be a simple way to obtain it via a similar technique.
+The problem is that one can not define an analogue of the light-cone coordinates for the complex variables $\tau \pm \i x$ and perform a proper substitution in the integral (e.g., what should the integration region look like?).}.
+Or, thinking of it the other way around, the function \autoref{eqn:app:J_bN_function} corresponds to the analytic continuation of this integral to arbitrary complex $\omega$.\\
+Starting from the case $N=1$ one can recursively obtain the general result\footnote{or any other case, it just so happens we only ``know'' the formula for $N=1$}.
+For illustrative purposes, consider $N$ to be odd and note that
+\begin{align*}
+J_{b,N-1}(k,\i 2n) &= \intx{0}{\pi}{\intr{\powe{\i 2n\tau - \i kx} \csc(\tau + \i x)^{b+N-1} \csc(\tau - \i x)^b}{x} }{\tau}\\
+&= \intx{0}{\pi}{\intr{\powe{\i 2n\tau - \i kx} \csc(\tau + \i x)^{b+N} \csc(\tau - \i x)^b \frac{\powe{\i \tau - x} - \powe{-\i\tau + x}}{2\i}}{x} }{\tau}\\
+&= \frac{1}{2\i} J_{b,N}(k-\i, \i 2n + \i) - \frac{1}{2\i} J_{b,N}(k+\i, \i 2n - \i).
+\end{align*}
+Of course a similar relation holds for $N$ even, as well as different frequency arguments.
+In the spirit of an inductive argument, we assume that \autoref{eqn:app:J_bN_function} is correct for $N$, and insert it to get
+\begin{align*}
+J_{b,N-1}(k,\i 2n) &= \pi \powe{\i \frac{\pi}{2}(N-1)} 2^{2b-2+(N-1)} \frac{I_b\kla*{\frac{\i 2n + k}{4}}}{\Gamma(b+N)} \klc*{f_+\kla*{\frac{\i 2n - k}{4}} - f_-\kla*{\frac{\i 2n - k}{4}} }
+\end{align*}
+where we define $f_\pm(z) = \Gamma\kla*{\frac{b+N}{2} - \i z \pm  \frac{1}{2}} / \Gamma\kla*{1-\frac{b+N}{2} - \i z \pm \frac{1}{2}}$.
+Using the recursive property of the Gamma function, $\Gamma(z+1)=z\Gamma(z)$, these can be rewritten as
+\begin{align*}
+f_+(z) &= \frac{\Gamma\kla*{\frac{b+N-1}{2} - \i z + 1} }{\Gamma\kla*{1-\frac{b+N-1}{2} - \i z}} = \frac{\Gamma\kla*{\frac{b+N-1}{2} - \i z} }{\Gamma\kla*{1-\frac{b+N-1}{2} - \i z}} \kla*{\frac{b+N-1}{2} - \i z},\\
+f_-(z) &= \frac{\Gamma\kla*{\frac{b+N-1}{2} - \i z} }{\Gamma\kla*{1-\frac{b+N-1}{2} - \i z - 1}} = \frac{\Gamma\kla*{\frac{b+N-1}{2} - \i z} }{\Gamma\kla*{1-\frac{b+N-1}{2} - \i z}} \kla*{-\frac{b+N-1}{2} - \i z}.
+\end{align*}
+Plugging this into our previous result yields
+\begin{align*}
+J_{b,N-1}(k,\i 2n) &= \pi \powe{\i \frac{\pi}{2}(N-1)} 2^{2b-2+(N-1)} \frac{b+N-1}{\Gamma(b+N)} I_b\kla*{\frac{\i 2n + k}{4}} \frac{\Gamma\kla*{\frac{b+N-1}{2} - \i \frac{\i 2n - k}{4}} }{\Gamma\kla*{1-\frac{b+N-1}{2} - \i \frac{\i 2n - k}{4}}}
+\end{align*}
+which corresponds to \autoref{eqn:app:J_bN_function}.
+Similarly, one can verify that the relation also holds for $N\rightarrow N+1$, and of course the case of even $N$ is analogous too.
+\subsection{First order correction -- shifted cotangent integral}\label{sec:app:first_order_correction_shifted_cot}
+For the \gls{ft} of the first order correction to the \gls{gf} in \autoref{sec:ell:gf:sine_Gordon_perturbation}, we also need the integral
+\begin{align}
+S_{b,1,s}(k,\i w_n, a) &= \sum_{s_a=\pm 1} \intx{0}{\pi}{\intr{\powe{\i w_n\tau - \i kx} \csc(z_+)^{b+1} \csc(z_-)^b \cot(z_s + \i s_aa)}{x} }{\tau} \label{eqn:app:S_b1s_function_def}
+\end{align}
+where we define $z_\pm = \tau \pm\i x$ and, as in the previous section, interpret this as the integral representation of some function $S_{b,1,s}(k,\omega,a)$ evaluated at the dimensionless Matsubara frequencies $\omega = \i w_n = \i(2n+1)$.\\
+The main problem with this integral is the shift due to the lattice spacing $a$ that changes the structure of the poles.
+In particular, and this can be confirmed by numerical integration, the limit $a\rightarrow 0$ does \emph{not} correspond to the result that comes out of naively plugging $a=0$ into the integral.
+On another note, the additional cotangent factor is now just one term too much to still hope for a closed form solution.
+There may be many ways to approach this problem\footnote{Series expansion of some component and rewriting in terms of the known $J_{b,N}$, clever integral representation of components, some asymptotic approach and other ideas the author is not even aware of.}; inspired by our strategy for the first order correction we again make use of the \gls{ct} to break down the product structure.
+Even in this subspace of possible solutions there are already many ways to split the integrand into two (or more) pieces.
+\myparagraph{Setup for the \gls{ct}}
+Since we already know the \gls{ft} without the cotangent, it would be natural to split off this factor.
+We choose to split off an additional cosecant factor as well, because this later makes the convolution in \tpspace{} more symmetric.
+At first glance this seems like a much less efficient choice, because naively we would expect the \gls{ft} of $\cot(\dots)$ to be simpler than that of $\cot(\dots)\csc(\dots)$, in particular due to the different arguments (otherwise one could use $\csc(x)'=-\cot(x)\csc(x)$).\\
+Remarkably, however, this is not the case because one can show that
+\begin{align*}
+T(k,\i w_n) &= \sum_{s_a=\pm 1} \intx{0}{\pi}{\intr{\powe{\i w_n \tau - \i kx} \csc(z_+) \cot(z_+ + \i s_aa)}{x} }{\tau} = \frac{4\pi}{\i w_n + k} \frac{\sin(ka)}{\sinh(a)}.
+\end{align*}
+%om=1j*(2*2+1); k=-0.43; b=0.3; a=1.223; s=1; L=5
+%print(c_quad(lambda tau: np.exp(om*tau) * c_quad(lambda x: np.exp(-1j*k*x)*(1 / np.tan(tau+1j*s*(x+a)) + 1/ np.tan(tau+1j*s*(x-a))) / np.sin(tau+1j*x), -L, L)[0], 0, np.pi))
+%print(4*np.pi*np.sin(k*a)/np.sinh(a)/(om+k))
+We only consider the case $n\ge 0$ here.
+Reading the complex substitution $z=\powe{\i 2\tau}$ backwards, the $\tau$-integration turns into a contour integral around the unit disk,
+\begin{align*}
+T&= \sum_{s_a=\pm 1} \oint_{|z|=1} \intr{ z^n\powe{- \i kx} \frac{\powe{x}}{z - \powe{2x}} \i \frac{z + \powe{2(x+s_aa)}}{z - \powe{2(x+s_aa)}} }{x} \,\d z.
+\end{align*}
+The contribution from the first pole at $z=\powe{2x}$ vanishes upon summation over $s_a$, since
+\begin{align*}
+\sum_{s_a=\pm 1} 2\pi\i \intx{-\infty}{0}{\powe{(w_n-\i k)x} \i \frac{1 + \powe{2s_aa}}{1 - \powe{2s_aa}}}{x} &= \sum \frac{2\pi \coth(s_aa)}{w_n -\i k} = 0.
+\end{align*}
+For the second pole at $z=\powe{2(x+s_aa)}$, we instead obtain
+\begin{align*}
+\sum_{s_a=\pm 1} 2\pi\i &\intx{-\infty}{-s_aa}{\powe{(w_n-\i k)x} \i\csch(s_aa) \powe{s_aaw_n}}{x} \\
+&= \frac{2\pi}{\i w_n + k} \sum (-\i) \frac{s_a\powe{s_aaw_n}}{\sinh(a)} \powe{-s_aa(w_n-\i k)} = \frac{4\pi}{\i w_n + k} \frac{\sin(ka)}{\sinh(a)}.
+\end{align*}
+Combined with the \gls{ft} of the remaining cosecant-product, the \gls{ct} now gives
+\begin{align*}
+S_{b,1,s} &= \frac{1}{2\pi^2} \sum_{m\in\mathbb{Z}} \intr{ J_{b - \frac{1-s}{2},1-s}(k-k', 2\i m) \frac{4\pi}{s\i w_{n-m} + k'} \frac{\sin(k'a)}{\sinh(a)}}{k'}.
+\end{align*}
+The integrand only contains simple poles, albeit infinitely many.
+Thus a cumbersome, but conceptually straight-forward solution via the residue theorem is possible.
+Alternatively one could perform the Matsubara sum first, but the result seems to perform quite a bit worse with respect to the rate of convergence.
+\myparagraph{Performing the residue integral}
+For the oscillatory factor $\powe{\i k'a}$, the contour has to be closed in the upper half of the complex plane to ensure that the integral along the arc vanishes as the radius tends to infinity.
+Similarly, for $\powe{-\i k'a}$ we have to close it in the lower half and include an extra minus sign due to the changed orientation.
+As before, we consider the poles separately, starting with the simple one at $k'=-s\i w_{n-m}$.
+Its residue is
+\begin{align*}
+\frac{1}{2\i} \powe{sw_{n-m} a} J_{b-\frac{1-s}{2}, 1-s}(k+s\i w_{n-m}, 2\i m) \Theta\kla*{- s\Im \i w_{n-m}} 
+\end{align*}
+for $\powe{\i k'a}$ and for $\powe{-\i k'a}$ it is
+\begin{align*}
+\frac{-1}{2\i} \powe{-sw_{n-m} a} J_{b-\frac{1-s}{2}, 1-s}(k+s\i w_{n-m}, 2\i m) \Theta\kla*{s\Im \i w_{n-m}} .
+\end{align*}
+Combining both contributions then yields the first part of our result,
+\begin{align*}
+\frac{2}{\sinh(a)} \sum_{m\in\mathbb{Z}} J_{b-\frac{1-s}{2}, 1-s}(k+s\i w_{n-m}, 2\i m) \powe{w_{n-m} a \sgn(-\Im \i w_{n-m})}.
+\end{align*}
+In order to deal with the other poles, we start by writing
+\begin{align*}
+J_{b,N}(k,\omega) &= C_{b,N} \prod_{\ell=\pm 1} \frac{\Gamma\kla[\big]{\frac{b_\ell}{2} - \i k_\ell}}{\Gamma\kla[\big]{1 - \frac{b_\ell}{2} - \i k_\ell}}
+\end{align*}
+where $k_\ell = \frac{\omega + \ell k}{4}$, $C_{b,N} = \pi \i^N 2^{2b-2+N} \frac{\Gamma(1-b)}{\Gamma(b+N)}$ and $b_\ell = b + \frac{1 - \ell}{2}N$.
+The poles correspond to the zeros of the argument of the Gamma functions in the numerator, and are thus located at $-l = \frac{b_\ell}{2} - \i k_\ell$, or equivalently,
+\begin{align*}
+k_l &= -2\i\ell (2l + b_\ell) - \ell\omega
+\end{align*}
+where $l\ge 0$.
+Using $\eta \Gamma(-l+\eta) \rightarrow \frac{(-1)^l}{l!}$, the residue of $J_{b,N}$ at these poles becomes
+\begin{align*}
+\Res[J_{b,N}](k_l) &= C_{b,N} \lim_{\eta\rightarrow 0} \eta \frac{\Gamma\kla[\big]{\frac{b_{\ell}}{2} - \i \frac{\omega + \ell (k_l + \eta)}{4}}}{\Gamma\kla[\big]{1 - \frac{b_{\ell}}{2} - \i \frac{\omega + \ell k_l}{4}}} \frac{\Gamma\kla[\big]{\frac{b_{-\ell}}{2} - \i \frac{\omega - \ell k_l}{4}}}{\Gamma\kla[\big]{1 - \frac{b_{-\ell}}{2} - \i \frac{\omega - \ell k_l}{4}}}\\
+%&= C_{b,N} \frac{(-1)^l}{l!} \frac{1}{\Gamma\kla*{1 - b_\ell - l}} \frac{\Gamma\kla[\big]{\frac{b_{\ell} + b_{-\ell}}{2} + l -\i \frac{\omega}{2}}}{\Gamma\kla[\big]{1 + \frac{b_{\ell} - b_{-\ell}}{2} + l -\i \frac{\omega}{2}}}\\
+&= C_{b,N} \frac{(-1)^l}{l!} \frac{-4\i \ell}{\Gamma\kla{1 - b_\ell - l}} \frac{\Gamma\kla[\big]{b + \frac{N}{2} + l -\i \frac{\omega}{2}}}{\Gamma\kla[\big]{1 - \ell \frac{N}{2} + l -\i \frac{\omega}{2}}}.
+\end{align*}
+%\frac{b_{-\ell}}{2} - \i \frac{\omega - \ell [-2\i\ell (2l+b_\ell) - \ell\omega]}{4} = \frac{b_{-\ell} + b_\ell}{2} + l -\i \frac{\omega}{2}
+In our case, $\omega=2\i m$, and due to the argument being $k-k'$ rather than $k'$, the poles are at $k_l = k + 2\i\ell (2l+m+b_\ell)$ where $b_\ell = b - \frac{1-s}{2} + \frac{1-\ell}{2}(1-s) = b - \delta_{s,-1} \ell$.
+The contribution from these poles is thus given by
+\begin{align*}
+\frac{2}{\sinh(a)} \sum_{m\in\mathbb{Z}} \sum_{l\ge 0} \sum_{\ell=\pm 1} \frac{(-1)^l}{l!} \frac{-4\i\ell C_{b - \delta_{s,-1},1-s} }{\Gamma(1-b + \delta_{s,-1}\ell - l)} \frac{\Gamma\kla*{b + l +m}}{\Gamma\kla*{1 - \delta_{s,-1} \ell + l +m}} \frac{\powe{\i k_l a \sgn(\Im k_l)}}{k_l + s\i w_{n-m}}.
+\end{align*}
+%om=1j*(2*2+1); k=0.43; b=0.3; a=1.223; s=-1; L=5
+%#print(c_quad(lambda tau: np.exp(om*tau) * c_quad(lambda x: np.exp(-1j*k*x)*(1 / np.tan(tau+1j*s*(x+a)) + 1/ np.tan(tau+1j*s*(x-a))) / np.sin(tau+1j*x)**(1+b) / np.sin(tau-1j*x)**b, -L, L)[0], 0, np.pi))
+%coeff = lambda b, N: np.pi*1j**N*2**(2*b-2+N) * _gamma_real(1-b) / _gamma_real(b+N)
+%omega = om; mmax=10; lmax=10
+%res = 0
+%for m in range(-mmax, mmax+1):
+%    res += _j_bn(k+s*(omega-2j*m), 2j*m, b- (s==-1), 1-s) * np.exp((-1j*omega - 2*m) * a * np.sign(2*m - omega.imag))
+%    for ell in [+1,-1]:
+%        for l in range(lmax+1):
+%            kl = k + 2j*ell * (2*l+m+b-(s==-1)*ell)
+%            res += (-1)**l / _gamma_real(1+l) * coeff(b-(s==-1), 1-s) / _gamma_real(1-b+(s==-1)*ell - l) * _gamma_real(b+l+m) / _gamma_real(1-(s==-1)*ell + l + m + 1e-14) * np.exp(1j*kl*a*np.sign(kl.imag)) / (kl + s*(omega - 2j*m)) * -4j*ell
+%res *= 2/np.sinh(a)
+%print(res)
+%print(s_b1s(k, om, b, a, s, mmax=mmax, lmax=lmax))
+Performing the analytic continuation $\i (2n+1)\rightarrow \omega + \i 0^+$ finally yields
+\begin{align*}
+S_{b,1,s}(k,\omega,a) &= \frac{2}{\sinh(a)} \sum_{m\in\mathbb{Z}} \klc[\bigg]{P_{1} + \sum_{l\ge 0} \sum_{\ell=\pm 1} C P_{2}},\\
+P_{1} &= J_{b-\delta_{s,-1}, 1-s}(k -2\i ms + s\omega, 2\i m) \powe{-\i (\omega + 2m)a \sgn(2m - \Im \omega)},\\
+P_{2} &=  \frac{\powe{\i k_l a \sgn(\Im k_l)}}{k_l + s \omega - 2\i ms},\\
+%P_{2} &= \frac{\powe{\i \klb*{\ell k + (4\i l+2\i m+2\i b - \delta_{s,-1} 2\i \ell)} a \sgn\kla*{2l+m+b - \delta_{s,-1} \ell}}}{k + 2\i\ell (2l+m+b - \delta_{s,-1} \ell) + s \omega - 2\i ms},\\
+C &= \frac{(-1)^l}{l!} \frac{-\i\ell \pi s 4^b}{\Gamma(1-b + \delta_{s,-1}\ell - l)} \frac{\Gamma(1-b)}{\Gamma(b+\delta_{s,-1})} \frac{\Gamma\kla*{b + l +m}}{\Gamma\kla*{1 - \delta_{s,-1} \ell + l +m}} \numberthis\label{eqn:app:S_b1s_function_res}
+\end{align*}
+%@njit(fastmath=True, error_model="numpy")
+%def s_b1s(k, omega, b=0.3, a=1.0, s=1, mmax=9, lmax=5):
+%    """Integral e^(i_omega_n tau - I k x) csc b+1 csc b sum cot(tau + I sx + I s_a a)"""
+%    sm1 = (s == -1)     # s is minus 1 --> some parameters change
+%    coeff = -1j * np.pi*s * 4**b * _gamma_real(1-b + sm1) / _gamma_real(b + (s==-1))
+%    res = 0
+%    for m in range(-mmax, mmax+1):
+%        res += _j_bn(k+s*(omega-2j*m), 2j*m, b - sm1, 1-s) * np.exp((-1j*omega - 2*m) * a * np.sign(2*m - omega.imag))
+%        for ell in [+1,-1]:
+%            for l in range(lmax+1):
+%                kl = k + 2j*ell * (2*l+m+b-sm1*ell)
+%                res += (-1)**l / _gamma_real(1+l) * coeff / _gamma_real(1-b+sm1*ell - l) * _gamma_real(b+l+m) / _gamma_real(1-sm1*ell + l + m + 1e-14) * np.exp(1j*kl*a*np.sign(kl.imag)) / (kl + s*(omega - 2j*m))*ell
+%    return res * 2/np.sinh(a)
+% IMPROVED VERSION ::
+%def s_b1s(k, omega, b=0.3, a=1.0, s=1, mmax=9, lmax=5):
+%    """Integral e^(i_omega_n tau - I k x) csc b+1 csc b sum cot(tau + I sx + I s_a a)"""
+%    sm1 = (s == -1)     # s is minus 1 --> some parameters change
+%    coeff = -1j * 4**b * _gamma_real(1-b + sm1) / _gamma_real(b + sm1) * np.sin(np.pi* b)
+%    res = 0
+%    for m in range(-mmax, mmax+1):
+%        res += (_j_bn(k+s*(omega-2j*m), 2j*m, b - sm1, 1-s)
+%                * np.exp((-1j*omega - 2*m) * a * np.sign(2*m - omega.imag)))
+%        for ell in [+1,-1]:
+%            for l in range(lmax+1):
+%                kl = k + 2j*ell * (2*l+m+b-sm1*ell)
+%                ratio = _gamma_rel(b+l+m, 1-sm1*ell + l + m + 1e-14) * _gamma_rel(b-sm1*ell + l, 1+l)
+%                res += ratio * coeff* np.exp(1j*kl*a*np.sign(kl.imag)) / (kl + s*(omega - 2j*m))*ell
+%    return res * 2/np.sinh(a)
+where $k_l = k + 2\i\ell (2l + m + b - \delta_{s,-1}\ell)$.
+See \autoref{fig:app:special_func_of_k} for a visualization.\\
+Assuming that $S_{b,1,s}$ is indeed not representable using standard functions, the final result will always be given by some series representation, and from a practical point of view the problem then becomes that of optimizing both rate and radius of convergence.
+This is highly non-trivial though, as there may be arbitrarily many ways of writing down such a series;  we in no way claim that the approach presented here is optimal.
+In \autoref{sec:app:numerics}, we analyse how many terms of the series expansions are needed for typical parameters.
+\subsection{First order correction -- \texorpdfstring{\acrlong{ct}}{CT}}\label{sec:app:convolution_theorem_first_order}
+In this section, we provide the technical details left out of the derivation in \autoref{sec:ell:gf:sine_Gordon_perturbation} for conciseness.
+Recall that the problem at hand is to evaluate the two-dimensional \gls{ft}
+\begin{align*}
+G^\M_1(k,\i\omega_n^\F) &= \intx{0}{\beta}{\intr{\powe{\i\omega_n^\F \tau - \i k x} G^\M_1(x,\tau)}{x} }{\tau},
+\end{align*}
+where the \gls{gf} in \trspace{} is given by
+\begin{align*}
+G_{1,\ell,\ell'}^\M(z) = \int &\sum_{s,s_a=\pm 1} \frac{\i\ell\pi (1-Ks)}{4\beta v} \frac{\pi v \delta_{\ell,-\ell'} w^{2M+2K_-}}{2(\beta v)^2} \csc(z_+)^{M-K_-} \csc(z_-)^{M-K_-} \\
+&\times \csc(z_{-\ell}')^{K_-} \csc(z_{\ell}')^{K_+}  \csc(z_{-\ell}-z_{-\ell}')^{K_+} \csc(z_{\ell}-z_{\ell}')^{K_-} \\
+&\times \klb*{\cot\kla*{z_{\ell s}-z_{\ell s}' - \i \ell ss_a \frac{\pi a}{\beta v}} + \cot\kla*{z_{-\ell s}' + \i \ell ss_a\frac{\pi a}{\beta v}}}
+\end{align*}
+with $z_\pm = \frac{\pi}{\beta v} \kla*{v\tau \pm \i x}$.
+As argued before, this \gls{gf} is indeed anti-periodic in $\tau$, and thus allows us to solve the problem by means of the \gls{ct}.
+In order to reduce the notational clutter somewhat, we now define the three functions
+\begin{align*}
+f(z) &= \csc(z_+)^{M-K_-} \csc(z_-)^{M-K_-},\\
+g_\ell(z) &= \csc(z_{-\ell})^{K_+} \csc(z_{\ell})^{K_-} \cot\kla*{z_{\ell s} - \i\ell ss_a \frac{\pi a}{\beta v}}\\
+\text{and}\quad h_\ell(z) &= \csc(z_{-\ell})^{K_-} \csc(z_{\ell})^{K_+}.
+\end{align*}
+Switching to dimensionless integration variables $x\rightarrow \frac{\beta v}{\pi} x$, $\tau \rightarrow \frac{\beta}{\pi} \tau$ and defining $\tilde{a} = \frac{\pi}{\beta v}a$ then allows us to rewrite the \gls{gf} in \tpspace{} as
+\begin{align*}
+G_1^\M(k,\i\omega_n^\F) &= \sum C_{s} \int \powe{\i \omega_n^\F \frac{\beta}{\pi} \tau - \i \frac{\beta v k}{\pi} x} f(z) \klb*{g_\ell(z-z') h_\ell(z') + g_{-\ell}(z') h_{-\ell} (z-z')},
+\end{align*}
+where we define the coefficient $C_s = \i\ell \delta_{\ell,-\ell'} \beta \frac{1-Ks}{8\pi^2} w^{2M+2K_-}$.\newpage %$C_s = -\delta_{\ell,-\ell'} \pi \frac{1+Ks}{4\beta v} \frac{\pi v}{2(\beta v)^2} w^{2M+2K_-} \frac{\beta^4v^2}{\pi^4}$
+\textbf{\gls{ct} on an infinite domain.}\ If we drop the $\tau$-dependences, the structure of our \gls{ft} is
+\begin{align*}
+G_1(k) &\sim \intr{\powe{-\i kx} f(x) \intr{g(x-x') h(x')}{x'} }{x}.
+\end{align*}
+With the resolution of unity $\delta(x) = \frac{1}{2\pi} \intr{\powe{\i kx}}{k}$, we can transform this into a convolution
+\begin{align*}
+G_1(k) &\sim \int_{\mathbb{R}^2} \powe{-\i k(x+x')} f(x+x') g(x) h(x')\\
+&= \int_{\mathbb{R}^3} \powe{-\i k(x+x')} \delta(x+x'-x'') f(x'') g(x) h(x')\\
+&= \frac{1}{2\pi} \int_{\mathbb{R}^5} \powe{-\i k (x+x')} \powe{\i k'(x+x'-x'')} f(x'') g(x) h(x').
+\end{align*}
+Defining the individual \glspl{ft} $f(k) = \int \powe{-\i kx} f(x)$ (and likewise $g(k)$ and $h(k)$), then yields $G_1(k) \sim \frac{1}{2\pi} \int f(k') g(k-k') h(k-k')$.
+\myparagraph{\gls{ct} on a finite domain}
+The same procedure is still possible for a finite interval, albeit with a few additional subtleties.
+This time, dropping the $x$-dependence the transformation, the expression we want to compute takes the form
+\begin{align*}
+G_1(\i\omega_n^\F) &\sim \intx{0}{\beta}{\powe{\i \omega_n^\F\tau} f(\tau) \intx{0}{\beta}{g(\tau-\tau') h(\tau')}{\tau'} }{\tau},
+\end{align*}
+and the shift $\tau\rightarrow \tau + \tau'$ then leads to
+\begin{align*}
+G_1(\i\omega_n^\F) &\sim \intx{0}{\beta}{\intx{-\tau'}{\beta-\tau'}{\powe{\i \omega_n^\F(\tau + \tau')} f(\tau + \tau') g(\tau) h(\tau')}{\tau'} }{\tau}.
+\end{align*}
+In order to restore the original integration region, we now require $f(\tau+\beta)=f(\tau)$ and $g(\tau+\beta) = -g(\tau)$.
+As discussed before, this is indeed the case, and consequently $\powe{\i\omega_n^\F\tau} f(\tau + \tau') g(\tau)$ is a periodic function in $\tau$.
+Thus
+\begin{align*}
+\intx{-\tau'}{0}{\powe{\i\omega_n^\F(\tau+\tau')} f(\tau+\tau') g(\tau) h(\tau')}{\tau} &= \intx{\beta-\tau'}{\beta}{\powe{\i\omega_n^\F(\tau+\tau')} f(\tau+\tau') g(\tau) h(\tau')}{\tau},
+\end{align*}
+and, combined with the interval $[0,\beta-\tau']$, we find
+\begin{align*}
+G_1(\i\omega_n^\F) &\sim \intx{0}{\beta}{\intx{0}{\beta}{\powe{\i \omega_n^\F(\tau + \tau')} f(\tau + \tau') g(\tau) h(\tau')}{\tau'} }{\tau}.
+\end{align*}
+The other subtleties are that the resolution of unity in this finite setting is given by $\delta(\tau) = \frac{1}{\beta} \sum_{n\in\mathbb{Z}} \powe{\i\omega_n^\B\tau}$, i.e. it involves the bosonic Matsubara frequencies, and that we pick up an additional factor of 2 during the manipulations, leading to the convolution
+\begin{align*}
+G_1(\i\omega_n^\F) &\sim \int_0^{2\beta} \int_0^\beta \int_0^\beta \powe{\i \omega_n^\F(\tau + \tau')} \delta(\tau + \tau' - \tau'') f(\tau'') g(\tau) h(\tau')\\
+&= \frac{1}{\beta} \sum_{m\in\mathbb{Z}} \int_0^{2\beta} \int_0^\beta \int_0^\beta \powe{\i \omega_n^\F(\tau + \tau')} \powe{-\i\omega_m^\B (\tau + \tau' - \tau'')} f(\tau'') g(\tau) h(\tau')\\
+&= \frac{1}{\beta} \sum_{m\in\mathbb{Z}} 2f(\i\omega_m^\B) g(\i\omega_{n-m}^\F) h(\i\omega_{n-m}^\F).
+\end{align*}
+For the last step, we once again define the individual \glspl{ft}, and notice that the $\tau''$-integration yields the aforementioned factor of 2 due to the periodicity of $f$.
+%\textbf{Combining the convolutions.}\ 
+\myparagraph{Combining the convolutions}
+We can now apply both of the previous ideas to our \gls{gf}.
+For brevity, define $\tilde{k} = \frac{\beta v}{\pi} k$ and $w_n = 2n+1$, which gives
+\begin{align*}
+G^\M_1(k,\i\omega_n^\F) &= \sum_{s,s_a=\pm 1} C_s \int \powe{\i w_n \tau - \i \tilde{k} x} f(z) \klb*{g_\ell(z-z') h_\ell(z') + g_{-\ell}(z') h_{-\ell} (z-z')}\\
+&= \sum_{s,s_a=\pm 1} C_s \int \powe{\i w_n (\tau + \tau') - \i \tilde{k} (x+x')} f(z+z') \klb*{g_\ell(z) h_\ell(z') + g_{-\ell}(z') h_{-\ell} (z)}\\
+&= \sum_{s,s_a,\ell'=\pm 1} C_s \int \powe{\i w_n (\tau+\tau') - \i \tilde{k} (x+x')} f(z+z') g_{\ell'}(z) h_{\ell'}(z').
+\end{align*}
+%At this point we can already see that the function is symmetric in $\ell$, i.e. the matrix structure is purely $\sigma_x$.
+In terms of the dimensionless variables, the resolution of unity for the imaginary time becomes $\delta(\tau) = \frac{1}{\pi} \sum_{m\in\mathbb{Z}} \powe{\i 2m\tau}$, and therefore
+\begin{align*}
+G^\M_1(k,\i\omega_n^\F) &=  \sum_{s,s_a,\ell,m} \frac{C_s}{\pi^2}\int \powe{\i w_n (\tau + \tau') - \i \tilde{k} x''} \powe{\i 2m (\tau + \tau' - \tau'') + \i \tilde{k}' (x+x'-x'')} f(z'') g_\ell(z) h_\ell(z')\\
+&= \sum_{s,s_a,\ell=\pm 1} \frac{C_s}{\pi^2} \sum_{m\in\mathbb{Z}} \int f(\tilde{k}- \tilde{k}', \i 2m) g_\ell(\tilde{k}', \i w_{n-m}) h_\ell(\tilde{k}', \i w_{n-m}).
+\end{align*}
+Now we finally resolve the abbreviations of the three functions, by noting that their \glspl{ft} are given by
+\begin{align*}
+f(k,\i 2m) &= \intx{0}{\pi}{ \intr{\powe{\i 2m\tau - \i kx} \klb[\big]{\csc(z_+) \csc(z_-)} ^{M-K_-}}{x} }{\tau} = J_{M-K_-,0}(k,\i 2m),\\
+g_\ell(k,\i w_n) &= \intx{0}{\pi}{\intr{\powe{\i w_n\tau - \i kx} \csc(z_{-\ell})^{K_+} \csc(z_{\ell})^{K_-} \cot(z_{\ell s} - \i\ell ss_a\tilde{a}) }{x} }{\tau},\\
+\text{and}\quad h_\ell(k,\i w_n) &= \intx{0}{\pi}{\intr{\powe{\i w_n\tau - \i kx} \csc(z_{-\ell})^{K_-} \csc(z_{\ell})^{K_+} }{x} }{\tau} = J_{K_-,1}(\ell k, \i w_n).
+\end{align*}
+At this point, it becomes clear why we went through the trouble of deriving the rather general result \autoref{eqn:app:J_bN_function} for the $J_{b,N}$-functions.
+Note that the \gls{ft} of $g$ reduces to the other family of special functions defined in \autoref{sec:app:first_order_correction_shifted_cot}, and we can identify $\sum_{s_a=\pm 1} g_\ell(k,\i w_n) = S_{K_-,1,-s}(-\ell k, \i w_n, \tilde{a})$.
+The \gls{gf} then takes the form
+\begin{align*}
+G^\M_1(k,\i\omega_n^\F) &= \bsplit{\i\ell \beta \delta_{\ell,-\ell'} \sum_{s,s'=\pm 1} \sum_{m\in\mathbb{Z}} \int & \frac{1+Ks}{8\pi^4} w^{2M+2K_-} J_{M-K_-,0}(\tilde{k} - \tilde{k}',\i 2m)\\
+&\times J_{K_-,1}(-s' \tilde{k}', \i w_{n-m}) S_{K_-,1,s}(s' \tilde{k}', \i w_{n-m}, \tilde{a})},
+\end{align*}
+which corresponds to the result stated in \autoref{sec:ell:gf:sine_Gordon_perturbation}.\newpage
+\section{Numerics}\label{sec:app:numerics}
+In this section, we discuss a few aspects of the numerical implementation used to evaluate the single-particle \gls{gf} from \autoref{sec:ell:gf:sine_Gordon_perturbation}.
+While the approach via the \gls{ct} greatly reduces the complexity of the problem (and, most importantly, allows for the crucial analytic continuation), the computational cost remains rather extensive.
+Instead of computing a four-dimensional integral, we now have a single integration and an infinite summation in the final result.
+The original construction of the functions $S_{b,1,s}$ also contains a single integration and summation, so the total parameter space is still essentially four-dimensional.\\
+For sufficiently high temperatures the Matsubara summations converge very fast, so that in most practical situations the cost remains manageable.
+This is a consequence of the frequency discretization being proportional to $\frac{1}{\beta}$.
+The numerical optimization details require no physical insight and are not discussed.
+\subsection{Visualization of \texorpdfstring{$J_{b,N}$}{Jbn} and \texorpdfstring{$S_{b,1,s}$}{Sb1s}}
+As shown in \autoref{sec:app:first_order_correction_shifted_cot}, the integral in $S_{b,1,s}$ can actually be solved (or, at least, reduced to a rapidly convergent sum over residues).
+In \autoref{sec:app:J_bN_function}, we also claim a solution for the integrals defining the function family $J_{b,N}$.
+By means of a direct numerical integration using \texttt{scipy.integrate.quad} \cite{Scipy_2020}, it is simple to verify that the result given by \autoref{eqn:app:J_bN_function} and \autoref{eqn:app:S_b1s_function_res} are indeed correct for some sample parameters, see \autoref{fig:app:special_func_magnitude_of_k_compare_num_int}.
+\begin{figure}[!ht]
+\centering
+\includegraphics{figures/appendix_special_func_na_example.pdf}
+\caption[Analytic and numeric results for $J_{b,1}(k,\omega)$ and $S_{b,1,s}(k,\omega,a)$]{Plot of $J_{b,1}(k,\omega)$ given by \autoref{eqn:app:J_bN_function}, and $S_{b,1,s}(k,\omega,a)$ given by \autoref{eqn:app:S_b1s_function_res} as a function of $k$.
+The fixed parameters are $\omega=\i$, $b=0.6$, $s=+1$ and $a=1$.
+Note that only the magnitude of both the real and imaginary part is shown to allow for a logarithmic axis.
+The black dots respectively correspond to a direct numerical integration of \autoref{eqn:app:j_bn_integral_repr} and \autoref{eqn:app:S_b1s_function_def}.}
+\label{fig:app:special_func_magnitude_of_k_compare_num_int}
+\end{figure}\\
+The integral representation is only defined for the Matsubara frequencies.
+In order to gain some intuition for the shape of the functions at real $\omega$, we visualize them in \autoref{fig:app:special_func_of_k}.
+\begin{figure}[!ht]
+\centering
+\includegraphics{figures/appendix_special_func_example.pdf}
+\caption[Visualization of $J_{b,N}(k,\omega)$ and $S_{b,1,s}(k,\omega,a)$ at real $\omega$]{Plot of $J_{b,1}(k,\omega)$ given by \autoref{eqn:app:J_bN_function}, and $S_{b,1,s}(k,\omega,a)$ given by \autoref{eqn:app:S_b1s_function_res} as a function of $k$ for real frequencies $\omega$.
+Solid lines are for $\omega=0$ and dashed lines are for $\omega=1$.
+The fixed parameters are $b=0.6$ and $a=1$.
+Since $S_{b,1,s}$ is fully real for these inputs, the colors in panel (d) instead correspond to the two values $s=\pm $ (see legend).}
+\label{fig:app:special_func_of_k}
+\end{figure}
+\subsection{Convergence of \texorpdfstring{$S_{b,1,s}$}{Sb1s}}\label{sec:app:Sb1s_convergence}
+In \autoref{sec:app:first_order_correction_shifted_cot}, we derive a series representation for the integral defined in \autoref{eqn:app:S_b1s_function_def}.
+Here, we briefly analyse the convergence properties of this series representation, and also discuss the function itself in some more detail.
+Since the integral representation is only valid for the Matsubara frequencies, there is little point in using the numerical result as a benchmark for the convergence of the series representation, and we instead use the series itself using sufficiently many terms. %\footnote{also, not a lot of time was spent optimizing the accuracy of the numerical integration so the results would be rather misleading anyway. It only serves as an empirical confirmation of the analytic result.}
+In the following, we therefore define the error as
+\begin{align}
+\Delta S &= \abs*{\frac{S_{l,m} - S}{S}}, \label{eqn:app:error_S_lm_def}
+\end{align}
+where the arguments $k,\omega,a$ and indices $b,s$ of the function are omitted, while $l,m$ refer to the maximal value of the summation indices in \autoref{eqn:app:S_b1s_function_res}.\\
+Despite the many parameters, it turns out that only $a$ has a major impact on the rate of convergence, which is illustrated in \autoref{fig:app:rel_err_sb1s}.
+\begin{figure}[!ht]
+\centering
+\includegraphics{figures/rel_err_sb1s_example_k1.300_omega0.100_b0.400_a0.500.1.000_s1.000.pdf}
+\caption[Rate of convergence of series representation of $S_{b,1,s}$]{Plot of the relative error defined in \autoref{eqn:app:error_S_lm_def} as a function of $l_\text{max}$, for various $m_\text{max}$.
+The difference between the two panels is only in the value of the parameter $a$, which illustrates the impact on the rate of convergence.
+Evidently the convergence is exponential with respect to increasing $l_\text{max}$, but only until $l_\text{max} \approx m_\text{max}$.
+The other parameters are fixed at $k=1.3$, $\omega=0.1$, $b=0.4$ and $s=1$; their influence on the rate of convergence is negligible compared to that of $a$.}
+\label{fig:app:rel_err_sb1s}
+\end{figure}
+Since in our specific application the parameter is given by $\frac{\pi}{\beta v}$, this puts a practical limitation on exploring the low-temperature limit, due to requiring an ever-growing number of terms.
+This should merely be interpreted as a shortcoming of the series representation, and originates in the increased difficulty of resolving the difference $a$ between the poles of the integrand.\\
+The takeaway messages are that, for any reasonable choice of parameters, we only need few terms of the series to acquire sufficient precision, and that $l_\text{max} \approx m_\text{max}$ makes for a decent heuristic.
+\subsection{Numerical integration over \texorpdfstring{$k'$}{kprime}}\label{sec:app:numerical_int_kp}
+The final result for the first order correction to the \gls{gf} in \autoref{sec:ell:gf:sine_Gordon_perturbation} contains an integral over $k'$.
+The various summations are trivial to implement numerically, but the integration requires a little more care.
+In principle, a general purpose integrator such as \texttt{scipy.integrate.quad} \cite{Scipy_2020} can solve this problem with a single line of code, but for the particular function at hand, this seems to not work reliably across the parameter space without some additional input (and is also painfully slow).
+Dropping constant prefactors and focusing on the momentum variables, the integrand reads
+\begin{align*}
+J_{M-K_-,0}\kla[\big]{\tilde{k} - k', \dots} J_{K_-,1}\kla[\big]{k', \dots} S_{K_-,1,s}\kla[\big]{-k',\dots}.
+\end{align*}
+These functions all have a peak at $k=0$ (see \autoref{fig:app:special_func_of_k}), and thus the integrand has peaks at $k'=0$ and $k'=\tilde{k} = \frac{\beta vk}{\pi}$.
+Combined with a heuristic peak-width proportional to $K_-$, we can then split the integration region accordingly.\newpage
+\subsection{Interpretation of the first order \texorpdfstring{\acrshort{gf}}{GF}}\label{sec:app:interpretation_G1}
+For $U_\A\neq U_\B$, our analytic result for the \gls{gf} is given by \autoref{eqn:ell:gf:order1_res}.
+Unlike in the case $U_\A=U_\B$ analysed in \autoref{sec:ell:gf:interpretation}, the microscopic predictions for the coupling and Luttinger parameters no longer lead to any considerable quantitative agreement.
+Instead, \autoref{fig:app:gf_1_na_example} visualizes the \gls{gf} in the $\R\L$-basis using the fit parameters from \autoref{fig:ell:ep:ll_par_fit} for the given interaction strengths.
+As in \autoref{sec:ell:gf:interpretation}, due to the linearization of the dispersion we can only expect agreement for $|k|\lesssim \Lambda_\tlin = 0.5$.
+In this region, the diagonal components agree reasonably well with the data (similar to \autoref{fig:ell:gf:gf_ua_eq_ub_dual_example}).
+\begin{figure}[!ht]
+\centering
+\includegraphics{figures/gf_ll_na_example_LR_UA1.500_UB1.200_beta1.000_K0.636_v0.537_g13.261_a1.000_alpha2.000_mmln5.5.5.48.pdf}
+\caption[Comparison of analytic and numeric result for $G$ in $\R\L$-basis for $U_\A\neq U_\B$]{Comparison between numeric (dots) and analytic (lines) results for the single-particle \gls{gf} in the $\R\L$-basis at $\beta=1$ and $\omega=0$.
+The interaction strengths for the numerics are $U_\A=1.5$ and $U_\B=1.2$.
+Since the microscopic predictions for the analytic parameters are not useful, \autoref{eqn:ell:gf:order1_res} instead uses the values $K\approx 0.64$, $v\approx 0.54$ and $g\approx 13.3$ from the fit in \autoref{fig:ell:ep:ll_par_fit}.
+We can only expect agreement for $|k|\lesssim \Lambda_\tlin = 0.5$, and in this region the diagonal components agree reasonably well (see also \autoref{fig:ell:gf:gf_ua_eq_ub_dual_example}).
+In the numerics, the off-diagonal components have an additional real-valued $\sigma_x$-contribution.
+The blue crosses correspond to manually subtracting off this contribution, and then the result qualitatively agrees with the prediction (pure imaginary $\sigma_y$-term).
+An essentially exact match to the modified data is possible through fitting, but disrupts the diagonal components.}
+\label{fig:app:gf_1_na_example}
+\end{figure}\\
+In the numerics, the off-diagonal components have an additional real-valued $\sigma_x$-contribution.
+This is also present for $U_\A=U_\B$, contrary to the analytic expectation.
+There is no indication of this being a numerical artefact, so we have to interpret the effect as a shortcoming of our result.
+That said, it is not very useful to compare this to our analytic first order correction, and we therefore also plot the numerical data after subtracting this contribution.
+Then it becomes clear that qualitatively, the result does agree with our prediction of a pure imaginary $\sigma_y$-term.
+The comparison to the modified data also explains why the agreement of the eigenvalues in \autoref{fig:ell:ep:ll_par_fit} is much better than the \gls{gf} in \autoref{fig:app:gf_1_na_example} would suggest.

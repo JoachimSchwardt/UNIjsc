@@ -1,0 +1,331 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{06 Interacting Bose-Einstein-Condensates}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Theoretical Physics (Master)}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Problem 1: \normalfont\textit{\large{Interacting boson in a background field}}}
+Consider the Hamiltonian
+\begin{align}
+\hat{H} &= \intr\int_{\mathbb{R}^{3}} \frac{1}{2m} \kla\left( \nabla\hat{\Psi^\dagger} \right)\cdot \kla\left( \nabla\hat{\Psi} \right) + V(\vec{r}) \hat{\Psi}^\dagger \hat{\Psi} + \frac{g}{2}\kla\left( \hat{\Psi}^\dagger \right)^2 \kla\left( \hat{\Psi} \right)^2 \, \mathrm{d}^{3}r
+\end{align}
+with the bosonic field operator $\hat{\Psi}(\vec{r})$, an unspecified single-particle background potential $V(\vec{r})$ and an interaction constant $g$ describing the interaction of the bosons among themselves.
+We assume a product ansatz for the $N$-particle state
+\begin{align}
+\Ket | \psi_N \rangle &= \frac{1}{\sqrt{N!}} \kla\left( \intr\int_{\mathbb{R}^{3}} \psi_1(\vec{r}) \hat{\Psi}^\dagger \, \mathrm{d}^{3}r \right)^N \Ket | 0 \rangle =: \frac{1}{\sqrt{N!}} \kla\left( \hat{A}^\dagger \right)^N \Ket | 0 \rangle,
+\end{align}
+where $\psi_q(\vec{r})$ is a single-particle wave function.
+Let us consider the action of $\hat{\Psi}$ on such a state.
+For this we will need to compute the commutator
+\begin{align}
+\klam\left[ \hat{\Psi}, \hat{A}^\dagger \right] &= \intr\int_{\mathbb{R}^{3}} \klam\left[ \hat{\Psi}(\vec{r}), \psi_1(\vec{r}') \hat{\Psi}^\dagger (\vec{r}') \right]  \, \mathrm{d}^{3}r' = \intr\int_{\mathbb{R}^{3}} \psi_1(\vec{r}') \delta\kla\left( \vec{r} - \vec{r}') \right) \, \mathrm{d}^{3}r' = \psi_1(\vec{r}).
+\end{align}
+Note that given two operators $\hat{A}$ and $\hat{B}$, with a commutator of $\klam\left[ \hat{A}, \hat{B} \right] = \hat{c}$, we have the identity
+\begin{align}
+\klam\left[ \hat{A}, \hat{B}^N \right] &= N\hat{c}\hat{A}^{N-1},
+\end{align}
+given that $\klam\left[ \hat{A}, \hat{c} \right] = 0$.
+For $\hat{A} \equiv \hat{\Psi}$ and $\hat{B} \equiv \hat{A}^\dagger$, we have just found $\hat{c} \equiv \psi_1(\vec{r})$, which obviously commutes with $\hat{A}^\dagger$.
+Thus, 
+\begin{align}
+\klam\left[ \hat{\Psi}(\vec{r}), \kla\left( \hat{A}^\dagger \right)^N \right] &= N\psi_1(\vec{r}) \kla\left( \hat{A}^\dagger \right)^{N-1}.
+\end{align}
+With this commutator we can know compute
+\begin{align}
+\hat{\Psi}(\vec{r}) \Ket | \psi_N \rangle &= \frac{1}{\sqrt{N!}} \hat{\Psi} (\vec{r}) \kla\left( \hat{A}^\dagger \right)^N \Ket | 0 \rangle = \frac{1}{\sqrt{N!}} \klam\left[ \hat{\Psi} (\vec{r}), \kla\left( \hat{A}^\dagger \right)^N \right] \Ket | 0  \rangle = \\
+&= \frac{N}{\sqrt{N!}} \psi_1(\vec{r}) \kla\left( \hat{A}^\dagger \right)^{N-1} \Ket | 0 \rangle = \sqrt{N} \psi_1(\vec{r}) \Ket | \psi_{N-1} \rangle.
+\end{align}
+This allows us to compute the many-particle energy
+\begin{align*}
+E_N\klam\left[ \psi_1 \right] &= \braket\langle \psi_N | \hat{H} | \psi_N \rangle = \numberthis \\
+&= \intr\int_{\mathbb{R}^{3}} \braket\langle \psi_N | -\frac{1}{2m}\nabla^2\hat{\Psi}^\dagger \sqrt{N}\psi_1 | \psi_N \rangle + V\braket\langle \psi_N | \sqrt{N}\psi_1^\ast \sqrt{N}\psi_1 | \psi_N \rangle + \\
+&\hspace{1.5cm} + \frac{g}{2}\braket\langle \psi_N | \sqrt{N}\sqrt{N-1} |\psi_1|^4 \sqrt{N}\sqrt{N-1} | \psi_N \rangle \, \mathrm{d}^{3}r = \numberthis \\
+&= \intr\int_{\mathbb{R}^{3}} \braket\langle \psi_N | \sqrt{N}\psi_1^\ast \frac{-\nabla^2}{2m} \sqrt{N}\psi_1 | \psi_N \rangle + NV|\psi_1|^2 + \frac{Ng}{2}(N-1) |\psi_1|^4 \, \mathrm{d}^{3}r = \numberthis \\
+&= N\intr\int_{\mathbb{R}^{3}} \frac{1}{2m}(\nabla\psi_1^\ast)\cdot (\nabla\psi_1) + V|\psi_1|^2 + \frac{(N-1)g}{2} |\psi_1|^4 \, \mathrm{d}^{3}r. \numberthis
+\end{align*}
+However, before minimizing this expression we need to account for the normalization of $\psi_1$. 
+Hence we instead need to consider the functional
+\begin{align}
+\tilde{E}_N &= E_N + \lambda \kla\left( \brak\langle \psi_1 | \psi_1 \rangle - 1 \right).
+\end{align}
+Note that we can approximate $g(N-1)\approx gN$, since $N$ is supposed to be large.
+We want this energy to be minimal, i.e. $\frac{\delta E_N}{\delta \psi_1} = 0$, which leads to the Euler-Lagrange equations
+\begin{align}
+0 &= \frac{\partial \tilde{E}_N}{\partial \psi_1} - \nabla\cdot \frac{\partial \tilde{E}_N}{\partial \nabla\psi_1} = V\psi_1^\ast + gN |\psi_1|^2 \psi_1^\ast + \frac{\lambda}{N}\psi_1^\ast - \frac{1}{2m}\nabla^2\psi_1^\ast,\\
+0 &= \frac{\partial \tilde{E}_N}{\partial \psi_1^\ast} - \nabla\cdot \frac{\partial \tilde{E}_N}{\partial \nabla\psi_1^\ast} = V\psi_1 + gN |\psi_1|^2 \psi_1 + \frac{\lambda}{N}\psi_1 - \frac{1}{2m}\nabla^2\psi_1.
+\end{align}
+
+
+
+
+\newpage
+\section*{Problem 2: \normalfont\textit{\large{Interference of two BEC's}}}
+Consider the $2N$-particle state modeling left- and right-moving BEC's.
+\begin{align}
+\Ket | \psi_{N,N} \rangle &= \frac{1}{N!} \kla\left( \int_{V} f_A(\vec{r}) \hat{\Psi}^\dagger (\vec{r}) \, \mathrm{d}^{3}r \right)^N  \kla\left( \int_{V} f_B(\vec{r}) \hat{\Psi}^\dagger (\vec{r}) \, \mathrm{d}^{3}r \right)^N \Ket | 0 \rangle,
+\end{align}
+where $f_A(\vec{r}) = \frac{1}{\sqrt{V}} \e^{\i\vec{k}\cdot\vec{r}}$ and $f_B(\vec{r}) = \frac{1}{\sqrt{V}} \e^{-\i\vec{k}\cdot\vec{r}}$ with $\vec{k} \neq 0$. 
+The case of $\vec{k} = 0$ should be considered in a different way, since then we simply have a single condensate with $2N$ particles.
+Introduce the creation operators
+\begin{align}
+\hat{A}^\dagger &= \intr\int_{V} f_A(\vec{r})\hat{\Psi}^\dagger (\vec{r}) \, \mathrm{d}^{3}r,\\
+\hat{B}^\dagger &= \intr\int_{V} f_B(\vec{r})\hat{\Psi}^\dagger (\vec{r}) \, \mathrm{d}^{3}r,
+\end{align}
+which fulfil the commutation relations 
+\begin{align}
+\klam\left[ \hat{A}, \hat{A}^\dagger  \right] &= \intr\int_{V^2} f_A^\ast(\vec{r}_1) f_A(\vec{r}_2) \delta (\vec{r}_1 - \vec{r}_2) \, \mathrm{d}^{3}r_1 \tecxt\text{d}^3r_2 = \\
+&= \intr\int_{V} f_A^\ast(\vec{r}) f_A(\vec{r}) \, \mathrm{d}^{3}\vec{r} = \frac{V}{V} = 1, \\
+\klam\left[ \hat{A}, \hat{B}^\dagger  \right] &= \intr\int_{V^2} f_A^\ast(\vec{r}_1) f_B(\vec{r}_2) \delta (\vec{r}_1 - \vec{r}_2) \, \mathrm{d}^{3}r_1 \tecxt\text{d}^3r_2 = \\
+&= \intr\int_{V} f_A^\ast(\vec{r}) f_B(\vec{r}) \, \mathrm{d}^{3}\vec{r} = \frac{(2\pi)^3}{V} \delta (\vec{k}) \equiv 0.
+\end{align}
+
+
+\subsection*{a)}
+Similar to the previous problem, we want to consider the action of $\hat{\Psi}$ on the state $\Ket | \psi_{N,N} \rangle$.
+For this, we need the commutator
+\begin{align}
+\klam\left[ \hat{\Psi}, \kla\left( \hat{A}^\dagger \right)^N\kla\left( \hat{B}^\dagger \right)^N \right] &= \kla\left( \hat{A}^\dagger \right)^N \klam\left[ \hat{\Psi}, \kla\left( \hat{B}^\dagger \right)^N \right] + \klam\left[ \hat{\Psi}, \kla\left( \hat{A}^\dagger \right)^N \right] \kla\left( \hat{B}^\dagger \right)^N = \\
+&= \kla\left( \hat{A}^\dagger \right)^N N f_B \kla\left( \hat{B}^\dagger \right)^{N-1} + N f_A \kla\left( \hat{A}^\dagger \right)^{N-1} \kla\left( \hat{B}^\dagger \right)^N.
+\end{align}
+We may then compute 
+\begin{align}
+\hat{\Psi} \Ket | \psi_{N,N} \rangle &= \frac{1}{N!} \hat{\Psi}  \kla\left( \hat{A}^\dagger \right)^N \kla\left( \hat{B}^\dagger \right)^N \Ket | 0 \rangle = \frac{1}{N!}\klam\left[ \hat{\Psi}, \kla\left( \hat{A}^\dagger \right)^N\kla\left( \hat{B}^\dagger \right)^N \right] \Ket | 0 \rangle = \\
+&= \frac{N}{N!}f_B \kla\left( \hat{A}^\dagger \right)^N N \kla\left( \hat{B}^\dagger \right)^{N-1} \Ket | 0 \rangle + \frac{N}{N!} f_A \kla\left( \hat{A}^\dagger \right)^{N-1} \kla\left( \hat{B}^\dagger \right)^N\Ket | 0 \rangle  = \\
+&= \sqrt{N}f_A\Ket | \psi_{N-1,N} \rangle + \sqrt{N}f_B \Ket | \psi_{N,N-1} \rangle.
+\end{align}
+For $\vec{k}\neq 0$ the states are fully orthogonal, i.e. $\brak\langle \psi_{j,l} | \psi_{j',l'} \rangle = \delta_{jj'}\delta_{ll'}$.
+Thus the density expectation value is given by
+\begin{align}
+\bra\langle \hat{\rho} \rangle &= \braket\langle \psi_{N,N} | \hat{\Psi}^\dagger \hat{\Psi} | \psi_{N,N} \rangle = N |f_A|^2 + N|f_B|^2 = \frac{2N}{V}.
+\end{align}
+
+
+\subsection*{b)}
+The density-density correlations for $\vec{r}_1 \neq \vec{r}_2$ are given by
+\begin{align*}
+\bra\langle \hat{\rho}(\vec{r}_1) \hat{\rho}(\vec{r}_2) \rangle &= \braket\langle \psi_{N,N} | \hat{\Psi}^\dagger (\vec{r}_1) \hat{\Psi}(\vec{r}_1) \hat{\Psi}^\dagger (\vec{r}_2) \hat{\Psi}(\vec{r}_2) | \psi_{N,N} \rangle = \numberthis  \\
+&= \braket\langle \psi_{N,N} | \hat{\Psi}^\dagger (\vec{r}_1) \hat{\Psi}^\dagger (\vec{r}_2) \hat{\Psi}(\vec{r}_1) \hat{\Psi}(\vec{r}_2) | \psi_{N,N} \rangle = \numberthis \\
+&= \sqrt{N}\kla\left( f_A^\ast (\vec{r}_1) \Bra\langle \psi_{N-1,N} | + f_B^\ast (\vec{r}_1) \Bra\langle \psi_{N,N-1} | \right) \hat{\Psi}^\dagger (\vec{r}_2) \hat{\Psi}(\vec{r}_1) \times \\
+&\hspace{0.8cm} \times \kla\left( f_A (\vec{r}_2) | \psi_{N-1,N} \rangle  + f_B (\vec{r}_2) | \psi_{N,N-1} \rangle  \right) \sqrt{N} =  \numberthis \\
+&= N \Big( f_A^\ast (\vec{r}_1) \big[ \sqrt{N-1} f_A^\ast (\vec{r}_2) \Bra\langle \psi_{N-2,N} | + \sqrt{N} f_B^\ast (\vec{r}_2) \Bra\langle \psi_{N-1,N-1} | \big] + \\
+&\hspace{1cm} + \sqrt{N} f_B^\ast (\vec{r}_1) \big[ f_A^\ast (\vec{r}_2) \Bra\langle \psi_{N-1,N-1} | + \sqrt{N-1} f_B^\ast (\vec{r}_2) \Bra\langle \psi_{N,N-2} | \big] \Big) \times \\
+&\hspace{0.45cm} \times \Big( f_A (\vec{r}_2) \big[ \sqrt{N-1} f_A (\vec{r}_1) \Ket | \psi_{N-2,N} \rangle + \sqrt{N} f_B (\vec{r}_1) \Ket | \psi_{N-1,N-1} \rangle \big] + \\
+&\hspace{1cm} + f_B (\vec{r}_2) \big[ \sqrt{N} f_A (\vec{r}_1) \Ket | \psi_{N-1,N-1} \rangle + \sqrt{N-1} f_B (\vec{r}_1) \Ket | \psi_{N-2,N} \rangle \big]  \Big) = \numberthis  \\
+&= N(N-1) \Big( f_A^\ast (\vec{r}_1) f_A^\ast (\vec{r}_2) f_A (\vec{r}_2) f_A (\vec{r}_1) + f_B^\ast (\vec{r}_1) f_B^\ast (\vec{r}_2) f_B (\vec{r}_2) f_B (\vec{r}_1) \Big) + \\
+&\hspace{0.45cm} + N^2\big[ f_A^\ast (\vec{r}_1) f_B^\ast (\vec{r}_2) + f_B^\ast (\vec{r}_1) f_A^\ast (\vec{r}_2) \big] \times \\
+&\hspace{0.98cm} \times \big[ f_A (\vec{r}_2) f_B (\vec{r}_1) + f_B (\vec{r}_2) f_A (\vec{r}_1) \big] = \numberthis  \\
+&= \frac{2N(N-1)}{V^2} + \frac{N^2}{V^2} \big( 1 + \e^{-\i\vec{k}\cdot\vec{r}_1} \e^{\i\vec{k}\cdot\vec{r}_2} \e^{\i\vec{k}\cdot\vec{r}_2} \e^{-\i\vec{k}\cdot\vec{r}_1} \big) + \tecxt\text{h.c.} = \numberthis \\
+&= \frac{2N(2N-1)}{V^2} + \frac{2N^2}{V^2}\cos\kla\left( 2\vec{k}\cdot [\vec{r}_2 - \vec{r}_1] \right).
+\end{align*}
+For large $N$ we may approximate this as 
+\begin{align}
+\bra\langle \hat{\rho}(\vec{r}_1) \hat{\rho}(\vec{r}_2) \rangle &=  \frac{2N^2}{V^2} \kla\left( 2 + \cos\kla\left( 2\vec{k}\cdot [\vec{r}_2 - \vec{r}_1] \right) \right).
+\end{align}
+Since for $\vec{r}_1 = \vec{r}_2$ we only get an additional commutator of order $N$, this result is actually approximately valid for any position.
+Thus the density fluctuations are given by
+\begin{align}
+\Delta \rho &= \sqrt{\bra\langle \hat{\rho}^2 \rangle - \bra\langle \hat{\rho} \rangle^2} = \sqrt{\frac{6N^2}{V^2} - \frac{4N^2}{V^2}} = \frac{N}{V} \sqrt{2}.
+\end{align}
+
+
+\subsection*{c)}
+
+The expression found above can be interpreted as ???
+
+
+
+\newpage
+\section*{Problem 3: \normalfont\textit{\large{BEC in harmonic traps}}}
+%Consider $N$ non-interacting atoms in an isotropic harmonic oscillator potential $V(x) = \frac{m\omega^2}{2} \sum_{j=1}^D x_j^2$, where $D\in\{1,2,3\}$ denotes the dimension of the problem.
+%Let $E_{k,j} = \omega \left( k_j +  \frac{1}{2} \right)$ be the energy-eigenvalues.
+%The Hamiltonian is
+%\begin{align}
+%\hat{H} &= \sum_k \hat{H}_{k} = \sum_{k}\sum_{j=1}^D \frac{\hat{p}_{j,k}^2}{2m} + V(\hat{x}_{k,j}),
+%\end{align}
+%and the total number operator is
+%\begin{align}
+%\hat{N} &= \sum_k \hat{n}_{k}.
+%\end{align}
+%The eigenstates $\Ket | \underline{n} \rangle \equiv \Ket | n_{0,1}, \dots, n_{0,D}, n_{1,1},\dots, n_{1,D}, \dots \rangle$ obey the equations
+%\begin{align}
+%\hat{n}_{k} \Ket | \underline{n} \rangle &= \sum_{j=1}^D n_{k,j} \Ket | \underline{n} \rangle,\\
+%\hat{H}_k \Ket | \underline{n} \rangle &= \sum_{j=1}^D E_{k,j} n_{k,j} \Ket | \underline{n} \rangle.
+%\end{align}
+%Then the partition function is given by $Z = \prod_{k,j}  Z_{k,j}$, where 
+%\begin{align}
+%Z_{k,j} &= \tecxt\text{tr\,} \e^{-\beta\hat{H}_{k,j} + \beta\mu\hat{n}_{k,j}} = \sum_{n_{k,j} = 0}^\infty  \e^{-\beta E_{k,j} n_{k,j} + \beta\mu n_{k,j}} = \frac{1}{1 - \e^{-\beta (E_{k,j} - \mu )}}.
+%\end{align}
+%The average occupation number is then given by
+%\begin{align}
+%\bra\langle \hat{n}_{k,j} \rangle &= \frac{1}{Z_{k,j}} \tecxt\text{tr\,} \hat{n}_{k,j} \e^{-\beta\hat{H}_{k,j} + \beta\mu\hat{n}_{k,j}} = \frac{1}{Z_{k,j}} \frac{\partial_\mu }{\beta} Z_{k,j} = \\
+%&= \frac{\partial_\mu }{\beta} \log Z_{k,j} = \frac{-1}{\beta} \frac{-\e^{-\beta (E_{k,j} - \mu )} \beta}{1 - \e^{-\beta (E_{k,j} - \mu )}} = \frac{1}{\e^{\beta (E_{k,j} - \mu )} - 1}.
+%\end{align}
+Consider $N$ non-interacting atoms in an isotropic harmonic oscillator potential $V(x) = \frac{m\omega^2}{2} \sum_{j=1}^D x_j^2$, where $D\in\{1,2,3\}$ denotes the dimension of the problem.
+Let $\vec{k} := (k_1,\dots ,k_D)^\top \in \mathbb{N}_0^D$ enumerate the occupation of the $k$-th mode in each dimension, and let $E_{\vec{k}} = \omega \left( \sum_{j=1}^D k_j +  \frac{D}{2} \right)$ be the energy-eigenvalues.
+Then the Hamiltonian is
+\begin{align}
+\hat{H} &= \sum_{\vec{k}} \hat{H}_{\vec{k}} \sum_{\vec{k}} E_{\vec{k}} \hat{n}_{\vec{k}},
+\end{align}
+and the total number operator is
+\begin{align}
+\hat{N} &= \sum_{\vec{k}} \hat{n}_{\vec{k}}.
+\end{align}
+The eigenstates $\Ket | \underline{n} \rangle \equiv \Ket | n_{(0,0,0)}, n_{(1,0,0)}, n_{(0,1,0)}, n_{(0,0,1)}, n_{(1,1,0)}, \dots, \rangle$ obey the equations
+\begin{align}
+\hat{n}_{\vec{k}} \Ket | \underline{n} \rangle &= n_{\vec{k}} \Ket | \underline{n} \rangle,\\
+\hat{H}_{\vec{k}} \Ket | \underline{n} \rangle &= E_{\vec{k}} n_{\vec{k}} \Ket | \underline{n} \rangle.
+\end{align}
+Then the partition function is given by $Z = \prod_{\vec{k}}  Z_{\vec{k}}$, where 
+\begin{align}
+Z_{\vec{k}} &= \tecxt\text{tr\,} \e^{-\beta\hat{H}_{\vec{k}} + \beta\mu\hat{n}_{\vec{k}}} = \sum_{n_{\vec{k}} = 0}^\infty  \e^{-\beta E_{\vec{k}} n_{\vec{k}} + \beta\mu n_{\vec{k}}} = \frac{1}{1 - \e^{-\beta (E_{\vec{k}} - \mu )}}.
+\end{align}
+The average occupation number is then given by
+\begin{align}
+\bra\langle \hat{n}_{\vec{k}} \rangle &= \frac{1}{Z_{\vec{k}}} \tecxt\text{tr\,} \hat{n}_{\vec{k}} \e^{-\beta\hat{H}_{\vec{k}} + \beta\mu\hat{n}_{\vec{k}}} = \frac{1}{Z_{\vec{k}}} \frac{\partial_\mu }{\beta} Z_{\vec{k}} = \\
+&= \frac{\partial_\mu }{\beta} \log Z_{\vec{k}} = \frac{-1}{\beta} \frac{-\e^{-\beta (E_{\vec{k}} - \mu )} \beta}{1 - \e^{-\beta (E_{\vec{k}} - \mu )}} = \frac{1}{\e^{\beta (E_{\vec{k}} - \mu )} - 1}.
+\end{align}
+
+\subsection*{a)}
+The total particle number $N = \bra\langle \hat{N} \rangle$ may be split into $N = N_g + N_e$, where $N_g = \bra\langle \hat{n}_0 \rangle$ denotes the expected number of particles in the ground state and $N_e = \bra\langle \hat{N} - \hat{n}_0 \rangle = \sum_{k\ge 1} \sum_{j=1}^D \bra\langle \hat{n}_{k,j} \rangle$ represents the excited states.
+We find
+\begin{align}
+N_g &= \frac{1}{\e^{\beta \kla\left( E_{\vec{k}=0} - \mu  \right)} - 1} = \frac{1}{\e^{\beta\kla\left( \frac{D\omega}{2} - \mu  \right)}} =: \frac{1}{z^{-1} - 1} = \frac{z}{1 - z},
+\end{align}
+where $z = \e^{\beta \kla\left( \mu - \frac{D\omega}{2} \right)}$ is the modified fugacity.
+The excited state contribution is then given by
+\begin{align}
+N_e &= \sum_{\vec{k}\neq 0} \frac{1}{\e^{\beta \kla\left( \omega [k_1 + \dots + k_D] + \frac{D\omega}{2} - \mu  \right)} - 1} = \sum_{\vec{k}\neq 0} \frac{1}{z^{-1} \e^{\beta\omega \|k\|_1} - 1}.
+\end{align}
+We may approximate it by an integral
+\begin{align}
+N_e &\simeq \int_{\mathbb{R}^D_+} \frac{1}{z^{-1} \e^{\beta\omega [k_1 + \dots + k_D]} - 1} \, \mathrm{d}^{D}k.
+\end{align}
+Let us attempt to directly solve the integral for $N_e$.
+%Note that we may write
+%\begin{align}
+%\sum_{\vec{k}\neq 0} \frac{1}{z^{-1} \e^{\beta\omega \|k\|_1} - 1}
+%\end{align}
+For $\mu\simeq \frac{D\omega}{2}$ we have $z\simeq 1$ and therefore
+\begin{align}
+N_e &\simeq \intr\int_{\mathbb{R}^{D}_+} \frac{1}{\e^{\beta\omega \|k\|_1} - 1} \, \mathrm{d}^{D}k \kom\overset{\substack{{x\,:=\,\beta\omega k} \\ |}}{=} \\
+&= \frac{1}{(\beta\omega)^D} \intr\int_{\mathbb{R}^{D}_+} \frac{1}{\exp\kla\left( \sum_{j=1}^D x_j \right) - 1} \, \mathrm{d}^{D}x =: \frac{I_D}{(\beta\omega)^D}.
+\end{align}
+%For $D=1$ this is the Riemann-Zeta-function.
+%For $D=2$ we find
+%\begin{align}
+%I &= \intx\int_{0}^{\infty}\intx\int_{0}^{\infty} \frac{1}{\e^x\e^y - 1}\, \mathrm{d}x\mathrm{d}y \kom\overset{\substack{{x=-\log u,\ y=-\log v} \\ |}}{=} \intx\int_{1}^{0}\intx\int_{1}^{0} \frac{1}{\frac{1}{uv}  -1}\, \frac{1}{u}\mathrm{d}u\, \frac{1}{v}\mathrm{d}v = \\
+%&= \intx\int_{0}^{1}\intx\int_{0}^{1} \frac{1}{1 - uv}\, \mathrm{d}u\, \mathrm{d}v = \sum_{n\ge 0} \intx\int_{0}^{1}\intx\int_{0}^{1} u^nv^n\, \mathrm{d}u \mathrm{d}v = \sum_{n\ge 0} \kla\left( \intx\int_{0}^{1} u^n\, \mathrm{d}u \right)^2 = \\
+%&= \sum_{n\ge 1} \frac{1}{n^2} = \zeta(2) = \frac{\pi^2}{6}.
+%\end{align}
+Substituting $x_j = -\log u_j$ in the integral $I_D$ gives
+\begin{align}
+I_D &=  \intx\int_{[0,1]^D} \frac{1}{1 - \prod_{j=1}^D u_j}\, \mathrm{d}^Du = \sum_{n\ge 0} \intx\int_{[0,1]^D} \prod_{j=1}^D u_j^n\, \mathrm{d}^Du = \\
+&= \sum_{n\ge 0} \kla\left( \intx\int_{0}^{1} u^n\, \mathrm{d}u \right)^D = \sum_{n\ge 1}\frac{1}{n^D} = \zeta (D).
+\end{align}
+For $D=1$ this integral diverges, so we need to consider this case separately.
+Note that 
+\begin{align}
+N_e &= \sum_{k \ge 1} \frac{1}{z^{-1}\e^{\beta\omega k} - 1} \simeq \intx\int_{1}^{\infty} \frac{1}{\e^{\beta\omega k} - 1}\, \mathrm{d}k = \frac{1}{\beta\omega} \intx\int_{1}^{\infty} \frac{1}{e^x - 1}\, \mathrm{d}x =: \frac{I}{\beta \omega}.
+\end{align}
+We will manually define this integral as $I_{D=1} := I$, so we can continue with the general discussion for all dimension.
+Summarizing, we found
+\begin{align}
+N_e &\simeq \frac{I_D}{(\beta\omega)^D} = \kla\left( \frac{k_BT}{\omega } \sqrt[D]{I_D} \right)^D,
+\end{align}
+%This integral is still very difficult, due to the $-1$ in the denominator.
+%We may assume $\beta\omega \gg 1$ to neglect this term.
+%This has the added benefit of removing the singularity in our integrand, that was wrongly introduced by the integral approximation.
+%We now find
+%\begin{align}
+%N_e &\simeq \intr\int_{\mathbb{R}^{D}_+} z\e^{-\beta\omega[k_1+ \dots + k_D]} \, \mathrm{d}^{D}k = z\kla\left( \frac{1}{\beta \omega} \right)^D.
+%\end{align}
+Due to $z\simeq 1$ from above we can write
+%\begin{align}
+%\frac{N_g}{N} &= \frac{N_g}{N_g + N_e} \simeq \frac{N_g}{N_g}\kla\left( 1 - \frac{N_e}{N_g} \right) = 1 - \frac{1-z}{(\beta\omega)^D} \overset{???}{\approx} 1 - \kla\left( \frac{T}{T_c} \right)^\alpha,
+%\end{align}
+%where $\alpha = D$ and $T_c = \frac{\omega}{k_B}$.
+%The last approximation would require $z\approx 0$, which directly contradicts the given.
+\begin{align}
+\frac{N_g}{N} &= \frac{N - N_e}{N} = 1 - \frac{1}{N}\kla\left( \frac{k_BT}{\omega } \sqrt[D]{I_D} \right)^D =: 1 - \kla\left( \frac{T}{T_c} \right)^D
+\end{align}
+where the critical temperature is given by $T_c := \frac{\omega}{k_B} \sqrt[D]{\frac{N}{I_D}}$.
+Note that this result is qualitatively correct, but the approximations for $I_D$ were so imprecise, that we ended up with a singularity for $D=1$.
+This does not bode well for the quantitative nature of the critical temperature from this calculation.
+
+\subsection*{b)}
+We want to expand the total particle number for the case of $\mu \lesssim \frac{D\omega}{2}$ and hence $z \lesssim 1$.
+Then we find
+\begin{align}
+N &= \sum_{\vec{k}\in\mathbb{N}_0^D} \frac{1}{z^{-1} \e^{\beta\omega \|\vec{k}\|_1} - 1} =  \sum_{\vec{k}\in\mathbb{N}_0^D} \frac{z\e^{-\beta\omega (k_1 + \dots + k_D)}}{ 1 - z\e^{-\beta\omega (k_1 + \dots + k_D)}}  = \\
+&=  \sum_{\vec{k}\in\mathbb{N}_0^D} \sum_{j\ge 0}  \left( z\e^{-\beta\omega (k_1 + \dots + k_D)} \right)^{j+1}  = \sum_{j\ge 0} z^{j+1} \sum_{\vec{k}\in\mathbb{N}_0^D} \prod_{n=1}^D \e^{-\beta\omega k_n(j+1)} = \\
+&= \sum_{j\ge 0} z^{j+1} \prod_{n=1}^D \sum_{k_n \ge 0} \e^{-\beta\omega k_n(j+1)} = \sum_{j\ge 0} \kla\left( \frac{1}{1 - \e^{-\beta\omega (j+1)}} \right)^D.
+\end{align}
+
+
+%expected result:
+%\begin{align}
+%N &= \sum_{j=0}^\infty z^{j+1} \kla\left( \frac{1}{1 - \e^{-\beta\omega (j+1)}} \right)^D = \sum_{j=0}^\infty \e^{\beta(j+1)\kla\left( \mu - \frac{D\omega}{2} \right)} \kla\left( \frac{1}{1 - \e^{-\beta\omega (j+1)}} \right)^D = \\
+%&= \sum_{j=0}^\infty \e^{\beta\mu (j+1)  } \kla\left( \frac{\e^{-\beta\omega (j+1) / 2}}{1 - \e^{-\beta\omega (j+1)}} \right)^D = 
+%\end{align}
+
+
+\subsection*{c)}
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+\end{document}

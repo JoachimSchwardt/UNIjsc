@@ -1,0 +1,1190 @@
+7360, Koble, Klauß
+
+Spontane Symmetriebrechung: Erklären Sie, was das ist bzw. was das beschreibt
+--> Anhand von Beispielen (Ferromagnetismus, elastischer Stab etc.) erklärt, wovon welche Symmetrie wie "gebrochen" wird
+
+Welche Größen braucht man, um spontane Symmetriebrechung zu beschreiben?
+--> Ordnungsparameter, Brechungsparameter, Potential, Grundzustand, Beispiele dafür
+
+Wie können wir die Symmetrie des Systems darstellen und die spontane Symmetriebrechung richtig beschreiben?
+--> Im ungebrochenen Zustand Parabelpotential gemalt (zuerst 2D, dann aber auch 3D erklärt), dann Übergang zum Doppelmuldenpotential erklärt als die Symmetriebrechung, gezeigt, wo sich im Potential der Grundzustand befindet und wie dieser sich ändert
+
+Können wir das auch richtig mathematisch beschreiben?
+--> Ja, mit der Landautheorie, Term für die freie Energie hingeschrieben, erklärt, woher diese Darstellung kommt (das ist eine Entwicklung der freien Energie nach Potenzen des Ordnungsparameters mit nur den geraden Potenzen (wieso?))
+
+Was sind die masselosen und massiven Anregungen des Systems?
+--> Im Potential gezeigt, dass masselos entlang Kreis im Hut-Potential (also 3D-Doppelmuldenpotential) ohne Änderung der potentiellen Energie und massiv "entlang Potentialwände"
+
+Am Beispiel des Ferromagnetismus: Wie ist das mit der spontanen Symmetriebrechung, wenn ein äußeres Feld angelegt wird?
+--> Ich meinte zuerst, dass diese dann nicht mehr so deutlich auftritt
+
+Das können Sie sogar noch genauer sagen...
+--> Sie tritt dann gar nicht auf, weil die Symmetrie schon explizit gebrochen wurde
+
+Wie sieht man eine solche explizite Symmetrieänderung in der Landau-Theorie?
+--> Durch einen zusätzlichen Term linear im Ordnungsparameter
+
+Wie verhält sich der Ordnungsparameter in Abhängigkeit vom Brechungsparameter?
+--> Am Beispiel des Ferromagn., wo OP die Magnetisierung und BP die Temperatur, typischen Verlauf der Magnetisierung in Abh. von T gezeichnet
+
+Wie ändert sich der Verlauf bei Existenz einer äußeren Feldes?
+--> An der kritischen Temperatur ist kein Knick, sondern ein abklingender Verlauf
+
+Wie ändert sich der Verlauf mit steigender äußerer Feldstärke?
+--> Der Bereich, in dem der Graph abfällt, verschiebt sich hin zu höheren Temperaturen
+
+Was gibt es für Anregungen im Ferromagneten?
+--> Spinwellen
+
+Was ist der Unterschied zwischen massiven und masselosen Spinwellen?
+--> Wellenlänge unterschiedlich, masselose Spinwellen haben "unendliche Wellenlänge", massive haben endliche Wellenlänge
+
+Was passiert mit einzelnen Spins bzw. den Anregungen nahe der kritischen Temperatur?
+--> Ich wusste nicht genau, worauf die Frage hinaus möchte, also habe ich etwas zum Gleichgewicht zwischen maximaler Entropie und minimaler innerer Energie erzält, aber ich weiß auch nicht mehr genau, ob wir auf eine eindeutige Aussage gekommen sind
+
+Wie kann man die Anregungen vermessen?
+--> Inelastische Neutronenstreuung, Kurz bisschen was dazu erzählt
+
+Bei welchen Energien sind Spinwellenanregungen?
+--> Einige hundert eV
+
+Welche anderen Objekte bzw. Strukturen kann man durch Streuexperimente auflösen?
+--> Z.B. Elektronstreuung an Molekülen bzw. an den Atomkernen der Atome im Molekül können die Bindungsenergien der H-Atome im Molekül aber auch die mittlere Bindungsenergie der Nukleonen im O-Kern auflösen, ich habe dazu die verschiedenen Streueffekte (elastisch, quasielastisch, inelastisch) am Beispiel von Elektronstreuung an Wassermolekülen erklärt, dazu das Streuspektrum hingezeichnet, die einzelnen Peaks den Effekten zugeordnet, erklärt, wie man daraus auch die Potentialstiefe der O-Kern-Potentials bestimmen kann usw., das kommt alles in der Vorlesung dran.
+
+Was passiert bei noch höheren Elektronenergien?
+--> Man kann die Ladungsdichteverteilung der Protonen im Kern auflösen, habe dazu etwas erzählt mit Formfaktoren und wie man aus Streubildern auf die Verteilung des Streutargets schließen kann
+
+Was passiert bei noch höheren Energien?
+--> Auflösung der Quark-Struktur der Protonen bzw. Quarkanregungen
+
+Welche Anregungen kann man bei Quarks beobachten?
+--> Spinanregungen, z.B. Delta-Resonanz, aber auch Drehimpulsanregungen, Kobel meinte, dass auch radiale Anregungen möglich sind
+
+Wie viele Größen braucht man, um inelastische Streuung zu beschreiben?
+--> Ich habe dazu was zur Bjorkenschen Skalenvariablen erzählt, dass man für el. Str. 1 Parameter (wegen Gleichung) und für inel. Str. 2 Parameter (wegen Ungleichung) braucht
+
+Was hat die Bjorkensche Skalenvariable bei hohen Energien für eine (anschauliche) Bedeutung?
+--> Die Antwort wusste ich nicht ( aber das war nicht so schlimm), man kann damit aber bei einem sich sehr schnell bewegenden Proton die Impulsanteile der Quarks im Proton am Gesamtimpuls des Protons bestimmen
+
+
+
+6492, Kobel, Laubschat
+
+Spontane Symmetriebrechung:
+
+- Definition
+
+- Beispiele: Stab, Ferromagnet, you know the drill ...
+
+- Was gibt es für Anregungen: massive und masselose, am Stab vorführen: so holte ich meine Rute heraus und... (just kidding)
+
+- Landau Theorie (aufschreiben und Malen)
+
+- Linearer Term? -> externes Feld
+
+- woher alpha < 0 (Entwicklung in der Nähe der Null, beta konst, alpha linear in T)
+
+- wie sieht die Magnetisierung bei endlichem Feld aus: bei hohen Feldern exponentiell unterdrückt (oh brother, da musste mich Prof. Laubschat mit der Nase drauf stoßen)
+
+- Was haben ferromagn. und chirale sym. br. Gemeinsam: positives feedback
+
+- Anregungen ferro: Magnonen (massiv und masselos), darauf haben wir alle gerätselt, wie wohl die massiven Magnonen aussehen und kamen auf:
+
+- Phononen:
+
+- Woher die zwei Äste: brillouin Zone halbieren -> Aufspaltung durch untersch. Massen
+
+habe 5 Atome zeichnen sollen und dann die versch. Moden aufgemalt (Prof. Laubschat hat mich sehr pädagogisch durch den Prozess geführt.)
+
+- Higgs und SL vergleichen:
+
+- was sind die Ordnungsparameter
+
+- was sind cooper paare
+
+- warum ist T_C bei SL so klein: (Masse der Atome) -> Phonon ww klein
+
+- Wie hoch sind die krit. Temperaturen im SL und bei Higgs (ich hab dann noch geschwafelt, in welchem Sinne der VEV des Higgs Feldes eine Krit. Temperatur darstellt: bei Energien höher als der VEV werden Massen der Teilchen unwichtig)
+
+- was gibts für Anregungen
+
+- Wie vermisst man den Higgs Mechanismus, wo doch T_C so hoch ist ->
+
+Anregungen, Higgs Boson koppelt genau wie Vakuum erw. Wert
+
+- Wie kommt der el. Widerstand im FK zustanden: Störstellenstreuung
+
+- Warum streuen Cooper paare nicht (100nm Ausdehnung, beide
+
+gleichzeitig. Streuen ist unwahrscheinlich + Anregungslücke)
+
+sekundäre E Skalen:
+
+- Beispiele: fs, hfs, Aufspaltung in externen Feldern
+
+- Untersch. und Gemeinsamkeiten fs, hfs bei Atomen/Hadronen: alpha Abhängigkeit, 1/r^3
+
+- wofür ist 1/r^3 typisch: Dipol
+
+- ls Kopplung im Kern: wofür sorgt die: Erklärung der magischen
+
+Zahlen bei hoher Nukleonenanzahl
+
+Kollektive Anregungen:
+
+- was gibts da so bei Kernen und auch in FK: Plasmonen, Anemonen, Riesenresonanzen, Schulranzen
+
+- was nimmt man da so zum Anregen:
+
+- Photonen
+
+- Neutronen fuer RR
+
+- warum nicht Neutr. für Plasmonen: EM WW sehr schwach
+
+- warum: keine Ladung (nach außen), sehr geringes Magnetisches-Moment
+
+- warum: naja, ..., hat nach außen keine Ladung also iwie intrinsische Faktoren:
+
+- vlt g-faktor
+
+- tatsächlich kam ich dann noch auf die Masseunterdrueckung und g ist für Neutronen fast 2 LOL
+
+- warum thermische Neutronen für FK: Wellenlänge wie Gitterkonstante
+
+- außerdem meV Bereich kreuzt Dispersion von Phononen Magnonen and the lot
+
+- man kann z.B. antiferromagn. Ordnung sehen ;P (hab dann noch den zusätzlichen Peak aufgemalt, siehe Skript 2013)
+
+
+
+5795, Klauß, Straessner
+
+Einführung:
+- Energieskalen und Größenordnungen
+- Bindungen von Teilchen und jeweils die Energieniveau-Formeln und allgemeinen Potentiale (Wasserstoff, Yukawa, Charmonium, Coulomb, Harmonischer Oszillator, Potentialtopf, Woods-Saxon)
+- Wie kommt man von einem Potential zum anderen, wie von Wasserstoff zu Deuterium (warum so viel tiefer), Wie von Deuterium zu Woods-Saxon, wie von Coulomb zu Yukawa (Welche Massen machen Wechselwirkung)
+- Was beschreibt das Tröpfchen-Modell
+- Wie kann man solche Bindungsenergien experimentell bestimmen?
+
+Elektronstreuung am Kern:
+- diffuse Kugel Streuquerschnitt
+- wo sieht man den Kernabstand
+- kann man bei Auflösung mehrer Teilchen mehr Energie haben als nur bei einem (nein, Streuung an einem Teilchen (z.B. Punktladung) gibt Maxima, Streuung an vielen Nukleonen bringt durch Überlagerung nur minima, aber keine höheren Maxima)
+
+Elektronenstreuung am Wasser:
+- hier fast 20 Minuten verbracht, Spektrum gezeichnet, welche Energie steht an der x-Achse
+- wo sieht man die initiale Energie der Elektronen
+- was für Peaks gibt es
+- Diskussion über Definition von elastischen/inelastischen/quasielastischen Streuungen: ist die Energie höher, wenn 2 Teilchen mit vergleichbaren Impulsen elastisch stoßen, wenn die Impulse in die gleiche oder entgegengesetzte Richtung zeigen (entgegen)
+- warum ist der quasielastische Peak so breit (Rauslösen von Protonen aus verschiedenen Energieniveaus im Kern, welche Energie muss überwunden werden (die Bindungsenergie der Nukleonen untereinander)
+- kurze Abschweifung zu Kernmodell freies Fermigas, Potentialkasten gezeichnet
+- wie sind die Energienieveaus im wirklichen Kern verteilt im Vergleich zum Kastenpotential (freies Gas -> L wird unendlich, n liegen dicht)
+
+Zustandsmischungen:
+- Wo treten die auf? Ammoniak
+- Skizze der Konfigurationen mit Dipol, Zustandsmischung der Tunneln des Stickstoff durch H-Ebene
+- Formel für gemischte Zustände, wie sind da die Energien
+- Zeichnung gekreuzte Zustände ohne E-Feld (Mittelpunkt der linearen Kreuzung), wo liegen sie mit Feld (auf y-Achse im Minimum der ALC)
+- Was ist ALC, was bedeutet es, diabatisch/adiabatisch, wann was, wie verhalten sich die Zustände bei hohen Feldern
+- Anwendung Maser: wie funktioniert er, warum inhomogenes Feld, Aufspalten der Zustände, Zustandsverteilung im oszillierenden Feld
+- Strahlende Übergänge starten durch spontane Emissionen, dadurch werden wie bei laser weitere angeregt
+- Warum muss ich bei kleinen E-Feldern aufpassen? Langsam ändern lassen, damit nicht tunneln
+- Bei welchen Teilchen gibt es noch zustandsmischungen? Neutrinooszillation
+
+Neutrinooszillation:
+- Was passiert da, wo gibt es da Zustandsmischungen
+- Zeichnung der ALC in Sonne, was ändert sich zu was (Elektronneutrino zu Myonneutrino), Was sind jeweils die geraden Linien im Diagramm
+- warum gerade das elektron-neutrino (zusätzliche masse über Wechselwirkung mit W), wie werden Neutrinos ins Sonne produziert
+- wie kann man solare Neutrinos auf der Erde detektieren (Experiment von 1970 mit Chlor und Argon, nur 1/3 der erwarteten Elektron-Neutrinos gemessen)
+- kann man die Detektierung auch mit myon-Neutrinos und myonen als Produkt machen? Nur wenn die neutrinos energiereich genug sind, was solare nicht sind
+- warum nur so wenige Elektron-neutrinos? Oszillation und nur neutrinos mit hohen energien detektierbar
+- Wovon hängt ab, ob die Elektron-Neutrinos zu Myon-Neutrinos werden? Dichte der Elektronen in Sonne muss sich langsam ändern, also dürfen die Neutrinos nicht zu viel Energie haben
+- Aber die fliegen doch mit quasi Lichtgeschwindigkeit, wieso kann man trotzdem von einer langsamen Änderung ausgehen? Weil der Sonnenradius so riesig ist
+
+
+5829, Klauß, Straessner
+
+Symmetriebrechung:
+
+    Coleman Theorem genannt
+        Beispiel nennen: Higgs erklärt, wollten wissen wie man einen metastabilen zustand herstellt (Term 6. Ordnung einführen da landau Theorie eine Taylorentwicklung ist und man höhere terme normalerweise aufgrund geringerem beitrags weglässt).
+
+        Dann wollten sie wissen wie man einen kinetischen term da rein bekommt (wusste nicht genau was sie wollen, hab den kin. Term der freien Energie des ferromagneten hingeschrieben, war richtig).
+
+
+    Warum brauchte man überhaupt das higgs?
+        (Goldstone Theorem genannt, Masse von Z und w+- ist nicht null)
+
+        Ferromagnet wie isses da mit der Symmetriebrechung? (Curie temperatur, Magnetisierung als Ordnungsparameter)
+
+
+
+Phasenübergänge:
+
+    Magnetisierung über temperatur aufzeichnen .
+        Welcher phasenübergang ist das (2. Art) wie würde ein Phasenübergang 1. Art in dem Diagramm aussehen? (Anstatt Unstetigkeit in der 1. Ableitung jetzt schon Unstetigkeit in M(T)).
+
+
+    Was charakterisiert einen Phasenübergang 1. Art (latente wärme).
+
+    Hab dann dummerweise wasser angesprochen und deshalb:
+        Wie sieht das Phasendiagramm von wasser aus.
+
+        Welche phasenübergänge gibt es da? Was passiert am kritischen punkt? (gas und wasser bilden keine getrennten phasen mehr).
+
+
+    Zurück zum Ferromagneten:
+        Was für anregungen gibt es?(spinwelle mit unendlicher Wellenlänge - goldstone boson im Magneten. Spinwelle mit endlicher wellenlänge- magnon).
+
+        Wie regt man die an? (Inelastische Neutronenstreuung)
+
+
+    Welche arten von Neutronenstreuung gibt es?(inel. , Elast. Und quasielast. Neutronenstreuung)
+        Warum neutronen?(keine ladung aber dafür spin).
+
+        Dispersionsrelation von magnonen aufzeichnen.
+            Warum ist die Kurve der Dispersionsrelation am Rand der Brillouin Zone abgeflacht?(Welle wird am Rand der BZ reflektiert und es bildet sich eine stehende Welle, Gruppengeschwindigkeit 0 und daher die Ableitung der Dispersionrelation auch Null).
+
+
+        Welche Energie braucht man für quasielastische Neutronenstreuung?(6-8MeV)
+
+        Welche energie braucht man so um magnonen anzuregen?(meV).
+
+
+
+Dispersionsrelationen
+
+    Welche werte messe ich um die dispersionsrelation zu finden.(energie und winkel der neutronen)
+
+    Wie sehen die gleichungen aus um k und E zu berechnen?(k=√(m*Ekin)*sin(theta), E=Evorher-Enachher)
+
+    Dispersionsrelation von phononen zeichen und erklären wann man welche zweige anregen kann.(1 atomige basis nur akustisch. 2 atomige basis auch optisch).
+
+    Wie schnell bewegen sich die Anregungen?(akustisch-schallgeschw. , Optisch-Lichtgeschwindigkeit).
+
+    Dann sollte ich die dispersionsrelation von photonen in die phononen dispersionsrelation einzeichnen und erklären wo ich optische anregungen überhaupt machen kann (nur nahe k=0).
+
+    Wovon hängt der anstieg der dispersionsrelation ab?(geschwindigkeit der anregung)
+
+    Und wie sieht das für elektronen im Festkörper aus?(Bandstruktur einzeichnen und aufpassen dass nahe dem koordinatenursprung die dispersionsrelation quadratisch sind und dann weiter aussen abflachen)
+
+    Was passiert wenn sich zwei elektronenbänder kreuzen?(landau zener kreuzung da wechselwirkung zwischen elektronen.)
+
+    Wo gibts das noch?(maser gesagt)
+
+
+Zustandsmischung
+
+    Erklären sie mal.(ammoniak zustandsmischung erklärt.)
+
+    Wie kann man die mischung sichtbar machen(stern gerlach apparat).
+
+    Was passiert jetzt wenn ich so einen strahl aus dem Feld herausbringe und mir den zeitlichen Verlauf der Mischungszustände und symmetriezustände anschaue?(da wusste ich nicht worauf sie hinaus wollten, sie wollten etwas über den mischungswinkel hören.)
+
+
+5563, Kobel, Klauß
+
+Die üblichen Fragen zu Spin-Bahnkopplung, primäre und sekundäre Energieskalen, Rotation/Vibration...
+
+Hervorheben würde ich zwei Themen:
+
+Warum kommt es zu Riesenresonanzen beim Kern bzw. bei Plasmonen im Festkörper? Ein Spinwelle oder ein Phonon ist doch auch eine kollektive Anregung, trotzdem gibt es hier nicht so einen Sprung in den Energieskalen. (Ein Elektron anregen vs Plasmon; Ein Nukleon anregen vs Riesenresonanz)
+-> wurde kontrovers diskutiert, ich würde sagen die Geometrie der Anregung ist eine andere, Riesenanregung im Kern heißt alle Nukleonen sind excited und schwingen, Phonon heißt Auslenkung propagiert durch den Raum
+
+Spektren von Kernen vs Quarkoniaspektrum:
+
+Wie funktioniert An/Abregung? Wie sieht das Emissionsspektrum aus? Was wird emittiert?
+-> verschiedene Argumente: z.B. spinBahn kopplung im Kern ist elektromagnetisch->auch Emissionsspektrum elektromagnetisch(Photonen) (eher handwaving)
+Abregung im Kern (ohne Zerfall) über Gluonen und Photonen. Gluonen zerfallen sofort in quarkantiquark und man beobachtet Pionen. Im Kernspektrum nicht, da Übergänge <140 MeV (Pionmasse)
+
+
+5268, Straessner, Laubschat (!!)
+
+Povh: "Teilchen und Kerne" (Atomkerne, Streuung); Demtröder: "Experimentelle Physik 3" (Atome, Moleküle, LASER, Bandstruktur); Wiesendanger: "Einführung in die Struktur der Materie" (Atomkerne); Feynman: "The Feynman Lectures on Physics 3" (Ammoniak-Molekül); Vorlesungsskript von Klauß/Kobel 2013 (Grundlagen, Auswahlregeln)
+
+ Symmetriebrechung:
+- Was gibt es denn für Arten von Symmetriebrechung/Symmetrien? (Habe das Coleman-Theorem erklärt mit exakter, spontaner, expliziter)
+- Geben Sie doch mal ein Beispiel für spontane Symmetrie. (Ferromagnetismus. Higgsmechanismus war mir dann doch ein bisschen zu riskant xD)
+- Was sind da denn die Ordnungsparameter/Brechungsparameter? (Magnetisierung, Temperatur)
+- Wie sieht denn die Energie des Ferromagneten aus? (Nach Landau-Theorie die Funktion für die freie Energie aufgeschrieben, erwähnt dass für explizite ein linearer Term dazu kommt)
+- Sie hatten doch erwähnt, dass das auch von der Temperatur abhängig ist, wo steckt denn die T-Abhängigkeit? (im a-Faktor, s.d. a=a0*(T-Tc))
+- Wie sieht dann denn die Energie für T>Tc und TTc, Mexican-Hat in 2D für TTc nicht auf Null)
+- Laubschat: Sie haben ja schon bemerkt, dass dort jetzt kein Knick mehr ist. Was hat man an dem Knick denn erkannt? (Dass es ein Phasenübergang 2. Ordnung ist) Und was bedeutet das dann für die explizite Symmetriebrechung? (Da hier kein Knick ist es auch kein Phasenübergang mehr)
+- Straessner: Es gibt ja verschiedene Anregungen bei der SSB, was sind denn hier diese Anregungen? (sowohl massive als auch masselose Magnonen, sind Spinwellen mit einmal endlicher Wellenlänge für massive, unendliche Wellenlänge für masselose, für die masselosen wird keine Energie aufgebracht. Kurz noch erklärt was die Anregungen allgemein darstellen, d.h. einmal Fluktuation ohne betraglicher Änderung des OP, einmal mit)
+- Wie kann man denn so ein Magnon unendlicher Wellenlänge verstehen? (Spindrehung des gesamten Ferromagneten, d.h. alle Spins drehen sich kollektiv in eine Richtung -> Betrag der Magnetisierung ändert sich nicht, nur die Richtung)
+- Wie kann man Magnonen denn messen? (Neutronenstreuung)
+
+Neutronenstreuung:
+- Also mit Magnonen ist das ja so eine Sache, weil die in der Vorlesung ja nicht so richtig besprochen werden. Was kann man denn stattdessen mit Neutronenstreuung messen? (Phononen)
+- Ja, genau. Toll machen Sie das. (Dankeschön.)
+- Wenn man das denn mit Phononen misst, was sieht man dann denn? (Wusste erst nicht genau worauf er hinaus will, hab ihn dann einfach gefragt, ob er die Dispersionsrelation von mir hören will. Er hat ja gesagt und mich angegrinst.)
+- Dispersionsrelation: Hier habe ich erst mal die Formel für den akustischen Zweig hingeschrieben, dann auch hingemalt in der ersten BZ. Dann erklärt dass es so bei einatomiger Basis aussieht, bei zweiatomiger Basis kriegt man den optischen Zweig dazu, den auch hingemalt, aber gesagt die Gleichung ist ein bisschen komplizierter, daraufhin hat Straessner gesagt, dass er sich die auch nicht merken will.
+- Wieso heißt der akustische Zweig denn der akustische Zweig? (Weil man aus der Ableitung die Schallgeschwindigkeit bekommt, außerdem ist die Schwingung ja gleichphasig, d.h. es gibt kein Dipolmoment und der Zweig kann nicht durch elektromagnetische Wellen angeregt werden sondern repräsentiert wirklich Schallwellen durch den Festkörper)
+- Sie meinten ja, man kriegt die Schallgeschwindigkeit aus der Ableitung: wie sieht das denn am BZ-Rand aus? (Wird null) Wieso ist das denn so? (Wusste da erst nicht die Antwort, dann haben sie mir geholfen, indem sie mich gefragt haben wie das ganze denn in einem Gas aussehen würde (direkte Proportionalität, also Gerade), dann sollte ich die Gaslinie auch vom nächsten reziproken Gittervektor einzeichnen (Gerade in die andere Richtung, schneidet die erste Gerade am BZ-Rand) und dann hat es endlich klick gemacht und ich hab erklärt dass die Wellen am nächsten Atom reflektiert werden und sich am BZ-Rand zu stehenden Wellen überlagern, die ja keine Gruppengeschwindigkeit und daher auch keine Schallgeschwindigkeit haben.)
+- Wieso heißt denn jetzt der optische Zweig optischer Zweig? (Weil der bei unterschiedlichen Ladungen durch elektromagnetische Wellen angeregt werden kann) Wie schwingen hier denn die Atome? (gegenphasig, bei akustisch gleichphasig)
+- Warum gibt es denn einen Energieunterschied zwischen dem akustischen und optischen Zweig am BZ-Rand? (weil die Atome unterschiedliche Massen haben) Wie entsteht das denn genau? (Wusste ich nicht, alles im Folgenden ist mehr oder weniger im Gespräch entstanden: Sie wollten von mir wirklich die Herleitung über den gekoppelten H.O. wissen, d.h. es gibt zwei Schwingungsmoden mit cos und sin (wirklich lineare Kette mit zwei Atomarten hingezeichnet, neues a‘=2a definiert, wie groß ist dann die Wellenlänge? Über k=pi/2a=2*pi/lambda auf lambda=4a, Schwingungsmoden einzeichnen, welche Atome schwingen jeweils? Was heißt das jetzt im H.O.? Im H.O. omega=(k/m)^1/2 und weil jeweils andere Atome schwingen gibt es ne unterschiedliche Eigenfrequenz und daher auch unterschiedliche Energie, obwohl die Wellenlänge für beide Schwingungen gleich ist.)
+- Wieso nimmt man denn Neutronenstreuung zur Messung? (Weil die Dispersionsrelation da gut passt) Was bedeutet das denn? (Die genaue Antwort wusste ich nicht, also habe ich erstmal die Dispersionsrelation von Neutronen gemalt (einfach quadratisch) und dann mit Laue-Bedingung erklärt wie man denn beim Streuungsexperiment die Dispersionsrelation der Phononen messen würde, d.h. Energieunterschied ist Energie des Phonons und k-Unterschied ist k des Phonons (+/- rez. Gittervektor). Das sollte ich dann noch graphisch in die Dispersionsrelation reinmalen und dann waren sie zufrieden.)
+
+Rutherfordstreuung:
+- Was hat Rutherford damals denn gemacht und was wollte er testen? (Hab das Experiment beschrieben, dann das Thompson’sche Atommodell erklärt und was zu erwarten gewesen wäre, dass Rutherford etwas anderes gemessen hat und dadurch sein Atommodell entstanden ist)
+- Wie sieht der Wirkungsquerschnitt aus? (Rutherford-Wirkungsquerschnitt hingeschrieben und aufgemalt (Punktladung, nicht reell), dann experimentelle Punkte eingezeichnet und dass bei hohen Winkeln schon Abweichungen auftraten die durch Volumen des Kerns erklärt werden konnten)
+- Wie sieht der Wirkungsquerschnitt für eine harte, homogene Kugel aus? (Mit den zusätzlichen Minima die bis auf Null fallen)
+- Woher kommt diese Form? (Aus dem Formfaktor) Ja, das ist mathematisch richtig, aber woher kommen die Minima anschaulich? (Daher, dass die Neutronen wie eine Welle an mehreren Nukleonen streuen und wie beim Doppelspalt Interferenzen auftreten)
+- Wie kriegt man aus diesem Wirkungsquerschnitt (harte, homogene Kugel) den Radius des Atomkerns? (Das erste Minimum ist prop. Zu 1/R) Was bedeutet das dann, wenn die Kugel sehr groß ist? (Minimum verschiebt sich zu kleineren theta) Wie sieht das dann für das ursprüngliche Rutherfordmodell aus? (Punktladung, R gegen 0 d.h. das Minimum verschiebt sich ins unendliche, daher keine Minima, mathematisch ist dann der Formfaktor konstant bei 1)
+- Wie sieht die Ladungsdichteverteilung eines echten Kerns aus? (Kugel mit diffusem Rand, Diagramm hingemalt) Wie sieht das dann bei größeren Kernen aus? (Sie wollten hören, dass dann der Radius größer wird aber die Ladungsdichte gleich bleibt)
+
+Atomkern:
+- Wie sieht das Potential des Kerns aus? (Woods-Saxon-Potential)
+- Wie sieht das Potential des Deuterons aus? (Yukawa mit Abstoßungsterm für Spin-Spin-WW (**), hingemalt) Wie sieht der Yukawa-Teil aus? (Formel für Yukawa-Potential, Pionmasse gekennzeichnet und erklärt dass dadurch die Energieskala zustande kommt)
+- Wieso gibt es denn eine Pauli-Abstoßung von Neutron und Proton, das sind doch nicht dieselben Teilchen? (Bestehen jeweils aus Quarks und für Quarks gilt das Pauli-Prinzip)
+- Wieso gibt es im Woods-Saxon-Potential keinen Abstoßungsterm? (Weil es ein gemitteltes Potential ist, außerdem wirken durch die Reichweite der Pion-WW nur die nächsten Nachbarn sich darauf aus, d.h. die Nukleonen können im inneren des Kerns einfach ihre Position wechseln ohne dass es einen Unterschied macht, solange sie nicht an die Oberfläche gelangen. An der Oberfläche haben sie dann weniger nächste Nachbarn, d.h. das Potential ist wirklich anders und dadurch kommt der diffuse Rand zustande)
+- Wie sieht das Woods-Saxon-Potential für kleinere und größere Kerne aus? (H.O. für kleiner, für größere wird es nur breiter und nicht tiefer) Wieso wird es nicht tiefer? (Weil nur die nächsten Nachbarn eine Rolle spielen.)
+- Sieht das Potential gleich für Protonen und Neutronen aus? (Nein, für Protonen noch Coulomb-Wall und ist nicht ganz so tief, weil sich die Protonen abstoßen)
+- Bei welchem Zerfall spielt das eine Rolle? (Wusste ich erst nicht, habe dann erst sehr leise beta, dann sehr leise alpha gesagt und bei alpha hat er mich angelächelt, also habe ich dann laut überlegt warum beim alpha-Zerfall und bin drauf gekommen dass da ja die Protonen über den Coulomb-Wall raustunneln müssen)
+- Wieso fliegen da eigentlich alpha-Teilchen raus? (Weil Heliumkerne eine höhere Bindung haben und daher schon mit einer höheren Energie im Potential sind, gibt ihnen einen Vorteil beim tunneln) Wieso haben Heliumkerne eine höhere Bindungsenergie? (Weil sie doppelt-magisch sind)
+
+Wasserstoffmolekülion:
+- Durch welches Potential lässt sich die Bindung des H2+ Ions beschreiben? (Morse bzw. Lennard-Jones, hingemalt)
+- Wie sieht denn der „Schwanz“ des Morsepotentials aus? (wusste ich nicht genau, die folgenden Fragen sollten mich dann auf die Antwort bringen, Antwort: exponentiell, wie Yukawa-Potential)
+- Wie kommt denn die Bindung zustande? (kovalente Bindung, LCAO erklärt)
+- Sie haben hier ja die Wellenfunktion (nach LCAO) hingemalt, wie fällt die denn zu größeren R ab? (exponentiell weil Wellenfunktion) Wie sieht’s dann beim Morsepotential aus? (auch exponentiell, wie Yukawa)
+- Beim Yukawa-Potential des Deuterons gab es die Masse des Pions, was ist hier denn die Masse? (Die des Elektrons)
+- Wie sind denn die Größenordnungen des Potentials vom Wassterstoffmolekülion und vom Deuteron? (Wasserstoffmolekülion: Potentialtiefe ~2-3 eV, Abstand ~1 Angström; Deuteron: Potentialtiefe ~200 MeV, Bindungsenergie ~2 MeV, Abstand ~1,5 fm)
+- Wie sehen die Energieeigenwerte im Morse-Potential aus? (Habe erklärt dass man es als H.O. annähern kann, daher unten äquidistant, dann zu größeren E immer kleinere Abstände)
+- Wie kann man so ein Molekül anregen? (Photonenabsorption, Vibrationen und Rotationen) Wie gehen die Vibrationsniveaus? (Sind die Niveaus im Morse-Potential) Was ist hier so die Größenordnung? (meV, das war ihnen zu ungenau) Was machen denn solche Vibrationen im makroskopischen Sinne? (Wärme, daher wohl im Raumtemperatur-Bereich, 300 K = 25 meV)
+- Wie sehen im Vergleich die Energieeigenwerte im Atomkern aus? (Näherung durch Kastenpotential, En ~n^2) Wie sehen sie im Wasserstoffatom aus? (En=E0/(n^2), E0=(m_red*alpha^2)/2)
+
+Wasserstoffatom/Feinstruktur:
+- Ohne Feinstruktur, was gibt es da noch für Niveaus? (Die durch die Drehimpulsquantenzahl)
+- Wie sehen die denn aus? (Habe das Termschema gemalt, Demtröder 3 S. 151, sie wollten auch wirklich diese Darstellung und keine andere) Wie sind da die L-Niveaus? (Hier noch entartet)
+- In der Feinstruktur, wie spaltet da denn zum Beispiel das 2p-Niveau auf? (2p1/2 und 2p3/2, habe noch erwähnt, dass hier 2s1/2 und 2p1/2 auch noch entartet sind) Wann sind 2s1/2 und 2p1/2 nicht mehr entartet? (Lamb-Shift)
+- Wie sieht das dann im Magnetfeld aus? (anomaler Zeemann-Effekt, 2p3/2 spaltet in 4 Linien auf, 2p1/2 in 2 Linien, mj drangeschrieben) Was passiert dann bei höheren Magnetfeldern? (vermiedene Niveaukreuzung = AVL) Bei welchen Niveaus passiert das? (Wusste ich nicht, Laubschat hat mir dann gesagt dass mj=-3/2 und mj=1/2 sich normal kreuzen, mj=1/2 und mj=-1/2 aber AVL)
+- Was passiert bei noch höheren Magnetfeldern? (Paschen-Back-Effekt, L und S koppeln nicht mehr und man sieht nur noch die L-Niveaus) Wie kann man das mit den AVL erklären? (Die, die AVL machen, nähern sich so weit an, dass sie wie eine Linie wirken)
+- Welche Größenordnung hat die Feinstruktur denn? (E_FS ~ En*alpha^2 ~ alpha^4, En Größenordnung eV, E_FS also meV)
+- Welche Größenordnung hat die Feinstruktur bei Atomkernen? (En in MeV, E_FS auch MeV weil alpha deutlich größer) Was hat das für Auswirkungen? (Magische Zahlen durch Feinstruktur erklärt, große Aufspaltung vom 1f7/2 sorgt für magische Zahl obwohl keine Schale voll ist)
+- Was ist denn abgesehen von der Bindungsenergie an doppelt magischen Kernen noch besonders? (Sie sind kugelsymmetrisch) Sind das nicht alle Kerne? (Nein, die sind durch die Valenznukleonen deformiert) Wie kann man das denn messen? (Bei deformierten Kernen gibt es Rotationsanregungen, bei kugelsymmetrischen nicht)
+
+
+
+(**) Im Povh steht zum Deuteron, dass auf die Quarks hier eigentlich nicht das Pauli-Prinzip wirkt weil die durch die Farbladungen immer noch unterschiedliche Zustände einnehmen können, aber durch die starke Spin-Spin-WW derselbe Effekt wie Pauli entsteht. Deswegen habe ich erste starke Spin-Spin-WW gesagt, aber dann hat mich Straessner berichtigt und ich hab ab diesem Punkt einfach das Pauli-Prinzip benutzt. Bin mir jetzt immer noch unsicher was richtig ist.
+
+
+5067, Klauß, Zuber
+
+Zustandsmischung
+
+    Klauß hat erst mal eingeleitet und dann gesagt das wir ja Mischungen und Entartungen besprochen haben in der Vorlesung und gefragt ob ich dazu vielleicht an einem Beispiel mal etwas sagen könnte:
+        Ammoniak erklärt, also Symmetriezustände aufgemalt, Tunneln von N, Hamiltonian aufgeschrieben, Energiezustände und zugehörige Energien, kleine Skizze
+
+        ich habe dann gefragt ob ich gleich noch aufs elektrische Feld eingehen soll, dann Dipolmomente in Symmetriezu. eingezeichnet, Änderung von H, Änderung der Eigenenergien und Skizze mit Symmetrie und Eigenengergien
+
+
+    wie kann man das exp. Überprüfen?
+        im Maser, kurz erklärt
+
+        resonanzfrequenz entspricht 2A (mit A off-Diagonalterm)
+
+
+    was muss man beachten damit Maser / Laser möglich ist?
+        Besetzungsinversion, motiviert mit Skizze von eig. Boltzmann Verteilung (N(E))
+
+        Besetzungsinversion bei Laser durch Pumpen (Skizze 3 Niveau-Laser)
+
+        in Maser durch Strahltrennung
+
+
+    ich habe das mit der Strahltrennung nach einem kurzen Fragenden Blick zu Klauß dann einfach erklärt
+        erst hohes Feld damit Symmetrie gleich Energiezu. , dann ausnutzten das elektrisches Dipolmoment von Symmetriezu. verschieden ausgerichtet und mit inhomogenen elektrischen Feld die Strahlen trennen
+
+        danach langsam elektrisches Feld senken um wieder zu perfekt gemischten Zuständen zu kommen
+
+
+    warum inhomogenes Feld?
+        wusste ich nicht, habe dann hingeschrieben wie Kraft und Potential zusammenhängen
+
+        Klauß hat dann gesagt das ich Potential ja schon in Hamiltonop hingeschrieben habe und gefragt was dann mit dem Skalarprodukt passiert
+
+        sind dann gemeinsam darauf gekommen das nur Drehmoment (ihm war wichtig das ich darauf gekommen bin das im homogenen Feld nur Drehmoment wirkt)
+
+
+    Warum muss man das elektrische Feld langsam ändern?
+        habe ganzes Landau-Zehner Übergangszeug erklärt, mit P= e^-gamma und was gamma ist und was langsam und schnell bedeutet und so weiter...
+
+
+    NH3 ist ja ein schönes Lehrbuchbsp. tritt ja aber auch in Teilchenphysik auf bei Neutrinos, da analoger Effekt, wissen dazu was?
+        heißt dann MSW Effekt für solare Neutrinos
+
+
+    Sagen sie mal erst mal noch allgemein etwas zur Neutrinooszi.
+        PMNS Mat., unterscheide Falvour und Masseneig.zu.
+
+        in Materie anders weil Elektronenneutrinos noch zusätzliche WW (Feynmann für diese und für die die alle können)
+
+        MSW mit Skizze erklärt, das in Sonne ja hohe Elektronendichte
+
+
+    Wie hoch ist die denn (Z)?
+        ich wusste das nicht, Klauß auch nicht, Herr Zuber hat dann aufgelöst
+
+        ich habe danach dann damit weitergemacht das in sonne ja Elektronen Neutrinos produziert
+
+
+    Wie werden die denn produziert(Z)?
+        aufgeschrieben dass p + p zu d + e+ + nu_e mit Feynmann
+
+        dann habe ich MSW weiter erklärt und dass nur 30% des erwarteten Flusses und deswegen hauptsächlich adiabat.
+
+
+    Welche Energien haben die Neutrinos denn da so?
+        ich hatte keine Ahnung und fragend drein geschaut...
+
+
+    Hatten das ja noch in der letzten Übung, hat was mit der WW zu tun die sie schon hingeschrieben haben
+        habe dann gesagt das deren Wirkungsquerschnitt von Energie der Neutrinos abhängt und eine Skizze gemacht
+
+
+    Wie sieht das dann in der MSW Skizze aus?
+        Kreuzungspunkt wandert nach rechts
+
+
+    warum nach rechts?
+        anstieg von Elektronen Neutrino geraden wird geringer
+
+
+    bisher ja nicht über Oszillation, also zeitentwicklung gesprochen, was passiert da?
+        für NH3 aufgeschrieben wie allgemeiner Zu. psi(t) = c1(t) 1 + c2(t) 2 und wie c1 und c2 aussehen und warum (also kurz für Eigenzustände Zeitentwicklung benannt)
+
+        Dann direkt weiter das man Koeffizienten dann über Anfangsbedingung bestimmt und die Wahrscheinlichkeit dann das Betragsquadrat des Skalarproduktes von 1 mit psi ist, Ergebnis hingeschrieben und Skizze gemacht
+
+
+    Wie ist das dann bei Neutrinos? Auch über Zeit?
+        nein über Länge, z.B. bei atomosphärischen Neutrinos gut erkennbar
+
+        Erwarten ja myonen elektronen neutrino Verhältnis von 2
+
+
+    Warum (Z)?
+        WW in Atmosphäre hingeschrieben und das da halt myon und antimyon neutrino und ein elektronenneutrino entsteht
+
+        dann erklärt das in Detektor (Skizze) gut Übereinstimmung für elektronen neutrinos aber beim auftragen nach Eintrittswinkel bei myonneutrions festgestellt wird das von unten weniger ankommen als erwartet weil die sich in tauneutrions umwandeln
+
+
+
+
+Energieskalen gebundener Systeme
+
+    Wie Grundzustand und Bindungsradius abschätzen?
+        kurz erklärt wie man das mit Heisenberg Unschärferelation macht und dann für Coulomb Pot Ergebnis hingeschrieben
+
+    Haben ja jetzt Coulomb WW angenommen was erhält man den für Ergebnisse für Wasserstoff?
+        r_0 = 0.5 * 10^-10 und E_0 = -13.6 eV
+
+    Wo liegt die Energie denn im Potential?
+        1/r Pot gezeichnet und eingemalt
+
+    Wie liegen jetzt höher angeregte Zu.? Wie skalieren die mit n?
+        eingemalt und gesagt das die mit 1 /n^2 gehen
+
+    Das ist ja jetzt alles nur für Haupt QZ n, was gibt es denn noch so für QZ?
+        l, s, ms, ml
+
+    Wie beeinflussen die jetzt die Energieniveaus?
+        LS Kopplung erklärt, Ruhesys. von Elektron mit mag. Moment mu = mu_b g_S S dann kreisendes Proton das Magnetfeld B proportional zum Drehimpuls erzeugt (mu_b noch erklärt)
+
+    Ist ja eher überraschend das B und L proportional wie sieht denn der Zusammenhang genau aus?
+        wusste ich nicht aus dem Kopf
+
+        Klauß hat dann gefragt wovon L abhängt und wovon B nicht abhängen sollte, habe ich ihm gesagt wusste trotzdem nicht weiter
+
+        hab dann erst mal Formel für delta E = a LS mit a=... hingeschrieben und gesagt das man das aus dem a jetzt schlussfolgern kann, nach einigem hin und her hatte ich es dann endlich (sollte noch sagen wie alpha_em mit e zusammenhängt)
+
+    Können Sie mal die Größenordnung abschätzen?
+        in a r durch Bindungsradius r0 = 1 / mu alpha ersetzt und dann E0 eingeführt
+
+        alpha abgeschätzt und damit delta E= E0 mal ca 10⁻4 erhalten
+
+    Wie sieht damit jetzt Aufspaltung aus?
+        habe für 2P Niveau Skizze gemacht und die jeweiligen j werte raungeschrieben
+
+    sie haben ja jetzt neue QZ eingeführt, was passiert denn mit der im Magnetfeld
+        habe kurz Zeemann und Paschen Back erklärt
+
+    Warum bei Paschen Back Kopplung aufgebrochen?
+        weil aufspaltung durch magnetfeld stärker als delta E durch LS
+
+    In mesonen sieht das ja alles etwas anders aus.
+        Grobstruktur erklärt und Größenordung E0 mit charm masse abgeschätzt
+
+        habe noch gesagt das potential eig. noch linearen Term (Skizze) der Confinement beschreibt, aber für kleine Abschätze 1 /r dominiert
+
+    Wie ist das dann in der Feinstruktur?
+        gar nicht mehr so fein, da alpha_strong 1/5 also keine so große Veränderung in Größenordnung
+
+    Aber was wechsel wirkt da jetzt? Kann ja nicht magnetfeld sein.
+        Wusste ich nicht genau, habe dann gesagt das das Spins sind die WW und da wir ja aus alpha_em alpha_strong machen kommt die WW durch die starke WW zustande
+
+        Klauss meinte dann noch das wir das nicht hatten, das aber stimmt und das der starke Isospin sein müsste
+
+    Noch kurz Hyperfeinstrukrur. Was WW da?
+        Gesamtspin J mit Kernspin I
+
+    Auch nur in angeregten zuständen wie vorhin bei Feinstruktur und 2p?
+        nein auch bei S1/2, kurz Hyperfeinstruktur im Wasserstoff erklärt, 21 cm linie erwähnt
+
+    Warum so interessant?
+        Zeug über magnetisches Dipol abregung erzählt und das das ungewöhnlich und deswegen so langlebig
+
+        noch erklärt warum kein elektrischer Dipolübergang möglich ist
+
+    Wie war die Wellenlänge(Z)? Warum gerade so interesssant?
+        Wellenlänge noch mal gesagt, aber ich wusste nicht was er noch meint
+
+        haben dann erklärt das halt damit Wasserstoff im universum messbar
+
+    Warum mögen Astrophysiker keine Handys ( Z)?
+        Weil die gleichen Frequenzen wie Hyperfeinstruktur Wasserstoff
+
+    Woher weiß man das man mit den großen Radioteleskopen auf der Erde den Wasserstoff aus dem universum misst und nicht den aus der Atmosphäre?
+        Weil sich der durch Streuung viel schneller abregt, so dass es nicht zu dem hyperfeinübergang kommen kann
+
+
+4539, Klauß, Straessner
+
+Anfangsfrage zum Einstief: Welche Formen der Symmetriebrechung gibt es und wo tritt es auf?
+Explizite und spontane Symmetriebrechung und was ist da wie Symmetrisch (wie im Coleman-Theorem)
+
+Wo tritt das auf: (da hatte ich die Wahl)
+
+Higgsmechanismus: Also angefangen mit im Standardmodell gibt es keine Massen, diese werden durch den Higgsmechanismus erklärt. Lagrangedichte hingeschrieben und das Potential dazu. Sie wollten unbedingt von der Temperaturabhängigkeit hören und wie es bei höheren Temperaturen ist (massen =0 da keine SSB) und welcher Term dann im Potential abhängig von der Temperatur ist und wie diese Abh. aussieht mit verweis, dass man es wie in anderen Theorien machen kann. (Also wie bei SL mu^2 = konstante*(Tc-T).
+
+Wie sieht denn der Grundzustand in abh. von der Temperatur aus?
+Sie wollten dabei ein Diagramm wie beim Ferromagnetismus mit seiner Magnetisierung nur in diesem Fall mit dem Vakuumerwartungswert (Grundzustand) sehen.
+
+Wie kommen damit die Massen zustande? Über die kovariante Ableitung im kin. Term der Lagrangedichte. Also kov. Abl. hingeschrieben und dann mit der Näherung des Potentials (Phy = v + h(x)) ergeben sich dann Massenterme in der Lagrangedichte für die Bosonen, dabei wollten sie wissen wie die Abhängigkeit vom Vakuumerwartungswert ist: linear.
+
+Dann haben sie gemeint dass das Universum ja wie ein Supraleiter des Typs zwei für die schwache Wechelwirkung ist und wollten wissen was damit gemeint ist. Also angefangen mit der magn. eindringtiefe beim Supraleiter und mit der Korrelationslänge, dass sich dann Flussschläuche ergeben. Und dass man das so ähnlich beim Higssmechanismus hat wobei die magnetische Eindringtiefe anstatt mit der Masse des Photons, mit der Masse der W und Z bosonen skaliert,.
+
+Daraufhin wollten sie dass ich noch tiefer auf die Flussschläuche eingehe also das Profil eines Flusschlauches angemalt und dann wollten sie wissen, wie es energetisch aussieht. (hier war die Frage etwas unpräzise formuliert) Ich habe die freie Energie aufgeschrieben und es mit den zwei konkurrierenden Termen erklärt (Supraleitendes Potentialund Bfeld), und dass es für den Supraleitenden Typ II dann zu flussschläuchen kommt, da dann weder Verlust durch die Verdrängung des B-Feldes noch durch die Unterbrechung der SL-Phase für einen großen Bereich zustande kommt, wodurch Flussschläuche energetisch günstger sind.
+
+Dann haben sie mich noch zu Cooperpaaren gefragt und wie man sich das genau vorstellen muss. Zwei Elektronen werden durch Phononen aneinander gebunden. Die beiden Elektronen haben einen entgegengesetzten Impuls mit gleichem Betrag. Daraufhin fragten sie mich, welche Eigenschaft noch diese Charakterisiert. Ich hatte keine Ahnung, worauf sie hinauswollten, also haben sie mich darauf hingewiesen, dass Elektronen ja einen Spin haben. Hier war ich mir nicht sicher und habe dann einfach gesagt, dass sich beide Spins aufheben und das Cooperpaar somit Spin 0 hat. War richtig.
+
+Sie meinten noch, welche Energie denn die Cooperpaarbindung hätte. Wusste ich nicht genau, hab aber im meV bereich geraten, was auch stimmte. Desweiteren fragten sie, wie man denn messen könnte, dass wirklich Phononen die Bindung von Elektronen machen für die Cooperpaare. Das war ganz schön tricky. Sie meinten ,dass man die Frequenz der phononen ändern müsste, um eine Änderung der Ww zu erreichen. Ich dachte erst vllt ändert sich das ja mit der Temperatur oder in dem man externe Felder anlegt, Das stimmte aber nicht. Sie brachten mich dann darauf, dass man den gleichen Supraleiter aber mit unterschiedlichen Isotopen messen könnte. Durch die anderen Massen der Atome ändert sich die Frequenz und damit die Bindung der Cooperpaare.
+
+Als nächstes leiteten sie über zu Zustandmischungen und fragten, wo es denn so etwas gebe. Ich habe dann Ammoniak gewählt. Dabei die beiden Molekülzustände hingeschrieben mit Dipolmoment. Dann den Hamilton mit Offdiagonal Elementen welche zu den neuen Zuständen führen und diese auch aufgeschrieben mit neuen Energien.
+Es folgte die Frage, wie man denn zeigen kann dass es diese Zustandmischung gibt. Also habe ich den Maser mit der Strahltrennung erklärt. Inhomogenens E-Feld erzeugt Kraft auf verschiedene Dipole. Dann bringt man das in einen Hohlraumresonator und mit stimulierter Emission erhält man kohärentes Laserlicht.
+
+Sie fragten spezifisch nach der Energie dieses Lichtes: Mikrowellen (da Maser) also im meV Bereich.
+
+Daraufhin wollten sie noch die energetische Betrachtung hören. Da war die Frage etwas verwirrend formuliert, aber es blieb ja nur noch das vermiedene Niveaukreuzungsschema .
+
+Was müsste man den beachten wenn man aus dem E-Feld der Strahltrennung wieder herausgeht? Darf nicht zu schnell gehen, da dann Landau-Zehner-Tunneln stattfindet, was abhängig ist von der Energie-Lücke, aber auch von der Energieänderungsrate.
+
+Dann meinten sie so von wegen: Wo kann man denn diese Übergangswahrscheinlichkeit messen? Das habe ich von magn. Molekülen erzählt. Also z.B. Mn12-Acetat was bei tiefen Temperaturen einen Giant-Spin von 10 besitzt. Kurz die Energie in Abhängigkeit von dem Magnetfeld skizziert und dann mit der Hysteresekurve erklärt, dass man da die Umklappwahrscheinlichkeit messen kann. Das wollten sie genau hören. (dass man pro umklappen misst wie viele von -10 auf +10 oder andersherum gesprungen sind und dass das der Wahrscheinlichkeit entspricht)
+
+Als Nächstes kam eine Frage, mit der ich erst nichts anzufangen wusste. Es ging so ungefähr wie: Was benötigt man denn, damit diese Spinzustände mischen, da Spinzustände ja eigentlich sonst Eigenzustände sind. Dann haben sie wieder etwas von energetisch und symmetrien gesprochen. Das waren wieder Signalworte. Kurz Hamilton skizziert wobei die planare Anisotropie nicht null sein darf, also die planare Anisotropie ist der "Wechselwirkungsterm" der dann zur Mischung führt. Damit waren sie zufrieden.
+Und sie fragten noch, wie man diese Mischung denn dann beeinflussen kann. Dabei wollten sie darauf hinaus, dass man mithilfe von Magnetfeldern in der x-y-Ebene genau diese planare Anisotropie beinflusst.
+
+Dann sind sie noch zu Spinwellen übergegangen und wollten die Dispersionsrelation sehen. Die wusste ich aber nicht so recht, also haben sie zuerst die von Phononen haben wollen, dann wie diese am Rand der BZ aussehen (an atomen skizzieren) und skizzieren wie Spinwellen aussehen. Sie wollten noch explizit hören, dass man bei beiden nur infinitesimale Energie brauch um sie anzuregen und sie dabei eine unendlich große Wellenlänge besitzen.
+Dann hat Klauß zu spinwellen übergeleitet und gezeigt wie deren Dispersionsrelation dann aussieht. (ungefährt quadratisch also flacher im Koordinatenursprung aber trotzdemgeht sie durch diesen)
+
+Zum Ende die Frage wie man die Dispersionsrelation von Phononen messen kann. Mit Neutronenstreuung, diese kurz erklärt. Warum Neutronen und nicht andere? Elektronenc dringen nicht tief genug in den Festkörper ein um diese gut zu messen und bei Photonen (er meinte man würde es mit Röntgen machen) ist der Energie unterschied in den Photonen dann sehr sehr klein und es spielen noch andere Effekte eine Rolle, Es geht also mit Röntgen, aber das ist nur schwer und bedingt möglich.
+
+
+4537, Klauß, Straessner
+
+(1) Los ging es mit Symmetriebrechung.
+- Beispiel nennen -> Ferromagnet -> Landau Modell
+- Welche Symmetrie gebrochen?
+- Brechungsparameter
+- ein anderes Beispiel ist Higgs, erklären Sie mal... -> aus der Landauformel, die noch da stand weiter gemacht.
+- worin äußert sich Higgssymmetriebrechung? -> Kosmischer Supraleiter, endliche Reichweite der WW-Bosonen und somit Masse
+- Zurück zu Landau: Anregungen? -> Magnonen
+- Dispersionsrelation Magnonen? -> Die wusste ich nicht genau, hab das aber auch so gesagt und wir haben stattdessen über Phononendispersion gesprochen (später hat mich H-H Klaus dann auf die richtige Lösung für Magnonen gebracht)
+-> Wann ein Ast, wann mehrere Äste? -> 1 Atomige Basis/2 atomige Basis
+-> Was, wenn Massen der Atome gleich bzw. unterschiedlich? -> Aufspaltung bei k=pi/a
+-> Wie misst man das? -> Neutronenstreuung
+(2) Nach dieser Überleitung: Streuung.
+- Arten + Anwendungen? Elastisch + inelastisch und entsprechend Strukturauflösung (mussten sie mich erst drauf bringen) bzw. Anregungen
+- Zurück zu phononen + Neutronenstreuung: was genau hier, welche Anregungen? -> inelast. Vibrationsanregung
+- Potential der Vibrationen + Energieskala -> Beispiel H2 Molekül (nur eine Mode), Entwichlung um Ruhelage, Energieskala durch Bindungsenergie
+- im Festkörper: welche Energien? -> nach etwas nachhaken waren sie dann mit omega² = k/m zufrieden
+(3) Nach Erwähnung H2 Molekül: Bindungen/Zustandsmischung
+- Wie kommt es zur Bindung -> LCAO erklärt
+Überleitung: Wie ist das mit diesen Mischungen...
+- Beispiel? -> Ammoniak. Zustände beschrieben, Übergang durch Tunneln, Mischung, neue Zustände. Hamiltonian hingeschrieben und Lösungen mit Energieeigenwerten angegeben
+- Ammoniak + ext. elektrisches Feld? -> zusätzlicher Term im Hamiltonian, veränderte Energieeigenwerte, Skizze mit den Zustandsenergien als Hyperbeln
+- Wie kann man die Zustände messen bzw. trennen? -> inhomogenes Feld quer zu Strahlachse -> Auftrennung der Zustände -> langsames Austreten aus dem Feld, damit nicht gleich durch Tunneln wieder gemischt.
+(4) Über Maser zum Laser:
+- Anwendungen Zustandsmischungen Ammoniak -> Maser
+- Was braucht man für stimulierte Emission? -> Besetzungszahlinversion
+- Warum nicht 2-Niveau? -> Gleichgewicht Absorption + stim. Emission -> keine Inversion
+- Was stattdessen? -> 4-Niveau system gezeichnet,
+- Warum kein Röntgen-Laser? -> Da mussten sie mich auch mit Hinweisen auf die richtige Lösung bringen: Zerfallszeit des spontanen Übergangs =1/Gamma und damit für Dipol = 1/E^3
+
+
+4538, Klauß, Straessner
+
+1. Streuung
+
+Wie klassifiziert man Streuprozesse?
+- elastisch, inelastisch und quasielastisch; elastisch = keine Änderung der Teilchen; inelastisch = Änderung der Teilchen oder Anregungen; quasielastisch = Nukleonen werden aus dem Kern gelöst
+
+Welche Größen misst man so?
+- Energien und Impulse der Streuteilchen und Targetteilchen; Winkelaufgelöster Wirkungsquerschnitt
+
+Zur elastischen Streuung, wie sieht da der Wirkungsquerschnitt aus?
+- Rutherford Wirkungsquerschnitt
+- q-Abhänigkeit mit 1/q^4[wusste ich an dieser Stelle nicht, ich habe dann davon erzählt, dass Vorwärtsstreuung dominiert, und Rückwärtsstreuung nicht verschwindet]
+- zusätzlich noch Formfaktor F(q^2)
+
+Was ist der Formfaktor?
+- Fouriertransformierte der Ladungsverteilung
+- zeichnen des Formfaktors für eine homogene, harte Kugel (sin(q)/q)
+
+Wie modifiziert sich der reale Wirkungsquerschnitt nun?
+- zusätzliche Minima, die aber nicht ganz auf null gehen
+
+Wie können wir das auftreten der Minima erklären?
+- Elektron streut wie eine Ebene Welle am Kern, Streuung an verschiedenen Stellen des Kerns erzeugt Phasenverschiebung, welche dann destruktive Interferenz erzeugt
+
+2. Nukleonen und Kerne
+
+Wie sieht denn dann das Potential im Kern aus?
+- Woods Saxon Potential gemalt und erklärt (Plateau in der Mitte, aufgeweichter Rand); Plateau dadurch, dass starke Wechselwirkung kurzreichweitig ist und Nukleonen nur Nachbarn "sehen", Potential wird also auch nicht tiefer sondern nur breiter
+- Morsepotential für Deuteron; Anziehung durch ein bzw. zwei Pionen Austausch; Yukama Potential aufschreiben (exp(-m*r)/r); Abstoßung durch Überlappung der Quarkwellenfunktionen und Pauliprinzip
+- für kleine Kerne, Gausskurve/Harmonischer Oszillator
+
+Wieso gibt es im Woods-Saxon Potential keinen Abstoßungsteil wie im Deuteron-Potential?
+- Woods-Saxon ist ein gemitteltes Potential das von den restlichen Nukleonen erzeugt wird
+
+Typische Energien im Kern
+- Energieniveaus wachsen etwa quadratisch
+- 8 MeV Bindungsenergie
+- 30...40 MeV Potentialtiefe
+- Fermiimpuls [wusste ich nicht den Zahlenwert, wir haben dann nur den Zusammenhang mit Fermienergie diskutiert]
+- Streuung an Wasser, wo sieht man da diese Energien
+
+
+3. Mehrelektronensystem
+- Größenordnung für die Feinstruktur im Wasserstoffatom abschätzen
+- mit gleicher Formel sollte auch die Spin-Bahn-Wechselwirkung im Kern abgeschätzt werden
+- Kopplungsschema bei mehreren Elektronen LS und jj, jeweils erklärt
+
+Welches Kopplungsschema wird wann relevant?
+- LS: Coulombabstoßung der Elektronen groß gegen Spin-Bahn-Wechselwirkung
+- jj: Spin-Bahn-Wechselwirkung groß gegen Coulomb-Abstoßung
+
+Wie werden z.B. d-Orbitale von sechs Elektronen besetzt?
+- 2l+1=5 Orbitale mit je zwei Spinausrichtungen
+- Besetzung nach Hundschen Regeln, das Schema wurde gemalt (wie im Chemiunterricht in der Schule)
+- Quantenzahlen für L, S und J berechnen (L=2, S=2, J=0...4)
+
+Wie kann die Spin-Bahn-Wechselwirkung noch überwunden werden?
+- durch starkes ext. Magnetfeld, anomaler Zeeman-Effekt für n=2 aufgezeichnet undvermiedene Kreuzung
+- die zwei Zustände mit m_l+2*m_s=0 vermeiden die Kreuzung, da sie ohne Kopplung entartet wären; die Kopplung ist aber nur bei unendlichen Magnetfeldern komplett weg, daher Kreuzungspunkt im unendlichen
+
+4. Zustandsmischung
+- möglichst allgemein am Zwei-Zustandssystem erklärt mit den entsprechenden Gleichungen
+- Beispiel des Ammoniakmoleküls im externen elektrischen Feld
+- Landau-Zener Tunneln und adiabatischer Übergang erklärt; Tunnel-Wahrscheinlichkeit exp(-|H_12|^2/(dE/dt))
+
+Wo kann man sowas beobachten?
+- solares Neutrinodefizit; Energieabhänigkeit der Flavourzustände von der Elektronendichte in der Sonne, diese kreuzen sich dann; erzeugt Elektron-Neutrinos der Sonne können dann durchtunneln, abhängig von der kin. Energie der Neutrinos
+
+Wie misst man eigentlich verschiedene Neutrinoflavours?
+- Elektron-Neutrino wechselwirkt mit Kernen und ändert z.B. Neutron im Kern zu Proton; dabei entsteht auch ein Elektron
+- [wie Myon-Neutrinos wechselwirken wusste ich auf anhieb nicht, dachte erst eigentlich gleich] Energien in Sonne im MeV Bereich; ein Myon kann bei Reaktionen nicht entstehen da Ruhemasse zu hoch; nur neutrale Ströme über Z Boson
+
+5. Symmetriebrechnung
+- Beispiel Ferromagnet: Landau Theorie aufgeschrieben und Ordnungsparameter erklärt
+
+Wie bekommt man einen Phasenübergang erster Ordnung?
+- Term sechster Ordnung einführen
+
+Was passiert wenn man die Symmetrie explizit bricht durch ext. Magnetfeld?
+- aufweichen des Phasenübergangs, kein Knick mehr
+- Magnetisierung geht nicht auf null runter sondern nähert sich nur mit 1/T an; Erklärung durch Suszeptibilität eines Paramagneten
+
+
+4489, Laubschat, Straessner
+
+Energienivaus
+
+    Grob- und Feinstruktur des Wasserstoffs (Abhängigkeiten von der Feinstrukturkonstante und typische Größenordnungen)
+    Was ist bei Charmonium anders und warum kann man da die selben Formeln verwenden?
+    Confinement der starken WW
+    Woher weiß man, dass die Feinstruktur wirklich eine geringere Größenordung hat? --> geht mit Alpha hoch 4 ein.
+    Wie kann man herausfinden, dass der Zustand 2p1/2 eine niedrigere Energie hat als der Zustand 2p3/2? Bzw woher wie misst man die Drehimpulse dieser beiden Zustände? --> Antwort Magentfeld nutzen und Zeemanaufspaltung ausnutzen.
+    Was ändert sich bei starken Magnetfeldern? --> Paschen-Back-Effekt. 2p3/2 --> 4 Unternivaus, 2p1/2 --> 2 Nivaus
+    Wenn ich das Magnetfeld noch weiter erhöhe was passiert dann? --> Nivaukreuzung. Die Zustände mit m=+-1/2 bilden eine vermiedene Kreuzung wobei der Kreuzungspunkt im unendlichen liegt. Deswegen beobachtet man bei starten Magnetfeldern nur eine Aufspaltung von 5 statt 6 Nivaus.
+    Wo findet man noch vermiedene Kreuzungen?
+
+
+
+Amoniak
+
+    - Grundsätzlich erklären, Hamiltonian aufstellen und Energieeigenwerte / -zustände hinschreiben. Wie gelangt das N-Atom auf die andere Seite --> tunneln
+    - Was ändert sich wenn man ein äußeres Feld hinzufügt.
+    - Adiabtische und diabatische Übergänge erklären
+    - Tunnelwahrscheinlichkeit hinschreiben
+
+
+
+Moleküle / Festkörper
+
+    - LCAO erklären und alle möglichen Diagramme zeichnen
+    - Vibrationszustände einzeichnen. Wo ist die Grundzustandsenergie? --> Näherung mit harmonischen Oszillator
+    - Vibration und Rotation --> Energieeigenwerte und Größenordnung. Mit welchen Frequenzen würde ich die anregen?
+    - Funktionsweise eines Mikrowellenherdes erklären (Es ging eigentlich nur darum, dass Mikrowellen Rotation anregen.)
+    - Bandstruktur / -lücke erklären --> Braggbedinungn erfüllt, stehende Wellen
+    - Warum ist es kein Widerspruch, dass die Elektronen bei LCAO bevorzugt zwischen den Kernen sind und im Festkörper bevorzugt an den Kernen? --> Bei LCAO machen sie die Bindung und im FeKö können sie als quasifrei betrachtet werden.
+    - Phononendispersion aufzeichnen und erklären. Modell der gekoppelten Oszillatoren erklärt.
+    - Woher kommen die Namen optisch und akustisch. Schallgeschwindigkeit einzeichnen. Mit welcher Frequenz werden optische Phonoen angeregt --> Infarot
+
+
+4500, Straessner, Klauß
+
+Wasserstoffatom vs. Atomkern
+(dieser ganze Abschnitt war etwas durcheinander und ich weiß die Fragen nicht mehr genau)
+
+- Was sind die Quantenzahlen beim Wasserstoff? Wie sieht das beim Atomkern aus?
+(n, l, m hingeschrieben und benannt und bei Atomkern genau so aber Knotenzahl N benutzt mit n=l+N+1)
+- wie kommt man darauf (d. h. Experiment vs. Theorie)?
+Experiment war eher da, eingeführt um Spektrallinien zu charakterisieren. (es sollte darauf hinauslaufen, dass die Theorie beim Atomkern dann schon
+bekannt war und man deshalb N benutzt hat und nicht n; Herr Klauß meinte wenn es die Theorie eher gegeben hätte wäre n nie eingeführt worden)
+- wieso hängen n und l zusammen (über oben genannte Formel)? wieso gilt diese für Atomkern nicht?
+(hier wusste ich bis zum Schluss nicht worauf er hinaus wollte; er meinte am Ende nur es sei keine einfache Frage und irgendwas davon dass es nicht trivial
+sei, dass der Radial- und Tangentialfreiheitsgrad irgendwie zusammenhängen)
+hab dann irgendwas gesagt von wegen 1/r-Potential bei Wasserstoff vs. Wood-Saxon aus mean-field Näherung von Yukawa bei Kern
+--> sollte Woods-Saxon zeichnen
+- wie ist Energieabhängigkeit bei Wasserstoff vs Atom?
+Atom 1/n^2 und Kern n^2 da ungefähr wie Kastenpotential
+
+
+LS-Kopplung:
+
+-Was ist das?
+Kopplung Elektronenspin an Bahndrehimpuls, semiklassische Dipolformel <1/r^3 mu_1 mu_2> und Dirac-Formel 1/r dV/dr aufgeschrieben und kurz
+erläutert (betrachte J=L+S, mu=g*e/(2m)*J, Entartung wird teilweise aufgehoben, ...)
+-sollte konkretes Beispiel geben also 2p Niveau und Aufpaltung zu j=1/2, 3/2 gezeichnet.
+-verschiebt LS-Kopplung ursprüngliches 2p Niveau bzw. was ist Mittelwert der neuen Niveaus?
+nein, mittelwert der neuen Niveaus gibt altes Niveau (d.h. Aufspaltung symmetrisch); erst Dirac, Lamb-Shift, etc. verschiebt 2p Niveau
+-Größenordnung gegenüber Grobstruktur bei Wasserstoff?
+Zustandekommen des alpha^4 an Hand der Formeln erklärt (aus V und r_0), dadurch ist Feinstruktur um 10^-4 kleiner
+- und bei Kern?
+auch alpha^4 aber hier alpha = 0.1 ... 1 also gleiche Größenordnung wie Grobstruktur
+(dann hat Herr Klauß kurz außerhalb der Prüfung mit Herrn Straessner diskutiert wie man denn das alpha^4 im Kern-Fall aus der Diracformel sieht,
+sind dann zu dem Schluss gekommen, dass es im Woods-Saxon-Potential stecken muss auch wenn man es nicht direkt sieht)
+-dann wurde irgendwie zum Zeeman-Effekt übergeleitet (ich glaube es wurde gefragt wie man die restliche Entartung aufhebt)
+Energieniveaus für die m_J (4 für J=3/2, 2 für J=1/2) eingezeichnet
+-was passiert bei sehr starkem Magnetfeld?
+J keine Erhaltungsgröße mehr, L und S koppeln nicht mehr zu J, 5 Paschen-Back-Linien inklusive vermiedener Kreuzung eingezeichnet
+
+
+Zustandsmischung
+
+-am Beispiel von Ammoniak
+beiden Konfigurationen des Moleküls |1> und |2> gezeichnet, Tunneln führt zu Mischung, Hamiltonian aufgeschrieben, EF und EW aufgeschrieben
+-wieso spielt elektrisches Feld eine Rolle? Energieverlauf mit Feld ohne Zustandsmischung
+weil Molekül polar, d.h. hat Dipolmoment; ohne Mischung Energie E = E0 +- d*|E| als Geraden eingezeichnet
+(hab ständig aus Versehen magnetisches statt elektrisches Feld gesagt. das hat zur allgemeinen Erheiterung beigetragen wurde mir aber nicht schlecht
+angerechnet)
+-nun mit Zustandsmischung zeichnen und hab noch was zur Landau Zeener Wahrscheinlichkeit gesagt
+-tritt auch bei Neutrinos auf. Wie war es da charakterisiert?
+Mischungsmatrix hingeschrieben für zwei Neutrinosorten, bei Ammoniak Mischungswinkel 45°
+-wie kann man |I> und |II> unterscheiden?
+Kraft auf Dipole im inhomogenen elektrischen Feld, bei hohen Feldern |1> rund |I> und |2> rund |II>
+-wo wird die Seperation genutzt?
+Ammoniak Maser, kurz Laser allgemein erklärt, d.h. z.B. für Laser thermische Besetzung schlecht also Besetzungsinversion, d.h. man pickt sich
+höherenergetischen Zustand |I> raus, spontane Emission ist um omega^3 unterdrückt
+-wo findet Maser-Übergang statt (d. h. bei welcher Feldstärke in meinem Energiediagramm)?
+bei |E| rund 0 damit Energiegewinn von 2A, d.h. Feld muss langsam abgeschaltet werden nach Extraktion von |I> damit d|E|/dt und damit
+Landau-Zeener-Wahrscheinlichkeit klein und Übergang adiabatisch
+
+(die Fragen zu Neutrinos hat Herr Straessner gestellt)
+-tritt auch bei Neutrinos auf. was ist da der Störparameter
+Materie vs. Vakuum, d.h. die Elektronendichte, nur für Elektronneutrinos relevant denn nur diese haben bestimmte wechselwirkung
+(Feynmandiagramm zur WW mit e gezeichnet aber fälschlicherweise Antineutrinos benutzt)
+-wirklich Antineutrinos? wie entstehen die in der Sonne?
+Fehler korrigiert, Neutrinos entstehen bei Umwandlung von Proton zu Neutron zusammen mit Positron wenn zwei Protonen zu einem Deuteriumkern
+fusionieren
+-dann sollte ich die Zustandskreuzung zeichnen, hab dass also gemacht und mit Sonnenrand und Zentrum beschriftet.
+-was dominiert am Rand und am Zentrum?
+am Rand Myon-Neutrinos, im Zentrum Elektron-Neutrinos (sieht man an Zeichnung), Wahscheinlichkeit für Elektronneutrinos am Rand is sin^2 theta
+-wo werden die Neutrinos gemessen?
+solare Neutrinos in Kamiokande, weniger Elektronen-Neutrinos als nach Sonnenmodellen entstehen müssten und damit Hinweis auf Zustandsmischung
+-wie verschiebt sich Kreuzungspunkt wenn man Neutrinoenergie verändert?
+(diese 50/50 Frage hatte ich falsch) ich glaube richtig ist, für höhere Energien verschiebt sich der Kreuzungspunkt aus dem Zentrum heraus, bin mir aber
+nicht mehr sicher
+-was ist die Ursache dafür?
+Wechselwirkungsstärke d.h. Beitrag des Feynmandiagramms ist Energieabhängig (weiß ich nicht mehr im Detail)
+
+
+Symmetriebrechung
+
+(zu diesem Zeitpunkt hatten wir wahrscheinlich nur noch so fünf oder zehn Minuten deshalb kam hierzu recht wenig)
+-wo tritt Massengewinn durch Symmetriebrechung auf?
+bei der schwachen WW im Higgs-Mechanismus, bei den Konstituentenquarks bei der starken WW
+-bleiben wir bei schwacher WW. was passiert da?
+Lagrangedichte invariant, aber Grundzustand instabil, wenn Brechungsparameter bestimmten Wert überschreitet folgt dieser nicht mehr Symmetrie,
+typisches x^2 und x^4 Potential eingezeichnet.
+-was ist das für eine Symmetrie die gebrochen wird?
+schwache Eichsymmetrie
+- wie bekommt man Masse, Anregungen
+massive und masselose Anregungen eingezeichnet, diese sind Higgs-Boson und Nambu-Goldstone-Bosonen die zu den W/Z-Bosonen beitragen
+- wieso haben W, Z Masse wen NG-Bosonen masselos?
+wegen Higgsfeld mit Vakuumerwartungswert ungleich Null
+
+
+3740, Kobel, Klauß
+
+Beginn mit Ende der letzten Prüfung: Symmetrie
+1. Def. Symmetriebrechung
+2. Was sind Brechungs-/Ordnungsparameter mit Beispielen
+3. Symmetriebrechung bei Ferromagneten mit Landau Formalismus
+4. Supraleitung mit Londonscher Eindringtiefe (ca. 100nm) und Korrelationslänge. Daran Erklärung von Supraleiter 1. und 2. Art
+5. Higgsmechanismus Aussehen des Potentials, was ist hier Ordnungsparameter, was Brechungsparameter. Masse Higgsboson.
+6. Schwache Wechselwirkung, warum beobachtet man sie nicht (da keine Bindung, denn Reichweite sehr klein aufgrund der Masse von Z und W-Boson.
+7. Analogie Higgsmechanismus zur Londonsche Eindringtiefe und Reichweite.
+8. Starke Wechselwirkung, Masse des Pioneer
+9. Kollektive Anregung, warum haben Kerne ein geringeres Trägheitsmoment als erwartet bei abgeschlossenen Schalen (Suprafluide Flüssigkeit)
+Unterscheidung Rotation und Vibration im Rotationsschwingungsspektrum
+Gleichungen für Rotation und Vibration, quantenmechanisch und klassisch
+10. Riesenresonanz bei Kernen, was passiert und äquivalenz im Festkörper (Plasmonen)
+11. Plasmonen: von was hängt die Plasmafrequenz ab (Elektronendichte), was schwingt Zusammenhang mit Reflexion. Wo treten Plasmonen auf (Metalle)
+12. Spinwelle und Spinflip, Unterscheidung und wann passiert was (Spinwelle braucht weniger Energie-->0
+
+
+3156, Laubschat, Straessner
+
+Reden wir über Streuung. Da gab es doch zwei Arten. Welche waren das?
+- elastisch und inelastische Streuung. Erklärt, was es ist
+
+Dann wählen Sie mal ein Beispiel!
+- Elektronenstreuung am Kern beschrieben
+- Formfaktor erklärt; Der Kern ist eine Kugel mit diffusem Rand
+- Formfaktor für eine harte Kugel gezeichnet
+- Rutherford-Wirkungsquerschnitt gezeichnet
+- Wirkungsquerschnitt für die harte Kugel gezeichnet (Formfaktor * Rutherford)´
+- Wood-Saxon-Potential
+
+Betrachten wir mal genau zwei Nukleonen im Kern... Durch welches Potential werden zusammengehalten?
+- Yukawa-Potential, hinschreiben und zeichnen, Massives Austauschteilchen = Pion
+
+Warum kann man Neutronen und Protonen nicht beliebig zusammenschieben?
+- Quarks sind Fermionen -> Pauli-Verbot
+
+Wie hoch ist die Bindungsenergie pro Nukleon?
+- durchschnittlich 8 MeV
+- E_B / A hingezeichnet
+- Tröpfchenmodell erklärt
+
+Wie hoch ist die Fermienergie?
+- ca 40 - 50 MeV
+
+Wie bestimme ich E_Fermi?
+- quasielastische Streuung am Wasser erklärt. An ein, zwei Punkten habe ich etwas geschlingert, kam nach Hilfestellungen aber noch auf die Antworten.
+- Fermiflüssigkeitsmodell des Kerns genannt
+
+Straessner zeichnet einige Zacken in meine Graphik der Bindungsenergie pro Nukleon. Da gibt es höhere Bindungsenergien. Wieso?
+- Magische Zahlen
+
+Aus welchem Modell kommen die raus?
+- Schalenmodell des Kerns
+
+Wie kommt man darauf?
+- Lösung der Schrödingergleichung
+- Unterschied zum Wasserstoff ist, dass Bahndrehimpuls unabhängig zu Hauptquantenzahl
+- Grobstruktur, Feinstruktur am Wasserstoff erklärt und am Kern
+
+Wenn wir jetzt ein Wasserstoff-Molekül haben, was machen wir dann?
+- LCAO erklärt
+- Lennard-Jones-Potential erklärt und hingemalt
+
+Wie sieht Potential für ein Elektron in einem großen Atom aus?
+- Wusste ich nicht gleich. Ergebnis: So ähnlich wie Yukawa, da "weiter draußen" die Kernladung abgeschirmt wird und das Elektron schwächer gebunden ist
+
+Wenn man den antibindenden Zustand im Wasserstoff-Molekül zu Helium zusammenschiebt... was hat man da?
+- Kam ich nicht drauf. Antwort: 2p-Orbital
+
+Im Festkörper... was können da Elektronen für Zustände besetzten?
+- Bänder
+- Bandstruktur erklärt, ausgehend vom quasifreien Elektron Modell
+
+Als letztes noch über Cooper-Paare in Supraleitern geredet. Die einzige Frage, die hier etwas tricky war, war: Wieso streuen Cooper-Paare nicht an Gitterfehlern?
+Antwort: Durchschnittlicher Abstand im Cooper-Paar ist 100 nm, also recht groß. Entweder zerbricht das Cooper-Paar an dem Gitterfehler (wenn die Energie groß genug ist) oder das Elektron streut nicht, da ansonsten gleichzeitig das Elektron 100 nm entfernt auch streuuen müsste (die Wahrscheinlichkeitist quasi 0).
+
+
+1726, Laubschatt, Straessner
+
+Sagen sie mal was zu Zustandsmischungen:
+Allgemein:Ungestörste E1/2 zu WW
+Hamiltonmatrizen aufgeschrieben Energiediagramme
+symetrische/Antisymmetirsche Mischung aufgeschrieben
+zusammenhang offdiagonalelemente/Aufspaltung (2epsilon)
+Beispiel Ammoniak
+
+
+
+Wie kann man denn die Zustände beim Amoniak (expreimentell) auseinanderhalten:
+Dipol - Inhomogenes El. Feld
+Führte zu vermiedener Kreuzung - Diagramm gezeichnet - Adiabatischer/nichtadiabatischcer Übergang
+Tunnel Wslk.
+
+
+
+Amoniakmaser
+Skiziert (aufteilung der zuistände im Feld zustandsinversion, maser im Feldfreien Raum)
+Nutzungsbeispiele (hab mit Wasserstiffmaser verglichen, den man zu zeitmessungen nutzt) 
+
+
+
+Laser allgemein
+Laser erklärt, allgemeine Eigenschaften
+führte zu Lebensdauer - überganswslkt. ~E^(2j+1)
+verbotene/erlaubte Übergänge, hab als Beispiel nochmal auf die Wasserstoff 21 cm Linie zurückgegriffen
+
+
+
+Weitere Zustandsmischung: Neutrinos
+Mischungsformel mit Flavor/Massen EZ aufgeschrieben, für ersten beiden detailiert
+Analog zu allgemeiner Zustandsmischung erklärt
+Osszillation im Vakuum besprochen
+offdiagonal terme durch schwache WW
+Ozillationslänge (~100te km/Energieabhängig)
+Beispiel vermiedene Zustandskreuzung in der Sonne (hier musste ich mich etwaas sortieren, da ich kich verzeichnet hatte, durch vergleich mit allg. zustandskreuzung gelang dies aber)
+Erkären warum so wenig elektroneutrinos (anhand der skizze offensichtlich)
+reaktion zur Erzeugung der Neutrimos in der Sonne
+
+
+
+Suchen sie sich mal noch ein weiters Beispiel für vermiedene Zustandskreuzigung aus
+Hab Bandstrucktur genommen und erklärt
+Bloch
+quasifreie elektronen
+Disp. aufzeichnen, erklären
+Wie Bandlücken veranschauliche? - Handwaving argument mit Elektronenwslkt. am/zwischen kern
+
+
+
+Vergleich mit H2+
+kurz Lösung mit LCAO skiziert
+E(R)/ Wfktnen. sym/antisym
+Gut wenn e- zwischen p+
+wiederspruch zu Bandstrucktur?: Nein, unterschiedliche Phänomene Eletron einmal quasifrei und einmal WW-Teilchen
+
+
+
+Vergleich zu Deuterium?
+Yukava pot.: ähnlich wie in Deuteriumg/h_2+, pion/elektron Massives austauschteilchen in Atomkern/Atom für Starke/Colomb WW
+Übergang zu größeren Kernen - kurzreichweitige WW, pot. abhängig von Neutronendichte, pot. Gezeichnet, übergang leichte-schwere Kerne, Formfaktor erwähnt
+
+
+1715, Straessner, Laubschat
+
+Energieskalen:
+
+    Wir haben uns mit 2-Körper-Bindungszuständen beschäftigt. Wie sehen die Energieniveaus vom Wasserstoffatom aus? (Hauptenergieniveaus zeichnen)
+    Wie bestimmt sich die Bindungsenergie von -13,6 eV? (Formel Grobstruktur, wichtig: Proportionalitäten der Feinstrukturkonstante und Hauptquantenzahl, Näherung der reduzierten Masse durchführen)
+    Wie ist die Feinstrukturkonstante definiert? (e^2/4*pi*eps0*hbar*c0)
+    Was beschreibt die Feinstruktur? (ls-Kopplung, rel. Korrekturen, j-Aufspaltung zeichnen)
+    Wie sieht der Zusatzterm der Energiefunktion aus? (Term ~ alpha^4 hinzufügen)
+    Warum ~ alpha^4? (Wusste ich nicht: Erklärung über Abstandsabhängigkeit der Dipol-WW)
+    Wie hängen magnetisches Moment und Spin zusammen? (Gyromagnetisches Verhältnis, Definition Bohrsches Magneton, Herleitung aus Kreisstrom um Proton ausführen)
+    Wir haben den gleichen Ansatz zur Beschreibung von Charmonium genutzt. Warum dürfen wir das? (Wusste nicht worauf sie hinaus wollen) Wie sieht die Abstandsabhängigkeit der Energie aus? (Zeichnung: erst ~1/r, dann linear, Formel) Was passiert bei großen Abständen? (Quark-Antiquark-Paarbildung, Confinement) Und bei kurzen Abständen? (Term 1/r dominiert, linearer Term vernachlässigbar -> Ansatz Wasserstoff)
+
+    Wieder Wasserstoff: Sind die Zustände 2s1/2 und 2p1/2 entartet? (Nein, Lambshift) Welcher liegt höher? (2s1/2) Warum? (Strahlungskorrekturen veranschaulichen durch Zitterbewegung des Elektrons und Vakuumsfluktuation)
+
+
+
+
+Kern- und Molekülbindung:
+
+    Auch im Kern kennen wir 2-Körper-Bindungszustände. Wie sieht das Potenzial von Deuteron aus? (Kernpotenzial zeichnen, Yukawa-Potenzial erklären)
+    Und wie sieht die Bindungsenergie von H2+ aus? (Zunächst (anti-)symmetrische Wellenfunktionen zeichnen, Aufenthaltswahrscheinlichkeit zwischen den Kernen erklären, dann (anti-)bindendes Potenzial (Lennard-Jones) zeichnen)
+    Kann man die Grundzustandsenergie aus dem Potenzial ablesen? Wie kann man das Potenzial nähern? (Harmonisches Potenzial für niedrige Energien, Grundzustand leicht oberhalb des Minimums, dann äquidistante Niveaus) Was passiert bei höheren Energien? (Niveauabstände verringern sich)
+    Treten neben Schwingungsanregungen noch andere Anregungen auf? (Rotationsanregungen) Welche zwei Ersetzungen muss man in der Energiefunktion durchführen um Rotation zu beschreiben? (Impuls -> Drehimpuls, Masse -> Trägheitsmoment) Welche Werte sind also möglich? (Eigenwerte l(l+1) hquer)
+    Wie kann man Rotations- von Schwingungsanregungen unterscheiden? (Rotationsanregungen im Spektrum äuquidistant, für höhere Energien leichte Verringerung wegen Änderung des Trägheitsmoments, Schwingungsanregungen haben nur eine Linie)
+    Für welche Kernform ist Rotationsanregung möglich? (Ellipsoide)
+
+
+
+
+Symmetriebrechung:
+
+    Wie kann man deformierte Kerne mit Symmetriebrechung beschreiben? (Grundlagen: exakte Symmetrie, spontane & explizite Symmetriebrechung, Zeichnung) Welche zwei Parameter sind wichtig und welche sind das im Beispiel? (Deformation (Ordnungsparameter) und Zahl Valenznukleonen (Brechungsparameter))
+    Welches ist das Standardbeispiel für Symmetriebrechung? (Ferromagnetismus, OP: M, BP: T, Freie Energie nach Landautheorie aufschreiben, Koeffizienten erklären, bei Phasenübergängen 1.Ordnung müsste phi^6-Term hinzugefügt werden)
+    Wie kann man hier eine explizite Symmetriebrechung erzeugen? (Äußeres Magnetfeld -> lin. Term)
+    Was ändert sich im M(T)-Diagramm? (Zeichnen, nicht mehr unstetig, Kurve verläuft oberhalb der vorherigen, kein Phasenübergang mehr)
+    Wie hängen Symmetriebrechung und Phasenübergänge allgemein zusammen? (SB impliziert Phasenübergang, Umkehrung gilt nicht, Beispiel: Übergang flüssig-gasförmig bei Wasser
+
+
+
+
+Supraleitung:
+
+    Ein magnetischer Phasenübergang tritt auch bei Supraleitern auf. Was ist das Besondere an der supraleitenden Phase? (idealer Diamagnet, idealer Leiter)
+    Was ändert sich an der Landautheorie? (Ginsburg-Landau-Theorie, Zusatzterme aufschreiben und erklären) Was ist dabei die Ladung? (Cooper-Paar-Ladung 2e)
+    Wie kann man den Unterschied von Supraleitern 1. und 2. Art phänomenologisch beschreiben und wie kann man ihn quantitativ charakterisieren? (M(H)-Diagramme zeichnen, Flussschläuche erklären, Ginsburg-Landau-Parameter, Londonsche Eindringtiefe & Kohärenzlänge erklären und Größenordnungen angeben)
+    Erhöht oder verringert sich die Energie bei Paarbildung? (Cooper-Paare sind energetisch günstiger, Zeichnung: Bandlücke)
+    Dann wurde es etwas konfus beim Thema, wie Photonen Masse gewinnen, welche der inversen Londonschen Eindringtiefe entspricht
+    Wie kann man Cooper-Paar-Bildung anschaulich erklären? (Zeichnung: Auslenkung des Ionengitters durch Elektron)
+    Steht die Paarbildung nicht im Widerspruch zur 1. Hundschen Regel? (Muss wegen hohem mittleren Abstand der Elektronen nicht berücksichtigt werden)
+    Wie kann man die Phononenanregung im SL untersuchen? (Sollte auf den Isotopeneffekt herauslaufen. Wir haben uns die Proportionalität der Schwingungsfrequenz zu k/m über das Hook'sche Gesetz und das Lösen der DGL des HO hergeleitet)
+
+
+
+
+Phononendispersion:
+
+    Wie sieht die Phononendispersionsrelation aus? (Akustische und optische Moden zeichnen)
+    Was kann man über den Anstieg bei kleiner Wellenzahl sagen? (linear, Ableitung ergibt Schallgeschwindigkeit)
+    Wie hoch ist die Geschwindigkeit am Brillouinzonenrand? (Anstieg = 0, stehende Welle, Laue-Bedingung erfüllt, Bandlücke)
+
+
+1598, Laubschat, Straessner
+
+1.) Symmetriebrechung:
+- Klassifizierung
+- Beispiel: Ferromagnetismus
+-> erklären + Einfluss äußeres Feld + Magnetisierung aufzeichnen
+
+Dann ging es plötzlich um Magnonen und deren Dispersion und um Elektronendispersion. Da waren die Fragen etwas durcheinander.
+
+2.) Festkörperphysik
+- Elektronendispersion, Bandlücke
+- Phonendispersion, opt. + akust., Schallgeschwindigkeit
+- wir misst man diese Disperison?
+
+3.) Streuung
+- Neutronenstreuung
+-Zwischendrin wurde auf einmal nach dem Woods-Saxon Potential für Kerne gefragt und auf ein Experiment aus der Übungsaufgabe eingegangen. Da hatte ich nicht so richtig Ahnung, da ich nicht in der Übung war. Zusammen haben wir dann aber das Ergebnis erarbeitet.
+- Elektronenstreuung, Rutherford + Formfaktor
+
+4.) Moleküle
+- Wellenfunktion LCAO
+- sym und antisym., aufzeichnen der Wellenfunktion und Energien
+
+5.) Zustandsmischung
+Zum Schluss sollte ich kurz noch ein Beispiel für Zustandsmischung nennen. Ich habe Ammoniak gewählt. Viel wurde da aber nicht mehr gefragt, da die Prüfung schon fast 1h ging. Ich sollte die Energieaufsplatung im äußeren Feld aufzeichen und habe noch dir Übergangswahrscheinlichkeit erwähnt.
+
+Allgemein kamen immer noch zu jedem Thema Zwischenfragen, an die ich mich leider nicht mehr 100% erinnere.
+
+
+1599, Laubschat, Straessner
+
+Symmetriebrechung:
+
+    verschiedene "Arten" von Symmetriebrechung erklären (Coleman-Theorem)
+    Ist Symmetriebrechung äquivalent zu Phasenübergang? (Nein)
+    Welche zwei Parameter sind wichtig? (Ordnungs- und Brechungsparameter)
+    Beispiel wählen: wollte erst den Esel nehmen, sollte aber was Physikalisches sein, also Ferromagnetismus: Ordnungsparameter M, Brechungsparameter T, Landau Theorie
+    Freie Energie entwickeln, M daraus berechnen, Diagramm M über T zeichnen
+    Ferromagnet im Feld: wie ändert sich Landau-Theorie (lin. Term), ist es noch ein Phasenübergang (nein)
+    Was gibt es für Anregungen? Magnonen, masselos (lambda=unendlich) und massiv (endliches lambda); Dispersionsrelation zeichnen
+    Wie kann man denn die Dispersionsrelation vermessen? --> Neutronenstreuung
+
+Streuung
+
+    Warum nimmt man die Neutronen für Magnonen? (Dispersionsrelation passt und Neutronen haben mag. Moment)
+    Wo kommen die Neutronen her? (Reaktor, Spallationsquelle) Haben die die passende Energie? (nein, man muss sie abbremsen)
+    Wie sieht magn. Moment des Neutrons aus (µ=g_n µ_Kern s) und woher kommt es, das Neutron ist doch neutral? (Neutron hat Unterstruktur: Valenzquarks)
+    Und wie kriegt man jetzt die Dispersionsrelation der Magnonen? (Wirkungsquerschnitt messen; das war ihnen zu unspezifisch: letztlich Winkelverteilung und Energie messen)
+    Was kann man noch mit Neutronen vermessen im Festkörper? (Kristallstruktur)
+    Warum bzw. wann sind Neutronen besser als Röntgenstrahlung bei Kristallstrukturvermessung? (man kann benachbarte Elemente unterscheiden, man kann leichte Elemente unterscheiden bzw. auflösen, man kann Antiferromagnetismus z.B. sehen, Neutronen sind zerstörungsfrei und auch für große Proben geeignet, weil große freie Weglänge)
+    Wechsel zum Rutherfordexperiment: Kernmodelle - was hat Rutherford gemacht und wie sieht die Winkelverteilung in seinem Wirkungsquerschnitt aus? (1/sin(theta/2)^4) - aufzeichnen (also WQ über sin(theta/2))
+    Welche Kernform nimmt Rutherford an? (punktförmig, Formfaktor ist 1)
+    Wie sieht der Formfaktor für eine harte Kugel aus? (Oszillation mit scharfen Minima) Wo bestimmt man den Kernradius? (1. Minimum, ist invers prop. zum Kernradius)
+    Wie ist das bei realen Kernen? (Woods-Saxon-Pot, d.h. Kugel mit diffusem Rand; Formfaktor hat keine scharfen Minima mehr)
+    Wieso kann man nicht einfach mit dem Tröpfchenmodell den Kern beschreiben? (Spin-Bahn-WW hat Auswirkungen, sieht man an magischen Zahlen, Analogie zu Elektronen erklärt)
+    Wie ist die Spin-Bahn-WW bei Elektronen und bei Nukleonen? (abstoßend bzw. anziehend)
+    Woods-Saxon-Potential zeichnen: warum sieht das gerade so aus in Kernen, insb. warum ist das so breit? (wusste nicht, was sie wollten) Genauer: wie sieht das Deuteron-Potential aus? (wusste ich nicht gleich) Was ist das Austauschteilchen? (Pion, d.h. Potential ist das Yukawa-Potential) -> Yukawa-Pot. und Coulomb-Pot. zeichnen.
+    Warum hat man kein Yukawa-Pot. für den ganzen Kern sondern Woods-Saxon? (wg. der Wechselwirkung der Nukleonen untereinander, immer nur nächste Nachbarn)
+    Wie kann man die Fermienergie des Kerns bestimmen? (ich hab vorgeschlagen, Nukleonen herauszulösen, damit kriegt man aber nicht die Potentialtopftiefe) --> quasielastische Streuung am Wassermolekül: Diagramm zeichnen und erklären.
+    Wassermolekül: Was ist eigentlich Molekülbindung?
+
+Molekülbindung und -anregungen
+
+    Wasserstoffmolekülion erklären, LCAO-Ansatz, sekundäre Energieskala (Größenordungen wissen!)
+    Bindende und antibindende Wellenfunktion aufmalen
+    Spaltet der Grundzustand symmetrisch auf oder nicht bzgl der Energie? (eigentlich ja, aber wg. der Absenkung der kin. Energie nicht ganz)
+    Vibrationsanregungen: Welchen Abstand haben die Energieniveaus "weiter unten im Potential"? (äquidistant, weil mit harm. Oszi. genähert)
+    Frank-Condon-Prinzip: aufmalen und Stokes-Shift erklären
+    Darüber kamen wir zum Laser: meine Frank-Condon-Skizze sah aus wie ein 4-Niveau-Laser - was ist Bedingung, dass Laser funktionieren kann? (Besetzungsinversion). Wo wäre in der Skizze der Laserübergang? (zwischen den zwei Niveaus, die "enger" beinander sind)
+    Welche Zustände müssen kurz- und welche langlebig sein beim 4-Niveau-Laser? (Anregungszst. beim Laserübergang und Grundzst. langlebig, andere kurzlebig)
+    Was heißt lang- und kurzlebig bzw. wie realisiert man das? (langlebig: meist spinverbotene Übergänge)
+    Können Sie Größenordnungen nennen bzw. das genauer erklären? (ich hab dann ein Molekülspektrum erklärt und daran Fluoreszenz und Phosphoreszenz samt Lebensdauern erklärt; eigentlich wollten sie "nur" darauf hinaus, dass Zustände, für die ein elektr. Dipolübergang erlaubt ist, kurzlebig sind und Zustände, wo nur Übergänge höherer Ordnung möglich sind, langlebig :D)
+    Was ist der Wasserstoff-Hyperfeinstrukturübergang für einer (also der berühmte)? (magnetischer Dipol)
+
+Supraleitung
+
+    Auch beim Supraleiter gibt es ja einen Übergang. Erzählen Sie mal was zu Supraleitern. (Kurz BCS-Theorie angerissen und wieder auf Symmetriebrechung verwiesen)
+    Landau-Theorie: wie muss man diese erweitern? (Term mit Gradient), dann Ginzburg-Landau-Theorie erklären
+    Welche zwei Längen sind wichtig und warum und wie erhält man diese? (London'sche Eindringtiefe, Kohärenzlänge)
+    in welcher Größenordnung liegen diese Längen?
+    Wie unterscheidet man Typ I und Typ II Supraleiter anhand dieser Längen und was ist der Unterschied zwischen den beiden?
+    Analogie zum Higgs-Mechanismus kurz erklären und Supraleiter-Typ feststellen.
+
+
+1600, Laubschat, Straessner
+
+- Grundzustandsenergie vom Wasserstoff, wie genau ist die definiert. 
+Dann zu Charmonium, wie da die Energie/das Potential aussieht; 
+das ganze auch für Deuterium und Kerne. 
+- Darüber zu Formfaktoren von Kernen und wie man die misst. 
+Mit Neutronstreuung- 
+Mit Neutronen kann man außrdem noch messen? 
+- >Die Dispersion von Phononen. Wie kommt die zustande.
+- Dann zu Zustandsmischungen. Ammoniak. Wie die Aufspaltung der Energie aussieht und wo die herkommt. 
+Wie man damit einen Maser baut, und was für Felder man da jeweils hat.
+- Über den Maser zum Laser: Wie funktionieren 3/4-Niveau-Laser- 
+Dann noch zur Hyperfeinstruktur des Wasserstoff: Wie sieht die Aufspaltung aus.  
+
+
+1536, Straessner, Laubschat
+
+Zustandsmischungen
+    Was gibt es da für Beispiele / Experimente? (Ammoniak aufzeichnen, Erklären, Gleichung hinschreiben)
+    Wie sieht das bei Kaonen aus? (Umwandlungsschema aufzeichnen, Zustände K und anti-K vs. K_short und K_long, Vergleich mit Ammoniak: Energielevels vs. Masselevels)
+    Was passiert beim Ammoniak, wenn man ein elektrisches Feld anlegt? (Erklärung Maser, Landau-Zener Theorie)
+    Wie sieht das bei einem Laser aus? (3-Niveau vs. 4-Niveau Laser)
+    Kann es auch Laser im Röntgenbereich geben? (Nein, wegen Energieabhängigkeit des Einstein-A-Koeffizienten)
+
+Festkörperphysik
+    Wo gibt es in der Festkörperphysik Zustandsmischungen? (Dispersionsrelation Elektronen im Festkörper -> Aufspaltung)
+    Wie kommt diese Aufspaltung zu Stande? (Überlagerung Einlaufende und Reflektierte Welle, stehende Welle (einmal Sinus, einmal Cosinus), die wahrscheinlichen Aufenthaltsorte sind also an unterschiedlichen Stellen im Potential und haben demzufolge unterschiedliche Energie)
+    Welcher Anteil hat die höhere Energie? (kommt auf das Potential drauf an)
+    Vergleich mit Gebundenen Zustand bei Wasserstoffmolekülion H_2^+ (Elektron hier in der Mitte zwischen Atomen, da durch Elektron Zusammenhalt, bei Festkörper auch Position bei Atomen möglich, da Gitter anderweitig zusammen halten kann)
+    Wie misst man die Dispersionsrelation? (Streuung von Neutronen, Aufmalen mit welchem Neutron welcher Punkt gemessen werden kann)
+
+Kerne
+    Was kann man Messen, wenn man ein Neutron mit einigen MeV hat? (Formfaktor von Kernen, diesen skizzieren)
+    Wie sieht die Ladungsverteilung in Kernen aus? (Aufzeichnen)
+    Wie sieht das Potential aus? (Woods-Saxon-Potential aufzeichnen, Energiezustandsdichte mit harmonischen Oszillator und Kastenpotential vergleichen)
+    Wie kann man die Niveaus messen? (Spektroskopie mit Photonen, siehe Photoeffekt)
+
+
+1537, Straessner, Laubschat
+
+Es wurden ein paar Ausgangsfragen gestellt, die im folgenden aufgelistet sind. Dazu wurden dann immer noch tiefergehende Fragen gestellt. Es ist zu erkennen, dass nicht wirklich auf übergreifende „Schlüsselkonzepte“ eingegangen wurde.
+
+    Durch was ist die Energie beim Wasserstoffatom festgelegt? Wie sieht das entsprechende Potential aus?
+    Wie sieht die weitere Aufspaltung aus und wodurch sind diese bedingt?
+    Wie sieht das Potential des Kerns aus? Wie sieht es hier mit dem Verhältnis von Grobstruktur und Spin-Bahn-Wechselwirkung aus?
+    Wodurch kommt die Molekülbindung zu Stande (Beispiel H2+)? Wie sieht das Potential aus?
+    Wie sieht die Dispersionsrelation von Phononen aus? Woher kommt die Aufspaltung der Bänder optischer und akustischer Phononen am Brillouin-Zonen-Rand?
+    Zwischendurch immer Fragen, wie Konstanten definiert sind/welchen Wert sie haben/was Änderung dieser bewirken würde.
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,303 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+%\pagestyle{scrheadings}  % Stil für die Seite setzen
+%\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+%\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{02 Spline Interpolation}
+\newcommand*{\autor}{Joachim Schwardt und Julian Fleck}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Numerik I - Aufgaben}
+\title{\titel}
+%\author{\autor}
+\author{\begin{tabular}{l|l}
+Joachim Schwardt & 4768711 \\ 
+Julian Fleck & 4759587\\ 
+\end{tabular}}
+%\author{\begin{tabular}{|l|l|}
+%\hline
+%Joachim Schwardt & 4768711 \\ \hline
+%Julian Fleck & 4759587\\ \hline
+%\end{tabular}}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Aufgabe 1}
+Sei $p_1(x,y)=ax^2+bxy+cy^2+dx+ey+f$ das Polynom, welches eine Funktion $f(x)$ an den $\mathbb{R}^3$-Punkten
+\begin{align}
+\kla\left( 0, 0, f(0,0) \right),&&&\kla\left( 0, \frac{1}{2},f\kla\left( 0,\frac{1}{2} \right) \right),&&\kla\left( 0,1,f(0,1) \right),\\
+\kla\left( 1, 0, f(1,0) \right),&&&\kla\left( \frac{1}{2}, 0,f\kla\left( \frac{1}{2}, 0 \right) \right),&&\kla\left( \frac{1}{2},\frac{1}{2},f\kla\left( \frac{1}{2},\frac{1}{2} \right) \right)
+\end{align}
+interpoliert.
+Das zu lösende Gleichungssystem lautet demnach
+\begin{align}
+f(0,0)&=p_1(0,0)=f,\\
+f(1,0)&=p_1(1,0)=a+d+f,\\
+f(\frac{1}{2},0)&=p_1(\frac{1}{2},0)=\frac{a}{4}+\frac{d}{2}+f,\\
+f(0,1)&=p_1(0,1)=c+e+f,\\
+f(0,\frac{1}{2})&=p_1(0,\frac{1}{2})=\frac{c}{4}+\frac{e}{2}+f,\\
+f(\frac{1}{2},\frac{1}{2})&=p_1(\frac{1}{2},\frac{1}{2})=\frac{a+b+c}{4} + \frac{d+e}{2}+f.
+\end{align}
+Die Koeffizienten können iterativ bestimmt werden.
+Man findet $f=f(0,0)$ und
+\begin{align}
+d &= 4f(\frac{1}{2},0)-f(1,0)-3f(0,0)&&\Rightarrow&a&=2f(0,0)+2f(1,0)-4f(\frac{1}{2},0).
+\end{align}
+Da das Vorgehen für $c,e$ analog zu dem für $a,d$ ist ($f(x,y)\rightarrow f(y,x)$,) kann man dann
+\begin{align}
+e &= 4f(0,\frac{1}{2})-f(0,1)-3f(0,0)&&\Rightarrow&c&=2f(0,0)+2f(0,1)-4f(0,\frac{1}{2}).
+\end{align}
+ablesen. 
+Der letzte Koeffizient lautet dann
+\begin{align}
+b&=-a-c-2(d+e)-4f=4\kla\left( f(0,0)+f(\frac{1}{2},\frac{1}{2})-f(0,\frac{1}{2})-f(\frac{1}{2},0) \right).
+\end{align}
+Das vollständige Polynom ist also
+\begin{align*}
+p_1(x,y)&=2x^2\kla\left( f(0,0)+f(1,0)-2f(\frac{1}{2},0) \right)+2y^2\kla\left( f(0,0)+f(0,1)-2f(0,\frac{1}{2}) \right)+\\
+&+x\kla\left( 4f(\frac{1}{2},0)-f(1,0)-3f(0,0) \right)+y\kla\left( 4f(0,\frac{1}{2})-f(0,1)-3f(0,0) \right)+\\
+&+4xy\kla\left( f(0,0)+f(\frac{1}{2},\frac{1}{2})-f(0,\frac{1}{2})-f(\frac{1}{2},0) \right)+f(0,0). \numberthis\label{eqn:p1xy}
+\end{align*}
+Dasselbe Vorgehen führt natürlich auch zu $p_2$. 
+Man kann sich aber überlegen, dass $p_2(x,y;f(x,y))\equiv p_1(1-x,1-y;f(1-x,1-y))$ ist.
+Mit der Notation ist gemeint, dass auch die Stützstellen an den jeweilig verschobenen Koordinaten auszuwerten sind.
+Damit erhält man dann direkt
+\begin{align*}
+p_2(x,y)&=2(1-x)^2\kla\left( f(1,1)+f(0,1)-2f(\frac{1}{2},1) \right)+2(1-y)^2\kla\left( f(1,1)+f(1,0)-2f(1,\frac{1}{2}) \right)+\\
+&+(1-x)\kla\left( 4f(\frac{1}{2},1)-f(0,1)-3f(1,1) \right)+(1-y)\kla\left( 4f(1,\frac{1}{2})-f(1,0)-3f(1,1) \right)+\\
+&+4(1-x)(1-y)\kla\left( f(1,1)+f(\frac{1}{2},\frac{1}{2})-f(1,\frac{1}{2})-f(\frac{1}{2},1) \right)+f(1,1). \numberthis\label{eqn:p2xy}
+\end{align*}
+Diese Form ist insbesondere hilfreich, wenn man nun im Folgenden die Polynome an den Punkten $(x,1-x)$ auswertet.
+Für $p_1$ ergibt sich dann
+\begin{align*}
+p_1(x,1-x)&=f(0,0)\kla\left( 1+2x^2+2(1-x)^2-3x-3(1-x)+4x(1-x) \right) + \\
+&+4x(1-x)f(\frac{1}{2},\frac{1}{2})+\\
+&+f(1,0)\kla\left( 2x^2-x \right)+ \\
+&+f(0,1)\kla\left( 2(1-x)^2-(1-x) \right)+\\
+&+f(\frac{1}{2},0)\kla\left( -4x^2+4x-4x(1-x) \right)+\\
+&+f(0,\frac{1}{2})\kla\left( -4(1-x)^2+4(1-x)-4(1-x)x \right)= \numberthis\\
+&=4x(1-x)f(\frac{1}{2},\frac{1}{2})+f(1,0)\kla\left( 2x-1 \right)x+f(0,1)\kla\left( 2(1-x)-1 \right)(1-x).
+\end{align*}
+Aus Symmetriegründen gilt dann für $p_2$ wie zuvor
+\begin{align}
+p_2( x,&1-x;f(x,1-x) )=p_1\kla\left( 1-x, 1-(1-x); f(1-x, 1-(1-x)) \right)=\\
+&=p_1(1-x,x;f(1-x,x))=\\
+&=4(1-x)xf(\frac{1}{2},\frac{1}{2})+f(0,1)(2(1-x)-1)(1-x)+f(1,0)(2x-1)(1-x).
+\end{align}
+Damit ist die stückweise definierte Interpolationsfunktion also tatsächlich stetig.
+
+\section*{Aufgabe 2}
+\subsection*{a)}
+Es gilt
+\begin{align}
+T_\alpha(s)&=\frac{\tecxt\text{d}\alpha(t(s))}{\tecxt\text{d}s}=\gamma'(t(s))t'(s)=\begin{pmatrix}
+1 \\ g'(t(s))
+\end{pmatrix}t'(s).
+\end{align}
+Aus der Bedingung $\|T_\alpha\|_2=1$ erhält man dann die gesuchte Differentialgleichung für $t(s)$ gemäß
+\begin{align}
+1&=\|T_\alpha\|_2^2=t'(s)^2\kla\left( 1+g'(t(s))^2 \right)&&\Rightarrow&t'(s)&=\frac{1}{\sqrt{1+g'(t(s))^2}}.
+\end{align}
+\subsection*{b)}
+Aus der Bedingung
+\begin{align}
+0&=T_\alpha\cdot N_\alpha=t'(s)\kla\left( 1\cdot N_\alpha^{(x)} + g'(t(s))\cdot N_\alpha^{(y)} \right)
+\end{align}
+erhält man 
+\begin{align}
+N_\alpha^{(x)}&=-g'(t(s))N_\alpha^{(y)},
+\end{align}
+also
+\begin{align}
+N_\alpha&\propto\begin{pmatrix}
+-g'(t(s)) \\ 1
+\end{pmatrix}.
+\end{align}
+Über die Normierung kann man dann den Proportionalitätsfaktor $\beta$ bestimmen.
+Man erhält also
+\begin{align}
+1&=\|N_\alpha\|_2^2=\beta^2\kla\left( g'(t(s))^2+1 \right)&&\Rightarrow&\beta&=\frac{1}{\sqrt{1+g'(t(s))^2}}=t'(s).
+\end{align}
+Insgesamt lautet der Normalenvektor
+\begin{align}
+N_\alpha(s)&=t'(s)\begin{pmatrix}
+-g'(t(s)) \\ 1
+\end{pmatrix}.
+\end{align}
+Für den nächsten Schritt ist es hilfreich, zunächst $T_\alpha'(s)$ zu berechnen, also
+\begin{align}
+T_\alpha'(s)&=\frac{\tecxt\text{d}}{\tecxt\text{d}s}\begin{pmatrix}
+1 \\ g'(t(s))
+\end{pmatrix}t'(s)=\begin{pmatrix}
+1 \\ g'(t(s))
+\end{pmatrix}t''(s)+\begin{pmatrix}
+0 \\ g''(t(s))t'(s)
+\end{pmatrix}t'(s)=\\
+&=\begin{pmatrix}
+t''(s) \\ t''(s)g'(t(s))+t'(s)^2g''(t(s))
+\end{pmatrix}.
+\end{align}
+Es ist nicht offensichtlich, dass dieser Vektor parallel zu $N_\alpha$ ist.
+Mit der Annahme $T'_\alpha(s)=k(s)N_\alpha(s)$ erhält man zunächst für die erste Komponente die Gleichung
+\begin{align}
+t''(s)&=-k(s)t'(s)g'(t(s))\\
+\Rightarrow\ \ |k(s)|&=\Bigg\vert\frac{1}{-t'(s)g'(t(s))} \underbrace{\frac{-g'(t(s))g''(t(s))t'(s)}{\sqrt{1+g'(t(s))^2}^3}}_{=t''(s)} \Bigg\vert=\frac{|g''(t(s))|}{\kla\left( 1+g'(t(s))^2 \right)^{3/2}}.
+\end{align}
+Um die Proportionalität zu beweisen, muss auch die andere Komponente untersucht werden.
+Man findet allerdings ebenfalls über
+\begin{align}
+k(s)t'(s)&=t''(s)g'(t(s))+t'(s)^2g''(t(s))\\
+\Rightarrow\ \ |k(s)|&=\frac{1}{|t'(s)|}\left\vert  - \frac{g'(t(s))g''(t(s))t'(s)}{\sqrt{1+g'(t(s))^2}^3} g'(t(s))+t'(s)^2g''(t(s)) \right\vert=\\
+&=|g''(t(s))t'(s)^3|\left\vert -g'(t(s))^2+\kla\left( 1+g'(t(s))^2 \right)\right\vert=|g''(t(s))t'(s)^3|,
+\end{align}
+was dem obigen Ergebnis entspricht.
+\section*{Aufgabe 3}
+Gegeben ist der Quadratur-Operator $Q[f]:=f(c)(b-a)$, mit welchem der Integralwert
+\begin{align}
+I&=\intx\int_{a}^{b}f(x)\, \mathrm{d}x
+\end{align}
+näherungsweise bestimmt werden soll.
+\subsection*{a)}
+Gemäß dem Mittelwertsatz existiert zu jedem $x\in[a,b]$ ein $\xi_x\in (a,b)$, sodass
+\begin{align}
+f(x)-f(c)&=f'(\xi_x)(x-c).
+\end{align}
+Allgemein gilt mit diesem Ansatz für den Fehler dann die Abschätzung
+\begin{align}
+|I-Q[f]|&=\left\vert\intx\int_{a}^{b}f(x)-f(c)\, \mathrm{d}x\right\vert\le\intx\int_{a}^{b}|f(x)-f(c)|\, \mathrm{d}x\le\\
+&\le\max_{x\in[a,b]}\left\vert f'(x) \right\vert\intx\int_{a}^{b}|x-c|\, \mathrm{d}x.
+\end{align}
+Für $c=a$ folgt dann
+\begin{align}
+|I-Q[f]|&\le\intx\int_{0}^{b-a}x\, \mathrm{d}x \max_{x\in[a,b]}\left\vert f'(x) \right\vert=\frac{(b-a)^2}{2}\max_{x\in[a,b]}\left\vert f'(x) \right\vert.
+\end{align}
+Für $c=b$ findet man analog dasselbe Ergebnis, da
+\begin{align}
+\intx\int_{a}^{b}|x-a|\, \mathrm{d}x&=\intx\int_{0}^{b-a}x\, \mathrm{d}x\kom\overset{\substack{{u\,:=\,b-x} \\ |}}{=}\intx\int_{b}^{a}b-u\, -\mathrm{d}u=\intx\int_{a}^{b}|x-b|\, \mathrm{d}x.
+\end{align}
+\subsection*{b)}
+Sei $c=\frac{a+b}{2}$ und $p_1(x)=f(c)+(x-c)f'(c)$.
+Der Satz von Taylor besagt, dass der maximale Fehler dieses Taylorpolynoms vom Grad eins durch 
+%http://pi.math.cornell.edu/~demlow/425/chap3.pdf
+\begin{align}
+\left\vert f(x)-p_1(x)\right\vert&\le \frac{1}{2!}\max_{x\in[a,b]}|f''(x)|(x-c)^2
+\end{align}
+beschrieben wird.
+Ein kurzer Beweis dieser Ungleichung ist weiter unten gegeben.
+Beachte, dass
+\begin{align}
+\intx\int_{a}^{b}x-c\, \mathrm{d}x&=\intx\int_{a}^{b}x-\frac{a+b}{2}\, \mathrm{d}x=\frac{b^2-a^2}{2}-\frac{a+b}{2}(b-a)=0. \label{eqn:int ab omega x}
+\end{align}
+Damit folgt die Fehlerabschätzung
+\begin{align}
+|I-Q[f]|&=\left\vert\intx\int_{a}^{b}f(x)-f(c)\, \mathrm{d}x \right\vert = \bigg\vert\intx\int_{a}^{b} f(x)-p_1(x)+\underbrace{\cancel{f'(c)(x-c)}}_{\eqref{eqn:int ab omega x}} \, \mathrm{d}x\bigg\vert\le\\
+&\le\frac{1}{2}\max_{x\in[a,b]}\left\vert f''(x) \right\vert\intx\int_{a}^{b}\kla\left( x-\frac{a+b}{2} \right)^2\, \mathrm{d}x=\\
+&=\frac{1}{2}\max_{x\in[a,b]}\left\vert f''(x) \right\vert 2\intx\int_{0}^{\frac{b-a}{2}}x^2\,\mathrm{d}x=\frac{(b-a)^3}{24}\max_{x\in[a,b]}\left\vert f''(x) \right\vert .
+\end{align}
+%Alternativ mit Sicherheit richtig, aber leider dafür falscher Vorfaktor:
+%\begin{align}
+%|I-Q[f]|&=\left\vert\intx\int_{a}^{b}f(x)-f(c)\, \mathrm{d}x \right\vert = \bigg\vert\intx\int_{a}^{b}\Big[ f'(\xi_x)-f'(c)+\underbrace{\cancel{f'(c)}}_{\eqref{eqn:int ab omega x}} \Big]\omega(x)\, \mathrm{d}x\bigg\vert\le\\
+%&\le\max_{x\in[a,b]}\left\vert f'(x)-f'(c) \right\vert\intx\int_{a}^{b}\left\vert x-\frac{a+b}{2}\right\vert\, \mathrm{d}x\le\\
+%&\le\max_{x\in[a,b]}\left\vert f''(x) \right\vert \max_{x\in[a,b]}\left\vert x-c\right\vert 2\intx\int_{0}^{\frac{b-a}{2}}x\, \mathrm{d}x=\\
+%&=\frac{b-a}{2}\max_{x\in[a,b]}\left\vert f''(x)\right\vert \kla\left( \frac{b-a}{2} \right)^2\le \frac{(b-a)^3}{8}\max_{x\in[a,b]}\left\vert f''(x)\right\vert.
+%\end{align}
+%\begin{align}
+%|I-Q[f]|&=\left\vert\intx\int_{a}^{b}f(x)-f(c)\, \mathrm{d}x \right\vert = \bigg\vert\intx\int_{a}^{b}\Big[ f'(\xi_x)-f'(c)+\underbrace{\cancel{f'(c)}}_{\eqref{eqn:int ab omega x}} \Big]\omega(x)\, \mathrm{d}x\bigg\vert\le\\
+%&\le\max_{x\in[a,b]}\left\vert \frac{f'(\xi_x)-f'(c)}{x-c} \right\vert\intx\int_{a}^{b}\left( x-c\right)^2\, \mathrm{d}x\le\\
+%&\le\max_{x\in[a,b]}\left\vert f''(x) \right\vert 2\intx\int_{0}^{\frac{b-a}{2}}x^2\, \mathrm{d}x=\\
+%&=\frac{b-a}{2}\max_{x\in[a,b]}\left\vert f''(x)\right\vert \kla\left( \frac{b-a}{2} \right)^2\le \frac{(b-a)^3}{24}\max_{x\in[a,b]}\left\vert f''(x)\right\vert.
+%\end{align}
+
+
+%%% !!! IMPORTANT RESOURCE !!! %%%
+%%% https://math.stackexchange.com/questions/481661/simplest-proof-of-taylors-theorem
+Hier noch ein kurzer Beweis für den verwendeten Fall des Satzes von Taylor.
+Schreibe zunächst eine beliebige Funktion $f\in\mathcal{C}^2$ mittels des Hauptsatzes der Differential- und Integralrechnung iterativ um.
+Also 
+\begin{align}
+f(x)&=f(x_0)+\intx\int_{x_0}^{x}f'(t_1)\, \mathrm{d}t_1=f(x_0)+\intx\int_{x_0}^{x}f'(x_0)+\intx\int_{x_0}^{t_1}f''(t_2)\, \mathrm{d}t_2\, \mathrm{d}t_1=\\
+&=f(x_0)+f'(x_0)(x-x_0)+\intx\int_{x_0}^{x}\intx\int_{x_0}^{t_1}f''(t_2)\, \mathrm{d}t_2\, \mathrm{d}t_1
+\end{align}
+Dann gilt für den Fehler
+\begin{align}
+\left\vert f(x)-f(x_0)-f'(x_0)(x-x_0)\right\vert&\le \max_{t\in [x_0,x]}\left\vert f''(t)\right\vert \intx\int_{x_0}^{x}\intx\int_{x_0}^{t_1}\, \mathrm{d}t_2\, \mathrm{d}t_1=\\
+&=\frac{1}{2}(x-x_0)^2\max_{t\in [x_0,x]}\left\vert f''(t)\right\vert.
+\end{align}
+In unserem Fall ist $x_0=\frac{a+b}{2}$ und $x\in [a,b]$.
+Das Maximum kann natürlich auch über $[a,b]$ ausgewertet werden, da das Intervall $[x_0,x]$ für alle $x$ darin enthalten ist.
+
+%Für $c=\frac{a+b}{2}$ kann man das Integral aus der Fehlerabschätzung aufteilen.
+%Schreibe
+%\begin{align}
+%\intx\int_{a}^{b}f(x)-f(c)\, \mathrm{d}x&=\intx\int_{a}^{\frac{a+b}{2}}f(x)-f(c)\, \mathrm{d}x+\intx\int_{\frac{a+b}{2}}^{b}f(x)-f(c)\, \mathrm{d}x=\\
+%&=\intx\int_{a}^{\frac{a+b}{2}}-|f(x)-f(c)|\, \mathrm{d}x+\intx\int_{\frac{a+b}{2}}^{b}|f(x)-f(c)|\, \mathrm{d}x.
+%\end{align}
+%Für beide Teilintegrale kann nun die Fehlerabschätzung aus a) verwendet werden.
+%Daraus folgt
+%\begin{align}
+%|I-Q[f]|&\le \left\vert -\frac{\kla\left( \frac{a+b}{2}-a \right)^2}{2}\max_{x\in[a,\frac{a+b}{2}]}\left\vert f'(x) \right\vert + \frac{\kla\left( b-\frac{a+b}{2} \right)^2}{2}\max_{x\in[\frac{a+b}{2},b]}\left\vert f'(x) \right\vert \right\vert\le\\
+%&\le\frac{(b-a)^2}{8}\left\vert\max_{x\in[\frac{a+b}{2},b]}\left\vert f'(x) - f'(c) \right\vert - \max_{x\in[a,\frac{a+b}{2}]}\left\vert f'(x) - f'(c) \right\vert\right\vert.
+%\end{align}
+%Es gilt
+%\begin{align}
+%f'(x)&=f''(\xi_x)(x-c)+f'(c)\\
+%\Rightarrow\ \ \max_{x\in[a,\frac{a+b}{2}]}|f'(x)|&\le |f'(c)|+\max_{x\in[a,\frac{a+b}{2}]}|f''(x)|
+%\end{align}
+%Für die Differenzen der ersten Ableitungen gilt wieder der Mittelwertsatz, also
+%\begin{align}
+%\max_{x\in[a,\frac{a+b}{2}]}\left\vert f'(x) - f'(c) \right\vert&\le\max_{x\in[a,\frac{a+b}{2}]}\left\vert f''(x)\left\vert x-\frac{a+b}{2} \right\vert\right\vert =\frac{b-a}{2}\max_{x\in[a,\frac{a+b}{2}]}\left\vert f''(x)\right\vert
+%\end{align}
+%und analog
+%\begin{align}
+%\max_{x\in[\frac{a+b}{2},b]}\left\vert f'(x) - f'(c) \right\vert&\le\max_{x\in[\frac{a+b}{2},b]}\left\vert f''(x)\left\vert x-\frac{a+b}{2} \right\vert\right\vert =\frac{b-a}{2}\max_{x\in[\frac{a+b}{2},b]}\left\vert f''(x)\right\vert.
+%\end{align}
+%Man benötigt noch die Ungleichung $|x-y|\le |x|+|y|$
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,329 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{ll_scrarticle}
+
+\newcommand*{\titel}{Linear two-atomic chain}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+%\subject{SUBJECT}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Bosonization}
+As before the model is described by $H=H_0+H_\Text{int}$ where
+\begin{align}
+H_0 &= \sum_{\kappa=\A,\B} \sum_k \vf k \varnormord{c_{\kappa,k}^\dagger c_{-\kappa,k}},\\
+H_\Text{int} &= \sum_{\kappa=\A,\B} \sum_{j=0}^{N-1} U_\kappa n_{\kappa,j} n_{\kappa,j+1}.
+\end{align}
+The free part can be diagonalized by $c_{\kappa} = \frac{1}{\sqrt{2}} \kla*{c_{\R} + \kappa c_{\L}}$.
+This basis rotation yields
+\begin{align}
+H_0 &= \sum_{\ell=\R,\L} \sum_k \vf k \frac{1}{2} \varnormord{\kla*{c_{\R,k}^\dagger + \kappa c_{\L,k}^\dagger} \kla*{c_{\R,k} - \kappa c_{\L,k}}} = \sum_{\ell=\R,\L} \sum_k \ell\vf k\varnormord{c_{\ell,k}^\dagger c_{\ell,k}}.
+\end{align}
+The density operator becomes $n_{\kappa} = \frac{1}{2} \kla*{c_{\R}^\dagger + \kappa c_{\L}^\dagger} \kla*{c_{\R} + \kappa c_{\L}} = \frac{1}{2} \sum_\ell \kla*{n_{\ell} + \kappa c_{\ell}^\dagger c_{-\ell}}$.
+Inserting into the interaction yields
+\begin{align}
+H_\Text{int} &= \frac{1}{4} \sum_{\kappa=\A,\B} \sum_{j=0}^{N-1} U_\kappa \sum_{\ell,\ell'} \kla*{n_{\ell,j} + \kappa c_{\ell,j}^\dagger c_{-\ell,j}} \kla*{n_{\ell',j+1} + \kappa c_{\ell',j+1}^\dagger c_{-\ell',j+1}} = H_+ + H_-
+\end{align}
+where introducing $U_\pm = \frac{1}{2} \kla*{U_\A \pm U_\B}$ gives
+\begin{align}
+H_+ &= \frac{U_+}{2} \sum_{\ell,\ell'} \sum_{j=0}^{N-1} \kla*{n_{\ell,j} n_{\ell',j+1} + c_{\ell,j}^\dagger c_{-\ell,j} c_{\ell',j+1}^\dagger c_{-\ell',j+1}},\\
+H_- &= \frac{U_-}{2} \sum_{\ell,\ell'} \sum_{j=0}^{N-1} \kla*{n_{\ell,j} c_{\ell',j+1}^\dagger c_{-\ell',j+1} + c_{\ell,j}^\dagger c_{-\ell,j} n_{\ell',j+1}}.
+\end{align}
+Going to a continuum theory via $c_j\rightarrow \sqrt{a}\psi(x)$ where $a$ is the lattice spacing and gives
+\begin{align}
+H_\pm &= \frac{U_\pm a}{2} \intr{\sum_{\ell,\ell'} \mathcal{H}_{\pm,\ell,\ell'}}{x}
+\end{align}
+where we defined the Hamilton densities
+\begin{align}
+\mathcal{H}_{+,\ell,\ell'} &= \psi_{\ell}^\dagger(x) \psi_{\ell}(x) \psi_{\ell'}^\dagger(x+a) \psi_{\ell'}(x+a) + \psi_{\ell}^\dagger(x) \psi_{-\ell}(x) \psi_{\ell'}^\dagger(x+a) \psi_{-\ell'}(x+a),\\
+\mathcal{H}_{-,\ell,\ell'} &= \psi_{\ell}^\dagger(x) \psi_{\ell}(x) \psi_{\ell'}^\dagger(x+a) \psi_{-\ell'}(x+a) + \psi_{\ell}^\dagger(x) \psi_{-\ell}(x) \psi_{\ell'}^\dagger(x+a) \psi_{\ell'}(x+a).
+\end{align}
+The Fourier components relate to the real-space operators via the transform
+\begin{align}
+c_k &= \frac{1}{\sqrt{L}} \intr{\powe{-\i kx} \psi(x)}{x}
+\end{align}
+which, in the thermodynamic limit $L\rightarrow\infty$ and using partial integration, allows us to rewrite the Hamiltonian as
+\begin{align}
+H_0 &= \sum_{\ell,k} \ell \vf k  \frac{1}{L}\intr{\intr{\powe{\i kx} \powe{-\i kx'} \varnormord{\psi_\ell^\dagger(x) \psi_\ell(x')}}{x'} }{x} = \sum_\ell \ell\vf \intr{ \varnormord{\psi_\ell^\dagger(x) (-\i\partial_x) \psi_\ell(x)} }{x}.
+\end{align}
+The bosonization identity we will use is $\psi_\ell(x) = \frac{\eta_\ell}{\sqrt{L}} \normord{\powe{-\i\varphi_\ell(x)}}$.
+Here $\eta_\ell$ obey the Majorana algebra and will for convenience be represented by $\eta_\R = \sigma_x$ and $\eta_\L = \sigma_z$.
+The bosonic fields may be split into a part containing creation and a part containing annihilation operators via $\varphi_\ell = \varphi_\ell^{(+)} + \varphi_\ell^{(-)}$.
+These satisfy the commutation relations
+\begin{align}
+\klb*{\varphi_\ell^{(+)}(x), \varphi_{\ell'}^{(-)}(x')} &= \lim_{\alpha\rightarrow 0} \delta_{\ell,\ell'} \log\klb*{\frac{2\pi}{L} \kla*{\alpha + \i\ell(x-x')}}.
+\end{align}
+\subsection{Free Hamiltonian}
+To bosonize the free Hamiltonian we consider the point-splitting
+\begin{align}
+\psi_\ell^\dagger(x) \psi_\ell(x+\epsilon) &= \frac{1}{L} \normord{\powe{\i\varphi_\ell(x)}} \normord{\powe{-\i\varphi_\ell(x+\epsilon)}} = \frac{1}{L} \normord{\powe{-\i\varphi_\ell(x+\epsilon) + \i\varphi_\ell(x)}} \powe{\klb*{\i\varphi_\ell^{(-)}(x), -\i\varphi_\ell^{(+)}(x+\epsilon)}} \\
+&= \frac{1}{L} \normord{\powe{-\i\sum_{n\ge 1} \frac{1}{n!} \epsilon^n \partial_x^n\varphi_\ell(x)}} \frac{L}{2\pi\i\ell \epsilon} \\
+&= \frac{-\i\ell}{2\pi\epsilon} \normord{\klb*{1 -\i \epsilon \partial_x\varphi_\ell - \i \frac{\epsilon^2}{2} \partial_x^2\varphi_\ell - \frac{\epsilon^2}{2} \kla*{\partial_x\varphi_\ell}^2 + \dots} }.
+\end{align}
+Removing the divergent constant by subtracting the ground-state expectation value then yields
+\begin{align}
+\lim_{\epsilon\rightarrow 0} \varnormord{\psi_\ell^\dagger(x) \psi_\ell(x+\epsilon)} &= \frac{-\ell}{2\pi} \partial_x\varphi_\ell(x),\\
+\lim_{\epsilon\rightarrow 0} \varnormord{\psi_\ell^\dagger(x)\partial_\epsilon \psi_\ell(x+\epsilon)} &= \frac{\i\ell}{4\pi} \klb*{\i \partial_x^2\varphi_\ell + \normord{\kla*{\partial_x\varphi_\ell}^2} }.
+\end{align}
+Inserting into the Hamiltonian and assuming that the fields vanish at infinity we obtain the well-known expression for a clean Luttinger liquid
+\begin{align}
+H_0 &= \frac{\vf}{4\pi} \intr{\sum_\ell \normord{ \kla*{\partial_x\varphi_\ell}^2 }}{x} = \frac{\vf}{2\pi} \intr{ \normord{ \klb*{\kla*{\partial_x\phi}^2 + \kla*{\partial_x\theta}^2} }}{x}
+\end{align}
+where we introduce the fields $\varphi_\ell\equiv \ell\phi - \theta$.
+\subsection{Interaction}
+We have already demonstrated that the terms $\psi_\ell^\dagger\psi_\ell$ become derivatives of the chiral fields.
+The similar looking terms
+\begin{align}
+\psi_\ell^\dagger(x)\psi_{-\ell}(x) &= \frac{\eta_\ell \eta_{-\ell}}{L} \normord{\powe{\i\varphi_\ell(x)}} \normord{\powe{-\i\varphi_{-\ell}(x)}} = \frac{\eta_\ell \eta_{-\ell}}{L} \normord{\powe{2\i\ell\phi(x)}}
+\end{align}
+are much less difficult to bosonize and hence we immediately find
+\begin{align}
+\mathcal{H}_{+,\ell,\ell'} &= \frac{-\ell}{2\pi} \partial_x\varphi_\ell(x) \frac{-\ell'}{2\pi} \partial_x\varphi_{\ell'}(x+a) + \frac{1}{L^2} \normord{\powe{2\i\ell\phi(x)}}\normord{\powe{2\i\ell'\phi(x+a)}}.
+\end{align}
+For $\ell=\ell'$ the second term becomes $\simeq \frac{a^2}{L^4} \normord{\cos\kla*{4\phi}}$ and will therefore be neglected.
+For $\ell=-\ell'$ we instead \TODO{(how to bring this in line with the other method?)}.\\
+The $U_-$-part becomes
+\begin{align}
+\mathcal{H}_{-,\ell,\ell'} &= \frac{-\ell}{2\pi} \partial_x\varphi_\ell(x) \frac{1}{L} \normord{\powe{2\i\ell'\phi(x+a)}} + \frac{1}{L} \normord{\powe{2\i\ell\phi(x)}} \frac{-\ell'}{2\pi} \partial_x\varphi_{\ell'}(x+a).
+\end{align}
+Shifting the argumen tof the first term by $-a$ under the integral sign we get
+\begin{align}
+H_- &= \frac{U_-}{2} \sum_\ell \frac{ -\eta_\ell \eta_{-\ell}}{2\pi L} \intr{ \klb*{\partial_x\phi(x-a) \normord{\powe{2\i\ell\phi(x)}} +  \normord{\powe{2\i\ell\phi(x)}}\partial_x\phi(x+a)} }{x}.
+\end{align}
+Note that $\klb*{\phi^{(+)}(x), \phi^{(-)}(x')} = \frac{1}{2} \log\klb*{\frac{2\pi}{L} \sqrt{\alpha^2 + (x-x')^2}}$ for $x\neq x'$ which leads to
+\begin{align}
+\partial_y \phi(y) \normord{\powe{\i m\phi(x)}} &= \partial_y \klb*{\phi^{(+)}(y) \normord{\powe{\i m\phi(x)}} + \phi^{(-)}(y) \powe{\i m\phi^{(+)}(x)} \powe{\i m\phi^{(-)}(x)}}\\
+&= \partial_y \klb*{\normord{\phi(y) \powe{\i m\phi(x)}} + \klb*{\phi^{(-)}(y), \powe{\i m\phi^{(+)}(x)}} \powe{\i m\phi^{(-)}(x)}}\\
+&= \partial_y \klb*{\normord{\phi(y) \powe{\i m\phi(x)}} -\i m \frac{1}{2} \log\klb*{\frac{2\pi}{L} \sqrt{\alpha^2 + (x-y)^2}} \normord{\powe{\i m\phi(x)}}}\\
+&= \normord{\partial_y\phi(y) \powe{\i m\phi(x)}} + \frac{\i m}{2} \frac{1}{x-y}.
+\end{align}
+%\begin{align}
+%\normord{\powe{\i m\phi(x)}} \partial_y \phi(y) &= \partial_y \klb*{\normord{\powe{\i m\phi(x)}} \phi^{(-)}(y) + \powe{\i m\phi^{(+)}(x)} \powe{\i m\phi^{(-)}(x)} \phi^{(+)}(y)}\\
+%&= \partial_y \klb*{\normord{\powe{\i m\phi(x)} \phi(y)} + \powe{\i m\phi^{(+)}(x)} \klb*{\powe{\i m\phi^{(-)}(x)}, \phi^{(+)}(y)}}\\
+%&= \partial_y \klb*{\normord{\phi(y) \powe{\i m\phi(x)}} - \normord{\powe{\i m\phi(x)}} \i m \frac{1}{2} \log\klb*{\frac{2\pi}{L} \sqrt{\alpha^2 + (x-y)^2}} }\\
+%&= \normord{\partial_y\phi(y) \powe{\i m\phi(x)}} + \frac{\i m}{2} \frac{1}{y-x}.
+%\end{align}
+This finally yields
+\begin{align}
+H_- &= \frac{U_-}{2} \sum_\ell \frac{-\eta_\ell \eta_{-\ell}}{2\pi L} \intr{\normord{ \powe{2\i\ell\phi(x)} \partial_x\kla*{\phi(x-a) + \phi(x+a)} }}{x} \\
+&=  \frac{U_-}{2} \sum_\ell \frac{-\eta_\ell \eta_{-\ell}}{2\pi L} \intr{\normord{ \powe{2\i\ell\phi(x)} \partial_x\kla*{2\phi(x) + a^2\partial_x^2\phi(x) + \dots} }}{x}\\
+&= -U_- a^2 \sum_{\ell} \frac{\eta_\ell \eta_{-\ell}}{2\pi L} \intr{\normord{ \powe{2\i\ell\phi(x)} \partial_x^3\phi(x)}}{x} + \mathcal{O}(a^4).
+\end{align}
+\subsection{Final model}
+Finally we arrive at 
+\begin{align}
+H &= \frac{u}{2\pi} \intr{\normord{\klb*{K \kla*{\partial_x\theta}^2 + \frac{1}{K} \kla*{\partial_x\phi}^2}}}{x} + g \sum_\ell \eta_\ell \eta_{-\ell} \intr{\normord{\powe{2\i\ell\phi(x)} \partial_x^3\phi(x)}}{x}.
+\end{align}
+For convenience set $u=1$ and $\beta=\pi$.
+The other parameters $g$ and $K$ will be treated phenomenological, although the second term is assumed to be small enough for a perturbative approach.
+\section{Green's function}
+Before we dive into the calculations let us introduce the notation
+\begin{align}
+\bra*{\zabx{A_1&A_2&A_3&\dots}{B_1&B_2&B_3&\dots}{z_1&z_2&z_3&\dots}}_0 &= \bra[\bigg]{\prod_j \powe{\i A_j\phi(z_j) + \i B_j\theta(z_j)}}_0.
+\end{align}
+We can rewrite this expression as
+\begin{align}
+\bra*{\abx{A}{B}{Z}}_0 &= \prod_{j<k} \powe{\frac{1}{2}\klb*{KA_jA_k + \frac{1}{K}B_jB_k + \abs*{s_{jk}}}F_1(z_j-z_k)} \powe{-\frac{1}{2}|s_{jk}| F\kla*{z_{-\sgn(s_{jk}),j} - z_{-\sgn(s_{jk}), k}}}
+\end{align}
+where $s_{jk} = A_jB_k+A_kB_j$ and the two functions are
+\begin{align}
+F(z_\ell) &= \log\klb*{\sin(z_\ell)},\\
+F_1(z) &= \frac{1}{2} \klb*{F(z_+) + F(z_-)}
+\end{align}
+with the coordinates $z_\pm = \tau \pm \i x$ and the tuple $z=(z_+,z_-)$.
+\subsection{Zeroth order}
+The Matsubara Green's function is given by
+\begin{align}
+G_{0,\ell,\ell'}^\M(z) &= -\mathcal{T} \bra*{\psi_\ell(z) \psi_{\ell'}^\dagger(0)}_0 \propto \bra*{\zabx{-\ell & \ell'}{1 & -1}{z & 0}}_0\\
+&= \delta_{\ell,\ell'} \powe{\frac{1}{2}\klb*{-K - \frac{1}{K} + 2}F_1(z)} \powe{-F\kla*{z_{-\ell}}} = \delta_{\ell,\ell'} \csc(z_{-\ell})^{1 + \frac{M}{2}} \csc(z_\ell)^\frac{M}{2}
+\end{align}
+where $M=\frac{1}{2} \klb*{K + \frac{1}{K} - 2} \ge 0$.
+At this point we give the Fourier integrals
+\begin{align}
+J_0(k,n; b) &= \intx{0}{\pi}{\intr{\powe{\i (2n+1)\tau - \i kx} \csc(\tau + \i x)^{1+b} \csc(\tau - \i x)^b}{x} }{\tau}\\
+&= -\i\sin(\pi b) I_0\kla*{\frac{\i(2n+1) + k}{2}, b} I_0\kla*{\frac{\i(2n+1) - k}{2}, b+1},\\
+L_0(k,n; b) &= \intx{0}{\pi}{\intr{\powe{\i 2n\tau - \i kx} \csc(\tau + \i x)^{b} \csc(\tau - \i x)^b}{x} }{\tau}\\
+&= \sin(\pi b) I_0\kla*{\frac{\i(2n+1) + k}{2}, b} I_0\kla*{\frac{\i(2n+1) - k}{2}, b}
+\end{align}
+where $I_0(z,b) = \frac{2^{b-1}}{\pi} \Gamma(1-b) \Gamma\kla*{\frac{b+\i z}{2}} \Gamma\kla*{\frac{b-\i z}{2}} \sin\kla*{\frac{\pi b}{2} + \frac{\pi\i z}{2}}$.
+Evidently this is enough to compute the exact Green's function to zeroth order.
+\subsection{First order}
+Now letting
+\begin{align}
+\partial_x^3\phi(x) &= \lim_{\epsilon\rightarrow 0} \partial_\epsilon^3 \lim_{J\rightarrow 0} (-\i\partial_J) \powe{\i J\phi(x+\epsilon)}
+\end{align}
+allows us to evaluate
+\begin{align}
+G_{1,\ell,\ell'}^\M(z) &\propto \lim_{\epsilon\rightarrow 0} \partial_\epsilon^3 \lim_{J\rightarrow 0} (-\i\partial_J) \int \sum_s \eta_\ell \eta_s \eta_{-s} \eta_{\ell'} \bra*{\powe{-\i\varphi_\ell(z)} \powe{2\i s\phi(z')} \powe{\i J\phi(z'+\epsilon)} \powe{\i\varphi_{\ell'}(0)}}_0\,\d z'\\
+&= \delta_{\ell,-\ell'} \lim_{\epsilon\rightarrow 0} \partial_\epsilon^3 \lim_{J\rightarrow 0} (-\i\partial_J) \int \bra*{\zabx{-\ell & 2\ell & J & -\ell}{1 & 0 & 0 & -1}{z & z' & z'+\epsilon & 0}}_0\,\d z'\\
+&= \delta_{\ell,-\ell'}  \lim_{\epsilon\rightarrow 0} \partial_\epsilon^3 \lim_{J\rightarrow 0} (-\i\partial_J) \bsplit{&\powe{(1-K) F_1(z-z') -F\kla[\big]{z_{-\ell} - z_{-\ell}'}} \powe{(1-K) F_1(z-z')-F\kla*{z_{\ell}'}} \powe{-NF_1(z)}\\
+&\times \powe{\frac{1}{2}\klb*{-\ell JK + J}F_1(z-z')} \powe{-\frac{1}{2}J F\kla*{z_{-} - z_{-}'}} \powe{\frac{1}{2}\klb*{-\ell JK + J}F_1(z')} \powe{-\frac{1}{2}J F\kla*{z_{+}'}}}\\
+&= \ell\i \frac{\delta_{\ell,-\ell'}}{2} \int \bsplit{&\powe{(1-K) F_1(z-z') -F\kla[\big]{z_{-\ell} - z_{-\ell}'}} \powe{(1-K) F_1(z-z')-F\kla*{z_{\ell}'}} \powe{-NF_1(z)}\\
+&\times \partial_{x'}^3 \klb*{\kla*{ K-\ell}F_1(z-z')+\ell F\kla*{z_{-} - z_{-}'}+\kla*{ K -\ell}F_1(z')+\ell F\kla*{z_{+}'}}\,\d z'}
+\end{align}
+where $N=\frac{1}{2} \klb*{\frac{1}{K} - K}$.
+The term containing the derivatives may be rewritten as
+\begin{align}
+\sum_{s=\pm 1} &\partial_{x'}^3 \klb*{ \kla*{\frac{K+s\ell}{2}} \log\klb*{\sin\kla*{\tau-\tau' - \i s(x-x')}} + \kla*{\frac{K+s\ell}{2}} \log\klb*{\sin\kla*{\tau' + \i s x'}}}\\
+&=\sum_{s=\pm 1} \partial_{x'}^2 \frac{K+s\ell}{2} \klb*{ \i s \cot\kla*{\tau - \tau' - \i s(x-x')} + \i s \cot\kla*{\tau' + \i sx'}}\\
+&= \sum_{s=\pm 1} (\i s)^3 \kla*{K+s\ell} \klb*{ \csc^2(\dots) \cot\kla*{\tau - \tau' - \i s(x-x')} + \csc^2(\dots) \cot\kla*{\tau' + \i sx'}}.
+\end{align}
+%#algebra
+%ell=-1; x,tau,xp,taup,K=sy.symbols(r"x tau x' \tau' K", real=True, positive=True)
+%f1 = lambda x,tau: sy.log(sy.sin(tau)**2 + sy.sinh(x)**2)/2
+%f = lambda x,tau,ell: sy.log(sy.sin(tau + sy.I*ell*x))
+%subs={x:0.43, tau:0.78, K:0.8, xp:0.84, taup:0.32}
+%term = (K-ell)*f1(x-xp, tau-taup) + ell*f(x-xp, tau-taup, -1) + (K-ell)*f1(xp,taup) + ell*f(xp,taup,1)
+%term2 = np.sum([(K+s*ell)/2 * (f(x-xp,tau-taup, -s) + f(xp,taup, s)) for s in [+1, -1]])
+%print(term.evalf(subs=subs), term2.evalf(subs=subs))
+%expr = sy.diff(term2, xp, 3)
+%expr2 = np.sum([-(s*K+ell)*sy.I * (sy.csc(tau-taup-sy.I*s*(x-xp))**2 * sy.cot(tau-taup-sy.I*s*(x-xp)) + sy.csc(taup+sy.I*s*xp)**2 * sy.cot(taup+sy.I*s*xp)) for s in [+1, -1]])
+%print(expr.evalf(subs=subs), expr2.evalf(subs=subs))
+The full Green's function thus becomes
+\begin{align}
+G_{1,\ell,-\ell}^\M(z) &\propto -\frac{\ell}{2} \powe{-NF_1(z)} \int \bsplit{& \csc\kla*{\tau - \tau' - \i \ell (x-x')}^{\frac{K+1}{2}} \csc\kla*{\tau - \tau' + \i \ell (x-x')}^{\frac{K-1}{2}} \\
+&\times \csc\kla*{\tau' - \i \ell x'}^{\frac{K-1}{2}} \csc\kla*{\tau' + \i \ell x'}^{\frac{K+1}{2}}\\
+&\times \sum_{s=\pm 1} \kla*{sK+\ell} \klb[\Big]{ \csc^2(\dots) \cot\kla*{\tau - \tau' - \i s(x-x')} \\
+&\qquad\qquad\qquad\quad + \csc^2(\dots) \cot\kla*{\tau' + \i sx'}}\,\d z'.}
+\end{align}
+The Fourier transform can be simplified by inserting a resolution of unity via
+\begin{align}
+G_{1,\ell,-\ell}^\M(k,\i\omega_n^\F) &\propto -\frac{\ell}{2} \int \bsplit{& \powe{\i (2n+1)(\tau+\tau') - \i k(x+x')} \powe{-NF_1(z'')} \csc\kla*{\tau - \i \ell x}^{\frac{K+1}{2}} \csc\kla*{\tau + \i \ell x}^{\frac{K-1}{2}} \\
+&\times \csc\kla*{\tau' - \i \ell x'}^{\frac{K-1}{2}} \csc\kla*{\tau' + \i \ell x'}^{\frac{K+1}{2}} \delta(\tau''-\tau-\tau') \delta(x''-x-x')\\
+&\times \sum_{s=\pm 1} \kla*{sK+\ell} \klb[\Big]{ \csc^2(\tau - \i sx) \cot\kla*{\tau - \i sx} \\
+&\qquad\qquad\qquad\quad + \csc^2(\tau' + \i sx') \cot\kla*{\tau' + \i sx'}}\,\d z'' \,\d z'\,\d z'}\\
+&= -\frac{\ell}{4\pi^2} \int \bsplit{& \sum_{s=\pm 1} \sum_{m\in\mathbb{Z}} \kla*{sK+\ell} \powe{\i 2m \tau'' -\i k'x''} \powe{-NF_1(z'')}\\
+&\times \klb[\bigg]{\powe{\i (2n+1-2m) \tau' -\i (k-k') x'}  \csc\kla*{\tau' - \i \ell x'}^{\frac{K-1}{2}} \csc\kla*{\tau' + \i \ell x'}^{\frac{K+1}{2}}\\
+&\qquad\times \powe{\i (2n+1-2m) \tau -\i (k-k') x} \csc\kla*{\tau - \i \ell x}^{\frac{K+1}{2}} \csc\kla*{\tau + \i \ell x}^{\frac{K-1}{2}}\\
+&\qquad\times \csc^2(\tau - \i sx) \cot\kla*{\tau - \i sx}\\
+&\quad + \powe{\i (2n+1-2m) \tau' -\i (k-k') x'}  \csc\kla*{\tau' - \i \ell x'}^{\frac{K-1}{2}} \csc\kla*{\tau' + \i \ell x'}^{\frac{K+1}{2}}\\
+&\quad\quad\times \powe{\i (2n+1-2m) \tau -\i (k-k') x} \csc\kla*{\tau - \i \ell x}^{\frac{K+1}{2}} \csc\kla*{\tau + \i \ell x}^{\frac{K-1}{2}}\\
+&\quad\quad\times \csc^2(\tau' + \i sx') \cot\kla*{\tau' + \i sx'}}\,\d (z,z',z'')\,\d k' }\\
+&= -\frac{1}{4\pi^2} \bsplit{\intr{& \sum_{s=\pm 1} \sum_{m\in\mathbb{Z}} (sK+1) L_0\kla*{k',\i 2m; \frac{N}{2}} \\
+&\times \klb[\bigg]{ J_0\kla*{\ell(k-k'), \i (2n+1-2m); \frac{K-1}{2}}\\
+&\qquad\times J_1\kla*{-\ell(k-k'), \i (2n+1-2m); \frac{K-1}{2}, s}\\
+&\quad + J_1\kla*{\ell(k-k'), \i (2n+1-2m); \frac{K-1}{2}, s}\\
+&\quad\quad\times J_0\kla*{-\ell(k-k'), \i (2n+1-2m); \frac{K-1}{2}}} }{k'}}
+\end{align}
+where
+\begin{align}
+J_1(k,\i\omega_n^\F;b,s) &= \intx{0}{\pi}{\intr{\powe{\i (2n+1)\tau - \i kx} \csc\kla*{\tau + \i x}^{1+b} \csc\kla*{\tau - \i x}^b \csc\kla*{\tau + \i sx}^2 \cot\kla*{\tau + \i sx} }{x} }{\tau}\\
+&= \intx{0}{\pi}{\intr{\powe{\i (2n+1)\tau - \i kx} \csc\kla*{\tau + \i x}^{2+b+s} \csc\kla*{\tau - \i x}^{1+b-s} \cot\kla*{\tau + \i sx} }{x} }{\tau}.
+\end{align}
+The problem is thus reduced to that of finding an analytic expression for $J_1$.
+It is best to rewrite the function as $J_{1,s}$ where
+\begin{align}
+J_{1,+}(k,\i\omega_n^\F; b) &= \intx{0}{\pi}{\intr{\powe{\i (2n+1)\tau - \i kx} \csc\kla*{\tau + \i x}^{3+b} \csc\kla*{\tau - \i x}^{b} \cot\kla*{\tau + \i x} }{x} }{\tau}\\
+&= -\frac{1}{3+b} \intx{0}{\pi}{\intr{\powe{\i (2n+1)\tau - \i kx} \csc\kla*{\tau - \i x}^{b} \partial_\tau \csc\kla*{\tau + \i x}^{3+b} }{x} }{\tau},\\
+J_{1,-}(k,\i\omega_n^\F; b) &= \intx{0}{\pi}{\intr{\powe{\i (2n+1)\tau - \i kx} \csc\kla*{\tau + \i x}^{1+b} \csc\kla*{\tau - \i x}^{2+b} \cot\kla*{\tau - \i x} }{x} }{\tau}\\
+&= -\frac{1}{2+b} \intx{0}{\pi}{\intr{\powe{\i (2n+1)\tau - \i kx} \csc\kla*{\tau + \i x}^{1+b} \partial_\tau \csc\kla*{\tau - \i x}^{2+b} }{x} }{\tau}.
+\end{align}
+%n=2; om = 1j*(2*n+1); k=0.43; K=0.6; b=(K-1)/2; L=10
+%print(c_quad(lambda tau: np.exp(1j*(2*n+1)*tau) * c_quad(lambda x: np.exp(-1j*k*x) / np.sin(tau+1j*x)**(1+b) / np.sin(tau-1j*x)**(2+b)/np.tan(tau-1j*x), -L, L)[0], 0, np.pi))  # ((-37.041378+6.346722j), 1.6e-05)
+We can then write
+\begin{align}
+G_{1,\ell,-\ell}^\M(k,\i\omega_n^\F) &\propto -\sum_{s,s'} \frac{sK+1}{4\pi^2} \bsplit{\intr{ &\sum_{m\in\mathbb{Z}}  L_0\kla*{k', \i \omega_m^\B; \frac{N}{2}} J_0\kla*{s'(k-k'), \i \omega_{n-m}^\F; \frac{K-1}{2}}\\
+&\times J_{1,s}\kla*{-s'(k-k'), \i \omega_{n-m}^\F; \frac{K-1}{2}} }{k'}.}
+\end{align}
+\subsubsection{Approximate solution}
+In order to make some progress we assume that $b=\frac{K-1}{2}$ is close to zero.
+Then we can approximately solve $J_{1,+}$ by neglecting one of the cosecant factors to get
+\begin{align}
+J_{1,+}(k,\i\omega_n^\F;b) &\approx -\frac{1}{3+b}\intx{0}{\pi}{\intr{\powe{\i \omega_n^\F \tau - \i kx} \partial_\tau \csc(\tau + \i x)^{3+b}}{x} }{\tau}\\
+&= -\frac{k}{3+b} \intx{0}{\pi}{\powe{\i \omega_n^\F \tau} \frac{2^{b+3}}{\Gamma(b+3)} \abs*{\Gamma\kla*{\frac{b+3+\i k}{2}}}^2 \powe{k\kla*{\tau - \frac{\pi}{2}}}  }{\tau}\\
+&= -\frac{k}{3+b} \frac{2^{b+3}}{\Gamma(b+3)} \abs*{\Gamma\kla*{\frac{b+3+\i k}{2}}}^2 \frac{\cosh\kla*{\frac{\pi k}{2}}}{\i\omega_n^\F + k}.
+\end{align}
+Integration by parts for $J_{1,-}$ yields
+\begin{align}
+J_{1,-}(k,\i\omega_n^\F;b) &= \frac{\i\omega_n^\F}{2+b} J_0\kla*{-k,\i\omega_n^\F;b+1} + \frac{1}{2+b} \intx{0}{\pi}{\intr{\powe{\i (2n+1)\tau - \i kx} \csc\kla*{\tau - \i x}^{2+b} \partial_\tau \csc\kla*{\tau + \i x}^{1+b} }{x} }{\tau}.
+\end{align}
+Neglecting the second term -- for which there does not yet seem to be any justification -- finally allows us to compute the Green's function numerically.
+The second approximation might seem more severe, but due to the global $1-K$ prefactor the $J_{1,-}$ contribution is very small anyway, and maybe one could justify neglecting the term altogether.
+And since the approximation $J_{1,+}$ must at least be decent for very small $b$, we might be able to trust the results for $K\approx 1$.
+On a different note: the author is sure that an exact solution along the lines of $J_0$ and $L_0$ exists, albeit even more difficult to obtain than even those.
+In order to make progress in that department one would first have to better understand how the aforementioned integrals are calculated, since this is all but certainly going to shed some light on the $J_{1,\pm}$-integrals as well.
+%#complex E
+%beta=np.pi; K=0.9; u=1.0; u_minus=0.5; kwm = 0.004
+%k_vals = np.linspace(-kwm, kwm, 101)
+%omega_vals = np.array([0.0])
+%green = green_perturbative(k_vals, omega_vals, beta, K, u, u_minus, order=1, model="density var")
+%hamilton = green_toolkit.hamilton_from_green(omega_vals, green)
+%energies = np.array([green_toolkit.eigenvalues_2x2(hamilton[i,0]) 
+%                     for i in range(k_vals.size)])
+%energies = green_toolkit.convert_to_contiguous_arrays(energies.T[0], energies.T[1])
+%plot_complex(plt.subplots()[1], k_vals, energies)
+%k_vals = np.linspace(-kwm, kwm, 71)
+%omega_vals = np.linspace(-kwm, kwm, 41)
+%green = green_perturbative(k_vals, omega_vals, beta, K, u, u_minus, order=1, model="density var")
+%hamilton = green_toolkit.hamilton_from_green(omega_vals, green)
+%fig, ax = plt.subplots()
+%ax.set_xlabel(r"$k$")
+%ax.set_ylabel(r"$\omega$")
+%ep_contour_plot(ax, hamilton, k_vals, omega_vals)
+%mpl_special.embed_labels(fig, ax)
+\section{Effective Hamiltonian}
+The effective Hamiltonian is given by
+\begin{align}
+H_\Text{eff}(k,\omega) &= \omega\sigma_0 - \kla*{G^\R(k,\omega)}^{-1}
+\end{align}
+where $\sigma_0$ is the identity matrix.
+Since $H_\Text{eff}\in\mathbb{C}^{2\times 2}$ we can decompose it into 
+\begin{align}
+H_\Text{eff}(k,\omega) &= d_0(k,\omega) \sigma_0 + \textbf{d}(k,\omega) \cdot \bm{\sigma}
+\end{align}
+where $\bm{\sigma} = (\sigma_x, \sigma_y, \sigma_z)^T$ and $\textbf{d} = (d_x,d_y,d_z)^T$.
+The eigenvalues are given by
+\begin{align}
+E_\pm(k,\omega) &= d_0 \pm \sqrt{\textbf{d}\cdot \textbf{d}}.
+\end{align}
+One should be careful not to simplify the square-root to $|\textbf{d}|$ since the components are generally complex in our setting.
+Writing $\textbf{d}=\textbf{d}_\r + \i \textbf{d}_\i$ instead yields
+\begin{align}
+E_\pm(k,\omega) &= d_0 \pm \sqrt{\textbf{d}_\r^2 - \textbf{d}_\i^2 + 2\i \textbf{d}_\r \cdot \textbf{d}_\i}.
+\end{align}
+Exceptional points are found at non-trivial solutions to the two equations
+\begin{align}
+\textbf{d}_\r^2 - \textbf{d}_\i^2 &= 0, \label{eqn:dr2 minus di2}\\
+\textbf{d}_\r \cdot \textbf{d}_\i &= 0. \label{eqn:dr cdot di}
+\end{align}
+Since the Green's function to first order could only be reduced to a numerical integration we are unable to write down explicit expressions for these equations.
+This would, however, not be too useful anyway.
+The numerical solution can be visualized as contour plots, see \autoref{fig:ep_order1} for an example.
+\begin{figure}[!ht]
+\centering
+\includegraphics{figures/ep_density_matsubara_Um0.5_K0.9_betaPi_order1.pdf}
+\caption{Contour plot of \autoref{eqn:dr2 minus di2} and \autoref{eqn:dr cdot di} to first order in $U_-$ for $\beta=\pi$, $K=0.9$ and $U_- = 0.5$.
+We find exceptional points at the intersections, notably all off the horizontal axis corresponding to $\omega=0$.
+Also note that the results are symmetric in both $k$ and $\omega$.}
+\label{fig:ep_order1}
+\end{figure}
+For the same set of parameters we may visualize the complex eigenvalues $E_\pm$.
+Choosing a frequency that corresponds to an exceptional point yields \autoref{fig:complex_E_omega0_order1}.
+\begin{figure}[!ht]
+\centering
+\includegraphics{figures/complex_E_density_matsubara_Um0.5_K0.9_betaPi_omega0_order1.pdf}
+\caption{Complex energy eigenvalues $E_\pm$ of the effective Hamiltonian $H_\Text{eff}$ to first order in $U_-$ for $\beta=\pi$, $K=0.9$ and $U_- = 0.5$.
+The frequency is fixed to $\omega=0$, corresponding to  two of the exceptional points in \autoref{fig:ep_order1}.}
+\label{fig:complex_E_omega0_order1}
+\end{figure}
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

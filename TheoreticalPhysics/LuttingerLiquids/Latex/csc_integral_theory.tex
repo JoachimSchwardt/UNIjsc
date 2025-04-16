@@ -1,0 +1,411 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{ll_scrarticle}
+
+\newcommand*{\titel}{2D Fourier transforms for cosecant functions}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Complex Analysis}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+
+\section{Master formula}
+The starting point for our analysis is the exact solution
+\begin{align}
+J_0(k,\i\omega_n^\F;b) &= \intx{0}{\beta}{\intr{\powe{\i\omega_n^\F\tau - \i kx} \csc(z_+)^{1+b} \csc (z_-)^b}{x} }{\tau} = -\i\frac{u\beta^2}{\pi^2} \sin(\pi b) I_0\kla*{w_-^\F; 1+b} I_0\kla*{w_+^\F; b},\\
+I_0(z; b) &= \frac{2^{b-1}}{\pi} \Gamma(1-b) \Gamma\kla*{\frac{b+\i z}{2}} \Gamma\kla*{\frac{b - \i z}{2}} \sin\kla*{\pi\frac{b+\i z}{2}} = 2^{b-1} B\kla*{1-b, \frac{b-\i z}{2}}
+\end{align}
+where $z_{\pm} = \frac{\pi}{\beta u} \kla*{u\tau \pm \i x}$, $w_\pm^\F = \beta \frac{\i\omega_n^\F \pm uk}{2\pi}$ and $\omega_n^\F = \frac{(2n+1)\pi}{\beta}$ for $n\in\mathbb{Z}$.
+We will similarly define the frequencies $\omega_n^\B = \frac{2n\pi}{\beta}$ and $w_\pm^\B = \beta \frac{\i\omega_n^\B \pm uk}{2\pi}$.
+%k=0.85; beta=2.4; u=1.3; n=3; om=1j*(2*n+1)*np.pi/beta; b=0.6; a=1+b; L=np.inf
+%coshln = lambda x: -np.log(2) + np.abs(x) + np.log(1 + np.exp(-2*np.abs(x)))
+%integrand = lambda x, k: (np.exp(special.loggamma((a+1j*k)/2 - 1j*x/2) 
+%                                 + special.loggamma((a-1j*k)/2 + 1j*x/2) 
+%                                 + special.loggamma(b/2 - 1j*x/2) 
+%                                 + special.loggamma(b/2 + 1j*x/2) 
+%                                 + coshln(np.pi/2 * k - np.pi*x)) / (1j*(2*n+1) + k - 2*x))
+%print(c_quad(lambda tau: np.exp(om*tau) * c_quad(lambda x: np.exp(-1j*k*x) / np.sin(np.pi/beta/u*(u*tau+1j*x))**a / np.sin(np.pi/beta/u*(u*tau-1j*x))**b, -10, 10)[0], 0, beta))
+%#print(c_quad(integrand, -L, L, k)[0] / (-special.gamma(a) * special.gamma(b) * np.pi / 2**(a+b-2)))
+%print(j_0(k,om,beta,b,u))
+%mybeta = lambda x,y: special.gamma(x)*special.gamma(y)/special.gamma(x+y)
+%I0 = lambda z,b: 2**(b-1) * mybeta(1-b, (b-1j*z)/2)
+%print(-1j*np.sin(np.pi*b)*u*beta**2/np.pi**2* I0(beta * (om-u*k)/(2*np.pi), 1+b)* I0(beta * (om+u*k)/(2*np.pi), b))
+Note that the functions $I_0$ satisfy several useful relations
+\begin{align}
+I_0(z;b+1) &= \frac{b+\i z-1}{b} I_0(z+\i; b),\\
+I_0(z\pm 2\i;b) &= -I_0(z,b) \frac{b \mp \i z}{b \pm \i z - 2},
+\end{align}
+\section{Recursion}
+%om=1j*(2*n+1)*np.pi/beta
+%omm=2j*n*np.pi/beta
+%wpb = beta*(omm+u*k)/(2*np.pi)
+%wmb = beta*(omm-u*k)/(2*np.pi)
+%wpf = beta*(om+u*k)/(2*np.pi)
+%wmf = beta*(om-u*k)/(2*np.pi)
+Let us now use the master formula to derive related integrals.
+As an illustrative example consider
+\begin{align}
+L_0(k,\i\omega_n^\B;b) &= \intx{0}{\beta}{\intr{\powe{\i\omega_n^\B\tau - \i kx} \csc(z_+)^{b} \csc (z_-)^b}{x} }{\tau}\\
+&= \intx{0}{\beta}{\intr{\powe{\i\omega_n^\B\tau - \i kx} \csc(z_+)^{1+b} \csc (z_-)^b \frac{\powe{\i z_+} - \powe{-\i z_+}}{2\i} }{x} }{\tau}\\
+&= \frac{1}{2\i} \klc*{J_0\kla*{k - \frac{\pi\i}{\beta u}, \i\omega_n^\B + \frac{\pi\i}{\beta}; b} - J_0\kla*{k + \frac{\pi\i}{\beta u}, \i\omega_n^\B - \frac{\pi\i}{\beta}; b}}\\
+&= \frac{1}{2\i} \klc*{J_0\kla*{k - \frac{\pi\i}{\beta u}, \i\omega_n^\F; b} - J_0\kla*{k + \frac{\pi\i}{\beta u}, \i\omega_{n-1}^\F; b}}\\
+&= \frac{\sin(\pi b) u\beta^2}{2\pi^2} \klc*{I_0\kla*{w_-^\F - \frac{3\i}{2}; 1+b} - I_0\kla*{w_-^\F + \frac{\i}{2}; 1+b}} I_0\kla*{w_+^\F - \frac{\i}{2}; b}\\
+&= \frac{\sin(\pi b) u\beta^2}{2\pi^2} \klc*{I_0\kla*{w_-^\B - \i; 1+b} - I_0\kla*{w_-^\B + \i; 1+b}} I_0\kla*{w_+^\B; b}.
+\end{align}
+To make progress we now rewrite the second term in the bracket using our relations for $I_0$ as
+\begin{align}
+I_0\kla*{w_-^\B + \i, 1+b} &= -I_0\kla*{w_-^\B -\i, 1+b} \frac{b - \i w_-^\B}{b + \i w_-^\B}
+\end{align}
+Inserting into the above then simplifies our result to
+\begin{align}
+L_0(k,\i\omega_n^\B;b) &= \frac{\sin(\pi b) u\beta^2}{2\pi^2} I_0\kla*{w_-^\B - \i; 1+b} \frac{2b}{b+\i w_-^\B} I_0\kla*{w_+^\B; b}\\
+&= \frac{\sin(\pi b) u\beta^2}{\pi^2} I_0\kla*{w_-^\B; b} \frac{b + \i w_-^\B}{b} \frac{b}{b+\i w_-^\B} I_0\kla*{w_+^\B; b}\\
+&= \sin(\pi b) \frac{u\beta^2}{\pi^2} I_0\kla*{w_-^\B; b} I_0\kla*{w_+^\B; b}.
+\end{align}
+Similarly we may now derive
+%b=0.2; a1=b+1; a2=b-1   # also works for b=1.2 --> (-3.718364-1.072286j)
+%print(c_quad(lambda tau: np.exp(omm*tau) * c_quad(lambda x: np.exp(-1j*k*x) / np.sin(np.pi/beta/u*(u*tau+1j*x))**a1 / np.sin(np.pi/beta/u*(u*tau-1j*x))**a2, -10, 10)[0], 0, beta))
+%print((j_0(k+1j*np.pi/beta/u, om,beta,b,u) - j_0(k-1j*np.pi/beta/u, om - 2j*np.pi/beta,beta,b,u))/2j)
+\begin{align}
+P_0(k,\i\omega_n^\B;b) &= \intx{0}{\beta}{\intr{\powe{\i\omega_n^\B\tau - \i kx} \csc(z_+)^{1+b} \csc (z_-)^{b-1}}{x} }{\tau}\\
+&= \intx{0}{\beta}{\intr{\powe{\i\omega_n^\B\tau - \i kx} \csc(z_+)^{1+b} \csc (z_-)^{b} \frac{\powe{\i z_-} - \powe{-\i z_-}}{2\i} }{x} }{\tau}\\
+&= \frac{1}{2\i} \klc*{J_0\kla*{k + \frac{\pi\i}{\beta u}, \i\omega_n^\B + \frac{\pi\i}{\beta}; b} - J_0\kla*{k - \frac{\pi\i}{\beta u}, \i\omega_n^\B - \frac{\pi\i}{\beta}; b}}\\
+&= \frac{1}{2\i} \klc*{J_0\kla*{k + \frac{\pi\i}{\beta u}, \i\omega_n^\F; b} - J_0\kla*{k - \frac{\pi\i}{\beta u}, \i\omega_{n-1}^\F; b}}\\
+&= \frac{\sin(\pi b) u\beta^2}{2\pi^2} \klc*{I_0\kla*{w_-^\F - \frac{\i}{2}; 1+b} I_0\kla*{w_+^\F - \frac{3\i}{2}; b} - I_0\kla*{w_-^\F - \frac{3\i}{2}; 1+b} I_0\kla*{w_+^\F - \frac{\i}{2}; b}}\\
+&= \frac{\sin(\pi b) u\beta^2}{2\pi^2} \klc*{I_0\kla*{w_-^\B; 1+b} I_0\kla*{w_+^\B- \i; b} - I_0\kla*{w_-^\B - \i; 1+b} I_0\kla*{w_+^\B; b}}
+\end{align}
+%#csc^2
+%b=-1.5; a1=b+1; a2=0#b-1; k=0.85; n=3; beta=2.4; u=1.3; om=1j*(2*n+1)*np.pi/beta
+%print(c_quad(lambda tau: np.exp(om*tau) * c_quad(lambda x: np.exp(-1j*k*x) / np.sin(np.pi/beta/u*(u*tau+1j*x))**3 / (np.sin(np.pi/beta*tau)**2 + np.sinh(np.pi*x/beta/u)**2)**b, -10, 10)[0], 0, beta))
+%print((2*j_0(k,om,beta,2+b,u) - j_0(k+2j*np.pi/beta/u,om+2j*np.pi/beta,beta,2+b,u) - j_0(k-2j*np.pi/beta/u,om-2j*np.pi/beta,beta,2+b,u))/4)
+%#strange flipping behaviour
+%b=-0.00001; L=1 #b=-0.00003 ## -0.00001009(+-1)
+%print(c_quad(lambda tau: np.exp(om*tau) * c_quad(lambda x: np.exp(-1j*k*x) / np.sin(np.pi/beta/u*(u*tau+1j*x))**3 / (np.sin(np.pi/beta*tau)**2 + np.sinh(np.pi*x/beta/u)**2)**b, -L, L)[0], 0, beta))
+%x=L; tau=0.76
+%print(1/ np.sin(np.pi/beta/u*(u*tau+1j*x))**3 / (np.sin(np.pi/beta*tau)**2 + np.sinh(np.pi*x/beta/u)**2)**b)
+%print((2*j_0(k,om,beta,2+b,u) - j_0(k+2j*np.pi/beta/u,om+2j*np.pi/beta,beta,2+b,u) - j_0(k-2j*np.pi/beta/u,om-2j*np.pi/beta,beta,2+b,u))/4)
+%#cot csc confirmation
+%b=-0.8; L=3
+%print(c_quad(lambda tau: np.exp(om*tau) * c_quad(lambda x: np.exp(-1j*k*x) / np.sin(np.pi/beta/u*(u*tau+1j*x))**3 / np.tan(np.pi/beta/u*(u*tau+1j*x)) / (np.sin(np.pi/beta*tau)**2 + np.sinh(np.pi*x/beta/u)**2)**b, -L, L)[0], 0, beta))
+%((1.397943+0.754876j), 1.77e-07)
+%(2*j_0(k,om,beta,2+b,u) - j_0(k+2j*np.pi/beta/u,om+2j*np.pi/beta,beta,2+b,u) - j_0(k-2j*np.pi/beta/u,om-2j*np.pi/beta,beta,2+b,u))/4 * (om - u*k) / (3+b) * beta/np.pi/2
+\section{Offsets}
+%beta=np.pi; v=1; om=1j*(2*2+1)*np.pi/beta; k=0.43; b=0.3; xi=1; s=1; L=5
+%m=np.arange(1,100); kv=np.linspace(-0.4, 0.4, 10)
+%print("K=1: ", c_quad(lambda tau: np.exp(om*tau) * c_quad(lambda x: np.exp(-1j*k*x)*(1 / np.tan(np.pi/(beta*v)*(tau*v+1j*s*(x+xi))) + 1/ np.tan(np.pi/(beta*v)*(tau*v+1j*s*(x-xi)))) / np.sin(np.pi/(beta*v)*(tau*v+1j*x)), -L, L)[0], 0, beta), 4*np.pi/(om+k)*np.sin(xi*k)/np.sinh(xi))
+%print(c_quad(lambda tau: np.exp(om*tau) * c_quad(lambda x: np.exp(-1j*k*x)*(1 / np.tan(np.pi/(beta*v)*(tau*v+1j*s*(x+xi))) + 1/ np.tan(np.pi/(beta*v)*(tau*v+1j*s*(x-xi)))) / np.sin(np.pi/(beta*v)*(tau*v+1j*x))**(1+b) / np.sin(np.pi/(beta*v)*(tau*v-1j*x))**b, -L, L)[0], 0, beta))
+%res=0; mmax=3
+%for m in range(-mmax, mmax+1):
+%    omm=2j*m*np.pi/beta
+%    delta = c_quad(lambda kp: 2/np.pi* l_0(k-kp,omm,np.pi,b) * np.sin(kp*xi)/np.sinh(xi) / (om-omm+kp), -150, 150)
+%    res += delta[0]
+%    print(m, delta)
+%print(res)
+%nres = 0; omega=om; a=xi
+%for m in range(-mmax,mmax+1):
+%    delta = 2/np.pi/np.sinh(a)*(np.pi * l_0(2j*m-omega-k,2j*m,np.pi,b) * np.exp(-a*(2*m + 1j* omega)*np.sign(2*m - omega.imag)) - 2j*np.pi*np.sin(np.pi*b) * special.gamma(1-b)**2 * 2**(2*b-1) * np.sum([(-1)**l/special.gamma(l+1)/special.gamma(1-b-l) *special.gamma(b+l+m) / special.gamma(1+l+m) * np.exp(-a*np.abs(4*l+2*b+2*m) - ell*1j*k*a*np.sign(4*l+2*b+2*m))/(ell*(2j*m-omega-k)+2j*b+4j*l+2j*m) for ell in [+1,-1]]))
+%    nres += delta
+%    print(m, delta)
+%print(nres)
+The goal here will be to solve the integral
+\begin{align}
+J_1 &= \intx{0}{\pi}{\intr{\powe{\i \omega_n^\F \tau - \i kx} \csc(\tau+\i x)^{b+1} \csc(\tau-\i x)^b \cot(\tau + \i sx + \i s a)}{x} }{\tau}
+\end{align}
+where again $\omega_n^\F = (2n+1)$ and $s=\pm 1$.
+The main difficulty here comes from the offset in the argument of the cotangent.
+\subsection{$s=+1$}
+One can show that for $s=+1$
+\begin{align}
+\sum_{s_a=\pm 1} \intx{0}{\pi}{\intr{\powe{\i \omega_n^\F \tau - \i kx} \csc(\tau+\i x) \cot(\tau + \i x + \i s_aa)}{x} }{\tau} &= \frac{4\pi}{\i\omega_n^\F + k} \frac{\sin(ka)}{\sinh(a)}.
+\end{align}
+%om=5j; a=0.754; k=0.43
+%c_quad(lambda tau: np.exp(om*tau) * c_quad(lambda x: np.exp(-1j*k*x)*(1 / np.tan(tau+1j*(x+a)) + 1/ np.tan(tau+1j*(x-a))) / np.sin(tau+1j*x), -10, 10)[0], 0, np.pi), 4*np.pi/(om+k)*np.sin(k*a)/np.sinh(a)
+By inserting a resolution of unity this yields
+\begin{align}
+J_1 &= \frac{1}{2\pi^2} \sum_{m\in\mathbb{Z}} \intr{L_0\kla*{k-k', 2\i m; b} \frac{4\pi}{\i\omega_n^\F - 2\i m + k'} \frac{\sin(k'a)}{\sinh(a)}}{k'}.
+\end{align}
+This is of course still a two-dimensional problem but the analytic structure is now easier in the sense that we are only dealing with products of simple poles.
+\subsubsection{Matsubara summation first}
+One can show that
+%#J1 Msum
+%m=1; n=1; v=1.0; beta=np.pi; xi=0.665; b=0.3; k=0.43; omega=0.15
+%omm=1j*(2*m)*np.pi/beta; om=1j*(2*n+1)*np.pi/beta; s=1; #om=omega
+%mmin=-300; mmax=301
+%mv = np.arange(mmin, mmax); ommv=1j*2*mv*np.pi/beta
+%kp=0.22; eta=1e-8; lv=np.arange(50); zl=2j*np.pi/beta*(lv+b)+om+v*(-1)**lv*(k-kp)
+%ana_res = np.sum(l_0(k, ommv,beta,b,v)/(ommv-kp))
+%print(ana_res)
+%m_sum = -np.pi/2/np.tanh(np.pi*kp/2)*l_0(k,kp,np.pi,b)
+%for l in range(150):
+%    for ell in [+1,-1]:
+%        zlell = -ell*k-2j*(2*l+b)
+%        m_sum += -np.pi/2/np.tanh(np.pi*zlell/2)/(zlell-kp) * np.sin(np.pi*b)*2**(2*b-2)*special.gamma(1-b)**2*4j*(-1)**l/special.gamma(l+1) * special.gamma(1j*ell*k/2-l) / special.gamma(1-b+1j*ell*k/2-l) / special.gamma(1-b-l)
+%print(m_sum)
+\begin{align}
+\sum_{m\in\mathbb{Z}} &\frac{L_0(k,2\i m; b)}{k' - 2\i m} = \frac{\pi}{2} \coth\kla*{\frac{\pi k'}{2}} L_0(k,k'; b) \\
+&+ \frac{\pi }{2} \sum_{l\ge 0} \sum_{\ell=\pm 1} \frac{\coth\kla*{\frac{\pi z_{\ell,l}}{2}}}{z_{\ell,l}-k'} \sin(\pi b) 2^{2b-2} \Gamma(1-b)^2 \frac{4\i (-1)^l}{l! \Gamma(1-b-l)} \frac{\Gamma\kla*{\i\ell \frac{k}{2} - l}}{\Gamma\kla*{1-b+\i\ell \frac{k}{2} - l}}
+\end{align}
+where $z_{\ell,l} =-\ell k - 2\i(2l+b)$ are the poles of $L_0$.
+The $J_1$ problem then reduces to that of solving the integrals
+\begin{align}
+J_1 &= \intr{\coth\kla*{\frac{\pi (\i\omega_n^\F + k')}{2}} L_0\kla*{k-k',\i\omega_n^\F + k'} \frac{\sin(k'a)}{\sinh(a)}}{k'}\\
++ &\sum \sin(\pi b) 2^{2b-2} \Gamma(1-b)^2 \frac{4\i (-1)^l}{l! \Gamma(1-b-l)} \intr{ \frac{\coth\kla*{\frac{\pi \ell (k-k')}{2} + \i\pi b}}{-\ell (k-k') - 2\i (2l+b) - \i\omega_n^\F - k'} \frac{\Gamma\kla*{\i\ell \frac{k-k'}{2} - l}}{\Gamma\kla*{1-b+\i\ell \frac{k-k'}{2} - l}}  \frac{\sin(k'a)}{\sinh(a)} }{k'}
+\end{align}
+\subsubsection{Residue integral first}
+The integral has the structure
+\begin{align}
+\intr{\frac{L_0(k',\i\omega_m^\B; b)}{k'-z} \sin(k'a)}{k'}.
+\end{align}
+Depending on the sign of the exponent the counter must be closed in the upper or lower half of the complex plane.
+For $\powe{+\i k' a}$ we find a residue at $k'=z$ with value
+\begin{align}
+\powe{\i za} L_0(z,\i\omega; b) \Theta(\Im z)
+\end{align}
+and for $\powe{-\i k'a}$ the value changes to
+\begin{align}
+-\powe{-\i za} L_0(z,\i\omega; b)\Theta(-\Im z)
+\end{align}
+where the sign change comes from the change of the orientation of the contour.
+This part of the integral contributes
+\begin{align}
+\frac{2\pi\i}{2\i} \klc*{\powe{\i za} L_0(z,\omega; b) \Theta(\Im z) - (-1) \powe{-\i za} L_0(z,\omega; b)\Theta(-\Im z)} &= \pi L_0(z,\omega; b) \powe{\i a\Re z} \powe{-a\abs*{\Im z}}.
+\end{align}
+The other poles are contained in the function $L_0$ that we will rewrite as
+\begin{align}
+L_0 &= C_b \prod_\ell \frac{\Gamma\kla*{\frac{b}{2} - \i k_\ell}}{\Gamma\kla*{1-\frac{b}{2} - \i k_\ell}}
+\end{align}
+where $C_b = \sin(\pi b)2^{2b-2} \Gamma(1-b)^2$ and $k_\ell = \frac{\omega + \ell k}{4}$.\\
+The poles are at
+\begin{align}
+-l &= \frac{b}{2} - \i k_\ell \qquad \Rightarrow\qquad k = -2\i\ell (2l+b) - \ell\omega.
+\end{align}
+This gives $k'=-\ell(4\i l + 2\i b + \omega)$ for $l\ge 0$.
+For $\powe{+\i k'a}$ the residues are at $\Im k' > 0$ and have value
+\begin{align}
+\frac{\powe{\i k'a}}{k'-z} &C_b \lim \eta\frac{\Gamma\kla*{\frac{b}{2} - \i \frac{\omega + (-\ell 2\i b -\ell 4\i l - \ell \omega + \eta)}{4}}}{\Gamma\kla*{1-\frac{b}{2} - \i \frac{\omega + (-\ell 2\i b -\ell 4\i l - \ell \omega)}{4}}} \frac{\Gamma\kla*{\frac{b}{2} - \i \frac{\omega - (-\ell 2\i b -\ell 4\i l - \ell \omega)}{4}}}{\Gamma\kla*{1-\frac{b}{2} - \i \frac{\omega - (-\ell 2\i b -\ell 4\i l - \ell \omega)}{4}}}\\
+&= -4\i C_b \frac{\powe{\i \Re k'a - |\Im k'|a}}{z + \ell (2\i b + \omega + 4\i l)} \frac{(-1)^l}{l!} \frac{1}{\Gamma(1-b-l)} \frac{\Gamma\kla*{b + l-\i\frac{\omega}{2}}}{\Gamma\kla*{1+l-\i\frac{\omega}{2}}}
+\end{align}
+Putting it all together we find
+\begin{align}
+\intr{\frac{L_0(k'-k,\omega;b)}{k'-z} \sin(k'a)}{k'} &= \pi L_0(z-k,\omega;b) \powe{\i za \sgn (\Im z)}\\
+-\sum_{l\ge 0}2\pi\i 2^{2b-1}\sin(\pi b) \Gamma(1-b)^2 &  \frac{(-1)^l}{l!\Gamma(1-b-l)} \frac{\Gamma\kla*{b + l-\i \frac{\omega}{2}}}{\Gamma\kla*{1+l-\i\frac{\omega}{2}}} \sum_\ell \frac{\powe{(\i \omega - \i \ell k - 4l-2b) a \sgn \kla*{4 l + 2 b + \Im\omega}}}{\ell (z-k) + 2\i b + \omega + 4\i l}
+\end{align}
+%z=1.3-0.442j; omega=0.334-1.599j; b=0.2; a=1.413; k=0.8355
+%integrand = lambda kp: l_0(k-kp,omega,np.pi,b)/(kp-z)*np.sin(kp*a)
+%print(c_quad(integrand, -150, 150))
+%l=np.arange(6)
+%print(np.pi * l_0(z-k,omega,np.pi,b) * np.exp(1j*a*z*np.sign(z.imag)) - 2j*np.pi*np.sin(np.pi*b) * special.gamma(1-b)**2 * 2**(2*b-1) * np.sum([(-1)**l/special.gamma(l+1)/special.gamma(1-b-l) *special.gamma(b+l-1j*omega/2) / special.gamma(1+l-1j*omega/2) * np.exp((1j*omega - 4*l-2*b- ell*1j*k)*a*np.sign(4*l+2*b+omega.imag))/(ell*(z-k)+2j*b+4j*l+omega) for ell in [+1,-1]]))
+for any $\omega,z\in\mathbb{C}$, $k\in\mathbb{R}$, $a>0$.
+In our case we have $\omega=2\i m$, $z=2\i m - \i\omega_n^\F$ giving
+\begin{align}
+J_1 &= \frac{2}{\pi \sinh(a)} \sum_{m\in\mathbb{Z}} \klc[\bigg]{\pi L_0(2\i m - \i\omega_n^\F-k,2\i m;b) \powe{- a(2m + \omega_n^\F)\sgn(2m - \Im \i \omega_n^\F)}\\
+-\sum_{l\ge 0}2\pi\i 2^{2b-1}\sin(\pi b) & \Gamma(1-b)^2 \frac{(-1)^l}{l!\Gamma(1-b-l)} \frac{\Gamma\kla*{b + l+m}}{\Gamma\kla*{1+l+m}} \sum_\ell \frac{\powe{-\abs*{4l+2b+2m} a - \i \ell k a \sgn \kla*{4 l + 2 b + 2m}}}{\ell (2\i m - \i\omega_n^\F-k) + 2\i b + 2\i m + 4\i l}}
+\end{align}
+%m=2; b=0.2; a=1.413; k=0.8355; omega=0.4431+0.23561j
+%integrand = lambda kp: l_0(k-kp,2j*m,np.pi,b)/(kp-2j*m+omega)*np.sin(kp*a)
+%print(c_quad(integrand, -150, 150))
+%l=np.arange(6)
+%print(np.pi * l_0(2j*m-omega-k,2j*m,np.pi,b) * np.exp(-a*(2*m + 1j* omega)*np.sign(2*m - omega.imag)) - 2j*np.pi*np.sin(np.pi*b) * special.gamma(1-b)**2 * 2**(2*b-1) * np.sum([(-1)**l/special.gamma(l+1)/special.gamma(1-b-l) *special.gamma(b+l+m) / special.gamma(1+l+m) * np.exp(-a*np.abs(4*l+2*b+2*m) - ell*1j*k*a*np.sign(4*l+2*b+2*m))/(ell*(2j*m-omega-k)+2j*b+4j*l+2j*m) for ell in [+1,-1]]))
+Note that after the analytic continuation $\i\omega_n^\F \rightarrow \omega+\i\delta$ this becomes
+\begin{align}
+J_1 &= \frac{2}{\pi \sinh(a)} \sum_{m\in\mathbb{Z}} \klc[\bigg]{\pi L_0(2\i m - \omega - \i \delta -k,2\i m;b) \powe{- a(2m -\i\omega + \delta)\sgn(2m - \delta)}\\
+-\sum_{l\ge 0}2\pi\i 2^{2b-1}\sin(\pi b) & \Gamma(1-b)^2 \frac{(-1)^l}{l!\Gamma(1-b-l)} \frac{\Gamma\kla*{b + l+m}}{\Gamma\kla*{1+l+m}} \sum_\ell \frac{\powe{-\abs*{4l+2b+2m} a - \i \ell k a \sgn \kla*{4 l + 2 b + 2m}}}{\ell (2\i m - \omega - \i\delta -k) + 2\i b + 2\i m + 4\i l}}.
+\end{align}
+For $m\neq 0$ this obeys the symmetry $(\dots [m])^\ast = (\dots [-m])$ and therefore the imaginary part can only come from the term $m=0$.
+That term is
+\begin{align}
+\frac{2}{\sinh(a)} \klc*{L_0(-\omega - k, 0; b) \powe{-\i\omega a} - \sum_{l\ge 0} 2^{2b} \sin(\pi b) \Gamma(1-b)^2 \frac{(-1)^l}{l!\Gamma(1-b-l)} \frac{\Gamma\kla*{b + l}}{\Gamma\kla*{1+l}} \sum_\ell \frac{\powe{-\abs*{4l+2b} a - \i \ell k a \sgn \kla*{4 l + 2 b}}}{\i\ell (\omega + k) + 2 b + 4 l}}.
+\end{align}
+Note that the second part is fully real since complex conjugation corresponds to $\ell\rightarrow-\ell$ leaving the total sum unchanged.
+The imaginary part thus only comes from the phase factor $\powe{-\i\omega a}$.
+\subsection{$s=-1$}
+One can show that
+\begin{align}
+P_0(k, \i 2n; b) &= \intx{0}{\pi}{\intr{\powe{\i 2n \tau - \i kx} \csc(\tau+\i x)^{b+1}  \csc(\tau - \i x)^{b-1}}{x} }{\tau} \\
+&= \frac{1}{2\i} \klb*{J_0(k+\i, \i (2n+1),b) - J_0(k-\i, \i (2n-1), b)} \\
+&=2^{2b-2} \sin(\pi b) \Gamma(1-b)^2 \frac{\Gamma\kla*{\frac{b}{2} - \i \frac{\i 2n + (k-2\i) }{4}} \Gamma\kla*{\frac{b}{2} - \i \frac{\i 2n - (k-2\i)}{4}}}{\Gamma\kla*{2-\frac{b}{2} - \i \frac{\i 2n + (k-2\i)}{4}} \Gamma\kla*{-\frac{b}{2} - \i \frac{\i 2n - (k-2\i)}{4}}} \frac{b-1}{b}.
+\end{align}
+%n=1; om=1j*2*n; b=0.3; k=0.43
+%print(c_quad(lambda tau: np.exp(om*tau) * c_quad(lambda x: np.exp(-1j*k*x) / np.sin(tau+1j*x)**(b+1) 
+%                                                 / np.sin(tau-1j*x)**(b-1), -30, 30)[0], 0, np.pi))
+%print(-(l_0(k+2j,om+2j,np.pi,b+1) - 2*l_0(k,om,np.pi,b+1) + l_0(k-2j,om-2j,np.pi,b+1))/4)
+%print((j_0(k+1j,om+1j,np.pi,b) - j_0(k-1j,om-1j,np.pi,b))/2j)
+%print(2**(2*b-2)*np.sin(np.pi*b)*special.gamma(1-b)**2*special.gamma(b/2 - 1j*(om+(k-2j))/4)*special.gamma(b/2 - 1j*(om-(k-2j))/4)/special.gamma(2-b/2 - 1j*(om+(k-2j))/4) / special.gamma(-b/2 - 1j*(om-(k-2j))/4)*(b-1)/b)
+Via the convolution theorem we therefore find
+\begin{align}
+J_1 &= \frac{1}{2\pi^2} \sum_{m\in\mathbb{Z}} \intr{P_0(k-k', 2\i m; b) \frac{-4\pi}{\i\omega_n^\F - 2\i m - k'} \frac{\sin(k'a)}{\sinh(a)}}{k'}.
+\end{align}
+%beta=np.pi; v=1; om=1j*(2*2+1)*np.pi/beta; k=0.43; b=0.3; xi=1; s=-1; L=5
+%m=np.arange(1,100); kv=np.linspace(-0.4, 0.4, 10)
+%print(c_quad(lambda tau: np.exp(om*tau) * c_quad(lambda x: np.exp(-1j*k*x)*(1 / np.tan(np.pi/(beta*v)*(tau*v+1j*s*(x+xi))) + 1/ np.tan(np.pi/(beta*v)*(tau*v+1j*s*(x-xi)))) / np.sin(np.pi/(beta*v)*(tau*v+1j*x))**(1+b) / np.sin(np.pi/(beta*v)*(tau*v-1j*x))**b, -L, L)[0], 0, beta))
+%res=0; mmax=30
+%p_0 = lambda k,om,b: (2**(2*b-2)*np.sin(np.pi*b)*special.gamma(1 - b)**2 *special.gamma(b/2 - 1j*(om+k)/4 - 1/2)*special.gamma(b/2 - 1j*(om-k)/4 + 1/2)/(special.gamma(-b/2 - 1j*(om+k)/4 + 1 + 1/2)*special.gamma(-b/2 - 1j*(om-k)/4 + 1 - 1/2))*(b-1)/b)
+%for m in range(-mmax, mmax+1):
+%    omm=2j*m*np.pi/beta
+%    #delta = c_quad(lambda kp: 2/np.pi* l_0(k-kp,omm,np.pi,b) * np.sin(kp*xi)/np.sinh(xi) / (om-omm+kp), -150, 150)
+%    delta = c_quad(lambda kp: -2/np.pi* p_0(k-kp,omm,b) * np.sin(kp*xi)/np.sinh(xi) / (om-omm-kp), -150, 150)
+%    res += delta[0]
+%    #print(m, delta)
+%print(res)
+Note that we have the relation
+\begin{align}
+\frac{P_0(k+2\i, \i 2n, b)}{L_0(k,\i 2n, b)} &= \frac{b-1}{b} \frac{-\frac{b}{2} - \i \frac{\i 2n - k}{4}}{1 - \frac{b}{2} - \i \frac{\i 2n + k}{4}}
+\end{align}
+and can consequently rewrite the integral as
+\begin{align}
+J_1(k+2\i; s=-1) &= -\frac{2}{\pi} \sum_{m\in\mathbb{Z}} \intr{L_0(k-k', 2\i m; b) \frac{b-1}{b} \frac{-\frac{b}{2} - \i \frac{\i 2m - (k-k')}{4}}{1 - \frac{b}{2} - \i \frac{\i 2m + (k-k')}{4}} \frac{1}{\i\omega_n^\F - 2\i m - k'} \frac{\sin(k'a)}{\sinh(a)}}{k'}
+\end{align}
+\subsubsection{Residue integral first}
+The integral has the structure
+\begin{align}
+\intr{\frac{P_0(k-k',\omega; b)}{k'-z} \sin(k'a)}{k'}.
+\end{align}
+Depending on the sign of the exponent the counter must be closed in the upper or lower half of the complex plane.
+For $\powe{+\i k' a}$ we find a residue at $k'=z$ with value
+\begin{align}
+\powe{\i za} P_0(k-z,\i\omega; b) \Theta(\Im z)
+\end{align}
+and for $\powe{-\i k'a}$ the value changes to
+\begin{align}
+-\powe{-\i za} P_0(k-z,\i\omega; b)\Theta(-\Im z)
+\end{align}
+where the sign change comes from the change of the orientation of the contour.
+This part of the integral contributes
+\begin{align}
+\frac{2\pi\i}{2\i} \klc*{\powe{\i za} P_0(k-z,\omega; b) \Theta(\Im z) - (-1) \powe{-\i za} P_0(k-z,\omega; b)\Theta(-\Im z)} &= \pi P_0(k-z,\omega; b) \powe{\i za \sgn(\Im z)}.
+\end{align}
+The other poles are contained in the function $P_0$ that we will rewrite as
+\begin{align}
+P_0(k,\omega;b) &= C_b \prod_\ell \frac{\Gamma\kla*{\frac{b-\ell}{2} - \i k_\ell}}{\Gamma\kla*{1 - \frac{b-\ell}{2} - \i k_\ell}}
+\end{align}
+where $C_b = \sin(\pi b)2^{2b-2} \Gamma(1-b)^2 \frac{b-1}{b}$ and $k_\ell = \frac{\omega + \ell k}{4}$.\\
+The poles are at
+\begin{align}
+-l &= \frac{b-\ell}{2} - \i k_\ell \qquad \Rightarrow\qquad k = -2\i\ell (2l+b-\ell) - \ell\omega.
+\end{align}
+This gives $k'=k+\ell(4\i l + 2\i b + \omega) - 2\i$ for $l\ge 0$.
+For $\powe{+\i k'a}$ the residues are at $\Im k' > 0$ and have value
+\begin{align}
+\frac{\powe{\i k'a}}{k'-z} &C_b \lim \eta\frac{\Gamma\kla*{\frac{b-\ell}{2} - \i \frac{\omega + \ell(-\ell 2\i b -\ell 4\i l - \ell \omega + 2\i + \eta)}{4}}}{\Gamma\kla*{1-\frac{b-\ell}{2} - \i \frac{\omega + \ell(-\ell 2\i b -\ell 4\i l - \ell \omega+ 2\i)}{4}}} \frac{\Gamma\kla*{\frac{b+\ell}{2} - \i \frac{\omega - \ell(-\ell 2\i b -\ell 4\i l - \ell \omega + 2\i)}{4}}}{\Gamma\kla*{1-\frac{b+\ell}{2} - \i \frac{\omega - \ell(-\ell 2\i b -\ell 4\i l - \ell \omega+ 2\i)}{4}}} \Theta(\Im k')\\
+&= -4\i\ell C_b \frac{\powe{\i k' a}}{z - k'} \frac{(-1)^l}{l!} \frac{1}{\Gamma(1+\ell -b-l)} \frac{\Gamma\kla*{b + l-\i\frac{\omega}{2}}}{\Gamma\kla*{1-\ell+l-\i\frac{\omega}{2}}} \Theta(\Im k')
+\end{align}
+Putting it all together we find
+%\begin{align}
+%\intr{\frac{P_0(k'-k,\omega;b)}{k'-z} \sin(k'a)}{k'} &= \pi P_0(z-k,\omega;b) \powe{\i za \sgn (\Im z)}\\
+%-\sum_{l\ge 0}2\pi\i 2^{2b-1}\sin(\pi b) \Gamma(1-b)^2\frac{b-1}{b} &  \sum_{\ell,\ell'} \frac{(-1)^l}{l!\Gamma(1+\ell -b-l)} \frac{\Gamma\kla*{b + l-\i \frac{\omega}{2}}}{\Gamma\kla*{1-\ell+l-\i\frac{\omega}{2}}} \frac{\powe{\ell'\i (k+k')a}}{z - k' - k} \Theta(\ell' \Im k')
+%\end{align}
+%where $k'= - \ell (4\i l+2\i b+\omega)+2\i$
+\begin{align*}
+\intr{\frac{P_0(k-k',\omega;b)}{k'-z} \sin(k'a)}{k'} &= \pi P_0(k-z,\omega;b) \powe{\i za \sgn (\Im z)} \\
++ 2\pi\i \frac{b-1}{b} \sum_{l\ge 0}  \frac{(-1)^l}{l!} \sum_{\ell} \frac{2^{2b-1}\sin(\pi b) \Gamma(1-b)^2}{\Gamma(1+\ell - b- l)} & \frac{\Gamma\kla*{b+l-\i \frac{\omega}{2}}}{\Gamma\kla*{1-\ell+l-\i \frac{\omega}{2}}} \ell \frac{\powe{\i k' a \sgn(\Im k')}}{z-k'} \numberthis
+\end{align*}
+where $k'=k-2\i + \ell(4\i l + 2\i b+\omega)$.
+%%% VERSION P0(k'-k), VARIANT 1
+%z=1.3+0.442j; omega=0.334-1.599j; b=0.2; a=1.413; k=0.8355
+%p_0 = lambda k,om,b: (2**(2*b-2)*np.sin(np.pi*b)*special.gamma(1 - b)**2 *special.gamma(b/2 - 1j*(om+k)/4 - 1/2)*special.gamma(b/2 - 1j*(om-k)/4 + 1/2)/(special.gamma(-b/2 - 1j*(om+k)/4 + 1 + 1/2)*special.gamma(-b/2 - 1j*(om-k)/4 + 1 - 1/2))*(b-1)/b)
+%integrand = lambda kp: p_0(kp-k,omega,b)/(kp-z)*np.sin(kp*a)
+%print(c_quad(integrand, -120, 120))
+%l=np.arange(10)
+%print(np.pi * p_0(z-k,omega,b) * np.exp(1j*a*z*np.sign(z.imag)) - 2j*np.pi*np.sin(np.pi*b) * special.gamma(1-b)**2 * 2**(2*b-1)*(b-1)/b * np.sum([(-1)**l/special.gamma(l+1)/special.gamma(1+ell-b-l) *special.gamma(b+l-1j*omega/2) / special.gamma(1-ell+l-1j*omega/2) * np.exp((1j*omega - 4*l-2*b+2*ell- ell*1j*k)*a*np.sign(4*l+2*b-2*ell+omega.imag))/(ell*(z-k-2j)+2j*b+4j*l+omega) for ell in [+1,-1]]))
+%%% VERSION P0(k'-k), VARIANT 2
+%z=1.3-1.442j; omega=0.334+1.599j; b=0.5; a=1.413; k=-0.8355
+%p_0 = lambda k,om,b: (2**(2*b-2)*np.sin(np.pi*b)*special.gamma(1 - b)**2 *special.gamma(b/2 - 1j*(om+k)/4 - 1/2)*special.gamma(b/2 - 1j*(om-k)/4 + 1/2)/(special.gamma(-b/2 - 1j*(om+k)/4 + 1 + 1/2)*special.gamma(-b/2 - 1j*(om-k)/4 + 1 - 1/2))*(b-1)/b)
+%integrand = lambda kp: p_0(kp-k,omega,b)/(kp-z)*np.sin(kp*a)
+%print(c_quad(integrand, -150, 150))
+%l=np.arange(10)
+%res = np.pi * p_0(z-k,omega,b) * np.exp(1j*a*z*np.sign(z.imag))
+%for l in range(10):
+%    for ell in [+1,-1]:
+%        kp = k-ell*(4j*l+2j*b+omega)+2j
+%        res += -ell * 2j*np.pi*np.sin(np.pi*b) * special.gamma(1-b)**2 * 2**(2*b-1)*(b-1)/b * (-1)**l/special.gamma(l+1)/special.gamma(1+ell-b-l) *special.gamma(b+l-1j*omega/2) / special.gamma(1-ell+l-1j*omega/2) * np.exp(1j*kp*a*np.sign(kp.imag))/(z - kp)
+%print(res)
+%%% VERSION P0(k-k'), VARIANT 1
+%z=1.3-1.442j; omega=0.334+1.599j; b=0.5; a=1.413; k=-0.8355
+%p_0 = lambda k,om,b: (2**(2*b-2)*np.sin(np.pi*b)*special.gamma(1 - b)**2 *special.gamma(b/2 - 1j*(om+k)/4 - 1/2)*special.gamma(b/2 - 1j*(om-k)/4 + 1/2)/(special.gamma(-b/2 - 1j*(om+k)/4 + 1 + 1/2)*special.gamma(-b/2 - 1j*(om-k)/4 + 1 - 1/2))*(b-1)/b)
+%integrand = lambda kp: p_0(k-kp,omega,b)/(kp-z)*np.sin(kp*a)
+%print(c_quad(integrand, -120, 120))
+%l=np.arange(10)
+%print(np.pi * p_0(k-z,omega,b) * np.exp(1j*a*z*np.sign(z.imag)) + 2j*np.pi*np.sin(np.pi*b) * special.gamma(1-b)**2 * 2**(2*b-1)*(b-1)/b * np.sum([(-1)**l/special.gamma(l+1)/special.gamma(1+ell-b-l) *special.gamma(b+l-1j*omega/2) / special.gamma(1-ell+l-1j*omega/2) * np.exp(1j*(k+ell*(4j*l+2j*b+omega)-2j)*a*np.sign(ell*(4*l+2*b+omega.imag)-2))/(z-k-ell*(4j*l+2j*b+omega)+2j) * ell for ell in [+1,-1]]))
+%%% VERSION P0(k-k'), VARIANT 2
+%z=1.3-1.442j; omega=0.334+1.599j; b=0.5; a=1.413; k=-0.8355
+%p_0 = lambda k,om,b: (2**(2*b-2)*np.sin(np.pi*b)*special.gamma(1 - b)**2 *special.gamma(b/2 - 1j*(om+k)/4 - 1/2)*special.gamma(b/2 - 1j*(om-k)/4 + 1/2)/(special.gamma(-b/2 - 1j*(om+k)/4 + 1 + 1/2)*special.gamma(-b/2 - 1j*(om-k)/4 + 1 - 1/2))*(b-1)/b)
+%integrand = lambda kp: p_0(k-kp,omega,b)/(kp-z)*np.sin(kp*a)
+%print(c_quad(integrand, -150, 150))
+%l=np.arange(10)
+%res = np.pi * p_0(k-z,omega,b) * np.exp(1j*a*z*np.sign(z.imag))
+%for l in range(10):
+%    for ell in [+1,-1]:
+%        kp = k+ell*(4j*l+2j*b+omega)-2j
+%        res += ell * 2j*np.pi*np.sin(np.pi*b) * special.gamma(1-b)**2 * 2**(2*b-1)*(b-1)/b * (-1)**l/special.gamma(l+1)/special.gamma(1+ell-b-l) *special.gamma(b+l-1j*omega/2) / special.gamma(1-ell+l-1j*omega/2) * np.exp(1j*kp*a*np.sign(kp.imag))/(z - kp)
+%print(res)
+In our case we have $\omega = 2\i m$ and $z=\i\omega_n^\F - 2\i m$ giving
+\begin{align*}
+J_1 &= \frac{2}{\sinh(a)} \sum_{m\in\mathbb{Z}} \klc[\bigg]{P_0\kla*{k+2\i m - \i\omega_n^\F, 2\i m; b} \powe{- (\omega_n^\F - 2 m)a \sgn (-2m + \Im \i\omega_n^\F)} \\
++ 2\i \frac{b-1}{b} \sum_{l\ge 0}  \frac{(-1)^l}{l!} \sum_{\ell} & \frac{2^{2b-1}\sin(\pi b) \Gamma(1-b)^2}{\Gamma(1+\ell - b- l)} \frac{\Gamma\kla*{b+l+m}}{\Gamma\kla*{1-\ell+l+m}} \ell \frac{\powe{\i (\ell k-2\i\ell + 4\i l + 2\i b+2\i m) a \sgn(4 l + 2 b+2 m - 2\ell)}}{\i\omega_n^\F - 2\i m - k+2\i - \ell(4\i l + 2\i b+2\i m)}}. \numberthis
+\end{align*}
+%beta=np.pi; v=1; om=1j*(2*2+1)*np.pi/beta; k=0.43; b=0.3; xi=1; s=-1; L=5
+%m=np.arange(1,100); kv=np.linspace(-0.4, 0.4, 10)
+%print(c_quad(lambda tau: np.exp(om*tau) * c_quad(lambda x: np.exp(-1j*k*x)*(1 / np.tan(np.pi/(beta*v)*(tau*v+1j*s*(x+xi))) + 1/ np.tan(np.pi/(beta*v)*(tau*v+1j*s*(x-xi)))) / np.sin(np.pi/(beta*v)*(tau*v+1j*x))**(1+b) / np.sin(np.pi/(beta*v)*(tau*v-1j*x))**b, -L, L)[0], 0, beta))
+%res=0; mmax=10
+%p_0 = lambda k,om,b: (2**(2*b-2)*np.sin(np.pi*b)*special.gamma(1 - b)**2 *special.gamma(b/2 - 1j*(om+k)/4 - 1/2)*special.gamma(b/2 - 1j*(om-k)/4 + 1/2)/(special.gamma(-b/2 - 1j*(om+k)/4 + 1 + 1/2)*special.gamma(-b/2 - 1j*(om-k)/4 + 1 - 1/2))*(b-1)/b)
+%for m in range(-mmax, mmax+1):
+%    omm=2j*m*np.pi/beta
+%    #delta = c_quad(lambda kp: 2/np.pi* l_0(k-kp,omm,np.pi,b) * np.sin(kp*xi)/np.sinh(xi) / (om-omm+kp), -150, 150)
+%    delta = c_quad(lambda kp: -2/np.pi* p_0(k-kp,omm,b) * np.sin(kp*xi)/np.sinh(xi) / (om-omm-kp), -150, 150)
+%    res += delta[0]
+%    #print(m, delta)
+%print(res)
+%res=0; a=xi
+%for m in range(-mmax, mmax+1):
+%    omm = 2j*m
+%    delta = 2/np.sinh(a)* (p_0(k+omm-om,omm,b)*np.exp(-(-1j*om-2*m)*a*np.sign(-2*m+om.imag)) + 2j * np.sum([(-1)**l/special.gamma(1+l) *ell * np.sin(np.pi*b) * special.gamma(1-b)**2 * 2**(2*b-1)*(b-1)/b /special.gamma(1+ell-b-l) *special.gamma(b+l+m) / special.gamma(1-ell+l+m) * np.exp(1j*(ell*k-2j*ell+4j*l+2j*b+omm) *a*np.sign(4*l+2*b+2*m-2*ell))/(om-omm-k+2j- ell*(4j*l+2j*b+omm)) for ell in [+1,-1]]))
+%    res += delta
+%    #print(m, delta)
+%print(res)
+\subsection{Final result}
+Combining both cases we have
+\begin{align*}
+J_1(k,\i\omega_n^\F; b, a, s=+1) &= \frac{2}{\sinh(a)} \sum_{m\in\mathbb{Z}} \klc[\bigg]{L_0\kla*{2\i m - \i\omega_n^\F-k,2\i m;b} \powe{- a(2m - \omega_n^\F)\sgn(2m - \Im \i \omega_n^\F)}\\
+-2\i\sum_{l\ge 0} \frac{(-1)^l}{l!} \sum_\ell & \frac{2^{2b-1}\sin(\pi b) \Gamma(1-b)^2}{\Gamma(1-b-l)} \frac{\Gamma\kla*{b + l+m}}{\Gamma\kla*{1+l+m}} \frac{\powe{-\abs*{4l+2b+2m} a - \i \ell k a \sgn \kla*{4 l + 2 b + 2m}}}{2\i b + 2\i m + 4\i l + \ell (2\i m - \i\omega_n^\F-k)}}, \numberthis\\
+J_1(k,\i\omega_n^\F; b, a, s=-1) &= \frac{2}{\sinh(a)} \sum_{m\in\mathbb{Z}} \klc[\bigg]{P_0\kla*{2\i m - \i\omega_n^\F + k, 2\i m; b} \powe{- (2m-\omega_n^\F)a \sgn (2m - \Im \i\omega_n^\F)} \\
+- 2\i \frac{b-1}{b} \sum_{l\ge 0}  \frac{(-1)^l}{l!} \sum_{\ell} & \frac{2^{2b-1}\sin(\pi b) \Gamma(1-b)^2}{\Gamma(1+\ell - b- l)} \frac{\Gamma\kla*{b+l+m}}{\Gamma\kla*{1-\ell+l+m}} \frac{\powe{ - |4 l + 2 b+2 m-2\ell| a + \i \ell ka \sgn(4 l + 2 b+2 m - 2\ell) }}{2\i b+2\i m + 4\i l +\ell(2\i m -\i\omega_n^\F + k-2\i)}}. \numberthis
+\end{align*}
+%om=1j*(2*2+1); k=0.43; b=0.3; a=1.223; s=-1; L=5
+%print(c_quad(lambda tau: np.exp(om*tau) * c_quad(lambda x: np.exp(-1j*k*x)*(1 / np.tan(tau+1j*s*(x+a)) + 1/ np.tan(tau+1j*s*(x-a))) / np.sin(tau+1j*x)**(1+b) / np.sin(tau-1j*x)**b, -L, L)[0], 0, np.pi))
+%mmax = 10; l=np.arange(6); res=0
+%if s == +1:
+%    for m in range(-mmax, mmax+1):
+%        omm = 2j*m
+%        delta = 2/np.sinh(a) * (l_0(omm-om-k, omm,np.pi,b) * np.exp(-a*(2*m+1j*om)*np.sign(2*m-om.imag)) - 2j * np.sum([(-1)**l/special.gamma(l+1) * 2**(2*b-1)*np.sin(np.pi*b)*special.gamma(1-b)**2/special.gamma(1-b-l) * special.gamma(b+l+m)/special.gamma(1+l+m) * np.exp(-np.abs(4*l+2*b+2*m)*a - 1j*ell*k*a*np.sign(4*l+2*b+2*m)) / (2j*b+omm + 4j*l + ell * (omm - om - k)) for ell in [+1,-1]]))
+%        res += delta
+%p_0 = lambda k,om,b: (2**(2*b-2)*np.sin(np.pi*b)*special.gamma(1 - b)**2 *special.gamma(b/2 - 1j*(om+k)/4 - 1/2)*special.gamma(b/2 - 1j*(om-k)/4 + 1/2)/(special.gamma(-b/2 - 1j*(om+k)/4 + 1 + 1/2)*special.gamma(-b/2 - 1j*(om-k)/4 + 1 - 1/2))*(b-1)/b)
+%if s == -1:
+%    for m in range(-mmax, mmax+1):
+%        omm = 2j*m
+%        delta = 2/np.sinh(a) * (p_0(omm-om+k, omm,b) * np.exp(-a*(2*m+1j*om)*np.sign(2*m-om.imag)) - 2j * (b-1)/b * np.sum([(-1)**l/special.gamma(l+1) * 2**(2*b-1)*np.sin(np.pi*b)*special.gamma(1-b)**2/special.gamma(1+ell-b-l) * special.gamma(b+l+m)/special.gamma(1-ell +l+m + 1e-14) * np.exp(-np.abs(4*l+2*b+2*m-2*ell)*a + 1j*ell*k*a*np.sign(4*l+2*b+2*m-2*ell)) / (2j*b+omm + 4j*l + ell * (omm - om + k - 2j)) for ell in [+1,-1]]))
+%        res += delta
+%print(res) ## THIS WORKS !!!
+where, to recall,
+\begin{align*}
+J_1\kla*{k,\i\omega_n^\F; b,a,s} &= \sum_{s_a=\pm 1} \intx{0}{\pi}{\intr{\powe{\i\omega_n^\F\tau - \i kx} \csc(\tau+\i x)^{b+1} \csc(\tau-\i x)^b \cot(\tau + \i sx + \i s_aa)}{x} }{\tau}.
+\end{align*}
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

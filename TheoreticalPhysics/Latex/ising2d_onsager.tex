@@ -1,0 +1,307 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+
+\newcommand*{\Title}{Onsager's Solution to the 2D Ising Model}
+\newcommand*{\Author}{Joachim Schwardt}
+
+\input{preamble_shared.tex}
+\input{preamble.tex}
+
+\newcommand{\note}[1]{\bgroup\color{black!30!blue}#1\egroup}
+\newcommand{\comment}[1]{\bgroup\color{black!30!blue}#1 \egroup}
+\DeclareMathOperator{\gd}{gd}
+
+%\titlehead{titlehead}
+\subject{Statistical Mechanics}
+\title{\Title}
+\author{\Author}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+\textbf{Disclaimer:} Modulo notation, this is a direct transcript of the original paper from 1944; some parts are left out, while others are explained in more (occasionally much more) detail.
+\end{center}
+\section{The Linear Ising Model}
+As an introduction to our subsequent notation we shall consider a one-dimensional model which has been deal with by many previous authors.
+
+Consider a chain of atoms where each atom $k$ possesses an internal coordinate $\sigma_k$ which may take values $\pm 1$.
+The interaction energy between each pair of successive atoms depends on whether their internal coordinates are alike or different, i.e. $u(\sigma_k, \sigma_{k+1}) = -J\sigma_k \sigma_{k+1}$.
+The partition function of this one-dimensional crystal equals
+\begin{align}
+Z &= \sum_{\klc*{\bm{\sigma}}} \powe{-\beta E\kla*{\bm{\sigma}}},
+\end{align}
+where $\bm{\sigma} = \kla*{\sigma_1, \sigma_2, \dots, \sigma_N}$ and $\klc*{\bm{\sigma}}$ denotes the set of all $2^N$ possible configurations.
+The energy function is simply $E\kla*{\bm{\sigma}} = \sum_k u\kla*{\sigma_k, \sigma_{k+1}}$.
+Following Kramers and Wannier, we express this sum in terms of a matrix whose elements are $\brc*{\sigma}{V}{\sigma'} = \powe{-\beta u(\sigma,\sigma')}$.
+\comment{The idea behind this is that any function with a finite input domain may be represented by some matrix (which contains all the possible outputs).
+In this simple example, there are $2\times 2=4$ inputs, so a possible representation is given by $\Ket{\sigma=+} = (1,0)^\transpose$, $\Ket{\sigma=-} = (0,1)^\transpose$ and $V = \begin{psmallmatrix} f(+,+) & f(+,-) \\ f(-,+) & f(-,-) \end{psmallmatrix}$.
+For example,
+\begin{align}
+f(-,+) &= \brc*{-}{V}{+} = \begin{psmallmatrix}
+0 & 1
+\end{psmallmatrix} \begin{psmallmatrix}
+f(+,+) & f(+,-) \\ f(-,+) & f(-,-)
+\end{psmallmatrix}\begin{psmallmatrix}
+1 \\ 0
+\end{psmallmatrix} = \begin{psmallmatrix}
+0 & 1
+\end{psmallmatrix} \begin{psmallmatrix}
+f(+,+) \\ f(-,+)
+\end{psmallmatrix} = f(-,+).
+\end{align}
+In this case, $f(\sigma,\sigma') = \powe{-\beta u(\sigma,\sigma')} = \powe{-\beta J \sigma\sigma'}$.}
+Then the summation over $\sigma_2,\dots,\sigma_{N-1}$ is equivalent to matrix multiplication, and we obtain
+\begin{align}
+Z &= \note{\sum_{\sigma_1=\pm 1} \dots \sum_{\sigma_N=\pm 1} f(\sigma_1,\sigma_{2}) \dots f(\sigma_{N-1}, \sigma_N)} \\
+&= \note{\sum_{\sigma_1=\pm 1} \dots \sum_{\sigma_N=\pm 1} \brc*{\sigma_1}{V}{\sigma_2}\dots \brc*{\sigma_{N-1}}{V}{\sigma_N}} \\
+&= \sum_{\sigma_1,\sigma_N} \brc*{\sigma_1}{V^{N-1}}{\sigma_N}.
+\end{align}
+\comment{The next claim requires some elaboration.
+The matrix $V$ can be more easily expressed in terms of the parameter $H=\beta J$, which gives
+\begin{align}
+\chi_V(\lambda) &= \det\kla*{V - \lambda} = \lambda^2 - \lambda \tr V + \det V = \lambda^2 - 2\powe{H}\lambda + \powe{2H} - \powe{-2H}.
+\end{align}
+This yields the two eigenvalues $\lambda_{1,2} = \powe{H} \pm \powe{-H}$, or equivalently $\lambda_1 = 2\cosh(H)$ and $\lambda_2 = 2\sinh(H)$.
+The eigenvectors are simply $v_{1,2} = (1, \pm 1)^\transpose$, so we can write $U=\frac{1}{\sqrt{2}} \begin{psmallmatrix} 1 & 1 \\ 1 & -1 \end{psmallmatrix}$ and $V=UDU$.
+Thus,
+\begin{align}
+V^N &= UD^NU = \frac{1}{2} \begin{psmallmatrix} 1 & 1 \\ 1 & -1 \end{psmallmatrix} \begin{psmallmatrix} \lambda_1^N & 0 \\ 0 & \lambda_2^N \end{psmallmatrix} \begin{psmallmatrix} 1 & 1 \\ 1 & -1 \end{psmallmatrix} = \frac{1}{2}\begin{psmallmatrix} 1 & 1 \\ 1 & -1 \end{psmallmatrix} \begin{psmallmatrix} \lambda_1^N & \lambda_1^N \\ \lambda_2^N & -\lambda_2^N \end{psmallmatrix} = \frac{1}{2} \begin{psmallmatrix} \lambda_1^N + \lambda_2^N & \lambda_1^N - \lambda_2^N \\ \lambda_1^N - \lambda_2^N & \lambda_1^N + \lambda_2^N \end{psmallmatrix}.
+\end{align}
+Summing all the entries yields $2\lambda_1^N$, but the important idea is that we could have found this result with much less computation:
+Writing $x = \frac{\lambda_2}{\lambda_1} \le 1$, it is clear that the sum we are looking for must take the form $\lambda_1^N P(x^N)$, where $P(x)$ is some polynomial (the degree does not even matter to us).
+Crucially, as $N\rightarrow \infty$ this asymptotically behaves as $\sim \lambda_1^N P(0)$, and this constant -- which turns out to be 2 -- is actually completely irrelevant for the physics.
+Thus, without doing any calculation, we can immediately make the claim that:}
+\begin{align}
+Z &\sim \lambda_\m^N \mathcal{O}(1),
+\end{align}
+where $\lambda_\m = 2\cosh(H)$ denotes the largest eigenvalue of $V$.
+
+Acting on functions $\psi(\sigma)$, the matrix $V$ acts as
+\begin{align}
+V\psi(\sigma) = \powe{H}\psi(\sigma) + \powe{-H}\psi(-\sigma).
+\end{align}
+This operator is therefore a function of the ``complementary'' operator $C$ which replaces $\sigma$ by $-\sigma$, $C\psi(\sigma) = \psi(-\sigma)$ with $C^2=1$.
+Its eigenfunctions are $\psi_1 = 1$ and $\psi_2 = \sigma$, with eigenvalues $\pm 1$.
+The linearized expression of $V$ in terms of $C$ is evidently just $V= \powe{H} + \powe{-H}C$.
+This also explains why the eigenfunctions of $V$ are the same as those of $C$, and clearly $\lambda_\pm = \powe{H} \pm \powe{-H}$.
+
+We shall frequently deal with \emph{products} of many operators of this type.
+It is therefore a matter of great interest to linearize the \emph{logarithm} of such an operator.
+Again following Kramers and Wannier, we introduce the function\footnote{\note{$\artanh(x) = \frac{1}{2}\log\kla*{\frac{1+x}{1-x}}$ gives $\powe{2\artanh(x)} = \frac{1+x}{1-x}$ and thus $\artanh\kla*{\powe{-2H}} = \frac{1}{2} \log \kla*{\frac{1+\powe{-2H}}{1 - \powe{-2H}}}$.}}
+\begin{align}
+H^\ast &= \frac{1}{2} \log\coth H = \artanh\kla*{\powe{-2H}}
+\end{align}
+and obtain $V=\powe{H}\kla*{1 + \powe{-2H}C} = \powe{H} \kla*{1 + \tanh (H^\ast)C}$, which may be written as\footnote{\note{$\powe{xC} = 1 + xC + \frac{1}{2}x^2 + \dots = \cosh(x) + \sinh(x)C$ and $\powe{2H} \sech(H^\ast)^2 = \powe{2H} \kla*{1 - \powe{-4H}} = 2\sinh(2H)$.}}
+\begin{align}
+V &= \powe{H} \frac{1}{\cosh H^\ast} \powe{H^\ast C} = \sqrt{2\sinh(2H)} \powe{H^\ast C}.
+\end{align}
+The first, less symmetrical form serves to keep a record of the sign when $H$ is not a positive real number.
+For example,
+\begin{align}
+(-H)^\ast &= \note{ \frac{1}{2} \log \kla*{-\coth H} }= H^\ast \pm \frac{1}{2} \pi\i,\\
+\cosh\kla*{(-H)^\ast} &= \note{\frac{1}{2} \kla*{\pm\i \powe{H^\ast} \mp \i \powe{-H^\ast}} } = \pm \i\sinh\kla*{H^\ast}.
+\end{align}
+For reference, we tabulate the relations given by Kramers and Wannier\footnote{\note{$\powe{2H^\ast} = \coth(H)$ gives $\sinh(2H^\ast) = \frac{1}{2}\kla*{\coth(H) - \tanh(H)} = \frac{\cosh(H)^2 - \sinh(H)^2}{2\sinh(H)\cosh(H)}$, $\cosh(2H^\ast) = \frac{1}{2} \kla*{\coth(H) + \tanh(H)} = \frac{\cosh(H)^2 + \sinh(H)^2}{\sinh(2H)}$ and $\tanh(2H^\ast) = \frac{1 - \tanh(H)^2}{1 + \tanh(H)^2} = \frac{1}{\cosh(2H)}$.}},
+\begin{align}
+\sinh(2H) \sinh(2H^\ast) &= \cosh(2H) \tanh(2H^\ast) = \tanh(2H) \cosh(2H^\ast) = 1.
+\end{align}
+Alternatively, we can express the hyperbolic functions in terms of the gudermannian angle\footnote{\note{$\gd x = 2\arctan \tanh\kla*{\frac{x}{2}} = \arctan\sinh(x)$ gives $\cos\kla*{\gd x}^2 = \frac{1}{1+\sinh(x)^2} = \sech(x)^2$ and $\sin\kla*{\gd x}^2 = \tanh(x)^2$.}},
+\begin{align}
+\sinh (x) \cot\kla*{\gd x} &= \cosh(x)\cos\kla*{\gd x} = \coth(x) \sin\kla*{\gd x} = 1.
+\end{align}
+Then the relation between $H$ and $H^\ast$ may be written in the form\footnote{\note{$\arctan(x) + \arctan(y) = \arctan\kla*{\frac{x+y}{1-xy}}$.}}
+\begin{align}
+\gd 2H + \gd 2H^\ast &= \note{\gd 2H + \arctan\sinh(2H^\ast) = \arctan\sinh(2H) + \arctan\kla*{\frac{1}{\sinh(2H)}}} = \frac{\pi}{2}.
+\end{align}
+\section{The Rectangular Ising Model}
+We consider $n$ parallel chains of the same type as before, each described by a set of $\bm{\sigma} = (\sigma_1, \dots, \sigma_n)$ spins.
+We shall build up these chains simultaneously, tier by tier, adding one atom to each chain in one step.
+\comment{Picture a single chain of $n$ spins in a circle, with interaction strengths $J'$.
+Add an exact copy on top and connect all the vertical lines with the interaction strengths $J$.
+Then, aside from the \emph{intra}chain energy of the configuration of the added chain, there is the \emph{inter}chain energy from the interaction between the chain below.}
+The operator, which describes the addition of a new tier with the interaction energy
+\begin{align}
+u_1\kla*{\bm{\sigma}, \bm{\sigma}'} &= - J\sum_{j=1}^n \sigma_j\sigma_j',
+\end{align}
+is now $V_1 = \prod_{j=1}^n \kla*{\powe{H} + \powe{-H}C_j} = \kla*{2\sinh 2H}^{n/2} \powe{H^\ast B}$ where $B=\sum_{j=1}^n C_j$.
+The individual $C_j$ have the effect
+\begin{align}
+C_j \psi\kla*{\sigma_1, \dots, \sigma_j, \dots, \sigma_n} &= \psi\kla*{\sigma_1, \dots, -\sigma_j, \dots, \sigma_n}.
+\end{align}
+Next, let us assume a similar interaction between adjacent atoms in a tier with an independent value $J'$ for the pairwise energy interaction \note{(this is \emph{intra}chain energy in each of the closed circular chains of $n$ spins mentioned above)}.
+For symmetry, let the $n$th atom be neighbour to the first \note{(i.e., each chain forms a closed loop)}; then with the convention that the atoms in a tier are numbered modulo $n$ \note{(i.e. periodic boundary conditions)}, the total interaction energy per tier is
+\begin{align}
+u_2\kla*{\bm{\sigma}} &= -J' \sum_{j=1}^n \sigma_j\sigma_{j+1}.
+\end{align}
+The effect of this interaction is simply to multiply the general term of the partition function, represented by one of the $2^n$ vector components $\psi(\bm{\sigma})$, by the appropriate factor $\powe{-\beta u_2(\bm{\sigma})}$; the corresponding operator $V_2$ has a diagonal matrix in this representation.
+It can be constructed from the simple operators $s_1,\dots,s_n$, which act on $\psi$ via
+\begin{align}
+s_j \psi\kla*{\bm{\sigma}} &= \sigma_j \psi\kla*{\bm{\sigma}}.
+\end{align}
+Writing $A=\sum_{j=1}^n s_js_{j+1}$ and $V_2 = \powe{H'A}$, we now imagine that we build the crystal in alternate steps.
+First, we add a new tier of atoms with $V_1$ \note{(\emph{inter}chain energy)}, then we add the interactions within the tier via $V_2$ \note{(\emph{intra}chain energy)}.
+The alternate modifications of the partition function are represented by the product $V_2V_1V_2V_1\dots$; the addition of one tier of atoms with interaction both ways is represented by $V=V_2V_1$.
+The eigenwert problem which yields the partition function of the crystal accordingly is
+\begin{align}
+\lambda\psi &= V\psi = V_2V_1\psi = \kla*{2\sinh 2H}^{n/2} \powe{H'A} \powe{H^\ast B} \psi.
+\end{align}
+Or, in the more explicit matrix notation used by previous authors,
+\begin{align}
+\lambda\psi\kla*{\bm{\sigma}} &= \powe{H' \sum_{j=1}^n \sigma_j \sigma_{j+1}} \sum_{\klc*{\bm{\sigma}'}} \powe{H \sum_{j=1}^n \sigma_j \sigma_j'} \psi\kla*{\bm{\sigma}'}.
+\end{align}
+\comment{Let us elaborate on the equivalence of this problem.
+Classically, the partition function of this cylindrical version of the two-dimensional Ising model could be written as
+\begin{align}
+Z &= \sum_{\klc*{\bm{\sigma}^{(1)}}} \sum_{\klc*{\bm{\sigma}^{(2)}}}\dots \powe{\beta J'\sum_{j=1}^n \sigma_j^{(1)} \sigma_{j+1}^{(1)}} \powe{\beta J'\sum_{j=1}^n \sigma_j^{(2)} \sigma_{j+1}^{(2)}} \dots \powe{\beta J \sum_{j=1}^n \sigma_j^{(1)} \sigma_j^{(2)}} \powe{\beta J \sum_{j=1}^n \sigma_j^{(2)} \sigma_j^{(3)}} \dots\\
+&= \sum_{\klc*{\bm{\sigma}^{(1)}}} \sum_{\klc*{\bm{\sigma}^{(2)}}}\dots \powe{\beta J'\sum_{j=1}^n \sigma_j^{(1)} \sigma_{j+1}^{(1)}} \powe{\beta J \sum_{j=1}^n \sigma_j^{(1)} \sigma_j^{(2)}} \powe{\beta J'\sum_{j=1}^n \sigma_j^{(2)} \sigma_{j+1}^{(2)}} \powe{\beta J \sum_{j=1}^n \sigma_j^{(2)} \sigma_j^{(3)}} \dots,
+\end{align}
+where the superscript denotes the tier (or, visually speaking, the height of the respective ring of spins).
+Identifying $\Ket{\bm{\sigma}} = \psi\kla*{\bm{\sigma}}$ then yields
+\begin{align}
+\brc*{\bm{\sigma}}{V_2V_1}{\bm{\sigma}'} &= \brc[\big]{\bm{\sigma}}{ \prod_{j=1}^n \powe{H's_js_{j+1}} \prod_{j=1}^n \kla*{\powe{H} + \powe{-H}C_j}}{\bm{\sigma}'} = \prod_{j=1}^n \powe{H'\sigma_j \sigma_{j+1}} \prod_{j=1}^n \brc*{\sigma_j}{  \kla*{\powe{H} + \powe{-H}C_j}}{\sigma_j'} \\
+&= \powe{H'\sum_{j=1}^n \sigma_j\sigma_{j+1}} \powe{H \sum_{j=1}^n \sigma_j\sigma_j'}.
+\end{align}
+Inserting this into the partition function then gives
+\begin{align}
+Z &= \sum_{\klc*{\bm{\sigma}^{(1)}}} \sum_{\klc*{\bm{\sigma}^{(2)}}}\dots \brc*{\bm{\sigma}^{(1)}}{V_2 V_1}{\bm{\sigma}^{(2)}} \dots \sim \lambda_\m^N \mathcal{O}(1),
+\end{align}
+where $\lambda_\m$ this time denotes the maximal eigenvalue of $V_2V_1$.
+Finally, note that $V=V_2V_1$ is a $2^n\times 2^n$-dimensional matrix.
+Thus, the eigenvalue equation can be expressed as
+\begin{align}
+\lambda \Ket{\bm{\sigma}} &= V\Ket{\bm{\sigma}} = \sum_{\klc*{\bm{\sigma}'}} V_{\bm{\sigma},\bm{\sigma}'}\Ket{\bm{\sigma}'} = \sum_{\klc*{\bm{\sigma}'}} \powe{H' \sum_{j=1}^n \sigma_j\sigma_{j+1}} \powe{H \sum_{j=1}^n \sigma_j \sigma_j'} \Ket{\bm{\sigma}'},
+\end{align}
+which is equivalent to the original formulation.}
+This $2^n$-dimensional problem shall be reduced to certain sets of $2$-dimensional problems.
+So far, we have expressed $A$ and $B$ rather simply by the generating elements $s_1,C_1,\dots,s_n,C_n$ of a certain abstract algebra, which is easily recognized as a direct product of $n$ quaternion algebras.
+However, the expansion of $A$ is not linear.
+Following a preliminary study of the basis group we shall therefore construct a new basis for a part of the present algebra, which allows linear expansions of both $A$ and $B$ in terms of generating elements.
+\section{Quaternion Algebra}
+We have introduced two sets of linear operators, $s_1,\dots,s_n$ and $C_1,\dots,C_n$, by their definitions
+\begin{align}
+s_j\psi\kla*{\bm{\sigma}} &= \sigma_j \psi\kla*{\bm{\sigma}},\\
+C_j\psi\kla*{\bm{\sigma}} &= \psi\kla*{\sigma_1,\dots,-\sigma_j,\dots,\sigma_n}.
+\end{align}
+We shall see that the group generated by these operators forms a complete basis for the algebra of linear operators in the $2^n$-dimensional vector space of the function $\psi\kla*{\bm{\sigma}}$.
+Their abstract properties are \note{(these follow directly from the definition)}
+\begin{align}
+s_j^2&=C_j^2=1,\quad s_js_k=s_ks_j, C_jC_k = C_kC_j \quad\text{and}\quad s_jC_k = \kla*{1 - 2\delta_{j,k}} C_ks_j .
+\end{align}
+The algebra based on one of the subgroups $\kla*{1,s_j,C_j,s_jC_j}$ is a simple quaternion algebra.
+The group of its basis elements includes $\kla*{-1,-s_j,-C_j,C_js_j}$ as well, but this completion of the group adds no new independent element for the purpose of constructing a basis.
+If we disregard the sign, each element is its own inverse.
+Except for the invariant element $(-1)$ and the identity, each element together with its negative constitutes a class.
+This algebra has just one irreducible representation,
+\begin{align}
+\textbf{D}_2\kla*{1} &= \begin{psmallmatrix} 1 & 0 \\ 0 & 1 \end{psmallmatrix}, \quad \textbf{D}_2\kla*{s_j} = \begin{psmallmatrix} 1 & 0 \\ 0 & -1 \end{psmallmatrix},\quad \textbf{D}_2\kla*{C_j} = \begin{psmallmatrix} 0 & 1 \\ 1 & 0 \end{psmallmatrix} \quad\text{and}\quad \textbf{D}_2\kla*{s_jC_j} = \begin{psmallmatrix} 0 & 1 \\ -1 & 0 \end{psmallmatrix}.
+\end{align}
+Our algebra of operators in $2^n$-dimensional space can be described accordingly as the direct product of $n$ simple quaternion algebra, which is still referred to as a (general) quaternion algebra.
+Each of its $4^n$ independent basis elements can be expressed uniquely as a product of $n$ factors from each set $\kla*{1,s_j,C_j,s_jC_j}$.
+Still, each element furnishes its own inverse and, except for $(-1)$ and the identity, each element with its negative constitutes a class, which immediately characterizes all possible representations of the algebra: \emph{The characters of all basis elements with the sole exception of the unit must vanish}.
+This, of course, is a consequence of the direct product construction.
+Another is the recognition that the algebra has only one irreducible representation,
+\begin{align}
+\textbf{D}_2\times \dots \times \textbf{D}_2 &= \textbf{D}_{2^n},
+\end{align}
+which is of $2^n$ dimensions; our definitions via the action on $\psi\kla*{\bm{\sigma}}$ describe an explicit version of it.
+
+With the customary restriction that the elements of the basis group are to be represented by unitary matrices, the representations of the $4^n$ independent basis elements must be orthogonal to each other (in the Hermitian sense) on the $2^{2n}$ (or more) matrix elements as a vector basis.
+For the vector product in question is nothing but
+\begin{align}
+\sum_{r,s=1}^{2^n} \textbf{D}(Q_1)_{rs} \bar{\textbf{D}}(Q_2)_{rs} &= \tr \textbf{D}\kla*{Q_1Q_2^{-1}} = \tr \textbf{D}(Q_3),
+\end{align} 
+and if $Q_1$ and $Q_2$ are independent elements of the absis group, then their quotient $Q_3$ is an element different from the unit and $(-1)$, so that its character vanishes.
+
+Since orthogonality guarantees linear independence, the irreducible $2^n$-dimensional representation of our $4^n$ independent basis elements will suffice for the construction of any $2^n\times 2^n$ matrix by linear combination; \emph{our quaternion algebra is equivalent to the complete matrix algebra of $2^n$ dimensions}.
+The choice between the two forms is a matter of convenience; the quaternion description seems more natural to the problem at hand.
+One of the main results obtained by Kramers and Wannier will be derived below, and the comparison with their derivation is instructive.
+
+In the following, the entire basis group will not be needed.
+Since our operator $A$ involves only products of pairs of the generating elements $s_1,\dots,s_n$ and $B$ does not involve any of these but only $C_1,\dots,C_n$, we shall only have to deal with that subgroup of the basis which consists of elements containing en \emph{even} number of factors $s_j$.
+This ``even'' subgroup, which comprises half the previous basis, may be characterized equally well by the observation that it consists of those basis elements which commute with the operator $C=C_1\dots C_n$.
+
+The representation is now reducible because the $2^{n-1}$ \emph{even} functions satisfying $C\psi = \psi$ are transformed among themselves, as are the \emph{odd} functions $C\psi = -\psi$.
+The corresponding algebras are both of the same type as before, with $(n-1)$ pairs of generating elements,
+\begin{align}
+s_1s_n, s_2s_n, \dots, s_{n-1} s_n \quad \text{and}\quad C_1, \dots, C_{n-1},
+\end{align}
+and either algebra is equivalent to the complete matrix algebra of $2^{n-2}$ dimensions.
+The previously independent operator $C_n$ is now expressible by the others, because either $C=1$ or $C=-1$ according to whether we are dealing with even or odd functions.
+This choice of sign determines the only difference between the two versions of the algebra in question.
+Moreover, the operator $A = \sum_{j=1}^n s_js_{j+1} $ is the same in both version, but obviously $B=\sum_{j=1}^nC_j$ is not; here, the interpretation of $C_n$ makes a difference.
+
+The arbitrary elimination of one of the sets of operators which enter symmetrically into the problem causes much inconvenience.
+The symmetry can be retained if we start with the two sequences of operators, 
+\begin{align}
+s_1s_2,s_2s_3,\dots, s_ns_1\quad\text{and}\quad C_1,\dots, C_n,
+\end{align}
+required to satisfy the identities
+\begin{align}
+s_1s_2s_2s_3 \dots s_ns_1 &= s_1^2s_2^2 \dots s_n^2 = 1,\\
+C_1C_2 \dots C_n &= C = \begin{cases} 1 \quad \text{(even functions)}\\ -1 \quad \text{(odd functions)}\end{cases}.
+\end{align}
+The commutation rules are simply described when the two sets are arranged in the interlacing cyclic sequence
+\begin{align}
+s_ns_1, C_1, s_1s_2,C_2,\dots, s_{n-1}s_n, C_n, (s_ns_1,\dots).
+\end{align}
+Here, each element anti-commutes with its neighbours and commutes with all other elements in the sequence.
+\section{Dual Transformation}
+The fundamental algebraic reason for the dual relation found by Kramers and Wannier is now readily recognized: \emph{In the representation that belongs to even functions}, the two sets of the operators are alike, because the starting point of the sequence is immaterial.
+Neither does it matter if the sequence is reversed, so that the general rules of computation remain unchanged if each member of the sequence is replaced by the corresponding member of the sequence
+\begin{align}
+C_k, s_ks_{k\pm 1}, C_{k\pm 1}, s_{k\pm 1} s_{k\pm 2}, \dots.
+\end{align}
+Accordingly, the correspondence $s_js_{j+1} \rightarrow C_{k\pm j}$ and $C_j\rightarrow s_{k\pm (j-1)}s_{k\pm j}$ describes an automorphism of the whole algebra.
+Under this automorphism, we in particular have $A\rightarrow B$ and $B\rightarrow A$, or, compactly, $f(A,B)\rightarrow f(B,A)$, all in the algebra of even functions.
+Similarity can be inferred from the additional observation that the characters of all representations are determined by the commutation rules, or equally well from the theorem that every automorphism of a complete matrix algebra is an internal automorphism.
+When we return to our original mixed algebra of even and odd functions, our result takes the form
+\begin{align}
+\kla*{1+C}f(A,B) \sim \kla*{1+C}f(B,A).
+\end{align}
+Application to the operator $V$ shows that the operators
+\begin{align}
+\kla*{\sinh 2H}^{-n/2} \kla*{1+C} V(H',H) &= 2^{-n/2} \kla*{1+C} \powe{H'A} \powe{H^\ast B},\\
+\kla*{\sinh 2H'}^{n/2} \kla*{1+C} V'(H^\ast, H'^\ast) &= 2^{-n/2} \kla*{1+C} \powe{H'B} \powe{H^\ast A}
+\end{align}
+are similar, so that the part of the spectrum of $V(H^\ast, H'^\ast)$ that belongs to even functions can be obtained from the corresponding part of the spectrum of $V(H',H)$ by the relation
+\begin{align}
+\lambda_+(H^\ast, H'^\ast) &= \kla*{\sinh 2H \sinh 2H'}^{-n/2} \lambda_+(H',H).
+\end{align}
+This result applies in particular to the larger eigenvalues of the operators in question, because both can be represented by matrices with all positive elements, such that, by Frobenius theorem, the corresponding eigenvectors cannot be odd.
+
+%n=7; J=1; Jp=1; beta=np.log(2); H=beta*J; Hp=beta*Jp
+%size = 2 << (n-1)
+%configurations=np.zeros((size, n),dtype=int)
+%for ctr in range(size):
+%    string = f"{ctr:b}"
+%    string = "0" * (n - len(string)) + string
+%    configuration = [(+1 if int(bit) else -1) for bit in string]
+%    configurations[ctr] = configuration
+%matrix = np.zeros((size, size))
+%for ix, c1 in enumerate(configurations):
+%    for iy, c2 in enumerate(configurations):
+%        intrachain = np.sum(c1 * np.roll(c1,1)) * Hp
+%        interchain = np.sum(c1 * c2) * H
+%        matrix[ix, iy] = np.exp(intrachain + interchain)
+%#ew, ev = np.linalg.eig(matrix)
+%v=np.full(size, 1/np.sqrt(size))
+%ewv=[]
+%for iteration in range(20):
+%    v_new = matrix@v
+%    ew_new = v@v_new
+%    ewv.append(ew_new)
+%    if np.allclose(ew_new*v, v_new):
+%        print(f"Power iteration succeded after {iteration = }")
+%        break
+%    v_new /= np.linalg.norm(v_new)
+%    v = np.copy(v_new)
+%kappa=1/2*np.tanh(2*H)/np.cosh(2*Hp)
+%m = np.arange(1,30)
+%print(np.exp(np.log(2*np.cosh(2*H)) - np.sum(kappa**(2*m) * special.comb(2*m,m)**2/4/m)))
+%print(ewv[-1]**(1/n))
+
+\end{document}

@@ -1,0 +1,152 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning,angles}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\usepackage[compat=1.1.0]{tikz-feynman}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{On the Optimization Problem of Volume per Surface Area}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Variational Calculus}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\newcommand{\vol}{\text{Vol}}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{The Problem}
+Consider an $N$-dimensional manifold $M$ with boundary $\partial M$.
+We want to find the $M$ for which the ratio of $N$-dimensional volume $V := \vol_N(M)$ and $N-1$-dimensional ``area'' $A := \vol_{N-1}(\partial M)$ is maximised.
+To that end we define
+\begin{align}
+\vol(M) &:= \intr\int_{\mathbb{R}^{N}} \Theta_M(x) \, \mathrm{d}^{N}x
+\end{align}
+where $\Theta_M(x) = 1$ for all $x\in M$ is the characteristic function.
+Then the problem as stated above is equivalent to maximizing the ratio
+\begin{align}
+R &:= \frac{\vol_N(M)}{\vol_{N-1}(\partial M)}.
+\end{align}
+Without loss of generality we may now assume two things.
+First, it is useful to fix the lower dimensional volume to unity, i.e. $A=1$, since the ratio is unaffected by that choice.
+This also avoids any potential problems with $A=0$.
+Second, we may assume $M$ to be convex. 
+Without giving a formal proof, it should be clear how any concavities can be removed by both increasing $V$ while decreasing $A$.
+This allows us to choose the ``center of mass'' of $M$ as our origin, while making sure that we can reach $\partial M$ with a straight line of unspecified length in any direction.
+Then we may rewrite the ratio $R$ as
+\begin{align}
+R &= \intr\int_{\mathbb{R}^{N}} \Theta_M(x) \, \mathrm{d}^{N}x.
+\end{align}
+\subsection{General Spherical Coordinates}
+We can define $N$-dimensional spherical coordinates by introducing angles $\phi\in [0,2\pi)$ and $\theta_1,\dots,\theta_{N-2} \in [0,\pi)$.
+One can show that the volume element is given by
+\begin{align}
+\mathrm{d}^Nx &= r^{N-1} \sin(\theta_1)^{N-2} \sin(\theta_2)^{N-3} \dots \sin(\theta_{N-2}) \mathrm{d}r \mathrm{d}\phi \tecxt\text{d}\theta_1 \dots \tecxt\text{d}\theta_{N-2}.
+\end{align}
+Therefore, in spherical coordinates we can express $R$ using the function $r(\phi,\theta_1,\dots,\theta_{N-2})$ which is defined as the radial distance of $\partial M$ from the origin in an arbitrary direction specified by the set of angles.
+We find
+\begin{align*}
+R &= \intx\int_{0}^{\pi} \dots \intx\int_{0}^{\pi} \intx\int_{0}^{2\pi}  \intx\int_{0}^{\infty} \Theta\kla\left( r(\phi,\theta_1,\dots,\theta_{N-2}) - r \right) \times\\
+&\hspace{2cm} \times \, r^{N-1}\mathrm{d}r \mathrm{d}\phi \sin(\theta_1)^{N-2} \sin(\theta_2)^{N-3} \dots \sin(\theta_{N-2}) \tecxt\text{d}\theta_1 \dots \tecxt\text{d}\theta_{N-2} \numberthis = \\
+&=  \int_{0}^{\pi} \intx\int_{0}^{2\pi} \dots \intx\int_{0}^{\pi} \frac{1}{N} r(\phi,\theta_1,\dots,\theta_{N-2})^N \, \mathrm{d}\phi \prod_{j=1}^{N-2} \sin(\theta_j)^{N-1-j} \mathrm{d}\theta_j. \numberthis
+\end{align*}
+\subsection{Lagrange Multipliers}
+Since we fixed the area $A=1$ we need to include a corresponding term in our functional
+\begin{align}
+R &\rightarrow R + \lambda (A - 1).
+\end{align}
+Note that the $N-1$-dimensional volume element on the surface of an $N$-dimensional sphere of radius $r$ is identical to the angular part of $\tecxt\text{d}^Nx$.
+Thus the area is given by
+\begin{align}
+A &= \int_{0}^{\pi} \intx\int_{0}^{\pi} \dots \intx\int_{0}^{2\pi} \sqrt{r^2 + \partial_\phi r(\dots)^2 + \partial_{\theta_1} r(\dots)^2 + \dots}^{N-1}  \mathrm{d}\phi \prod_{j=1}^{N-2} \sin(\theta_j)^{N-1-j} \mathrm{d}\theta_j.
+\end{align}
+The functional we need to maximize then becomes $R[r(\dots)] = \int \mathcal{R}(r(\dots), \partial r(\dots))$ where we defined
+\begin{align}
+\mathcal{R} &= \frac{1}{N} r(\phi,\theta_1 ,\dots,\theta_{N-2})^N + \lambda \sqrt{r^2 + \partial_\phi r(\dots)^2 + \partial_{\theta_1}r(\dots)^2 + \dots + \partial_{\theta_{N-2}} r(\dots)^2}^{N-1}.
+\end{align}
+FIXME: The surface area formula feels wrong, and I also do not know how to derive it -- this was more of a guess...
+\section{Solution to the Optimization Problem}
+\subsection{Case $N=2$}
+In two dimensions the functional is $R[r(\phi)] = \intx\int_{0}^{2\pi} \mathcal{R}(r(\phi), r'(\phi)) \, \mathrm{d}\phi$ with
+\begin{align}
+\mathcal{R} &= \frac{1}{2} r(\phi)^2 + \lambda\sqrt{r^2 + r'(\phi)^2}.
+\end{align}
+Since there is no explicit dependence on $\phi$ the Euler-Lagrange equations become
+\begin{align}
+\mathcal{R} - r'(\phi) \frac{\partial \mathcal{R}}{\partial r'(\phi)} &= \tecxt\text{const} =: c.
+\end{align}
+In our case we find
+\begin{align}
+c &= \frac{r^2}{2} + \lambda\sqrt{r^2 + r'^2} - \lambda \frac{r'^2}{\sqrt{r^2 + r'^2}}.
+\end{align}
+Multiplying by the square root yields
+\begin{align}
+\kla\left( c - \frac{r^2}{2} \right) \sqrt{ r^2 + r'^2 } &= \lambda r^2.
+\end{align}
+Squaring and rearranging gives
+\begin{align}
+r'^2 &= \frac{\lambda^2 r^4}{\kla\left( c - \frac{r^2}{2} \right)^2} - r^2 =: f(r).
+\end{align}
+The solution to this differential equation is given by 
+\begin{align}
+\phi + \tecxt\text{const} &= \intx\int_{ }^{ } \frac{1}{\sqrt{f(r)}} \, \mathrm{d}r = \intx\int_{ }^{ } \frac{1}{r} \kla\left( \frac{\lambda^2r^2}{c^2 - cr^2 + \frac{r^4}{4}} - 1 \right)^{-\frac{1}{2}} \, \mathrm{d}r = \\
+&= \frac{1}{2} \intx\int_{ }^{ } \frac{1}{u} \kla\left( \frac{\lambda^2}{c^2 - cu + \frac{u^2}{4}} - 1 \right)^{-\frac{1}{2}} \, \mathrm{d}u = \frac{1}{2} \intx\int_{ }^{ } \frac{1}{u} \sqrt{\frac{c^2 - cu + \frac{u^2}{4}}{\lambda^2 - c^2 + cu - \frac{u^2}{4}}} \, \mathrm{d}u
+\end{align}
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,147 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{2 Lattice polymer}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Soft Condensed Matter}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+We consider a random walk on a one-dimensional lattice consisting of $N$ steps of size $\pm a$, where $a$ is the 1D lattice constant.
+Starting at the origin, the walker reaches the position $R$ on the lattice.
+The walk can be considered as a model for a one-dimensional ideal polymer with $N+1$ monomers having the end-to-end distance $R$ (in terms of lattice coordinates).
+\\
+The total number of configurations a polymer of length $N$ can have is simply given by $\Omega_0(N) = 2^N$, as there are two possible configurations for each (independent) step.
+Let $N_\pm$ denote the number of steps in positive or negative direction respectively.
+An end-to-end distance of $R$ is then equivalent to 
+\begin{align}
+R &= N_+ - N_- = N - 2N_-.
+\end{align}
+In this form it is evident that we are looking for the number of possible combinations of the $N_-$-steps, leading to
+\begin{align}
+\Omega(R,N) &= \binom{N}{N_-} = \binom{N}{\frac{N-R}{2}}.
+\end{align}
+The formula is not entirely correct, as it does not respect that e.g. odd $N$ and $R$ should give $\Omega(R,N)=0$.
+This effectively means that only half the $R$-values are allowed with some non-zero probability. 
+We will come back to this in the discussion of the next result.
+\\
+The probability for an end-to-end length is given by
+\begin{align}
+p(R) &= \frac{\Omega(R,N)}{\Omega_0(N)} = \frac{N!}{2^N}\frac{1}{\kla\left( \frac{N-R}{2} \right)! \kla\left( \frac{N+R}{2} \right)!}.
+\end{align}
+Consider the case $N\gg 1$ and $R\ll N$.
+Then we may make use of the Stirling approximation $N!\sim\sqrt{2\pi N}(N/\e)^N$.
+Note that $\log N! \sim N\log N - N + \frac{1}{2}\log (2\pi N)$.
+It is easier to first consider the logarithm of the probability
+\begin{align*}
+\log p(R) &= -N\log 2 + \log N! - \log\kla\left( \frac{N-R}{2} \right)! - \log\kla\left( \frac{N+R}{2} \right)! \sim \\
+&\sim -N\log2 + \log\sqrt{2\pi N} + N\log N - N - \log\kla\left( \pi \sqrt{N^2-R^2} \right) - \\
+&\hspace{0.5cm} - \frac{N-R}{2}\log\frac{N-R}{2} + \frac{N-R}{2} - \frac{N+R}{2}\log\frac{N+R}{2} + \frac{N+R}{2} \simeq \\
+&\simeq \log\kla\left( \frac{\sqrt{2\pi N}}{\pi N} \right) +\frac{R^2}{2N^2} + N\log \frac{N}{2} - \frac{N}{2}\log\kla\left( \frac{N^2}{4} \right) + \frac{R}{2}\log\frac{N-R}{N+R} = \numberthis \\
+&= \frac{1}{2}\log \frac{2}{\pi N} +\frac{R^2}{2N^2} + \frac{R}{2} \klam\left[ \log\kla\left( 1 - \frac{R}{N} \right) - \log\kla\left( 1 + \frac{R}{N} \right) \right] \simeq \\
+&\simeq \frac{1}{2}\log \frac{2}{\pi N} +\frac{R^2}{2N^2} + \frac{R}{2}\klam\left[ -\frac{R}{N} - \frac{R^2}{2N^2} - \frac{R}{N} + \frac{R^2}{2N^2} \right] = \\
+&= \frac{1}{2}\log \frac{2}{\pi N} -\frac{R^2}{2N}.
+\end{align*}
+Thus we obtain the preliminary result
+\begin{align}
+p(R) &\sim \sqrt{\frac{2}{\pi N}} \exp\kla\left( -\frac{R^2}{2N} \right).
+\end{align}
+Recall that only half the $R$-values were allowed.
+However, in this ``continuous'' limit this distinction is not very useful.
+Instead, we just allow the entire range for $R$ but compensate by reducing the probability for any $R$ by two, giving
+\begin{align}
+p(R) &\sim \frac{1}{\sqrt{2\pi N}} \exp\kla\left( -\frac{R^2}{2N} \right).
+\end{align}
+In terms of the actual distance $r=Ra$ on the lattice we find
+\begin{align}
+p(r) &\sim \frac{1}{\sqrt{2\pi N}} \exp\kla\left( -\frac{r^2}{2Na^2} \right) \frac{\tecxt\text{d}R}{\tecxt\text{d}r} = \frac{1}{\sqrt{2\pi N}a} \exp\kla\left( -\frac{r^2}{2Na^2} \right).
+\end{align}
+The mean position is given by
+\begin{align}
+\bra\langle r \rangle &= \intr\int_{\mathbb{R}^{ }} rp(r) \, \mathrm{d}^{ }r = 0\quad (\tecxt\text{due to the symmetry }r\rightarrow -r).
+\end{align}
+The variance is then simply given by 
+\begin{align}
+\Delta r^2 &= \bra\langle r^2 \rangle = \intr\int_{\mathbb{R}^{ }} r^2p(r) \, \mathrm{d}^{ }r = \frac{1}{\sqrt{2\pi Na^2}} 2N^2a^2 \frac{\partial}{\partial N} \intr\int_{\mathbb{R}^{ }} \exp\kla\left( -\frac{r^2}{2Na^2} \right) \, \mathrm{d}^{ }r = \\
+&= \frac{1}{\sqrt{2\pi Na^2}} 2N^2a^2 \frac{\partial}{\partial N} \sqrt{2\pi Na^2} = 2N^2a^2 \frac{1}{2N} = Na^2.
+\end{align}
+The entropy of the polymer for a given $r$ can be computed from $S(r) = k_B\log \Omega(r)$, where $\Omega(r) = p(r)\Omega$.
+This leads to 
+\begin{align}
+S(r) &= k_B\log p(r)\Omega_0 = k_B\log\Omega + k_B\log p(r) =: S_0 - \frac{k_Br^2}{2\Delta r^2},
+\end{align}
+where $S_0 := k_B\log\Omega - \frac{1}{2}\log\kla\left( 2\pi\Delta r^2 \right)$ is independent of $r$.
+Since $S''(r)<0$, entropy maximisation gives $r=0$ without any outer influence.
+However, for a linear potential $U(r) = -\kappa r$ we find the free energy
+\begin{align}
+F(r) &= U(r) - TS(r) = -\kappa r - TS_0 + \frac{k_BTr^2}{2\Delta r^2}.
+\end{align}
+This function has a minimum at $F'(r) = 0 = -\kappa + \frac{k_BT}{\Delta r^2} \bar{r}$, giving $\bar{r}=\frac{\kappa \Delta r^2}{k_BT}$.
+The assumed potential is equivalent to a constant force $-U'(r) = \kappa$.
+For increasing temperature, the equilibrium length is $\bar{r} \propto \frac{\kappa}{T}$.
+For this to be constant, the force would have to be directly proportional to temperature.
+\\
+The Central Limit Theorem would have directly provided us with the gaussian probability distribution, since the walker is the culmination of many independent identical events.
+
+%This allows us to simplify the expression
+%\begin{align}
+%p(R) &\sim \frac{\sqrt{2\pi N} N^N\e^{-N}}{2^N} \frac{1}{\pi\sqrt{N^2-R^2}} \e^{\frac{N-R}{2}} \e^{\frac{N+R}{2}} \kla\left( \frac{N-R}{2} \right)^{-\frac{N-R}{2}} \kla\left( \frac{N+R}{2} \right)^{-\frac{N+R}{2}} \simeq \\
+%&\simeq \frac{N^N}{2^{N-1}\sqrt{2\pi N}} \kla\left( \frac{N-R}{2} \right)^{-\frac{N-R}{2}} \kla\left( \frac{N+R}{2} \right)^{-\frac{N+R}{2}}
+%\end{align}
+
+\end{document}

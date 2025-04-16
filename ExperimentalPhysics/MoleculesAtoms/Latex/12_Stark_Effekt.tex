@@ -1,0 +1,95 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{12 Stark-Effekt}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 34: Zeeman-Effekt}
+Der 3d-Zustand im Wasserstoff ($n=3$, $l=2$) spaltet in einem äußeren Magnetfeld $B$ in $2l+1=5$ Energieniveaus mit $\Delta E_Z=\mu_Bm_lB$ auf. Der anomale Zeeman-Effekt liefert für die Zustände 3d${}_{3/2}$ und 3d${}_{5/2}$ ($j=\frac{3}{2},\frac{5}{2}$) mit $g_j=\frac{4}{5},\frac{6}{5}$ allerdings $\Delta E_Z=\mu_Bg_jm_jB$. Die maximal möglich Aufspaltung ist also bestimmt durch $g_j\Delta m_j=2g_jj=\frac{12}{5},6$. Die Feinstrukturaufspaltung folgt aus $j=l\pm\frac{1}{2}=\frac{5}{2},\frac{3}{2}$. Berechne die Feldstärke, damit diese Aufspaltungen gleich groß sind:
+\begin{align*}
+\Delta E_{FS}&=E_n\frac{\alpha^2Z^2}{n}\klam\left[ {\frac{1}{j_1+\frac{1}{2}}-\frac{3}{4n}-\frac{1}{j_2+\frac{1}{2}}+\frac{3}{4n}} \right]=\frac{\alpha^4m_ec^2}{2n^3}\klam\left[ {\frac{1}{2}-\frac{1}{3}} \right]=\frac{\alpha^4m_ec^2}{12\cdot 27}\\
+B&=\frac{\Delta E_{FS}}{6\mu_B}=\frac{\alpha^4m_ec^2}{72\cdot 27\mu_B}=\underline{12,88\,\tecxt\text{mT}}
+\end{align*}
+Die Niveaus $7^1$D und $6^1$P ($S=0$, $L=2,1$) spalten nur in $2L+1=5,3$ Energien auf, da der anomale Zeeman-Effekt nur bei $S\ge 1$ einen Einfluss hat. Aufgrund der konstanten Aufspaltung $\Delta E_Z=\mu_BB\Delta m_L=0,\pm\mu_B$ ($B=1\,$T) und der Auswahlregel $\Delta m_L=0,\pm 1$ gibt es nur 3 Linien ($E_0=\frac{hc}{\lambda}=1,92563\,$eV):
+\begin{table}[!h]
+\centering
+\begin{tabular}{c|c|c|c|c|c}
+$7^1\tecxt\text{D}_{m_L}$&$6^1\tecxt\text{P}_{m_L}$&$\Delta m_L$&Polarisation&$\Delta E$&$\lambda\,/\,$nm\\ \hline
+2&1&&&&\\
+1&0&-1&$\sigma^{-}$&$E_0+\mu_B$&643,78\\
+0&-1&&&&\\ \hline
+1&1&&&&\\
+0&0&0&$\pi$&$E_0$&643,8\\
+-1&-1&&&&\\ \hline
+0&1&&&&\\
+-1&0&1&$\sigma^{+}$&$E_0-\mu_B$&643,82\\
+-2&-1&&&&
+\end{tabular}
+\end{table}
+\section*{Aufgabe 35: Zeeman-Effekt und Paramagnetismus}
+Der Zustand $[Xe]4\tecxt\text{f}^2$ hat $2l+1=7$ mögliche Werte für $m_l$. Da nur 2 Elektronen im Orbital vorhanden sind, können beide den Spin in die gleiche Richtung haben, folglich ist $S=1$ (und $m_{l_1}=3,m_{l_2}=2$). Also ist $J=|L-S|=4$ (Schale weniger als halbvoll) und der Zustand spaltet in $2J+1=9$ Niveaus auf. Beim Paschen-Back-Effekt ist $\Delta E=\mu_BB(m_L+2m_S)$, also gibt es $2(L+2S)+1=15$ Niveaus.\\
+Es gilt $g_J=1+\frac{J(J+1)+S(S+1)-L(L+1)}{2J(J+1)}=\frac{4}{5}$ und damit $\Delta E=g_Jm_J\mu_BB=\frac{4m_J}{5}\mu_B$ ($B=1\,$T). Die Ionen mit $m_J=-4$ sind im Feld ausgerichtet. Gemäß der Boltzmann-Verteilung gilt nun für das Verhältnis der Anzahl an Teilchen in einem Zustand $N_a$ zur Gesamtanzahl $N$ folgender Zusammenhang:
+\begin{align*}
+\frac{N_a}{N}&=\frac{\sum_{a\in\tecxt\text{Konfigurationen in }a}\exp\kla\left( {-\frac{E_a}{kT}} \right)}{\sum_{j\in\tecxt\text{Konfigurationen gesamt}}\exp\kla\left( {-\frac{E_j}{kT}} \right)}\\
+\frac{N(m_J=-4)}{N}&=\frac{\exp\kla\left( -\frac{\Delta E_{-4}}{kT} \right)}{\sum_{j=-4}^4\exp\kla\left( {-\frac{\Delta E_j}{kT}} \right)}=\klam\left[ {\sum_j\exp\kla\left( {-\frac{g_J\mu_BB}{kT}\kla\left( {4+j} \right)} \right)} \right]^{-1}\kom\overset{\substack{{\tecxt\text{geom. Reihe}} \\ |}}{\approx}\\
+&\approx \klam\left[ {\sum_{j=0}^\infty\exp\kla\left( {-\frac{g_J\mu_BB}{kT}} \right)^j} \right]^{-1}=1-\exp\kla\left( {-\frac{g_J\mu_BB}{kT}} \right)\overset{!}{=}\frac{9}{10}\\
+&\Rightarrow\ \ T=-\frac{g_J\mu_BB}{k\log\kla\left( {1-\frac{N_{-4}}{N}} \right)}=\underline{0,2334\,\tecxt\text{K}}
+\end{align*}
+\section*{Aufgabe 36: Stark-Effekt}
+Gegeben ist ein Wasserstoffniveau mit $n=4$ und eine Feldstärke von $\epsilon=10^8\,\frac{\tecxt\text{V}}{\tecxt\text{m}}$. Im Stark-Effekt spaltet sich dieses in $2n-1=7$ Niveaus auf. Für die Energieverschiebung gilt dabei $\Delta E=\frac{3a_0e\epsilon}{2Z}\cdot n(n_1-n_2)$, wobei $n=n_1+n_2+|m_l|+1$ ist. Die maximal mögliche Aufspaltung ist also zwischen $n_1=n-1,n_2=0$ und $n_1=0,n_2=n-1$ durch $\Delta E=3a_0e\epsilon n(n-1)=0,1905\,$eV gegeben. Eine Aufschlüsselung der Zustände ergibt folgende Tabelle:
+\begin{table}[!h]
+\centering
+\begin{tabular}{c|c|c|c}
+$m_l$&$n_1$&$n_2$&$n_1-n_2$\\ \hline
+0&3&0&3\\
+ &2&1&1\\
+ &1&2&-1\\
+ &0&3&-3\\ \hline
+1&2&0&2\\
+ &1&1&0\\
+ &0&2&-2\\ \hline
+2&1&0&1\\
+ &0&1&-1\\ \hline
+3&0&0&0
+\end{tabular}
+\end{table}\\
+Unter Beachtung des Vorzeichens von $m_l$ bei Werten ungleich Null ergeben sich also $4+2\cdot 6=16$ Konfigurationen mit nur 7 verschiedenen Energien. \\
+Im anomalen Zeeman-Effekt gibt es für $n=4,s=\frac{1}{2}$ folgende Konfigurationen. Die Energiedifferenz ist $\Delta E=\mu_BBg_jm_j$ und die maximale Aufspaltung somit $\Delta E=\mu_BBg_j\cdot 2j\equiv E\cdot\alpha_j$ mit $\alpha_j:=2g_jj$:
+\begin{table}[!h]
+\centering
+\begin{tabular}{c|c|c|c}
+$l$&$j$&$g_j$&$\alpha_j$\\ \hline
+3&7/2&8/7&8\\
+ &5/2&6/7&30/7\\ \hline
+2&5/2&6/5&6\\
+ &3/2&4/5&12/5\\ \hline
+1&3/2&4/3&4\\
+ &1/2&2/3&2/3\\ \hline
+0&1/2&2&2
+\end{tabular}
+\end{table}
+Die größte Aufspaltung liegt ist also $\Delta E=8\mu_BB$, woraus $B=\frac{\Delta E}{8\mu_B}=411,38\,$T folgt.
+\end{document}

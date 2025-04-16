@@ -1,0 +1,98 @@
+Generell: es ist sicherlich hilfreich, wenn einige Punkte erst nacheinander auf
+den Folien auftauchen und somit die Folien langsam aufgebaut werden. Dann wird 
+man nicht sofort so erschlagen.
+
+
+
+
+Slide 2
+    - Bilder verwenden. Auch schon das schoenste Bild aus deiner Arbeit als 
+    Anreiz (aus blablabla Gruenden schauen wir uns das an und da wollen wir 
+    im speziellen hin)
+    - Vielleicht dazu ein Bild eines 2D Phasenraums. Daran kann man erklaeren,
+    wo so Tori auftreten und kann damit auch ein bisschen motivieren, warum man
+    sich die im komplizierter werdenden Testsignal anschaut
+    - Der Begriff der Frequenz in dem Kontezt muss ein mal Allgemein 
+    eingefuehrt werden
+    - Wozu gehoert die Referenz? Das ist nicht so ganz klar
+
+Slide 3
+    - das ist sehr technisch, aber unbedingt notwendig. Kann man das eventuell
+    mit ein, zwei Bildern untermauern? Ansonsten ist hier die Tonspur sehr
+    wichtig um ein Gefuehl fuer die einzelnen Bestandteile der WBA zu bekommen
+    - Referenz gehoert eher nur zur linken Seite, dass sollte klar werden
+
+Slide 4
+    - wird das Problem fuer die WBA hinreichend klar? (Tonspur)
+    - was ist die Message dieser Folie? Ergebnisse?
+
+
+Slide 5
+    - Wieder: warum schauen wir uns das an? Gibt es dazu Ergebnisse?
+
+Slide 6
+    - Ist die Motivation dafuer in der Tonspur?
+
+Slide 7
+    - So am besten auch fuer die beiden Faelle davor -> man gewoehnt sich an
+    den Plotaufbau und man kann das Bild schneller einschaetzen
+
+Slide 8
+    - Eine Zeile als Ueberschrift reicht: Chirikov's 2D standard map oder 
+    aehnlich
+    - Eigentlich wuerde man in der  Notation das n und n+1 weglassen. Das
+    wuerde dir gerade bei den 4D Gleichungen auch eine Menge Platz sparen. Ist
+    aber auf die letzten paar Tage vielleicht zu aufwendig, da die Plotlabels
+    noch mal anzupassen
+    - Tonspur: generisch aber verhaeltnismaessig einfaches Hamiltonsches 
+    dynamisches System
+    - Mit einem Viereck den Bereich markieren in dem auf der naechsten Slide
+    reingezoomt wird
+
+Slide 9
+    - Die gestrichelte Linie im rechten Plot muss dicker sein
+    - Erst Zoom des Phasenraums und die Linie erklaeren und dann den linken
+    Plot einblenden
+    - Tonspur: kurz Resuemee fassen bevor zu 4D uebergegangen wird
+
+Slide 10
+    - Auch hier nur einen Titel verwenden: Froeschle's 4D standard map
+    - Auf der Folie dann nur die Map erklaeren, dann kann die Gleichung auch
+    ausgeschrieben werden. Den Fall der schwachen Kopplung auf eine neue Folie
+    analog zum Fall der starken Kopplung. Hier muss halt viel ueber die Tonspur
+    kommen. Ein Zuhoerer  wird die vier Gleichungen wahrscheinlich eh nicht so
+    schnell komplett nachvollziehen koennen (was nicht schlimm ist)
+    - Die Boxen verwirren mich. Man bekommt den Eindruck, dass diese Teile der
+    Gleichung etwas mit den blau und orange eingefaerbten Projektionen zu tun 
+    hat. Lieber weglassen.
+
+Slide 12
+    - Der rechte Plot ueberblendet ein bisschen die untere Trennlinie
+    - Kann man noch ein mal kurz das Problem hierbei auf die Folie packen?
+    Entweder hier als Motivation fuer die naechste Folie oder direkt auf die
+    naechste Folie
+
+Slide 13
+    - Vielleicht waere es noch mal cool ein vorher/nachher Bild von der
+    Transformation auf einer Folie zu haben. Einfach durch Ueberblendung zum 
+    Beispiel
+
+Slide 15/16
+    - Ich denke mal, das wird eine Folie, die nur den Experten etwas sagt, was
+    aber nicht schlimm ist, da es eh die letzte inhaltliche Folie ist. Da
+    steckt unglaublich viel Information drin und ich wuerde nicht versuchen
+    dazu alles zu erklaeren. Ich vermute mal, dass es da auf jeden Fall nach
+    dem Vortrag Fragen geben wird.
+
+Slide 17
+    - Wird auf alle Punkte in dem Vortrag eingegangen? Ansonsten wuerde ich
+    erst ein mal nur Zusammenfassen, was man im Vortrag gelernt hat und dann
+    noch anmerken, was generell noch in der Arbeit geleistet wurde, hier aber
+    aus zeitlichen Gruenden nicht dabei ist
+    - Das "Thanks to my supervisors!" wuerde ich nach dem Inhalt machen, also
+    irgendwo unter der Summary :)
+
+Slide 18 bis Ende
+    - Wow, da kann ja nichts mehr schief gehen :) :D
+
+    

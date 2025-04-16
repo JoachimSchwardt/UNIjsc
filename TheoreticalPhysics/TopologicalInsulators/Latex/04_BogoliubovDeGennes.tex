@@ -1,0 +1,243 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{04 Bogoliubov-de Gennes Hamiltonians}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Topological Insulators and Superconductors}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Problem 4.1: Particle-Hole Symmetry}
+We consider a particle-hole-symmetric Bloch Hamiltonian satisfying
+\begin{align}
+CH(\mathbf{p})C^\dagger &= -H(-\mathbf{p})^\ast,
+\end{align}
+where $C$ is the charge conjugation matrix.
+Let the Hamiltonian take the form
+\begin{align}
+H(\mathbf{p}) &= \epsilon(\mathbf{p}) \tau_0 + d_\alpha (\mathbf{p}) \tau_\alpha
+\end{align}
+where $\tau_0$ is the identity matrix, and $\tau_\alpha$ are the Pauli-matrices.
+
+\subsection*{a) $C=\tau_x$}
+In this case, we have
+\begin{align}
+CH(\mathbf{p})C^\dagger &= \tau_x \kla\left( \epsilon(\mathbf{p}) \tau_0 + d_x (\mathbf{p}) \tau_x  + d_y (\mathbf{p}) \tau_y + d_z (\mathbf{p}) \tau_z \right) \tau_x = \\
+&= \epsilon\tau_0 + d_x\tau_x - d_y\tau_y - d_z\tau_z \overset{!}{=} -H(-\mathbf{p})^\ast.
+\end{align}
+In explicit matrix form, we then find
+\begin{align}
+\begin{pmatrix}
+\epsilon (\mathbf{p}) - d_z(\mathbf{p}) & d_x(\mathbf{p}) + \i d_y (\mathbf{p}) \\ 
+d_x (\mathbf{p}) - \i d_y(\mathbf{p}) & \epsilon(\mathbf{p}) + d_z (\mathbf{p})
+\end{pmatrix} &\overset{!}{=} -\begin{pmatrix}
+\epsilon^\ast (-\mathbf{p}) + d_z^\ast(-\mathbf{p}) & d_x^\ast(-\mathbf{p}) + \i d_y^\ast(-\mathbf{p}) \\ 
+d_x^\ast (-\mathbf{p})  - \i d_y^\ast(-\mathbf{p}) & \epsilon^\ast(-\mathbf{p}) - d_z^\ast (-\mathbf{p})
+\end{pmatrix}.
+\end{align}
+We may assume that all coefficients are real, since we require $H$ to be hermitian, i.e. $H^\dagger = H$.
+Then the most simple set of constraints is given by
+\begin{align}
+\epsilon (-\mathbf{p}) &= -\epsilon (\mathbf{p}),\\
+d_x (-\mathbf{p}) &= -d_x (\mathbf{p}),\\
+d_y (-\mathbf{p}) &= -d_y (\mathbf{p}),\\
+d_z (-\mathbf{p}) &= d_z (\mathbf{p}).
+\end{align}
+
+
+\subsection*{b) $C=\tau_0$}
+In this case, we have
+\begin{align}
+CH(\mathbf{p})C^\dagger &= \tau_0 \kla\left( \epsilon(\mathbf{p}) \tau_0 + d_\alpha (\mathbf{p}) \tau_\alpha \right) \tau_0 = \\
+&= H(\mathbf{p}) \overset{!}{=} -H(-\mathbf{p})^\ast.
+\end{align}
+In explicit matrix form, we then find
+\begin{align}
+\begin{pmatrix}
+\epsilon (\mathbf{p}) + d_z(\mathbf{p}) & d_x(\mathbf{p}) - \i d_y (\mathbf{p}) \\ 
+d_x (\mathbf{p}) + \i d_y(\mathbf{p}) & \epsilon(\mathbf{p}) - d_z (\mathbf{p})
+\end{pmatrix} &\overset{!}{=} -\begin{pmatrix}
+\epsilon^\ast (-\mathbf{p}) + d_z^\ast(-\mathbf{p}) & d_x^\ast(-\mathbf{p}) + \i d_y^\ast(-\mathbf{p}) \\ 
+d_x^\ast (-\mathbf{p})  - \i d_y^\ast(-\mathbf{p}) & \epsilon^\ast(-\mathbf{p}) - d_z^\ast (-\mathbf{p})
+\end{pmatrix}.
+\end{align}
+We may assume that all coefficients are real, since we require $H$ to be hermitian, i.e. $H^\dagger = H$.
+Then the most simple set of constraints is given by
+\begin{align}
+\epsilon (-\mathbf{p}) &= -\epsilon (\mathbf{p}),\\
+d_x (-\mathbf{p}) &= -d_x (\mathbf{p}),\\
+d_y (-\mathbf{p}) &= d_y (\mathbf{p}),\\
+d_z (-\mathbf{p}) &= -d_z (\mathbf{p}).
+\end{align}
+
+%\begin{align}
+%CH(\mathbf{p})C^\dagger &= \tau_x \kla\left( \epsilon(\mathbf{p}) \tau_0 + d_\alpha (\mathbf{p}) \tau_\alpha \right) \tau_x = \\
+%&= \epsilon(\mathbf{p}) \tau_0 + d_\alpha (\mathbf{p}) \tau_x \kla\left( \tau_x\tau_\alpha + \klam\left[ \tau_\alpha, \tau_x \right] \right) = \\
+%&= H(\mathbf{p}) + d_\alpha (\mathbf{p}) \tau_x 2\i\epsilon_{\alpha x \beta} \tau_\beta = \\
+%&= H(\mathbf{p}) + 2\i d_\alpha (\mathbf{p}) \epsilon_{\alpha x\beta} \kla\left( \delta_{x\beta}\tau_0 + \i\epsilon_{x\beta\gamma} \tau_\gamma \right) = \\
+%&=  H(\mathbf{p}) -2 d_\alpha (\mathbf{p}) 
+%\end{align}
+%\begin{align}
+%CH(\mathbf{p})C^\dagger &= \tau_x \kla\left( \epsilon(\mathbf{p}) \tau_0 + d_\alpha (\mathbf{p}) \tau_\alpha \right) \tau_x = \epsilon(\mathbf{p}) \tau_0 + d_\alpha (\mathbf{p}) \tau_x \kla\left( \i\epsilon_{\alpha x\beta}\tau_\beta \right) = \\
+%&= 
+%\end{align}
+
+\newpage
+\section*{Problem 4.2: Bogoliubov-de Gennes Hamiltonians}
+We will consider three Hamiltonians of differing dimensionality.
+Let $\tau_\alpha$ and $\sigma_\alpha$ be Pauli-matrices for the spin and orbital degrees of freedom respectively.
+Note that in general, we may write
+\begin{align}
+H &= \sum_{p\sigma} \epsilon_p c_{p\sigma}^\dagger c_{p\sigma} = \frac{1}{2}\sum_{p\sigma} \epsilon_p c_{p\sigma}^\dagger c_{p\sigma} + \epsilon_p \kla\left( \klammer\left\{ c_{p\sigma},c_{p\sigma}^\dagger \right\} - c_{p\sigma}c_{p\sigma}^\dagger \right) = \\
+&= \frac{1}{2} \sum_{p\sigma} \epsilon_p c_{p\sigma}^\dagger c_{p\sigma} - \epsilon_p c_{p\sigma}c_{p\sigma}^\dagger + \underbrace{\frac{1}{2}\sum_{p\sigma} \epsilon_p}_{=\,\sum_p\epsilon_p \,\equiv\, \tecxt\text{const}}.
+\end{align}
+
+\subsection*{a) One-dimensional}
+Consider a Bloch Hamiltonian of the form
+\begin{align}
+H_{1\tecxt\text{D}} &= \kla\left( p - 1 \right)\sigma_0 \equiv \epsilon_p\sigma_0,
+\end{align}
+then the actual Hamiltonian is given by
+\begin{align}
+H &= \sum_{p} c_p^\dagger  H_{1\tecxt\text{D}}(p) c_p = \frac{1}{2} \sum_p \epsilon_pc_p^\dagger c_p - \epsilon_p c_pc_p^\dagger + \tecxt\text{const},
+\end{align}
+where $c_p = (c_{p\uparrow}, c_{p\downarrow})^\top$. 
+Including an arbitrary interaction-term of the form
+\begin{align}
+H_\Delta &= \sum_{p\sigma\sigma'} \Delta_{p\sigma\sigma'} c_{p\sigma}^\dagger c_{-p\sigma'}^\dagger + \tecxt\text{h.c.},
+\end{align}
+we can transform the Hamiltonian, also dropping the constant term.
+Introducing $a_p := (c_{p\uparrow}, c_{p\downarrow}, c_{-p\uparrow}^\dagger, c_{-p\downarrow}^\dagger)^\top$ we may express the Hamiltonian as
+\begin{align}
+\tilde{H} &= \frac{1}{2}\sum_p a_p^\dagger H_\tecxt\text{BdG} a_p,
+\end{align}
+where the Bogoliubov-de\,Gennes-Hamiltonian is given by
+\begin{align}
+H_\tecxt\text{BdG} &= \begin{pmatrix}
+H_{1\tecxt\text{D}} & \Delta_p \\ \Delta_p^\dagger & -H_{1\tecxt\text{D}}
+\end{pmatrix}.
+\end{align}
+Inserting this we find
+\begin{align}
+\tilde{H} &= \frac{1}{2}\sum_p \begin{pmatrix}
+c_p^\dagger & c_{-p}
+\end{pmatrix} \begin{pmatrix}
+\epsilon_p & \Delta_p \\ \Delta_p^\dagger & -\epsilon_p
+\end{pmatrix} \begin{pmatrix}
+ c_p \\ c_{-p}^\dagger
+\end{pmatrix} = \\
+&= \frac{1}{2}\sum_p c_p^\dagger \epsilon_p c_p - c_{-p} \epsilon_p c_{-p}^\dagger + c_p^\dagger \Delta_p c_{-p}^\dagger + \tecxt\text{h.c.} = \\
+&= H + \tecxt\text{const} + \sum_{p\sigma} \Delta_{p\sigma\sigma'} c_{p\sigma}^\dagger c_{-p\sigma'}^\dagger + \tecxt\text{h.c.} \equiv H + H_\Delta.
+\end{align}
+It may be beneficial to choose
+\begin{align}
+\Delta_p &:= \begin{pmatrix}
+0 & \Delta \\ -\Delta & 0
+\end{pmatrix},
+\end{align}
+since this leads to an interaction-term of the form
+\begin{align}
+H_\Delta &= \sum_{p\sigma\sigma'} \Delta_{p\sigma\sigma'} c_{p\sigma}^\dagger c_{-p\sigma'}^\dagger + \tecxt\text{h.c.} = \sum_p \Delta c_{p\uparrow}^\dagger c_{-p\downarrow}^\dagger - \Delta c_{p\downarrow}^\dagger c_{-p\uparrow}^\dagger + \tecxt\text{h.c.} = \\
+&= \sum_p\Delta \kla\left( c_{p\uparrow}^\dagger c_{-p\downarrow}^\dagger - c_{p\downarrow}^\dagger c_{-p\uparrow}^\dagger \right) + \tecxt\text{h.c.}
+%&= \sum_p \Delta \kla\left( c_{p\uparrow}^\dagger c_{-p\downarrow}^\dagger + c_{-p\uparrow}c_{p\downarrow} \right) - \Delta \kla\left( c_{p\downarrow}^\dagger c_{-p\uparrow}^\dagger + c_{-p\downarrow}c_{p\uparrow} \right).
+\end{align}
+Thus we find
+\begin{align}
+H_\tecxt\text{BdG}  &= \begin{pmatrix}
+(p-1) & 0 & 0 & \Delta \\
+0 & (p-1)  & -\Delta & 0 \\
+0 & -\Delta^\ast & -(p-1) & 0 \\
+\Delta^\ast & 0 & 0 & -(p-1)
+\end{pmatrix}
+\end{align}
+Note that 
+\begin{align}
+\sigma_x\begin{pmatrix}
+a&b \\ c&d
+\end{pmatrix} \sigma_x &= \sigma_x\begin{pmatrix}
+b & a \\ d & c
+\end{pmatrix} = \begin{pmatrix}
+d & c \\ b & a.
+\end{pmatrix}
+\end{align}
+This allows us to verify the particle-holy symmetry of the BdG-Hamiltonian
+\begin{align}
+C H_\tecxt\text{BdG}C &= \begin{pmatrix}
+0 & \sigma_x \\ \sigma_x & 0
+\end{pmatrix}\begin{pmatrix}
+H_{1\tecxt\text{D}} & \Delta_p \\ \Delta_p^\dagger & -H_{1\tecxt\text{D}}
+\end{pmatrix}\begin{pmatrix}
+0 & \sigma_x \\ \sigma_x & 0
+\end{pmatrix} = \\
+&=  \begin{pmatrix}
+0 & \sigma_x \\ \sigma_x & 0
+\end{pmatrix} \begin{pmatrix}
+\Delta_p\sigma_x & H_{1\tecxt\text{D}}\sigma_x \\ 
+-H_{1\tecxt\text{D}}\sigma_x & \Delta_p^\dagger\sigma_x
+\end{pmatrix} = \\
+&= \begin{pmatrix}
+-\sigma_x H_{1\tecxt\text{D}}\sigma_x & \sigma_x\Delta_p^\dagger \sigma_x \\ 
+\sigma_x \Delta_p\sigma_x & \sigma_xH_{1\tecxt\text{D}}\sigma_x
+\end{pmatrix} = \\
+&= \begin{pmatrix}
+-H_{1\tecxt\text{D}} & \Delta_p^\ast \\ 
+-\Delta_p & H_{1\tecxt\text{D}}
+\end{pmatrix} = ???
+\end{align}
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

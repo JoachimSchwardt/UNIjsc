@@ -1,0 +1,53 @@
+UM (3 Fragen)
+-Definition+Diffeomorphismus und Nennen einer äquivalenten Definition
+-Gaußscher Satz mit Definition Kompaktum mit glattem Rand, Äußeres Normaleneinheitsfeld
+-Inhalt einer Untermannigfaltigkeit (gramsche Matrix)
+-Tangentialräume und deren Basis
+
+ODE (2-3 Fragen)
+-Picard Lindelöf mit Beweis (Banach'scher Fixpunktsatz, kontrahierende Abbildungen...)
+-Fortsetzung der Lösung, Beweisidee für Eindeutigkeit (Bild!)
+-Matrixexponentialfunktion mit Beweis Konvergenz (Partialsummenkonvergenz und submultiplikative Norm)
+-Lösung des AWP x'=Ax x(t0)=x0 mit Matrixexponentialfunktion
+-Wronski-Determinante (Zusammenhang mit linearer Unabhängigkeit)
+-Basis des Lösungsraumes
+
+PDE (4-6 Fragen)
+-Wahl zwischen Distributionen und klassischem Problem (Distributionen!!!)
+-Was ist eine Distribution? (Schwartzraum D mit gleichmäßiger Konvergenz)
+-Ableitung einer Distribution
+-Ableitungen von Fourier-Trafos
+-temperierte Distribution (beim Schwartzraum S reichte "schnellfallende Funktionen" aus)
+-Wie liegen D,D',S,S' zueinander, wie/warum geht die Einbettung? (-> reguläre Distribution)
+-schwache Lösung
+-Lösung einer PDE mit Distribution (L(x,D)T=S), Grundlösung
+-Grundlösung und wozu nützlich (-> durch Faltung schwache Lösung)
+
+Hilbertraum (etwa 5 Fragen)
+-Definition beschränkter Operator, (auch C*-Algebra-Eigenschaften!)
+-Spektrum und Spektrum beschränkter Operatoren
+-Beweis, dass Spektrum kompakt und nichtleer ist
+-Spektraltheorem s.a. Operatoren mit Spektralschar und R.-S.-Integral
+-Definition kompakter Operatoren und deren Spektrum
+-Beweis, dass Null im Spektrum kp.Op.
+	[Ang. T inv. K(H) ist Ideal in B(H) -> T^-1 * T in K(H). Aber Identität nicht kp.]
+-Spektraltheorem kp. und nicht kp. mit Spektralschar und R.-S.-Integral
+-Satz von Riesz und adjungierter Operator mit Existenz (siehe Riesz!)
+-Eigenschaften abgeschlossenes zweiseitiges *-Ideal K(H)
+-Spurklasseoperator und Anwendung Dichteoperatoren in Physik (seltene Frage)
+
+Funktionentheorie (1-4 Fragen)
+-Beweis Satz von Liouville
+-Identitätssatz mit Beweis einer der nichttrivialen Implikation
+-Isolierte Singularitäten mit Laurententwicklung
+-Beispiel einer wesentlichen Singularität
+-Satz von Casorati-Weierstraß (Beweis?)
+-Cauchy-Integralsatz
+-eindeutige Fortsetzung aus reellem
+-Stammfunktion (Stichwort Wegunabhängigkeit)
+
+dELS >> dEB  -> LS - Kopplung, m_jg_jmu_bB
+dELS << dEB  -> JJ - Kopplung, (m_lg_l + m_sg_s)mu_bB, g_l=1, g_s=2
+
+dEHFS >> dEB -> JI - Kopplung, 
+dEHFS << dEB -> FF - Kopplung

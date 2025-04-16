@@ -1,0 +1,248 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{xcolor, colortbl}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{05 Discussion of various metrics}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{General Relativity}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Problem 13: Rindler-Metric}
+Consider the Minkowski-metric $\tecxt\text{d}s^2 = \tecxt\text{d}t^2 - \tecxt\text{d}x^2$.
+Define Rindler-coordinates $(\tau,\rho)$ satisfying $t=\rho\sinh(\kappa\tau)$ and $x=\rho\cosh(\kappa\tau)$ for a constant $\kappa\in\mathbb{R}$.
+This is equivalent to $\rho^2 = x^2 - t^2$ and $\tanh (\kappa\tau) = \frac{t}{x}$.
+Thus lines of constant $\tau$ take the form $t(x) = \alpha x$, i.e. straight lines with a slope $\alpha=\tanh (\kappa\tau)$.
+Lines of constant $\rho$ take the hyperbolic form $t(x) = \pm\sqrt{x^2 - \rho^2}$, where the latter is only valid for $|x| \ge |\rho|$.
+Since $|\alpha|\le 1$, the new coordinates can only describe the region $|x|\le |t|$.
+See \autoref{fig:rindler} for a sketch of the Rindler worldlines.
+\begin{figure}[!ht]
+\centering
+\includegraphics{rindler_worldlines.png}
+\caption{Sketch of the Rindler worldlines.
+Blue lines correspond to $\rho=$ const and black lines correspond to $\tau=$ const.}
+\label{fig:rindler}
+\end{figure}
+\\
+The Rindler-metric is given by
+\begin{align}
+\text{d}s^2 &= \klam\left[ \text{d}\rho \sinh(\kappa\tau) + \rho\kappa \cosh(\kappa\tau) \text{d}\tau \right]^2 - \klam\left[ \text{d}\rho \cosh(\kappa\tau) + \rho\kappa\sinh(\kappa\tau) \text{d}\tau \right]^2 = \\
+&= \rho^2\kappa^2\text{d}\tau^2 - \text{d}\rho^2.
+\end{align}
+The Lagrange function is $L=\kappa^2\rho^2 \dot{\tau}^2 - \dot{\rho}^2$ where $\dot{\tau} := \frac{\text{d}\tau}{\tecxt\text{d}s}$.
+The Euler-Lagrange equations are
+\begin{align}
+0 &= \frac{\tecxt\text{d}}{\tecxt\text{d}s} \frac{\partial L}{\partial \dot{\tau}} - \frac{\partial L}{\partial \tau} = \frac{\tecxt\text{d}}{\tecxt\text{d}s} \kla\left( 2\kappa^2\rho^2 \dot{\tau} \right) = 2\kappa^2\rho^2 \kla\left( \ddot{\tau} + \frac{2}{\rho} \dot{\tau}\dot{\rho} \right),\\
+0 &= \frac{\tecxt\text{d}}{\tecxt\text{d}s} \frac{\partial L}{\partial \dot{\rho}} - \frac{\partial L}{\partial \rho} = \frac{\tecxt\text{d}}{\tecxt\text{d}s} \kla\left( -2\dot{\rho} \right) - 2\kappa^2\rho \dot{\tau}^2 = -2 \kla\left( \ddot{\rho} + \kappa^2\rho \dot{\tau}^2 \right).
+\end{align}
+%Thus the Christoffel symbols are readily computed from the definition
+%\begin{align}
+%\Gamma^a_{bc} &= \frac{1}{2} g^{ad} \kla\left( \partial_bg_{cd} + \partial_cg_{bd} - \partial_dg_{bc} \right) = \\
+%&= \frac{1}{2} g^{ad} \kla\left( \partial_\rho g_{\tau\tau} \delta_{d\tau}\delta_{b\rho}\delta_{c\tau} + (b\leftrightarrow c) - \partial_\rho g_{\tau\tau} \delta_{d\rho}\delta_{b\tau}\delta_{c\tau} \right) = \\
+%&= 
+%\end{align}
+The only non-zero contributions therefore are $\Gamma^\tau_{\tau\rho} = \frac{1}{\rho}$ and $\Gamma^\rho_{\tau\tau} = \kappa^2\rho$.
+\\
+In two dimensions there exists only one independent component of the curvature tensor.
+In the case of Rindler coordinates it is
+\begin{align}
+R_{\rho\tau\rho\tau} &= g_{\rho b} R^b_{\ \tau\rho\tau} = g_{\rho\rho} \kla\left( \partial_\rho \Gamma^\rho_{\tau\tau} - \partial_\tau\Gamma^\rho_{\tau\rho} + \Gamma^c_{\tau\tau}\Gamma^\rho_{c\rho} - \Gamma^c_{\tau\rho}\Gamma^\rho_{\tau c} \right) = \\
+&= -\kappa^2 + 0 - 0 + \frac{1}{\rho} \kappa^2\rho = 0.
+\end{align}
+This is the expected result, since we can not change the physical curvature via a coordinate transformation.
+
+\section*{Problem 14: Coriolis-Force}
+Consider a metric in a rotating frame of reference with $\vec{\omega} = \omega e_z$.
+We will use cylindrical coordinates with $\vec{r} =: re_r + ze_z$ to carry out the calculations
+\begin{align}
+\tecxt\text{d}s^2 &= \klam\left[ 1 - (\vec{\omega} \times \vec{r})^2 \right] \tecxt\text{d}t^2 - 2 (\vec{\omega} \times \vec{r}) \cdot \tecxt\text{d}\vec{r} \tecxt\text{d}t - \tecxt\text{d}\vec{r}^2 = \\
+&= \klam\left[ 1 - \omega^2r^2 \right] \tecxt\text{d}t^2 - 2\omega re_\phi \cdot \kla\left( \tecxt\text{d}r e_r + r\tecxt\text{d}\phi e_\phi + \tecxt\text{d}t e_z \right) \tecxt\text{d}t - \tecxt\text{d}r^2 - r^2\tecxt\text{d}\phi^2 - \tecxt\text{d}z^2 = \\
+&= \klam\left[ 1 - \omega^2r^2 \right]\tecxt\text{d}t^2 - 2\omega r^2\tecxt\text{d} \phi\tecxt\text{d}t - \tecxt\text{d}r^2 - r^2\tecxt\text{d}\phi^2 - \tecxt\text{d}z^2.
+\end{align}
+The Lagrange function is given by 
+\begin{align}
+L &= \klam\left[ 1 - \omega^2r^2 \right] \dot{t}^2 - 2\omega r^2 \dot{t}\dot{\phi} - \dot{r}^2 - r^2\dot{\phi}^2 - \dot{z}^2,
+\end{align}
+where again $\dot{t} := \frac{\tecxt\text{d}t}{\tecxt\text{d}s}$.
+The Euler-Lagrange equations are
+\begin{align}
+0 &= \frac{\tecxt\text{d}}{\tecxt\text{d}s} \frac{\partial L}{\partial \dot{t}} - \frac{\partial L}{\partial r} = \frac{\tecxt\text{d}}{\tecxt\text{d}s} \kla\left( 2\klam\left[ 1 - \omega^2r^2 \right] \dot{t} - 2\omega r^2 \dot{\phi} \right) = \\
+&= 2\klam\left[ 1 - \omega^2r^2 \right] \ddot{t} - 4\omega^2 r\dot{r}\dot{t} -4\omega r\dot{r}\dot{\phi} - 2\omega r^2 \ddot{\phi} = \\
+&= 2\klam\left[ 1 - \omega^2r^2 \right] \kla\left( \ddot{t} - \frac{2\omega^2 r}{1 - \omega^2r^2} \dot{t}\dot{r} - \frac{2\omega r}{1 - \omega^2r^2 } \dot{r}\dot{\phi} - \frac{\omega r^2}{1 - \omega^2r^2 } \ddot{\phi} \right),\\
+0 &= \frac{\tecxt\text{d}}{\tecxt\text{d}s} \frac{\partial L}{\partial \dot{r}} - \frac{\partial L}{\partial r} = \frac{\tecxt\text{d}}{\tecxt\text{d}s} (-2\dot{r}) + 2r\dot{\phi}^2 + 2r\omega^2\dot{t}^2 + 4\omega r \dot{t}\dot{\phi} = \\
+&= -2\kla\left( \ddot{r} - r\dot{\phi}^2 - r\omega^2\dot{t}^2 - 2\omega r\dot{t}\dot{\phi} \right) ,\\
+0 &= \frac{\tecxt\text{d}}{\tecxt\text{d}s} \frac{\partial L}{\partial \dot{\phi}} - \frac{\partial L}{\partial \phi} = \frac{\tecxt\text{d}}{\tecxt\text{d}s} \kla\left( -2r^2\dot{\phi} - 2\omega r^2 \dot{t} \right) = \\
+&= -2r^2\ddot{\phi} - 4r\dot{r}\dot{\phi} - 4\omega r\dot{r}\dot{t} - 2\omega r^2\ddot{t} = \\
+&= -2r^2 \kla\left( \ddot{\phi} + \frac{2}{r} \dot{r} \dot{\phi} + \frac{2\omega }{r} \dot{r}\dot{t} + \omega\ddot{t}  \right).
+\end{align}
+The equation for $z$ is trivial.
+We can combine the first and third equations to get
+\begin{align}
+0 &= \ddot{t} - \frac{2\omega^2r \dot{t}\dot{r}}{1 - \omega^2r^2} - \frac{2\omega r\dot{r}\dot{\phi}}{1 - \omega^2r^2} + \frac{\omega r^2}{1 - \omega^2r^2} \kla\left( \omega \ddot{t} + \frac{2\omega}{r}\dot{r}\dot{t} + \frac{2\dot{r}}{r}\dot{\phi} \right),\\
+0 &= \ddot{\phi} + \frac{2\dot{r}}{r}\dot{\phi} + \frac{2\omega}{r} \dot{r}\dot{t} + \frac{\omega}{1 - \omega^2r^2} \kla\left( 2\omega^2 r\dot{r}\dot{t} + 2\omega r\dot{r}\dot{\phi} + \omega r^2 \ddot{\phi} \right).
+\end{align}
+These can be simplified to
+\begin{align}
+0 &= \ddot{t} - 2\omega^2 r\dot{t}\dot{r} - 2\omega r\dot{r}\dot{\phi} + 2\omega^2 r\dot{r}\dot{t} + 2\omega r\dot{r}\dot{\phi} = \ddot{t},\\
+0 &= \ddot{\phi} + \klam\left[ 1 - \omega^2r^2 \right] \frac{2\dot{r}}{r} \kla\left( \dot{\phi} + \omega\dot{t} \right) + 2\omega^2 r\dot{r} \kla\left( \dot{\phi} + \omega\dot{t} \right).
+\end{align}
+For the first equation we may choose the solution $t(s) = s$.
+Then shifting $\phi \rightarrow \phi - \omega s$ we can reduce the second equation to
+\begin{align}
+0 &= \ddot{\phi} + \klam\left[ 1 - \omega^2r^2 \right] \frac{2\dot{r}}{r} \dot{\phi} + 2\omega^2 r\dot{r}\dot{\phi} = \ddot{\phi} + \frac{2}{r} \dot{r}\dot{\phi}.
+\end{align}
+Thus the non-zero Christoffel symbols are
+\begin{align} 
+\Gamma^r_{\phi\phi} &= -r, \quad \Gamma^r_{tt} = -r\omega^2, \quad \Gamma^r_{t\phi} = - \omega r,\\
+\Gamma^\phi_{r\phi} &= \frac{1}{r}.
+\end{align}
+The geodesic equations are $0 = \ddot{x}^\sigma + \Gamma^\sigma_{\mu\nu} \dot{x}^\mu \dot{x}^\nu$, which is of course nothing but the Euler-Lagrange equations
+\begin{align}
+\ddot{r} &= r\dot{\phi}^2 + r\omega^2 + 2\omega r \dot{\phi},\\
+\ddot{\phi} &= -\frac{2}{r}\dot{r}\dot{\phi}.
+\end{align}
+%The second equation may be integrated to yield
+%\begin{align}
+%%\log \dot{t} &= \intx\int_{ }^{ } \frac{2\omega^2r}{1 - \omega^2r^2}\, \mathrm{d}r = -\log \kla\left( 1 - \omega^2r^2 \right) + \tecxt\text{const},\\
+%\log\dot{\phi} &= -2\log r + \tecxt\text{const}
+%\end{align}
+%or equivalently
+%\begin{align}
+%%\dot{t} &= \frac{c_t}{1 - \omega^2r^2},\\
+%\dot{\phi} &= \frac{c_\phi}{r^2}.
+%\end{align}
+%Note that $c_\phi = \frac{L_z}{m}$ from the classical limit.
+%Inserting into the second equation gives
+%\begin{align}
+%\ddot{r} &= \frac{L_z^2}{m^2r^3} + r\omega^2  + 2\omega r \frac{L_z}{mr^2}.
+%\end{align}
+%Multiplying by $m$ yields
+%\begin{align}
+%m\ddot{r} &= \frac{L_z^2}{mr^3} + m\omega^2 r + \frac{2\omega L_z}{r}.
+%\end{align}
+The Coriolis force is 
+\begin{align}
+\vec{F}^\tecxt\text{cor} &= 2m\vec{v} \times \vec{\omega} = 2m\omega \kla\left( \dot{r}e_r + r\dot{\phi}e_\phi + \dot{z}e_z \right) \times e_z = 2m\omega \kla\left( r\dot{\phi} e_r - \dot{r}e_\phi \right).
+\end{align}
+The acceleration can be written as $\ddot{\vec{r}} = \ddot{r}e_r + 2\dot{r} \dot{\phi} e_\phi + r\ddot{\phi} e_\phi - r\dot{\phi}^2 e_r + \ddot{z}e_z$.
+This leads to the equations
+\begin{align}
+\ddot{r} &= 2\omega r\dot{\phi} + r\dot{\phi}^2,\\
+r\ddot{\phi} &= -2\omega \dot{r} - 2\dot{r} \dot{\phi}.
+\end{align}
+Except for the centripetal term $r\omega^2$ these equations are identical to the result above.
+Note that we again use a shift $\phi \rightarrow \phi - \omega t$ in the second equation.
+
+%Let $r =: \frac{1}{u}$.
+%Then $\dot{r} = -\frac{\dot{u}}{u^2}$ and $\ddot{r} = - \frac{\ddot{u}}{u^2} + \frac{2\dot{u}^2}{u^3}$.
+%Inserting into the equation yields
+%\begin{align}
+%-\frac{\ddot{u}}{u^2} + \frac{2\dot{u}^2}{u^3} &= u \kla\left( c_\phi u + \frac{\omega c_t u}{u^2 - \omega^2} \right)^2
+%\end{align}
+%Multiplying by $\dot{r}$ and integrating using the substitution $u := 1 - \omega^2r^2$ yields
+%\begin{align}
+%\frac{1}{2} \dot{r}^2 &= \intx\int_{ }^{ } \frac{c_\phi^2}{r^3} + \frac{\omega^2c_t^2 r}{(1 - \omega^2r^2)^2}\, \mathrm{d}r = \\
+%&= -\frac{c_\phi^2}{2r^2} - c_t^2 \intx\int_{ }^{ } \frac{1}{u^2}\, \frac{1}{2}\mathrm{d}u = \\
+%&= -\frac{c_\phi^2}{2r^2} + \frac{c_t^2}{2} \frac{1}{1 - \omega^2r^2} + \tecxt\text{const}
+%\end{align}
+%which is equivalent to
+%\begin{align}
+%\dot{r} &= \sqrt{\frac{c_t^2}{1 - \omega^2r^2} - \frac{c_\phi^2}{r^2} + c_r}
+%\end{align}
+%We can solve this equation by separation of variables
+%\begin{align}
+%s + \tecxt\text{const} &= \intx\int_{ }^{ } \frac{r\sqrt{1 - \omega^2r^2}}{\sqrt{r^2c_t^2 - c_\phi^2(1 - \omega^2r^2) + c_r r^2(1-\omega^2r^2)}}\, \mathrm{d}r.
+%\end{align}
+%Let $u := \omega^2r^2$.
+%Then we find
+%\begin{align}
+%s + \tecxt\text{const} &= \frac{1}{2\omega^2} \intx\int_{ }^{ } \frac{\sqrt{1 - u}}{\sqrt{\kla\left( \frac{c_t^2}{\omega^2} + c_\phi^2 \right) u - c_\phi^2 + \frac{c_r}{\omega^2} u (1 - u)}}\, \mathrm{d}u.
+%\end{align}
+%This integral can not be solved analytically.
+%However, we may solve the special case of
+
+\section*{Problem 15: Cosmic horizon}
+We previously considered a special expanding universe describable by the metric
+\begin{align}
+\tecxt\text{d}s^2 &= \tecxt\text{d}t^2 - a(t)^2 \klam\left[ \tecxt\text{d}r^2 + r^2\tecxt\text{d}\theta^2 + r^2\sin^2\theta \tecxt\text{d}\phi^2 \right]
+\end{align}
+where $a(t) = \e^{Ht}$ with the Hubble constant $H$.
+Introducing a new variable $r = \e^{-Ht} R$ with $\tecxt\text{d}r = \e^{-Ht} \tecxt\text{d}R - HR\e^{-Ht} \tecxt\text{d}t$ we find
+\begin{align}
+\tecxt\text{d}s^2 &= \tecxt\text{d}t^2 - \klam\left[ \tecxt\text{d}R^2 + H^2R^2 \tecxt\text{d}t^2 - 2RH \tecxt\text{d}R \tecxt\text{d}t + R^2 \tecxt\text{d}\Omega^2 \right] = \\
+&= \klam\left[ 1 - H^2R^2 \right]\tecxt\text{d}t^2 + 2HR\tecxt\text{d}t \tecxt\text{d}R - \tecxt\text{d}R^2 - R^2\tecxt\text{d}\Omega^2.
+\end{align}
+Now let $T:= t + \xi(R)$, where $\xi$ should be chosen such that the metric becomes diagonal.
+We find
+\begin{align}
+\tecxt\text{d}s^2 &= \klam\left[ 1 - H^2R^2 \right] \kla\left( \tecxt\text{d}T^2 + \xi'^2 \tecxt\text{d}R^2 - 2\xi' \tecxt\text{d}T \tecxt\text{d}R \right) + 2HR \tecxt\text{d}R \kla\left( \tecxt\text{d}T - \xi'\tecxt\text{d}R \right) - \tecxt\text{d}R^2 - R^2\tecxt\text{d}\Omega^2.
+\end{align}
+We can eliminate the mixed terms by setting $\xi'(R) = \frac{HR}{1-H^2R^2}$ which upon integration yields
+\begin{align}
+\xi(R) &= -\frac{1}{2H}\log \kla\left( 1 - H^2R^2 \right) + \tecxt\text{const}.
+\end{align}
+Then the metric simplifies to
+\begin{align}
+\tecxt\text{d}s^2 &= \klam\left[ 1 - H^2R^2 \right] \tecxt\text{d}T^2 - \frac{1}{1 - H^2R^2} \tecxt\text{d}R^2 - R^2\tecxt\text{d}\Omega^2.
+\end{align}
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

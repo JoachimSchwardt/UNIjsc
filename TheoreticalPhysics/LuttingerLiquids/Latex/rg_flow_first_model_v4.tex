@@ -1,0 +1,395 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{ll_scrarticle}
+
+\newcommand*{\titel}{Renormalization Group Analysis}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Renormalization Group}
+Our model Hamiltonian is $H=H_0 + H_1 + H_2 + H_3$ where
+\begin{align}
+H_0 &= \frac{v}{2\pi} \intx{}{}{ \normord{\klb*{K\kla*{\partial_x\theta}^2 + \frac{1}{K} \kla*{\partial_x\phi}^2 + g_4 \partial_x\phi(x) \partial_x\phi(x+a)}}}{x},\\
+H_1 &= g_1 \intx{ }{ }{\normord{\sin(2\phi) \partial_x \phi(x+a)}}{x},\\
+H_2 &= g_2 \intx{ }{ }{\normord{\cos\kla*{2\phi(x) - 2\phi(x+a)}}}{x},\\
+H_3 &= g_3 \intx{ }{ }{\normord{\cos\kla*{2\phi(x) + 2\phi(x+a)}} }{x}.
+\end{align}
+Every coupling term also appears once more with $a\rightarrow - a$.
+The initial couplings are $g_4=\frac{u_+}{\pi v}$, $g_{1,0} = \frac{-u_-}{2\pi L}$, $g_{2,0} = \frac{u_+}{2} \frac{1}{4\pi^2 a^2}$ and $g_{3,0} = \frac{-u_+}{2} \frac{4\pi^2a^2}{L^4}$.
+Also the original model has $v=\vf$ and $K=1$ but they are already included in anticipation of 1-loop corrections.
+\TODO{Here $u_\pm = U_\pm a$ should intuitively be fixed, because these are the parameters that would manually be held constant in a naive continuum limit $a\rightarrow 0$.
+In the RG this is of course a little difficult to justify; why should I be allowed to just remove (or add) a scaling factor here.
+The argument (and with it all the problems) would disappear if the interaction strengths $U_\pm$ themselves picked up some scaling; an argument for this might be that the energy scale of the thermal fluctuations changes, and that this might imply a similar change for any other energy scale too [doesn't really convince me though].
+Luckily the calculations are (as far as I can tell) completely independent of what ends up being correct here. This is because the change only amounts to a $+1$ (or a $+0$) in the final RG flow equations.}\\
+Later it will be more convenient to discuss dimensionless quantities so we also define $c_j = \frac{g_j}{g_{j,0}}$.\\
+The initial bandwidth is given by $\Lambda_0 = \frac{\vf}{a^2}$ and corresponds to the region where the linearization of the dispersion relation is a good approximation.
+The final bandwidth is given by thermal fluctuations and we thus stop the RG flow at $\Lambda_\Text{min} = \frac{T}{\vf}$.\\
+Momentum shell renormalization is an idea that essentially consists of a series of instructions:
+\begin{itemize}
+\item[1.] Impose a bandwidth $\Lambda$ such that only momenta $|k|<\Lambda$ are allowed.
+\item[2.] Split the range of momenta into slow and fast modes via $0<|k_\s| < \frac{\Lambda}{s} < |k_\f| < \Lambda$.
+\item[3.] ``Integrate out'' the ``fast'' modes in the sense of splitting the Fourier components into $\phi = \phi_\s + \phi_\f$ according to the respective momenta.
+\item[4.] Match the effective interaction to the initial action by rescaling variables and coupling constants. Any genuinely new terms that appear in this procedure would become part of the next iteration.
+Instead they are included (with coupling zero) in the initial model in the hope of at some point obtaining a closed system. (REF SEE AltlandSimons)
+\end{itemize}
+Some of these steps are rather vague, so let us try to implement them for our concrete model.
+To start we write $\phi(x) = \phi_\s(x) + \phi_\f(x)$ where 
+\begin{align}
+\phi_\s(x) &= \frac{1}{\sqrt{L}} \intx{\s}{ }{ \powe{\i kx} \phi(k)}{k},\qquad \phi_\f(x) = \frac{1}{\sqrt{L}} \intx{\f}{ }{ \powe{\i kx} \phi(k)}{k}
+\end{align}
+and the notation $\int_\s$ stands for $\int_{|k| < \frac{\Lambda}{s}}$ and similarly $\int_\f \equiv \int_{\frac{\Lambda}{s}<|k|<\Lambda}$.
+Using $\partial_x\theta = \pi \Pi$ and $\partial_\tau \phi = -\i\partial_t\phi = -\i\partial_\Pi H = -\i \pi Kv\Pi = -\i Kv \partial_x\theta$ allows us to write down the action
+\begin{align}
+S &= -\intx{0}{\beta}{\klb*{\Pi \i\partial_\tau \phi - H}}{\tau} = S_0 + S_1 + S_2 + S_3.
+\end{align}
+\QnA{[[Everything is normal-ordered so we drop the symbol for notational convenience]] $\rightarrow$ more honest comment is: we now treat this as a classical field theory in the spirit of classical statistical mechanics and therefore do no longer care about such subtleties (although I do not guarantee that we are allowed to do this).}
+The components of the action can then be written as
+\begin{align}
+S_0 &= -\intx{0}{\beta}{\intx{-L/2}{L/2}{ \klc*{\frac{\i}{\pi Kv} \partial_\tau \phi \i\partial_\tau \phi - \frac{v}{2\pi}  \klb*{ K \kla*{\frac{\i}{\pi Kv} \partial_\tau\phi}^2 + \frac{1}{K} \kla*{\partial_x\phi}^2 + g\partial_x\phi \partial_x\phi(x\pm a) }} }{x}}{\tau}\\
+&= \frac{1}{2\pi K} \intx{0}{\beta}{\intx{-L/2}{L/2}{\klb*{\frac{1}{v}\kla*{\partial_\tau \phi}^2 + v \kla*{\partial_x\phi}^2 + \tilde{g}v \partial_x\phi \partial_x\phi(x\pm a)}}{x}}{\tau},\\
+S_1 &= c_1 g_{1,0} \intx{0}{\beta}{\intx{-L/2}{L/2}{\sin(2\phi) \partial_x \phi(x+a,\tau)}{x}}{\tau},\\
+S_2 &= c_2 g_{2,0} \intx{0}{\beta}{\intx{-L/2}{L/2}{\cos\kla*{2\phi - 2\phi(x+a,\tau)}}{x}}{\tau},\\
+S_3 &= c_3 g_{3,0} \intx{0}{\beta}{\intx{-L/2}{L/2}{\cos\kla*{2\phi + 2\phi(x+a,\tau)}}{x}}{\tau}
+\end{align}
+where once again the existence of additional couplings with $a\rightarrow -a$ is implied and we defined $\tilde{g}=2\pi K g$ for notational convenience.
+Rewriting the free part of the action in terms of the Fourier modes $\phi(x,\tau) = \frac{2\pi}{L\beta} \sum_{n,k} \powe{\i kx - \i\omega_n^\B\tau} \phi\kla*{k,\omega_n^\B}$ yields
+\begin{align}
+S_0[\phi] &= \frac{1}{2\pi K} \frac{(2\pi)^2}{(L\beta)^2} \sum_{n,n',k,k'} \bsplit{\intx{0}{\beta}{\intx{-L/2}{L/2}{ & \powe{\i (k+k')x - \i \omega_{n+n'}^\B \tau} \klb*{\frac{-1}{v}\omega_n^\B \omega_{n'}^\B - vkk' - \tilde{g} v kk' 2\cos(ka)}\\ 
+& \times \phi(k,\omega_n^\B) \phi(k',\omega_{n'}^\B) }{x}}{\tau}} \\
+&= \frac{2\pi}{KL\beta} \sum_{n,k} \klb*{\frac{1}{v} \kla*{\omega_n^\B}^2 + vk^2 \kla*{1 + 2\tilde{g} \cos(ka)} } \abs*{\phi(k,\omega_n^\B)}^2 \\
+&\simeq \frac{1}{K\beta} \sum_n \intx{-\Lambda}{\Lambda}{\klb*{\frac{1}{v} \kla*{\omega_n^\B}^2 + vk^2 \kla*{1 + 2\tilde{g} \cos(ka)}} \abs*{\phi(k,\omega_n^\B)}^2}{k}.
+\end{align}
+Evidently splitting this into a ``slow'' and ``fast'' part is rather straightforward since we merely have to identify $\int_k \equiv \int_{k,\s} + \int_{k,\f}$ to get $S_0[\phi] = S_{0,\s}[\phi_\s] + S_{0,\f}[\phi_\f]$.
+Integrating over the fast modes in $S_{0,\f}$ merely yields a global prefactor to the partition function and we may therefore neglect it.\\
+We define the effective action as $\powe{S_\text{eff}} = \powe{-S_{0,\s}} \bra*{\powe{-S_\Text{int}}}_\f$ which corresponds to integrating out the fast modes from the original model.
+If this average could be computed exactly we could use the same technique to just solve the full problem; obviously any practical calculation will therefore require some serious approximations.
+For some variable $X$ and some notion of an expectation value one generally has
+\begin{align}
+\bra*{\powe{X}} &= 1 + \bra*{X} + \frac{1}{2} \bra*{X^2} + \frac{1}{6} \bra*{X^3} + \dots \\
+&= 1 + \bra*{X} + \frac{1}{2} \bra*{X}^2 + \frac{1}{2} \bra*{X^2}_\c + \frac{1}{6} \bra*{X}^3 + \frac{1}{6} \kla*{\bra*{X^3} - \bra*{X}^3} + \dots\\
+&= 1 + \bra*{X} + \frac{1}{2} \bra*{X^2}_\c + \frac{1}{2} \kla*{\bra*{X} + \frac{1}{2} \bra*{X^2}_\c}^2 + \frac{1}{6} \bra*{X}^3 + \frac{1}{6} \kla*{\bra*{X^3} - \bra*{X}^3 - 3\bra*{X} \bra*{X^2}_\c} + \dots\\
+&= 1 + \bra*{X} + \frac{1}{2} \bra*{X^2}_\c + \frac{1}{2} \kla*{\bra*{X} + \frac{1}{2}\bra*{X^2}_\c}^2 + \frac{1}{6}\kla*{\dots}^3 + \frac{1}{6} \bra*{X^3}_\c + \dots
+\end{align}
+where $\bra*{X^2}_\c = \bra*{\kla*{X - \bra*{X}}^2} = \bra*{X^2} - \bra*{X}^2$ is the typical connected average of two variables and similarly $\bra*{X^3}_\c = \bra*{\kla*{X - \bra*{X}}^3}$.
+Evidently higher order terms are more difficult to write down, and the nice pattern for the ``cumulants'' (\QnA{or connected averages, depending on who you ask}) $\bra*{X^n}_\c$ becomes more complicated after $n=3$.
+For example $\bra*{X^4}_\c = \bra*{\kla*{X - \bra*{X}}^4} - 3 \bra*{X^2}_\c^2$.
+Still, formally we may write
+\begin{align}
+\bra*{\powe{X}} &= \powe{\bra*{X} + \frac{1}{2}\bra*{X^2}_\c + \frac{1}{6} \bra*{X^3}_\c + \dots}
+\end{align}
+which is the \emph{cumulant expansion}.
+For our purposes we will terminate this series after two terms
+\begin{align}
+\bra*{\powe{X}} &\approx \powe{\bra*{X} + \frac{1}{2} \bra*{X^2}_\c}.
+\end{align}
+Whether this is a good approximation may not always be apparent beforehand.
+Our hope is that the result for the tree-level will already be good enough and that we merely use the first order (or 1-loop) corrections to justify this.\\
+At tree-level we need to evaluate\footnote{$\bra*{\prod \powe{C_j}} = \powe{\frac{1}{2} \sum \bra{C_j^2}} \powe{\sum_{j<k} \bra*{C_jC_k}}$}
+\begin{align}
+\bra*{S_1}_\f &= g_1 \frac{1}{2\i} \intx{0}{\beta}{\intx{-L/2}{L/2}{\powe{\i 2\phi_\s(r)} \bra*{\powe{\i 2\phi_\f(r)} \klb*{\partial_x \phi_\s(r+a) + \partial_x\phi_\f(r+a)}}_\f}{x}}{\tau} + \hc\\
+&= \bsplit{&g_1 \intx{0}{\beta}{\intx{-L/2}{L/2}{\sin(2\phi_\s)\partial_x\phi_\s(x+a,\tau) \powe{-2\bra*{\phi_\f(0)^2}_\f}}{x}}{\tau}\\
+&+\frac{g_1}{2\i} \intx{0}{\beta}{\intx{-L/2}{L/2}{ \powe{\i 2\phi_\s} \partial_J \partial_a \bra*{\powe{\i 2\phi_\f} \powe{J\phi_\f(x+a,\tau)}}_\f }{x}}{\tau} + \hc}\\
+&= \powe{-2\bra*{\phi_\f(0)^2}_\f} S_{1,\s} + \frac{g_1}{2\i} \intx{0}{\beta}{\intx{-L/2}{L/2}{\powe{\i 2\phi_\s} \partial_J \partial_a \powe{\frac{1}{2} \kla*{J^2 - 4} \bra*{\phi_\f(0)^2}_\f} \powe{\i 2J\bra*{\phi_\f(a) \phi_\f(0)}_\f}}{x}}{\tau} + \hc\\
+&= \powe{-2\bra*{\phi_\f(0)^2}_\f} S_{1,\s} + g_1 \powe{-2 \bra*{\phi_\f(0)^2}_\f} \partial_a \bra*{\phi_\f(a) \phi_\f(0)}_\f \intx{0}{\beta}{\intx{-L/2}{L/2}{\cos\kla*{2\phi_\s}}{x}}{\tau}.
+\end{align}
+The second part is known as the standard sine-Gordon potential and is structurally different from any of the original couplings.
+However, we will see that $\partial_x\bra*{\phi_\f(x) \phi_\f(0)}_\f$ is an odd function so the additional term with the opposite sign cancels this contribution.
+The precise evaluation of this fast correlator will be done later.\\
+The other two perturbations can be treated simultaneously and give
+\begin{align}
+\bra*{S_{2,3}}_\f &= g_{2,3} \frac{1}{2} \intx{0}{\beta}{\intx{-L/2}{L/2}{\powe{\i 2\phi_\s \mp 2\i \phi_\s(x+a,\tau)} \bra*{\powe{\i 2\phi_\f \mp \i 2\phi_\f(x+a,\tau)}}_\f}{x}}{\tau} + \hc\\
+&= g_{2,3} \intx{0}{\beta}{\intx{-L/2}{L/2}{\cos\kla*{2\phi_\s \mp 2\phi_\s(x+a,\tau)} \powe{-2 \bra*{\klb*{\phi_\f(a) \mp \phi_\f(0)}^2}_\f}}{x}}{\tau}\\
+&= g_{2,3} \powe{-4 \bra*{\phi_\f(0)^2}_\f \pm 4 \bra*{\phi_\f(a)\phi_\f(0)}_\f} S_{2,3,\s}.
+\end{align}
+Within the tree level RG we therefore do not generate any new couplings and we are left with the calculation of the fast correlator
+\begin{align}
+K\Phi_{1,\f}(r) \d l &= 2\bra*{\phi_\f(x,\tau)\phi_\f(0,0)}_\f = 2\frac{1}{\beta^2} \sum_{n,n'} \intx{\f}{ }{\intx{\f}{ }{ \powe{\i kx-\i\omega_n^\B\tau} \bra*{\phi_\f(k,\omega_n^\B) \phi_\f(k',\omega_{n'}^\B)}_\f }{k'}}{k}.
+\end{align}
+The remaining expectation value can be obtained from a simple field integration
+\begin{align}
+\bra*{\phi(q_1)\phi(q_2)} &= \int \powe{-\frac{1}{K\beta} \sum_q q^2 \abs*{\phi(q)}^2} \phi(q_1)\phi(-q_2)^\ast\,\mathcal{D}\phi \\
+&= \delta_{q_1,-q_2} \frac{K\beta}{q_1^2} = \delta_{q_1,-q_2} \frac{K\beta v}{\kla*{\omega_n^\B}^2 + v^2k^2 \kla*{1 + 2\tilde{g}\cos(ka)}}.
+\end{align}
+Inserting this into the fast correlator and making the transformation infinitesimal via $s=\powe{\d l} = 1 + \d l$ yields\footnote{$\sum_{n\in\mathbb{Z}} \frac{\powe{\i 2\pi nb}}{2\pi n + \i a} = \i \powe{a [b]} \frac{1}{1 - \powe{-a}}$ where $[b] = b - \lfloor b \rfloor$ denotes the fractional part and thus\\
+$\sum_{n\in\mathbb{Z}} \frac{\cos(2\pi nb)}{(2\pi n)^2 + a^2} = \frac{1}{2a} \klb*{\frac{\powe{a[b]}}{\powe{a} - 1} + \frac{\powe{-a[b]}}{1 - \powe{-a}}} = \frac{1}{2a} \frac{\cosh\kla*{a/2 - a[b]}}{\sinh(a/2)}$}
+%N=400; nv=np.arange(-N,N+1); beta=1.442; tau=0.76; z=1; wv=2*np.pi*nv/beta
+%print(np.sum(np.cos(wv*tau)/(wv**2+z**2)), (np.exp(z*tau)/(np.exp(beta*z)-1) - np.exp(-z*tau)/(np.exp(-beta*z)-1)) * beta / (2*z), beta/(2*z) / np.sinh(beta*z/2) * np.cosh((beta/2-tau)*z))
+\begin{align}
+\Phi_{1,\f}(r) &= \frac{2}{K\d l} \frac{1}{\beta^2} \sum_{n} \intx{\f}{ }{ \powe{\i kx} \powe{-\i\omega_n^\B\tau} \frac{K\beta v}{\kla*{\omega_n^\B}^2 + v^2k^2\kla*{1 + 2\tilde{g}\cos(ka)}}}{k} \\
+&= \frac{2}{K\d l} \frac{2Kv}{\beta} \sum_{n\in\mathbb{Z}} \intx{\Lambda/s}{\Lambda}{\frac{\cos(kx) \cos\kla*{\omega_n^\B\tau}}{\frac{4\pi^2}{\beta^2}n^2 + v^2k^2\kla*{1 + 2\tilde{g}\cos(ka)}}}{k}\\
+&= \frac{4v}{\beta} \sum_{n\in\mathbb{Z}} \cos(\Lambda x) \beta^2 \frac{\cos\kla*{\omega_n^\B\tau}}{(2\pi n)^2 + \beta^2 v^2\Lambda^2\kla*{1 + 2\tilde{g}\cos(\Lambda a)}} \Lambda \\
+&= 2 \cos(\Lambda x) \frac{\cosh\kla*{\klb*{\frac{\beta}{2} - \tau} v\Lambda \sqrt{1 + 2\tilde{g}\cos(\Lambda a)}}}{\sinh\kla*{\frac{\beta v\Lambda}{2} \sqrt{1 + 2\tilde{g}\cos(\Lambda a)}}}.
+\end{align}
+The reason we integrate over all frequencies is that we want the action to remain local in time as argued in (TODO REF BOSON RG RaoSen).\\
+At this stage the $S_1$-part of our effective action is
+\begin{align}
+\powe{-K\Phi_{1,\f}(0) \d l} g_1 \intx{0}{\beta}{\intx{-L/2}{L/2}{ \sin\kla*{2\phi_\s(x,\tau)} \partial_x\phi_\s(x+a,\tau) }{x}}{\tau}.
+\end{align}
+While this looks structurally identical, the momenta are now -- as we aimed for -- restricted to $\frac{\Lambda}{s}$.
+This now requires us to rescale the momenta $k'=ks$ in order to once again cover the full range.
+Consistency of the Fourier transform (and of course also physical intuition) then requires $x'=\frac{x}{s}$ leading to
+\begin{align}
+\powe{-K \Phi_{1,\f}(0) \d l} g_1 \intx{0}{\beta}{\intx{-L/(2s)}{L/(2s)}{ \sin\kla*{2\phi_\s(sx',\tau)} \partial_{x'}\phi_\s(sx'+a,\tau) }{x'}}{\tau}
+\end{align}
+where a factor of $s$ from the differential $\d x$ cancelled the one from $\partial_x$.
+To make this identical to $S_1$ we then also need to rescale $L' = \frac{L}{s}$, $a'=\frac{a}{s}$ and $g_1' = g_1 \powe{-K\Phi_{1,\f}(0)\d l}$.\\
+The free part of the action should also be invariant, but so far we have
+\begin{align}
+S_{0,\s} &= \frac{1}{2\pi K} \intx{0}{\beta}{\intx{-L'/2}{L'/2}{\klb*{\frac{1}{v} \kla*{\partial_\tau\phi_\s(sx',\tau)}^2 + v \frac{1}{s^2}\kla*{\partial_{x'}\phi_\s(sx',\tau)}^2 + gv \frac{1}{s^2} \partial_{x'}\phi_\s(sx',\tau) \partial_{x'}\phi_\s(sx'+a,\tau) } s}{x'}}{\tau}.
+\end{align}
+In this form it becomes apparent that we can not eliminate the dependence on $s$ without also introducing $\tau'=\frac{\tau}{s}$.
+Then we can finally define the new field $\phi'(x',\tau') = \phi_\s(sx',s\tau')$ and find the free action
+\begin{align}
+S_0' &= S_{0,\s} = \frac{1}{2\pi K} \intx{0}{\beta'}{\intx{-L'/2}{L'/2}{\klb*{\frac{1}{v} \kla*{\partial_{\tau'} \phi'(x',\tau')}^2 + v \kla*{\partial_{x'} \phi'(x',\tau')}^2 + gv \partial_{x'}\phi' \partial_{x'}\phi'(x'+a',\tau')}}{x'}}{\tau'}.
+\end{align}
+Here $\beta'= \frac{\beta}{s}$ is sufficient to rewrite everything in terms of the new variables.
+Going back to $S_1$ we now obtain
+\begin{align}
+S_1' &= c_1 g_{1,0} \powe{-\Phi_{1,\f}(0)} s \intx{0}{\beta'}{\intx{-L'/2}{L'/2}{\sin\kla*{2\phi'(x',\tau')} \partial_{x'} \phi'(x'+a',\tau')}{x'}}{\tau'}
+\end{align}
+which implies $c_1' = c_1 \powe{-K\Phi_{1,\f}(0) \d l} s$.
+Similarly the other two interactions are invariant with the mappings
+\begin{align}
+c_{2,3}' &= c_{2,3} \powe{-2K\klb*{\Phi_{1,\f}(0) \mp \Phi_{1,\f}(a)} \d l}
+\end{align}
+where the dependence of the initial couplings on $a$ and $L$ is taken into account.
+This is why $c_{2,3}$ pick up an additional factor of $\frac{1}{s^2}$ cancelling the $s^2$ from the differentials. (\TODO{once again; is this correct? in natural units $\text{meter} \sim \frac{1}{\text{energy}}$, so $u_+$ not picking up an additional factor would be reasonable...}\\
+The RG step is now complete and in our infinitesimal language we arrive at the system of differential equations
+\begin{align}
+\frac{\d c_1}{\d l} &= - K\Phi_{1,\f}(0) c_1(l),\\
+\frac{\d c_{2,3}}{\d l} &= - 2K \klb{\Phi_{1,\f}(0) \pm \Phi_{1,\f}(a)} c_{2,3}(l)
+\end{align}
+where $a'(l)=-a(l)$ leads to $a(l) = a_0 \powe{-l}$ and similarly $\beta(l) = \beta_0 \powe{-l}$ as well as $\Lambda(l) = \Lambda_0 \powe{- l}$.
+Note that the differential equations here are rather difficult to solve analytically as $\Phi_{1,\f}$ also depends on $l$ via the parameters.
+Of course a formal solution is easy to write down at this stage, but a numerical solution will suffice for our purposes.\\
+As argued in the beginning we terminate the RG flow when the bandwidth corresponds to the thermal fluctuations.
+With $\Lambda_0 = \frac{u}{a_0^2}$ and $\Lambda_\text{min} = \frac{1}{\beta_0 u}$ this corresponds to $l_\text{max} = \log\kla*{\frac{\beta_0 u^2}{a_0^2}}$.
+However, this is only true so long as the couplings do not grow exponentially as this would quickly leave the region of parameter space where we can expect correct result from this tree-level RG analysis.
+%#RG flow odeint
+%from scipy.integrate import odeint
+%def phi_f_correlator(x, K=1, beta=1, v=1, Lambda=1, a=1, g=1):
+%    arg = v*Lambda*np.sqrt(1 + g*np.cos(Lambda*a))
+%    return 2*np.cos(Lambda*x) / np.tanh(beta/2 * arg)
+%    #return 2*K*(1 - (Lambda*x)**2/2) * (1/arg + arg/3)
+%def rg_beta(couplings, l_val):
+%    c1, c2, c3, c4, a, beta, Lambda, v, K = couplings
+%    phi_f_val0 = phi_f_correlator(0, K, beta, v, Lambda, a, g)
+%    phi_f_valx = phi_f_correlator(a, K, beta, v, Lambda, a, g)
+%    c1p = c1 * ( -K* phi_f_val0)
+%    c2p = c2 * ( -K* 2*phi_f_val0 + 2*K*phi_f_valx)
+%    c3p = c3 * ( -K* 2*phi_f_val0 - 2*K*phi_f_valx)
+%    c4p = 0
+%    ap = -a
+%    betap = -beta
+%    Lambdap = -Lambda
+%    vp = 0
+%    Kp = 0
+%    return np.array([c1p, c2p, c3p, c4p, ap, betap, Lambdap, vp, Kp])
+%v = 1; a0 = 1; beta0 = 10; K = 1
+%Lambda0 = v/a0**2
+%Lambdaf = 1/beta0/v
+%lmax = np.log(Lambda0/Lambdaf)
+%if lmax < 0:
+%    raise ValueError(f"RG flow not possible for thermal fluctations with beta = {beta0} for these parameters")
+%lv = np.linspace(0, lmax, 200)
+%couplings0 = np.array([1, 1, 1, 1, a0, beta0, Lambda0, v, K])
+%yv = odeint(rg_beta, couplings0, lv)
+%import mpl_special
+%fig, ax = plt.subplots()
+%for i in range(3):
+%    ax.plot(lv, yv[:,i], label=f"$c_{{{i+1}}}$")
+%#ax.plot(lv, yv[:,4] / a0, label="$a / a_0$")
+%#ax.plot(lv, yv[:,5] / beta0, label=r"$\beta / \beta_0$")
+%#ax.plot(lv, yv[:,6] / Lambda0, label=r"$\Lambda / \Lambda_0$")
+%ax.set_xlim(lv[0], lv[-1])
+%ax.set_ylim(1e-6, 1.5)
+%ax.set_yscale("log")
+%ax.set_xlabel("$l$")
+%ax.legend()
+%mpl_special.embed_labels(fig, ax)
+\subsection{1-loop corrections}
+The effective action was defined via the fast average $\powe{S_\text{eff}} = \int \powe{S}\,\mathcal{D}\phi_\f = \powe{S_{0,\s}} \bra*{S_\text{int}}_\f$.
+If we include 1-loop corrections this becomes $\powe{S_\text{eff}} \approx \powe{S_{0,\s}} \powe{\bra*{S_\text{int}}_\f + \frac{1}{2} \bra*{S_\text{int}^2}_\f^\c}$.
+Since our interaction consists of three independent terms and another three with $a\rightarrow -a$ this correction contains some 36 contributions.
+Of course not all of these are independent or relevant, but it still makes for a rather daunting task.
+\subsubsection{Squared contributions}
+Out of the 36 terms there are 12 ``squares'' in the sense that $S_j$ pairs with $S_{j'}$ for $j=j'$.
+As is also true for the general case, we only need to consider the two out of four potential options $S_j(a)^2$ and $S_j(a)S_j(-a)$.
+The others are then obtained by adding the terms with $a\rightarrow -a$.
+To start, consider the term
+\begin{align}
+\bra*{S_2(a) S_2(\epsilon a)}_\f^\c &= c_2^2g_{2,0}^2 \frac{1}{4v^2} \sum_{\epsilon_{1,2}=\pm 1} \int \bra*{ \powe{\i 2\epsilon_1\phi(r_1) - \i 2\epsilon_1\phi(r_1+a)} \powe{\i 2\epsilon_2\phi(r_2) - \i 2\epsilon_2\phi(r_2+\epsilon a)} }_\f^\c \,\d^2r_1\,\d^2r_2\\
+&= g_2^2 \frac{1}{4v^2} \sum_{\epsilon_{1,2}=\pm 1} \bsplit{\int &\powe{\i 2\epsilon_1\phi_\s(r_1) - \i 2\epsilon_1\phi_\s(r_1+a)} \powe{\i 2\epsilon_2\phi_\s(r_2) - \i 2\epsilon_2\phi_\s(r_2+\epsilon a)} \\
+&\times\bra*{ \powe{\i 2\epsilon_1\phi_\f(r_1) - \i 2\epsilon_1\phi_\f(r_1+a)} \powe{\i 2\epsilon_2\phi_\f(r_2) - \i 2\epsilon_2\phi_\f(r_2+\epsilon a)} }_\f^\c \,\d^2r_1\,\d^2r_2}\\
+&= g_2^2 \frac{1}{4v^2} \sum_{\epsilon_2=\pm 1} \bsplit{\int  &\cos\kla*{2\phi_\s(r_1) - 2\phi_\s(r_1+a) + 2\epsilon_2\phi_\s(r_2) - 2\epsilon_2\phi_\s(r_2+\epsilon a)}\\
+&\times \klc*{\powe{-2 \bra*{\klb*{\phi_\f(r_1) - \phi_\f(r_1+a) + \epsilon_2 \phi_\f(r_2) - \epsilon_2\phi_\f(r_2+\epsilon a)}^2}_\f} - \powe{-4\bra*{\klb*{\phi_\f(a) - \phi_\f(0)}^2}_\f}} }\\
+&= g_2^2 \frac{1}{4v^2} \sum_{\epsilon_2=\pm 1} \bsplit{\int  &\cos\kla*{2\phi_\s(r_1) - 2\phi_\s(r_1+a) + 2\epsilon_2\phi_\s(r_2) - 2\epsilon_2\phi_\s(r_2+\epsilon a)}\\
+&\times \klc*{\powe{-4 \epsilon_2 \bra*{\klb*{\phi_\f(r) - \phi_\f(r+a)} \klb*{\phi_\f(0) - \phi_\f(\epsilon a)}}_\f} - 1} \powe{-4\bra*{\klb*{\phi_\f(a) - \phi_\f(0)}^2}_\f}}\\
+&= g_2^2 \frac{1}{4v^2} \sum_{\epsilon_2=\pm 1} \bsplit{\int  &\cos\kla*{2\phi_\s(r_1) - 2\phi_\s(r_1+a) + 2\epsilon_2\phi_\s(r_2) - 2\epsilon_2\phi_\s(r_2+\epsilon a)}\\
+&\times (-2 \epsilon_2 K\d l) \klb*{\Phi_{1,\f}(r) + \Phi_{1,\f}(r+a-\epsilon a) - \Phi_{1,\f}(r+a) - \Phi_{1,\f}(r-\epsilon a)}}
+\end{align}
+Here the typical argument again leads to $r\lesssim \frac{1}{\Lambda} \sim a$ and allows us to expand the cosine.
+Contrary to the pure sine-Gordon term the case of $\epsilon_2=+1$ is actually interesting here because it leads to an action that is essentially $\cos(4\phi(r) - 4\phi(r+a))$ and thus roughly as RG relevant as the action $S_4$ we started with.
+Furthermore, after expansion in $a$ the contribution scales with the square of the argument so relative to $S_4$ this leads to an additional factor of four.
+That said, including this term is practically impossible; if we wanted to do so, we would have to include it from the start.
+In a recursive manner this would then generate all of these types of terms.
+There is hope though, because initially all of the couplings would be zero.
+Additionally, the recursive structure means that there is a  certain power-law structure to the relevance of the terms.
+Essentially, if the $\cos(4\phi)$ is not important, then all the other ones will definitely not be either.
+Since we do not let the RG flow for very long (typical $l_\text{max} \approx 1\dots 3$) these higher order terms have little time to become relevant.\\
+\QnA{Later one might want to check just the $\cos(4\phi)$-term to (hopefully) verify this conjecture.
+This may not be too difficult as within a ``self-consistency-check'' it might be sufficient to just consider the tree-level RG for the term.\\}
+That said, we throw out $\epsilon_2=+1$ at this stage and focus on $\epsilon_2=-1$ giving
+\begin{align}
+\cos &\approx \cos\kla[\big]{2 r\cdot \nabla_R\phi_\s(R) - (r+2a) \cdot \nabla_R\phi_\s(R) - (r-2\epsilon a) \cdot \nabla_R\phi_\s(R)}\\
+&\simeq 1 - \delta_{\epsilon,-1} 8a^2 \kla*{\partial_X\phi_\s(R)}^2.
+\end{align}
+Of course the contribution for $\epsilon=+1$ is not exactly constant, but it consists of higher-order derivatives and is thus negligible at this level of rigour.
+Inserting this result gives an irrelevant constant and the interesting part
+\begin{align}
+\bra*{S_2(a) S_2(-a)}_\f^\c &\approx -g_2^2 K \d l \frac{1}{2v^2} 8a^2 \int \kla*{\partial_X\phi_\s(R)}^2 2 \klb*{\Phi_{1,\f}(r) + \Phi_{1,\f}(r+2a) - 2\Phi_{1,\f}(r+ a)}.
+\end{align}
+Adding a term of the form $C\int \kla*{\partial_x\phi}^2$ to the free action results in the new parameters $\frac{v'}{K'} = \frac{v}{K}$ and $\frac{1}{K'v'} = \frac{1}{Kv} + 2\pi C$ which yields $K'=\gamma K$ and $v'=\gamma v$ with $\gamma = \kla*{1 + 2\pi KvC}^{-1/2}$.
+For an infinitesimal $C$ this becomes $\gamma = 1 - \pi KvC$, so this 1-loop correction boils down to a modification of $K$ and $v$ in the form of $\d K = -\pi K^2vC$ and $\d v = -\pi Kv^2C$.
+This is presumably the most relevant of its kind as $c_2$ is the only parameter that is not RG irrelevant.\\
+The integrals over the fast correlators can be evaluated explicitly, although this calculation is a little bit painful.
+Note that we have restricted $r$ to values that are small in the sense of $r\lesssim \frac{1}{\Lambda}$ and consequently
+\begin{align}
+C_{0,0}(s) &= \int \Phi_{1,\f}(r+sa) = \intx{-w/\Lambda}{w/\Lambda}{\intx{-w/\Lambda}{w/\Lambda}{2\cos\kla*{\Lambda x + \Lambda sa} \frac{\cosh\kla*{\frac{\beta v\Lambda}{2} \kappa - \kappa \Lambda y}}{\sinh\kla*{\frac{\beta v\Lambda}{2} \kappa}}}{x}}{y}\\
+&= \frac{2}{\Lambda^2} \frac{1}{\sinh\kla*{\frac{\beta v\Lambda}{2} \kappa}}\intx{-w}{w}{\intx{-w}{w}{\cos\kla*{x + \Lambda sa} \cosh\kla*{\frac{\beta v\Lambda}{2} \kappa - \kappa y}}{x}}{y}\\
+&= \frac{2}{\Lambda^2} \frac{2\sin(w) \cos(\Lambda sa)}{ \sinh\kla*{\frac{\beta v\Lambda}{2} \kappa}} \frac{2}{\kappa} \sinh\kla*{w\kappa} \cosh\kla*{\frac{\beta v\Lambda}{2} \kappa}
+\end{align}
+where we defined $\kappa = \sqrt{1 + 2\tilde{g}\cos(\Lambda a)}$ and introduced the cut-off constant $w\approx 1$.
+This parameter is not physical and any qualitative consequences are a very clear indication of a breakdown of the RG.
+In practice the results should only show a mild dependence with respect to values of $w$ ``close'' to unity.\\
+More generally we can define $C_{n,m}(s) = \int x^n y^m \Phi_{1,\f}(r+sa)$ where we will often encounter the two special cases $C_{2,0}$ and $C_{0,2}$.
+Using
+\begin{align}
+\intx{-w}{w}{x^2\cos\kla*{x + s}}{x} &= 2\cos(s) \kla*{ \klb*{w^2-2}\sin(w) + 2w\cos(w)},\\
+\intx{-w}{w}{x^2\cosh\kla*{x + s}}{x} &= 2\cosh(s)\kla*{\klb*{w^2+2} \sinh(w) - 2w\cosh(w)}
+\end{align}
+yields
+\begin{align}
+C_{2,0}(s) &= \frac{2}{\Lambda^4} \frac{2\kla*{ \klb*{w^2-2}\sin(w) + 2w\cos(w)} \cos(\Lambda sa)}{ \sinh\kla*{\frac{\beta v\Lambda}{2} \kappa}} \frac{2}{\kappa} \sinh\kla*{w\kappa} \cosh\kla*{\frac{\beta v\Lambda}{2} \kappa},\\
+C_{0,2}(s) &= \frac{2}{\Lambda^4} \frac{2\sin(w) \cos(\Lambda sa)}{ \sinh\kla*{\frac{\beta v\Lambda}{2} \kappa}} \frac{2}{\kappa} \kla*{\klb*{w^2\kappa^2+2} \sinh(w\kappa) - 2w\kappa\cosh(w\kappa)} \cosh\kla*{\frac{\beta v\Lambda}{2} \kappa}.
+\end{align}
+\TODO{This seems way too explicit for what we are trying to achieve with the RG.
+Also the dependence on $w$ is exponential and thus certainly not irrelevant.
+Somehow we should keep the discussion more qualitative; what could be a good replacement for these integrals?}\\
+With these functions the tree-level beta function is now modified by
+\begin{align}
+K'(l) &= \kla*{-\pi K^2 v} \kla*{-\frac{1}{2}} c_2^2 K g_{2,0}^2 \frac{8a^2}{v^2} \klb*{2C_{0,0}(0) - 2C_{0,0}(1) + C_{0,0}(2) - 2C_{0,0}(-1) + C_{0,0}(-2)}\\
+&\simeq \frac{\pi K^2 v}{2} c_2^2 Kg_{2,0}^2 \frac{8a^2}{v^2} \kla*{-2\Lambda^2a^2} C_{0,0}(1),\\
+v'(l) &= \frac{\pi Kv^2}{2} \dots
+\end{align}
+where we used $2f(x) - f(x-a) - f(x+a) \approx a^2 f''(x)$ and $\partial_x^2 C_{0,0} \equiv -(\Lambda a)^2 C_{0,0}$ as well as $C_{0,0}(x) = C_{0,0}(-x)$.
+The justification for this approximation -- in our case $x\sim a$ so this is not a proper limit -- is based on the numerics.\\
+A very similar analysis can be performed for $S_3$ and leads to
+\begin{align}
+\bra*{S_3(a) S_3(\epsilon a)}_\f^\c &= g_3^2 \frac{1}{4v^2} \sum_{\epsilon_2=\pm 1} \bsplit{\int  &\cos\kla*{2\phi_\s(r_1) + 2\phi_\s(r_1+a) + 2\epsilon_2\phi_\s(r_2) + 2\epsilon_2\phi_\s(r_2+\epsilon a)}\\
+&\times (-2 \epsilon_2 K\d l) \klb*{\Phi_{1,\f}(r) + \Phi_{1,\f}(r+a-\epsilon a) + \Phi_{1,\f}(r+a) + \Phi_{1,\f}(r-\epsilon a)}.}
+\end{align}
+Despite the difference being only a few minus signs the discussion here is significantly easier.
+This is because the case $\epsilon_2=+1$ is, just as for the sine-Gordon model, only a glorified $\cos(16\phi)$-term that is negligible compared to $S_4$.
+For $\epsilon_2=-1$ we make the usual expansion and get
+\begin{align}
+&\cos\kla*{2\phi_\s \kla*{R + \frac{r}{2}} + 2\phi_\s\kla*{R + \frac{r+2a}{2}} - 2\phi_\s\kla*{R - \frac{r}{2}} - 2\phi_\s\kla*{R - \frac{r - 2\epsilon a}{2}}} \\
+&\qquad \approx \cos\kla*{2r\cdot \nabla_R\phi_\s + \kla*{r+2a}\cdot \nabla_R \phi_\s(R) + \kla*{r - 2\epsilon a}\cdot \nabla_R \phi_\s(R)}\\
+&\qquad \simeq 1 - \frac{1}{2} \klb*{4x + 4a\delta_{\epsilon,-1}}^2 \kla*{\partial_X\phi_\s(R)}^2 - \frac{1}{2} \klb*{4y}^2 \kla*{\partial_Y\phi_\s(R)}^2.
+\end{align}
+Inserting into the expectation value yields
+\begin{align}
+\bra*{S_3(a) S_3(\epsilon a)}_\f^\c &= -g_3^2 \frac{4}{v^2} K\d l \int \klb*{\kla*{\partial_X\phi_\s(R)}^2 C_{3\epsilon,x} + \kla*{\partial_Y\phi_\s(R)}^2 C_{3\epsilon,y}} \,\d^2R
+\end{align}
+where we defined the parameters
+\begin{align}
+C_{3\epsilon,x} &= \int \klb*{x + a\delta_{\epsilon,-1}}^2  \klb*{\Phi_{1,\f}(r) + \Phi_{1,\f}(r+a-\epsilon a) + \Phi_{1,\f}(r+a) + \Phi_{1,\f}(r-\epsilon a)}\,\d^2r,\\
+C_{3\epsilon,y} &= \int y^2 \klb*{\Phi_{1,\f}(r) + \Phi_{1,\f}(r+a-\epsilon a) + \Phi_{1,\f}(r+a) + \Phi_{1,\f}(r-\epsilon a)}\,\d^2r.
+\end{align}
+Adding a term of the form $C\int \kla*{\partial_y\phi}^2$ leads to $K'=K-\pi K^2vC$ as well as $v'=v-\pi Kv^2C$.
+Evidently this is identical to the term with $\partial_x$ and thus the only relevant quantity is
+\begin{align}
+C_{3\epsilon} &= C_{3\epsilon,x} + C_{3\epsilon,y} \approx 4C_{2,0}(0) + 4C_{0,2}(0)
+\end{align}
+where the approximation is once again justified by numerics and we have
+\begin{align}
+K'(l) &= \kla*{-\pi K^2v} \kla*{-\frac{1}{2}} c_3^2 K g_{3,0}^2 \frac{4}{v^2} \klb*{4C_{2,0}(0) + 4C_{0,2}(0)},\\
+v'(l) &= \kla*{-\pi Kv^2} \dots
+\end{align}
+For $j=1$ the connected average is
+\begin{align}
+\bra*{S_1(a) S_1(\epsilon a)}_\f^\c &= g_1^2 \frac{1}{(2\i)^2v^2} (\eta_\R\eta_\L)^2 \sum_{\epsilon_{1,2}=\pm 1} \int \bra*{ \epsilon_1 \powe{\i 2\epsilon_1\phi(r_1)} \partial_{x_1} \phi(r_1+a) \epsilon_2 \powe{\i 2\epsilon_2\phi(r_2)} \partial_{x_2} \phi(r_2+\epsilon a)}_\f^\c\\
+&= g_1^2\frac{1}{4v^2} \sum_{\epsilon_{1,2}=\pm 1} \epsilon_1\epsilon_2 \bsplit{\int & \powe{\i 2\epsilon_1\phi_\s(r_1) + \i 2\epsilon_2\phi_\s(r_2)}\\
+&\times \bra*{\powe{\i 2\epsilon_1\phi_\f(r_1)} \powe{\i 2\epsilon_2\phi_\f(r_2)}}_\f^\c \partial_{x_1} \phi_\s(r_1+ a) \partial_{x_2} \phi_\s(r_2+\epsilon a)\\
+&\times \bra*{\powe{\i 2\epsilon_1\phi_\f(r_1)} \powe{\i 2\epsilon_2\phi_\f(r_2)} \partial_{x_2} \phi_\f(r_2+\epsilon a)}_\f^\c \partial_{x_1} \phi_\s(r_1+ a)\\
+&\times \bra*{\powe{\i 2\epsilon_1\phi_\f(r_1)} \partial_{x_1} \phi_\f(r_1+ a) \powe{\i 2\epsilon_2\phi_\f(r_2)}}_\f^\c \partial_{x_2} \phi_\s(r_2+\epsilon a)\\
+&\times \bra*{\powe{\i 2\epsilon_1\phi_\f(r_1)} \partial_{x_1} \phi_\f(r_1+ a) \powe{\i 2\epsilon_2\phi_\f(r_2)} \partial_{x_2} \phi_\f(r_2+\epsilon a)}_\f^\c.}
+\end{align}
+Let us compute the expectation values individually.
+The easiest one is
+\begin{align}
+\bra*{\powe{\i 2\epsilon_1\phi_\f(r_1)} \powe{\i 2\epsilon_2\phi_\f(r_2)}}_\f^\c &= \powe{-2 \bra*{\klb*{\epsilon_1\phi_\f(r_1) + \epsilon_2\phi_\f(r_2)}^2}_\f} -\powe{-4\bra*{\phi_\f(0)^2}_\f} \\
+&= \powe{-4\bra*{\phi_\f(0)^2}_\f} \klc*{\powe{-2\epsilon_1\epsilon_2 \bra*{\phi_\f(r_1-r_2) \phi_\f(0)}_\f} - 1}.
+\end{align}
+The mixed terms are slightly more complicated and evaluate to
+\begin{align}
+\bra*{\dots \partial_{x_1} \phi_\f(r_1+ a)}_\f^\c &= \bsplit{&\partial_a \partial_J \bra*{\powe{\i 2\epsilon_1\phi_\f(r_1)} \powe{J \phi_\f(r_1+ a)} \powe{\i 2\epsilon_2\phi_\f(r_2)}}_\f \\
+&- \partial_a \partial_J \bra*{\powe{\i 2\epsilon_1\phi_\f(r_1)} \powe{J \phi_\f(r_1+ a)}}_\f \bra*{\powe{\i 2\epsilon_2\phi_\f(r_2)}}_\f}\\
+&= \bsplit{& \partial_a \partial_J \powe{\frac{1}{2} \bra*{\klb*{\i 2\epsilon_1\phi_\f(r_1) + \i 2\epsilon_2\phi_\f(r_2) + J\phi_\f(r_1+a)}^2}_\f} \\
+&- \powe{-2\bra*{\phi_\f(0)^2}_\f} \partial_a \partial_J \powe{\frac{1}{2} \bra*{\klb*{\i 2\epsilon_1 \phi_\f(r_1) + J\phi_\f(r_1+a)}^2}_\f}}\\
+&= \bsplit{&\partial_a \partial_J \powe{\frac{1}{2} \klb*{J^2-8} \bra*{\phi_\f(0)^2}_\f - 4\epsilon_1\epsilon_2 \bra*{\phi_\f(r)\phi_\f(0)}_\f + \i 2\epsilon_1 J \bra*{\phi_\f(a) \phi_\f(0)}_\f + \i 2\epsilon_2 J \bra*{\phi_\f(r+a) \phi_\f(0)}_\f} \\
+&- \powe{-2\bra*{\phi_\f(0)^2}_\f} \partial_a \partial_J \powe{\frac{1}{2} \klb*{J^2 - 4} \bra*{\phi_\f(0)^2}_\f + \i 2\epsilon_1 J\bra*{\phi_\f(a) \phi_\f(0)}_\f}}\\
+&= \bsplit{\powe{-4\bra*{\phi_\f(0)^2}_\f} 2\i \klb[\Big]{&\epsilon_1 \klc*{\powe{-4\epsilon_1\epsilon_2 \bra*{\phi_\f(r) \phi_\f(0)}_\f} - 1} \partial_{a} \bra*{\phi_\f(a)\phi_\f(0)}_\f\\
+& + \epsilon_2 \powe{-4\epsilon_1\epsilon_2 \bra*{\phi_\f(r) \phi_\f(0)}_\f} \partial_{a} \bra*{\phi_\f(r+a)\phi_\f(0)}_\f }},\\
+\bra*{\dots \partial_{x_2} \phi_\f(r_2+ \epsilon a)}_\f^\c &= \bsplit{\powe{-4\bra*{\phi_\f(0)^2}_\f} 2\i \klb[\Big]{&\epsilon_2 \klc*{\powe{-4\epsilon_1\epsilon_2 \bra*{\phi_\f(r) \phi_\f(0)}_\f} - 1} \partial_{a} \bra*{\phi_\f(a)\phi_\f(0)}_\f\\
+& + \epsilon_1 \powe{-4\epsilon_1\epsilon_2 \bra*{\phi_\f(r) \phi_\f(0)}_\f} \partial_{x} \bra*{\phi_\f(r+\epsilon a)\phi_\f(0)}_\f }}.
+\end{align}
+The last term requires some more notational care.
+If we let $x_3=x_1+a$ and $x_4=x_2+\epsilon a$ it gives\footnote{$\lim_{J_{1,2}\rightarrow 0} \partial_{J_1} \partial_{J_2} \powe{J_1^2 X + J_2^2Y + J_1J_2Z + J_1A + J_2B} = Z + AB$}
+\begin{align}
+\bra*{\dots} &= \bsplit{ & \partial_{x_3} \partial_{x_4} \partial_{J_1} \partial_{J_2} \bra*{\powe{\i 2\epsilon_1 \phi_\f(r_1)} \powe{J_1 \phi_\f(r_3)} \powe{\i 2\epsilon_2 \phi_\f(r_2)} \powe{J_2 \phi_\f(r_4)}}_\f\\
+& - \partial_{x_3} \partial_{x_4} \partial_{J_1} \partial_{J_2} \bra*{\powe{\i 2\epsilon_1 \phi_\f(r_1)} \powe{J_1 \phi_\f(r_3)}}_\f \bra*{\powe{\i 2\epsilon_2 \phi_\f(r_2)} \powe{J_2 \phi_\f(r_4)}}_\f }\\
+&= \bsplit{ & \partial_{x_3} \partial_{x_4} \partial_{J_1} \partial_{J_2} \powe{\frac{1}{2} \bra*{\klb*{\i 2\epsilon_1\phi_\f(r_1) + \i 2\epsilon_2\phi_\f(r_2) + J_1 \phi_\f(r_3) + J_2 \phi_\f(r_4)}^2}_\f }\\
+& - \partial_{x_3} \partial_{x_4} \partial_{J_1} \partial_{J_2} \powe{\frac{1}{2} \bra*{\klb*{\i 2\epsilon_1\phi_\f(r_1) + J_1 \phi_\f(r_3)}^2}_\f } \powe{\frac{1}{2} \bra*{\klb*{\i 2\epsilon_2\phi_\f(r_2) + J_2 \phi_\f(r_4)}^2}_\f }}\\
+&= \bsplit{ & \partial_{x_3} \partial_{x_4} \partial_{J_1} \partial_{J_2} \powe{\frac{1}{2} \klb*{J_1^2 + J_2^2 - 8} \bra*{\phi_\f(0)^2}_\f + J_1J_2 \bra*{\phi_\f(r_3) \phi_\f(r_4)}_\f - 4\epsilon_1\epsilon_2 \bra*{\phi_\f(r) \phi_\f(0)}_\f}\\
+&\quad \times \powe{\i 2 \epsilon_1 J_1 \bra*{\phi_\f(r_1) \phi_\f(r_3)}_\f + \i 2 \epsilon_1 J_2 \bra*{\phi_\f(r_1) \phi_\f(r_4)}_\f + \i 2 \epsilon_2 J_1 \bra*{\phi_\f(r_2) \phi_\f(r_3)}_\f + \i 2 \epsilon_2 J_2 \bra*{\phi_\f(r_2) \phi_\f(r_4)}_\f }\\
+& - \partial_{x_3} \partial_{x_4} \partial_{J_1} \partial_{J_2} \powe{\frac{1}{2} \klb*{J_1^2 - 4}\bra*{\phi_\f(0)^2}_\f + \i 2\epsilon_1J_1 \bra*{\phi_\f(r_1) \phi_\f(r_3)}_\f } \powe{\frac{1}{2} \klb*{J_2^2 - 4} \bra*{\phi_\f(0)^2}_\f + \i 2\epsilon_2J_2 \bra*{\phi_\f(r_2)\phi_\f(r_4)}_\f }}\\
+&=  \bsplit{ &\powe{-4 \bra*{\phi_\f(0)^2}_\f }\powe{-4\epsilon_1\epsilon_2 \bra*{\phi_\f(r) \phi_\f(0)}_\f} \partial_{x_3} \partial_{x_4} \klb[\Big]{\bra*{\phi_\f(r_3) \phi_\f(r_4)}_\f \\
+&\qquad - 4 \kla*{\epsilon_1 \bra*{\phi_\f(r_1) \phi_\f(r_3)}_\f + \epsilon_2\bra*{\phi_\f(r_2) \phi_\f(r_3)}_\f} \kla*{\epsilon_1 \bra*{\phi_\f(r_1) \phi_\f(r_4)}_\f + \epsilon_2\bra*{\phi_\f(r_2) \phi_\f(r_4)}_\f} }\\
+& + \partial_{x_3} \partial_{x_4} \powe{-4\bra*{\phi_\f(0)^2}_\f} 4\epsilon_1\epsilon_2 \bra*{\phi_\f(r_1) \phi_\f(r_3)}_\f \bra*{\phi_\f(r_2) \phi_\f(r_4)}_\f.}
+\end{align}
+\TODO{Everything here is a function of $r$ so the general structure is similar to the other terms. The details are horrific though; this does not look like something that can reasonably be put on a computer. Let alone something I can proof-read within finite time...\\}
+\QnA{Rough analysis;\\
+Corrections are of the form
+\begin{align}
+2\sum_{\epsilon_2} \epsilon_2 \int \cos\kla*{2\phi_\s(r_1) + 2\epsilon_2 \phi_\s(r_2)} \mathcal{C}_j \mathcal{F}_j
+\end{align}
+where $\mathcal{F}_j$ are the four $r$-dependent fast correlators and $\mathcal{C}_j$ are the four combinations of slow fields.
+\begin{align}
+j=1:\quad &\epsilon_2=+1:\quad \cos(4\phi) \kla*{\partial_X\phi}^2 \sim 0; &&\epsilon_2=-1:\quad \cos(2r\cdot\nabla_R\phi) \kla*{\partial_X\phi}^2 \sim \kla*{\partial_X\phi}^2\\
+j=2,3:\quad &\epsilon_2=+1:\quad \cos(4\phi) \partial_X\phi \sim 0; &&\epsilon_2=-1:\quad \cos(2r\cdot\nabla_R\phi) \partial_X\phi \sim 0\\
+j=4:\quad &\epsilon_2=+1:\quad \cos(4\phi) \sim S_3; &&\epsilon_2=-1:\quad \cos(2r\cdot\nabla_R\phi) \sim \kla*{r\cdot \partial_R\phi}^2.
+\end{align}
+Arguments are: We drop constants, total derivatives and anything containing more than two derivatives (this is what takes care of $j=2,3$-terms for $\epsilon_2=-1$).
+Also we ignore anything that is less relevant than $S_1$ (this removes $j=1,2,3$ for $\epsilon_2=+1$).\\
+What survives are two ``boring'' (but incredible horrific) corrections to $K$ and $v$ that are most likely not too important due to the $g_1^2$-dependence. At least I \emph{hope} that they are not important, because calculating the fast correlator $\mathcal{F}_4$ looks absolutely disgusting.
+The interesting contribution is a feedback loop into the $S_3$-term; I am even more certain that this term is not relevant, but it is structurally interesting nonetheless.\\
+After the dust settles there is a reasonable chance that none of the above actually make a difference -- which is exactly what we were hoping for! [and yes it is true; we do all this work hoping that not much will change]
+}
+
+\end{document}

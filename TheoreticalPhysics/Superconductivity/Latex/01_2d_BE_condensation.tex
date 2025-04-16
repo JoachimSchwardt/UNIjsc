@@ -1,0 +1,242 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Bose-Einstein Condensation in 2D}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Theory of Superconductivity}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+%\section{London penetration depth}
+%In gaussian units we have and assuming $\rho \equiv 0$ the Maxwell and London equations in real and Fourier space read
+%\begin{align}
+%\nabla\cdot \textbf{E} &= 0 && \rightarrow & \i\textbf{k} \cdot \textbf{E} &= 0,\\
+%\nabla\cdot \textbf{B} &= 0 && \rightarrow & \i\textbf{k} \cdot \textbf{B} &= 0,\\
+%\nabla\times \textbf{E} &= - \frac{1}{c} \partial_t \textbf{B} && \rightarrow & \textbf{k} \times \textbf{E} &= \frac{1}{c} \omega \textbf{B}, \label{eqn:maxwell 3}\\
+%\nabla\times \textbf{B} &= \frac{4\pi}{c}\textbf{j} + \frac{1}{c} \partial_t \textbf{E} && \rightarrow & \textbf{k} \times \textbf{B} &= \frac{4\pi}{\i c}\textbf{j} - \frac{\omega}{c} \textbf{E},\\
+%\partial_t \textbf{j} &= \frac{c^2}{4\pi\lambda_L^2} \textbf{E} && \rightarrow & \i\omega \textbf{j} &= \frac{c^2}{4\pi\lambda_L^2} \textbf{E}, \\
+%\nabla\times \textbf{j} &= -\frac{c}{4\pi\lambda_L^2} \textbf{B} && \rightarrow & \i\textbf{k} \times \textbf{j} &= -\frac{c}{4\pi\lambda_L^2} \textbf{B}.
+%\end{align}
+%The solutions have to be transverse waves since both $\textbf{k} \cdot \textbf{E} = 0$ and $\textbf{k} \cdot \textbf{B} = 0$.
+%\autoref{eqn:maxwell 3} can be written as $\textbf{B} = \frac{c}{\omega} \textbf{k} \times \textbf{E}$.
+%Using this, we may eliminate $\textbf{B}$ from the set of equations
+%\begin{align}
+%\frac{4\pi}{\i c} \textbf{j} - \frac{\omega}{c} \textbf{E} &= \textbf{k} \times \kla\left( \frac{c}{\omega} \textbf{k} \times \textbf{E} \right) = \frac{c}{\omega} \textbf{k} \kla\left( \textbf{k} \cdot \textbf{E} \right) - \frac{ck^2}{\omega} \textbf{E} =  - \frac{ck^2}{\omega} \textbf{E},\\
+%\i \textbf{j} &= -\frac{c}{4\pi\lambda_L^2} \frac{c}{\omega} \textbf{E}.
+%\end{align}
+%We find two equations for the supercurrent $\textbf{j}$
+%\begin{align}
+%\textbf{j} &= \frac{\i}{4\pi} \left( \omega - \frac{c^2 k^2}{\omega} \right) \textbf{E} ,\\
+%\textbf{j} &= \frac{\i c^2}{4\pi\omega\lambda_L^2} \textbf{E}.
+%\end{align}
+%Combining these leads to an equation for the dispersion relation
+%\begin{align}
+%0 &= \omega - \frac{c^2k^2}{\omega} - \frac{c^2}{\omega\lambda_L^2} && \Rightarrow & \omega &= c\sqrt{k^2 + \frac{1}{\lambda_L^2}} \equiv \sqrt{c^2k^2 + \omega_p^2}
+%\end{align}
+%where $\omega_p := \frac{c}{\lambda_L}$ is the plasma frequency.
+%\autoref{fig:long dispersion} shows a plot of the dispersion relation.
+%\begin{figure}[!ht]
+%\centering
+%\includegraphics{london_dispersion.png}
+%\caption{Plot of the dispersion relation for $\lambda_L = \SI{200}{nm}$.}
+%\label{fig:long dispersion}
+%\end{figure}
+%\section{Boltzmann equation in relaxation time approximation}
+%In the absence of an applied force the Boltzmann equation in the relaxation time approximation $\mathcal{S}[\rho] = \frac{\rho - \rho_0}{\tau}$ reads
+%\begin{align}
+%\kla\left( \partial_t + \frac{\hbar\textbf{k}}{m} \cdot\nabla \right) \rho &= - \frac{\rho - \rho_0}{\tau}
+%\end{align}
+%where $\rho_0(k) = \frac{1}{\e^{\beta \epsilon_\textbf{k}} + 1}$ is the Fermi-Dirac distribution function.
+%Since both $\partial_t \rho_0 = 0$ and $\nabla\rho_0 = 0$ we indeed find that $\rho = \rho_0$ is a (trivial) solution to this simplified Boltzmann equation.
+%Let $\eta(\textbf{r},\textbf{k},t) := \rho (\textbf{r},\textbf{k},t) - \rho_0(\textbf{k})$ be the deviation from the equilibrium distribution.
+%Then the equation for $\eta$ reads
+%\begin{align}
+%\kla\left( \partial_t + \frac{\hbar \textbf{k}}{m} \cdot \nabla \right) \eta &= -\frac{\eta}{\tau}.
+%\end{align}
+%%Applying a spatial Fourier transform results in
+%%\begin{align}
+%%\kla\left( \partial_t + \frac{\hbar \textbf{k}}{m} \cdot \i \textbf{q} \right) \eta(\textbf{q},\textbf{k},t) &= -\frac{\eta(\textbf{q},\textbf{k},t) }{\tau}.
+%%\end{align}
+%%Splitting of the exponential dampening term by $\eta =: \phi (\textbf{q},\textbf{k}) \e^{-t/\tau}$ yields
+%%\begin{align}
+%%\frac{\hbar}{m\tau} \textbf{k} \cdot \i\textbf{q} \phi &= 0.
+%%\end{align}
+%Splitting of the exponential dampening term by $\eta =: \phi (\textbf{r},\textbf{k}) \e^{-t/\tau}$ yields
+%\begin{align}
+%\frac{\hbar}{m\tau} \textbf{k} \cdot \nabla \phi &= 0.
+%\end{align}
+%A simple solution of this equation would be given by an arbitrary, but spatially homogeneous $\phi = \phi(\textbf{k})$.
+%Regardless, the deviations show exponential dampening with an expected lifetime of $\tau$.
+
+%\section{Bose-Einstein condensation in two dimensions}
+This problem is best solved in the grand-canonical ensemble where
+\begin{align}
+\hat{\rho} &= \frac{1}{Z} \e^{-\beta \hat{H} + \beta\mu \hat{N}} = \frac{1}{Z} \prod_\textbf{k} \e^{-\beta \epsilon_\textbf{k} \hat{n}_\textbf{k} + \beta \mu \hat{n}_\textbf{k}}.
+\end{align}
+Since the trace of this density operator is unity the partition function is given by
+\begin{align}
+Z &= \tecxt\text{tr} \prod_\textbf{k} \e^{-\beta \epsilon_\textbf{k} n_\textbf{k} + \beta \mu n_\textbf{k}} = \sum_{\{n_\textbf{k}\}} \langle \{n_\textbf{k}\} | \prod_\textbf{q} \e^{-\beta (\epsilon_\textbf{q} - \mu) \hat{n}_\textbf{q}} | \{n_\textbf{k} \} \rangle = \\
+&= \sum_{\{n_\textbf{k}\}} \prod_\textbf{q} \e^{-\beta (\epsilon_\textbf{q} - \mu) n_\textbf{q}} = \prod_\textbf{k} \sum_{n_\textbf{k} \ge 0} \e^{-\beta (\epsilon_\textbf{k} - \mu) n_\textbf{k}} = \prod_\textbf{k} \frac{1}{1 - \e^{-\beta (\epsilon_\textbf{k} - \mu)}}.
+\end{align}
+With the fugacity $y := \e^{\beta\mu}$ the logarithm of this partition function becomes
+\begin{align}
+\log Z &= \sum_\textbf{k} \log \kla\left( 1 - y\e^{-\beta\epsilon_\textbf{k}} \right).
+\end{align}
+The expected number of particles is given by
+\begin{align}
+N &= \tecxt\text{tr} (\hat{N} \hat{\rho}) = \frac{1}{Z} \frac{\partial_\mu }{\beta} Z = \frac{1}{\beta} \partial_\mu \log Z = y\partial_y \log Z = \sum_\textbf{k} \frac{y\e^{-\beta\epsilon_\textbf{k}}}{1 - y\e^{-\beta\epsilon_\textbf{k}}}.
+\end{align}
+The density of states is defined by
+\begin{align}
+n(\epsilon) &:= \frac{1}{A}\sum_\textbf{k} \delta(\epsilon - \epsilon_\textbf{k}).
+\end{align}
+This allows us to rewrite expressions of the following form in terms of an integral
+\begin{align}
+%\sum_\textbf{k} \cdot &\sim \frac{A}{(2\pi)^2} \intr\int_{\mathbb{R}^{2}} \cdot\ \,\mathrm{d}^{2}k = \frac{A}{(2\pi)^2} \intx\int_{0}^{\infty} \cdot  \  n(\epsilon) \, \mathrm{d}\epsilon
+\sum_\textbf{k} f(\epsilon_\textbf{k}) &= \sum_\textbf{k} \intx\int_{0}^{\infty} f(\epsilon) \delta (\epsilon - \epsilon_\textbf{k}) \, \mathrm{d}\epsilon = A\int_{0}^{\infty} f(\epsilon) n(\epsilon)\, \mathrm{d}\epsilon.
+\end{align}
+In our case the density of states may be approximated by
+\begin{align}
+n(\epsilon) &\simeq \frac{1}{(2\pi)^2} \intr\int_{\mathbb{R}^{2}} \delta \kla\left( \epsilon - \frac{\hbar^2\textbf{k}^2}{2m} \right) \, \mathrm{d}^{2}k = \frac{1}{2\pi} \intx\int_{0}^{\infty} \delta \kla\left( \epsilon - \frac{\hbar^2k^2}{2m} \right) \, \frac{1}{2}\mathrm{d}(k^2) = \frac{m}{2\pi \hbar^2}.
+\end{align}
+Thus we find
+\begin{align}
+\log Z &= \frac{mA}{2\pi\hbar^2} \intx\int_{0}^{\infty} \log \kla\left( 1 - y\e^{-\beta\epsilon} \right) \, \mathrm{d}\epsilon,\\
+N &= \frac{mA}{2\pi\hbar^2} \intx\int_{0}^{\infty} \frac{1}{\frac{1}{y} \e^{\beta\epsilon} - 1}\, \mathrm{d}\epsilon = \frac{mA}{2\pi\hbar^2\beta} \intx\int_{0}^{\infty} \frac{y\e^{-x}}{1 - y\e^{-x}}\, \mathrm{d}x = \\
+&= \frac{mA}{2\pi\hbar^2\beta} \sum_{n\ge 1} \intx\int_{0}^{\infty} \kla\left( y\e^{-x} \right)^n\, \mathrm{d}x = \\
+&=\frac{mA}{2\pi\hbar^2\beta} \sum_{n\ge 1} y^n \frac{1}{n} = \frac{mA}{2\pi\hbar^2\beta} \log \kla\left( \frac{1}{1 - y} \right).
+\end{align}
+The fugacity can now be expressed as a function of the particle number
+\begin{align}
+y &= 1 - \e^{-\frac{2\pi\hbar^2\beta}{m} \frac{N}{A}}
+\end{align}
+and similarly the partition function becomes
+\begin{align}
+\log Z &= \frac{mA}{2\pi\hbar^2} \intx\int_{0}^{y} \log\kla\left( 1 - u \right) \, \frac{\mathrm{d}u}{\beta u} = \\
+&= -\frac{mA}{2\pi\hbar^2\beta} \tecxt\text{Li}_2(y) = -\frac{mA}{2\pi\hbar^2\beta} \tecxt\text{Li}_2 \kla\left( 1 - \e^{-\frac{2\pi\hbar^2}{mA} \beta N} \right).
+\end{align}
+Note that the ground state occupation number is $N_0 = \frac{y}{1 - y}$.
+For a phase transition this would have to diverge, requiring $y\rightarrow 1$ and therefore $\beta\mu \rightarrow 0$.
+Thus the chemical potential would have to scale as $\mu \sim T^{1+\alpha}$ for some $\alpha > 0$.
+Comparing to our equation for the particle density, this would be equivalent to
+\begin{align}
+\frac{N}{A} \frac{2\pi\hbar^2}{mk_\tecxt\text{B}} &= -T \log \kla\left( 1 - \e^{\kappa T^{1 + \alpha}} \right) \\
+&\rightarrow \lim \frac{\frac{1}{1 - \e^{\kappa T^{1+\alpha}}} \kla\left( -\kappa (1+\alpha) T^\alpha \e^{\kappa T^{1+\alpha}} \right)}{\frac{1}{T^2}} = \lim \frac{-\kappa (1+\alpha) T^{2+\alpha}}{1 - \e^{\kappa T^{1+\alpha}}} = 0.
+\end{align}
+However, since we are dealing with bosons we expect all particles to be in the ground state for $T=0$.
+There is no phase transition, because as seen in the limit above, the particle density of the $N_{>0}$-states non-zero for any finite temperature.
+%Note that $\mu \le 0$ and therefore $y = \e^{\beta\mu} \rightarrow 0$ for $T \rightarrow 0$ (or $\beta\rightarrow \infty$ respectively).
+%Thus
+%\begin{align}
+%\frac{N}{A} &= \frac{-m}{2\pi\hbar^2\beta} \log (1 - y) \sim \frac{m}{2\pi\hbar^2\beta} y = \frac{m}{2\pi\hbar^2} \frac{\e^{\beta\mu}}{\beta} \le \frac{m}{2\pi\hbar^2\beta} \rightarrow 0.
+%\end{align}
+%\begin{align}
+%\mu &= \frac{1}{\beta} \log y = \frac{1}{\beta} \log \kla\left( 1 - \e^{-\frac{2\pi\hbar^2\beta}{m} \frac{N}{A}} \right) \le 0,\\
+%\frac{N}{A} &\le \frac{m}{2\pi\hbar^2} \frac{y}{\beta} \le \frac{m}{2\pi\hbar^2} \frac{1}{\beta} \rightarrow 0.
+%\end{align}
+%TODO: Show that there is no phase transition (this is more difficult than it should be, something weird about this approach) and compute pressure (should be easy).
+The grand-canonical potential is $\Omega = -\frac{1}{\beta} \log Z$.
+The pressure is then given by
+\begin{align}
+p &= -\frac{\partial \Omega}{\partial A} = -\frac{\Omega}{A} + \frac{1}{\beta} \frac{mA}{2\pi\hbar^2\beta} \frac{-\log (1-y)}{y} \frac{\partial y}{\partial A} = \\
+&= -\frac{\Omega}{A} + \frac{1}{\beta} \frac{mA}{2\pi\hbar^2\beta} \frac{-\log (1-y)}{y} \frac{-2\pi\hbar^2\beta N}{mA^2} (1 - y) = \\
+&= \frac{m}{2\pi\hbar^2\beta^2} \tecxt\text{Li}_2(y) + \frac{1}{\beta A} \frac{\log (1-y)}{y}(1-y).
+\end{align}
+The low-temperature limit is equivalent to $y\rightarrow 1$ for which the dilogarithm behaves as $\tecxt\text{Li}_2(y) \sim \text{Li}_2(1) - (1-y) \klam\left[ 1 - \log(1 - y) \right]$.
+Thus the pressure becomes
+\begin{align}
+p &\sim \frac{m}{2\pi\hbar^2\beta^2} \klam\left[ \text{Li}_2(1) - (1-y) \right] + (1-y)\log(1-y) \klam\left[ \frac{m}{2\pi\hbar^2\beta^2} + \frac{1}{\beta A y} \right]\\
+&\rightarrow \frac{m}{2\pi\hbar^2\beta^2} \frac{\pi^2}{6} = \frac{\pi m}{12 \hbar^2}(k_\tecxt\text{B}T)^2.
+\end{align}
+In a classical ideal gas $p\sim T$ and in a 3D condensate $p\sim T^{5/2}$, so pressure in 2D drops faster than in a classical gas but slower than in 3D.
+
+\subsubsection*{Problems with $T\rightarrow 0$}
+The script and problem sheet both claim that ``splitting off the ground state would be not just unnecessary but incorrect for a two-dimensional gas''. 
+But why would this be case?
+Either the ground state shows macroscopic occupation (then we do have to split it off) or it does not.
+In case of the latter we certainly have
+\begin{align}
+N &= (\textbf{k} = 0)-\tecxt\text{term} + A \int \dots
+\end{align}
+where, since we assumed the first term to not be macroscopically occupied,
+\begin{align}
+\frac{N}{A} &= \frac{(\textbf{k} = 0)-\tecxt\text{term}}{A} + \int \dots \overset{\tecxt\text{t.d. limit: } N,A \rightarrow \infty}{\longrightarrow} 0 + \int \dots
+\end{align}
+so the ``wrong'' term just disappears again.
+Another line of thought is that, unless one is dealing with divergences, splitting off zero-measure sets from the realm of integration does not change the result of an integral.
+Of course my approach must be flawed in some way, but I did not find the mistake.
+%\\
+%Regardless of this issue (which is presumably due to a major misunderstanding on my part of course\dots), I also fail to see how the situation for the $\textbf{k} = 0$-term is any different from the 3D case since $\epsilon_0 = 0$ all the same and therefore
+%\begin{align}
+%N_0 &= \frac{y}{1 - y} 
+%\end{align}
+%may still diverge for $T\rightarrow 0$ if $y \rightarrow 1$.
+%However, this would require $\beta\mu \rightarrow 0$ and thus $\mu \sim T^{1+\alpha}$ for some $\alpha > 0$.
+%\begin{align}
+%\frac{N}{A} &= \int_{\mathbb{R}^{2}} \frac{1}{\e^{\beta (\epsilon_\textbf{k} - \mu)} - 1} \, \frac{\mathrm{d}^{2}k}{(2\pi)^2} = \frac{1}{(2\pi)^2} \intx\int_{0}^{\infty} \frac{1}{\e^{\beta (\epsilon - \mu)} - 1} \, n(\epsilon)\mathrm{d}\epsilon = \\
+%&= \frac{m}{(2\pi)^3\hbar^2\beta} \intx\int_{-\beta\mu}^{\infty} \frac{1}{\e^x - 1} \, \mathrm{d}x = \\
+%&= \frac{m}{(2\pi)^3\hbar^2\beta} \zeta(2) + \frac{m}{(2\pi)^3\hbar^2\beta} \intx\int_{-\beta\mu }^{0} \frac{1}{\e^x - 1}\, \mathrm{d}x \sim \\
+%&\sim \frac{mk_\tecxt\text{B} }{48\pi\hbar^2}T + \frac{m}{(2\pi)^3\hbar^2\beta} \intx\int_{-\beta\mu}^{0} \frac{1}{x}\, \mathrm{d}x \sim \dots + \dots \frac{\log}{•}
+%\end{align}
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

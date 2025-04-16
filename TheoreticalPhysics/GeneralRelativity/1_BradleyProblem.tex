@@ -1,0 +1,245 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{01 Lorentz transformations}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{General Relativity}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Task 1: The Bradley problem}
+Let earth orbit the sun in the $xy$-plane at the radius $R$ and let $k^\mu$ describe light originating from a star sitting along the $z$-axis at a distance $\ell \gg R$.
+Since the star is assumed to be at rest relative to the sun, we have $(k^\mu) = (\omega, 0,k\sin\theta,k\cos\theta)^\top$ in the inertial reference frame (IRF) of the sun.
+Of course we also have $\omega = k$ for light.
+Here the angle $\theta$ characterizes the finite radius of earth's orbit via $\tan\theta = \frac{R}{\ell}$.
+Assuming that the earth is currently moving along the $x$-axis with $\vec{\beta} = \beta\vec{e}_x$, we find the Lorentz transformation to be
+\begin{align}
+k_\tecxt\text{E}^\mu &= L^\mu_{\ \nu}(\beta\vec{e}_x) k^\nu \equiv \begin{pmatrix}
+\gamma & -\beta\gamma & 0 & 0 \\
+-\beta\gamma & \gamma & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{pmatrix} \begin{pmatrix}
+\omega \\ 0 \\ k\sin\theta \\ k\cos\theta
+\end{pmatrix} = \begin{pmatrix}
+\gamma\omega   \\ 
+-\beta\gamma\omega \\
+k\sin\theta \\ k\cos\theta
+\end{pmatrix} = \begin{pmatrix}
+\omega_\tecxt\text{E} \\ k_{\tecxt\text{E} x}  \\ k_{\tecxt\text{E} y} \\ k_{\tecxt\text{E} z}
+\end{pmatrix} .
+\end{align}
+Therefore the angle $\alpha$ between $\vec{k}_\tecxt\text{E}$ and the $z$-axis is given by
+%\begin{align}
+%\cos\alpha &= \frac{\vec{k}_\tecxt\text{E}\cdot\vec{e}_z}{k_\tecxt\text{E}} = \frac{k}{\sqrt{ \beta^2 \gamma^2\omega^2 + k^2}} = \frac{1}{\sqrt{\gamma^2\beta^2 + 1}} = \frac{1}{\sqrt{\gamma^2 - 1 + 1}} = \frac{1}{\gamma}.
+%\end{align}
+%A more useful form of this result is given by
+%\begin{align}
+%\sin\alpha &= \sqrt{1 - \cos^2\alpha} = \sqrt{1 - \frac{1}{\gamma^2}} = \beta,
+%\end{align}
+%where we may approximate $\alpha\simeq \beta$ for small velocities.
+%In the case of earth, this value is determined by $\beta \approx \frac{\SI{30}{\frac{km}{s}}}{\SI{3e5}{\frac{km}{s}}} = 10^{-4}$.
+%This is equivalent to $\alpha\approx \frac{360^\circ}{2\pi}\cdot 10^{-4} \approx 20.6''$.
+%%% TANGENT
+%\begin{align}
+%\tan\alpha &= \frac{\sqrt{k_x^2 + k_y^2}}{k_z} = \frac{\sqrt{\gamma^2\beta^2\omega^2 + k^2\sin^2\theta}}{k\cos\theta} = \sqrt{\frac{\gamma^2\beta^2+1}{\cos^2\theta} - 1} = \\
+%&= \sqrt{\gamma^2 \kla\left( 1 + \tan^2\theta \right) - 1} = \sqrt{\gamma^2\beta^2 + \gamma^2\tan^2\theta} = \\
+%&= \gamma\sqrt{\beta^2 + \frac{R^2}{L^2}}.
+%\end{align}
+%%% SINUS
+\begin{align}
+\sin\alpha &= \frac{\sqrt{k_x^2 + k_y^2}}{\sqrt{k_x^2 + k_y^2 + k_z^2}} = \frac{\gamma^2\beta^2\omega^2 + k^2\sin^2\theta}{\sqrt{\gamma^2\beta^2\omega^2 + k^2}} = \\
+&= \frac{\sqrt{\gamma^2\beta^2 + \sin^2\theta}}{\gamma} = \sqrt{\beta^2 + (1-\beta^2)\sin^2\theta}.
+\end{align}
+where we may approximate $\alpha\simeq \beta$ for small velocities and $\theta \approx 0$ for a distant source.
+In the case of earth we find $\beta \approx \frac{\SI{30}{\frac{km}{s}}}{\SI{3e5}{\frac{km}{s}}} = 10^{-4}$.
+This is equivalent to $\alpha\approx \frac{360^\circ}{2\pi}\cdot 10^{-4} \approx 20.6''$.
+
+\section*{Task 2: Four-vector products}
+We know that $(u^\mu) = (\gamma,\gamma\vec{\beta})^\top$,  $p^\mu = mu^\mu$, $(k^\mu) = (\omega, \vec{k})^\top$ and $(x^\mu) = (t,\vec{x})^\top$.
+Therefore
+\begin{align}
+u_\mu u^\mu &= \gamma^2 - \gamma^2\beta^2 = 1,\\
+p_\mu p^\mu &= m^2 u_\mu u^\mu = m^2,\\
+x_\mu k^\mu &= \omega t - \vec{k}\cdot\vec{x}.
+\end{align}
+Let $a^\mu,b^\mu$ be arbitrary four-vectors and let the Lorentz-transformation be
+\begin{align}
+(\Lambda^\mu_{\ \nu}) &= \begin{pmatrix}
+\gamma & \beta\gamma & 0 & 0 \\
+\beta\gamma & \gamma & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{pmatrix},
+\end{align}
+which transforms the four-vectors into $\tilde{v}^\mu = \Lambda^\mu_{\ \nu} v^\nu$ (for $v\in\{a,b\}$).
+Then we find
+\begin{align}
+\tilde{a}_\mu \tilde{b}^\mu &= \tilde{a}^\nu g_{\nu\mu} \tilde{b}^\mu = \Lambda^\nu_{\ \alpha}a^\alpha g_{\nu\mu} \Lambda^\mu_{\ \beta} b^\beta = a^\alpha \Lambda_{\alpha}^{\ \nu} g_{\nu\mu} \Lambda^\mu_{\ \beta} b^\beta.
+\end{align}
+Note that
+\begin{align}
+\Lambda_{\alpha}^{\ \nu} g_{\nu\mu} \Lambda^\mu_{\ \beta} &\equiv \begin{pmatrix}
+\gamma & \beta\gamma & 0 & 0 \\
+\beta\gamma & \gamma & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{pmatrix} \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & -1 & 0 & 0 \\
+0 & 0 & -1 & 0 \\
+0 & 0 & 0 & -1
+\end{pmatrix} \begin{pmatrix}
+\gamma & \beta\gamma & 0 & 0 \\
+\beta\gamma & \gamma & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{pmatrix} \\ 
+&= \begin{pmatrix}
+\gamma & \beta\gamma & 0 & 0 \\
+\beta\gamma & \gamma & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{pmatrix} \begin{pmatrix}
+\gamma & \beta\gamma & 0 & 0 \\
+-\beta\gamma & -\gamma & 0 & 0 \\
+0 & 0 & -1 & 0 \\
+0 & 0 & 0 & -1
+\end{pmatrix} = \\
+&= \begin{pmatrix}
+\gamma^2 - \beta^2\gamma^2 & \gamma\beta\gamma + \beta\gamma(-\gamma) & 0 & 0 \\
+\beta\gamma^2 + \gamma(-\beta\gamma) & \beta\gamma\beta\gamma + \gamma(-\gamma) & 0 & 0 \\
+0 & 0 & -1 & 0 \\
+0 & 0 & 0 & -1
+\end{pmatrix} = \\
+&= \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & -1 & 0 & 0 \\
+0 & 0 & -1 & 0 \\
+0 & 0 & 0 & -1
+\end{pmatrix} \equiv g_{\alpha\beta}.
+\end{align}
+Using this identity, the previous product simplifies to
+\begin{align}
+\tilde{a}_\mu \tilde{b}^\mu &= a^\alpha g_{\alpha\beta} b^\beta = a_\alpha b^\alpha.
+\end{align}
+Thus four-vector products are always invariant under Lorentz transformation.
+
+\section*{Task 3: Electrodynamics}
+The field strength tensor is defined as $F_{\mu\nu} := \partial_\mu A_\nu - \partial_\mu A_\nu$ and is hence fully anti-symmetric.
+Thus we only need to consider the components $\mu>\nu$.
+For $\nu = 0$ and $j\in\{1,2,3\}$ we find
+\begin{align}
+F_{j 0} &= \partial_jA_0 - \partial_0 A_j \equiv \nabla \phi + \partial_t\vec{A} = -\vec{E}.
+\end{align}
+For $\nu > 0$ and $j\neq k$ we find \footnote{Note that $\sum_a\epsilon_{abc}\epsilon_{ab'c'} = \delta_{bb'}\delta_{cc'} - \delta_{bc'}\delta_{cb'}$.}
+\begin{align}
+F_{jk} &= \partial_j(-A_k) - \partial_k (-A_j) =  \sum_{bc} \kla\left( \delta_{jb}\delta_{kc} - \delta_{jc}\delta_{kb} \right)  \partial_{b} (-A_{c}) = \\
+&= -\sum_{abc}\epsilon_{ajk}\epsilon_{abc} \partial_{b}A_{c} = -\sum_a \epsilon_{ajk} B_a.
+\end{align}
+Therefore we may write
+\begin{align}
+F_{\mu\nu} &= \begin{pmatrix}
+0 & \vec{E} \\ -\vec{E} & -(\epsilon_{jkl}B_l)_{jk}
+\end{pmatrix} &&\tecxt\text{and} & F^{\mu\nu} &= \begin{pmatrix}
+0 & -\vec{E} \\ \vec{E} & -(\epsilon_{jkl}B_l)_{jk}
+\end{pmatrix}.
+\end{align}
+In this form we can elegantly compute the contraction
+\begin{align}
+F^{\mu\nu}F_{\mu\nu} &= -2\vec{E}^2 + \sum_{jkll'}\epsilon_{jkl}\epsilon_{jkl'}B_lB_{l'} = \\
+&= -2\vec{E}^2 + \sum_{kll'} \kla\left( \delta_{ll'} - \delta_{kl'}\delta_{kl} \right)B_lB_{l'} = 2\kla\left( \vec{B}^2 - \vec{E}^2 \right).
+\end{align}
+We may also express the equations $\partial_\mu F^{\mu\nu}=j^\nu$ and $\partial_\mu F_{\nu\rho} + \partial_\nu F_{\rho\mu} + \partial_\rho F_{\mu\nu} = 0$ in terms of $\vec{E}$ and $\vec{B}$.
+For $\nu=0$ the first equation is
+\begin{align}
+\partial_\mu F^{\mu 0} &= \nabla \cdot \vec{E} = \rho.
+\end{align}
+For $\nu > 0$ the first equation is
+\begin{align}
+\partial_\mu F^{\mu j} &= \partial_t F^{0j} + \partial_k F^{kj} = \partial_t \kla\left( -\vec{E} \right) + \partial_k \kla\left( -\epsilon_{kjl}B_l \right) = \\
+&= \nabla\times\vec{B} - \partial_t\vec{E} = \vec{j}.
+\end{align}
+For $\rho=0$ and $\mu>\nu > 0$ the second equation is
+\begin{align}
+0 &= \partial_\mu F_{\nu 0} - \partial_\nu F_{\mu 0} + \partial_0 F_{\mu \nu} \equiv -\partial_\mu E_\nu + \partial_\nu E_\mu - \partial_t \epsilon_{\mu\nu k}B_k = \\
+&= -\epsilon_{\mu\nu k} (\nabla\times \vec{E})_k - \epsilon_{\mu\nu k}\partial_t B_k,\\
+\Rightarrow\ \ \ 0 &= \nabla\times\vec{E} + \partial_t\vec{B}.
+\end{align}
+For $\rho>\mu>\nu> 0$ the second equation is
+\begin{align}
+0 &= \partial_\mu \kla\left( -\epsilon_{\nu\rho k}B_k \right) + \partial_\nu \kla\left( -\epsilon_{\rho\mu k}B_k \right) + \partial_\rho \kla\left( -\epsilon_{\mu\nu k} B_k \right) = \\
+&= -\kla\left( \partial_2\epsilon_{13k} + \partial_1\epsilon_{32k} + \partial_3\epsilon_{21k} \right) B_k = -\partial_k B_k,\\
+\Rightarrow\ \ \ 0 &= \nabla\cdot\vec{B}.
+\end{align}
+
+%\begin{align}
+%0 &= \partial_\mu F_{\nu\rho} + \partial_\nu F_{\rho\mu} + \partial_\rho F_{\mu\nu} = \\
+%&= \partial_\mu \partial_\nu A_\rho - \partial_\mu \partial_\rho A_\nu + \partial_\nu \partial_\rho A_\mu - \partial_\nu \partial_\mu A_\rho + \partial_\rho \partial_\mu A_\nu - \partial_\rho \partial_\nu A_\mu.
+%\end{align}
+%For $\rho=0$ this reduces to
+%\begin{align}
+%0 &= \partial_t\partial_\nu A_\mu - \partial_t \partial_
+%\end{align}
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

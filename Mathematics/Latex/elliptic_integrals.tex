@@ -1,0 +1,33 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\begin{document}
+
+\title{Funktionentheorie}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Approximation elliptischer Integrale}
+Die elliptischen Integrale erster und zweiter Art sind:
+\begin{align*}
+F(\phi,k)&:=\int_0^{\phi} \frac{1}{\sqrt{1-k^2\sin^2(x)}}dx =\int_0^1 \frac{1}{\sqrt{(1-k^2x^2)(1-x^2)}}dx  \numberthis\label{F_phi_k} \\
+E(\phi,k)&:=\int_0^{\phi} \sqrt{1-k^2\sin^2(x)}dx=\int_0^1 \sqrt{\frac{1-k^2x^2}{1-x^2}}dx \numberthis\label{E_phi_k}
+\end{align*}
+Für den Fall $\phi=\pi/2$ werden nun verschiedene Näherungen vorgestellt:
+\begin{align*}
+E(k)_1&=\int_0^{\pi/6}\sqrt{1-k^2\sin^2(x)}dx \overset{\substack{\sin^2(x)\simeq x^2 \\|}}{\simeq}\int_0^{\pi/6}\sqrt{1-k^2x^2}dx\overset{\substack{ kx=\sin(t)\\|}}{=}\frac{1}{k}\int_a^{b}\cos^2(t)dt=  \\
+&= \frac{1}{4k}(2t+2\sin(t)\cos(t))=\frac{1}{2k}\left(\arcsin(\frac{k\pi}{6})+\frac{k\pi}{6}\sqrt{1-(\frac{k\pi}{6})^2}\right) \\
+E(k)_2&=\int_{\pi/6}^{\pi/3}\sqrt{1-k^2\sin^2(x)}dx\overset{\substack{\sin^2(x)\simeq 1/2+r-\pi/4\\|}}{\simeq}\int_{\pi/6}^{\pi/3}\sqrt{1+k^2(\frac{\pi -2}{4})-k^2x}= \\
+&=-\frac{2}{3k^2}\left(1+k^2(\frac{\pi -2}{4})-k^2x\right)^{3/2}   \\
+E(k)_3&=\int_{\pi/3}^{\pi/2}\sqrt{1-k^2\sin^2(x)}dx\overset{\substack{\sin^2(x)\simeq 1-(x-\pi/2)^2 \\|}}{\simeq}
+\end{align*}
+\ref{test} \cite{test}
+
+\end{document}

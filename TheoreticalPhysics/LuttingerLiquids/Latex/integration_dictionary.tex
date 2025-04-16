@@ -1,0 +1,77 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{ll_scrarticle}
+
+\newcommand*{\titel}{Integration Dictionary}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Quantum Physics in 1D}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+
+\section{Gaussian integrals}
+Note that $\d u^\ast\wedge\d u = \kla*{\d u_\r - \i\d u_\i} \wedge \kla*{\d u_\r + \i\d u_\i} = 2\i\d u_\r \d\u_\i$.
+The following integrals can be proven by diagonalizing the matrix $A$ and transforming to the eigenbasis.
+To that end we assume that $A^\dagger = A$, which also simplifies the result in the real case.
+The results will also be valid for continuous results, so we choose the notation $\brc*{u}{A}{u}$ to combine both the finite and the infinite case.
+Defining $\mathcal{D}u^\ast\mathcal{D}u = \prod_j \frac{\d u_j^\ast\d u_j}{2\pi\i}$ we find
+\begin{align}
+Z[J,J'] &= \int \powe{-\brc*{u}{A}{u} + \brb*{J}{u} + \brb*{u}{J'}} \,\mathcal{D}u^\ast\mathcal{D}u = \frac{1}{\det(A)} \powe{\brc*{J}{A^{-1}}{J'}} \label{eqn:gauss_c_jj'},\\
+\bra*{u_1^\ast u_2} &= \frac{1}{Z[J,J]} \partial_{J_1^\ast} \partial_{J_2} Z[J,J] \Big\vert_{J=0} = (A^{-1})_{12} \label{eqn:gauss_c_expval_12}.
+\end{align}
+For us the more common integrals will instead involve real fields for which defining $\mathcal{D}u = \prod_j \frac{\d u_j}{2\pi}$ yields
+\begin{align}
+Z[J] &= \int \powe{-\frac{1}{2} \brc*{u}{A}{u} + \brb*{J}{u}} \,\mathcal{D}u = \frac{1}{\sqrt{\det(A)}} \powe{\frac{1}{2} \brc*{J}{A^{-1}}{J}} \label{eqn:gauss_r_j},\\
+\bra*{u_1u_2} &= \frac{1}{Z[J]} \partial_{J_1} \partial_{J_2} Z[J] \Big\vert_{J=0} = (A^{-1})_{12} \label{eqn:gauss_r_expval_12}.
+\end{align}
+\section{Path integrals}
+For the typical quadratic Luttinger Liquid Hamiltonian
+\begin{align}
+H_0 &= \frac{u}{2\pi} \intr{\klb*{K\kla*{\nabla\theta}^2 + \frac{1}{K} \kla*{\nabla\phi}^2} }{x}
+\end{align}
+one finds after a somewhat involved calculation that
+\begin{align}
+\frac{1}{K} \bra*{\klb*{\phi(r) - \phi(0)}^2} &= K \bra*{\klb*{\theta(r) - \theta(0)}^2} =  F_1(r),\\
+\bra*{\phi(r)\theta(0)} &= \frac{1}{2} F_2(r)
+\end{align}
+where $r=(u\tau,x)$ and at finite temperature and to lowest order in $\alpha$ with $y_\alpha \equiv u\tau + \alpha\sgn(\tau)$
+\begin{align}
+F_1(r) &= \frac{1}{2} \log \klb*{\kla*{\frac{\beta u}{\pi\alpha}}^2 \kla*{\sin^2\kla*{\frac{\pi y_\alpha}{\beta u}} + \sinh^2\kla*{\frac{\pi x}{\beta u}} }}, \label{eqn:F1r}\\
+F_2(r) &= -\i\arg\klb*{\tan\kla*{\frac{\pi y_\alpha}{\beta u}} + \i\tanh \kla*{\frac{\pi x}{\beta u}}}.\label{eqn:F2r}
+\end{align}
+For $T=0$ these expression can be simplified to
+\begin{align}
+F_1(r) &= \log \klb*{\frac{\sqrt{y_\alpha^2 + x^2}}{\alpha}},\label{eqn:F1r_T0}\\
+F_2(r) &= -\i\arg \klb*{y_\alpha + \i x} \label{eqn:F2r_T0}.
+\end{align}
+This corresponds to the real and imaginary part of $\log(z)$ with $z=\frac{y_\alpha - \i x}{\alpha}$.
+\subsection{General expectation values}
+One can show that for sequences $A_j,B_j$
+\begin{align}
+\bra*{\powe{\i \sum_j \klb*{A_j\phi(r_j) + B_j\theta(r_j)}}} &= \powe{\frac{1}{2} \sum_{j<k} \klb*{\kla*{KA_jA_k + \frac{1}{K}B_jB_k} F_1(r_j-r_k) - (A_jB_k + A_kB_j) F_2(r_j-r_k)}} \label{eqn:expval_Aphi_Btheta_sum}.
+\end{align}
+This only holds assuming the neutrality condition $\sum_jA_j = 0 = \sum_jB_j$, otherwise the expectation value works out to zero.
+
+
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,339 @@
+%\section{Four dimensional standard map} 
+In this chapter we investigate whether the WBA is also competitive to existing frequency methods like the Naff in a four dimensional setting.
+To this end we consider a 4D standard map, which we define in section \ref{sec:Definiton4DMap}.
+Subsequently, we consider two coupling regimes in sections \ref{sec:WeakCoupling} and \ref{sec:StrongCoupling}, for which we determine frequencies with both methods.
+%In section \ref{sec:WeakCoupling} and \ref{sec:StrongCoupling} we use Naff and WBA to extract two frequencies from orbits of a four dimensional map for different coupling strengths.
+%As in the two dimensional case, we show the convergence of each method to the respective limit calculated from the respective method.
+\section{Definition of the map}
+\label{sec:Definiton4DMap}
+We construct a variant of the four dimensional mapping presented in \cite{Fro1972}.
+For this, we start from a pair of two dimensional standard maps, each identical to the previous one from section \ref{sec:DefinitionOfThe2DMap}. 
+Let $K_j$ be their kicking strengths and $(q_j,p_j)\in [0,1)\times\mathbb{R}$ for $j\in\{1,2\}$. 
+Then we introduce an additional coupling term proportional to the parameter $K$ to construct the mapping given by the set of equations
+\begin{align*}
+q_{1,n+1}&=q_{1,n}+p_{1,n},\\
+q_{2,n+1}&=q_{2,n}+p_{2,n},\\
+p_{1,n+1}&=p_{1,n}+\frac{K_1}{2\pi}\sin\kla\left( {2\pi q_{1,n+1}} \right)+\frac{K}{2\pi}\sin\kla\left( {2\pi[q_{1,n+1}+q_{2,n+1}]} \right),\\
+p_{2,n+1}&=p_{2,n}+\frac{K_2}{2\pi}\sin\kla\left( {2\pi q_{2,n+1}} \right)+\frac{K}{2\pi}\sin\kla\left( {2\pi[q_{1,n+1}+q_{2,n+1}]} \right). \numberthis\label{eqn:Definition4DMap}
+\end{align*}
+We choose coordinates on the cylinder to avoid problems with orbits wrapping around periodic boundaries in $p$, for the same reasons discussed in section \ref{sec:TwoDimensionalStandardMap}.
+\section{Weak coupling}
+\label{sec:WeakCoupling}
+For a small coupling parameter $K\ll 1$, we can visualize the four dimensional orbits by showing the projections onto the planes $(q_1,p_1)$ and $(q_2,p_2)$ corresponding to each subsystem. 
+The limit $K=0$ yields two decoupled standard maps, for which these planes correspond to their natural coordinates.
+Therefore we can expect this representation to also be useful for small $K$. 
+Then the most simple approach for extracting two frequencies, is to compute one frequency from either pair of coordinates in the same way presented in section \ref{sec:TwoDimensionalStandardMap}.
+In the following we consider regular tori of different topology.
+\subsubsection{Rotational circles}
+%: Rotational times rotational orbits. Comparison to Naff1D, because NaffND does too much internally, which would make the comparison more difficult.
+Shown in panel (a) of fig. \ref{figure:RotRot4DK05K07K001} are three orbits, that are rotational in both pairs of coordinates, and the convergence of the frequencies computed using Naff and WBA in (b). 
+Because the orbits are rotational, we make use of the transformation on to a circle from eqn. (\ref{eqn:MapToCircle}) for the Naff.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/RotRot4DK05K07K001.png}
+\caption[Convergence of Naff and WBA for three rotational orbits in the weakly coupled four dimensional standard map]{Three orbits of the four dimensional map with $K_1=0.5$, $K_2=0.7$ and small coupling $K=0.01$  are shown as a pair
+of projections onto $(q_1,p_1)$ and $(q_2,p_2)$ in panel (a).
+The convergence of WBA and Naff for extracting one frequency for each projection is shown in (b). 
+The differences between the methods and the different orbits are generally much smaller than in the two dimensional case, and we can merely observe hints for the super-convergence of the WBA.}
+%Also, there appears to be virtually no difference in the rate of convergence for the rational frequency of the shown island chain.}
+%The differences between the methods for any single orbit are generally much smaller than those between different orbits. 
+%Relative to the two dimensional map with similar $K_{1,2}$, regular orbits appear to be much less common, even for small a coupling of $K=0.01$.
+%FIXME: do they really survive?. 
+%The shown examples correspond to some these.
+\label{figure:RotRot4DK05K07K001}
+\end{figure}
+\\
+Here the blue orbit, where both frequencies are close to the golden mean, does not lead to a significantly better convergence for WBA than other examples. 
+However, it still corresponds to regular dynamics, whereas the majority of orbits already appears to be chaotic for $K=0.01$. 
+%: use even smaller $K$? \\
+Note that the convergence of both methods is very similar here, regardless of rational or irrational frequencies.
+%While not shown, there exist many orbits for which Naff and WBA reach a precision anywhere between $|\nu-\nu_{N_\tecxt\text{max}}=10^{-15}\dots 10^{-2}$ for $N_\tecxt\text{max}=2^{14}$.
+%In the two dimensional case, most orbits 
+% there are chaotic orbits with very bad convergence, but they look regular up to a certain magnification. 
+%Maybe replace the green example with such an orbit? 
+%Risk of putting too many different features into a single figure...
+\FloatBarrier
+\subsubsection{Oscillatory circles}
+As in the decoupled maps, we find oscillatory motion in the vicinity of the elliptic fixed points $(\frac{1}{2},0)$ of either pair of coordinates. 
+Shown in panel (b) of fig. \ref{figure:OscOsc4DK05K07K001} is the convergence of Naff and WBA for three orbits, whose initial conditions lie near the point
+\begin{align*}
+(q_1,q_2,p_1,p_2)_\tecxt\text{EE}&:=\kla\left( {\frac{1}{2},\frac{1}{2},0,0} \right). \numberthis\label{eqn:EEFixpoint}
+\end{align*}
+%although the explicit values depend on the convention used for the map. 
+This fixed point is elliptic in both degrees of freedom and thus often denoted as EE (elliptic-elliptic).
+The orbits are shown in (a), and appear to intersect themselves. 
+This does not contradict the uniqueness of the time evolution, as the intersections only occur due to the projection of the four dimensional orbit onto two dimensional planes.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/OscOsc4DK05K07K001.png}
+\caption[Convergence of Naff and WBA for three oscillatory orbits in the weakly coupled four dimensional standard map]{Three four dimensional orbits near the EE fixed point (\ref{eqn:EEFixpoint}) are shown as a pair of two dimensional projections in (a). 
+%The self intersections are a visual artifact of said projection. 
+The convergence of WBA and Naff as shown in (b) is again very similar. 
+Here the differences between the examples are much larger than those between the two methods for any single orbit.}
+\label{figure:OscOsc4DK05K07K001}
+\end{figure}
+\\
+As in the rotational case, the rate of convergence of Naff and WBA is very similar, contrary to the large differences for different orbits.
+Just like in two dimensions, the frequencies decrease, the further the orbits lie from the EE fixed point. 
+However, in the examples from fig. \ref{figure:OscOsc4DK05K07K001}, we have $\nu_2>\nu_1$ for all orbits, despite the larger distance to the elliptic fixed point of the respective projection. 
+Thus, this rule only seems to hold within each pair of coordinates. 
+The convergence for the orbit with a rational frequency $\nu_2=\frac{1}{8}$ is slower than for the other orbits, but the difference is less evident than in the two dimensional case.
+\\
+Overall the WBA method performs at least as good as Naff, but rarely better. 
+Here the main advantage of WBA remains the relative simplicity of the algorithm, and hence its speed.
+\FloatBarrier
+\section{Strong coupling}
+\label{sec:StrongCoupling}
+In the following we consider the strongly coupled standard map with parameters $K_1=2.25$, $K_2=3$ and a coupling strength of $K=1.0$, also see \cite{RicLanBaeKet2014,LanRicOnkBaeKet2014,OnkLanKetBae2016}. 
+In section \ref{sec:OrbitsNearTheEEFixpoint} we demonstrate the difficulties, that can arise with WBA for the case of strong coupling and present a possible solution. 
+In section \ref{sec:FrequencySpace} this solution is applied to compute the frequency space for the specified parameters.
+\subsection{Orbits near the EE fixed point}
+\label{sec:OrbitsNearTheEEFixpoint}
+%In the previous section, we were able to extract two frequencies with Naff and WBA, by applying them to the natural coordinates $(q_1,p_1)$ and $(q_2,p_2)$ of the underlying decoupled standard maps. 
+In the previous section, we were able to extract two frequencies with Naff and WBA by utilizing projections of the orbit onto the canonical planes $(q_1,p_1)$ and $(q_2,p_2)$.
+For a strong coupling like $K=1$, these are no longer good coordinates for every initial condition. 
+This is because the two dimensional tori might be rotated and twisted in the four dimensional space.
+This sometimes leads to non-trivial projections in the canonical planes, which are not elliptical as in fig. \ref{figure:OscOsc4DK05K07K001} (a), and therefore pose a problem for the frequency analysis with WBA. 
+Panel (a) of fig. \ref{figure:OscOsc4DK225K3K1Failure} shows some of the typical examples for such orbits, and panel (b) shows the rate of convergence for Naff and WBA. 
+This rate is particularly slow, or non-existent, for most of the examples of the WBA method.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/OscOsc4DK225K3K1_failure.png}
+% FreqSpaceCompleteColored
+\caption[Convergence of Naff and WBA for three oscillatory orbits in the strongly coupled four dimensional standard map]{Shown in (a) are three examples of two dimensional tori as pairs of projections. 
+The convergence of Naff and WBA is shown in (b), and is slow or non-existent for the WBA. 
+The blue orbit shows that this variant of Naff is sometimes able to detect the second frequency, but not reliably, which is evident from the blue dashed line. 
+There the Naff alternates between two different frequencies.
+While the convergence is generally much better, Naff also mostly extracts the same frequency from both projections.}
+\label{figure:OscOsc4DK225K3K1Failure}
+\end{figure}
+\\
+While this variant of Naff is only inconsistently detecting two different frequencies, the WBA do only converge for specific examples, and do not yield different frequencies either. 
+Judging from many more examples, than have been shown in fig. \ref{figure:OscOsc4DK225K3K1Failure}, this appears to be connected to the orientation of the two dimensional tori. 
+In particular, the frequency analysis seems to fail whenever the hole in the middle of the projection in $(q_1,p_1)$ or $(q_2,p_2)$ vanishes, which may occur due to said orientation in the four dimensional space.
+It is certainly not obvious, that the WBA gives wrong results for such projections.
+An analysis of this problem is presented in section \ref{sec:FailureWBASpecificOrbit} of the appendix.
+\\
+%A possible solution is based on finding a new set of coordinates, on which to project the tori.
+%The idea behind a possible solution is to find two planes, on which the projections of a torus are again topologically similar to a circle.
+%If the inertia tensor of the torus was diagonal, our coordinates would coincide with its FIXME
+We want to find two suitable planes, on which the projections of a torus are again topologically similar to a circle, as in the weakly coupled case.
+The idea behind our solution is, that the inertia tensor should be diagonal, if our coordinates were to coincide with the principal axes of a torus. 
+In these coordinates, we expect the projections to again be elliptical.
+%We define the following quantities.
+\\
+The inertia tensor for a set of points $X_N:=\{\mathbf{x}_n\in\mathbb{R}^d\,\vert\,n=0,\dots,N-1\}$ in a space with $d$ dimensions can be defined as
+\begin{align*}
+I_d(X_N)&:=\sum_{n=0}^{N-1}\mathbf{x}_n\cdot \mathbf{x}_n \mathds{1}_{d\times d}-\mathbf{x}_n\otimes \mathbf{x}_n. \numberthis\label{eqn:InertiaTensor}
+\end{align*}
+We are interested in the orthogonal transformation matrix $U\in \text{O}(d)$, that satisfies $I_d=U DU^\top$, where $D$ is a diagonal matrix consisting of the eigenvalues of $I_d$. 
+Then we define a transformed set of points
+\begin{align*}
+X'_N:=\klammer\left\{Ux_n\in\mathbb{R}^d\,\middle\vert\, x_n\in X_N\right\}\equiv UX_N.\numberthis\label{eqn:TransformPointsND}
+\end{align*}
+For our case of $d=4$ dimensions, eqn.
+(\ref{eqn:TransformPointsND}) gives us four coordinates, which we will refer to as $x_k$ for $k=1,2,3,4$. 
+In order to extract two frequencies from these new coordinates, we need to select two pairs. 
+%As it is unclear, which of the $x_k$ corresponds to our previous $(q_{1,2},p_{1,2})$, 
+The three possible ways to construct these pairs from the $x_k$ are listed in tab. \ref{table:PairsFor4DCoordinates} and shown for a specific example in fig. \ref{figure:Torus4dTransform}. 
+There the projection onto the canonical planes is shown in (a), and the three pairs of projections after the transformation in (b)-(d).
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c}
+Combination&1&2&3\\ \hline
+Coordinates for the first section&$(x_1,x_2)$&$(x_4,x_2)$&$(x_3,x_2)$\\ \hline
+Coordinates for the second section&$(x_3,x_4)$&$(x_3,x_1)$&$(x_4,x_1)$\\
+\end{tabular}
+\caption{List of all possible combinations for selecting two pairs of the transformed coordinates from eqn. (\ref{eqn:TransformPointsND}) for the case $d=4$.}
+\label{table:PairsFor4DCoordinates}
+\end{table}
+\\
+Note that the order of the coordinates inside each pair is not relevant for the frequency analysis, because changing the order only introduces a factor of $-1$ for the frequency, which can be resolved by taking the absolute value of $\nu$. 
+Choosing $\nu_1\ge\nu_2$ further allows us to ignore the order of the pairs.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/Torus4dTransform.png}
+\caption[Possible projections for an oscillatory orbit from the strongly coupled map after transformation]{This figure shows different projections of the orange orbit from fig. \ref{figure:OscOsc4DK225K3K1Failure} (a).
+%The orbit in (a) is the same as the orange example from fig. \ref{figure:OscOsc4DK225K3K1Failure}, where the frequency analysis failed. 
+The projection onto the canonical planes is shown in (a).
+Panels (b)-(d) show the three possible projections listed in tab. \ref{table:PairsFor4DCoordinates} after the transformation from eqn. (\ref{eqn:TransformPointsND}).
+%The other three pairs (b,c,d) show all possible representations of the orbit listed in tab. \ref{table:PairsFor4DCoordinates} after the transformation eqn. (\ref{eqn:TransformPointsND}). 
+Only the pair of elliptic curves in (b) allows for a frequency analysis with WBA, the other projections yield zero.}
+\label{figure:Torus4dTransform}
+\end{figure}
+\\
+The example in fig. \ref{figure:Torus4dTransform} corresponds to the best case scenario for the described transformation. 
+However, there remains the difficulty of choosing the correct projection, since in general only one of the pairs of coordinates from tab. \ref{table:PairsFor4DCoordinates} will be usable for WBA. 
+%We need a criterion to differentiate between the possible variants. 
+Therefore we need a criterion, to find the projection topologically similar to a circle.
+For the example in fig. \ref{figure:Torus4dTransform} it is sufficient to compute the ratio of the smallest and largest distance to the center, formally written as
+\begin{align*}
+r_{jk}&:=\frac{\tecxt\text{min}\klammer\left\{ \sqrt{x_{j,n}^2+x_{k,n}^2} \,\middle\vert\,n=0,\dots,N-1 \right\}}{\tecxt\text{max}\klammer\left\{\sqrt{x_{j,n}^2+x_{k,n}^2} \,\middle\vert\,n=0,\dots,N-1 \right\}}, \numberthis\label{eqn:RatioTest}
+\end{align*}
+and choose the combination of indexes $j,k$ from tab. \ref{table:PairsFor4DCoordinates}, for which this ratio is maximal. 
+Note that the ratios need to be computed for both pairs of each combination listed in the table.
+\\ 
+%Because this threshold is a purely empirical choice, it can not be assumed to be reliable in every case, and has to be considered a possible flaw whenever the frequency analysis gives a wrong result.\\
+Panels (a) and (c) of fig. \ref{figure:OscOsc4DK225K3K1Success} show the same three orbits from fig. \ref{figure:OscOsc4DK225K3K1Failure} (a) before and after the transformation respectively, where the coordinates are chosen using eqn. \ref{eqn:RatioTest}. 
+%Since their order is different for all three examples, the labels are taken from the first orbit, and are merely for future reference. 
+Panel (b) shows, that the WBA converges to two different frequencies for each of the transformed signals, at a rate comparable to that of Naff.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/OscOsc4DK225K3K1_success.png}
+\caption[Convergence of Naff and WBA for three oscillatory orbits in the strongly coupled map with transformation for WBA]{The three orbits from fig. \ref{figure:OscOsc4DK225K3K1Failure} are shown in (a), and their transformation according to eqn. (\ref{eqn:TransformPointsND}) in (c). 
+The pairs of the new coordinates were chosen according to eqn. (\ref{eqn:RatioTest}). 
+The WBA now converge to two different frequencies for all orbits (b).
+For both Naff (dashed) and WBA (solid) the frequencies in (b) were reordered such that $\nu_1>\nu_2$.
+The blue dashed in line for $\nu_1$ shows large spikes, because the result from Naff alternates between two different frequencies.}
+%Interestingly, the rate of convergence is significantly better for $\nu_1$, at least for the blue and green signals.}
+\label{figure:OscOsc4DK225K3K1Success}
+\end{figure}
+\\
+We can conclude, that it is possible to use WBA for the frequency analysis in the strongly coupled case of the four dimensional standard map. 
+The rate of convergence is generally very similar to that of Naff, but sometimes slightly worse, as seen in fig. \ref{figure:OscOsc4DK225K3K1Success} (b). 
+Because the transformation from eqns. (\ref{eqn:InertiaTensor}) and (\ref{eqn:TransformPointsND}) requires additional computation, the WBA is not as much faster than the Naff, as compared to the two dimensional case. 
+\\
+Contrary to the impression from the frequency analysis shown in fig. \ref{figure:OscOsc4DK225K3K1Failure}, Naff is also capable of extracting two different frequencies from a signal, as described in section \ref{sec:Naff}.
+%For this, one subtracts a signal consisting of the first frequency and its higher harmonics from the original orbit, and computes the second frequencies based on the remaining signal. 
+This approach has the advantage of being more readily generalized to higher dimensions than our transformation for the WBA, as the latter seems to require checking an exponentially growing number of possible projections.
+%Two dimensional tori and the convergence of WBA and Naff. First difficulties encountered in the multitude of orbits in this region. Solution via the inertia tensor in four dimensions and its eigenvectors.
+\FloatBarrier
+\subsection{Frequency space}
+\label{sec:FrequencySpace}
+% FreqSpaceCompleteColored
+We now want to apply our transformation, to compute the frequency space for the specified parameters using WBA.
+Consider orbits with initial values in a subset of the phase space given by $q_j\in [0.2,0.8]$ and $p_j\in [-0.3,0.3]$ for $j=1,2$, with a length of $N=4096$.
+For each orbit we calculate the pair of frequencies $(\nu_1,\nu_2)$ after applying the transformation from eqn. (\ref{eqn:TransformPointsND}). 
+Note that the frequencies are ordered such that $\nu_1\ge \nu_2$.
+Since the frequencies $\nu$ and $1-\nu$ are indistinguishable here, we ensure that $\nu\in \left[0,\frac{1}{2}\right)$.
+The frequency pairs are calculated twice, from the first and second half of every orbit. 
+The resulting difference is again used as a chaos indicator, compare to eqn. (\ref{eqn:DeltaNu2N2}).
+This is used as the color code for the frequencies computed using WBA in fig. \ref{figure:FreqSpaceCompleteColored}.
+For comparison with Naff, $29000$ frequency pairs from \cite{RicLanBaeKet2014} are shown in black.
+The same initial conditions are computed a second time with Naff, but without subtracting any higher harmonics of the first frequency.
+These frequency pairs with $n_\tecxt\text{harm}=1$, compare to section \ref{sec:Naff}, are shown in red.
+Due to the strong agreement with the WBA data, these points are only visible near the upper most edge of the frequency space.
+%This is also what lead to the choice of the box above. A test run with $10^6$ orbits showed initial conditions . %Frequency pairs are ordered such that $\nu_2\le \nu_1$.\\
+%: explain transformations for the picture and interpretation. comparison to Naff would be nice, atleast with respect to the unimodular transformations, which were not needed here.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/FreqSpaceColoredWithNaffv3.png}
+% FreqSpaceCompleteColored
+\caption[Frequency space from Naff and WBA]{Frequency space for $10^8$ initial conditions in a box with $(q_j,p_j)\in [0.2,0.8]\times [-0.3,0.3]$ for $j=1,2$. 
+The frequency pairs are calculated twice, from the first and second halves of each orbit, which have a total length of $N=4096$.
+The kicking strengths and coupling are $K_1=2.25$, $K_2=3$ and $K=1$.
+The color corresponds to the chaos indicator $|\Delta\nu_1|$ from eqn. (\ref{eqn:DeltaNu2N2}), and only orbits with $|\Delta\nu_{1,2}|<10^{-5}$ are shown. 
+Shown in black are $29000$ frequency pairs calculated from Naff for comparison, which are provided by the authors of \cite{RicLanBaeKet2014}.
+The red points correspond to the same initial conditions, but are recalculated with a smaller number of harmonics $n_\tecxt\text{harm}=1$ for the Naff, see section \ref{sec:Naff}. 
+The frequency pairs from Naff are chosen from the subset of those, with a chaos indicator smaller than $10^{-8}$.
+Some parts of the frequency space, that are found by Naff, appear to be missing for the results of WBA.}
+\label{figure:FreqSpaceCompleteColored}
+\end{figure}
+\\
+The frequency space is organized by resonance lines, on which the frequencies fulfill the condition
+\begin{align*}
+m_1\nu_1+m_2\nu_2&=l\numberthis \label{eqn:ResonanceCondition}
+\end{align*}
+for integers $m_1,m_2,l\in\mathbb{Z}$, where at most one may be zero \cite{RicLanBaeKet2014}. 
+They lead to the gaps in the frequency space, because there exist no regular tori, that would have frequencies close to a resonance line.
+Some of the more prominent lines are shown in fig. \ref{figure:FreqSpaceCompleteColored}, where eqn. (\ref{eqn:ResonanceCondition}) is abbreviated as $m_1:m_2:l$.
+%\\
+%For comparison, in two dimensions eqn. (\ref{eqn:ResonanceCondition}) becomes equivalent to the condition for a rational number.
+%Therefore the island chains of our two dimensional map correspond to the resonant tori, and fig. \ref{figure:FreqAlongVectorK09N12Nt1000} showed, that there were indeed no regular tori with frequencies sufficiently close to that of a nearby island chain.
+%These corresponded to island chains in phase space, and they obey the resonance condition in eqn. (\ref{eqn:ResonanceCondition}) if we ignore the second frequency.FIXME KAM ?! or just in 2d? or not at all
+\\
+For the WBA, only frequency pairs with a chaos indicator below $10^{-5}$ are shown in fig. \ref{figure:FreqSpaceCompleteColored}, while a much smaller limit of $10^{-8}$ was chosen for Naff.
+This explains, why the result from Naff is missing in some regions, where the WBA still shows structures. 
+%For the frequency pairs with $\nu_1= 0.295\dots 0.296$ and $\nu_2=0.1\dots 0.102$, this is to be expected. 
+%All of the frequency pairs in this region originally lie on the $3:1:1$ resonance. 
+%For the Naff, an unimodular transformation was applied to all the frequencies on this particular resonance, which explains the disagreement in the figure.
+%\\
+The more interesting phenomenon is, that the WBA method does not find regular dynamics with frequencies primarily corresponding to the lower left edge of fig. \ref{figure:FreqSpaceCompleteColored} around $\nu_1=0.28\dots 0.3$ and $\nu_2=0.07\dots 0.1$, but also near some of the other edges in the frequency space.
+%RESONANCE of horseshoe from wba 875*nu1 + 250*nu2 = 287
+\\
+This is a systematic problem and requires closer investigation.
+For the missing frequency pairs with $\nu_1= 0.295\dots 0.296$ and $\nu_2=0.1\dots 0.102$, we find that both Naff and WBA result in frequency pairs, that lie on the $3:1:1$ resonance.
+The explanation of this discrepancy is, that for the black Naff data in fig. \ref{figure:FreqSpaceCompleteColored}, a value of $n_\tecxt\text{harm}>1$ was used, whereas we recompute the frequencies with $n_\tecxt\text{harm}=1$, corresponding to the red points.
+Additionally, the unimodular transformation
+\begin{align*}
+\begin{pmatrix}
+\nu_1 \\ \nu_2
+\end{pmatrix}&\longrightarrow\begin{pmatrix}
+1&0 \\ 4& -1
+\end{pmatrix}\begin{pmatrix}
+\nu_1 \\ \nu_2
+\end{pmatrix}, \numberthis\label{eqn:UnimodularTransformation}
+\end{align*}
+was applied for all black points $(\nu_1,\nu_2)$, that originally lay on the $3:1:1$ resonance. 
+The intent of these modifications was to ensure, that orbits, which are close in phase space, are also close in frequency space \cite{Lan2012,LanRicOnkBaeKet2014}.
+However, due to subtracting higher harmonics, this approach might correspond to zooming into the hierarchy of the frequency space.
+Note that no unimodular transformations are used for the WBA.
+\\
+%By also recomputing all the other initial conditions with Naff and $n_\tecxt\text{harm}=1$, we find a much better overall agreement with the results from WBA.
+While we find a much better agreement between WBA and Naff for $n_\tecxt\text{harm}=1$, as the results only appear to deviate near the upper edge around $\nu_1=0.286\dots 0.29$, there still remain small discrepancies, that are not evident from fig. \ref{figure:FreqSpaceCompleteColored}. 
+%We compute the frequency space for all the initial conditions, that were used for the Naff, to get an overview of the discrepancies.
+There are at least two different types of orbits, for which the transformation from eqn. (\ref{eqn:TransformPointsND}) fails to produce an output, that would be usable for WBA.
+More precisely, the problem seems to only occur for the projection corresponding to the second frequency.
+Panels (a) and (c) of fig. \ref{figure:Transform2failures} show the canonical projections for one example of each type. 
+The projections of the transformed orbits, chosen by eqn. (\ref{eqn:RatioTest}), are shown in (b) and (d), respectively.
+The orbit in (c) corresponds to one of the missing frequency pairs from the lower left region of fig. \ref{figure:FreqSpaceCompleteColored}.
+%The frequencies of the orbit in (c) can be located at the missing upper region in fig. \ref{figure:FreqSpaceCompleteColored}, but this is not the case for many other orbits, that show a similar structure.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/Torus4dTransform2failures.png}
+\caption[Two examples of orbits from the missing regions in the frequency space]{Shown in (a) and (c) are orbits, that correspond to frequency pairs from the missing part of the frequency space in fig. \ref{figure:FreqSpaceCompleteColored}. 
+The projections chosen by eqn. (\ref{eqn:RatioTest}) of the transformed orbits from eqn. (\ref{eqn:TransformPointsND}) are shown in (b) and (d) respectively.
+While WBA gives the correct frequency for the upper projections in (b) and (d), it fails for the lower ones. 
+Note that the scale of the $x_3$-axis in (b) is smaller than that of the $x_4$-axis by an order of magnitude.}
+\label{figure:Transform2failures}
+\end{figure}
+\\
+%The example in fig. \ref{figure:Transform2failures} (a,b) shows, that not all four dimensional orbits have a meaningful extent in all dimensions. 
+The example in fig. \ref{figure:Transform2failures} (a,b) shows, that some orbits have a relatively small extent in one of the four dimensions after the transformation. 
+As a consequence, we can not find a second elliptical section, on which we could apply the WBA method.
+Meanwhile the example in (c,d) demonstrates a slightly different kind of error. 
+Here the transformation is also unable to find a second elliptical projection, but the problem does not lie within the relative extents of the coordinates.
+Instead, this torus lies very close to the lower left edge of the frequency space in fig. \ref{figure:FreqSpaceCompleteColored}.
+As was discussed in \cite{LanRicOnkBaeKet2014,OnkLanKetBae2016}, these edges correspond to the limiting case of one-dimensional tori.
+In principal, this does not present a problem for the WBA, because the edges of the rightmost region in fig. \ref{figure:FreqSpaceCompleteColored} are correctly identified.
+%Due to the limited numerical precision, we can of course not get arbitrarily close to the true edge.
+But beyond the $3:1:1$ and $-1:2:0$, some of the projections for the second frequency cease to be elliptical near the edge, and rather have an appearance similar to fig. \ref{figure:Transform2failures} (d). 
+Further note, that while the canonical projections are both elliptical in fig. \ref{figure:Transform2failures}, they only yield the first frequency in both examples.
+%for extents, that are certainly not limited by the machine precision.
+\\
+%%%%%%%%%%% BEGIN ALTERNATIVE
+%\begin{figure}[h!]
+%\centering
+%\includegraphics[width=\linewidth]{pictures/Torus4dTransformFlatTransform.png}
+%\caption{Shown in (a) is an orbit from the missing part of the frequency space in fig. \ref{figure:FreqSpaceCompleteColored}, specifically the lower left edge. 
+%The three possible projections of the transformed orbit via eqn. (\ref{eqn:TransformPointsND}) are shown in (b,c,d).
+%While WBA gives the correct frequency for the upper projection in (b), it fails for the lower one. 
+%Note that the scale of the $x_3$-axis is smaller than that of the $x_4$-axis by a factor of 10.}
+%The inertia tensor from eqn. (\ref{eqn:InertiaTensor}) for this projection is diagonal up to a correction with a relative magnitude of about $10^{-12}$.
+%This means, that there is no orientation of the}
+%This means, that the four dimensional object only has a meaningful extent in three dimensions.}
+%\label{figure:TransformFlatTransform}
+%\end{figure}\\
+%This example shows, that not all four dimensional object have a meaningful extent in all dimensions. 
+%As a consequence, we can not find two elliptical sections, for which WBA would yield different frequencies.
+%\\
+%One example from the missing part of lower left region in fig. \ref{figure:FreqSpaceCompleteColored} is shown in fig. \ref{figure:TransformLowerEdge}. 
+%Here the original orbit is shown in (a), and the three possible projections of the transformed orbit in (b,c,d). 
+%\begin{figure}[h!]
+%\centering
+%\includegraphics[width=\linewidth]{pictures/Torus4dTransformLowerEdge.png}
+%\caption{Shown in (a) is an orbit from the missing part of the frequency space in fig. \ref{figure:FreqSpaceCompleteColored}, specifically the lower left edge. 
+%The three possible projections of the transformed orbit via eqn. (\ref{eqn:TransformPointsND}) are shown in (b,c,d).
+%WBA again gives the correct frequency for the upper projection in (b), but fails for the lower one.
+%This time, the extents of $x_3$ and $x_4$ are of similar magnitude. 
+%If two elliptic sections exist, it is not possible to find them with out transformation.}
+%\label{figure:TransformLowerEdge}
+%\end{figure}\\
+%This example demonstrates a different kind of failure. 
+%Here the problem does not lie within the relative extents of the coordinates, but rather a missing second elliptic section of the full trajectory.
+%%%%%%%%% END ALTERNATIVE
+We can conclude, that the WBA method is capable of extracting the main frequency of a signal in four dimensions, where the transformation described by eqn. (\ref{eqn:TransformPointsND}) may sometimes be required in the strongly coupled case.
+Due to the nature of specific orbits, we are not always able to compute a second frequency via the method presented here.
+A possible solution could be to subtract the first frequency from the original signal, similar to the Naff.
+It is also important to note, that in cases, where we we are able to compute $\nu_2$, the result appears to correspond to the Naff for $n_\tecxt\text{harm}=1$.
+%, especially because the result of Naff for $n_\tecxt\text{harm}=1$ shows a much better agreement with the WBA.

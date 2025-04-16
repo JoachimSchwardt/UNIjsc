@@ -1,0 +1,212 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb, slashed}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\def\I{\text{i}}
+\def\E{\text{e}}
+
+\newcommand*{\titel}{04 Dirac equation II}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+\subject{Quantum theory 2}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Questions}
+Multiply by $\gamma^0$ and rewrite the equation as $\I\partial_t\psi=:H_\tecxt\text{D}\psi$. \\
+To make the equation invariant under the described transformation, we need to adjust $\I\partial_\mu\rightarrow \I D_\mu :=\I\partial_\mu + \beta$, where $\beta':=\beta - \partial_\mu\alpha$. \\
+For electromagnetic fields we have $D_\mu=\partial_\mu -\I eA_\mu$.\\
+The first terms of the Dirac Hamiltonian are 
+$$H_\tecxt\text{D}=m\gamma^0-e\Phi+\begin{pmatrix}
+0&\sigma\cdot (p+eA)\\ \sigma\cdot (p+eA)&0
+\end{pmatrix} +\mathcal{O}(m^{-1})$$.
+\section{Gauge invariance and charge conjugation}
+Let $(\I\slashed{\partial}+e\slashed{A}-m)\psi=0$ and consider the transformation $\psi':=\E^{-\I e\alpha}\psi$. We want to find a field $\beta_\mu$, such that the equation is invariant under this transformation, given that $A_\mu'=A_\mu +\beta_\mu$. Note that $\partial_\mu\psi'=\E^{-\I e\alpha}(\partial_\mu\psi-\I e\partial_\mu\alpha)$, which leads to
+\begin{align*}
+0&\overset{!}{=}\kla\left( {\I\slashed{\partial}+e\slashed{A}'-m} \right)\psi'=\E^{-\I e\alpha}\klam\left[ {\kla\left( {\I\slashed{\partial}+e\slashed{A}-m} \right)+e\slashed{\beta}+e\slashed{\partial}\alpha} \right]\psi.
+\end{align*}
+The first term vanishes, as that is the original Dirac equation. Thus we can simply read of the solution as $\beta_\mu=-\partial_\mu\alpha$.\\
+For a positron we have $e\rightarrow -e$ and $\psi\rightarrow\psi_c:=C\overline{\psi}^\top=\tilde{C}\psi^\ast$ with $\tilde{C}:=C\gamma^0$. We want to determine $C$, such that the Dirac equation is still fulfilled. Start by taking thee complex conjugate of the original equation, which leads to
+\begin{align*}
+0&=\kla\left( {-\I (\gamma^\mu)^\ast\partial_\mu + e(\gamma^\mu)^\ast A_\mu -m} \right)\psi^\ast.
+\end{align*}
+Assuming an invertible matrix $U$, we can multiply by $C$ and insert the identity $I=U^{-1}U$, such that we arrive at
+\begin{align*}
+0&=\kla\left( {\I U(-\gamma^\mu)^\ast U^{-1} - eU(-\gamma^\mu)^\ast U^{-1}-m} \right)U\psi^\ast.
+\end{align*}
+We can identify $U=\tilde{C}$ and recover the Dirac equation if $\tilde{C}(\gamma^\mu)^\ast \tilde{C}^{-1}=-\gamma^\mu$. Equivalently we could demand that $C\gamma^0(\gamma^\mu)^\ast\gamma^0C^{-1}=-\gamma^\mu$. There is the identity $(\gamma^\mu)^\ast=\gamma^2\gamma^\mu\gamma^2$. This leads to $\tilde{C}=\gamma^2$ as a possible solution.
+
+%Insert the new variables and look for canceling terms, given that $\klam\left[ {C,\gamma^\mu } \right]=\zeta^\mu$:
+%\begin{align*}
+%0&\overset{!}{=}\kla\left( {\I\slashed{\partial}-e\slashed{A}-m} \right)\tilde{C}\psi^\ast=\\
+%&=\tilde{C}\klam\left[ {\kla\left( {\I\slashed{\partial}-e\slashed{A}-m} \right)+\I\zeta^\mu\partial_\mu-e\zeta^\mu A_\mu} \right]\psi^\ast
+%\end{align*} 
+\section{Relativistic hydrogen atom (spinless)}
+The Klein-Gordon equation for a particle in the Coulomb potential $A^0 =-\frac{\alpha/e}{r}=A_0$ is given by 
+\begin{align*}
+0&=\klam\left[ {\kla\left( {\partial^\mu -\I eA^\mu } \right)\kla\left( {\partial_\mu -\I eA_\mu } \right)+m^2} \right]\psi=\\
+&=\kla\left( {\partial^\mu\partial_\mu-\frac{\alpha^2}{r^2}-2\I\frac{\alpha}{r}\partial_0+m^2} \right)\psi.
+\end{align*}
+Introduce the planar wave $\psi(t,x)=\E^{-\I E t}\phi(x)$ to arrive at
+\begin{align*}
+0&=\kla\left( {E^2+\nabla^2+2E\frac{\alpha}{r}+\frac{\alpha^2}{r^2}-m^2} \right)\phi=\klam\left[ {\nabla^2+\kla\left( {E +\frac{\alpha}{r}} \right)^2-m^2} \right]\phi.
+\end{align*}
+Use $\nabla^2=\frac{1}{r}\partial_r^2r-\frac{L^2}{r^2}$ with $L^2\phi=l(l+1)\phi$ and separate the equation by $\phi=:R(r)Y(\theta,\varphi)$:
+\begin{align*}
+0&=\frac{1}{RY}\kla\left( {E^2-m^2+\frac{1}{r}\partial_r^2r+\frac{2E\alpha}{r}-\frac{L^2-\alpha^2}{r^2}} \right)RY=\\
+&=\frac{1}{rR}\partial_r^2rR+\frac{2E\alpha}{r}-\frac{l(l+1)-\alpha^2}{r^2}+E^2-m^2
+\end{align*}
+Define $\tilde{m}^2:=m^2-E^2$ and substitute $R=:\frac{u(r)}{r}$: %$\tilde{l}(\tilde{l}+1):=l(l+1)-\alpha^2$
+\begin{align*}
+0&=\frac{u''}{u}-\tilde{m}^2+\frac{2E\alpha}{r}-\frac{l(l+1)-\alpha^2}{r^2}
+\end{align*}
+In the limit of large $r$, the terms of order $\mathcal{O}(r^1,r^2)$ can be ignored, which yields the equation
+\begin{align*}
+0&\simeq u''-\tilde{m}^2u,
+\end{align*}
+thus $u\sim \E^{-\tilde{m}r}$, as the positive exponent does not give a normalizable solution. To avoid singularities, there must also be a certain power of $r$ contained in $u$, hence the Ansatz $u=:r^\gamma \E^{-\tilde{m}r}P(r)$:
+\begin{align*}
+0&=\frac{\gamma(\gamma-1)r^{-\gamma-2}}{r^\gamma}+\frac{P''}{P}+\frac{\tilde{m}^2\E^{-\tilde{m}r}}{\E^{-\tilde{m}r}}+\frac{2\gamma r^{\gamma-1}P'}{r^\gamma P}+\frac{-2\gamma r^{\gamma-1}\tilde{m}\E^{-\tilde{m}r}}{r^\gamma \E^{-\tilde{m}r}}+\\
+&\ \ \ \ \ \ +\frac{-2\tilde{m}\E^{-\tilde{m}r}P'}{\E^{-\tilde{m}r}P}-\tilde{m}^2+\frac{2E\alpha}{r}-\frac{l(l+1)-\alpha^2}{r^2}=\\
+&=\frac{\gamma(\gamma-1)+\alpha^2-l(l+1)}{r^2}+\frac{P''}{P}+\frac{2P'}{rP}(\gamma-r\tilde{m})+\frac{2}{r}(E\alpha-\gamma\tilde{m})
+\end{align*}
+We can choose $\gamma$ such that $\gamma(\gamma-1)+\alpha^2-l(l+1)=0$, or explicitly
+$$\gamma=\frac{1}{2}\pm\sqrt{\kla\left( {l+\frac{1}{2}} \right)^2-\alpha^2}$$
+This removes the only remaining term with a factor of $\frac{1}{r^2}$. Now the equation is in a form, that can be solved with a power series $P=:\sum a_k r^k$:
+\begin{align*}
+0&=\sum_{k\ge 0}a_kk(k-1)r^{k-2}+2\gamma a_kkr^{k-2}-2\tilde{m}a_kkr^{k-1}+2(E\alpha-\gamma\tilde{m})a_kr^{k-1}
+\end{align*}
+This is equivalent to 
+\begin{align*}
+0&=\sum_{k\ge 1}r^{k-1}\klam\left[ a_{k+1}k(k+1)+2\gamma a_{k+1}(k+1)-2\tilde{m}a_kk +2(E\alpha-\gamma\tilde{m})a_k \right]
+\end{align*}
+where we set $a_0=a_1=0$. Rewriting this into a iterative relation for the coefficients $a_k$ results in
+\begin{align*}
+\frac{a_{k+1}}{a_k}&=2\frac{(k+\gamma)\tilde{m}-\alpha E}{(k+1)(k+2\gamma)}
+\end{align*}
+The crucial observation is, that this series must terminate. Consider the limit of large $k$, where the ratios can be approximated as
+\begin{align*}
+\frac{a_{k+1}}{a_k}&\simeq \frac{2\tilde{m}}{k+1}
+\end{align*}
+This lead to exponential behavior, i.e. $P\sim \E^{2\tilde{m}r}$. This makes the solution for $u$ no longer normalizable, because we would arrive at $u\sim \E^{\tilde{m}r}$ in total. Thus, there must exist some integer $K\in\mathbb{N}$, such that $a_{K+1}=0$, i.e.
+\begin{align*}
+0&=(K+\gamma)\tilde{m}-\alpha E
+\end{align*}
+Due to the nature of the recursion relation, all $a_{j>K}=0$, and the series terminates, which avoids the exponential behavior. The last equation can now be solved for the energy eigenvalues:
+\begin{align*}
+0&=(K+\gamma)^2\tilde{m}^2-\alpha^2E^2=(K+\gamma)^2m^2-E^2\klam\left[ {(K+\gamma)^2+\alpha^2} \right]\\
+\Rightarrow\ \ \ E&=m\frac{(K+\gamma)}{\sqrt{(K+\gamma)^2+\alpha^2}}=m\kla\left( {1+\frac{\alpha^2}{(K+\gamma)^2}} \right)^{-1/2}=\\
+&=m\kla\left( {1+\frac{\alpha^2}{\klam\left[ n-\kla\left( {l+\frac{1}{2}} \right)+\sqrt{\kla\left( {l+\frac{1}{2}} \right)^2-\alpha^2} \right]^2}} \right)^{-1/2},
+\end{align*}
+where the principal quantum number was defined as $n:=K+l+1$ and the positive branch of $\gamma$ was chosen. The approximation of this gives
+\begin{align*}
+E&=m-\frac{m\alpha^2}{2n^2}-\frac{m\alpha^4}{2n^2}\klam\left[ {\frac{n}{2l+1}-\frac{3}{4}} \right]+\mathcal{O}(\alpha^6)
+\end{align*}
+Surprisingly, adding more terms to this series does not generally improve the result. This is, because perturbative effects from QED like the Lamb shift are already of order $\alpha^3$, and as such dominate the small correction terms, that were left out in this expansion.
+%Naive approach: 
+%\begin{align*}
+%E_K&=\sqrt{m^2+E_S^2}=m\sqrt{1+\frac{\alpha^4}{4n^4}}=m+\frac{m\alpha^4}{8n^4}
+%\end{align*}
+
+%Consider the non-relativistic limit $\omega=m+\epsilon$ with $\nabla^2=\partial_r^2+\frac{2}{r}\partial_r-\frac{L^2}{r^2}$:
+%\begin{align*}
+%\mathcal{O}(\epsilon^2)&=\kla\left( {2m\epsilon+\nabla^2+\frac{\alpha^2}{r^2}+2(m+\epsilon)\frac{\alpha}{r}} \right)\phi=\\
+%&=\kla\left( {2m\epsilon+\partial_r^2+\frac{2}{r}\partial_r+2(m+\epsilon)\frac{\alpha}{r}+\frac{\alpha^2-L^2}{r^2}} \right)\phi
+%\end{align*}
+
+\section{Dirac Hamiltonian in nonrelativistic limits}
+For the given electric field we have $E\cdot(\sigma\times p)=\epsilon\begin{pmatrix}
+0&p^1-\I p^2 \\ p^1 + \I p^2 & 0
+\end{pmatrix} $. 
+\begin{align*}
+E\psi&=H_D\psi=\E^{\I k\cdot x}\klam\left[ {\frac{k^2}{2m}-\frac{k^4}{8m^3}-\frac{e\epsilon}{4m^2}\begin{pmatrix}
+0&k_x-\I k_y \\ k_x + \I k_y & 0
+\end{pmatrix}} \right]\begin{pmatrix}
+u \\ v
+\end{pmatrix}
+\end{align*}
+We find
+\begin{align*}
+v&=\frac{\frac{e\epsilon}{4m^2}u(k_x+\I k_y)}{E-\frac{k^2}{2m}+\frac{k^4}{8m^3}}
+\end{align*}
+which can be inserted into the first equation to get
+\begin{align*}
+Eu&=-\frac{k^2}{2m}u-\frac{k^4}{8m^3}u-\frac{e\epsilon}{4m^2}(k_x-\I k_y)\frac{\frac{e\epsilon}{4m^2}u(k_x+\I k_y)}{E-\frac{k^2}{2m}+\frac{k^4}{8m^3}}
+\end{align*}
+and rearranged to
+\begin{align*}
+\kla\left( {E-\frac{k^2}{2m}+\frac{k^4}{8m^3}} \right)^2&=\kla\left( {\frac{e\epsilon\vec{k}}{4m^2}} \right)^2&\Rightarrow&& E&=\frac{k^2}{2m}-\frac{k^4}{8m^3}\pm\frac{e\epsilon}{4m^2}|\vec{k}|
+\end{align*}
+One can choose $\tilde{u}=1$ to find $\tilde{v}=\pm\frac{k_x+\I k_y}{|\vec{k}|}$. Normalizing gives $u=\frac{1}{2}$ and $v=\pm\frac{k_x+\I k_y}{2|\vec{k}|}$.
+The expectation values are 
+\begin{align*}
+\bra\langle {s_x}\rangle_\pm&=\frac{1}{2}\begin{pmatrix}
+u&v
+\end{pmatrix}^\ast \sigma_x\begin{pmatrix}
+u \\ v
+\end{pmatrix}=\begin{pmatrix}
+u&v
+\end{pmatrix}^\ast \begin{pmatrix}
+v \\ u
+\end{pmatrix}=\frac{u^\ast v+v^\ast u}{2}=\frac{v+v^\ast}{4}=\pm\frac{k_x}{4|\vec{k}|}\\
+\bra\langle {s_y}\rangle_\pm&=\frac{1}{2}\begin{pmatrix}
+u&v
+\end{pmatrix}^\ast \sigma_y\begin{pmatrix}
+u \\ v
+\end{pmatrix}=\begin{pmatrix}
+u&v
+\end{pmatrix}^\ast \begin{pmatrix}
+-\I v \\ \I u
+\end{pmatrix}=\frac{-\I u^\ast v+\I v^\ast u}{2}=\I\frac{-v+v^\ast}{4}=\pm\frac{k_y}{4|\vec{k}|}
+\end{align*} 
+The expectation value is
+\begin{align*}
+\bra\langle {\vec{s}}\rangle_\pm&=\frac{1}{2}\begin{pmatrix}
+u&v
+\end{pmatrix}^\ast \vec{\sigma}\begin{pmatrix}
+u \\ v
+\end{pmatrix}=\pm\frac{1}{4|\vec{k}|}\begin{pmatrix}
+k_x \\ k_y \\ 0
+\end{pmatrix}=\pm\frac{\vec{k}}{4|\vec{k}|}
+\end{align*}
+this result is wrong, should be something like $(-k_y,k_x,0)$. FIXME: except it is not. mistake has to be within $u,v$.
+\end{document}

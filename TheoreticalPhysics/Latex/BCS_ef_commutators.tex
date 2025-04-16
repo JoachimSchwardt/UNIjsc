@@ -1,0 +1,149 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Lots of commutators}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+%\subject{Superconductivity}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Hamiltonian}
+Hamiltonian $\hat{H} = \hat{H}_0 + \hat{W}$ where
+\begin{align}
+\hat{H}_0 &= \sum_{\textbf{k}s} E_\textbf{k} \hat{a}_{\textbf{k}s}^\dagger  \hat{a}_{\textbf{k}s},\\
+\hat{W} &= \sum_{\textbf{kpq}} V_\textbf{kpq}^{\uparrow\downarrow}  \hat{a}_{\textbf{k} + \textbf{q} \uparrow}^\dagger \hat{a}_{\textbf{p} - \textbf{q} \downarrow}^\dagger \hat{a}_{\textbf{p} \downarrow} \hat{a}_{\textbf{k} \uparrow}
+\end{align}
+and $V_\textbf{kpq}^{\uparrow\downarrow} = -E_\textbf{k} - E_\textbf{p} - E_\mathbf{k+q} - E_\mathbf{p-q}$.
+Here the operators $\hat{a}$ may represent doublons $\hat{d}_{\textbf{k}s}$ or holons $\hat{h}_{\textbf{k}s}$ defined by
+\begin{align}
+\begin{pmatrix}
+\hat{d}_{\textbf{k}s} \\ \hat{h}_{\textbf{k}s}^\dagger
+\end{pmatrix} &= \begin{pmatrix}
+\cos\phi_\textbf{k} & \sin\phi_\textbf{k} \\ -\sin\phi_\textbf{k} & \cos\phi_\textbf{k}
+\end{pmatrix} \begin{pmatrix}
+\hat{f}_{\textbf{k}s} \\ \hat{e}_{\textbf{k}s}^\dagger
+\end{pmatrix}
+\end{align}
+where $\hat{c}_{\textbf{k}\uparrow} = \hat{c}_{\textbf{k}\uparrow} \hat{n}_{\textbf{k}\downarrow} + \hat{c}_{\textbf{k}\uparrow} (1 - \hat{n}_{\textbf{k}\downarrow}) =: \hat{f}_{\textbf{k}\uparrow} + \hat{e}_{\textbf{k}\uparrow}^\dagger$.
+Note that\footnote{$[ab,c] = a\{b,c\} - \{a,c\}b = a[b,c] + [a,c]b$ and $\{a,bc\} = b[c,a] + \{a,b\} c = b\{a,c\} + [a,b]c$.}
+%\begin{align}
+%\klam\left[ \hat{n}_{\textbf{k}s}, \hat{c}_{\textbf{k}'s'} \right] &= \hat{c}_{\textbf{k}'s'}^\dagger \klammer\left\{ \hat{c}_{\textbf{k}s}, \hat{c}_{\textbf{k}'s'} \right\} - \klammer\left\{ \hat{c}_{\textbf{k}s}^\dagger, \hat{c}_{\textbf{k}'s'} \right\} \hat{c}_{\textbf{k}s} = -\hat{c}_{\textbf{k}s} \delta_{\textbf{kk}'} \delta_{ss'},\\
+%\left[ \hat{n}_{\textbf{k}s}, \hat{c}_{\textbf{k}'s'}^\dagger \right] &= \hat{c}_{\textbf{k}s}^\dagger \delta_{\textbf{kk}'} \delta_{ss'}, \\
+%\klammer\left\{ \hat{n}_{\textbf{k}s}, \hat{n}_{\textbf{k}'s'} \right\} &= \hat{c}_{\textbf{k}'s'}^\dagger \klam\left[ \hat{n}_{\textbf{k}s}, \hat{c}_{\textbf{k}'s'} \right] + \klammer\left\{ \hat{n}_{\textbf{k}s}, \hat{c}_{\textbf{k}'s'}^\dagger \right\} \hat{c}_{\textbf{k}'s'} = \\
+%&= -\hat{c}_{\textbf{k}'s'}^\dagger \hat{c}_{\textbf{k}s} \delta_{\textbf{kk}'} \delta_{ss'} + \hat{c}_{\textbf{k}s}^\dagger  \delta_{\textbf{kk}'} \delta_{ss'} \hat{c}_{\textbf{k}'s'} - 2\hat{c}_{\textbf{k}'s'}^\dagger \hat{n}_{\textbf{k}s} \hat{c}_{\textbf{k}'s'} = \\
+%&= (1 - \delta) (-2) \hat{n}_{\textbf{k}'s'} \hat{n}_{\textbf{k}s} , \\
+%\left\{ \hat{n}_{\textbf{k}\bar{s}}, \hat{c}_{\textbf{k}'s'} \hat{n}_{\textbf{k}'\bar{s}'} \right\} &= \hat{c}_{\textbf{k}'s'} \klammer\left\{ \hat{n}_{\textbf{k}\bar{s}}, \hat{n}_{\textbf{k}'\bar{s}'} \right\} + \klam\left[ \hat{n}_{\textbf{k}\bar{s}}, \hat{c}_{\textbf{k}'s'} \right] \hat{n}_{\textbf{k}'\bar{s}'} = \\
+%&= \hat{c}_{\textbf{k}'s'} \kla\left( \hat{c}_{\textbf{k}'\bar{s}'}^\dagger \klam\left[ \hat{n}_{\textbf{k}\bar{s}}, \hat{c}_{\textbf{k}'\bar{s}'} \right] + \klammer\left\{ \hat{n}_{\textbf{k}\bar{s}}, \hat{c}_{\textbf{k}'\bar{s}'}^\dagger \right\} \hat{c}_{\textbf{k}'\bar{s}'} \right) - \hat{c}_{\textbf{k}s} \delta_{\textbf{kk}'} \delta_{ss'} = \\
+%&= 
+%\end{align}
+\begin{align}
+\klam\left[ \hat{n}_{\textbf{k}s}, \hat{c}_{\textbf{k}'s'} \right] &= \hat{c}_{\textbf{k}'s'}^\dagger \klammer\left\{ \hat{c}_{\textbf{k}s}, \hat{c}_{\textbf{k}'s'} \right\} - \klammer\left\{ \hat{c}_{\textbf{k}s}^\dagger, \hat{c}_{\textbf{k}'s'} \right\} \hat{c}_{\textbf{k}s} = -\hat{c}_{\textbf{k}s} \delta_{\textbf{kk}'} \delta_{ss'},\\
+\left[ \hat{n}_{\textbf{k}s}, \hat{c}_{\textbf{k}'s'}^\dagger \right] &= \hat{c}_{\textbf{k}s}^\dagger \delta_{\textbf{kk}'} \delta_{ss'}.
+\end{align}
+Some of the relevant commutation relations are
+%\begin{align}
+%\klammer\left\{ \hat{f}_{\textbf{k}s}, \hat{f}_{\textbf{k}'s'} \right\} &= \klammer\left\{ \hat{c}_{\textbf{k}s} \hat{n}_{\textbf{k}\bar{s}}, \hat{c}_{\textbf{k}'s'} \hat{n}_{\textbf{k}'\bar{s}'} \right\} = \\
+%&= \hat{c}_{\textbf{k}s} \klammer\left\{ \hat{n}_{\textbf{k}\bar{s}}, \hat{c}_{\textbf{k}'s'} \hat{n}_{\textbf{k}'\bar{s}'} \right\} - \klam\left[ \hat{c}_{\textbf{k}s}, \hat{c}_{\textbf{k}'s'} \hat{n}_{\textbf{k}'\bar{s}'} \right] \hat{n}_{\textbf{k}\bar{s}} = \\
+%&= \hat{c}_{\textbf{k}s} \kla\left( \hat{c}_{\textbf{k}'s'} \klammer\left\{ \hat{n}_{\textbf{k}\bar{s}}, \hat{n}_{\textbf{k}'\bar{s}'} \right\} + \klam\left[ \hat{n}_{\textbf{k}\bar{s}}, \hat{c}_{\textbf{k}'s'} \right] \hat{n}_{\textbf{k}'\bar{s}'} \right) - \kla\left( \hat{c}_{\textbf{k}'s'} \klam\left[ \hat{c}_{\textbf{k}s}, \hat{n}_{\textbf{k}'\bar{s}'} \right] + \klam\left[ \hat{c}_{\textbf{k}s}, \hat{c}_{\textbf{k}'s'} \right] \hat{n}_{\textbf{k}'\bar{s}'} \right) \hat{n}_{\textbf{k}\bar{s}} = \\
+%&= 
+%%&= \klammer\left\{ \hat{c}_{\textbf{k}s} \hat{c}_{\textbf{k}\bar{s}}^\dagger \hat{c}_{\textbf{k}\bar{s}}, \hat{c}_{\textbf{k}'s'} \hat{c}_{\textbf{k}'\bar{s}'}^\dagger \hat{c}_{\textbf{k}'\bar{s}'} \right\} = \\
+%%&= \left\{ \hat{c}_{\textbf{k}\bar{s}}^\dagger \hat{c}_{\textbf{k}s} \hat{c}_{\textbf{k}\bar{s}}, \hat{c}_{\textbf{k}'\bar{s}'}^\dagger \hat{c}_{\textbf{k}'s'} \hat{c}_{\textbf{k}'\bar{s}'} \right\} = \\
+%%&= 
+%\end{align}
+\begin{align}
+\klammer\left\{ c_{ks}, f_{k's'} \right\} &= \klammer\left\{ c_{ks}, c_{k's'} n_{k'\bar{s}'} \right\} = c_{k's'} \klam\left[ n_{k'\bar{s}'}, c_{ks} \right] + \klammer\left\{ c_{ks}, c_{k's'} \right\} n_{k'\bar{s}'} = c_{ks}c_{k\bar{s}} \delta_{kk'} \delta_{s\bar{s}'}, \\
+\klammer\left\{ c_{ks}^\dagger, f_{k's'} \right\} &= \klammer\left\{ c_{ks}^\dagger, c_{k's'} n_{k'\bar{s}'} \right\} = c_{k's'} \klam\left[ n_{k'\bar{s}'}, c_{ks}^\dagger \right] + \klammer\left\{ c_{ks}^\dagger, c_{k's'} \right\} n_{k'\bar{s}'} = \\
+&= c_{k\bar{s}} c_{ks}^\dagger \delta_{kk'} \delta_{s\bar{s}'} + n_{k\bar{s}} \delta_{kk'} \delta_{ss'}, \\
+\left[ n_{ks}, f_{k's'} \right] &= \left( c_{ks}^\dagger \klammer\left\{ c_{ks}, f_{k's'} \right\} - \klammer\left\{ c_{ks}^\dagger, f_{k's'} \right\} c_{ks} \right) = \\
+&= \kla\left( c_{ks}^\dagger c_{ks}c_{k\bar{s}} \delta_{s\bar{s}'} - c_{k\bar{s}} c_{ks}^\dagger \delta_{s\bar{s}'} c_{ks} - n_{k\bar{s}} \delta_{ss'} c_{ks}  \right) \delta_{kk'} = \\
+&= -c_{ks} n_{k\bar{s}} \delta_{ss'} \delta_{kk'} ,\\
+\klammer\left\{ f_{ks}, f_{k's'} \right\} &= \klammer\left\{ c_{ks} n_{k\bar{s}}, f_{k's'} \right\} = c_{ks} \klam\left[ n_{k\bar{s}}, f_{k's'} \right] - \klammer\left\{ c_{ks}, f_{k's'} \right\} n_{k\bar{s}} = \\
+&= c_{ks} \left( - c_{k\bar{s}} n_{ks} \delta_{s\bar{s}'} \right) \delta_{kk'} - c_{ks}c_{k\bar{s}} \delta_{kk'} \delta_{s\bar{s}'} = \\
+&= 2c_{k\bar{s}} c_{ks} \delta_{kk'} \delta_{s\bar{s}'},\\
+\klammer\left\{ f_{ks}^\dagger, f_{k's'} \right\} &= \klammer\left\{ c_{ks}^\dagger n_{k\bar{s}} , f_{k's'} \right\} = c_{ks}^\dagger \klam\left[ n_{k\bar{s}}, f_{k's'} \right] - \klammer\left\{ c_{ks}^\dagger, f_{k's'} \right\} n_{k\bar{s}} = \\
+&= c_{ks}^\dagger \left( -c_{k\bar{s}} n_{ks} \delta_{s\bar{s}'} \right) \delta_{kk'} - c_{k\bar{s}} c_{ks}^\dagger \delta_{kk'} \delta_{s\bar{s}'} n_{k\bar{s}} - n_{k\bar{s}} \delta_{kk'} \delta_{ss'} n_{k\bar{s}} = \\
+&= \kla\left( c_{ks}^\dagger c_{k\bar{s}} \delta_{s\bar{s}'} - n_{k\bar{s}} \delta_{ss'} \right) \delta_{kk'}, \\
+\klammer\left\{ e_{ks}, f_{k's'} \right\} &= \klammer\left\{ \kla\left( c_{ks} - f_{ks} \right)^\dagger, f_{k's'} \right\} = \\
+&= c_{k\bar{s}} c_{ks}^\dagger \delta_{kk'} \delta_{s\bar{s}'} + n_{k\bar{s}} \delta_{kk'} \delta_{ss'} - \left( c_{ks}^\dagger c_{k\bar{s}} \delta_{s\bar{s}'} - n_{k\bar{s}} \delta_{ss'} \right) \delta_{kk'} = \\
+&= 2\kla\left( c_{k\bar{s}} c_{ks}^\dagger \delta_{s\bar{s}'} + n_{k\bar{s}} \delta_{ss'} \right) \delta_{kk'},\\
+\klammer\left\{ e_{ks}^\dagger, f_{k's'} \right\} &= \klammer\left\{ c_{ks} - f_{ks}, f_{k's'} \right\} = \\
+&= c_{ks}c_{k\bar{s}} \delta_{kk'} \delta_{s\bar{s}'} - 2c_{k\bar{s}} c_{ks} \delta_{kk'} \delta_{s\bar{s}'} = 3c_{ks} c_{k\bar{s}}  \delta_{kk'} \delta_{s\bar{s}'},\\
+\klammer\left\{ e_{ks}^\dagger, e_{k's'}^\dagger \right\} &= \klammer\left\{ c_{ks} - f_{ks}, c_{k's'} - f_{k's'} \right\} = \\
+&= \delta_{kk'} \kla\left( -c_{ks'}c_{k\bar{s}'} \delta_{s\bar{s}'} - c_{ks}c_{k\bar{s}} \delta_{s\bar{s}'} + 2c_{k\bar{s}} c_{ks} \delta_{s\bar{s}'} \right) = 2c_{k\bar{s}} c_{ks} \delta_{s\bar{s}'} \delta_{kk'} ,\\
+\klammer\left\{ e_{ks}^\dagger, e_{k's'} \right\} &= \klammer\left\{ c_{ks} - f_{ks}, c_{k's'}^\dagger - f_{k's'}^\dagger \right\} = \\
+&= \delta_{kk'} \kla\left( \delta_{ss'} + c_{k\bar{s}}^\dagger c_{ks} \delta_{s\bar{s}'} - n_{k\bar{s}} \delta_{ss'} - 2c_{ks} c_{k\bar{s}}^\dagger \delta_{s\bar{s}'} - 2n_{k\bar{s}} \delta_{ss'} \right) = \\
+&= \kla\left( 1 + 3c_{k\bar{s}}^\dagger c_{ks} \right) \delta_{s\bar{s}'} \delta_{kk'} - 3n_{k\bar{s}} \delta_{ss'} \delta_{kk'}.
+\end{align}
+Using these, we can write down the relations for $d$ and $h$.
+Since all previous terms contained $\delta_{kk'}$, we may omit the $k$-index entirely
+\begin{align}
+\klammer\left\{ d_{s}, d_{s'} \right\} &= \klammer\left\{ \cos \phi f_{s} + \sin\phi e_{s}^\dagger, \cos \phi f_{s'} + \sin\phi e_{s'}^\dagger \right\} = \\
+&= 2c_\phi^2 c_{\bar{s}} c_s \delta_{s\bar{s}'}  + 2s_\phi^2 c_{\bar{s}} c_s \delta_{s\bar{s}'} + 3s_\phi c_\phi \kla\left( c_sc_{\bar{s}} \delta_{s\bar{s}'} + c_{\bar{s}} c_s \delta_{s\bar{s}'} \right) = 2c_{\bar{s}}c_s \delta_{s\bar{s}'},\\
+\klammer\left\{ d_s, d_{s'}^\dagger \right\} &= \left\{ \cos \phi f_{s} + \sin\phi e_{s}^\dagger, \cos \phi f_{s'}^\dagger + \sin\phi e_{s'} \right\} = \\
+&= c_\phi^2 \kla\left( c_s^\dagger c_{\bar{s}} \delta_{s\bar{s}'} - n_{\bar{s}} \delta_{ss'} \right) + s_\phi^2 \left( \delta_{s\bar{s}'} + 3c_{\bar{s}}^\dagger c_{s} \delta_{s\bar{s}'} - 3n_{\bar{s}} \delta_{ss'} \right) + 4c_{s}c_{\bar{s}}^\dagger \delta_{s\bar{s}'} + 4n_{\bar{s}} \delta_{ss'},\\
+\dots &= \dots.
+\end{align}
+
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,64 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+
+\newcommand*{\Title}{One-loop Integrals}
+\newcommand*{\Author}{Joachim Schwardt}
+
+\input{preamble_shared}
+\input{preamble}
+
+%\titlehead{titlehead}
+\subject{Relativistic Quantum Field Theory}
+\title{\Title}
+\author{\Author}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{A First Example}
+Consider the integral
+\begin{align}
+I_D(a,b,p) &= \intx{ }{ }{\frac{1}{\kla*{k^2-a^2} \kla*{(k+p)^2 - b^2}}}{k},
+\end{align}
+where $k,p$ are four-momenta with $k^2=k_0^2-\textbf{k}^2$, $\d k = \frac{\d^D k}{(2\pi)^D}$ and $a,b$ are mass parameters to be taken to zero.
+\subsection{Dimensional Regularization}
+Let the dimension be $D=4-2\epsilon$.
+Note that we have
+\begin{align}
+\frac{1}{\prod_j A_j^{\alpha_j}} &= \frac{\Gamma\kla*{\sum \alpha_j}}{\prod_j \Gamma(\alpha_j)} \intx{[0,1]^n}{ }{\delta\kla[\Big]{1 - \sum_j u_j} \frac{\prod_j u_j^{\alpha_j-1}}{\klb*{\sum_j u_j A_j}^{\sum_j \alpha_j}}}{u},
+\end{align}
+which holds for $\Re\alpha_j > 0$.
+There is also the similar result $\frac{1}{x^\alpha} = \frac{1}{\Gamma(\alpha)} \intx{0}{\infty}{ v^{\alpha-1} \powe{-vx} }{v}$ for $\Re x>0$ and $\Re \alpha > 0$.
+
+In our case, we have $A_1=k^2-a^2$, $A_2=(k+p)^2-b^2$ with $\alpha_1=\alpha_2=1$.
+This yields
+\begin{align}
+I_D &= \frac{\Gamma(2)}{\Gamma(1)^2} \intx{0}{1}{ \intx{0}{1}{ \delta(1-u_1-u_2) \intx{ }{ }{\frac{1}{\klb*{u_1 \kla*{k^2 - a^2} + u_2 \kla*{(k+p)^2 - b^2}}^2 }}{k}  }{u_1}}{u_2}\\
+&= \intx{0}{1}{\intx{0}{1}{\intx{ }{ }{\frac{1}{ \klb*{k^2 - u_1a^2 + 2u_2k\cdot p + u_2(p^2-b^2)}^2 }}{k} }{u_1}}{u_2}\\
+&= \intx{0}{1}{\intx{0}{1}{\intx{ }{ }{\frac{1}{ \klb*{k^2 - u_2^2p^2 - u_1a^2 + u_2(p^2-b^2)}^2 }}{k} }{u_1}}{u_2}.
+\end{align}
+The core structure of this integral is given by
+\begin{align}
+f_D(m,n) &= \intx{ }{ }{\frac{1}{\klb*{k^2 - m^2}^n}}{k}.
+\end{align}
+Assuming the magic of Wick rotation\footnote{This is a point seldom touched on in QFT. This innocent ``rotation'' requires some pretty restrictive properties of the integrals at hand, which are typically \emph{not} satisfied! Somehow we can do these things anyway -- but be warned, for thou now leave the path of well-defined mathematics for a deep dark forest of magic...} $k_0 \rightarrow \i k_0$.
+This transforms the problem into on of spherical symmetry,
+\begin{align}
+f_D(m,n) &= \i\intrndpi{D}{ \frac{1}{\klb*{k^2 + m^2}^n} }{k} = \frac{\i S_D}{(2\pi)^D} \intx{0}{\infty}{ \frac{1}{\klb*{k^2 + m^2}^n} k^{D-1}}{k},
+\end{align}
+where $S_D= \frac{2\pi^{D/2}}{\Gamma(D/2)}$ is the surface area of a $D$-dimensional hyper-sphere with unit radius.
+If $m^2\ge 0$ we can solve this integral (for now, assume that parameters are chosen such that we find convergence),
+\begin{align}
+f_D(m,n) &= \frac{\i S_D}{(2\pi)^D} \intx{0}{\infty}{v^{n-1} \intx{0}{\infty}{k^{D-1} \powe{-v(k^2+m^2)}}{k} }{v}\\
+&= \frac{\i S_D}{(2\pi)^D} \intx{0}{\infty}{v^{n-1} \powe{-vm^2} \intx{0}{\infty}{r^{\frac{D-1}{2}} \powe{-vr} \frac{1}{2\sqrt{r}} }{r} }{v}\\
+&= \frac{\i S_D}{(2\pi)^D} \intx{0}{\infty}{v^{n-1} \powe{-vm^2} \frac{\Gamma(D/2)}{2v^{D/2}} }{v} = \frac{\i \pi^{D/2}}{(2\pi)^D} \frac{\Gamma(n)}{\kla*{m^2}^{n - D/2}} = \frac{\i\Gamma(n)}{2^D \pi^{D/2}} \kla*{m^2}^{D/2 - n}.
+\end{align}
+
+\end{document}

@@ -1,0 +1,189 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{05 Itó calculus}
+\newcommand*{\autor}{Joachim Schwardt and Julian Fleck}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Stochastic processes}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+
+\section*{Problem 5.1: Wiener and Ornstein-Uhlenbeck process as Ito stochastic differential equation}
+The general one-dimensional Fokker-Planck equation takes the form
+\begin{align}
+\partial_t p &= - \partial_x \kla\left( {Ap} \right) + \frac{1}{2} \partial_x^2 \kla\left( {Bp} \right)
+\end{align}
+for some functions $A(x,t)$ and $B(x,t)$.
+In the lecture we discussed the one-to-one correspondence of such an equation to an Itó stochastic differential equation
+\begin{align}
+\tecxt\text{d}x &= a \tecxt\text{d}t + b \tecxt\text{d}W
+\end{align}
+where $a(x,t)\equiv A(x,t)$ and $b^2(x,t)\equiv B(x,t)$.
+\\
+For the Wiener process we have
+\begin{align}
+\partial_t p &= \frac{1}{2} \partial_x^2 \kla\left( {p} \right),
+\end{align}
+so $A\equiv 0$ and $B\equiv 1$.
+The corresponding stochastic equation therefore reads
+\begin{align}
+\tecxt\text{d}x &= \tecxt\text{d}W.
+\end{align}
+For the Ornstein-Uhlenbeck process we have
+\begin{align}
+\partial_t p &= \alpha \partial_x (xp) + \frac{\sigma^2}{2} \partial_x^2 p, 
+\end{align}
+so $A\equiv -\alpha x$ and $B\equiv \sigma^2$.
+The corresponding stochastic equation therefore reads
+\begin{align}
+\tecxt\text{d}x &= -\alpha x\tecxt\text{d}t + \sigma \tecxt\text{d}W.
+\end{align}
+
+
+\newpage
+\section*{Problem 5.2: Black-Scholes model}
+Let $x(t)$ be the price of a stock.
+Then the Ito-stochastic equation is
+\begin{align}
+\tecxt\text{d}x &= \mu x \tecxt\text{d}t + \sigma x \tecxt\text{d}W,
+\end{align}
+where $\mu$ is the expected return value and $\sigma$ the volatility.
+Let $w(x,t)$ be the price of an option on the stock.
+Ito's rule states that we have to expand up to order $\tecxt\text{d}W^2\equiv \tecxt\text{d}t$.
+Thus we may expand $w$ to second order and neglect the terms proportional to $\tecxt\text{d}x \tecxt\text{d}t$ and $\tecxt\text{d}t^2$. 
+Then find the differential
+\begin{align}
+\tecxt\text{d}w &= \frac{\partial w}{\partial x} \tecxt\text{d}x + \frac{\partial w}{\partial t} \tecxt\text{d}t + \frac{1}{2} \frac{\partial^2 w}{\partial x^2} \tecxt\text{d}x^2 = \\
+&= \frac{\partial w}{\partial x} \kla\left( {\mu x \tecxt\text{d}t + \sigma x \tecxt\text{d}W} \right) + \frac{\partial w}{\partial t} \tecxt\text{d}t + \frac{1}{2} \frac{\partial^2 w}{\partial x^2} \sigma^2x^2 \tecxt\text{d}t = \\
+&= \kla\left( {\mu \frac{\partial w}{\partial x} + \frac{\partial w}{\partial t} + \frac{\sigma^2}{2} x^2  \frac{\partial^2 w}{\partial x^2} } \right) \tecxt\text{d}t + \sigma x \frac{\partial w}{\partial x} \tecxt\text{d}W
+\end{align}
+
+
+
+\section*{Problem 5.3: Complex Wiener increments}
+Let $W_{1,2}(t)$ be to independent Wiener process with increments $\tecxt\text{d}W_{1,2}(t)$.
+We define the complex increment
+\begin{align}
+\tecxt\text{d}\xi &:= \frac{\tecxt\text{d}W_1 +
+ \i \tecxt\text{d}W_2}{\sqrt{2}}.
+\end{align}
+Using $\tecxt\text{d}W_j^2 \equiv \tecxt\text{d}t$, the Ito rules lead to
+\begin{align}
+\tecxt\text{d}\xi^2 &= \frac{1}{2} \kla\left( {\tecxt\text{d}W_1^2 - \tecxt\text{d}W_2^2 + 2\i\,\tecxt\text{d}W_1 \tecxt\text{d}W_2 } \right) = \i\,\tecxt\text{d}W_1 \tecxt\text{d}W_2.
+\end{align}
+Similarly, for the square of the absolute value we find
+\begin{align}
+|\tecxt\text{d}\xi|^2 &= \frac{1}{2} \kla\left( { \tecxt\text{d}W_1^2 + \tecxt\text{d}W_2^2 } \right) = \tecxt\text{d}t.
+\end{align}
+This is reminiscent of a Wiener increment!
+
+\newpage
+\section*{Problem 5.4: Linear Ito-stochastic Schrödinger equation}
+Consider an Ito-stochastic extension of the usual Schrödinger equation in the form
+\begin{align}
+\tecxt\text{d}\Ket | {\psi} \rangle &= \frac{1}{\i} H\Ket | {\psi} \rangle \tecxt\text{d}t - \frac{1}{2} L^\dagger L\Ket | {\psi} \rangle \tecxt\text{d}t + L\Ket | {\psi} \rangle \tecxt\text{d}\xi.
+\end{align}
+Here $H$ is the Hamiltonian and $L$ an operator modeling the influence of some sort of ``environment''.
+We define the density operator 
+\begin{align}
+\rho (t) &:= \bra\langle {\bra\langle {\, \oper | {\psi(t) } \rangle\langle {\psi(t)} | \,}\rangle }\rangle,
+\end{align}
+where $\langle\langle ... \rangle\rangle $ denotes an ensemble average over the complex Wiener process $\xi(t)$ from problem 5.3.
+We may derive an evolution equation for $\rho(t)$ by use of the Ito rules
+\begin{align}
+\tecxt\text{d}\rho &=  \left\langle\left\langle\,  \tecxt\text{d}\oper | {\psi} \rangle  \langle {\psi} | \,\right\rangle\right\rangle + \left\langle\left\langle\, \oper | {\psi} \rangle \tecxt\text{d} \langle {\psi} | \,\right\rangle\right\rangle = \\
+&= \left\langle\left\langle\, \frac{1}{\i} H | {\psi} \rangle  \langle {\psi} | \tecxt\text{d}t - \frac{1}{2} L^\dagger L | {\psi} \rangle  \langle {\psi} | \tecxt\text{d}t + L | {\psi} \rangle  \langle {\psi} | \tecxt\text{d}\xi  \,\right\rangle\right\rangle + \tecxt\text{h.c.} = \\
+&= \i \klam\left[ {\rho, H} \right] \tecxt\text{d}t - \frac{1}{2} \klammer\left\{{\rho, L^\dagger L} \right\} \tecxt\text{d}t + \kla\left( {L\rho + \rho L^\dagger} \right) \tecxt\text{d}\xi.
+\end{align}
+With this evolution equation for $\rho$, we may determine the change of the trace
+\begin{align}
+\tecxt\text{tr\,} \tecxt\text{d}\rho &= \tecxt\text{tr\,} \i \klam\left[  \rho, H  \right] \tecxt\text{d}t - \frac{1}{2} \tecxt\text{tr\,} \klammer\left\{ \rho, L^\dagger L  \right\} \tecxt\text{d}t + \tecxt\text{tr\,} \kla\left( { L\rho + \rho L^\dagger} \right) \tecxt\text{d}\xi = \\
+&= 0 - \tecxt\text{tr\,} \rho L^\dagger L \tecxt\text{d}t + \tecxt\text{tr\,} \rho (L + L^\dagger) \tecxt\text{d}\xi = \\
+&= \bra\langle  L + L^\dagger \rangle \tecxt\text{d}\xi - \bra\langle  L^\dagger L \rangle \tecxt\text{d}t.
+\end{align}
+Here we used the expectation value $\bra\langle {A}\rangle = \tecxt\text{tr\,} \rho A$ for some operator $A$.
+\\
+For the time-evolution of the norm $\brak\langle {\psi(t)}| {\psi(t)}\rangle$ for an instance $\Ket | {\psi(t)} \rangle$ we find
+\begin{align}
+\tecxt\text{d}\brak\langle {\psi}| {\psi}\rangle &= \Bra\langle {\psi} | \tecxt\text{d}\Ket | {\psi} \rangle + \tecxt\text{h.c.} = \\
+&= \frac{1}{\i}\braket\langle {\psi} | {H} | {\psi}\rangle \tecxt\text{d}t - \frac{1}{2} \braket\langle {\psi} | {L^\dagger L} | {\psi}\rangle \tecxt\text{d}t + \braket\langle {\psi} | {L} | {\psi}\rangle \tecxt\text{d}\xi + \tecxt\text{h.c.} = \\
+&= \braket\langle {\psi} | {L + L^\dagger } | {\psi}\rangle \tecxt\text{d}\xi. 
+\end{align}
+Since the time-average $\bra\langle {\tecxt\text{d}\xi}\rangle_t = 0$, the normalization is only preserved if averaged over large time-periods.
+
+
+\newpage
+\section*{Problem 5.5: Non-linear Ito-stochastic Schrödinger equation}
+Similar to problem 5.4, consider an Ito-stochastic extension of the usual Schrödinger equation in the form
+\begin{align}
+\tecxt\text{d}\Ket | {\psi} \rangle &= \frac{1}{\i} H\Ket | {\psi} \rangle \tecxt\text{d}t - \frac{1}{2}  \kla\left( {L^\dagger L - 2L \bra\langle {L^\dagger}\rangle + |\bra\langle {L}\rangle|^2} \right) \Ket | {\psi} \rangle \tecxt\text{d}t + (L-\bra\langle {L}\rangle )\Ket | {\psi} \rangle \tecxt\text{d}\xi.
+\end{align}
+This time we find the increment of the density operator as
+\begin{align*}
+\tecxt\text{d}\rho &= \left\langle\left\langle\,  \tecxt\text{d}\oper | {\psi} \rangle  \langle {\psi} | \,\right\rangle\right\rangle + \tecxt\text{h.c.}  = \numberthis \\
+&= \i\klam\left[ {\rho, H} \right]\tecxt\text{d}t - \frac{1}{2}\klammer\left\{{\rho, L^\dagger L + |\bra\langle {L}\rangle|^2 } \right\} \tecxt\text{d}t +\\
+&\hspace{2.05cm} + \left\langle\left\langle\, L \bra\langle {L^\dagger}\rangle | {\psi} \rangle  \langle {\psi} |  \tecxt\text{d}t + (L-\bra\langle {L}\rangle ) | {\psi} \rangle  \langle {\psi} | \tecxt\text{d}\xi + \tecxt\text{h.c.}  \,\right\rangle\right\rangle = \numberthis \\
+&= \i\klam\left[ {\rho, H} \right]\tecxt\text{d}t - \frac{1}{2}\klammer\left\{{\rho, L^\dagger L + |\bra\langle {L}\rangle|^2 } \right\} \tecxt\text{d}t + \kla\left( {L\bra\langle {L^\dagger}\rangle\rho + \rho L^\dagger \bra\langle {L}\rangle } \right) \tecxt\text{d}t + \\
+&\hspace{2.05cm} + \klam\left[ {\kla\left( {L - \bra\langle {L}\rangle } \right)\rho + \rho \kla\left( {L^\dagger - \bra\langle {L^\dagger}\rangle } \right) } \right] \tecxt\text{d}\xi =  \numberthis  
+\end{align*}
+I did not understand 5.4, and for this one I am even more puzzled. 
+Why can we just simply pull $H$ or $L$ out of these complicated looking ensemble averages, how does the increment for $\rho$ actually help us to do anything, etc... 
+Repeating the blind analysis from 5.4 does not appear to give any major insights at the moment.
+
+
+%\begin{thebibliography}{9}
+%\bibitem{numerical levy stable distributions} S.Ament, M. O'Neil: Accurate and efficient numerical calculation of stable
+%densities via optimized quadrature and asymptotics, \url{https://arxiv.org/pdf/1607.04247.pdf}, 31.\,August~2021.
+%\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,517 @@
+\documentclass[english, parskip=full]{scrreport}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption, slashed}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Zusammenfassung der Vorlesungen}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Theoretische Physik}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+
+\chapter{Quantentheorie II}
+\section{Relativistische Quantenmechanik}
+\subsection{Ortsraum und Teilchen in einer Dimension}
+Der Translationsoperator ist definiert als
+\begin{align}
+\hat{T}_a &:= \e^{-\i\hat{p}a}.
+\end{align}
+Es gilt für den Kommutator mit dem Ortsoperator dann
+\begin{align}
+\klam\left[ \hat{x}, \hat{T}_a \right] &= \sum_{n\ge 0}\frac{(-\i a)^n}{n!}\klam\left[ \hat{x}, \hat{p}^n \right] = \sum_{n\ge 0}\frac{(-\i a)^n}{n!} n\i\hat{p}^{n-1} = a\hat{T}_a.
+\end{align}
+Der Ortseigenwert von einem Zustand $\hat{T}_a\Ket | x_0 \rangle$ folgt dann zu
+\begin{align}
+\hat{x}\kla\left( \hat{T}_a\Ket | x_0 \rangle \right) &= \hat{T}_a\kla\left( x + a \right)\Ket | x_0 \rangle.
+\end{align}
+Es gilt also $\hat{T}_a\Ket | x_0 \rangle\propto \Ket | x_0 + a \rangle$.
+Da $\hat{T}_a^\dagger\hat{T}_a = 1$ gilt insbesondere die Gleichheit, also
+\begin{align}
+\hat{T}_a\Ket | x \rangle &= \Ket | x + a \rangle.
+\end{align}
+Insbesondere verwenden wir die Konvention $\brak\langle p | x \rangle = \e^{-\i px}$.
+
+%Insbesondere können wir $\hat{T}_a$ im folgenden Skalarprodukt auch ``nach links'' anwenden, also
+%\begin{align}
+%\brak\langle p | x + a \rangle &= \braket\langle p | \hat{T}_a | x \rangle = \e^{-\i pa}\brak\langle p | x \rangle.
+%\end{align}
+%Andererseits ist dann
+%\begin{align}
+%\brak\langle p | x \rangle &= \intr\int_{\mathbb{R}^{ }} \brak\langle p | y \rangle\brak\langle y | x \rangle \, \mathrm{d}^{ }y = \intr\int_{\mathbb{R}^{ }} \e^{-\i py}\brak\langle p | 0 \rangle \delta(x-y) \, \mathrm{d}^{ }y
+%\end{align}
+
+
+\subsection{Rotationsinvarianz und Drehimpuls}
+Rotationen werden im $\mathbb{R}^3$ durch die Rotationsmatrizen
+\begin{align}
+R_{\vec{n}} (\theta) 
+\end{align}
+mit Einheitsvektor $\vec{n}$ beschrieben.
+Für $\vec{n} = \vec{e}_z$ ist die Drehung dann beispielsweise gegeben durch
+\begin{align}
+R_{\vec{n}} (\theta) &:= R_z(\theta) = \begin{pmatrix}
+\cos\theta & -\sin\theta & 0\\
+\sin\theta & \cos\theta & 0\\
+0 & 0 & 1
+\end{pmatrix}.
+\end{align}
+Die zugehörige infinitesimale Drehung ist
+\begin{align}
+R_z(\varepsilon) &= 1 -\i\varepsilon\begin{pmatrix}
+0 & -\i & 0 \\ \i & 0 & 0 \\ 0&0&0
+\end{pmatrix} + \mathcal{O}(\varepsilon^2) \equiv 1 - \i\varepsilon\ell_z + \mathcal{O}(\varepsilon^2).
+\end{align}
+Die Matrizen $(\ell_m)_{jk} = -\i\epsilon_{jkm}$ heißen Generatoren und spannen eine Lie-Algebra auf.
+Ihre explizite Form ist
+\begin{align}
+\ell_x &= \begin{pmatrix}
+0 & 0 & 0 \\ 0 & 0 & -\i \\ 0&\i&0
+\end{pmatrix}, &&& \ell_y &= \begin{pmatrix}
+0 & 0 & \i \\ 0 & 0 & 0 \\ -\i&0&0
+\end{pmatrix} &&\tecxt\text{und} & \ell_z &= \begin{pmatrix}
+0 & -\i & 0 \\ \i & 0 & 0 \\ 0&0&0
+\end{pmatrix}.
+\end{align}
+Mit der Relation $\epsilon_{abc}\epsilon_{ade} = \delta_{bd}\delta_{ce} - \delta_{be}\delta_{cd}$ kann man zeigen, dass
+\begin{align}
+ \ell_n\ell_m  &\equiv  -\epsilon_{akn}\epsilon_{kcm} = \epsilon_{kan}\epsilon_{kcm} = \delta_{ac}\delta_{nm} - \delta_{am}\delta_{nc}
+\end{align}
+und somit
+\begin{align}
+\klam\left[ \ell_n,\ell_m \right] &= \ell_n\ell_m - \ell_m\ell_n \equiv \delta_{ac}\delta_{nm} - \delta_{am}\delta_{nc} - \delta_{ac}\delta_{mn} + \delta_{an}\delta_{mc} = \\
+&= \delta_{an}\delta_{mc} - \delta_{am}\delta_{nc} = \underbrace{\epsilon_{kac}}_{=\,(\ell_k)_{ac}} \epsilon_{knm} \equiv \i\epsilon_{knm}\ell_k.
+\end{align}
+Es gilt außerdem
+\begin{align}
+R_{\vec{n}}(\theta) &= \e^{-\i\theta\vec{n}\cdot\vec{\ell}} \equiv \e^{-n_m(\ell_m)_{jk}}.
+\end{align}
+Eine Abbildung $R\mapsto D(R)$ mit $D(R_1R_2)=D(R_1)D(R_2)$ heißt Darstellung einer Drehung.
+Beispielsweise gelten
+\begin{align}
+\Ket | \psi \rangle &\rightarrow \Ket | \psi' \rangle = D(R)\Ket | \psi \rangle, &&& Q&\rightarrow Q'=Q, &&&\vec{p}&\rightarrow \vec{p}\,'= D(R)\vec{p}.
+\end{align}
+Im Folgenden werden die Korrekturen $\mathcal{O}(\varepsilon^2)$ nicht mehr explizit geschrieben.
+Die Transformation für eine Ladungsverteilung führt dann auf
+\begin{align}
+\rho(\vec{r}) &\rightarrow \rho'(\vec{r}\,') = \rho(R_z\vec{r}) = \rho(x-\varepsilon y, y + \epsilon x, z) = \\
+&= \rho(\vec{r}) - \epsilon\partial_y\rho(\vec{r}) + \epsilon\partial_x\rho(\vec{r}) = \kla\left( 1 - \i\varepsilon\klam\left[ x\partial_y - y\partial_x \right] \right)\rho(\vec{r}).
+\end{align}
+Wir definieren
+\begin{align}
+J_m &:= \i\epsilon_{mjk}x_j\partial_{x_k}.
+\end{align}
+Für eine beliebige Quantentheorie fordern wir 
+\begin{enumerate}
+\item Symmetrie, also $\hat{D}$ unitär damit
+\begin{align}
+\brak\langle \psi' | \phi' \rangle &= \braket\langle \psi | \hat{D}^\dagger\hat{D} | \phi \rangle \overset{!}{=} \brak\langle \psi | \phi \rangle.
+\end{align}
+und zudem $\klam\left[ \hat{H},\hat{D} \right] \overset{!}{=} 0$.
+\item Infinitesimale Repräsentation über
+\begin{align}
+\hat{D}_m &= 1 - \i\varepsilon\hat{J}_m
+\end{align}
+mit $\hat{J}_m^\dagger = \hat{J}_m$ hermitisch, $\klam\left[ \hat{J}_j, \hat{J}_k \right] = \i\epsilon_{jkm}\hat{J}_m$ und $\klam\left[ \hat{H}, \hat{J}_m \right] \overset{!}{=} 0$.
+\end{enumerate}
+Insbesondere gilt dann
+\begin{align}
+\klam\left[ \hat{J}^2, \hat{J}_m \right] &= \klam\left[ \hat{J}_j\hat{J}_j, \hat{J}_m \right] = \hat{J}_j\i\epsilon_{jkm}\hat{J}_k + \i\epsilon_{jkm}\hat{J}_k \hat{J}_j = \\
+&= \i\epsilon_{jkm}\hat{J}_j\hat{J}_m + \i\epsilon_{kjm}\hat{J}_j\hat{J}_m = \i\hat{J}_j\hat{J}_m\kla\left( \epsilon_{jkm} + \epsilon_{kjm} \right) = 0.
+\end{align}
+Ohne Beschränkung können wir eine Raumrichtung auszeichnen, indem wir $\hat{J}^2$ und $\hat{J}_z$ gemeinsam diagonalisieren.
+Sei also $\hat{J}^2\Ket | j,m \rangle = j(j+1)\Ket | j,m \rangle$ und $\hat{J}_z\Ket | j,m \rangle = m\Ket | j,m \rangle$.
+Die ausführliche Konstruktion von Leiteroperatoren $\hat{J}_\pm := \hat{J}_x\pm\i\hat{J}_y$ wurde in Quantentheorie I besprochen.
+Man findet letztlich $j\in\klammer\left\{ 0,\frac{1}{2},1,\frac{3}{2},\dots \right\}$ und $|m|\le j$.
+\\
+Die einfachste nicht-triviale Darstellung hat daher $j=\frac{1}{2}$, was auf die Pauli-Matrizen führt.
+Definiere dazu die zwei Zustände $\Ket | \pm \rangle := \Ket | j=\frac{1}{2}, m=\pm\frac{1}{2} \rangle$, womit wir einen beliebigen Zustand gemäß
+\begin{align}
+\Ket | \psi \rangle &= \psi_+\Ket | + \rangle + \psi_- \Ket | - \rangle
+\end{align}
+zerlegen können.
+Für den Vektor $\psi := (\psi_+,\psi_-)^\top$ gilt dann
+\begin{align}
+\psi&\rightarrow \psi' = \kla\left( 1 - \i\theta\frac{\sigma_k}{2} \right)\psi,
+\end{align}
+wobei die Pauli-Matrizen $\sigma_k$ die Generatoren der Gruppe SU(2) sind, welche isomorph zu SO(3) ist (also insbesondere gleiche Kommutatorrelationen).
+
+\subsection{Lorentzinvarianz}
+Wir verwenden hier die Vorzeichenkonvention $g_{\mu\nu} = (+---)$.
+Die allgemeine Lorentztransformation wird durch $\Lambda^\mu_{\ \nu}$ beschrieben, wobei
+\begin{align}
+x^\mu&\rightarrow x'^\mu = \Lambda^\mu_{\ \nu} x^\nu.
+\end{align}
+Das Skalarprodukt bleibt hierbei erhalten, das heißt $x'^\mu y'_\mu = x^\mu y_\mu$.
+Die infinitesimale Beschreibung ist
+\begin{align}
+\Lambda^\mu_{\ \nu} (\varepsilon) &= 1 - \i\epsilon G,
+\end{align}
+wobei es hier sechs Generatoren $G$ gibt.
+Diese teilen sich auf in drei Boosts
+\begin{align}
+k_x &= \begin{pmatrix}
+0&\i&0&0 \\ \i&0&0&0 \\ 0&0&0&0 \\ 0&0&0&0
+\end{pmatrix}, &&& k_y &= \begin{pmatrix}
+0&0&\i&0 \\ 0&0&0&0 \\ \i&0&0&0 \\ 0&0&0&0
+\end{pmatrix}, &&& k_z &= \begin{pmatrix}
+0&0&0&\i \\ 0&0&0&0 \\ 0&0&0&0 \\ \i&0&0&0
+\end{pmatrix}, 
+\end{align}
+und drei Rotationen
+\begin{align}
+\ell_x &= \begin{pmatrix}
+0&0&0&0 \\ 0&0&0&0 \\ 0&0&0&-\i \\ 0&0&\i&0
+\end{pmatrix}, &&& \ell_y &= \begin{pmatrix}
+0&0&0&0 \\ 0&0&\i&0 \\ 0&0&0&0 \\ -\i&0&0&0
+\end{pmatrix}, &&& \ell_z &= \begin{pmatrix}
+0&0&0&0 \\ 0&0&-\i&0 \\ 0&\i&0&0 \\ 0&0&0&0
+\end{pmatrix}.
+\end{align}
+Es gelten die Kommutatorrelationen
+\begin{align}
+\klam\left[ \ell_x, \ell_y \right] &= \i\ell_z , &&& \klam\left[ k_x,k_y \right] &= -\i\ell_z &&\tecxt\text{und} & \klam\left[ \ell_x, k_y \right] &= \i k_z &&\tecxt\text{(zyklisch)} .
+\end{align}
+Man führt zudem $K_m, J_m$ für die Darstellung ein, welche dieselben Relationen 
+\begin{align}
+\klam\left[ J_x, J_y \right] &= \i J_z , &&& \klam\left[ K_x, K_y \right] &= -\i J_z &&\tecxt\text{und} & \klam\left[ J_x, K_y \right] &= \i K_z &&\tecxt\text{(zyklisch)} .
+\end{align}
+erfüllen.
+
+\subsubsection{Darstellung für Spin $\frac{1}{2}$}
+Eine mögliche Darstellung ist $J_m := \frac{\sigma_m}{2}$ und $K_m := \mp\i\frac{\sigma_m}{2}$.
+Man nennt dies auch die zweidimensionale komplexe Darstellung der Lorentz-Algebra.
+Unter Raumspiegelung transformieren sich die folgenden Größen wie
+\begin{align}
+x&\rightarrow -x, &&& p&\rightarrow -p, &&& J&\rightarrow J && \tecxt\text{und} & K&\rightarrow -K.
+\end{align}
+TODO: Dirac-Spinoren, $\gamma$-Matrizen, Weyl-Spinoren, Ausblick auf weitere Darstellungen der L-Algebra.
+
+\subsection{Relativistische Wellengleichung}
+Aus der Elektrodynamik kennen wir beispielsweise $\square\phi = 0$ und $(\nabla^2 + \vec{k}^2)\phi = 0$ oder $\i\partial_t + \frac{1}{2m}\nabla^2\phi = 0$ aus Quantentheorie I.
+Diese Gleichungen sind alle rotationsinvariant, weshalb der Operator $\nabla^2$ auftaucht.
+Frage: Welche Gleichungen erlaubt die Lorentz-Invarianz?
+\\
+\subsubsection{Klein-Gordon-Gleichung}
+Die einfachste relativistische Gleichung ist die Klein-Gordon-Gleichung als Verallgemeinerung der Schrödingergleichung für ein Skalarfeld mit $\phi'(x') = \phi(x)$.
+Sie lautet 
+\begin{align}
+\kla\left( \partial_\mu\partial^\mu + m^2 \right)\phi &= 0.
+\end{align}
+Wir betrachten den nicht-relativistischen Limes, also $\psi =: \e^{-\i mt}\psi_\tecxt\text{nr} $ mit $E=m+\mathcal{O}(\varepsilon)$.
+Dann ist
+\begin{align}
+0 &= \kla\left( -m^2 - \nabla^2 - 2\i m\partial_t + \mathcal{O}\kla\left( \partial_t^2\psi_\tecxt\text{nr} \right) + m^2 \right)\psi_\tecxt\text{nr},
+\end{align}
+was auf die Schrödingergleichung
+\begin{align}
+\i\partial_t\psi_\tecxt\text{nr} &= -\frac{1}{2m}\nabla^2\psi_\tecxt\text{nr}
+\end{align}
+führt, wenn wir die höheren Ordnungen der Zeitableitung vernachlässigen.
+Die KG-Gleichung findet Anwendung in der QFT für Feldoperatoren $\hat{\phi}(x)$.
+Die Lagrange-Dichte lautet
+\begin{align}
+\mathcal{L}_\tecxt\text{KG} &= \kla\left( \partial_\mu\phi^\ast \right)\kla\left( \partial^\mu \phi \right) - m^2\phi^\ast\phi
+\end{align}
+und führt mit 
+\begin{align}
+\frac{\partial\mathcal{L}}{\partial \phi} &= \partial^\mu \frac{\partial\mathcal{L}}{\partial (\partial^\mu\phi)}
+\end{align}
+wieder auf die Klein-Gordon-Gleichung (analog mit $\phi^\ast$).
+Für die Schrödingergleichung konnten wir $\rho = \phi^\ast\phi$ als eine Wahrscheinlichkeitsdichte und 
+\begin{align}
+\vec{j} &= -\frac{\i}{2m}\kla\left( \phi^\ast\nabla\phi - \phi\nabla\phi^\ast \right)
+\end{align}
+als eine Stromdichte für $\rho$ interpretieren.
+Es galt eine Kontinuitätsgleichung der üblichen Form $\partial_t\rho + \nabla\cdot\vec{j} = 0$.
+Für Klein-Gordon findet man ähnlich
+\begin{align}
+0 &= \phi^\ast\kla\left( \square + m^2 \right)\phi -\phi\kla\left( \square + m^2 \right)\phi^\ast = \partial_\mu \kla\left( \phi^\ast\partial^\mu\phi - \phi\partial^\mu\phi^\ast \right),
+\end{align}
+also $\partial_\mu j^\mu = 0$ für die Viererstromdichte %$j^\mu = (\rho, \vec{j})$ mit 
+\begin{align}
+j^\mu := \frac{1}{2m}\kla\left( \phi^\ast \partial^\mu\phi - \phi \partial^\mu\phi^\ast \right).
+\end{align}
+Allerdings ist hier $\rho = j^0 < 0$ möglich, wir können dies also nicht mehr als Wahrscheinlichkeitsdichte interpretieren.
+Für die zwei ebenen Wellen $\phi_\pm \propto \e^{\mp\i(Et - \vec{p}\cdot\vec{r})}$ ist vielmehr $\rho = \pm \frac{E}{m}$.
+Wir finden also Anti-Teilchen mit $E<0$ und $\rho< 0$.
+Diese Interpretation kann zwar funktionieren, aber wir haben jetzt zwei Teilchenarten.
+Eigentlich sollte KG aber eine Einteilchentheorie beschreiben (Ausblick: QFT).
+\subsubsection{Dirac-Gleichung}
+Idee: $E=\sqrt{m^2 + \vec{p}\,^2}\overset{!}{=} \beta m + \vec{\alpha}\cdot\vec{p}$, also
+%\begin{align}
+%\i\partial_t &\equiv \sqrt{m^2 - \nabla^2}\overset{!}{=}: \beta m - \vec{\alpha}\cdot\nabla.
+%\end{align}
+\begin{align}
+E^2 &= \beta^2m^2 + \kla\left( \vec{\alpha}\cdot\vec{p} \right)^2 + \klammer\left\{ \beta, \vec{\alpha} \right\}\cdot m\vec{p} + \klammer\left\{ \alpha_j, \alpha_k \right\}p_jp_k \overset{!}{=} m^2 + \vec{p}\,^2.
+\end{align}
+Also müssen $\beta^2 = 1$, $\alpha_j^2 = 1$, $\klammer\left\{ \beta, \alpha_j \right\} = 0$ und $\klammer\left\{ \alpha_j, \alpha_k \right\}=\delta_{jk}$ gelten.
+Diese Bedingungen können mit $4\times 4$-Matrizen erfüllt werden.
+Man verwendet für die Darstellung der Dirac-Gleichung üblicherweise die $\gamma$-Matrizen, welche mit $\beta,\vec{\alpha}$ über
+\begin{align}
+\gamma^0 &= \beta = \begin{pmatrix}
+1 & 0 \\ 0 & -1
+\end{pmatrix} &&\tecxt\text{und} & \gamma^j &= \gamma^0\alpha_j = \begin{pmatrix}
+0 & \sigma^j \\ -\sigma^j & 0
+\end{pmatrix}
+\end{align}
+in Verbindung gebracht werden können.
+Sei $\psi$ nun ein Dirac-Spinorfeld mit $\psi\rightarrow\psi ' = S(\Lambda) \psi$.
+Dann ist die Dirac-Gleichung $(\i\slashed{\partial} - m)\psi=0$ Lorentz-invariant, da
+\begin{align}
+\slashed{\partial}' &= \partial_\mu'\gamma'^\mu = \partial_\mu'S^{-1}\gamma^\mu S = \partial_\mu'\Lambda^\mu_{\ \nu}\gamma^\nu = \slashed{\partial}.
+\end{align}
+Die Lorentz-Transformation kann hier als
+\begin{align}
+\psi &\rightarrow\psi' = \kla\left( 1 - \frac{\i}{2}\omega_{\mu\nu}\hat{J}^{\mu\nu} \right) 
+\end{align}
+dargestellt werden, wobei $\omega_{\mu\nu} = -\omega_{\nu\mu}$ infinitesimale Boosts bzw. Drehungen beschreibt.
+Zudem ist
+\begin{align}
+\hat{J}^{\mu\nu} &= \hat{L}^{\mu\nu} + \hat{S}^{\mu\nu} = \i\kla\left( x^\mu\partial^\nu - x^\nu\partial^\mu  \right) + \frac{\i}{4}\klam\left[ \gamma^\mu, \gamma^\nu \right].
+\end{align}
+%Insbesondere ist \psi'(x) &= S(\Lambda)\psi(\Lambda^{-1}) = \kla\left( 1 - \frac{\i}{2}\omega_{\mu\nu}S^{\mu\nu} \right) \psi(x^\mu - \omega^{\mu\nu} x_\nu)
+
+\subsection{Lösungen der Dirac-Gleichung}
+Es existieren freie Lösungen gegeben durch ebene Wellen
+\begin{align}
+\psi(x) &= u(p) \e^{\mp\i p\cdot x},
+\end{align}
+wobei die Koeffizienten die algebraische Gleichung
+\begin{align}
+0 &= \kla\left( \pm\slashed{p} - m \right)u(p)
+\end{align}
+erfüllen. 
+Die Eigenwerte von $\slashed{p}$ kann man dabei elegant über
+\begin{align}
+\slashed{p}^2 &= p_\mu p_\nu \gamma^\mu\gamma^\nu = p_\mu p_\nu\kla\left( \klammer\left\{ \gamma^\mu, \gamma^\nu \right\} - \gamma^\nu\gamma^\mu  \right) = p_\mu p_\nu \kla\left( 2g^{\mu\nu} \right) - \slashed{p}^2
+\end{align}
+bestimmen, da hieraus direkt $\slashed{p}^2 = p^2 = E^2 - \vec{p}\,^2 = m^2$ folgt.
+Die Eigenwerte sind also $\pm m$.
+Für masselose Teilchen sind diese also trivial.
+Wir definieren
+\begin{align}
+\kla\left( \slashed{p} - m \right)u(p,s) &:= 0 &&\tecxt\text{und}  & \kla\left( \slashed{p} + m \right)v(p,s) &:= 0,
+\end{align}
+wobei das Argument $s=\pm\frac{1}{2}$ den Spin der Wellenfunkton beschreibt.
+Um diese Funktionen interpretieren zu können, wählen wir zunächst $p^\mu = (E, 0, 0 ,p_z)^\top$.
+Dann ist
+\begin{align}
+\slashed{p} &= E\gamma^0 - p_z\gamma^3 = \begin{pmatrix}
+E & -p_z\sigma^3 \\ p_z\sigma^3 & -E
+\end{pmatrix}.
+\end{align}
+Insbesondere gilt hier $\klam\left[ \slashed{p}, S_z \right] = 0$, da $S_z = \frac{1}{2}\begin{pmatrix}
+\sigma^3 & 0 \\ 0 & \sigma^3
+\end{pmatrix}$.
+Also haben $\slashed{p}$ und $S_z$ simultane Eigenzustände.
+Allgemein findet man $\klam\left[ \slashed{p}, \hat{h} \right] = 0$, wobei $\hat{h} := \frac{\vec{p}\cdot\vec{S}}{|\vec{p}|}$ der Helizitätsoperator ist.
+Wir finden in unserem Spezialfall letztlich die vier Lösungen
+\begin{align}
+u\kla\left( p, \frac{1}{2} \right) &= N\begin{pmatrix}
+E + m \\ 0 \\ p_z \\ 0
+\end{pmatrix}, &&& u\kla\left( p, -\frac{1}{2} \right) &= N\begin{pmatrix}
+0 \\ E + m \\ 0 \\ -p_z
+\end{pmatrix}, \\
+v\kla\left( p, \frac{1}{2} \right) &= N\begin{pmatrix}
+p_z \\ 0 \\ E + m \\ 0
+\end{pmatrix} &&\tecxt\text{und}& v\kla\left( p, -\frac{1}{2} \right) &= N\begin{pmatrix}
+0 \\ -p_z \\ 0 \\ E + m
+\end{pmatrix}.
+\end{align}
+Die Normierung ist $N=\frac{1}{\sqrt{E+m}}$ und führt mit $u_s(p) := u(p,s)$ auf $\overline{u}_{s_1}u_{s_2} = 2m\delta_{s_1s_2}$.
+Analog findet man $\overline{v}_{s_1}v_{s_2} = -2m\delta_{s_1s_2}$. 
+\\
+Für beliebige $\vec{p}$ kann man diese Lösungen mittels
+\begin{align}
+u_s'(p) &= \e^{-\frac{\i}{2}\omega_{\mu\nu}S^{\mu\nu}}u_s(p) 
+\end{align}
+transformieren.
+Die $v_s(p)$ Lösungen haben negative Energie, können also wieder als Antiteilchen interpretiert werden.
+Allerdings ist hier im Gegensatz zu Klein-Gordon trotzdem $\rho\ge 0$.
+
+\subsubsection{Kopplung ans elektromagnetische Feld}
+Wir kennen bereits die Eichtransformation $A'^\mu = A^\mu + \partial^\mu\chi$.
+Die Lagrange-Funktion
+\begin{align}
+L &= \frac{m}{2}\frac{\tecxt\text{d}x^\mu }{\tecxt\text{d}\tau} \frac{\tecxt\text{d}x_\mu }{\tecxt\text{d}\tau} + Q\frac{\tecxt\text{d}x_\mu }{\tecxt\text{d}\tau} A^\mu \kla\left( x(\tau) \right)
+\end{align}
+führt auf den kanonischen Impuls
+\begin{align}
+\pi^\mu := \frac{\partial L}{\partial \frac{\tecxt\text{d}x_\mu }{\tecxt\text{d}\tau}} = m\frac{\tecxt\text{d}x^\mu }{\tecxt\text{d}\tau} + Q A^\mu = p^\mu + QA^\mu.
+\end{align}
+Wir transformieren unseren Impuls also über $p^\mu \rightarrow p^\mu - QA^\mu$ um den zusätzlichen Term zu kompensieren.
+Entsprechend führen wir dann mit $p^\mu \equiv \i\partial^\mu$ den Differentialoperator
+\begin{align}
+\i D^\mu &:= \i\partial^\mu - QA^\mu 
+\end{align}
+ein.
+Dann ist die modifizierte Dirac-Gleichung
+\begin{align}
+\kla\left( \i \slashed{D} - Q\slashed{A} - m \right)\psi &= 0
+\end{align}
+eichinvariant, da 
+\begin{align}
+\slashed{D}'\psi' &= \kla\left( \slashed{D} + \i Q\slashed{\partial}\chi \right) \e^{-\i Q\chi}\psi = \e^{-\i Q\chi} \kla\left( \slashed{D} + \i Q\slashed{\partial}\chi - \i Q\slashed{\partial}\chi \right)\psi = \e^{-\i Q\chi}\slashed{D}\psi.
+\end{align}
+Man findet die Stromdichte $j^\mu := -Q\overline{\psi}\gamma^\mu \psi$.
+Für diese gilt
+\begin{align}
+D_\mu j^\mu &= -Q\overline{\psi}\slashed{D}\psi - Q\kla\left( \slashed{D}\overline{\psi} \right)\psi = \i Q\overline{\psi}\kla\left( m \right)\psi + \i Q\overline{\psi}\kla\left( -m  \right)\psi =  0.
+\end{align}
+Die Schrödinger-Gleichung für die minimale Kopplung lautet
+\begin{align}
+\kla\left( \i\partial_t - Q\phi \right)\psi &= \frac{1}{2m} \kla\left( \vec{p} - Q\vec{A} \right)^2\psi.
+\end{align}
+Um den nichtrelativistischen Limes der Dirac-Gleichung zu betrachten führen wir zunächst Spinoren $\psi = (\psi_A, \psi_B)^\top$ ein.
+Mit $\i D_0 \equiv E - Q\phi$ und $\i D_j \equiv \vec{p} - Q\vec{A} = \vec{\pi}$ können wir dann zunächst
+\begin{align}
+0 &= \kla\left( \i\slashed{D} - m \right)\psi = \begin{pmatrix}
+E - Q\phi - m & -\vec{\sigma}\cdot\kla\vec{\pi} \\ 
+\vec{\sigma}\cdot\vec{\pi} & -E + Q\phi - m
+\end{pmatrix}\begin{pmatrix}
+\psi_A \\ \psi_B
+\end{pmatrix}
+\end{align}
+schreiben. 
+Wir nehmen an, dass $\varepsilon := E-m-Q\phi \ll m$.
+Dann gilt $\varepsilon \psi_A = \vec{\sigma}\cdot\vec{\pi}\psi_B$ und somit
+\begin{align}
+0 &= \vec{\sigma}\cdot\vec{\pi}\psi_A - \kla\left( 2m + \varepsilon \right)\psi_B = \frac{1}{\varepsilon}\kla\left( \vec{\sigma}\cdot\vec{\pi} \right)^2\psi_B - \kla\left( 2m + \varepsilon \right)\psi_B.
+\end{align}
+Mit $\sigma_j\sigma_k = \delta_{jk} + \i\epsilon_{jkl}\sigma_l$ erhalten wir
+\begin{align}
+\kla\left( \vec{\sigma}\cdot\vec{\pi} \right)^2 &= \sigma_j\sigma_k \kla\left( p_j - QA_j \right)\kla\left( p_k - QA_k \right) = \\
+&= \vec{\pi}^2 + \i\epsilon_{jkl}\sigma_l \kla\left( p_jp_k + Q^2A_jA_k  - Qp_jA_k - QA_jp_k \right) = \\
+&= \vec{\pi}^2 - \i Q\vec{\sigma}\cdot\kla\left( \vec{p}\times\vec{A} \right) = \vec{\pi}^2 - Q\vec{\sigma}\cdot\vec{B}.
+\end{align} 
+Daraus folgt dann unter Vernachlässigung von Termen $\mathcal{O}(\varepsilon^2)$ die Pauli-Gleichung
+\begin{align}
+\varepsilon\psi_B &= \frac{1}{2m}\kla\left( \vec{\pi}^2 - Q\vec{\sigma}\cdot\vec{B} \right)\psi_B.
+\end{align}
+Verglichen mit der Schrödinger-Gleichung von oben enthält diese einen zusätzlichen Term $\vec{S}\cdot\vec{B}$-Term, der an das Magnetfeld koppelt.
+Wir können also auch $\hat{H} = \hat{H}_\tecxt\text{SG} - \vec{\mu}\cdot \vec{B}$ schreiben, wobei das magnetische Moment durch
+\begin{align}
+\vec{\mu} &:= g_s \frac{Q}{2m}\vec{S}
+\end{align}
+gegeben ist.
+Da $\vec{S} = \frac{1}{2}\begin{pmatrix}
+\vec{\sigma}  & 0 \\ 0 & \vec{\sigma}
+\end{pmatrix}$, finden wir im Vergleich zur Pauli-Gleichung den gyromagnetischen Faktor $g_s = 2$.
+Klassisch war $\vec{\mu} = \frac{Q}{2m}\vec{L}$, also $g=1$. 
+Der exakte Wert weicht leicht von 2 ab, was allerdings erst mit QED verstanden werden kann.
+Für ein konstantes Magnetfeld können wir $\vec{A} = \frac{1}{2}\vec{B}\times\vec{r}$ verwenden, da 
+\begin{align}
+\nabla\times\vec{A} &= \frac{1}{2}\vec{B}\kla\left( \nabla\cdot\vec{r} \right) - \frac{1}{2}\kla\left( \vec{B}\cdot\nabla \right)\vec{r} = \frac{3}{2}\vec{B} - \frac{1}{2}\vec{B} = \vec{B}.
+\end{align}
+Insbesondere gilt dann
+\begin{align}
+\klammer\left\{ \vec{p}, \vec{A} \right\} &= \frac{1}{2}\epsilon_{jkl}  B_k \klammer\left\{ p_j, x_l \right\} = B_k\epsilon_{ljk}x_lp_j = \vec{B}\cdot\kla\left( \vec{r}\times\vec{p} \right) = \vec{B}\cdot\vec{L}.
+\end{align}
+Wir finden also 
+\begin{align}
+\vec{\pi}^2 &= \vec{p}\,^2 + Q^2\vec{A}^2 - Q\klammer\left\{ \vec{p}, \vec{A} \right\} = \vec{p}\,^2 + \frac{Q^2}{4}\vec{B}\cdot\kla\left( \vec{r}\times \kla\left( \vec{B}\times\vec{r} \right) \right) - Q\vec{B}\cdot\vec{L} = \\
+&= \vec{p}\,^2 + \frac{Q^2}{4}\kla\left( r^2B^2 - \vec{r}\kla\left( \vec{B}\cdot\vec{r} \right) \right) - Q\vec{B}\cdot\vec{L}.
+\end{align}
+Hier stimmt $g_l=1$ also mit dem klassischen Wert überein.
+\subsubsection{Foldy-Wouthuysen Transformation}
+TODO: höhere Ordnungen von $\epsilon$ in der Herleitung oben. Längeres Kapitel mit ausführlichen Herleitungen.
+
+\section{Ununterscheidbare Teilchen}
+\subsection{Unterscheidbare Teilchen}
+Die Basis für Teilchen 1 sei $\Ket | n^{(1)} \rangle$, und die für Teilchen 2 sei $\Ket | m^{(2)} \rangle$.
+Dann können wir beide Teilchen in einem gemeinsamen Produktraum
+\begin{align}
+\mathcal{H}_2 &:= \mathcal{H}_1^{(1)} \otimes \mathcal{H}_2^{(1)} = \klammer\left\{ \sum_{nm} c_{nm} \Ket | n^{(1)} \rangle \Ket | m^{(2)} \rangle \right\}
+\end{align}
+beschreiben.
+Dieser enthält insbesondere verschränkte Zustände wie zum Beispiel
+\begin{align}
+\frac{\Ket | 1^{(1)} \rangle \Ket | 2^{(2)} \rangle - \Ket | 2^{(1)} \rangle \Ket | 1^{(2)} \rangle}{\sqrt{2}},
+\end{align}
+die nicht als einfache Produktzustände dargestellt werden können.
+Zwei ein-Teilchen-Observablen $A_1^{(1)}$ und $B_1^{(2)}$ kommutieren.
+Da sie sich zunächst auf unterschiedliche Räume beziehen, ist diese Aussage allerdings mathematisch unsauber.
+Wir müssen sie zunächst auf den $\mathcal{H}_2$ fortsetzen, also
+\begin{align}
+A_2 := A_1^{(1)}\otimes 1^{(2)} &&\tecxt\text{und} & B_2 &:= 1^{(1)} \otimes B_1^{(2)}.
+\end{align}
+Dann gilt $\klam\left[ A_2, B_2 \right] = 0$.
+Das bedeutet letztlich einfach, dass wir beispielsweise den Ort von Teilchen 1 und den  Impuls von Teilchen 2 gleichzeitig scharf messen können.
+Manchmal schreibt man auch $A_2^{(1)}$ um explizit anzudeuten, dass ein Operator effektiv nur auf einen bestimmten Teilraum wirkt.
+\subsection{Identische/Ununterscheidbare Teilchen}
+Um Verwirrung zu vermeiden, werden wir überwiegend den Begriff ``identisch'' verwenden, da er beim Lesen leichter von ``unterscheidbar'' zu trennen ist.
+\\
+Der bisherige Formalismus reicht für diese Idee nicht aus.
+Wir können beispielsweise nicht den Zustand
+\begin{align}
+\Ket | \dots, \psi, \dots,\phi, \dots \rangle &\equiv \text{``Jeweils ein Teilchen im Zustand }\psi\tecxt\text{ und }\phi\tecxt\text{''}
+\end{align}
+beschreiben.
+Wir können nun den Permutationsoperator $P$ einführen, welcher zwei Einträge in einem Zustand vertauscht.
+\begin{align}
+P_{jk} \Ket | \dots, \underbrace{\psi}_{j\tecxt\text{-ter Eintrag}}, \dots,\underbrace{\phi}_{k\tecxt\text{-ter Eintrag}}, \dots \rangle &= \pm\Ket | \dots, \phi, \dots,\psi, \dots \rangle.
+\end{align}
+Hierbei gilt das positive Vorzeichen für Bosonen, und das negative für Fermionen.
+
+
+
+%Analog zum Vorgehen bei der Klein-Gordon-Gleichung kann man eine Stromdichte konstruieren.
+%Betrachte dazu
+%\begin{align}
+%0 &= \overline{\psi}\kla\left( \i \slashed{D} - m \right)\psi + \psi\kla\left( \i \slashed{D} + m \right)\overline{\psi} = 
+%\end{align}
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

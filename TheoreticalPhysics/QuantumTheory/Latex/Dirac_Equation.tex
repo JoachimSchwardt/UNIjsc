@@ -1,0 +1,249 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{\textsc{Dirac} equation}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Deriving the \textsc{Dirac} equation}
+From \textsc{Schrödinger}'s theory of quantum mechanics, we know that in the absence of electromagnetic fields, we can replace the four-momentum with a contravariant derivative:
+\begin{align*}
+p^\mu&\longrightarrow i\hbar\partial^\mu\numberthis\label{replacement rule momentum}
+\end{align*} 
+We now want to factor \textsc{Einstein}'s energy equation in the following way using natural units, $\hbar=c=1$. Note that $p^\mu=\begin{pmatrix} E \\ \vec{p} \end{pmatrix}$:
+\begin{align*}
+E&=\sqrt{m^2+\vec{p}^2}\overset{!}{=}\alpha_0m+\sum_{j=1}^3\alpha_jp_j\numberthis\label{factoring the equation}
+\end{align*}
+Squaring both sides of (\ref{factoring the equation}) and assuming that the $\alpha_\mu$ commute with $m$ and the $p_j$ leads to well known anti-commutator relations:
+\begin{align*}
+m^2+p_x^2+p_y^2+p_z^2&=\alpha_0^2m^2 + \alpha_1^2p_x^2 + \alpha_2^2p_y^2 + \alpha_3^2p_z^2+\\
+&\ \ \ +mp_x(\alpha_0\alpha_1+\alpha_1\alpha_0) +mp_y(\alpha_0\alpha_2+\alpha_2\alpha_0) +mp_z(\alpha_0\alpha_3+\alpha_3\alpha_0)+\\
+&\ \ \ +p_xp_y(\alpha_1\alpha_2+\alpha_2\alpha_1) +p_xp_z(\alpha_1\alpha_3+\alpha_3\alpha_1)+p_yp_z(\alpha_2\alpha_3+\alpha_3\alpha_2)\\
+&\Rightarrow\ \ \klammer\left\{{\alpha_\mu,\alpha_\nu} \right\}\overset{!}{=}2\delta_{\mu\nu}I_4\numberthis\label{anticommutator for alpha}
+\end{align*}
+Here $I_4$ denotes the unit matrix of rank 4. It is by no means obvious how one could choose the $\alpha_\mu$, such that (\ref{anticommutator for alpha}) holds, let alone that we have to search for 4x4-matrices at all. \textsl{One} possible solution is given via the \textsc{Pauli}-spin matrices:
+\begin{align*}
+\sigma_1&=\begin{pmatrix}
+0 & 1 \\ 1 & 0
+\end{pmatrix}&\sigma_2&=\begin{pmatrix}
+0 & -i \\ i & 0
+\end{pmatrix}&\sigma_3&=\begin{pmatrix}
+1 & 0 \\ 0 & -1
+\end{pmatrix} \\
+\alpha_0&=\begin{pmatrix}
+I_2 & 0 \\ 0 & -I_2
+\end{pmatrix}&\alpha_i&=\begin{pmatrix}
+0 & \sigma_i \\ \sigma_i & 0
+\end{pmatrix}&\Rightarrow\ \ &\klammer\left\{{\alpha_\mu,\alpha_\nu} \right\}=2\delta_{\mu\nu}I_4
+\end{align*}
+Using (\ref{replacement rule momentum}) in (\ref{factoring the equation}) and applying to some wavefunction $\psi$ leads to the original \textsc{Dirac}-equation:
+\begin{align*}
+i\partial_t\psi&=\kla\left( {\alpha_0m-i\sum_{j=1}^3\alpha_j\partial_j} \right)\psi\numberthis\label{original Dirac equation}
+\end{align*}
+However, (\ref{original Dirac equation}) can be transformed into a "nicer" looking equation. For this we define the \textsc{Dirac}-gamma matrices as $\gamma^0:=\alpha_0$ and $\gamma^j:=\alpha_0\alpha_j$. Then, multiplying by $\alpha_0$ from the left leads to the following (\textsc{Einstein} sum convention is used):
+\begin{align*}
+0&=\alpha_0\kla\left( {i\partial_t+i\alpha_j\partial_j-\alpha_0m} \right)\psi=\kla\left( {i\gamma^\mu\partial_\mu-m} \right)\psi\equiv\kla\left( {i\cancel{\partial} -m} \right)\psi\numberthis\label{Dirac equation}
+\end{align*}
+Define the adjoint spinor as $\overline{\psi}:=\psi^\dagger\gamma^0$. Then, noticing that $(\gamma^\mu)^\dagger\gamma^0=\gamma^0\gamma^\mu$, we can derive the adjoint \textsc{Dirac}-equation by applying the ${}^\dagger$-operation to (\ref{Dirac equation}) and multiplying by $\gamma^0$ from the right:
+\begin{align*}
+0&=\psi^\dagger\kla\left( {-i(\gamma^\mu)^\dagger\partial_\mu -m} \right)\gamma^0\ \ \Rightarrow\ \ 0=\overline{\psi}\kla\left( {i\gamma^\mu\partial_\mu +m} \right)\numberthis\label{adjoint Dirac equation}
+\end{align*}
+The used identity is trivial for $\mu=0$. For the other cases, consider the terms $(\gamma^j)^\dagger$:
+\begin{align*}
+(\gamma^j)^\dagger&=\begin{pmatrix}
+0 & \sigma_j \\ -\sigma_j & 0
+\end{pmatrix}^\dagger=\begin{pmatrix}
+0^\dagger & -\sigma_j^\dagger \\ \sigma_j^\dagger & 0^\dagger
+\end{pmatrix}=\begin{pmatrix}
+0 & -\sigma_j \\ \sigma_j & 0
+\end{pmatrix}=-\gamma^j
+\end{align*}
+It is easy to check, that $\sigma_j^\dagger=\sigma_j$, as was used in this derivation. The mentioned identity then follows directly from the anticommutator relations. Note that we also obtain the identity $(\gamma^\mu)^\dagger = g_\nu^\mu\gamma^\nu$, where the metric tensor is $g_{\mu\nu}=\tecxt\text{diag}(+---)$.\\
+Both \textsc{Dirac}-equations can also be obtained by varying a \textsc{Lagrange}-density with respect to $\psi$ or $\overline{\psi}$ respectively:
+\begin{align*}
+\mathcal{L}&=i\overline{\psi}\gamma^\mu\partial_\mu\psi - m\overline{\psi}\psi &\Rightarrow &&\big(0&=\partial_\chi\mathcal{L} - \partial_\mu\partial_{\partial_\mu\chi}\mathcal{L}\big)\\
+&\ \ \kla\left( {\chi=\psi} \right)\ \ &\Rightarrow &&\ 0&=\overline{\psi}\kla\left( {i\gamma^\mu\partial_\mu +m} \right)\numberthis\label{Dirac adjoint}\\
+&\ \ \kla\left( {\chi=\overline{\psi}} \right)\ \ &\Rightarrow &&\ 0&=\kla\left( {i\gamma^\mu\partial_\mu -m} \right)\psi\numberthis\label{Dirac}
+\end{align*}
+The conservation of probabilty becomes apparent by considering (\ref{Dirac adjoint})$\cdot\psi+\overline{\psi}\cdot$(\ref{Dirac}):
+\begin{align*}
+0&=\overline{\psi}\kla\left( {i\gamma^\mu\partial_\mu +m} \right)\psi + \overline{\psi}\kla\left( {i\gamma^\mu\partial_\mu -m} \right)\psi\ \ \Rightarrow\ \ 0=\partial_\mu\kla\left( {\overline{\psi}\gamma^\mu\psi} \right)\equiv\partial_\mu J^\mu\numberthis\label{local conservation}
+\end{align*}
+For $\mu=0$ we then obtain $J^0=\psi^\dagger\psi$, which is equivalent to the probability density suggested by the \textsc{Born}-rule.\\ 
+The equation changes in the presence of electromagnetic fields according to $p_\mu=i\partial_\mu - A_\mu$ (e=1). The \textsc{Dirac}-equation can then be shown to be invariant under the transformations $A_\mu'=A_\mu +\partial_\mu\chi$ and $\psi'=e^{-i\chi}\psi$:
+\begin{align*}
+0&=\kla\left( {\gamma^\mu(i\partial_\mu-A'_\mu)-m} \right)\psi'=\kla\left( {\gamma^\mu(i\partial_\mu-A_\mu) - \gamma^\mu\partial_\mu\chi -m } \right)e^{-i\chi}\psi=\\
+&=e^{-i\chi}\kla\left( {\gamma^\mu(i\partial_\mu-A_\mu)-m} \right)\psi
+\end{align*}
+\section{Radial symmetric potentials}
+\subsection{The $K$ operator}
+The four operators $H,J^2,J_z,K$ mutually commute and correspond to the quantum numbers $n,j,m_j,k$. The $K$ operator may be expressed in a few different ways, using $\vec{J}=\vec{L}+\vec{S}$ with $\vec{S}=\frac{1}{2}\vec{\sigma}$ and $\vec{\sigma}\cdot\vec{\sigma}=3$. Let $K\psi=k\psi$:
+\begin{align*}
+K&=\gamma^0\left(\vec{\sigma}\cdot\vec{J}-\frac{1}{2}\right)=\gamma^0\kla\left( {\vec{\sigma}\cdot\vec{L}+1} \right)=\begin{pmatrix}
+\vec{\sigma}\cdot\vec{L}+1 & 0\\ 0 & -\vec{\sigma}\cdot\vec{L}-1
+\end{pmatrix}
+\end{align*}
+Using the identity $\epsilon_{abc}\epsilon_{ade}=\delta_{bd}\delta_{ce}-\delta_{be}\delta_{cd}$, we can derive an expression for:
+\begin{align*}
+\vec{L}\times\vec{L}&=\epsilon_{ijk}\epsilon_{mni}\epsilon_{abj}  x_mp_nx_ap_b=\epsilon_{ijk}\epsilon_{mni}\epsilon_{abj}x_mx_ap_np_b-i\epsilon_{ijk}\epsilon_{mni}\epsilon_{abj}x_m\delta_{na}p_b=\\
+&=\epsilon_{ijk}\epsilon_{abi}\epsilon_{mnj}x_mx_ap_np_b-i\epsilon_{ijk}\epsilon_{aim}\epsilon_{abj}x_mp_b=\\
+&=-\epsilon_{ijk}\epsilon_{mni}\epsilon_{abj}x_mx_ap_np_b-i\epsilon_{ijk}(\delta_{ib}\delta_{mj}-\delta_{ij}\delta_{mb})x_mp_b=\\
+&=-i\epsilon_{ijk}x_jp_i+i\epsilon_{iik}x_bp_b=i\vec{L}\numberthis\label{L times L}
+\end{align*}
+Now consider $K^2$ and note that $\sigma_j\sigma_k=\delta_{jk}+i\epsilon_{jkl}\sigma_l$:
+\begin{align*}
+J^2&=L^2+2\vec{L}\cdot\vec{S}+S^2=L^2+\vec{\sigma}\cdot\vec{L}+\frac{3}{4}\\
+K^2&=\kla\left( {\sigma_jL_j+1} \right)^2=\sigma_j\sigma_kL_jL_k+2\sigma_jL_j+1=L_jL_j+i\epsilon_{jkl}L_jL_k\sigma_l+2\sigma_jL_j+1=\\
+&=L^2+2\vec{\sigma}\cdot\vec{L}+1+i\vec{\sigma}\cdot\kla\left( {\vec{L}\times\vec{L}} \right)\overset{(\ref{L times L})}{=}L^2+\vec{\sigma}\cdot\vec{L}+1=J^2-\frac{1}{4}\\
+&\Rightarrow\ \ k^2=j(j+1)+\frac{1}{4}\ \ \Rightarrow\ \ k=\pm\kla\left( {j+\frac{1}{2}} \right)
+\end{align*}
+\subsection{Tranforming the \textsc{Dirac}-equation}
+Let $\alpha=\frac{e^2}{4\pi\epsilon_0\hbar c}$ denote the fine-structure constant ($\hbar=c=e=1$). 
+Let the electromagnetic four-potential consist only of a radial symmetric potential, i.e. $A^\mu = V(r)$. Inserting this into the original \textsc{Dirac}-equation (\ref{original Dirac equation}) and assuming stationary states $i\partial_t\psi=E\psi$ gives:
+\begin{align*}
+i\partial_t\psi&=\kla\left( {\alpha_0m+V+\vec{\alpha}\cdot\vec{p}} \right)\psi\overset{!}{=}E\psi\numberthis\label{stationary hydrogen eigenvalue problem}
+\end{align*}
+Now we want to transform this equation into spherical coordinates, which requires to express the term $\vec{\alpha}\cdot\vec{p}$ in a different way. Consider the expression $T:=(\vec{\alpha}\cdot\vec{r})(\vec{\alpha}\cdot\vec{r})(\vec{\alpha}\cdot\vec{p})$. We will need two identities:
+\begin{align*}
+-i\alpha_j\alpha_k&=\epsilon_{jkl}\begin{pmatrix}
+\sigma_l & 0 \\ 0 & \sigma_l
+\end{pmatrix}=\epsilon_{jkl}\sigma_l\otimes I_2\\
+p_r&:=\frac{1}{2}\kla\left( {e_r\cdot\vec{p}+\vec{p}\cdot e_r} \right)=\frac{-i}{2}\kla\left( {\partial_r+\nabla\cdot\frac{\vec{r}}{r}+\partial_r} \right)=-i\kla\left( {\partial_r+\frac{1}{r}} \right)=-\frac{i}{r}\partial_rr
+\end{align*} 
+The quantity $T$ can now be evaluated in two different ways:
+\begin{align*}
+T&=(\alpha_jx_j\alpha_kx_k)(\vec{\alpha}\cdot\vec{p})=\kla\left( {x_jx_j+\sum_{j<k} x_jx_k\klammer\left\{{\alpha_j,\alpha_k} \right\}} \right)(\vec{\alpha}\cdot\vec{p})=r^2(\vec{\alpha}\cdot\vec{p})\\
+T&=(\vec{\alpha}\cdot\vec{r})(x_j\alpha_jp_k\alpha_k)=(\vec{\alpha}\cdot\vec{r})\kla\left( {x_jp_j+\sum_{j<k}x_jp_k\alpha_j\alpha_k+x_kp_j\alpha_k\alpha_j} \right)=\\
+&=(\vec{\alpha}\cdot\vec{r})\kla\left( {\vec{r}\cdot\vec{p}+\sum_{j<k}\alpha_j\alpha_k(x_jp_k-x_kp_j)} \right)=(\vec{\alpha}\cdot\vec{r})\kla\left( {\vec{r}\cdot\vec{p}+i\sum_{j<k}-i\alpha_j\alpha_k(\vec{r}\times\vec{p})_j} \right)=\\
+&=(\vec{\alpha}\cdot\vec{r})(\vec{r}\cdot\vec{p}+i\vec{\sigma}\cdot (\vec{r}\times\vec{p}))\\
+&\Rightarrow\ \ (\vec{\alpha}\cdot\vec{p})=\frac{\vec{\alpha}\cdot\vec{r}}{r^2}(\vec{r}\cdot\vec{p}+i\vec{\sigma}\cdot\vec{L})=\frac{\alpha_r}{r}\kla\left( {-ir\partial_r-i+i+i\vec{\sigma}\cdot\vec{L}} \right)=\frac{\alpha_r}{r}\kla\left( {rp_r+i+i\vec{\sigma}\cdot\vec{L}} \right)
+\end{align*}
+Inserting this into (\ref{stationary hydrogen eigenvalue problem}) yields:
+\begin{align*}
+E\psi&=\kla\left( {\alpha_0m+V+\alpha_r\kla\left( {p_r+\frac{i}{r}(\vec{\Sigma}\cdot\vec{L}+1)} \right)} \right)\psi=\kla\left( {\alpha_0+V+\alpha_rp_r+i\alpha_r\alpha_0\frac{K}{r}} \right)\psi
+\end{align*}
+The substitution $\psi=R(r)Y(\vartheta,\varphi)$ then gives us the radial equation:
+\begin{align*}
+ER&=\kla\left( {\alpha_0m+V+\alpha_rp_r+i\alpha_r\alpha_0\frac{k}{r}} \right)R
+\end{align*}
+To solve this, we pick the representations $\alpha_r=\sigma_2$ and $\alpha_0=\sigma_3$. Additionally, write $R=\frac{1}{r}\begin{pmatrix}
+G(r) \\ F(r)
+\end{pmatrix} $, which is analogous to the substitution $R=\frac{u(r)}{r}$ from the \textsc{Schrödinger} solution:
+\begin{align*}
+(E-V)\begin{pmatrix}
+G \\ F
+\end{pmatrix}&=\begin{pmatrix}
+mG+\frac{kF}{r}-F' \\ -mF+\frac{kG}{r}+G'
+\end{pmatrix} \\
+\Rightarrow\ \ \ \begin{pmatrix}
+F'-\frac{kF}{r} \\ G'+\frac{kG}{r}
+\end{pmatrix}&=\begin{pmatrix}
+(m-E+V)G \\ (m+E-V)F
+\end{pmatrix}\numberthis\label{radial equations}
+\end{align*}
+To continue, we now need to insert information about the potential. In the case of single-electron atoms this is $V(r)=-\frac{Z\alpha}{r}$. Now consider the asymptotic form (\ref{radial equations}) for $r\rightarrow\infty$ and write $C:=\sqrt{m^2-E^2}$:
+\begin{align*}\begin{pmatrix}
+F' \\ G'
+\end{pmatrix}&=\begin{pmatrix}
+(m-E)G \\ (m+E)F
+\end{pmatrix}\ \ \Rightarrow\ \ \begin{pmatrix}
+F'' \\ G''
+\end{pmatrix}=(m^2-E^2)\begin{pmatrix}
+G \\ F
+\end{pmatrix}\ \ \Rightarrow\ \ \begin{pmatrix}
+F \\ G
+\end{pmatrix}\propto e^{-Cr}
+\end{align*}
+Based on this, make the substitution $F(r)=r^se^{-Cr}f(r)$ (similarly for $G(r)$). Define the wavenumbers $k_{1,2}:=m\pm E$ and notice that $C^2=k_1k_2$. This motivates the change of variables $\rho:=Cr=\sqrt{k_1k_2}r$:
+\begin{align*}
+\begin{pmatrix}
+f'-\frac{k-s}{r}f-Cf \\ g'+\frac{k+s}{r}g-Cg
+\end{pmatrix}&=\begin{pmatrix}
+(m-E-\frac{Z\alpha}{r})g \\ (m+E+\frac{Z\alpha}{r})f
+\end{pmatrix}\\
+\Rightarrow\ \ \ \begin{pmatrix}
+f'(\rho)-\frac{k-s}{\rho}f(\rho)-f(\rho) \\ g'(\rho)+\frac{k+s}{\rho}g(\rho)-g(\rho)
+\end{pmatrix}&=\begin{pmatrix}
+(\sqrt{\frac{k_2}{k_1}}-\frac{Z\alpha}{\rho})g(\rho) \\ (\sqrt{\frac{k_1}{k_2}}+\frac{Z\alpha}{\rho})f(\rho)
+\end{pmatrix}
+\end{align*}
+Now propose a power series of the form $f(\rho)=f_m\rho^m$ and $g(\rho)=g_m\rho^m$:
+\begin{align*}
+0&=\begin{pmatrix}
+(m+s-k)f_m\rho^{m-1}-f_m\rho^m+Z\alpha g_m\rho^{m-1}-\sqrt{\frac{k_2}{k_1}}g_m\rho^m \\ (m+s+k)g_m\rho^{m-1}-g_m\rho^m-Z\alpha f_m\rho^{m-1}-\sqrt{\frac{k_1}{k_2}}f_m\rho^m
+\end{pmatrix}\\
+\Rightarrow\ \ \ 0&=\begin{pmatrix}
+(m+s-k+1)f_{m+1}-f_m+Z\alpha g_{m+1}-\sqrt{\frac{k_2}{k_1}}g_m \\ (m+s+k+1)g_{m+1}-g_m-Z\alpha f_{m+1}-\sqrt{\frac{k_1}{k_2}}f_m
+\end{pmatrix}\numberthis\label{iteration for coefficients hydrogen}
+\end{align*}
+We want these coefficients to vanish for negative $m$. Plugging $m=-1$ into (\ref{iteration for coefficients hydrogen}) gives the desired result if $s^2=k^2-Z^2\alpha^2$:
+\begin{align*}
+0&=\begin{pmatrix}
+(s-k)f_0+Z\alpha g_0 \\ (s+k)g_0-Z\alpha f_0
+\end{pmatrix}\ \ \Rightarrow\ \ \begin{pmatrix}
+f_0 \\ g_0
+\end{pmatrix}=\begin{pmatrix}
+\frac{Z\alpha}{s-k}g_0 \\ \frac{-Z\alpha}{s+k}f_0
+\end{pmatrix}=\begin{pmatrix}
+-\frac{Z^2\alpha^2}{s^2-k^2}f_0 \\ -\frac{Z^2\alpha^2}{s^2-k^2}g_0
+\end{pmatrix}
+\end{align*}
+The series must terminate at some $n_r\in\mathbb{N}$. Otherwise the coefficients lead to a positive exponential behaviour, which makes the solution non-normalizable. This condition gives us $f_{n_r+1}=0=g_{n_r+1}$:
+\begin{align*}
+\begin{pmatrix}
+f_{n_r} \\ g_{n_r}
+\end{pmatrix}&=\begin{pmatrix}
+-\sqrt{\frac{k_2}{k_1}}g_{n_r} \\ -\sqrt{\frac{k_1}{k_2}}f_{n_r}
+\end{pmatrix}\numberthis\label{fn and gn connection}
+\end{align*}
+These equations are identical and therefor do not contradict our assumption of $f_m,g_m$ terminating at the same integer $n_r$. Now use (\ref{fn and gn connection}) in (\ref{iteration for coefficients hydrogen}) with $m=n_r-1$:
+\begin{align*}
+\begin{pmatrix}
+f_m+\sqrt{\frac{k_2}{k_1}}g_m \\ g_m+\sqrt{\frac{k_1}{k_2}}f_m
+\end{pmatrix}&=\begin{pmatrix}
+(n+s-k)f_{n_r}+Z\alpha g_{n_r} \\ (n+s+k)g_{n_r}-Z\alpha f_{n_r}
+\end{pmatrix}\\
+\Rightarrow\ \ \ \begin{pmatrix}
+f_m+\sqrt{\frac{k_2}{k_1}}g_m \\ \sqrt{\frac{k_2}{k_1}}g_m+ f_m
+\end{pmatrix}&=\begin{pmatrix}
+(n+s-k)f_n-Z\alpha\sqrt{\frac{k_1}{k_2}}f_{n_r} \\ -(n+s+k)f_n-Z\alpha\sqrt{\frac{k_2}{k_1}}f_{n_r}
+\end{pmatrix}\\
+\Rightarrow\ \ \ 0&=2(n+s)f_{n_r}+Z\alpha\kla\left( {\sqrt{\frac{k_2}{k_1}}-\sqrt{\frac{k_1}{k_2}}} \right)f_{n_r}\\
+\Rightarrow\ \ \ \kla\left( {\frac{2(n+s)}{Z\alpha}} \right)^2 &=\frac{k_2}{k_1}-2+\frac{k_1}{k_2}=\frac{2m^2+2E^2}{m^2-E^2}-2
+\end{align*}
+Write $\beta^2:=1+\frac{2(n_r+s)^2}{Z^2\alpha^2}$ and obtain the solution for the energy levels:
+\begin{align*}
+m^2+E^2&=\beta^2(m^2-E^2)\ \ \Rightarrow\ \ E^2=\frac{\beta^2-1}{1+\beta^2}m^2\\
+&\Rightarrow\ \ E=m\sqrt{\frac{(n_r+s)^2}{Z^2\alpha^2+(n_r+s)^2}}=\frac{m}{\sqrt{1+\frac{Z^2\alpha^2}{(n_r+s)^2}}}\numberthis\label{hydrogen energy natural units}
+\end{align*}
+Using SI-units, $n= n_r+k$ and $k=j+\frac{1}{2}$ the result can be expressed in a form that is closer to the non-relativistic solution:
+\begin{align*}
+E=\frac{mc^2}{\sqrt{1+\frac{Z^2\alpha^2}{\kla\left( {n-j-\frac{1}{2}+\sqrt{\kla\left( {j+\frac{1}{2}} \right)^2-Z^2\alpha^2}} \right)^2}}}\numberthis\label{hydrogen energy}
+\end{align*}
+From (\ref{hydrogen energy}) we can deduce the approximate solution as follows:
+\begin{align*}
+E\approx\frac{mc^2}{\sqrt{1+\frac{Z^2\alpha^2}{n^2}}}\approx mc^2\kla\left( {1-\frac{Z^2\alpha^2}{2n^2}} \right)
+\end{align*}
+\end{document}

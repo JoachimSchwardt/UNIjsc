@@ -1,0 +1,137 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+
+\begin{document}
+
+\title{04 Operatoren}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Satz von Lax-Milgram}
+a)
+\begin{proof}
+Satz von Riesz: $\exists !A\phi\in\mathcal{H}\forall\psi\in\mathcal{H}:f_\phi (\psi)=a(\phi,\psi)=\brak\langle {A\phi}| {\psi}\rangle$ (Es ist $a(\phi,\psi)$ linear und stetig, da beschränkt: $|f_\phi(\psi)|\le (M\|\phi\|)\|\psi\|$).\\
+$A$ ist linear:\\
+Sei $\phi,\psi\in\mathcal{H}$ und $\lambda\in\mathbb{C}$. Dann gilt:
+\begin{align*}
+\brak\langle {A\phi+A\lambda\psi}| {\chi}\rangle=a(\phi,\chi)+\lambda^\ast a(\psi,\chi)=a(\phi+\lambda\psi,\chi)=\brak\langle {A(\phi+\lambda\psi)}| {\chi}\rangle
+\end{align*}
+$A$ ist beschränkt:
+\begin{align*}
+\|A\phi\|^2&=\brak\langle {A\phi}| {A\phi}\rangle=a(\phi,A\phi)\le M\|\phi\|\cdot\|A\phi\|\\
+&\Rightarrow\ \ \|A\phi\|\le M\|\phi\|
+\end{align*}
+\end{proof}
+b)
+\begin{proof}
+Sei $\phi\in\mathcal{H}\setminus\klammer\left\{ {0} \right\}$. $A$ ist injektiv, falls $A\phi=0\ \ \Rightarrow\ \ \phi=0$:
+\begin{align*}
+\alpha\|\phi\|&\le\frac{|a(\phi,\phi)|}{\|\phi\|}=\frac{|\brak\langle {A\phi}| {\phi}\rangle|}{\|\phi\|}\le\frac{\|A\phi\|\cdot\|\phi\|}{\|\phi\|}=\|A\phi\|
+\end{align*}
+Es ist $\mathrm{im\,}A$ abgeschlossen. Sei $A\phi_n\rightarrow\psi\in\mathcal{H}$ eine Folge in $\mathrm{im\,}A$. Dann ist $A\phi_n$ insbesondere CF in $\mathcal{H}$ und somit auch CF in $\mathrm{im\,}A$:
+\begin{align*}
+\|\phi_n-\phi_m\|\le\frac{1}{\alpha}\|A\phi_n-A\phi_m\|\rightarrow 0
+\end{align*}
+Also ist $\phi_n$ CF in $\mathcal{H}$ und somit $\phi_n\rightarrow\phi\in\mathcal{H}$. Da $A$ stetig ist folgt somit:
+$$\psi=\lim A\phi_n= A\lim\phi_n=A\phi\in \mathrm{im\,}A$$
+$A$ ist surjektiv. Sei $\phi\in (\mathrm{im\,}A)^\bot$. Dann gilt $\forall A\psi\in\mathrm{im\,}A:\brak\langle {A\psi}| {\phi}\rangle=0$. Insbesondere gilt also für $\psi=\phi$:
+$$0=\brak\langle {A\phi}| {\phi}\rangle=a(\phi,\phi)\ge\alpha\|\phi\|^2\ \ \Rightarrow\ \ \phi=0$$
+Aus $(\mathrm{im\,}A)^\bot=\klammer\left\{ {0} \right\}$ folgt dann:
+$$\mathrm{im\,}A=\overline{\mathrm{im\,}A}=(\mathrm{im\,}A)^{\bot \bot}=\klammer\left\{ {0} \right\}^\bot=\mathcal{H}$$
+$A^{-1}$ ist stetig. Sei $\phi\in\mathcal{H}$:
+$$\|A^{-1}\phi\|\le\frac{1}{\alpha}\|AA^{-1}\phi\|=\frac{1}{\alpha}\|\phi\|$$
+\end{proof}
+c)
+\begin{proof}
+Es gilt:
+$$|\brak\langle {\phi}| {\psi}\rangle_1|\le\|\phi\|_1\|\psi\|\le C^2\|\phi\|\cdot\|\psi\|$$
+Existenz und Eindeutigkeit sind dann gegeben durch a).
+$T$ ist positiv. Es gilt:
+\begin{align*}
+\brak\langle {\phi}| {T\phi}\rangle=\overline{\brak\langle {T\phi}| {\phi}\rangle}=\overline{\brak\langle {\phi}| {\phi}\rangle_1}\ge 0
+\end{align*}
+$T$ ist selbstadjungiert. Es gilt:
+\begin{align*}
+\brak\langle {\phi}| {T\psi}\rangle&=\overline{\brak\langle {T\psi}| {\phi}\rangle}=\overline{\brak\langle {\psi}| {\phi}\rangle_1}=\brak\langle {\phi}| {\psi}\rangle_1=\brak\langle {T\phi}| {\psi}\rangle
+\end{align*}
+\end{proof}
+\section{Shiftoperatoren}
+\begin{proof}
+Sei $x\in l^2$:
+$$\|Lx\|_2^2=\sum_n|x_{n+1}|_2^2\le \|x\|_2^2$$
+Also ist $\|L\|\le 1$. Für $x=e^2$ gilt zudem $\|Le^2\|=1$.
+Es gilt:
+$$\|Rx\|_2^2=\sum_n|x_{n-1}|_2^2= \|x\|_2^2$$
+Also ist $\|R\|\le 1$. Für $x=e^1$ gilt zudem $\|Re^1\|=1$. Insbesondere ist $R$ eine Isometrie.
+Sei $x\in l^2$:
+\begin{align*}
+\ker L&=\{e^1\}\ \ \ \ \mathrm{und}\ \ \ \ \ker R=\{\}
+\end{align*}
+Es ist $x=LRx\in\mathrm{im\,}L$ also ist im\, $L=l^2$.\\
+Sei $y_1=0$. Dann ist $y=RLy\in\mathrm{im\,}R$ also ist im\,$R=\klammer\left\{ {y\in l^2|\ y_1=0} \right\}$. 
+\end{proof}
+\section{Diagonaloperatoren}
+a)
+\begin{proof}
+Es ist $c_c\subseteq D(M_a)$ dicht in $l^2$. Sei $x\in c_c$, d.h. $\exists N\in\mathbb{N}\forall n\ge N:x_n=0$. Dann gilt $\sum_n^\infty |a_nx_n|^2=\sum_n^N|a_nx_n |^2<\infty$. 
+\end{proof}
+b)
+\begin{proof}
+Sei $x^n\rightarrow x\in l^2$ Folge in $D(M_a)$ und $M_ax^n\rightarrow y\in l^2$. Dann gilt:
+\begin{align*}
+|x_k^n-x_k|&\le\|x^n-x\|_2\rightarrow 0\\
+|a_kx_k^n-y_k|&=|(M_ax^n)_k-y_k|\le\|M_ax^n-y\|_2\rightarrow 0\\
+|a_kx_k-y_k|&\le |a_k|\cdot|x_k-x_k^n|+|a_kx_k^n- y_k|\rightarrow 0
+\end{align*}
+Also ist $y_k=a_kx_k$. Wegen $y\in l^2$ gilt dann $\sum_k^\infty |a_kx_k|^2=\sum_k^\infty |y_k|^2<\infty$.
+\end{proof}
+c)
+\begin{proof}
+Sei $a_k$ beschränkt, also $\exists A>0:|a_k|<A$. Genauer gilt $A=sup_k|a_k|=\|a\|_\infty$. Dann gilt für $x\in l^2$:
+$$\|M_ax\|_2=\sqrt{\sum_k^\infty |a_kx_k|^2}\le \sqrt{\|a\|_\infty^2\sum_k^\infty |x_k|^2}=\|a\|_\infty\|x\|_2$$
+Also ist $\|M_a\|\le \|a\|_\infty$.\\
+Es gilt:
+$$|a_n|^2=\sum_k^\infty |a_k\delta_{kn}|^2=\|M_ae^n\|_2^2\le\|M_a\|^2$$
+Also ist $\|a\|_\infty=\sup_n|a_n|\le\|M_a\|$. \\
+Zusammengefasst gilt somit $x\in D(M_a)$ und $\|M_a\|=\|a\|_\infty$.
+\end{proof}
+d)
+\begin{proof}
+Sei $M_a$ injektiv. Angenommen $a_N=0$. Dann ist $M_a$ nicht injektiv:
+$$\|M_ae^N\|_2^2=\sum_k^\infty |a_k\delta_{kN}|^2=|a_N|^2=0$$
+Sei $a_k\neq 0$. Dann gilt:
+$$0\overset{!}{=}\|M_ax\|_2^2=\sum_k^\infty |a_kx_k|^2\ \ \Rightarrow\ \ x_k=0\ \ (\forall k\in\mathbb{N})$$
+\end{proof}
+e)
+\begin{proof}
+Es gilt gemäß d) zunächst $a_k\neq 0$. Angenommen: $\inf_k|a_k|=0$. Dann gibt es eine Teilfolge mit $|a_{k_j}\le 1/\sqrt{j}$. Die Folge $y_n=\frac{1}{j}\delta_{k_j n}$ ($n\in\mathbb{N}$) ist dabei quadratisch summierbar. Nach Voraussetzung ist $M_a$ surjektiv, also $\exists x\in D(M_a): y_n=a_nx_n$. Das führt auf einen Widerspruch:
+$$\sum_n^\infty |x_n|^2=\sum_n^\infty\frac{|y_n|^2}{|a_n|^2}\ge \sum_j^\infty \frac{j}{j^2}=\infty$$
+Also ist $\inf_n|a_n|>0$. 
+Nach Voraussetzung und mit d) ist $M_a$ injektiv. Es ist $1/a$ beschränkt, nach c) also $M_{1/a}$ ebenfalls beschränkt. \\
+Sei $y\in l^2$. Wegen $\sum_k^\infty |a_k\frac{y_k}{a_k}|^2=\sum_k^\infty |y_k|^2<\infty $ gilt dann $M_{1/a}\in D(M_a)$ und $y=M_aM_{1/a}\in\mathrm{im\,}M_a$. Somit ist $M_a$ surjektiv. Es ist $M_a^{-1}=M_{1/a}$.
+\end{proof}
+f)
+\begin{proof}
+Sei $x\in D(M_a)$. Dann gilt:
+$$\|M_{\overline{a}}x\|_2^2=\sum_k^\infty |\overline{a}_kx_k|^2=\sum_k^\infty |a_kx_k|^2=\|M_ax\|_2^2<\infty$$
+Außerdem gilt:
+$$\brak\langle {y}| {M_a x}\rangle=\sum_k^\infty \overline{y}_ka_kx_k=\sum_k^\infty \overline{\overline{a}_ky_k}x_k=\brak\langle {M_{\overline{a}}y}| {x}\rangle$$
+\end{proof}
+\end{document}

@@ -1,0 +1,72 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{09 Spektraltheorem}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Spektraltheorem für kompakte Operatoren}
+a)
+\begin{proof}
+Sei $T\phi=0$. Dann ist natürlich auch $T^\ast T\phi=0$, also $\ker T\subseteq\ker T^\ast T$. Außerdem gilt für den umgekehrten Fall $0=\brak\langle {\phi}| {T^\ast T\phi}\rangle=\|T\phi\|^2$ und somit $\ker T^\ast T\subseteq\ker T$, woraus die Behauptung folgt.
+\end{proof}
+b)
+\begin{proof}
+Die Eigenvektoren selbstadjungierter Operatoren sind orthogonal und die Eigenwerte reell. Zur Erinnerung: 
+\begin{align*}
+\lambda\brak\langle {\lambda}| {\lambda}\rangle&=\brak\langle {\lambda}| {T\lambda}\rangle=\brak\langle {T\lambda}| {\lambda}\rangle=\lambda^\ast\brak\langle {\lambda}| {\lambda}\rangle\\
+\lambda\brak\langle {\mu}| {\lambda }\rangle&=\brak\langle {\mu }| {T\lambda}\rangle=\brak\langle {T\mu }| {\lambda}\rangle=\mu^\ast\brak\langle {\mu }| {\lambda}\rangle\\
+&\Rightarrow\ \ 0=\brak\langle {\mu }| {\lambda}\rangle(\mu-\lambda)
+\end{align*}
+Seien also $\Ket | {\mu } \rangle,\,\Ket | {\lambda} \rangle\in\ker\kla\left( {T^\ast T-\mu,\lambda I} \right)$. Dann folgt die Behauptung aus folgender Rechnung:
+\begin{align*}
+\brak\langle {T\mu }| {T\lambda}\rangle&=\brak\langle {\mu }| {T^\ast T\lambda}\rangle=\lambda\brak\langle {\mu }| {\lambda}\rangle\\
+\brak\langle {T\mu }| {T\lambda}\rangle&=\brak\langle {T^\ast T\mu }| {\lambda}\rangle=\mu\brak\langle {\mu }| {\lambda}\rangle\\
+\Rightarrow\ \ 0&=\brak\langle {\mu }| {\lambda}\rangle\kla\left( {\mu-\lambda} \right)
+\end{align*}
+\end{proof}
+c)
+\begin{proof}
+Da $T^\ast T$ selbstadjungiert und kompakt ist, gibt es nach dem Spektraltheorem $\mu_j\subseteq\mathbb{R}$ und ein ONS $\phi_j \in\mathcal{H}$ so, dass $T^\ast T=\sum\mu_j\oper | {\phi_j} \rangle\langle {\phi_j} |$. Sei $\psi_j\subseteq\mathcal{H}$ ebenfalls ein ONS. Dann ist $T^\ast T=\sum\mu_j\oper | {\phi_j} \rangle\langle {\psi_j} \oper | {\psi_j} \rangle\langle {\phi_j} |=\sum\kla\left( {\sqrt{\mu_j}\oper | {\psi_j} \rangle\langle {\phi_j} |} \right)^\ast\kla\left( {\sqrt{\mu_j}\oper | {\psi_j} \rangle\langle {\phi_j} |} \right)$. Da wir ONS gewählt haben, kann man $T=\sum\sqrt{\mu_j}\oper | {\psi_j} \rangle\langle {\phi_j} |$ setzen, da bei der Betrachtung von $T^\ast T$ aus dem Produkt der Summe wieder eine Summe der Produkte wird.
+\end{proof}
+\section{Polynome selbstadjungierter Operatoren}
+a)
+\begin{proof}
+Nachrechnen.
+\end{proof}
+b)
+\section{Konvergenzen in der Normtopologie}
+a)
+\begin{proof}
+Es gilt für die Konvergenzen, dass $\tecxt\text{Normtopologie}>\tecxt\text{starke Operatortopologie}>\tecxt\text{schwache Operatortopologie}$. Die hinreichenden Bedingungen sind hierbei leicht zu beweisen:\\
+Sei $\|T_n-T\|\rightarrow 0$. Dann gilt für alle $\phi\in\mathcal{H}$, dass $\|T_n\phi-T\phi\|\le\|T_n-T\|\cdot\|\phi\|\rightarrow 0$.\\
+Sei nun $\|T_n\phi-T\phi\|\rightarrow 0$. Dann gilt für alle $\phi,\psi\in\mathcal{H}$ mit der Cauchy-Schwartz Ungleichung, dass $|\brak\langle {\psi}| {(T_n-T)\phi}\rangle|\le\|\psi\|\cdot\|(T_n-T)\phi\|\rightarrow 0$.
+\end{proof}
+b)
+\begin{proof}
+Es ist $\|T_n\|=n$ für $\phi_j=e_j$. Also liegt keine Konvergenz in der Normtopologie vor. Allerdings ist $\|T_n\phi -T\phi\|=\|\sum_j^n\oper | {\phi_j} \rangle\langle {\phi_j} |\phi\rangle -\Ket | {\phi} \rangle\|\rightarrow 0$ gerade die Folgerung aus der Parseval'schen Gleichung.
+\end{proof}
+
+\end{document}

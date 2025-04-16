@@ -1,0 +1,413 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{ll_scrarticle}
+
+\newcommand*{\titel}{One-dimensional chain with 2-atomic basis and linear dispersion}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Quantum Physics in 1D}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Model Hamiltonian}
+We consider the model $H=H_0 + H_U$ where
+\begin{align}
+H_0 &= \vf\sum_k k \varnormord{c_{k,\A}^\dagger c_{k,\B}} + \hc \equiv \vf\sum_k \varnormord{\Psi_k^\dagger k\sigma_x \Psi_k},\\
+H_U &= \sum_{j,\kappa = \A,\B} U_\kappa n_{j,\kappa} n_{j+1,\kappa}.
+\end{align}
+Here $U_\kappa\in\mathbb{R}$, $\Psi = (c_{k,\A}, c_{k,\B})^T$ and we set $\hbar=1$.
+Note that we have two different kinds of normal-ordering.
+The one used above can readily be defined by
+\begin{align}
+\varnormord{A} &= A - \bra*{A}
+\end{align}
+for any operator $A$.
+It has the interpretation of simply removing the vacuum expectation value.
+The other normal-ordering requires a basis of annihilation and creation operators $b$ and $b^\dagger$ that make up the operator $A$.
+Then $\normord{(\dots)}$ reorders products of $b$ and $b^\dagger$ such that all $b$ appear on the right of the expression, and all $b^\dagger$ to appear on the left.
+While this is conceptually simple, it is not all that simple to write it down in a formal manner.
+Instead, just consider the example $\normord{b^\dagger b} = b^\dagger b$, $\normord{bb^\dagger}=b^\dagger b$ and $\normord{\kla*{b + bb^\dagger b}} = b + b^\dagger b^2$.
+Note that in the special case of a bilinear operator the two normal-ordering prescriptions may actually have the same meaning, since $\varnormord{b^\dagger b} = b^\dagger b - \brc*{0}{b^\dagger b}{0} = b^\dagger b$ due to $b\Ket{0} = 0$.
+However, in general this is not correct and we will therefore distinguish between both ideas.\\
+For now we want to treat $H_0$ as the ``exactly solvable'' part of the model and $H_U$ as the perturbation.
+This requires diagonalizing $\sigma_x$ by
+\begin{align}
+\sigma_x &= U \sigma_z U^\dagger
+\end{align}
+with the transformation matrix $U = \frac{1}{\sqrt{2}} \begin{pmatrix}
+1 & 1 \\ 1 & -1
+\end{pmatrix}$.
+We may use this to change into the $\ell=\L,\R$-basis 
+\begin{align}
+\Psi &\rightarrow U\Psi = \frac{1}{\sqrt{2}} \begin{pmatrix}
+c_\A + c_\B \\ c_\A - c_\B
+\end{pmatrix} \equiv \begin{pmatrix}
+c_\R \\ c_\L
+\end{pmatrix}.
+\end{align}
+In this basis we find
+\begin{align}
+H_0 &= \vf\sum_{k,\ell} k\ell n_{k\ell}
+\end{align}
+where $\ell = \L$ will be treated as $-1$ and $\ell = \R$ as $+1$.
+Applying the inverse Fourier transform
+\begin{align}
+c_{k,\ell} &= \frac{1}{\sqrt{L}} \intr{\powe{-\i kx} c_{x,\ell}}{x}
+\end{align}
+allows us to rewrite $H_0$ as\footnote{Note that $\frac{1}{L}\sum_k \powe{\i kx} \simeq \delta(x)$ for $k=\frac{2\pi}{L}n$ with $n\in\mathbb{Z}$ and large $L$.}
+\begin{align}
+H_0 &= \vf\sum_{k,\ell} k\ell \varnormord{\intr{\intr{\powe{\i kx} c_{x,\ell}^\dagger \powe{-\i kx'} c_{x',\ell}}{x}}{x'}} \\
+&= \vf\sum_\ell \ell \varnormord{\intr{c_{x,\ell}^\dagger \intr{c_{x',\ell} \i \partial_{x'} \frac{1}{L} \sum_k \powe{\i k (x - x')} }{x'}}{x}} \\
+&= \vf\sum_\ell \ell \intr{\varnormord{c_{x,\ell}^\dagger (-\i\partial_x) c_{x,\ell}}}{x}.
+\end{align}
+We will use one of the standard bosonization prescriptions
+\begin{align}
+c_{x,\ell} &\rightarrow \sqrt{a} \psi_\ell(x) = \sqrt{a} \frac{\eta_\ell}{\sqrt{2\pi \alpha}} \powe{-\i\varphi_\ell(x)} \label{eqn:bosonization_prescription}
+\end{align}
+with the short-distance cut-off $\alpha$ and a lattice spacing $a$.
+For distinct species $\ell\neq\ell'$ the Klein factors satisfy the usual fermionic anti-commutation relations $\klc*{\eta_\ell, \eta_{\ell'}} = 0$ and $\klc[\big]{\eta_\ell, \eta_{\ell'}^\dagger} = 0$.
+In the thermodynamic limit the Klein factors obey the Majorana algebra, and therefore satisfy $\eta_\ell^\dagger \eta_\ell \equiv 1 \equiv \eta_\ell\eta_\ell^\dagger$.
+Furthermore $\eta_\ell^\dagger \equiv \eta_\ell$, which allows a representation in terms of Pauli matrices.
+To summarize, for $L\rightarrow\infty$ the Klein factors are hermitian, unitary operators that square to unity and anti-commute for distinct species.\\
+Note that the chiral fields $\varphi_\ell = \ell\phi - \theta$ can be split into a part containing creation operators and a part containing annihilation operators via $\varphi_\ell = \varphi_\ell^{(+)} + \varphi_\ell^{(-)}$.
+These parts satisfy the commutation relation
+\begin{align}
+\klb*{\varphi_\ell^{(+)}(x), \varphi_{\ell'}^{(-)}(x')} &= \delta_{\ell\ell'} \log\klb*{\frac{2\pi}{L} \kla*{\alpha + \i\ell (x-x')} } \label{eqn:commutator_varphi_ell_plus_x_varphi_ellp_minus_xp},
+\end{align}
+which can be derived by expressing $\varphi_\ell$ in terms of bosonic creation and annihilation operators $b_q$ and $b_q^\dagger$.\punctfootnote{See \texttt{bosonization{\_}dictionary.tex} and references therein.}
+We will also make use of
+\begin{align}
+\klb*{\varphi_\ell(x), \varphi_{\ell'}(x')} &= \sum_{pp'} \klb*{\varphi_\ell^{(p)}(x), \varphi_{\ell'}^{(p')}(x')} = \sum_p \delta_{\ell\ell'} p \log\klb*{\frac{2\pi}{L} \kla*{\alpha + p\i\ell (x-x')} } \\
+&= \delta_{\ell\ell'} \log \klb*{ \frac{\alpha + \i \ell (x-x')}{\alpha - \i \ell (x-x')}} \label{eqn:commutator_varphi_ell_x_varphi_ellp_xp},\\
+\klb*{\phi^{(+)}(x), \phi^{(-)}(x')} &= \frac{1}{4} \sum_{\ell\ell'} \klb*{\ell\varphi_\ell^{(+)}(x), \ell'  \varphi_{\ell'}^{(-)}(x')} = \frac{1}{4} \sum_\ell \log \klb*{\frac{2\pi}{L} \kla*{\alpha + \i\ell (x-x')} } \\
+&= \frac{1}{2} \log \klb*{\frac{2\pi}{L} \sqrt{\alpha^2 + (x-x')^2}} \label{eqn:commutator_phi_plus_x_phi_minus_xp}.
+\end{align}
+Since the commutator is $\mathbb{C}$-valued, Baker-Campbell-Hausdorff here reads $\powe{A}\powe{B} = \powe{A+B} \powe{\frac{1}{2} \klb*{A,B}}$.
+Similarly, $\powe{A}\powe{B} = \powe{B}\powe{A} \powe{\klb*{A,B}}$.
+We may then use these identities to evaluate
+\begin{align}
+\powe{\i m\varphi_\ell(x)} &= \powe{\i m\varphi_\ell^{(+)}(x)} \powe{\i m\varphi_\ell^{(-)}(x)} \powe{-\frac{1}{2} \klb*{\i m\varphi_\ell^{(+)}(x),\, \i m\varphi_\ell^{(-)}(x)}} = \normord{\powe{\i m\varphi_\ell(x)}} \kla*{\frac{2\pi \alpha}{L}}^{\frac{m^2}{2}}.
+\end{align}
+This derivation encompasses the essence of how to correctly treat products of these kinds of exponential or vertex operators.
+In a similar way we may now also compute
+\begin{align}
+\psi_\ell^\dagger(x) \psi_\ell(x+\epsilon) &= \frac{\eta_\ell^\dagger \eta_\ell}{2\pi \alpha} \powe{\i\varphi_\ell(x)} \powe{-\i\varphi_\ell(x+\epsilon)} = \frac{1}{2\pi \alpha} \normord{\powe{\i\varphi_\ell(x)}} \normord{\powe{-\i\varphi_\ell(x+\epsilon)}} \frac{2\pi \alpha}{L} \\
+&= \frac{1}{L} \powe{\i\varphi_\ell^{(+)}(x)} \powe{\i\varphi_\ell^{(-)}(x)} \powe{-\i\varphi_\ell^{(+)}(x+\epsilon)} \powe{-\i\varphi_\ell^{(-)}(x+\epsilon)} \\
+&= \frac{1}{L} \powe{\i\varphi_\ell^{(+)}(x)} \powe{-\i\varphi_\ell^{(+)}(x+\epsilon)} \powe{\i\varphi_\ell^{(-)}(x)} \powe{-\i\varphi_\ell^{(-)}(x+\epsilon)} \klb*{\frac{2\pi}{L} \kla*{\alpha + \i\ell\epsilon}}^{-1} \\
+&= \frac{1}{2\pi} \frac{1}{\alpha + \i\ell\epsilon} \normord{\powe{\i \varphi_\ell(x) - \i\varphi_\ell(x+\epsilon)}}.
+\end{align}
+In this expression we can safely take the limit $\alpha\rightarrow 0$, and due to the normal-ordering also Taylor-expand $\varphi_\ell(x+\epsilon)$ in the exponential.
+Dropping irrelevant constants we then find
+\begin{align}
+\lim_{\epsilon\rightarrow 0^+} \varnormord{\psi_\ell^\dagger(x) \psi_\ell(x+\epsilon)} &= \lim_{\epsilon\rightarrow 0^+} \frac{-\i\ell}{2\pi\epsilon} \klb*{\normord{\powe{-\i \epsilon\partial_x\varphi_\ell(x)}} - \bra*{\normord{\powe{-\i \epsilon\partial_x\varphi_\ell(x)}}}} \\
+&= \lim_{\epsilon\rightarrow 0^+} \frac{-\i\ell}{2\pi\epsilon} \normord{\klb[\big]{-\i\epsilon\partial_x\varphi_\ell(x)}} = \frac{-\ell}{2\pi} \partial_x\varphi_\ell(x) \equiv \rho_\ell
+\end{align}
+where normal-ordering can be dropped since $\varphi_\ell$ is given by a linear combination of $b_q$ and $b_q^\dagger$ and is thus already normal-ordered by construction.
+To bosonize $H_0$ we consider the same calculation, but due to the derivative need to expand to a higher order in the point-splitting parameter $\epsilon$.
+We have
+\begin{align}
+\varnormord{\psi_\ell^\dagger(x) \i\partial_x \psi_\ell(x+\epsilon)} &= \i\partial_\epsilon \varnormord{\psi_\ell^\dagger (x) \psi_\ell(x+\epsilon)} = \i\partial_\epsilon \frac{-\i\ell}{2\pi\epsilon} \klb*{\normord{\powe{-\i\epsilon\partial_x\varphi_\ell(x) - \i \frac{\epsilon^2}{2} \partial_x^2\varphi_\ell(x)}} - 1} \\
+&= \i\partial_\epsilon \frac{-\i\ell}{2\pi\epsilon} \normord{\klb*{-\i\epsilon\partial_x\varphi_\ell(x) - \i \frac{\epsilon^2}{2} \partial_x^2\varphi_\ell(x) - \frac{\epsilon^2}{2} \kla*{\partial_x\varphi_\ell(x)}^2}}\\
+&= \frac{-\ell}{4\pi} \normord{\klb*{\kla*{\partial_x\varphi_\ell(x)}^2 + \i \partial_x^2\varphi_\ell(x)}}.
+\end{align}
+We want to work in the continuum limit and therefore take the limit $a\rightarrow 0$ whenever possible.
+The free Hamiltonian then becomes\footnote{As usual $\sum_j \rightarrow \int \,\frac{\d x}{a}$.}
+\begin{align}
+H_0 &= \vf\sum_\ell \ell \intr{\varnormord{\psi_\ell^\dagger(x) (-\i\partial_x) \psi_\ell(x)}}{x} = \frac{\vf}{2\pi} \intr{\varnormord{\klb*{\kla*{\partial_x\theta}^2 + \kla*{\partial_x\phi}^2}} }{x}
+\end{align}
+where the total derivative $\partial_x^2\varphi_\ell$ dropped out and we used $\sum_\ell \kla*{\partial_x\varphi_\ell}^2 = 2 \kla*{\partial_x\theta}^2 + 2\kla*{\partial_x\phi}^2$.
+\section{Bosonization of the interaction}
+Before we turn to the bosonization of the interaction Hamiltonian we first perform the basis transformation used to diagonalize the free Hamiltonian
+\begin{align}
+c_\kappa &= \frac{c_\R + \kappa c_\L}{\sqrt{2}}.
+\end{align}
+to get $n_\kappa = \frac{1}{2} \kla[\big]{c_\R^\dagger + \kappa c_\L^\dagger} \kla*{c_\R + \kappa c_\L} = \frac{1}{2} \kla*{n_\R + n_\L + \kappa c_\R^\dagger c_\L + \hc} = \frac{1}{2} \sum_\ell \kla[\big]{n_\ell + \kappa c_\ell^\dagger c_{-\ell}}$. 
+Using this we find
+\begin{align}
+H_U &= \frac{1}{4} \sum_{j,\kappa=\A,\B} U_\kappa \sum_{\ell,\ell' = \R,\L} \kla*{n_{j,\ell} + \kappa c_{j,\ell}^\dagger c_{j,-\ell}} \kla*{n_{j+1,\ell'} + \kappa c_{j+1,\ell'}^\dagger c_{j+1,-\ell'}} = H_{U_+} +  H_{U_-}
+\end{align}
+where $U_\pm = \frac{U_\A \pm U_\B}{2}$ and
+\begin{align}
+H_{U_+} &= \frac{U_+}{2} \sum_{j,\ell,\ell'} \kla*{n_{j,\ell} n_{j+1,\ell'} + c_{j,\ell}^\dagger c_{j,-\ell} c_{j+1,\ell'}^\dagger c_{j+1,-\ell'}},\\
+H_{U_-} &= \frac{U_-}{2} \sum_{j,\ell,\ell'} \kla*{c_{j,\ell}^\dagger c_{j,-\ell} n_{j+1,\ell'} + n_{j,\ell} c_{j+1,\ell'}^\dagger c_{j+1,-\ell'} }.
+\end{align}
+We will implicitly assume integration over $x$ and make use of the approximation $F(x+a) \simeq F(x)$ for the slowly-varying fields $F\in \klc*{\varphi_\ell, \phi, \theta}$ whenever applicable.\footnote{Note that this needs to be treated with caution whenever the exponent would completely vanish due to such an approximation, as in the previous $\psi_\ell^\dagger \psi_\ell$ example.} 
+First, the density-density term simply renormalizes the free Luttinger parameters since
+\begin{align}
+\sum_{\ell,\ell'} \frac{-\ell}{2\pi} \partial_x\varphi_\ell \frac{-\ell'}{2\pi} \partial_x\varphi_{\ell'} = \frac{1}{4\pi^2} \sum_{\ell,\ell'} \ell \ell' \kla*{\ell \partial_x\phi - \partial_x\theta} \kla*{\ell' \partial_x\phi - \partial_x\theta} = \frac{1}{\pi^2} \kla*{\partial_x\phi}^2.
+\end{align}
+The second term behaves very differently for $\ell=\ell'$ and $\ell\neq\ell'$, so we consider those cases separately.
+Note that the first vanishes in the continuum limit $\rightarrow 0$ because
+\begin{align}
+c_{j,\ell}^\dagger c_{j,-\ell} c_{j+1,\ell}^\dagger c_{j+1,-\ell} &= - c_{j,-\ell} c_{j,\ell}^\dagger c_{j+1,\ell}^\dagger c_{j+1,-\ell} \overset{a\,\rightarrow\,0}{\longrightarrow} c_{j,-\ell} \kla[\big]{c_{j,\ell}^\dagger}^2 c_{j,-\ell} \equiv 0.
+\end{align}
+This is consistent with the bosonization procedure, as shown in \autoref{subsec:correct_order_of_limits}.
+The second case gives a more interesting result.
+First note that
+\begin{align}
+c_{j,\ell}^\dagger c_{j,-\ell} c_{j+1,-\ell}^\dagger c_{j+1,\ell} &= c_{j,\ell}^\dagger c_{j+1,\ell} c_{j,-\ell} c_{j+1,-\ell}^\dagger = - c_{j,\ell}^\dagger c_{j+1,\ell} c_{j+1,-\ell}^\dagger c_{j,-\ell}.
+\end{align}
+Just as in the bosonization of the free Hamiltonian we now consider the terms
+\begin{align}
+\psi_\ell^\dagger(x) \psi_\ell(x+a) &= \frac{1}{L} \normord{\powe{\i\varphi_\ell(x)}} \normord{\powe{-\i\varphi_\ell(x+a)}} = \frac{1}{L} \normord{\powe{ \i\varphi_\ell(x) - \i\varphi_\ell(x+a)}} \powe{\klb*{\i\varphi_\ell^{(-)}(x), -\i\varphi_\ell^{(+)}(x+a)}} = \\
+&= \frac{1}{2\pi} \frac{1}{\alpha +\i\ell a} \normord{\powe{-\i a\partial_x\varphi_\ell - \i \frac{a^2}{2} \partial_x^2\varphi_\ell + \mathcal{O}(a^3)}} = \\
+&= \frac{-\i\ell }{2\pi a} \normord{\klb*{1 - \i a\partial_x\varphi_\ell - \i\frac{a^2}{2} \partial_x^2\varphi_\ell - \frac{a^2}{2}\kla*{\partial_x\varphi_\ell}^2 + \mathcal{O}(a^3)}} = \\
+&= \frac{-\i\ell}{2\pi a} - \frac{\ell}{2\pi} \partial_x\varphi_\ell + \frac{\i\ell a}{4\pi} \klb*{\i\partial_x^2\varphi_\ell + \normord{\kla*{\partial_x\varphi_\ell}^2}} + \mathcal{O}(a^2),\\
+\psi_{-\ell}^\dagger(x+a) \psi_{-\ell}(x) &= \frac{-\i\ell }{2\pi a} + \frac{\ell}{2\pi} \partial_x\varphi_{-\ell} + \frac{\i\ell a}{4\pi} \klb*{-\i\partial_x^2\varphi_{-\ell} + \normord{\kla*{\partial_x\varphi_{-\ell}}^2}} + \mathcal{O}(a^2).
+\end{align}
+To order $\mathcal{O}(a)$ the product $\psi_\ell^\dagger(x) \psi_\ell(x+a) \psi_{-\ell}^\dagger(x+a) \psi_{-\ell}(x)$ gives
+\begin{align}
+\frac{-1}{(2\pi a)^2} + \frac{-1}{4\pi^2} \partial_x\varphi_\ell \partial_x\varphi_{-\ell} + \frac{1}{8\pi^2} \klb*{-\i\partial_x^2\varphi_{-\ell} + \normord{\kla*{\partial_x\varphi_{-\ell}}^2} + \i\partial_x^2\varphi_\ell + \normord{\kla*{\partial_x\varphi_\ell}^2}}.
+\end{align}
+Dropping the constant and the total derivatives we get
+\begin{align}
+\frac{1}{4\pi^2} &\normord{\kla*{\ell \partial_x\phi - \partial_x\theta} \kla*{-\ell \partial_x\phi - \partial_x\theta}} + \frac{1}{4\pi^2} \normord{\klb*{\kla*{\partial_x\phi}^2 + \kla*{\partial_x\theta}^2 }} = \frac{1}{2\pi^2} \normord{\kla*{\partial_x\theta}^2}.
+\end{align}
+Summation on $\ell$ and the additional minus sign then give $\frac{-U_+a}{2\pi^2} \kla*{\partial_x\theta}^2$.
+\TODO{TODO: Giamarchi (8.3) on p. 254 essentially corresponds to our interaction, and setting $\kf=0$ would completely eliminate any influence from that term.
+The difference is that, in this section, he does not pay any attention to Klein factors whatsoever and takes a very different approach overall.
+It seems unlikely that my derivation is more correct, but that the interaction term simply drops out when setting $\kf=0$ does not appear reasonable to me, so I am really not convinced by his result...}\\
+We now turn to the third and fourth term of the interaction Hamiltonian.
+Once again, before bosonizing we first manipulate the fermionic operators.
+Starting with the case $\ell=\ell'$ we find
+\begin{align}
+c_{j,\ell}^\dagger c_{j,-\ell} n_{j+1,\ell} &= -c_{j,-\ell} c_{j,\ell}^\dagger c_{j+1,\ell}^\dagger c_{j+1,\ell} \overset{a\,\rightarrow \, 0}{\longrightarrow} -c_{j,-\ell} \kla[\big]{c_{j,\ell}^\dagger}^2 c_{j,\ell} \equiv 0,\\
+n_{j,\ell} c_{j+1,\ell}^\dagger c_{j+1,-\ell} &= \kla*{1 - c_{j,\ell} c_{j,\ell}^\dagger} c_{j+1,\ell}^\dagger c_{j+1,-\ell} \overset{a\,\rightarrow \, 0}{\longrightarrow} c_{j,\ell}^\dagger c_{j,-\ell}.
+\end{align}
+Similarly for $\ell = -\ell'$ we find
+\begin{align}
+c_{j,\ell}^\dagger c_{j,-\ell} n_{j+1,-\ell} &= c_{j,\ell}^\dagger c_{j,-\ell} \kla*{1 - c_{j+1,-\ell} c_{j+1,-\ell}^\dagger} \overset{a\,\rightarrow \, 0}{\longrightarrow} c_{j,\ell}^\dagger c_{j,-\ell},\\
+n_{j,\ell} c_{j+1,-\ell}^\dagger c_{j+1,\ell} &= -c_{j,\ell}^\dagger c_{j,\ell} c_{j+1,\ell} c_{j+1,-\ell}^\dagger \overset{a\,\rightarrow \, 0}{\longrightarrow} 0.
+\end{align}
+Thus we find that the interaction actually reduces to the quadratic expression 
+\begin{align}
+H_{U_-} &= U_- \sum_{j,\ell} c_{j,\ell}^\dagger c_{j,-\ell}
+\end{align}
+in the continuum limit.
+Bosonizing this is rather straight-forward, since the chiral fields commute for different $\ell$.
+Thus we find
+\begin{align}
+\frac{\eta_\ell^\dagger \eta_{-\ell}}{2\pi\alpha} \powe{\i\varphi_\ell - \i\varphi_{-\ell}} &= \frac{\eta_\ell^\dagger \eta_{-\ell}}{2\pi\alpha} \powe{2\i\ell \phi}
+\end{align}
+and in the thermodynamic limit with $\eta^\dagger=\eta$ summing on $\ell$ yields
+\begin{align}
+\frac{\eta_\R \eta_\L}{2\pi\alpha} 2\i\sin(2\phi).
+\end{align}
+Collecting terms our Hamiltonian now takes the form $H=H_0+H_I$ with
+\begin{align}
+H_0 &= \frac{\vf}{2\pi} \intr{\normord{\klb*{\kla*{1 - \frac{U_+a}{\pi\vf}} \kla*{\partial_x\theta}^2 + \kla*{1 + \frac{U_+a}{\pi\vf}} \kla*{\partial_x\phi}^2  }}}{x},\\
+H_I &= \frac{U_- \eta_\R\eta_\L}{2\pi\alpha} \intr{2\i\sin(2\phi)}{x}
+\end{align}
+or by introducing the effective parameters $u = \vf\sqrt{1 - \frac{U_+^2a^2}{\pi^2\vf^2}}$ and $K = \sqrt{\frac{\pi\vf - U_+a}{\pi\vf + U_+a}}$
+\begin{align}
+H_0 &= \frac{u}{2\pi} \intr{\normord{\klb*{K\kla*{\partial_x\theta}^2 + \frac{1}{K} \kla*{\partial_x\phi}^2}}}{x},\\
+H_I &= \frac{U_-}{2\pi\alpha} \sum_\ell \eta_{\ell}\eta_{-\ell} \intr{\powe{2\i\ell \phi}}{x}.
+\end{align}
+\subsection{On the correct order of limits}\label{subsec:correct_order_of_limits}
+The bosonization procedure is, somewhat surprisingly, not very straightforward.
+To understand why the naive approach of plugging the bosonization identity into the interaction Hamiltonian does not yield the correct result, one has to consider the order of limits.
+Since we ultimately want to take $\alpha,a,\epsilon \rightarrow 0$ there are a priori six possible options with regard to the order of those limits.
+For illustrative purposes we recalculate some of the previous results obtained by reordering the fermionic operators, but this time using only the bosonized fields.
+First, note that since the chiral fields commute for different $\ell$ we only need to consider strings of three $c$'s, which share the same index.
+For example all the complexity of $c_{j,\ell}^\dagger c_{j,-\ell} n_{j+1,\ell}$ is contained in $c_{j,\ell}^\dagger n_{j+1,\ell}$.
+The latter is
+\begin{align*}
+\frac{\eta_\ell^\dagger \eta_\ell^\dagger \eta_\ell }{L^{3/2}} & \normord{\powe{\i\varphi_\ell(x)}} \normord{\powe{\i\varphi_\ell(x+a)}} \normord{\powe{-\i\varphi_\ell(x+a+\epsilon)}}  \\
+&= \frac{\eta_\ell^\dagger }{L^{3/2}} \normord{\powe{\i\varphi_\ell(x)} \powe{\i\varphi_\ell(x+a)}} \frac{2\pi}{L} (\alpha + \i\ell a)  \normord{\powe{-\i\varphi_\ell(x+a+\epsilon)}}  \\
+&= \frac{\eta_\ell^\dagger }{L^{3/2}} \normord{\powe{\i\varphi_\ell(x)} \powe{\i\varphi_\ell(x+a)} \powe{-\i\varphi_\ell(x+a+\epsilon)}} \frac{2\pi}{L} (\alpha + \i\ell a) \frac{L}{2\pi} \frac{1}{\alpha + \i\ell\epsilon}  \frac{L}{2\pi} \frac{1}{\alpha + \i\ell(\epsilon + a)} .\numberthis \label{eqn:c_ell_dagger_n_ell_bosonized_limit_order}
+\end{align*}
+Similarly $c_{j,\ell} n_{j+1,\ell}$ becomes
+\begin{align*}
+\frac{\eta_\ell \eta_\ell^\dagger \eta_\ell }{L^{3/2}} & \normord{\powe{-\i\varphi_\ell(x)}} \normord{\powe{\i\varphi_\ell(x+a)}} \normord{\powe{-\i\varphi_\ell(x+a+\epsilon)}}  \\
+&= \frac{\eta_\ell }{L^{3/2}} \normord{\powe{-\i\varphi_\ell(x)} \powe{\i\varphi_\ell(x+a)}} \frac{L}{2\pi} \frac{1}{\alpha + \i\ell a} \normord{\powe{-\i\varphi_\ell(x+a+\epsilon)}}  \\
+&= \frac{\eta_\ell }{L^{3/2}} \normord{\powe{-\i\varphi_\ell(x)} \powe{\i\varphi_\ell(x+a)} \powe{-\i\varphi_\ell(x+a+\epsilon)}}  \frac{L}{2\pi} \frac{1}{\alpha + \i\ell a} \frac{L}{2\pi} \frac{1}{\alpha + \i\ell\epsilon}  \frac{2\pi}{L} \kla[\big]{\alpha + \i\ell(\epsilon + a)}.\numberthis \label{eqn:c_ell_n_ell_bosonized_limit_order}
+\end{align*}
+As a last example consider $c_{j,\ell} c_{j+1,\ell} c_{j+1,\ell}^\dagger$ which becomes
+\begin{align*}
+\frac{\eta_\ell \eta_\ell \eta_\ell^\dagger }{L^{3/2}} & \normord{\powe{-\i\varphi_\ell(x)}} \normord{\powe{-\i\varphi_\ell(x+a)}} \normord{\powe{\i\varphi_\ell(x+a+\epsilon)}}  \\
+&= \frac{\eta_\ell }{L^{3/2}} \normord{\powe{-\i\varphi_\ell(x)} \powe{-\i\varphi_\ell(x+a)}} \frac{2\pi}{L} (\alpha + \i\ell a) \normord{\powe{\i\varphi_\ell(x+a+\epsilon)}}  \\
+&= \frac{\eta_\ell }{L^{3/2}} \normord{\powe{-\i\varphi_\ell(x)} \powe{-\i\varphi_\ell(x+a)} \powe{\i\varphi_\ell(x+a+\epsilon)}} \frac{2\pi}{L} (\alpha + \i\ell a) \frac{L}{2\pi} \frac{1}{\alpha + \i\ell\epsilon}  \frac{L}{2\pi} \frac{1}{\alpha + \i\ell(\epsilon + a)}. \numberthis \label{eqn:c_ell_c_ell_c_ell_dagger_bosonized_limit_order}
+\end{align*}
+For both of these examples the six different orders of limits are listed in \autoref{table:order_of_limits_for_c_ell_dagger_n_ell}.
+Note that one should take $\epsilon\rightarrow 0$ as the last limit and that the second example always gives a singular result.
+{\setlength{\tabcolsep}{15pt}
+\begin{table}[!ht]
+\centering
+\begin{tabular}{l*{6}{c}}\toprule
+ & \multicolumn{2}{c}{$a\rightarrow 0$} & \multicolumn{2}{c}{$\alpha\rightarrow 0$} & \multicolumn{2}{c}{$\epsilon\rightarrow 0$} \\ \midrule
+ & $\alpha\rightarrow 0$ & $\epsilon\rightarrow 0$ & $a\rightarrow 0$ & $\epsilon\rightarrow 0$ & $a\rightarrow 0$ & $\alpha\rightarrow 0$ \\ \midrule
+\autoref{eqn:c_ell_dagger_n_ell_bosonized_limit_order}: & 0 & $\frac{1}{\alpha}$ & 0 & $\frac{1}{\epsilon}$ & $\frac{1}{\alpha}$ & $\frac{1}{\alpha}$ \\ \midrule
+\autoref{eqn:c_ell_n_ell_bosonized_limit_order}: & $\frac{1}{\alpha}$ & $\frac{1}{\alpha}$ & $\frac{1}{a}$ & $\frac{1}{\epsilon}$ & $\frac{1}{\alpha}$ & $\frac{1}{\alpha}$ \\ \midrule
+\autoref{eqn:c_ell_c_ell_c_ell_dagger_bosonized_limit_order}: & 0 & $\frac{1}{\alpha}$ & 0 & $\frac{1}{\epsilon}$ & $\frac{1}{\alpha}$ & $\frac{1}{\alpha}$ \\ \bottomrule
+\end{tabular}
+\caption{Singular parts of for the six possible orders of limits for three examples of the bosonized expressions.
+Note that most of the options for the first and third example lead to ambiguous results, and that one steers clear of difficulties so long as $\epsilon\rightarrow 0$ is the last limit to be taken.
+Furthermore, the second example only produces ambiguous results and such terms should therefore be avoided by means of the fermionic commutation relations before bosonization.}
+\label{table:order_of_limits_for_c_ell_dagger_n_ell}
+\end{table}
+}
+In essence, difficulties arise because the anti-commutator $\klc*{c_{j,\ell}, c_{j,\ell}^\dagger} = 1$ is not so easy to replicate with the bosonization identity.
+Careful analysis shows that $\klc*{\psi_\ell(x), \psi_\ell^\dagger(x+\epsilon)} = \delta(\epsilon)$, but since we are not integrating over $\epsilon$ this is a rather dangerous expression and most likely responsible for the difficulties.
+\section{Single-particle Green's function in perturbation theory}
+Our model turned out to be almost identical to the classical sine-Gordon model.
+It is said to be integrable, but thus far the problem of obtaining the exact two-point correlation functions has resisted many attempts.
+Here we want to take a more modest approach and merely treat the term in the first few orders of a perturbation series.
+Recall that given some Hamiltonian $H=H_0+H_\Text{int}$ we calculate expectation values via
+\begin{align}
+\bra*{\mathcal{O}} &= \frac{1}{\mathcal{Z}} \int \mathcal{O} \powe{\i S[\Phi]}\,\mathcal{D}\Phi
+\end{align} 
+where $\mathcal{Z} = \int \powe{\i S[\Phi]}\,\mathcal{D}\Phi$ is the full partition function, $\mathcal{O}$ is some operator and $\Phi$ represents the fields appearing in the action.
+Since the action decomposes into  a free and an interacting part via $S=S_0 + S_\Text{int}$ we find
+\begin{align}
+\mathcal{Z} &= \int \powe{\i S_0[\Phi]} \powe{\i S_\Text{int}[\Phi]}\,\mathcal{D}\Phi = \mathcal{Z}_0 \bra*{\powe{\i S_\Text{int}[\Phi]}}_0
+\end{align}
+where $\bra*{\mathcal{O}}_0$ denotes the average with respect to $S_0$.
+Similarly
+\begin{align}
+\bra*{\mathcal{O}} &= \frac{1}{\mathcal{Z}}\int \mathcal{O} \powe{\i S_\Text{int}[\Phi]} \powe{\i S_0[\Phi]} \,\mathcal{D}\Phi = \frac{\mathcal{Z}_0 \bra*{\mathcal{O}\powe{\i S_\Text{int}}}_0}{\mathcal{Z}_0 \bra*{\powe{\i S_\Text{int}}}_0} = \frac{1}{\bra*{\powe{\i S_\Text{int}}}_0} \bra*{\mathcal{O}\powe{\i S_\Text{int}}}_0.
+\end{align}
+Expanding into a power series then yields
+\begin{align}
+\bra*{\mathcal{O}} &= \frac{1}{1 + \i \bra*{S_\Text{int}}_0 + \frac{\i^2}{2} \bra*{S_\Text{int}^2}_0 + \dots} \klc*{\bra*{\mathcal{O}}_0 + \i\bra*{\mathcal{O}S_\Text{int}}_0 + \frac{\i^2}{2} \bra*{\mathcal{O} S_\Text{int}^2} + \dots}\\
+&= \bra*{\mathcal{O}}_0 + \i\bra*{\mathcal{O}S_\Text{int}}_0^c + \frac{\i^2}{2} \bra*{\mathcal{O}S_\Text{int}^2}_0^c - \i^2 \bra*{\mathcal{O}S_\Text{int}}_0^c \bra*{S_\Text{int}}_0 + \dots
+\end{align}
+where $\bra*{AB}^c = \bra*{AB} - \bra*{A}\bra*{B}$ denotes the connected average.
+While we have converted the calculation of a single expectation value into a somewhat complicated series expansion, we only ever evaluated averages with respect to the free action $S_0$.
+In our context of bosonization and the single-particle Green's function we can even go one step further and write down an explicit formula for the most general kind of expectation value we will encounter.
+Assuming that $\phi(x,t)$ and $\theta(x,t)$ have $\mathbb{C}$-valued commutators for any $x$ and $t$ and that both $\bra*{\phi(0,0)^2}_0$ and $\bra*{\theta(0,0)^2}_0$ diverge one has
+\begin{align}
+\bra[\Big]{\prod_j \powe{\i A_j\phi(x_j,t_j) + \i B_j\theta(x_j,t_j)}} &= \powe{\frac{1}{2} \sum_{j<k} \klb*{\kla*{K A_jA_k + \frac{1}{K} B_jB_k} F_1(x_j-x_k,t_j-t_k) - \kla*{A_jB_k + A_kB_j} F_2(x_j-x_k,t_j-t_k)}}
+\end{align}
+under the neutrality condition $\sum_jA_j=0=\sum_jB_j$.
+If this condition is not met, the expectation value gives zero.
+Note that we can express all quantities and integrals in terms of $\xi_\pm$ via
+\begin{align}
+S_\Text{int} &= \frac{U_-}{2\pi\alpha u} \sum_\ell \eta_\ell \eta_{-\ell} \intrnd{2}{\powe{2\i\ell\phi}}{\xi},\\
+\psi_\ell &= \frac{\eta_\ell}{\sqrt{2\pi\alpha}} \powe{-\i\varphi_\ell} = \frac{\eta_\ell}{\sqrt{2\pi\alpha}} \powe{-\i \ell \phi + \i \theta},\\
+F(\xi) &= \log\klb*{\frac{\i\beta u}{\pi\alpha}} - \log\klb*{\csch\kla*{\frac{\pi \xi}{\beta u}}},\\
+F_1(\xi) &= \log\klb*{
+\frac{\i\beta u}{\pi\alpha}} - \frac{1}{2}\log\klb*{ \csch\kla*{\frac{\pi \xi_-}{\beta u}} \csch\kla*{\frac{\pi \xi_+}{\beta u}}}.
+\end{align}
+The general formula for the expectation value admits a recursion relation.
+Writing $V_j = \powe{\i A_j\phi(\xi_j) + \i B_j \theta(\xi_j)}$ and $\Sigma_{jk} = \kla*{KA_jA_k + \frac{1}{K} B_jB_k}F_1(\xi_j-\xi_k) - \kla*{A_jB_k + A_kB_j}F_2(\xi_j-\xi_k)$ we have
+\begin{align}
+\bra[\Big]{\prod_{j=1}^{N+1} V_j } &= \powe{\frac{1}{2} \sum_{k=2}^{N+1} \sum_{j=1}^{k-1} \Sigma_{jk}} = \powe{\frac{1}{2} \sum_{k=2}^N \sum_{j=1}^{k-1} \Sigma_{jk} + \frac{1}{2}\sum_{j=1}^N \Sigma_{j,N+1} } = \bra[\Big]{\prod_{j=1}^NV_j} \powe{\frac{1}{2} \sum_{j=1}^N \Sigma_{j,N+1}}.
+\end{align}
+Another interesting observation is that swapping $V_1$ and $V_2$ only leads to the sign change $\xi_1 - \xi_2 \rightarrow \xi_2 - \xi_1$, leaving everything else unchanged.
+Since $F^\ast(-\xi)=F(\xi)$ and $F_1^\ast(-\xi) = F_1(\xi)$ it follows that
+\begin{align}
+\bra[\Big]{\klc*{V_1, V_2} \prod_{j=3}^NV_j} &= 2\Re \klc*{\powe{\frac{1}{2} \Sigma_{12}}} \powe{\frac{1}{2} \sum_{j<k} \kla*{1 - \delta_{j1} \delta_{k2}} \Sigma_{jk}}.
+\end{align}
+Using these tools we will calculate the single-particle Green's function, i.e. we set $\mathcal{O} = \klc*{\psi_\ell(\xi), \psi_{\ell'}(0)^\dagger}$.
+Since the perturbation only contains $\phi$ we can simply our general formula a bit\footnote{$A_{1} = -\ell$, $B_{1} = $, $\xi_{1} = \xi$ and $A_{2} = \ell'$, $B_{2} = -1$, $\xi_{2} = 0$}
+\begin{align}
+\mathcal{E} &= \bra[\Big]{\klc*{\psi_\ell(\xi), \psi_{\ell'}(0)^\dagger} \prod_{j=3}^N \powe{\i A_j\phi(\xi_j)} }_0 \\
+&= \frac{1}{2\pi\alpha} \klc*{\eta_\ell\eta_{\ell'} \powe{-\frac{1}{2} \klb*{\ell\ell' K + \frac{1}{K}}F_1(\xi) - \ell F_2(\xi)} + \eta_{\ell'}\eta_\ell \kla*{\xi \rightarrow -\xi}} \powe{\frac{1}{2} \sum_{k=2}^{N} \sum_{j=1}^{k-1} \kla*{1 - \delta_{j1} \delta_{k2}} \Sigma_{jk}}.
+\end{align}
+We can also write down the expectation value more explicitly as
+\begin{align}
+\mathcal{E} &= \mathcal{C}_0 \mathcal{C} \powe{\frac{1}{2} \sum_{k=4}^N \sum_{j=3}^{k-1} KA_jA_kF_1(\xi_j-\xi_k)},\\
+\mathcal{C}_0 &= \frac{1}{2\pi\alpha} \klc*{\eta_\ell \eta_{\ell'} \powe{-\frac{1}{2} \klb*{\ell\ell' K + \frac{1}{K}}F_1(\xi) - \frac{1}{2} \klb*{\ell + \ell'} F_2(\xi)} + \hc},\\
+\mathcal{C} &= \prod_{k=3}^N \powe{-\frac{1}{2} \ell K A_k F_1(\xi - \xi_k) - \frac{1}{2} A_k F_2(\xi - \xi_k)} \powe{\frac{1}{2} \ell' K A_k F_1(-\xi_k) + \frac{1}{2} A_k F_2(-\xi_k)}
+\end{align}
+where the only relevant neutrality condition is $0=\sum_jA_j = -\ell + \ell' + \sum_{j=3}^N A_j$ since the one for the $B_j$ is met by construction.
+Finally, we can replace $F_2$ by $F$ via
+\begin{align}
+\mathcal{C}_0 &= \frac{\delta_{\ell\ell'}}{\pi\alpha} \Re\klc*{\powe{- F(\xi_{-\ell})} \powe{-\frac{1}{2} \klb*{K + \frac{1}{K} - 2}F_1(\xi)}} + \i\eta_\ell\eta_{-\ell} \frac{\delta_{\ell,-\ell'}}{\pi\alpha} \Im\klc*{\powe{\frac{1}{2} \klb*{K - \frac{1}{K}} F_1(\xi)}},\\
+\mathcal{C} &= \prod_{k=3}^N \powe{-\frac{1}{2} \ell A_k F\kla{\xi_{-\ell} - \xi_{k,-\ell}}} \powe{\frac{1}{2} \ell'A_k F\kla{-\xi_{k,-\ell'}}} \powe{-\frac{1}{2} \ell (K-1) A_k F_1(\xi - \xi_k)} \powe{\frac{1}{2} \ell' (K-1) F_1(-\xi_k)}.
+\end{align}
+Note that we made use of the abbreviations $\xi = (\xi_+,\xi_-)$ and that $\xi_{k,\pm} \equiv ut_k \pm x_k \equiv \kla*{\xi_k}_\pm$.
+\subsection{Zeroth order and first order}
+We expand the Green's function into a power series of the form
+\begin{align}
+G_{\ell\ell'}^\r(\xi) &= \sum_{p\ge 0} \frac{\kla*{\i U_-}^p}{p!} G_{p,\ell\ell'}^\r(\xi).
+\end{align}
+The free contribution to the Green's function is
+\begin{align}
+G_{0,\ell\ell'}^\r(\xi) &= -\i\Theta(t) \mathcal{C}_0\\
+&= -\i\Theta(t) \frac{\delta_{\ell\ell'}}{\pi\alpha} \Re \klc*{\powe{-F(\xi_{-\ell}) - MF_1(\xi)}}\\
+&= -\i\Theta(t) \frac{\delta_{\ell\ell'}}{\pi\alpha} \Re \klc*{\csch\kla*{\frac{\pi\xi_{-\ell}}{\beta u}}^\frac{2+M}{2} \csch\kla*{\frac{\pi\xi_\ell}{\beta u}}^\frac{M}{2} \kla*{\frac{\pi\alpha}{\i\beta u}}^{1+M}}\\
+&= \i\Theta(\xi_+)\Theta(\xi_-) \frac{\delta_{\ell\ell'} \sin\kla*{\frac{\pi M}{2}}}{\beta u} \kla*{\frac{\pi\alpha}{\beta u}}^{M} \csch\kla*{\frac{\pi\xi_{-\ell}}{\beta u}}^\frac{2+M}{2} \csch\kla*{\frac{\pi\xi_\ell}{\beta u}}^\frac{M}{2}
+\end{align}
+where we defined $M = \frac{1}{2} \klb*{K + \frac{1}{K} - 2}\ge 0$.
+The Fourier transform gives
+\begin{align}
+G_{0,\ell\ell'}^\r(k,\omega) &= \i \delta_{\ell\ell'} \frac{\beta \sin\kla*{\frac{\pi M}{2}}}{2\pi^2} \kla*{\frac{\pi\alpha}{\beta u}}^{M} J_0\kla*{\frac{\beta u}{\pi} k_\ell, \frac{2 + M}{2}} J_0\kla*{\frac{\beta u}{\pi} k_{-\ell}, \frac{M}{2}}.
+\end{align}
+%prefactor = 1j*np.sin(np.pi*M/2) * (np.pi * alpha /(beta*u))**M * beta / (2*np.pi**2)
+%k_p = (omega + u*k_vals) / (2*u)
+%k_m = (omega - u*k_vals) / (2*u)
+%j_0 = lambda z, K: 2**(K-1) * special.gamma(1-K) * special.gamma(K/2 - 1j * z/2) / special.gamma(1-K/2 - 1j * z/2)
+%g_rr = prefactor * j_0(beta*u * k_p / np.pi, 1 + M/2) * j_0(beta*u * k_m / np.pi, M/2)
+%g_ll = prefactor * j_0(beta*u * k_m / np.pi, 1 + M/2) * j_0(beta*u * k_p / np.pi, M/2)
+where we defined $k_\pm = \frac{\omega \pm uk}{2u}$ and the integral
+\begin{align}
+J_0(z,K) &= \intx{0}{\infty}{\powe{\i zx} \csch^K(x)}{x} = 2^{K-1} B\kla*{1 - K, \frac{K - \i z}{2}}.
+\end{align}
+As shown above the first order correction only consists of the connected average $\bra*{\klc*{\psi_\ell, \psi_{\ell'}^\dagger} S_\Text{int}}_0^c$.
+The neutrality condition immediately gives $\bra*{S_\Text{int}}_0 = 0$ so we are left with
+\begin{align}
+G_{1,\ell\ell'}^\r(\xi) &= -\i\Theta(t) \frac{1}{2\pi\alpha u} \sum_{s=\pm 1} \intrnd{2}{ \mathcal{E} }{\xi'},\\
+\mathcal{E} &= \bra*{\klc*{\psi_\ell(\xi), \psi_{\ell'}(0)^\dagger} \powe{2\i s\phi(\xi')}}_0 = \mathcal{C}_0 \mathcal{C} \eta_s\eta_{-s} \delta_{0, -\ell + \ell' + 2s}.
+\end{align}
+The Kronecker delta decomposes into $\delta_{\ell,-\ell'} \delta_{s,\ell}$ which simplifies the components to
+\begin{align}
+\mathcal{C}_0 &= \frac{\i\eta_\ell\eta_{-\ell} }{\pi\alpha} \Im\klc*{\powe{\frac{1}{2} \klb*{K - \frac{1}{K}} F_1(\xi)}} = \frac{\i\eta_\ell\eta_{-\ell}}{\pi\alpha} \Im \klc*{ \kla*{\frac{\pi\alpha}{\i\beta u}}^N \csch\kla*{\frac{\pi\xi_-}{\beta u}}^\frac{N}{2} \csch\kla*{\frac{\pi\xi_+}{\beta u}}^\frac{N}{2} }\\
+&= \frac{-\i\eta_\ell\eta_{-\ell} \sin\kla*{\frac{\pi N}{2}}}{\pi\alpha} \kla*{\frac{\pi\alpha}{\beta u}}^N \Theta(\xi_- \xi_+) \csch\kla*{\frac{\pi\xi_-}{\beta u}}^\frac{N}{2} \csch\kla*{\frac{\pi\xi_+}{\beta u}}^\frac{N}{2},\\
+\mathcal{C} &= \powe{-F(\xi_{-\ell} - \xi'_{-\ell})} \powe{-F(-\xi'_{\ell})} \powe{-(K-1) F_1(\xi - \xi')} \powe{-(K-1) F_1(-\xi')}\\
+&= \kla*{\frac{\pi\alpha}{\i\beta u}}^{2K} \csch\kla*{\frac{\pi [\xi_{-\ell} + \xi_{-\ell}']}{\beta u}}^{K_+} \csch\kla*{\frac{\pi [\xi_{\ell} + \xi_{\ell}']}{\beta u}}^{K_-} \csch\kla*{\frac{\pi \xi_{\ell}'}{\beta u}}^{K_+} \csch\kla*{\frac{\pi \xi_{-\ell}'}{\beta u}}^{K_-} 
+\end{align}
+where we defined $N=\frac{1}{2} \klb*{\frac{1}{K} - K}\ge 0$ and $K_\pm = \frac{K \pm 1}{2}$.
+Note that we replaced $\xi'\rightarrow -\xi'$ which is valid under the integral.
+At this point we realize that the two-dimensional integral once again decomposes into the product of one-dimensional integrals, this time of the type
+\begin{align}
+I_1(x,K) &= \intr{\csch^\frac{K+1}{2}\kla*{x+x' - \i\delta} \csch^\frac{K-1}{2}\kla*{x' - \i\delta}}{x'}
+\end{align}
+%integrate csch(0.3+x - I/10)^1.1 csch(x - I/10)^0.1 from x=-inf to inf = -0.855449 + 2.6328 i
+%x=0.3; K=1.0; delta=1e-1
+%c_quad(lambda xp: 1/np.sinh(x+xp-1j*delta)**(1.1) * 1/np.sinh(xp-1j*delta)**(0.1), -50, 50, limit=300)
+%#OUT: ((-0.8554485+2.6327998j), 3.85e-09)
+where we have reinserted a regularization to ensure convergence.
+One can numerically check that
+\begin{align}
+I_1(x,K) &\approx \kla*{1 - \powe{\pi\i (K-1)}} \frac{8^\frac{K-1}{2} B\kla*{\frac{K}{2}, 1-K} \sech^\frac{K-1}{2}(x)}{1 + \kla*{2^\frac{K-1}{2} - 1} \sech^\frac{K+7}{10}(x)}
+\end{align}
+%K=0.1; delta=1e-1
+%x=2.3
+%c_quad(lambda xp: 1/np.sinh(xp+x-1j*delta)**((K+1)/2) * 1/np.sinh(xp-1j*delta)**((K-1)/2), -50, 50), (1 - np.exp(np.pi*1j*(K-1))) * 8**((K-1)/2) * special.beta(K/2, 1-K) / np.cosh(x)**((K-1)/2) / (1 + (2**((K-1)/2)-1) / np.cosh(x)**((K+7)/10))
+is a very good approximation.
+Thus the correlation function becomes
+\begin{align}
+G_{1,\ell\ell'}^\r(\xi) &= \bsplit{&\Theta(\xi_+)\Theta(\xi_-) \frac{\delta_{\ell,-\ell'}\sin\kla*{\frac{\pi N}{2}}}{2\pi^2\alpha^2 u} \kla*{\frac{\pi\alpha}{\beta u}}^{N+2K} \powe{-\i\pi K} \csch\kla*{\frac{\pi \xi_-}{\beta u}}^\frac{N}{2} \csch\kla*{\frac{\pi \xi_+}{\beta u}}^\frac{N}{2}\\
+&\times \frac{\beta u}{\pi} I_1\kla*{\frac{\pi\xi_{-\ell}}{\beta u}, K} \frac{\beta u}{\pi} I_1\kla*{\frac{\pi\xi_\ell}{\beta u}, K} }\\
+&\approx \bsplit{&\Theta(\xi_+)\Theta(\xi_-) \frac{\delta_{\ell,-\ell'} \sin\kla*{\frac{\pi N}{2}}}{2\pi^2 u} \kla*{\frac{\pi\alpha}{\beta u}}^{N+2K-2} \powe{-\i\pi K} \kla*{1 - \powe{\pi\i (K-1)}}^2 8^{K-1} \\
+&\times \frac{\csch\kla*{\frac{\pi \xi_-}{\beta u}}^\frac{N}{2} \sech^\frac{K-1}{2}\kla*{\frac{\pi\xi_{-}}{\beta u}}}{1 + \kla*{2^\frac{K-1}{2} - 1} \sech^\frac{K+7}{10}\kla*{\frac{\pi\xi_{-}}{\beta u}}} \frac{\csch\kla*{\frac{\pi \xi_+}{\beta u}}^\frac{N}{2} \sech^\frac{K-1}{2}\kla*{\frac{\pi\xi_{+}}{\beta u}}}{1 + \kla*{2^\frac{K-1}{2} - 1} \sech^\frac{K+7}{10}\kla*{\frac{\pi\xi_{+}}{\beta u}}} B\kla*{\frac{K}{2}, 1-K}^2. }
+\end{align}
+The Fourier transform is given by
+\begin{align}
+G_{1,\ell\ell'}^\r(k,\omega) &= \delta_{\ell,-\ell'} \frac{2^{3K-3} \beta^2\sin\kla*{\frac{\pi N}{2}}}{\pi^4} \kla*{\frac{\pi\alpha}{\beta u}}^{N+2K-2} J_1\kla*{\frac{\beta u}{\pi}k_+, K} J_1\kla*{\frac{\beta u}{\pi}k_-, K}
+\end{align}
+where we defined the integral
+\begin{align}
+J_1(z,K) &= \cos\kla*{\frac{\pi K}{2}} B\kla*{\frac{K}{2}, 1-K} \intx{0}{\infty}{\powe{\i zx} \frac{\csch(x)^{\frac{1}{2} \kla*{\frac{1}{K} - K}} \sech(x)^\frac{K-1}{2}}{1 + \kla*{2^\frac{K-1}{2} - 1} \sech(x)^\frac{K+7}{10}} }{x}.
+\end{align}
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

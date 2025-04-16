@@ -1,0 +1,230 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{xcolor, colortbl}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{06 Light bending and Lense-Thirring}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{General Relativity}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Problem 16: Light bending}
+For light we have $\tecxt\text{d}s^2=0$ and therefore need to use a new affine parameter $\lambda$ to describe the motion.
+For a Schwarzschild metric with $a(r) := 1 - \frac{R_S}{r}$ the Lagrange function is given by
+\begin{align}
+L &= \frac{\tecxt\text{d}s^2}{\tecxt\text{d}\lambda^2} = g_{\mu\nu} \frac{\tecxt\text{d}x^\mu }{\tecxt\text{d}\lambda} \frac{\tecxt\text{d}x^\nu}{\tecxt\text{d}\lambda} = a \kla\left( \frac{\text{d}t }{\text{d}\lambda} \right)^2 - \frac{1}{a} \kla\left( \frac{\text{d}r }{\text{d}\lambda} \right)^2 - r^2 \kla\left( \frac{\text{d}\theta }{\text{d}\lambda} \right)^2 - r^2 \sin^2\theta \kla\left( \frac{\text{d}\phi }{\text{d}\lambda} \right)^2.
+\end{align}
+The motion can be fully described within a two dimensional plane, so we may choose $\theta = \frac{\pi}{2} \equiv \tecxt\text{const}$.
+Note that $t$ and $\phi$ do not appear explicitly in our Lagrangian.
+Thus we have the conserved quantities
+\begin{align}
+\frac{\partial L }{\partial \frac{\text{d}t }{\text{d}\lambda}} &= 2a \frac{\text{d}t }{\text{d}\lambda} = \tecxt\text{const} \equiv 2E,\\
+\frac{\partial L }{\partial \frac{\text{d}\phi }{\text{d}\lambda}} &= -2r^2 \frac{\text{d}\phi }{\text{d}\lambda} = \tecxt\text{const} \equiv -2L_z
+\end{align}
+where $E$ can be interpreted as the energy and $L_z$ as the $z$-component of the angular momentum.
+Inserting these expressions into the Lagrangian, we find
+\begin{align}
+0 &= a\frac{E^2}{a^2} - \frac{1}{a} \kla\left( \frac{\text{d}r }{\text{d}\lambda} \right)^2 - r^2 \frac{L_z^2}{r^4}.
+\end{align}
+Let us parametrize $r=r(\phi)$ to rewrite the derivative.
+Then we find
+\begin{align}
+E^2 &= r'(\phi)^2 \frac{L_z^2}{r^4} + a \frac{L_z^2}{r^2}
+\end{align}
+an may read of the effective potential
+\begin{align}
+V_\tecxt\text{eff} &= a\frac{L_z^2}{r^2} = \kla\left( 1 - \frac{R_S}{r} \right) \frac{L_z^2}{r^2}.
+\end{align}
+In order to solve this equation, we transform to a new variable $u := \frac{1}{r}$.
+This yields
+\begin{align}
+E^2 &= \frac{u'^2}{u^4} u^4 L_z^2 + (1 - R_Su) L_z^2u^2.
+\end{align}
+Differentiating with respect to $\phi$ gives
+\begin{align}
+0 &= 2L_z^2 u'u'' + 2L_z^2 uu' - 3R_SL_z^2 u^2u',
+\end{align}
+or equivalently just
+\begin{align}
+u'' + u &= \frac{3R_S}{2} u^2.
+\end{align}
+Assuming that $r\gg R_S$, we may solve this equation using perturbation theory.
+Up to order $R_S^0$ the equation is just a harmonic oscillator
+\begin{align}
+u_0'' + u_0 &= 0
+\end{align}
+with the solution $u_0(\phi) = A\cos (\phi + \phi_0)$.
+Let $u=u_0 + R_Su_1 + \mathcal{O}(R_S^2)$ into the original equation to get
+\begin{align}
+u_1''+u_1 &= \frac{3}{2} u^2 + \mathcal{O}(R_S) = \frac{3}{2} u_0^2 + \mathcal{O}(R_S) \simeq \frac{3A^2}{4} \klam\left[ 1 + \cos (2\phi + 2\phi_0) \right].
+\end{align}
+We can find a solution to this equation with the ansatz $u_1(\phi) = \frac{3A^2}{4} + B\cos(2\phi + 2\phi_0)$.
+This yields
+\begin{align}
+B ( 1 - 2^2) &= \frac{3A^2}{4}
+\end{align}
+giving $B = -\frac{A^2}{4}$.
+Thus our full solution up to order $R_S^2$ is given by
+\begin{align}
+u(\phi) &= A\cos(\phi + \phi_0) + \frac{3R_SA^2}{4} - \frac{R_SA^2}{4} \cos (2\phi + 2\phi_0) + \mathcal{O}(R_S^2).
+\end{align}
+Without loss of generality we may set $\phi_0 = 0$, since the problem is symmetric in the polar angle.
+Thus our solution takes the form
+\begin{align}
+u(\phi) &= A\cos(\phi) + \frac{3R_SA^2}{4} - \frac{R_SA^2}{4} \klam\left[ 2\cos^2(\phi) - 1 \right] = \\
+&= A\cos(\phi) + R_SA^2 - \frac{R_SA^2}{2}\cos^2(\phi).
+\end{align}
+We want to discuss this for the physical situation of light coming from and going to a point infinitely far away, i.e. $u(\phi_\tecxt\text{in,out}) = 0$.
+Thus we need to solve
+\begin{align}
+0 &\overset{!}{=} A\cos(\phi) + R_SA^2 - \frac{R_SA^2}{2} \cos^2(\phi)
+\end{align}
+which gives
+%\begin{align}
+%\cos(\phi) &= \frac{-A \pm \sqrt{A^2 + 2R_S^2A^4}}{-R_SA^2} = \frac{-1}{R_SA} \klam\left[ \substack{+\vspace{-0.1cm} \\ (-)} \sqrt{1 + 2R_S^2A^2} - 1 \right].
+%\end{align}
+\begin{align}
+\cos(\phi_\tecxt\text{in,out}) &= -\frac{1}{R_SA} \pm \sqrt{\frac{1}{R_S^2A^2} - 2} = \frac{\substack{+\vspace{-0.1cm} \\ (-)} \sqrt{1 - 2R_S^2A^2} - 1}{R_SA} = -R_SA + \mathcal{O}(R_S^2).
+\end{align}
+The negative branch gives $|\cos(\phi)|>1$, which is invalid.
+Therefore we find
+\begin{align}
+\phi_\tecxt\text{in,out} &\simeq \pm \arccos\left( R_SA \right) \simeq \pm \klam\left[ \frac{\pi}{2} + R_SA + \mathcal{O}(R_S^2) \right].
+\end{align}
+The expected angle difference would be $\phi_\text{in} - \phi_\text{out} = \pi$, so we define the deviation as
+\begin{align}
+\Delta\phi &= \phi_\text{in} - \phi_\text{out} - \pi \simeq 2R_SA.
+\end{align}
+We still have to determine the value of $A$.
+We can interpret this as the closest approach along the trajectory, so it should correspond to the point at which $u'(\phi_c)=0$, i.e.
+\begin{align}
+0 &= A\cos(\phi_c) -R_SA^2\sin(\phi_c)\cos(\phi_c).
+\end{align}
+Then we can get an equation for $A$ by setting
+$u \left( \phi_c=\frac{\pi}{2} \right) = \frac{1}{R}$ where $R$ is the minimal distance to the central mass.
+This leads to
+\begin{align}
+\frac{1}{R} &= A + \frac{R_SA^2}{2},\\
+\Rightarrow\ \ \ A &= \frac{-1 \substack{+\vspace{-0.1cm}\\(-)} \sqrt{1 + \frac{2R_S}{R}}}{R_S} \simeq \frac{1}{R_S} \frac{R_S}{R} = \frac{1}{R}.
+\end{align}
+Thus the final result is
+\begin{align}
+\Delta \phi &= \frac{2R_S}{R} \equiv \frac{4G_NM}{Rc^2}.
+\end{align}
+For $M=\SI{2e30}{kg}$, $G_N=\SI{7e-11}{\frac{m^3}{kg\cdot s^2}}$ and $R=\SI{7e8}{m}$ this amounts to $\Delta \phi = 1.75''$ (where one arcsecond is $1'' := \frac{1^\circ}{3600} = \frac{1}{3600} \frac{2\pi}{360}\,\tecxt\text{rad}$).
+
+\section{Problem 17: Lense-Thirring effect}
+A rotating sphere with homogenous charge density $\rho_0$, radius $R$ and frequency $\vec{\omega}$ creates a magnetic field $\vec{B} = \frac{1}{3}R^2\rho_0\vec{\omega}$ in its core.
+The corresponding vector potential is $\vec{A} = \frac{1}{2} \vec{B}\times\vec{r} + \mathcal{O}(\vec{r}\,^2)$.
+In analogy to electrodynamics, we define such a potential for the $T_{0j}$ components of the energy tensor.
+The linearised field equations reduce to
+\begin{align}
+-\frac{\epsilon}{2}\square h^\tecxt\text{E}_{\mu\nu} &= \kappa T_{\mu\nu}.
+\end{align}
+For time-independent sources this reduces to
+\begin{align}
+\frac{\epsilon}{2} \nabla^2 h^\tecxt\text{E}_{0j} &= \kappa T_{0j} = \kappa (\vec{j})_j = -\kappa\nabla^2(\vec{A})_j.
+\end{align}
+Since $h^\tecxt\text{E}_{0j} = h_{0j} - \frac{1}{2}\eta_{0j}h = h_{0j}$, we can just write
+\begin{align}
+\epsilon h_{0j} &= -2\kappa (\vec{A})_j = \kappa \epsilon_{jkl} x_kB_l.
+\end{align}
+Now let us fix $\vec{\omega} = \omega\vec{e}_z$.
+Then $\vec{B} = B_z \vec{e}_z \equiv B\vec{e}_z$ and our result simplifies to
+\begin{align}
+\epsilon h_{0x} &= \kappa yB, &&& \epsilon h_{0y} &= -\kappa xB && \tecxt\text{and} & \epsilon h_{0z} &= 0.
+\end{align}
+The Christoffel symbols are given by
+\begin{align}
+\Gamma^k_{0j} &= \frac{\epsilon}{2}\eta^{kl} \kla\left( h_{l0,j} + h_{lj,0} - h_{0j,l} \right) = \\
+&= \frac{\epsilon}{2} \eta^{kl} \kla\left( h_{0x,y} \delta_{lx}\delta_{jy} + h_{0y,x} \delta_{ly} \delta_{jx} + 0 - h_{0x,y} \delta_{jx} \delta_{ly} - h_{0y,x} \delta_{jy} \delta_{lx} \right) = \\
+&= \frac{\epsilon}{2} (-\delta^k_x) (h_{0x,y} - h_{0y,x}) \delta_{jy} + \frac{\epsilon}{2} (-\delta^k_y) (h_{0y,x} - h_{0x,y}) \delta_{jx}.
+\end{align}
+Thus we have 
+\begin{align}
+\Gamma^y_{0x} &= \frac{\epsilon}{2} (h_{0x,y} - h_{0y,x}) = \kappa B = -\Gamma^x_{0y}.
+\end{align}
+However, we already know that $\Gamma^y_{0x} = \Omega = -\Gamma^x_{0y}$ from problem 14, so we can identify
+\begin{align}
+\Omega &\equiv \kappa B = \frac{8\pi G_N}{c^2} \frac{1}{3} R^2\rho_0 \omega.
+\end{align}
+Using the matter density $\rho_0 = \frac{M}{\frac{4\pi}{3}R^3}$ for a sphere we can write this as
+\begin{align}
+\Omega &= \frac{2G_NM\omega}{Rc^2} = \frac{R_S}{R} \omega.
+\end{align}
+For the sun we have $\omega = \frac{2\pi}{T}$ where the period is $T = \SI{25}{d} = \SI{2.16e6}{s}$.
+Together with the other constants this leads to 
+\begin{align}
+\Omega &= \SI{1.23e-11}{\frac{1}{s}} = \SI{3.9e-4}{\frac{1}{a}}.
+\end{align}
+
+\section{Problem 18: Differential operators}
+For cylindrical coordinates the metric is $\tecxt\text{d}s^2 = \tecxt\text{d}r^2 + r^2\tecxt\text{d}\phi^2 + \tecxt\text{d}z^2$.
+Thus we find
+\begin{align}
+\tecxt\text{div\,} \vec{A} &= \frac{1}{\sqrt{g}} \partial_\mu \kla\left( \sqrt{g} g^{\mu\nu} A_\nu \right) = \frac{1}{r} \partial_r \kla\left( r A_r \right) + \partial_\phi \kla\left( \frac{1}{r^2} A_\phi \right) + \partial_z A_z,\\
+\tecxt\text{rot\,} \vec{A} &= \frac{1}{\sqrt{g}} \sum_{jkl} \epsilon_{jkl} \partial_k A_l \vec{g}_j = \\
+&= \frac{1}{r} (\partial_\phi A_z - \partial_z A_\phi) \vec{e}_r + (\partial_z A_r - \partial_r A_z) \vec{e}_\phi + \frac{1}{r} (\partial_rA_\phi - \partial_\phi A_r) \vec{e}_z,\\
+\nabla^2 \phi &= \frac{1}{\sqrt{g}} \partial_\mu \kla\left( \sqrt{g} g^{\mu\nu} \partial_\nu \psi \right)  = \frac{1}{r}\partial_r \kla\left( r \partial_r \psi \right) + \frac{1}{r^2} \partial_\phi^2 \psi + \partial_z^2\psi.
+\end{align}
+Note that $A_\nu := \vec{g}_\nu \cdot \vec{A}$.
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

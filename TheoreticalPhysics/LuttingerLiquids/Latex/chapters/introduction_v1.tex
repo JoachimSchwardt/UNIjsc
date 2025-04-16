@@ -1,0 +1,46 @@
+\chapter{Introduction}\label{chap:int}
+%\showthe\textwidth %TODO
+%\begin{figure}[!ht]
+%\includegraphics{figures/test.pdf}
+%\caption{Test image; check that font is identical and $x$ and $y$ match size of axis labels; check that image size is correctly configured to match linewidth} %TODO
+%\end{figure}
+%\FloatBarrier
+%TODO \gls{ll} \gls{ep}
+%\section{Background}\label{sec:int:background}
+The current frontier of high-energy physics lies in the extension of known microscopic laws at ever higher energies, or even the discovery of entirely new interactions.
+In the world of condensed matter the situation is somewhat different for the underlying microscopic description of particles at the relative low energies and temperatures is already well understood.
+Here the challenge instead lies in the complexity that emerges as many particles are combined, e.g. in a solid or a fluid.
+In both of the latter two examples one generally deals with a macroscopic number of particles, but nevertheless there is a major difference in the way those particles are treated.\\
+In fluid dynamics -- at least on the analytical side of things -- one makes use of a continuum description such as the Navier-Stokes equation.
+Here the particles are essentially smeared out and objects of interest are density and velocity flow \emph{fields}.
+Additionally, quantum properties do not play a role due to the field theory being built on entirely classical interactions.\\
+In a solid very similar approaches also exist for the description of the properties surrounding rigidity, e.g. sheer tensions or compressibility.
+But on an even more fundamental level a description in terms of quantized particles moving and interacting within a lattice structure is also possible where the quantum nature is mostly due to the Bose-Einstein or Fermi-Dirac statistics that arise from acknowledging the spin of the particles.
+On a high level this situation of a quantum many-body system is difficult for the same reason as the fluid; while the macroscopic properties are certainly derivable from the microscopic ones in theory, the complexity growth makes any practical calculation of the $10^{30}$ particles in a volume of gas impossible.
+Crucially, even the hypothetical knowledge of the exact positions and velocities of all particles, or the full quantum many-body wave-function, would not even be all that useful due to the phenomenon of emergence.
+Essentially, this is the idea that the whole can be greater than the sum of its constituents\footnote{although when looked at more closely this claim is rather absurd and should not be taken too literally} and as such emergence is both a blessing and a curse.
+On the one hand it makes our life difficult since understanding the microscopic laws is only a small step on the road to understanding a system of many particles.
+On the other hand it is not \emph{just} complexity that arises from emergence; for example a large volume of pure Neon would certainly not be considered ``complicated''.
+This is because while the individual motion of all the particles may be hard to calculate, the emergent properties of temperature and pressure are both simple and also sufficient to describe the gas.
+Loosely speaking an accurate prediction of those is possible because we only need to know what any given particle is doing on average.
+In fact, it would definitely not be straightforward to even grasp the concept of such emergent macroscopic properties given the exact array of microscopic degrees of freedom.\\
+Similarly in quantum systems such an effective description can potentially be very powerful.
+On a fundamental level all Hamiltonians should be hermitian to ensure real energy eigenvalues and all dynamics should be unitary.
+Yet in the real world entropy imposes a direction on the axis of time and dissipative phenomena by coupling to an environment exist.
+The idea of non-hermitian physics is that since one can never quite get rid of the coupling to the rest of the universe anyway, but is generally only interested in a small part of it.
+As such the full theory may still be hermitian, but, in analogy to how temperature and pressure elegantly describe a gas, the phenomena emerging from such a coupling might be more elegantly described by an \emph{effective} non-hermitian model.\\
+The other aspect of many-body dynamics relevant for this thesis is that of strongly correlated systems.
+An effective theory can be very useful while massively reducing the complexity of the problem.
+A prime example of this is the Fermi-Liquid theory [REF] which takes interactions into account in a way that ultimately lends itself to a single-particle description [TODO others?] [REF?].
+But when interactions, and by the same token correlations, become strong enough, this theory breaks down as the new phenomena can no longer be described by merely adjusting the lifetime of the quasiparticles [TODO rewrite and/or expand].
+In one spatial dimension correlations turn out to essentially always be ``strong'' and the Fermi-Liquid approach does not work at all.
+A more detailed discussion is given in the next chapter, but the gist is that a clever change by of perspective going by the name of Bosonization leads to the so-called \acrlong{ll}.
+In this picture some -- but, alas, not all -- interactions can be treated exactly because the constituent product of four creation and annihilation operators is mapped to one that is merely quadratic in the new degrees of freedom.\\
+In its essence this thesis combines the three main ideas discussed here -- quantum many-body systems, non-hermitian physics and the Luttinger Liquid theory -- through a case study of a specific microscopic model.
+%REF QFT_Abrikosov intro?, 
+\subsubsection{Outline}\label{sec:int:outline}
+This thesis consists of two main parts.
+In \autoref{chap:back} we introduce the analytical tools and background information required for the subsequent case study in \autoref{chap:ell}.
+%In \autoref{chap:ell} these concepts are subsequently applied to a specific model in order to derive the formation of \acrlong{ep}s within the context of \acrlong{ll}s.
+In \autoref{chap:sum} we summarize the results and provide an outlook.
+Many of the technical details are given in \autoref{chap:app} to stream-line the discussion in the main body of the text.

@@ -1,0 +1,5 @@
+Hello everyone and welcome to my talk on the Extremal Types Theorem!
+But before we get into the details of that and break down the proof, I think it is important to understand exactly which question is answered by the theorem. Therefore I want to spend the first part of the talk on showing how said question arises naturally from a very general view on Extreme Value Theory.
+
+With that out of the way, let me introduce you to the setup.
+We're doing statistics, so we need random variables \xi_1 to \xi_n. And the one big assumption throughout the talk will be, that these random variables are both independent and identically distributed -- I suppose that makes two assumptions, really. The latter of course just means that they share a common cumulative distribution function denoted F of x.

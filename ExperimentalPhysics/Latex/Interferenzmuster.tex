@@ -1,0 +1,40 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\begin{document}
+
+\title{Interferenzmuster}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{5. Polarisiertes Licht}
+\section*{6. Brewster-Winkel}
+Es gilt die Bedingung $\alpha +\beta =\frac{\pi}{2}$:
+\begin{align*}
+n_E\sin\alpha &=n_G\sin\beta=n_G\cos\alpha\ \ \Rightarrow\ \ \tan\alpha=\frac{n_G}{n_E}\ \ \Rightarrow\ \ \alpha =\arctan\frac{n_G}{n_E}
+\end{align*}
+\section*{7. Interferenzmuster}
+Betrachte eben Wellen der Form $\cos(\vv{k}\cdot\vv{r}-\omega t)$ und verwende das Additionstheorem $\cos(x)+\cos(y)=2\cos(\frac{x-y}{2})\cos(\frac{x+y}{2})$. Es sei zudem $|\vv{k}|=|\vv{h}|=\frac{2\pi}{\lambda}$ und $\vv{k}\cdot\vv{h}=kh\cos(\theta)$:
+\begin{align*}
+\Psi_k+\Psi_h&=\cos(k_xx+k_yy-\omega t)+\cos(h_xx+h_yy-\omega t)=\\
+&=2\cos(\frac{(k_x-h_x)x+(k_y-h_y)y}{2})\cos(\frac{(k_x+h_x)x+(k_y+h_y)y}{2}-\omega t)
+\end{align*}
+Bestimme nun das Interferenzmuster entlang $\vv{k}-\vv{h}$ mithilfe der Parametrisierung $x=\frac{k_x-h_x}{|\vv{k}-\vv{h}|}z$ und $y=\frac{k_y-h_y}{|\vv{k}-\vv{h}|}z$. Für den Betrag ist zudem folgende Vereinfachung möglich:
+\begin{align*}
+|\vv{k}-\vv{h}|&=\sqrt{k_x^2+k_y^2+h_x^2+h_y^2-2(k_xh_x+k_yh_y)}=\sqrt{k^2+h^2-2\vv{k}\cdot\vv{h}}=2k\sqrt{\frac{1-\cos\theta}{2}}= \\
+&=2k\sin\frac{\theta}{2}=\frac{4\pi}{\lambda}\sin\frac{\theta}{2} \\
+\Psi_k+\Psi_h&=2\cos(\frac{(k_x-h_x)^2+(k_y-h_y)^2}{2|\vv{k}-\vv{h}|}z)\cos(\frac{k_x^2-h_x^2+k_y^2-h_y^2}{2|\vv{k}-\vv{h}|}z-\omega t)= \\
+&=2\cos(\frac{|\vv{k}-\vv{h}|}{2}z)\cos(\omega t)=2\cos(\frac{2\pi}{\lambda}\sin\frac{\theta}{2}z)\cos(\omega t)\\
+&\Rightarrow\ \ \Lambda=\frac{2\pi}{\frac{2\pi}{\lambda}\sin\frac{\theta}{2}}=\frac{\lambda}{\sin\frac{\theta}{2}}
+\end{align*}
+\section*{8. Beugung am kreisrunden Hindernis}
+\section*{9. Beugung und Interferenz am Doppelspalt}
+
+\end{document}

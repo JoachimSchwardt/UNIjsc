@@ -1,0 +1,293 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+
+\newcommand*{\Title}{Various Problems of Statistical Nature}
+\newcommand*{\Author}{Joachim Schwardt}
+
+\input{preamble_shared}
+\input{preamble}
+
+\usepackage{xurl}
+
+%\titlehead{titlehead}
+\subject{Stochastic Processes}
+\title{\Title}
+\author{\Author}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Random Walk -- Fibonacci Edition}
+Source: \url{https://math.stackexchange.com/questions/5008486/how-to-find-lim-n-to-infty-sqrtnx-n-for-a-random-fibonacci-sequenc}
+
+Let $x_0=x_1=1$.
+Then we define a stochastic process by
+\begin{align}
+x_{n+1} &= S_{n,1} x_n + S_{n,2} x_{n-1},
+\end{align}
+where the signs $S_{n,l}$ for $l=1,2$ are drawn from $\klc*{\pm 1}$ with probability $p$ for $s=+1$ and $1-p$ for $s=-1$.
+Assume that the $S_{n,l}$ are i.i.d.
+Show that $\abs*{x_n}^{1/n} \rightarrow 1.13198824\dots$with probability 1.
+
+
+Solution:\\
+Let us start by rewriting the process as a matrix equation,
+\begin{align}
+y_{n+1} &= \begin{pmatrix}
+x_{n+1} \\ x_n
+\end{pmatrix} = \begin{pmatrix}
+S_{n,1} x_n + S_{n,2} x_{n-1} \\ x_n
+\end{pmatrix} = \begin{pmatrix}
+S_{n,1} & S_{n,2} \\ 1 & 0
+\end{pmatrix} \begin{pmatrix}
+x_n \\ x_{n-1}
+\end{pmatrix} = M_n y_n.
+\end{align}
+This gives $y_n=M_{n-1} M_{n-2} \dots M_{1} y_1 \equiv T_n y_1$.
+Our goal is to find a more useful representation of the product of the matrices, $T_n$, in order to evaluate the limiting behaviour.
+Consider first some simple examples,
+\begin{align}
+T_3 &= M_2M_1 = \begin{pmatrix}
+S_{2,1} & S_{2,2} \\ 1 & 0
+\end{pmatrix} \begin{pmatrix}
+S_{1,1} & S_{1,2} \\ 1 & 0
+\end{pmatrix} = \begin{pmatrix}
+S_{2,1}S_{1,1} + S_{2,2} & S_{2,1} S_{1,2} \\ S_{1,1} & 0
+\end{pmatrix},\\
+T_4 &= M_3T_3 = \begin{pmatrix}
+S_{3,1} \kla*{S_{2,1}S_{1,1} + S_{2,2}} + S_{3,2} S_{1,1} & S_{3,1} S_{2,1} S_{1,2} \\ S_{2,1}S_{1,1} + S_{2,2} & 0
+\end{pmatrix},\\
+T_5 &= M_4T_4 = \begin{pmatrix}
+S_{4,1} \kla*{S_{3,1} \kla*{S_{2,1}S_{1,1} + S_{2,2}} + S_{3,2} S_{1,1}} + S_{4,2} \kla*{S_{2,1}S_{1,1} + S_{2,2}} & S_{4,1} S_{3,1} S_{2,1} S_{1,2} \\ S_{3,1} \kla*{S_{2,1}S_{1,1} + S_{2,2}} + S_{3,2} S_{1,1} & 0
+\end{pmatrix}.
+\end{align}
+A more clear approach is to consider
+\begin{align}
+X_2 &= S_{1,1} + S_{1,2},\\
+X_3 &= S_{2,1}X_2 + S_{2,2} = S_{2,1} \kla*{S_{1,1} + S_{1,2}} + S_{2,2},\\
+X_4 &= S_{3,1}X_3 + S_{3,2}X_2 = S_{3,1} \kla*{S_{2,1} \kla*{S_{1,1} + S_{1,2}} + S_{2,2}} + S_{3,2} \kla*{S_{1,1} + S_{1,2}}.
+\end{align}
+%import mpl_special
+%PATH = "/home/jo-cube/Documents/UNI/Mathematik/Latex/figures/"
+%def process(n, size=10):
+%    x0 = np.ones(size, dtype=float)
+%    x1 = np.ones(size, dtype=float)
+%    signs = np.random.choice([+1.0,-1.0], size=(2*(n-1), size))
+%    for i in range(n-1):
+%        x0, x1 = x1, signs[2*i] * x1 + signs[2*i+1] * x0
+%    return x1
+%sample=100000; n_v=np.geomspace(250, 4000, 5, dtype=int)
+%nbins=int(np.sqrt(sample))
+%process_v = [process(n, sample) for n in n_v]
+%results = [np.abs(p)**(1/n) for p, n in zip(process_v, n_v)]
+%mean = np.mean(results[-1])
+%std = np.std(results[-1])
+%theory = np.random.normal(mean, std, size=100000)
+%fig, ax = plt.subplots()
+%for result, n in zip(results, n_v):
+%    ax.hist(result, bins=nbins, density=True, label=f"$n={n}$")
+%ax.hist(theory, bins=nbins, density=True, label="Gaussian", histtype="step", color="k")
+%ax.axvline(np.mean(results[-1]), c="k", label=rf"$\mu = {mean:.4f} \pm {std:.4f}$")
+%ax.legend()
+%ax.set_xlabel(r"$\sqrt[n]{|x_n|}$")
+%ax.set_ylabel("$p$")
+%mpl_special.embed_labels(fig, fig.axes)
+Different idea:
+We have only four possible matrices, all equally likely.
+They are
+\begin{align}
+K_1 &= \begin{pmatrix}
+1 & 1 \\ 1 & 0
+\end{pmatrix}, \quad K_2 = \begin{pmatrix}
+1 & -1 \\ 1 & 0
+\end{pmatrix}, \quad K_3 = \begin{pmatrix}
+-1 & 1 \\ 1 & 0
+\end{pmatrix} \quad\text{and}\quad K_4 = \begin{pmatrix}
+-1 & -1 \\ 1 & 0
+\end{pmatrix}.
+\end{align}
+The eigenvalues of these are determined by the characteristic equations,
+\begin{align}
+0 &= \lambda^2 - s_1\lambda - s_2,
+\end{align}
+which have solutions $\lambda_\pm = \frac{1}{2}\kla*{s_1 \pm \sqrt{1 + 4s_2}}$.
+These have a magnitude of $|\lambda_\pm| = \phi^{\pm 1}$ if $s_2=+1$ and $1$ if $s_2=-1$, where $\phi = \frac{1}{2} \kla*{1 + \sqrt{5}}$ is the golden ratio.
+
+%Kv=[np.array([[s1,s2],[1,0]]) for s1 in [1,-1] for s2 in [1,-1]]
+%Uv = [np.array([[phi,1],[phi,-1]]), np.array([[1,1],[1,0]])/np.sqrt(2),np.array([[1,1],[1,0]])/np.sqrt(2),np.array([[1,1],[1,0]])/np.sqrt(2),]
+%for K, U in zip(Kv, Uv):
+%    ew, ev = np.linalg.eig(K)
+%    print(np.linalg.inv(U) @ K @ U - K)
+
+To make some progress, let us assume that the rotation matrices generated by $s_2=-1$ do not interfere with the eigenspace of the other two matrices.
+Within this rather brutal approximation, we would then expect an average growth rate of $\phi$ every other iteration, and thus the asymptotic behaviour $|x_n| \sim \phi^{n/2}$, giving a limit of $\sqrt{\phi} \approx 1.272\dots$; clearly, we have some errors to clean up.
+
+%Note that we have $\powe{x\textbf{n} \cdot \bm{\sigma}} = \cosh(x) + \sinh(x) \textbf{n} \cdot \bm{\sigma}$, and that $K_j = \powe{x_j \textbf{n}_j\cdot \bm{\sigma}}$ with $\textbf{n}_1 = \frac{1}{\sqrt{5}}\kla*{2,0,1}^\transpose$
+Instead, let us diagonalize the four matrices.
+The equations are
+\begin{align}
+s_1v_x + s_2v_y &= \lambda v_x,\\
+v_x &= \lambda v_y,
+\end{align}
+giving $v_+ = \frac{1}{\sqrt{1 + |\lambda_+|^2}} \kla*{\lambda_+, 1}^\transpose$ and $v_- = \frac{1}{\sqrt{1 + |\lambda_- - s_1|^2}} \kla*{s_2, \lambda_- - s_1}^\transpose$.
+One finds $K_j = U_j^{-1} D_j U_j$ with
+\begin{align}
+U_1 &= \frac{1}{\sqrt{2}} \begin{pmatrix}
+1 & 1 \\ 1 & -1
+\end{pmatrix}
+\end{align}
+
+Different idea 2:
+Define $a_n = \frac{x_n}{x_{n-1}}$ and let $S_{n,1} S_{n,2} \equiv S_n$.
+Then we have
+\begin{align}
+a_{n+1} &= \frac{x_{n+1}}{x_n} = S_{n,1} + S_{n,2} \frac{1}{a_n} = S_{n,1} + \frac{S_{n,2}}{S_{n-1,1} + \frac{S_{n-1,2}}{S_{n-2,1} + \dots}}.
+\end{align}
+
+Different idea 3:
+We have numerical evidence that taking the absolute value at every iteration does not affect the final distribution; this appears to be a special property of the symmetric process, i.e. $p=\frac{1}{2}$.
+For this value we can then instead consider
+\begin{align}
+X_{n+1} &= \abs*{S_nX_n + X_{n-1}}.
+\end{align}
+Curiously, in this form we may then also drop the absolute value again and let
+\begin{align}
+X_{n+1} &= S_nX_n + X_{n-1}.
+\end{align}
+The explicit form of the random variables is then given by
+\begin{align}
+X_2 &= S_1 + 1,\\
+X_3 &= S_2X_2 + 1 = S_2S_1 + S_2 + 1,\\
+X_4 &= S_3X_3 + X_2 = S_3S_2S_1 + S_3S_2 + S_3 + S_2S_1 + S_2 + 1.
+\end{align}
+Note that $p_Y(y) = \int p_X(x) \delta(y - f(x))\,\d x$ for $Y=f(X)$ and associated probability density functions $p$.
+Thus,
+\begin{align}
+p_{X_2}(x_2) &= \sum_{s_1=\pm 1} p_{S_1}(s_1) \delta_{x_2,s_1+1} = \frac{1}{2} \kla*{\delta_{x_2,2} + \delta_{x_2,0}},\\
+p_{X_3}(x_3) &= \sum_{s_2=\pm 1} \sum_{x_2\in \Omega_2} p_{S_2}(s_2) p_{X_2}(x_2) \delta_{x_3, s_2x_2+1} = \frac{1}{2} \frac{1}{2} \sum_{x_2\in\Omega_2} \kla*{\delta_{x_3, x_2+1} + \delta_{x_3, -x_2+1}}\\
+&= \frac{1}{4} \kla*{\delta_{x_3, 3} + 2\delta_{x_3, 1} + \delta_{x_3, -1}}.
+\end{align}
+Here, $\Omega_2=\klc*{0, 2}$ and $\Omega_3 = \kla*{-1,1,3}$.
+Then we also find
+\begin{align}
+p_{X_4}(x_4) &= \sum_{s_3=\pm 1} \sum_{x_3\in\Omega_3} \sum_{x_2\in\Omega_2} \frac{1}{2} p_{X_3}(x_3) \frac{1}{2} \delta_{x_4, s_3x_3+x_2}\\
+&= \frac{1}{4} \sum_{x_3\in\Omega_3} p_{X_3}(x_3) \kla*{\delta_{x_4, x_3} + \delta_{x_4,x_3+2} + \delta_{x_4, -x_3} + \delta_{x_4, -x_3+2}}\\
+&= \frac{1}{16} \kla*{\delta_{x_4,-3} + 4\delta_{x_4,-1} + 6\delta_{x_4,1} + 4\delta_{x_4,3} + \delta_{x_4,5}},\\
+p_{X_5}(x_5) &= \klc*{8: 1, 6: 7, 4: 21, 2: 35, 0: 35, -2: 21, -4: 7, -6: 1},\\
+p_{X_6}(x_6) &= \klc{13: 1, 11: 12, 9: 66, 7: 220, 5: 495, 3: 792, 1: 924, -1: 792, -3: 495, \\
+&\qquad -5: 220, -7: 66, -9: 12, -11: 1}.
+\end{align}
+%pv = [{1 : 1}, {1 : 1}]
+%def update(pv):
+%    p = {}
+%    for s in [+1,-1]:
+%        for key1, value1 in pv[-2].items():
+%            for key2, value2 in pv[-1].items():
+%                key = s*key1 + key2
+%                value = value1 * value2
+%                try:
+%                    p[key] += value
+%                except KeyError:
+%                    p[key] = value
+%    return p
+%for _ in range(5):
+%    pv.append(update(pv))
+This looks like a bit like a binomial distribution, but it is difficult to make this precise.
+
+Perhaps going back to the matrix representation is a good idea.
+We have
+\begin{align}
+Y_{n+1} &= K_\pm Y_n
+\end{align}
+with $K_+ = \begin{psmallmatrix}
+1 & 1 \\ 1 & 0
+\end{psmallmatrix}$ and $K_+ = \begin{psmallmatrix}
+-1 & 1 \\ 1 & 0
+\end{psmallmatrix}$ appearing with equal probability.
+%Kv=[np.array([[s1,s2],[1,0]]) for s1 in [1,-1] for s2 in [1,]]
+%Uv = [np.array([[phi,1],[-1,phi]]), np.array([[1,phi],[-phi,1],]),]
+%Dv=[np.diag([phi, 1-phi]), np.diag([phi-1, -phi])]
+%for K, U, D in zip(Kv, Uv, Dv):
+%    ew, ev = np.linalg.eig(K)
+%    print((np.linalg.inv(U) @ D @ U, K))
+%https://www.wolframalpha.com/input?i=diagonalize+%7B%7Bs%2C+1%7D%2C+%7B1%2C+0%7D%7D
+We have $K_\pm = \pm U_\pm D U_\pm^{-1}$ with $D=\diag\kla*{\phi, 1-\phi}$ and $U_\pm = \begin{psmallmatrix}
+\phi & 1-\phi \\ \pm 1 & \pm 1
+\end{psmallmatrix}$.
+%Kv=[np.array([[s1,s2],[1,0]]) for s1 in [1,-1] for s2 in [1,]]
+%Uv = [np.array([[phi,1-phi],[1,1]]), np.array([[phi,1-phi],[-1,-1]]),]
+%Dv=[np.diag([phi, 1-phi]), np.diag([-phi, phi-1])]
+%for K, U, D in zip(Kv, Uv, Dv):
+%    ew, ev = np.linalg.eig(K)
+%    print((U @ D @ np.linalg.inv(U), K))
+%UP=np.linalg.inv(Uv[1])@Uv[0]
+Note that we find
+\begin{align}
+U_\pm^{-1} &= \frac{\pm 1}{\phi - (1-\phi)} \begin{pmatrix}
+\pm 1 & \phi-1 \\ \mp 1 & \phi
+\end{pmatrix} = \frac{1}{\sqrt{5}} \begin{pmatrix}
+1 & \pm \kla*{\phi-1} \\ -1 & \pm \phi
+\end{pmatrix},\\
+U_s^{-1} U_{-s} &= \frac{1}{\sqrt{5}} \begin{pmatrix}
+1 & s \kla*{\phi-1} \\ -1 & s \phi
+\end{pmatrix} \begin{pmatrix}
+\phi & 1-\phi \\ -s & -s
+\end{pmatrix} = \frac{1}{\sqrt{5}} \begin{pmatrix}
+1 & 1-\sqrt{5} \\ -2\phi & -1
+\end{pmatrix} \equiv \tilde{U}
+\end{align}
+Crucially, this product matrix $\tilde{U}$ is its own inverse.
+This allows us to collapse longer strings of matrix products, e.g. ($y_1=(1,1)^\transpose$)
+\begin{align}
+Y_6 &= K_+ K_-K_-K_+K_+ y_1 = (-1)^{2} U_+DU_+^{-1} U_-DU_-^{-1} U_-DU_-^{-1} U_+DU_+^{-1} U_+DU_+^{-1} y_1\\
+&= (-1)^2 U_+ D\tilde{U}D^2 \tilde{U}D^2 U_+^{-1} y_1,\\
+Y_9 &= K_+K_+K_+K_-K_-K_+K_-K_- y_1 = (-1)^4 U_+ D^3 \tilde{U} D^2 \tilde{U} D \tilde{U} D^2 U_-^{-1} y_1.
+\end{align}
+%def hamilton_2x2_decomp(hamilton):
+%    d_0 = np.trace(hamilton @ sigma_0, axis1=-1, axis2=-2)/2
+%    d_x = np.trace(hamilton @ sigma_x, axis1=-1, axis2=-2)/2
+%    d_y = np.trace(hamilton @ sigma_y, axis1=-1, axis2=-2)/2
+%    d_z = np.trace(hamilton @ sigma_z, axis1=-1, axis2=-2)/2
+%    return d_0, d_x, d_y, d_z
+%sigma_0 = np.array([[1,0],[0,1]])
+%sigma_x = np.array([[0,1],[1,0]])
+%sigma_y = np.array([[0,-1j],[1j,0]])
+%sigma_z = np.array([[1,0],[0,-1]])
+Note that $\tilde{U} = \frac{1}{\sqrt{5}} \kla*{-\sqrt{5} \sigma_x + \i \sigma_y + \sigma_z}$ and $D = \frac{1}{2}\kla*{\mathbbm{1} + \sqrt{5} \sigma_z}$.
+This gives
+\begin{align}
+D^m &= \frac{1}{2^m}\sum_{l=0}^m \binom{m}{l} \sqrt{5}^l \sigma_z^l = \frac{1}{2^m}\sum_{l=0}^m \binom{m}{l} \sqrt{5}^l \frac{1}{2}\klb*{1 + (-1)^l}\mathbbm{1} + \frac{1}{2^m}\sum_{l=0}^m \binom{m}{l} \sqrt{5}^l \frac{1}{2}\klb*{1 - (-1)^l} \sigma_z\\
+&= \frac{1}{2^{m+1}} \kla*{1+ \sqrt{5}}^m\mathbbm{1} + \frac{1}{2^{m+1}} \kla*{1 - \sqrt{5}}^m\mathbbm{1} + \frac{1}{2^{m+1}} \kla*{1+ \sqrt{5}}^m \sigma_z - \frac{1}{2^{m+1}} \kla*{1 - \sqrt{5}}^m \sigma_z\\
+&= \frac{1}{2} \klb*{\phi^m + \kla*{1-\phi}^m} \mathbbm{1} + \frac{1}{2} \klb*{\phi^m - \kla*{1-\phi}^m}\sigma_z.
+\end{align}
+%N=7; Dv[0]**7, (((1+np.sqrt(5))**N+(1-np.sqrt(5))**N)*np.eye(2) + ((1+np.sqrt(5))**N-(1-np.sqrt(5))**N)*sigma_z)/2**(N+1)
+The interaction of these objects with the transformation matrices is then
+%apm = (phi**N + (1-phi)**N)
+%amm = (phi**N - (1-phi)**N)
+%UP@(Dv[0]**N)@UP, 1/10* (np.sqrt(5)*sigma_x - 1j*sigma_y - sigma_z)@ (apm* np.eye(2) + amm*sigma_z)@ (np.sqrt(5)*sigma_x - 1j*sigma_y - sigma_z), np.array([[5*apm-3*amm,4*amm*(1-phi)],[-4*amm*phi,5*apm+3*amm]])/10
+\begin{align}
+\tilde{U}D^m\tilde{U} &= \frac{1}{10} \kla*{\sqrt{5} \sigma_x - \i\sigma_y - \sigma_z} \klb*{\kla*{\phi^m + \kla*{1-\phi}^m} \mathbbm{1} + \kla*{\phi^m - \kla*{1-\phi}^m}\sigma_z} \kla*{\sqrt{5} \sigma_x - \i\sigma_y - \sigma_z}\\
+&= \dots = \frac{1}{10}\begin{pmatrix}
+5a_+^m - 3a_-^m & 4a_-^m(1 - \phi) \\ -4a_-^m\phi & 5a_+^m + 3a_-^m
+\end{pmatrix} \\
+&= \frac{1}{5}\begin{pmatrix}
+\phi^m + 4\kla*{1-\phi}^m & 2[\phi^m - \kla*{1-\phi}^m](1 - \phi) \\ -2[\phi^m - \kla*{1-\phi}^m]\phi & 4\phi^m + \kla*{1-\phi}^m
+\end{pmatrix} \equiv \tilde{D}_m
+\end{align}
+%A,B=sy.symbols("A B", real=True)
+%UP=(-sy.sqrt(5)*sigma_x + sy.I*sigma_y + sigma_z)/sy.sqrt(5)
+%D=(A*np.eye(2) + B*sigma_z)
+%D2=UP@D@UP
+%for i in range(2):
+%    for j in range(2):
+%        D2[i,j]=sy.simplify(D2[i,j])
+where $a_\pm^m \equiv \phi^m \pm \kla*{1-\phi}^m$.
+
+\end{document}

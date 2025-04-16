@@ -1,0 +1,76 @@
+\section{Non-Hermitian Topology}\label{chap:ep}
+In this section, we motivate the concept of an effective \gls{nh} description for a quantum many-body system.
+We then briefly discuss the ramifications of abandoning hermiticity that are most relevant for our purposes.
+%NOTES for INTRO
+%{Emergent_NH_models_Eek_2024}:
+%non-Hermitian platforms offer enhanced sensing capabilities (https://www.nature.com/articles/s41467-020-19090-4, NH_Topology_Sensors_Budich_2020)
+%NH skin effect, accumulation on edge {NH_Topology_SkinEffect_Lin_2023}
+%{Budich GTQP Notes}
+%real system generically open -> dissipation always present
+%TODO Quasi-particles in many-body systems: no need for explicit dissipation because in sufficiently large systems quantum numbers of individual particles are no longer good (e.g. only global momentum conservation) [maybe shift to GF chapter]
+%-> even in closed systems respose to outside perturbation may be complicated
+%-> lifetime of excitations at fixed k finite due to scattering -> imaginary part of energy
+%GF describe excitations -> experimentally relevant (measure response to perturbation instead of 10^23 particles
+%QParticles : {NH_SkinEffect_QuasiParticles_NNint_Micallo_2023}
+%Effective H : {NH_Heff_SelfEnergy_1d_Hubbard_Rausch_2021}
+%QP and EFFH : {NHT_FiniteLifetime_QuasiParticles_Kozii_2017}
+\subsection{Effective \texorpdfstring{\acrlong{nh}}{NH} models}\label{sec:ep:motivation}
+While first \gls{nh} concepts date back a century \cite{NH_Physics_review_Ashida_2020}, the study of \gls{nh} systems has gained much attention in recent years \cite{Emergent_NH_models_Eek_2024}.
+Amongst other examples in \cite{ExceptTop_RevModPhys.93.015005,NH_Physics_review_Ashida_2020}, novel discoveries include the \gls{nh} skin effect \cite{NH_Topology_SkinEffect_Lin_2023} and potential enhancement of sensing capabilities \cite{NH_Topology_Sensors_Budich_2020}, as well as \gls{nh} topological phases \cite{NH_TopologicalPhases_Gong_2018} and an accompanying symmetry classification \cite{NHT_SymmetryClassification38_Kawabata_2019}.\\
+Despite the evident success, this concept naively appears at odds with a fundamental principle of quantum mechanics:
+On a microscopic level the eigenvalues of an observable must be real, and thus the Hamiltonian describing a closed system generically ought to be Hermitian\footnote{Note that this requirement can be relaxed somewhat, as $\mathcal{PT}$-symmetry can suffice for a real spectrum \cite{Hermiticity_PT_Symmetry_Bender_2003}.}.
+%This requirement can be relaxed somewhat, since $\mathcal{PT}$-symmetry can suffice for a real spectrum \cite{Hermiticity_PT_Symmetry_Bender_2003}, but, because any physical system is inevitably coupled to the environment, a full microscopic description is generally infeasible \cite[\spage 116]{OpenQuantumSystems_Breuer_2007}.
+Because any real physical system is inevitably coupled to the environment, a full microscopic description is generally infeasible \cite[\spage 116]{OpenQuantumSystems_Breuer_2007}.
+If this coupling is not negligible, it can then be more fruitful to consider the model as an open quantum system, where the environment is taken into account in the form of a heat bath or reservoir \cite[\schap 3]{OpenQuantumSystems_Breuer_2007}.
+Although simpler, the description in terms of Lindblad quantum master equations, or the already mentioned Keldysh formalism for non-equilibrium problems, is still highly complicated \cite{ExceptTop_RevModPhys.93.015005}.
+The complex energy eigenvalues of truly \gls{nh} Hamiltonians can serve as an elegant approximation for the dissipation and amplification in such systems \cite{ExceptTop_RevModPhys.93.015005,NH_SkinEffect_QuasiParticles_NNint_Micallo_2023}.\\
+Interestingly, the idea of an effectively \gls{nh} description even enters in closed systems where the imaginary part of the energy corresponds to the finite lifetime of quasi-particles induced by interactions or disorder \cite{NHT_FiniteLifetime_QuasiParticles_Kozii_2017,NH_Heff_SelfEnergy_1d_Hubbard_Rausch_2021,NH_SkinEffect_QuasiParticles_NNint_Micallo_2023}.
+%TODO Essentially, in sufficiently large systems the quantum numbers of individual particles are no longer good (e.g. momentum is only conserved globally) consequently at a fixed momentum $k$ the lifetime of an excitations may become finite and [REF; Jan Lecture Notes, but book/article would be better].
+Mathematically, this is modelled by a self-energy $\Sigma$ that leads to the effective Hamiltonian and retarded single-particle \gls{gf} 
+\begin{align}
+H_\eff(k,\omega) &= H_0(k) + \Sigma^\ret(k,\omega) \label{eqn:ep:h_eff_def}, \\
+\sgf^\ret(k,\omega) &= \kla*{\omega + \i \eta - H_\eff(k,\omega)}^{-1} \label{eqn:ep:g_ret_from_h_eff}
+\end{align}
+where $H_0$ generically corresponds to the non-interacting system \cite{NHT_FiniteLifetime_QuasiParticles_Kozii_2017,NH_Heff_SelfEnergy_1d_Hubbard_Rausch_2021,GF_SelfEnergyFunctionals_Eder_2021}.
+%With the free \gls{gf} $\sgf_0 = \kla*{\omega - H_0}^{-1}$ this also gives the Dyson equation
+A more formal introduction, as well as approximation schemes via diagrammatic techniques, can be found in the literature, e.g. \cite[\schap 5]{AltlandSimons}.\\
+As a final remark, note that one requirement for \glspl{ep} is a non-trivial matrix structure of the self-energy, i.e. $\klb*{\Sigma, H_0} \neq 0$ \cite{EP_DynamicInduced_Quenched_Lehmann_2021,NH_SkinEffect_QuasiParticles_NNint_Micallo_2023}.
+%Since $H_0$ is certainly simple enough to be diagonalizable, suppose a corresponding basis is chosen.
+In \cite[\ssec 2]{EP_Physics_Heiss_2012} this is demonstrated for the example of a two-level system\footnote{For the general case, one can decompose the self-energy into $\Sigma = \Sigma_+ + \i\Sigma_-$ where $\Sigma_+ = \frac{1}{2} \kla*{\Sigma + \Sigma^\dagger}$ and $\Sigma_- = \frac{1}{2\i} \kla*{\Sigma - \Sigma^\dagger}$ are both Hermitian. Commuting matrices are simultaneously diagonalizable, and therefore $H_\eff$ can not harbour \glspl{ep} if $\klb*{H_0 + \Sigma_+, \Sigma_-} = 0$.}.
+\subsection{\texorpdfstring{\acrlongpl{ep}}{EP} in two-level systems}\label{sec:ep:eps}
+%EP is spectral degeneracy, matrix becomes non-diagonalizable (not possible for hermitian matrix)
+%-> minimal example [from review]
+%One of the properties unique to \gls{nh} matrices is that they may be non-diagonalizable.
+%Abandoning the requirement of Hermiticity implies that Hamiltonians are described by \gls{nh} matrices.
+%One of the pare so-called \glspl{ep}.
+%These are spectral degeneracies at which the Hamiltonian (
+%Unlike , which are spectral degeneracies at which the
+%Abandoning the requirement of hermiticity has several consequences beyond generically complex eigenvalues [REF].
+%One of these is that the left and right eigenvectors need no longer be related by simple hermitian conjugation [REF; this one (?): Heiss 2012, see EP review].
+To illustrate some of the unique properties of \gls{nh} matrices, consider the explicit example $H = \begin{psmallmatrix}
+0&\epsilon \\ 1&0
+\end{psmallmatrix}$ given in \cite{ExceptTop_RevModPhys.93.015005}.
+The eigenvalues are $E_\pm = \pm \sqrt{\epsilon}$ and the usual, albeit not normalized, right eigenvectors are $v^\R_{1,2} = \kla*{\pm\sqrt{\epsilon}, 1}^\transpose$ while the left eigenvectors are $v^\L_{1,2} = \kla*{1, \pm\sqrt{\epsilon}}$.
+In the limit $\epsilon\rightarrow 1$ we recover the Hermitian case and, as expected, $\kla{v^\L}^\dagger = v^\R$.
+An \gls{ep} corresponds to a spectral degeneracy, here at $\epsilon=0$, where additionally both the left and right eigenvectors coalesce \cite[\ssec 2]{EP_Physics_Heiss_2012}.
+Note that these are not the only features of \glspl{ep} and that they generalize to higher dimensions, see \cite{ExceptTop_RevModPhys.93.015005} for an extended discussion.\\
+At the \gls{ep} the dispersion becomes non-analytic and, at least in two dimensions, the square-root behaviour in the vicinity is typical.
+To see why this is the case, let us now consider a general Hamiltonian of a two-band model given by
+\begin{align*}
+H &= d_0 \sigma_0 + \textbf{d}\cdot \bm{\sigma}
+\end{align*}
+where $\sigma_0$ is the $2\times 2$-identity matrix, $\bm{\sigma}$ are the standard Pauli matrices and $d_0\in\mathbb{C}$ \cite{NHT_SymmetryProtectedNodalPhases_Budich_2019}.
+For convenience we split the vector components into $\textbf{d} = \textbf{d}_\r + \i \textbf{d}_\i$ where $\textbf{d}_{\r}, \textbf{d}_{\i}\in\mathbb{R}^3$ are the real and imaginary part.
+The eigenvalues can be obtained by squaring the Hamiltonian and using $\sigma_j\sigma_k = \delta_{jk}\sigma_0 + \i\epsilon_{jkl} \sigma_l$ to simplify.
+They are given by
+\begin{align}
+E_\pm &= d_0 \pm \sqrt{\textbf{d}^2} = d_0 \pm \sqrt{\textbf{d}_\r^2 - \textbf{d}_\i^2 + 2\i \textbf{d}_\r \cdot \textbf{d}_\i} \label{eqn:ep:eigvals_of_d}
+\end{align}
+and consequently the requirements for an \gls{ep} are \cite{NHT_SymmetryProtectedNodalPhases_Budich_2019}
+\begin{align}
+\textbf{d}_\r^2 &= \textbf{d}_\i^2 \quad\text{and}\quad \textbf{d}_\r \cdot \textbf{d}_\i = 0. \label{eqn:ep:dr2_di2_and_drdi_condition}
+\end{align}
+Crucially, these are only two conditions as opposed to the three conditions ($\textbf{d}_\r = \textbf{0}$) required for a degeneracy in the Hermitian case.
+As such, one expects isolated \glspl{ep} to be a generic feature in two spatial dimensions and lines of \glspl{ep} in three dimensions \cite{ExceptTop_RevModPhys.93.015005}.
+In only one dimension an additional symmetry reducing the codimension is required to stabilize \glspl{ep} \cite{NHT_SymmetryProtectedNodalPhases_Budich_2019,NHT_SymmetryProtectedExceptRings_Chiral_Yoshida_2019,EP_DynamicInduced_Quenched_Lehmann_2021}.
+For example, the chiral symmetry present in our model trivializes the second condition in \autoref{eqn:ep:dr2_di2_and_drdi_condition} at the Fermi level.

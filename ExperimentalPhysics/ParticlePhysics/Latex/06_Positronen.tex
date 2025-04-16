@@ -1,0 +1,76 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\usepackage{tikz} 
+\usetikzlibrary{shapes,arrows,positioning,automata,backgrounds,calc,er,patterns}
+\usepackage{tikz-feynman}
+\tikzfeynmanset{compat=1.0.0}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{06 Positronen}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 6.1: Die Entdeckung des Positrons}
+Für die Lorentz-Kraft gilt $F=qvB$. Aus dem Kräftegleichgewicht mit der Zentripetal-Kraft $F=\frac{mv^2}{r}$ mit dem Krümmungsradius $r$ der Bahn, folgt für den Impuls des Teilchens mit $B=1.5\,$T, $r_1=14\pm 1\,$cm und $r_2=5\pm 0.5\,$cm:
+\begin{align*}
+qvB&\overset{!}{=}\frac{\gamma mv^2}{r}&\Rightarrow &&p&=\gamma mv=qBr=\left\{\begin{matrix}
+63.0\pm 4.5\,\tecxt\text{MeV} & \tecxt\text{für}\ r_1 \\ 22.5\pm 2.2\,\tecxt\text{MeV} & \tecxt\text{für}\ r_2
+\end{matrix}\right.
+\end{align*}
+Für die $\beta$- und $\gamma$- Faktoren des eintreffenden Teilchens gilt:
+\begin{align*}
+\kla\left( {\frac{qBr}{mc}} \right)^2&=\frac{\beta^2}{1-\beta^2}&\Rightarrow && \beta&=\sqrt{1-\frac{1}{1+\kla\left( {\frac{qBr}{mc}} \right)^2}}\\
+\beta_\tecxt\text{Pos.}&=0.99997&&&\beta_\tecxt\text{Pro.}&=0.06695\\
+\gamma_\tecxt\text{Pos.}&=123.2 &&&\gamma_\tecxt\text{Pro.}&=1.002
+\end{align*}
+%\Delta\beta&=\kla\left( {1+\kla\left( {\frac{qBr}{mc}} \right)^2} \right)^{-3/2}\frac{qB\Delta r}{mc}\\
+Die kinetische Energie ist gegeben durch $E-E_0=\sqrt{m^2+p^2}-m$:
+\begin{align*}
+\frac{\Delta E_\tecxt\text{kin}}{E_\tecxt\text{kin}}&=\frac{\sqrt{m^2+p_1^2}-\sqrt{m^2+p_2^2}}{\sqrt{m^2+p_1^2}-m}\\
+\frac{\Delta E_\tecxt\text{kin,Pos.}}{E_\tecxt\text{kin,Pos.}}&=64.8\,\%&\frac{\Delta E_\tecxt\text{kin,Pro.}}{E_\tecxt\text{kin,Pro.}}&=87.2\,\%
+\end{align*}
+Die Bethe-Bloch-Formel für $\beta\ll 1$ lautet in natürlichen Einheiten:
+\begin{align*}
+\frac{\tecxt\text{d}E}{\tecxt\text{d}x}&=-\frac{4\pi n\alpha^2Z^2}{m_e\beta^2}\log\kla\left( {\frac{2m_e\beta^2}{I}} \right)
+\end{align*}
+Mit der Näherung eines konstanten Potentials $I=Z\cdot 10\,$eV, $Z=Z_\tecxt\text{Pb}=82$, $A=A_\tecxt\text{Pb}=207.2\,$u, $n=n_\tecxt\text{Pb}=\frac{Z_\tecxt\text{Pb}\rho_\tecxt\text{Pb}}{A_\tecxt\text{Pb}}=4.51\,\frac{1}{\tecxt\text{cm}^3}=2.09\cdot 10^{-8}\,\tecxt\text{MeV}^3$ folgt dann für den Energieverlust bei einer Dicke der Bleischicht von $x=6\,\tecxt\text{mm}=3.04\cdot 10^{10}\,\frac{1}{\tecxt\text{MeV}}$:
+\begin{align*}
+|\Delta E|&=6.27\,\tecxt\text{GeV}\gg E
+\end{align*}
+\section*{Aufgabe 6.2:Feynman-Diagramme}
+Siehe die zweite Datei explizit zu dieser Aufgabe.
+\section*{Aufgabe 6.3: Relativistische Kinematik}
+Sei $P=(M,0)$ der Impuls des ruhenden Teilchens und $p_{1,2}=(E_{1,2},\vec{p}_{1,2})$ die Impulse der Zerfallsprodukte. Dann gilt wegen $p^2=E^2-\vec{p}^2=m^2$:
+\begin{align*}
+p_2^2&=(P-p_1)^2&\Rightarrow &&m_2^2&=M^2+m_1^2-2P\cdot p_1=M^2+m_1^2-2ME_1
+\end{align*}
+Für die Energie des ersten Teilchens gilt also bei gleichen Massen $m_1=m_2=m$:
+\begin{align*}
+E_1&=\frac{M^2+m_1^2-m_2^2}{2M}=\frac{M}{2}\kla\left( {=E_2} \right)
+\end{align*}
+Daraus folgt der Impuls zu $|\vec{p}|=\sqrt{E^2-m^2}=\sqrt{\frac{M^2}{4}-m^2}$. Schreibe $M=2m+\epsilon$:
+\begin{align*}
+E&=m+\frac{\epsilon}{2}&\Rightarrow &&|\vec{p}|&=\sqrt{m\epsilon+\frac{\epsilon^2}{4}}
+\end{align*}
+\end{document}

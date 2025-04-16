@@ -1,0 +1,255 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Background and Central Theorems}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Extreme Value Theory}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Asymptotic Extreme Value Distributions}
+For a set of $n$ identically and independently distributed (iid) random variables $\xi_1,\dots,\xi_n$ consider the maximum value
+\begin{align}
+M_n &:= \max \klammer\left\{ \xi_j \right\}.
+\end{align}
+In general, the cumulative distribution is simply given by
+\begin{align}
+P(M_n\le x) &= P(\xi_1 \le x, \dots, \xi_n\le x) = F(x)^n
+\end{align}
+where $F(x)$ is the cumulative distribution function of the individual $\xi_j$.
+The distribution of this maximum is governed only by the behaviour of $f(x) = F'(x)$ for large $x$, and locks the limiting distribution of $M_n$ into one of three possible forms.\\
+For sequences of numbers $a_n>0, b_n$ consider the behaviour of $P(a_n(M_n - b_n) \le x)$ for large $n$.
+Then the only possible limiting \emph{Extreme Value Distributions}, or \emph{max-stable} distributions, are
+\begin{align}
+\tecxt\text{Type I:}\quad G(x) &= \e^{-\e^{-x}}, &&& (\tecxt\text{Gumball class})\\
+\tecxt\text{Type II:}\quad G(x) &= \Theta(x) \e^{-x^{-\alpha}},  &&& (\tecxt\text{Fr\'echet class})\\
+\tecxt\text{Type III:}\quad G(x) &= \Theta(-x) \e^{-(-x)^\alpha} + \Theta(x), &&& (\tecxt\text{Weibull class})
+\end{align}
+where $\alpha > 0$.
+These functions are also shown for some $\alpha$ in \autoref{fig:ev distributions simple}.
+\begin{figure}[!ht]
+\centering
+\includegraphics{../EE_Pictures/ev_distributions_simple.png}
+\caption{Plot of the three fundamental EV distributions for a fixed $\alpha$.}
+\label{fig:ev distributions simple}
+\end{figure}
+\subsection{Khintchine's Convergence Theorem}
+We consider the convergence of sequences
+\begin{align}
+F\kla\left( \frac{x}{a_n} + b_n \right) \overset{n\rightarrow \infty}{\longrightarrow} G(x)
+\end{align}
+and say that $F$ belongs to the \emph{domain of attraction} of $G$ (written $F\in D(G)$).
+Before we continue with the convergence theory of these distributions, consider the inverses of continuous monotonically increasing functions given by
+\begin{align}
+\psi^{-1}(y) &= \inf \klammer\left\{ x \,\middle\vert\, \psi(x) \ge y \right\}.
+\end{align}
+Then for $a>0,b,c\in\mathbb{R}$ and $H(x) := \psi(ax+b) - c$ we find $H^{-1}(y) = \frac{1}{a} [\psi^{-1}(y+c) - b]$.
+Khintchine's Theorem states that given a sequence of distribution functions $\{F_n\}$, $a_n>0,b_n$ and a non-degenerate d.f. $G$ for which
+\begin{align}
+F_n(a_nx+b_n)&\rightarrow G_1(x),
+\end{align}
+then for some $\alpha_n>0,\beta_n$ we find 
+\begin{align}
+F_n(\alpha_n x+ \beta_n) \rightarrow G_2(x)
+\end{align}
+if and only if $\frac{\alpha_n}{a_n} \rightarrow a$ and $\frac{\beta_n - b_n}{a_n} \rightarrow b$ for some $a>0,b$, and then $G_2(x) = G_1(ax+b)$.
+\begin{proof}
+Write $\tilde{F}_n(x) := F_n(a_nx + b_n)$, $\tilde{\alpha}_n := \frac{\alpha_n}{a_n}$ and $\tilde{\beta}_n := \frac{\beta_n - b_n}{a_n}$.
+Then
+\begin{align}
+\tilde{F}_n(x) \rightarrow G_1(x),\\
+\tilde{F}_n(\tilde{\alpha}_nx + \tilde{\beta}_n) \rightarrow G_2(x)
+\end{align}
+\end{proof}
+MY VERSION of Khintchine's theorem:
+\begin{proof}
+Consider an interval $I\subset\mathbb{R}$ such that $\forall x\in I: 0 < G_{1,2}(x) < 1$.
+Assume that
+\begin{align}
+F_n(a_nx + b_n) &\rightarrow G_1(x),\\
+F_n(\alpha_nx + \beta_n) &\rightarrow G_2(x).
+\end{align}
+Define $\tilde{F}_n(x) := F_n(a_nx + b_n)$, therefore
+\begin{align}
+\tilde{F}_n(x) &\rightarrow G_1(x),\\
+\tilde{F}_n(\tilde{a}_n x + \tilde{b}_n) &= F_n\big( \underbrace{a_n \tilde{a}_n}_{:=\ \alpha_n} x + \underbrace{a_n \tilde{b}_n + b_n}_{:=\ \beta_n} \big) \rightarrow G_2(x)
+\end{align}
+where we may identify $\tilde{a}_n = \frac{\alpha_n}{a_n} \rightarrow a$ and $\tilde{b}_n = \frac{\beta_n - b_n}{a_n} \rightarrow b$ (NOTE: sequences are bounded, hence there exist convergent subsequences. Relabel and continue)\\
+But then since $\tilde{F}_n \rightarrow G_1$, we find
+\begin{align}
+G_1(ax + b) &= G_2(x).
+\end{align}
+But now for $k\in\mathbb{N}$ consider the subsequences $n = mk$ where $m\in\mathbb{N}$ (essentially we consider the subsequences $n=1,2,3,\dots$ for $k=1$, or $n=3,6,9,\dots$ for $k=3$ etc.).
+Then we find 
+\begin{align}
+F_{mk}(a_{mk}x + b_{mk}) &\overset{m\,\rightarrow\,\infty}{\longrightarrow} G(x) =: G_1(x).
+\end{align}
+Since $k$ is fixed, we may define sequences $\alpha_m := a_{mk}$ and $\beta_m := b_{mk}$.
+Taking the $k$-th root of the previous expression yields
+\begin{align}
+F_{mk}(\alpha_mx + \beta_m)^{1/k} &\overset{m\,\rightarrow\,\infty}{\longrightarrow} G(x)^{1/k}.
+\end{align}
+In our special case the sequences of functions are $F_n=F^n$, and thus the above simplifies to
+\begin{align}
+F(\alpha_mx + \beta_m)^m &\overset{m\,\rightarrow\,\infty}{\longrightarrow} G(x)^{1/k} =: G_2(x).
+\end{align}
+However, we may interpret this as $F_m(\alpha_mx + \beta_m) \rightarrow G_2(x)$ and thus the previous theorem implies
+\begin{align}
+G_2(x) &= G_1(A_kx + B_k) && \Rightarrow & G(x) &= G(A_kx + B_k)^k
+\end{align}
+for all $k\in\mathbb{N}$, where $A_k,B_k$ are the result of the respective limits from Khintchine's theorem.
+This is also referred to as the \emph{max-stable} property and completes the proof that all extreme value distributions must be max-stable.
+\end{proof}
+%A non-degenerate c.d.f. $G$ is max-stable if and only if there is a sequence $F_n$ and constants $a_n>0,b_n$ such that
+%\begin{align}
+%F_n \kla\left( \frac{x}{a_{nk}} + b_{nk} \right) \rightarrow G(x)^{1/k}\quad (n\rightarrow\infty, k\in\mathbb{N}).
+%\end{align}
+%Also $D(G)$ is non-empty if and only if $G$ is max-stable and then $G\in D(G)$.
+%\begin{proof}
+%If $G$ is non-degenerate, so is $G^{1/k}$ for each $k$
+%\end{proof}
+\subsection{Max-stable property}
+Furthermore, if $G$ is max-stable, there exist real functions $a(s)>0,b(s)$ defined for $s>0$ such that
+\begin{align}
+G(a(s)x + b(s))^s = G(x)\quad \forall x,s>0 \label{eqn:khintchine theorem corollary}
+\end{align}
+\begin{proof}
+Since $G$ is max-stable, there exist $a_n>0, b_n$ such that 
+\begin{align}
+G(a_nx + b_n)^n &= G(x)
+\end{align}
+and hence
+\begin{align}
+G(a_{\lfloor ns \rfloor} x + b_{\lfloor ns \rfloor})^{\lfloor ns \rfloor} &= G(x).
+\end{align}
+But then taking the $\frac{1}{s}$-th power of this equation yields
+\begin{align}
+G(a_{\lfloor ns \rfloor}x + b_{\lfloor ns \rfloor})^{\frac{1}{s} \lfloor ns \rfloor} &= G(x)^{1/s},\\
+\Rightarrow\quad G(a_{\lfloor ns \rfloor}x + b_{\lfloor ns \rfloor})^n &\rightarrow G(x)^{1/s}.
+\end{align}
+Khintchine's theorem applies and $\alpha_n := a_{\lfloor ns \rfloor}, \beta_n := b_{\lfloor ns \rfloor}$ leads to $G(a(s)x + b(s)) = G(x)^{1/s}$ for some $a(s) > 0, b(s)$.
+\end{proof}
+\subsection{Max-Stable Distributions and Extremal Type Theorem}
+We say that a non-degenerate d.f. $G$ is \emph{max-stable} if $G(a_n x + b_n)^n = G(x)$ for $n\in\mathbb{N}$.
+Also, $G_1$ and $G_2$ are considered to be of the same \emph{type} if $G_2(x) = G_1(ax+b)$ for some $a>0,b$.
+Then we may rephrase the previous definition as ``$G$ is max-stable if $G^n$ and $G$ have the same type for $n\in\mathbb{N}$''.\\
+To prove the Extremal Type Theorem we start by taking the logarithm of \autoref{eqn:khintchine theorem corollary} twice giving
+\begin{align}
+s\log G(a(s)x + b(s)) &= \log G(x),\\
+\Rightarrow\ \ \ \log \kla\left( -\log G(a(s)x + b(s)) \right) + \log s &= \log (-\log G(x)).
+\end{align}
+Since $G(x)$ is increasing, so is $\log G(x)$ and therefore $\psi(x) := -\log(-\log G(x))$ is also increasing and has an inverse denoted by $U(y)$.
+In this form the previous equations reads
+\begin{align}
+\psi(a(s)x + b(s)) - \log s &= \psi(x),
+\end{align}
+where we may identify $c=\log s$ from the Lemma on inverse functions.
+This gives us the relation
+\begin{align}
+\frac{U(y + \log s) - b(s)}{a(s)} &= U(y),\\
+\Rightarrow\ \ \ \frac{U(y + \log s) - U(\log s)}{a(s)} &= U(y) - U(0),\\
+\Rightarrow\ \ \ \tilde{U}(y+z) - \tilde{U}(z) &= \tilde{U}(y) \tilde{a}(z) \label{eqn:extremal type theorem u tilde}
+\end{align}
+where we defined $z := \log s$, $\tilde{a}(z) := a(e^z)$ and $\tilde{U}(y) := U(y) - U(0)$.
+Since this has to hold for arbitrary $y,z$, we may interchange them.
+Then from \autoref{eqn:extremal type theorem u tilde} we find
+\begin{align}
+\tilde{U}(y+z) &= \tilde{U}(z) + \tilde{U}(y) \tilde{a}(z) = \tilde{U}(y) + \tilde{U}(z) \tilde{a}(y),\\
+\Rightarrow\ \ \  \tilde{U}(z) \kla\left( 1 - \tilde{a}(y) \right) &= \tilde{U}(y) \kla\left( 1 - \tilde{a}(z) \right). \label{eqn:extremal type theorem u tilde v2}
+\end{align}
+There are now two possible scenarios (a) and (b).
+In the first case (a) we assume $\tilde{a}(z) \equiv 1$, which yields $\tilde{U}(y+z) = \tilde{U}(y) + \tilde{U}(z)$ and therefore $\tilde{U}(z) \propto z$.
+Then $\psi^{-1}(y) = U(y) = \rho y + U(0)$ and we find
+\begin{align}
+x &= \psi^{-1}(\psi(x)) = \rho \psi(x) + U(0),\\
+\Rightarrow\ \ \ \psi(x) &= \frac{x - U(0)}{\rho}.
+\end{align}
+This leads to the d.f. of Type I
+\begin{align}
+G(x) &= \e^{-\e^{-\psi(x)}} = \e^{-\e^{-\frac{x - U(0)}{\rho}}}.
+\end{align}
+The second case (b) is that $\tilde{a}(z) \neq 1$ for at least some $z$.
+Thus we may divide through by $1 - \tilde{a}(z)$ in \autoref{eqn:extremal type theorem u tilde v2} and find
+\begin{align}
+\tilde{U}(y) &= \frac{1 - \tilde{a}(y)}{1 - \tilde{a}(z)}\tilde{U}(z) =: c(z) \kla\left( 1 - \tilde{a}(y) \right).
+\end{align}
+Inserting this back into \autoref{eqn:extremal type theorem u tilde} yields
+\begin{align}
+c(z) \kla\left( 1 - \tilde{a}(x+y) \right) - c(z) \kla\left( 1 - \tilde{a}(x) \right) &= c(z) \kla\left( 1 - \tilde{a}(y) \right) \tilde{a}(x),\\
+\Rightarrow\ \ \ \tilde{a}(x) - \tilde{a}(x+y) &= \tilde{a}(x) - \tilde{a}(x) \tilde{a}(y),\\
+\Rightarrow\ \ \ \tilde{a}(x+y) &= \tilde{a}(x) \tilde{a}(y).
+\end{align}
+But since $\tilde{a}$ is monotone (why?) we find $\tilde{a}(x) = \e^{\rho x}$ and therefore
+\begin{align}
+U(y) &= U(0) + \tilde{U}(y) = U(0) + c \kla\left( 1 - \e^{\rho y} \right) \equiv B + A\e^{\rho y}.
+\end{align}
+Since $G(x)$ is increasing, so are $\log G, \psi = -\log (-\log G)$ and $U = \psi^{-1}$.
+This restricts the signs of $A,\rho$ to only two out of four cases, since $\rho > 0$ implies $A>0$ and $\rho < 0$ implies $A<0$.
+Solving for $G$ finally yields
+\begin{align}
+G(x) &= \e^{-\e^{-\psi(x)}} = \e^{-\e^{-\frac{1}{\rho} \log \left( \frac{x - B}{A} \right)}} = \e^{-\kla\left( \frac{x - B}{A} \right)^\alpha} = \e^{-\kla\left( -\frac{\alpha}{|\alpha|} \frac{x - B}{|A|} \right)^\alpha}
+\end{align}
+where $\alpha := -\frac{1}{\rho}$ must have the opposite sign of $A$.
+The final expression allows us to fix $A>0$ and decomposes into the two missing extremal types for $\alpha > 0$ (Weibull) and $\alpha < 0$ (Fr\'echet).
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

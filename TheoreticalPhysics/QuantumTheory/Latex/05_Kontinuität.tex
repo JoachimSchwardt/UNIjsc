@@ -1,0 +1,107 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+
+\begin{document}
+
+\title{05 Kontinuität}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Kontinuitätsgleichung}
+Sei $j=\frac{1}{2m}\kla\left( {\psi^\ast p\psi - \psi p\psi^\ast} \right)$:
+\begin{align*}
+\dot{\varrho}&=\dot{\psi}^\ast\psi + \psi^\ast\dot{\psi}=\kla\left( {\frac{V\psi}{i\hbar}-\frac{\hbar^2\nabla^2}{2mi\hbar}\psi} \right)^\ast\psi + \psi^\ast\kla\left( {\frac{V\psi}{i\hbar}-\frac{\hbar^2\nabla^2}{2mi\hbar}\psi} \right)= \\
+&= \frac{\hbar}{2mi}\kla\left( {\psi\nabla^2\psi^\ast - \psi^\ast\nabla^2\psi } \right)= -\frac{\hbar}{2mi}\nabla\kla\left( {\psi^\ast\nabla\psi - \psi\nabla\psi^\ast} \right)=-\nabla j\numberthis\label{rho punkt + nabla j = 0}
+\end{align*}
+Wellenfunktionen bleiben normiert wenn $\psi\rightarrow 0$ für $r\rightarrow\infty$ schnell genug abfällt:
+\begin{align*}
+\partial_t\brak\langle {\psi(t)}| {\psi(t)}\rangle&=\intr\int_{\mathbb{R}^{3}}{\dot{\varrho}}\,\mathrm{d}^{3}r\kom\overset{\substack{{\textsc{Gauss}} \\ |}}{=}-\oint j\cdot\mathrm{d}^2r\kom\overset{\substack{{\psi\rightarrow 0} \\ |}}{=}0 \numberthis\label{dt Normierung}
+\end{align*}
+\section{Streuung an einem Potential}
+Für $x\neq 0$ gilt:
+\begin{align*}
+0&=E\phi_I+\frac{\hbar^2}{2m}\phi_I''=\kla\left( {E-\frac{\hbar^2k^2(1+r)}{2m}} \right)\phi_I\ \ \Rightarrow\ \ k=\sqrt{\frac{2mE}{\hbar^2(1+r)}}\numberthis\label{k von E und r} \\
+0&=E\phi_{II}+\frac{\hbar^2}{2m}\phi_{II}''=\kla\left( {E-\frac{\hbar^2k^2t}{2m}} \right)\phi_{II}\ \ \Rightarrow\ \ k=\sqrt{\frac{2mE}{\hbar^2t}}\numberthis\label{k von E und t}
+\end{align*}
+Daraus folgt außerdem $1+r=t$. Integration der Schrödinger-Gleichung über ein kleines Intervall um $x=0$ ergibt:
+\begin{align*}
+0&=\lim_{\epsilon\rightarrow 0}\intx\int_{-\epsilon}^{\epsilon}E\phi\,\mathrm{d}x=-\frac{\hbar^2}{2m}\lim_{\epsilon\rightarrow 0} \phi'(x)\bigg\vert_{-\epsilon}^\epsilon + \frac{\hbar^2\beta}{2m}\phi(0)= \\
+&=\frac{\hbar^2}{2m}\left(\lim_{\epsilon\rightarrow 0}ike^{-ik\epsilon}-ikre^{ik\epsilon}-ikte^{ik\epsilon}+\beta t\right)=\frac{\hbar^2}{2m}\kla\left( {\beta t+ik(1-r-t)} \right) \\
+&\Rightarrow\ \ r=1-t+\frac{\beta t}{ik}\overset{!}{=}t-1\ \ \Rightarrow\ \ 2ik=2ikt - \beta t \ \ \Rightarrow\ \ t=\frac{2ik}{2ik-\beta} \\
+&\Rightarrow\ \ r=t-1=\frac{\beta}{2ik -\beta}\\
+T&=|t|^2=\frac{(2k)^2}{(2k)^2+\beta^2}\numberthis\label{T von E}\\
+R&=|r|^2=\frac{\beta^2}{(2k)^2+\beta^2}\numberthis\label{R von E}
+\end{align*}
+\section{Impulsdarstellung}
+Die Impulsdarstellung der Wellenfunktion berechnet sich wie folgt:
+\begin{align*}
+\hat{\psi}(p)&=\frac{1}{\sqrt{2\pi\hbar}}\intx\int_{x_0-a}^{x_0+a}\sqrt{\frac{3}{2a}}\kla\left( {1-\frac{|x-x_0|}{a}} \right)e^{-ipx/\hbar}\,\mathrm{d}x\kom\overset{\substack{{y=x-x_0} \\ |}}{=} \\
+&=\sqrt{\frac{3}{4\pi\hbar a}}e^{-ipx_0/\hbar}\intx\int_{-a}^{a}\kla\left( {1-\frac{|y|}{a}} \right)e^{-ipy/\hbar}\,\mathrm{d}y\kom\overset{\substack{{\int_{-a}^a\sin y=0} \\ |}}{=} \\
+&=2\sqrt{\frac{3}{4\pi\hbar a}}e^{-ipx_0/\hbar}\intx\int_{0}^{a}\kla\left( {1-\frac{y}{a}} \right)\cos\frac{py}{\hbar}\,\mathrm{d}y= \\
+&=\sqrt{\frac{3}{\pi\hbar a}}e^{-ipx_0/\hbar}\kla\left( {\frac{\hbar}{p}\sin\frac{py}{\hbar}-\frac{y\hbar}{pa}\sin\frac{py}{\hbar}-\frac{\hbar^2}{p^2a}\cos\frac{py}{\hbar}} \right)\bigg\vert_0^a = \\
+&=\sqrt{\frac{3}{\pi\hbar a}}e^{-ipx_0/\hbar}\frac{\hbar^2}{p^2a}\kla\left( {1-\cos\frac{pa}{\hbar}} \right)=\sqrt{\frac{3a}{\pi \hbar}}e^{-ipx_0/\hbar}\frac{2\hbar^2}{p^2a^2}\sin^2\frac{pa}{2\hbar}= \\
+&=\sqrt{\frac{3a}{4\pi\hbar}}\mathrm{sinc}^2\frac{pa}{2\hbar}\,e^{-ipx_0/\hbar}\numberthis\label{Fouriertransformierte}
+\end{align*}
+Die beiden Funktionen haben Nullstellen bei $x=x_0\pm a$ bzw. $p=\pm\frac{\pi\hbar}{a}$. Wählt man $\Delta x$ und $\Delta p$ als die Hälfte des sich durch die Nullstellen ergebenden Intervalls, so erhält man:
+\begin{align*}
+\Delta x\Delta p&=a\cdot \frac{\pi\hbar}{a}=\pi\hbar \numberthis\label{Unschaerfe}
+\end{align*}
+\section{Potentialkasten}
+Es gilt für die Beta-Funktion:
+\begin{align*}
+B(x,y):=\frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}=\intx\int_{0}^{\pi/2}\sin^{2x-1}t\cos^{2y-1}t\,\mathrm{d}t \numberthis\label{Beta Funktion}
+\end{align*}
+Der gegebene Zustand $\psi(x,0)$ ist normiert:
+\begin{align*}
+\brak\langle {\psi}| {\psi}\rangle&=\intx\int_{-a/2}^{a/2}\frac{16}{5a}\sin^6\frac{2\pi x}{a}\,\mathrm{d}x\kom\overset{\substack{{ta=2\pi x} \\ |}}{=}2\intx\int_{0}^{\pi}\frac{16}{5a}\sin^6t\,\frac{a}{2\pi}\mathrm{d}t= \\
+&=\frac{16}{5\pi}\cdot 2\intx\int_{0}^{\pi/2}\sin^{2\cdot\frac{7}{2}-1}t\cos^{2\cdot\frac{1}{2}-1}t\,\mathrm{d}t=\frac{16}{5\pi}B\left(\frac{7}{2},\frac{1}{2}\right)= \\
+&=\frac{16}{5\pi}\cdot\frac{5}{2}\frac{3}{2}\frac{1}{2}\frac{\Gamma\kla\left( {\frac{1}{2}} \right)^2}{\Gamma(4)}\kom\overset{\substack{{\Gamma(\frac{1}{2})=\sqrt{\pi}} \\ |}}{=}1 \numberthis\label{Normierung}
+\end{align*}
+Der Energieerwartungswert ist:
+\begin{align*}
+\bra\langle {E}\rangle&=\braket\langle {\psi} | {H} | {\psi}\rangle=\intx\int_{-a/2}^{a/2}\frac{16}{5a}\sin^3\frac{2\pi x}{a}\,\frac{-\hbar^2\partial_x^2}{2m}\sin^3\frac{2\pi x}{a}\,\mathrm{d}x= \\
+&=-\frac{32\pi^2\hbar^2}{5ma^3}\intx\int_{-a/2}^{a/2}6\sin^4\frac{2\pi x}{a}\cos^2\frac{2\pi x}{a} - 3\sin^6\frac{2\pi x}{a}\,\mathrm{d}x= \\
+&=\frac{32\pi^2\hbar^2}{5ma^3}\kla\left( {\frac{15a}{16}-24\intx\int_{0}^{\pi/2}\sin^4y\cos^2y\,\frac{a}{2\pi}\mathrm{d}y} \right)=\\
+&=\frac{32\pi^2\hbar^2}{5ma^3}\kla\left( {\frac{15a}{16}-\frac{6a}{\pi}\frac{\Gamma\kla\left( {\frac{5}{2}} \right)\Gamma\left(\frac{3}{2}\right)}{\Gamma(4)}} \right)=\frac{32\pi^2\hbar^2}{5ma^3}\kla\left( {\frac{15a}{16}-\frac{3a}{8}} \right)=\frac{18\pi^2\hbar^2}{5ma^2}\numberthis\label{Energieerwartung}
+\end{align*}
+Der gegebene Zustand kann in die Grundzustände zerlegt werden:
+$$\psi (x,0)=\sum_n \oper |\phi_n\rangle\langle \phi_n|\psi(x,0)\rangle$$
+Die zugehörigen Koeffizienten $c_n:=\brak\langle {\phi_n}| {\psi}\rangle$ berechnen sich wie folgt:
+\begin{align*}
+\psi &=\frac{4}{\sqrt{5a}}\sin\frac{2\pi x}{a}\frac{1}{2}\kla\left( {1-\cos\frac{4\pi x}{a}} \right)\kom\overset{\substack{{2\sin a\sin b\,=\,\sin(a+b)+\sin (a-b)} \\ |}}{=} \\
+&= \frac{2}{\sqrt{10}}\phi_2-\frac{2}{\sqrt{5a}}\frac{1}{2}\kla\left( {\sin\kla\left( {\frac{2\pi x}{a}+\frac{4\pi x}{a}} \right)}+\sin\kla\left( {\frac{2\pi x}{a}-\frac{4\pi x}{a}} \right) \right)=\frac{3}{\sqrt{10}}\phi_2-\frac{1}{\sqrt{10}}\phi_6\\
+c_n&=\frac{1}{\sqrt{10}}\kla\left( {3\brak\langle {\phi_n}| {\phi_2}\rangle-\brak\langle {\phi_n}| {\phi_6}\rangle} \right)=\frac{3\delta_{2n}}{\sqrt{10}}-\frac{\delta_{6n}}{\sqrt{10}}\numberthis\label{Koeffizienten}
+\end{align*}
+Damit kann man die Wahrscheinlichkeit dafür berechnen, dass bei einer Messung bestimmte Energien auftreten. Der Energieerwartungswert lässt sich somit auch auf einfacherem Wege bestimmen:
+\begin{align*}
+P(E_2)&=|c_2|^2=90\%\ \ \ \ \mathrm{und}\ \ \ \ P(E_6)=|c_6|^2=10\% \numberthis \\
+&\Rightarrow\ \ \bra\langle {E}\rangle=\sum_n P(E_n)E_n=\frac{9}{10}\frac{\pi^2\hbar^2\cdot 2^2}{2ma^2}+\frac{1}{10}\frac{\pi^2\hbar^2\cdot 6^2}{2ma^2}=\frac{18\pi^2\hbar^2}{5ma^2}
+\end{align*}
+Die Zeitentwicklung ergibt sich aus der Entwicklung in die Grundzustände unter Berücksichtigung derer Zeitabhängigkeit:
+\begin{align*}
+\psi(x,t)&=\sum_nc_n\phi_ne^{-iE_nt/\hbar}=\frac{1}{\sqrt{5a}}\kla\left( {3\sin\frac{2\pi x}{a}e^{-i\frac{2\pi^2\hbar t}{ma^2}}}-\sin\frac{6\pi x}{a}e^{-i\frac{18\pi^2\hbar t}{ma^2}} \right)\numberthis\label{psi von t}
+\end{align*}
+Das System kehrt wieder in den Ausgangszustand zurück:
+\begin{align*}
+2\pi k&\overset{!}{=}\frac{2\pi^2\hbar T_k}{ma^2}\ \ \Rightarrow\ \ T_k=\frac{ma^2k}{\pi\hbar}\ \ \Rightarrow\ \ \psi(x,T_k)\kom\overset{\substack{{k\in\mathbb{N}_0} \\ |}}{=}\psi(x,0)
+\end{align*}
+Bei beliebigen (endlichen) Superpositionen kehrt das System spätestens nach $T_k=2\pi k\hbar\prod_n\frac{1}{E_n}$ in den Ausgangszustand zurück.
+
+\end{document}

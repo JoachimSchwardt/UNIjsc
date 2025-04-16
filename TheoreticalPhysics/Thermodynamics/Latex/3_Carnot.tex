@@ -1,0 +1,132 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{03 Carnot-Prozesse}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 3.1: Carnot-Prozess}
+Die Prozessschritte seien mit A,B,C und D bezeichnet, wobei A und C isotherme Expansion/Kompression sowie B und D isentrope Expansion/Kompression sind:
+\begin{align*}
+\tecxt\text{a}\kom\overset{\substack{{\tecxt\text{A}} \\ |}}{\longrightarrow}\tecxt\text{b}\kom\overset{\substack{{\tecxt\text{B}} \\ |}}{\longrightarrow}\tecxt\text{c}\kom\overset{\substack{{\tecxt\text{C}} \\ |}}{\longrightarrow}\tecxt\text{d}\kom\overset{\substack{{\tecxt\text{D}} \\ |}}{\longrightarrow}\tecxt\text{a}
+\end{align*} 
+\subsection*{a)}Es gilt $U=c_vNk_BT$ und d$U=\tecxt\text{d}Q+\tecxt\text{d}W$ mit d$W=-p\tecxt\text{d}V$. Isentrop bedeutet, dass $\Delta Q=0$ ist. Aus dem ersten Hauptsatz folgt dann der Zusammenhang zwischen Druck und Volumen für diesen Fall:
+\begin{align*}
+\tecxt\text{d}U&=\tecxt\text{d}(c_vpV)=c_vp\tecxt\text{d}V+c_vV\tecxt\text{d}p\overset{!}{=}-p\tecxt\text{d}V\\
+&\Rightarrow\ \ (1+c_v)p=-c_vVp'(V)\ \ \Rightarrow\ \ \intx\int_{ }^{ }\frac{1+\frac{1}{c_v}}{V}\,\mathrm{d}V=-\intx\int_{ }^{ }\frac{p'(V)}{p(V)}\,\mathrm{d}V\\
+&\Rightarrow\ \ V^{1+\frac{1}{c_v}}=\frac{\beta}{p}\ \ \Rightarrow\ \ pV^\kappa=\tecxt\text{const.}
+\end{align*}
+Der Adiabatenkoeffizient ist definiert als $\kappa:=1+\frac{1}{c_v}$. Die Temperaturen der Isothermen sind $T_h>T_c$. Also gilt für die einzelnen Prozessschritte:
+\begin{align*}
+\tecxt\text{A}&\,:&\Delta U&\propto T_h-T_h=0\\
+&&\Delta W&=-\intx\int_{V_a}^{V_b}p\,\mathrm{d}V=-Nk_BT_h\intx\int_{V_a}^{V_b}\frac{1}{V}\,\mathrm{d}V=-Nk_BT_h\log\frac{V_b}{V_a}<0\\
+&&\Delta Q&=-\Delta W>0\\
+\tecxt\text{B}&\,:&\Delta Q&=0\\
+&&\Delta W&=-\intx\int_{V_b}^{V_c}\frac{\beta}{V^{\kappa}}\,\mathrm{d}V=\frac{\beta}{1-\kappa}\kla\left( {V_c^{1-\kappa}-V_b^{1-\kappa}} \right)=\\
+&&&=c_v(p_cV_c-p_bV_b)=c_vNk_B(T_c-T_h)<0\\
+&&\Delta U&=c_vNk_B\Delta T=c_vNk_B(T_c-T_h)=\Delta W\\
+\tecxt\text{C}&\,:&\Delta W&=-\intx\int_{V_c}^{V_d}p\,\mathrm{d}V=-Nk_BT_c\intx\int_{V_c}^{V_d}\frac{1}{V}\,\mathrm{d}V=-Nk_BT_c\log\frac{V_d}{V_c}>0\\
+&&\Delta Q&=-\Delta W<0\\
+\tecxt\text{D}&\,:&\Delta U&=c_vNk_B\Delta T=c_vNk_B(T_h-T_c)=\Delta W>0
+\end{align*}
+\subsection*{b)}Die Summe der $\Delta W_i$ ergibt sich dann zu
+\begin{align*}
+\Delta W&=-Nk_B\klam\left[ {T_h\log\frac{V_b}{V_a}+T_c\log\frac{V_d}{V_c}} \right]
+\end{align*}
+\subsection*{c)}Die aufgenommene Wärme ist die Summe aller $\Delta Q_i>0$. Es werden also nur die Beiträge gezählt, bei denen Wärme in das System gesteckt wird:
+\begin{align*}
+\Delta Q_\tecxt\text{in}&=\Delta Q_A=Nk_BT_h\log\frac{V_b}{V_a}
+\end{align*}
+\subsection*{d)}Man beachte, dass die Bedingung der Isentropen äquivalent zu $VT^{c_v}=\tecxt\text{const.}$ ist. Damit gelten
+\begin{align*}
+V_bT_h^{c_v}&=V_cT_c^{c_v}&\tecxt\text{und}&&V_dT_c^{c_v}&=V_aT_h^{c_v}\\
+\frac{V_c}{V_b}&=\kla\left( {\frac{T_h}{T_c}} \right)^{c_v}&&&\frac{V_d}{V_a}&=\kla\left( {\frac{T_h}{T_c}} \right)^{c_v}
+\end{align*}
+Durch Gleichsetzen erhält man daraus $V_aV_c=V_bV_d$. Der Wirkungsgrad ist wie folgt definiert. Man beachte, dass per Definition $\Delta Q_\tecxt\text{in}>0$ gilt:
+\begin{align*}
+\eta_C&:=\frac{|\Delta W_\tecxt\text{ges}|}{\Delta Q_\tecxt\text{in}}=\frac{\log\frac{V_b}{V_a}+\frac{T_c}{T_h}\log\frac{V_a}{V_b}}{\log\frac{V_b}{V_a}}=1-\frac{T_c}{T_h}
+\end{align*}
+\subsection*{e)}
+\section*{Aufgabe 3.2: Kreisprozesse}
+\subsection*{a) Stirling-Prozess}
+A und C sind wieder isotherme Expansion/Kompression aber B und D sind hier isochore Abkühlung/Erwärmung. Aus $V_d=V_a$ und $V_c=V_b$ folgt dann
+\begin{align*}
+\Delta W_\tecxt\text{ges}&=-Nk_B\klam\left[ {T_h\log\frac{V_b}{V_a}+T_c\log\frac{V_a}{V_b}} \right]=-Nk_B(T_h-T_c)\log\frac{V_b}{V_a}
+\end{align*}
+Die aufgenommene Wärme ist gegeben durch
+\begin{align*}
+\Delta Q_\tecxt\text{in}&=\Delta Q_A+\Delta Q_D=Nk_BT_h\log\frac{V_b}{V_a}+Nk_Bc_v(T_h-T_c)
+\end{align*}
+Für den Wirkungsgrad folgt dann einfach
+\begin{align*}
+\eta_S&:=\frac{|\Delta W_\tecxt\text{ges}|}{\Delta Q_\tecxt\text{in}}=\frac{(T_h-T_c)\log\frac{V_b}{V_a}}{T_h\log\frac{V_b}{V_a}+(T_h-T_c)c_v}=\frac{1-\frac{T_c}{T_h}}{1+\kla\left( {1-\frac{T_c}{T_h}} \right)\frac{c_v}{\log\frac{V_b}{V_a}}}=\frac{\eta_C}{1+\beta\eta_C} <\eta_C
+\end{align*}
+Dabei ist $\beta:=\frac{c_v}{\log\frac{V_b}{V_a}}>0$.
+\subsection*{b) Otto-Prozess}
+A und C sind diesmal isentrope Expansion/Kompression, B und D sind erneut isochore Abkühlung/Erwärmung. Hier berechnet sich die Arbeit eines isentropen Prozesses nicht mehr über die Temperaturdifferenz. Es gilt $p_bV_b^\kappa=\beta_A$ und $p_cV_c^\kappa=\beta_C$, wobei $V_c=V_b$:
+\begin{align*}
+\Delta W_\tecxt\text{ges}&=-\intx\int_{V_a}^{V_b}\frac{\beta_A-\beta_C}{V^{\kappa}}\,\mathrm{d}V=-\frac{p_b-p_c}{1-\kappa}V_b^\kappa\kla\left( {V_b^{1-\kappa}-V_a^{1-\kappa}} \right)=\\
+&=-c_vNk_B(T_h-T_c)\kla\left( {1-V_b^{\kappa-1}V_a^{1-\kappa}} \right)
+\end{align*}
+Die aufgenommene Wärme ist gegeben durch
+\begin{align*}
+\Delta Q_\tecxt\text{in}&=Nk_Bc_v(T_h-T_c)
+\end{align*}
+Für den Wirkungsgrad folgt dann einfach
+\begin{align*}
+\eta_O&:=\frac{|\Delta W_\tecxt\text{ges}|}{\Delta Q_\tecxt\text{in}}=1-\kla\left( {\frac{V_b}{V_a}} \right)^\frac{1}{c_v}
+\end{align*}
+\section*{Aufgabe 3.3: Reversibler und irreversibler Temperaturausgleich}
+\subsection*{a)}Aus $U_\tecxt\text{ges}'=U_\tecxt\text{ges}$ folgt mit $U=C_VT$ folgt
+\begin{align*}
+C_VT_1+C_VT_2&=2C_VT'\ \ \Rightarrow\ \ T'=\frac{T_1+T_2}{2}
+\end{align*}
+\subsection*{b)}Die Entropie eines idealen Gases ist $S=S_0(N)+Nk_B\log\frac{VT^{c_v}}{N}$. Damit folgt aus $S_1'=S_2'=:S'$
+\begin{align*}
+\Delta S&=2S'-S_1-S_2=Nk_B\klam\left[ {2\log\frac{VT'^{c_v}}{N}-\log\frac{VT_1^{c_v}}{N}-\log\frac{VT_2^{c_v}}{N}} \right]=\\
+&=Nk_Bc_v\log\kla\left( {\frac{(T_1+T_2)^2}{4T_1T_2}} \right)\ge 0
+\end{align*}
+\subsection*{c)}
+\subsection*{d)}Sei $T_1>T_2$ und $Q_\tecxt\text{ab}$ eine kleine abgeführte Wärmemenge. Dann gilt $\tecxt\text{d} T_1=-\frac{\tecxt\text{d} Q_\tecxt\text{ab}}{C_V}$. Daraus folgt direkt $T_1(Q_\tecxt\text{ab})=T_1-\frac{Q_\tecxt\text{ab}}{C_V}$. Wir betreiben eine Carnot-Maschine, weshalb $\Delta W<0$ und $\Delta Q=Q_\tecxt\text{ab}-Q_\tecxt\text{auf}=-\Delta W>0$ ist. Aus dem Wirkungsgrad folgt dann
+\begin{align*}
+Q_\tecxt\text{ab}-Q_\tecxt\text{auf}&=\kla\left( {1-\frac{T_2}{T_1}} \right)Q_\tecxt\text{ab}&\Rightarrow &&Q_\tecxt\text{auf}&=\frac{T_2}{T_1}Q_\tecxt\text{ab}
+\end{align*}
+Also ist $\tecxt\text{d} T_2=\frac{\tecxt\text{d} Q_\tecxt\text{auf}}{C_V}=\frac{T_2}{T_1}\frac{Q_\tecxt\text{ab}}{C_V}$. Daraus folgt die Differentialgleichung für $T_2(Q)$, wobei $Q\equiv Q_\tecxt\text{ab}$:
+\begin{align*}
+\frac{\tecxt\text{d}T_2}{\tecxt\text{d}Q}&=\frac{T_2(Q)}{T_1(Q)}\frac{1}{C_V}=\frac{T_2(Q)}{C_VT_1-Q}&\Rightarrow &&\int\frac{T_2'(Q)}{T_2(Q)}\,\mathrm{d}Q&=\intx\int_{ }^{ }\frac{1}{C_VT_1-Q}\,\mathrm{d}Q\\
+\Rightarrow\ \ T_2(Q)&=\frac{\beta}{C_VT_1-Q}=\frac{T_2}{1-\frac{Q}{C_VT_1}}
+\end{align*}
+Wir wollen die Gleichgewichtstemperatur bestimmen. Diese ergibt sich aus der Bedingung $T_1(Q)=T_2(Q)$:
+\begin{align*}
+\frac{T_2}{T_1}&=\kla\left( {1-\frac{Q_\tecxt\text{C}}{C_VT_1}} \right)^2&\Rightarrow &&Q_\tecxt\text{C}&=C_VT_1-C_V\sqrt{T_1T_2}
+\end{align*}
+Daraus folgt $T'=T_1(Q_\tecxt\text{C})=\sqrt{T_1T_2}$.
+\subsection*{e)}Die Änderung der Entropie ergibt sich wie oben gemäß
+\begin{align*}
+\Delta S&=2S'-S_1-S_2=C_V\log\kla\left( {\frac{(T')^2}{T_1T_2}} \right)=0
+\end{align*}
+\subsection*{f)}??$\Delta S_{\tecxt\text{b})}=\Delta W$??
+
+\end{document}

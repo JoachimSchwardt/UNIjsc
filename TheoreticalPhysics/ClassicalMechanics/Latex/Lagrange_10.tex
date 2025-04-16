@@ -1,0 +1,65 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\begin{document}
+
+\title{Euler-Lagrange Gleichungen}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 30: Teilchen auf Kugeloberfläche}
+\subsection*{a)} Die Zwangsbedingung lautet: $x^2+y^2+z^2 = R^2$. Für den Ortsvektor bedeutet das: $\vv{r}=R\vv{e_r}$
+\subsection*{b)} Für die Lagrange-Funktion gilt somit:
+\begin{align*}
+L=T-V&=\frac{m}{2}(\dot{\vv{r}})^2-mgz=\frac{m}{2}(R\dot{\theta}\vv{e_{\theta}}+R\sin(\theta)\dot{\varphi}\vv{e_{\varphi}})^2-mgR\cos(\theta) = \\
+&=\frac{mR^2}{2}(\dot{\theta}^2+\sin^2(\theta)\dot{\varphi}^2)-mgR\cos(\theta)
+\end{align*}
+Daraus ergibt sich für die Bewegungsgleichungen mit dem Lagrange-Formalismus:
+\begin{align}
+\partial_{\theta}L=\frac{d}{dt}\partial_{\dot{\theta}}L\ \ &\Rightarrow\ \ mR^2\sin(\theta)\cos(\theta)\dot{\varphi}^2+mgR\sin(\theta)=mR^2\ddot{\theta} \label{theta_Lagrange}\\
+\partial_{\varphi}L=\frac{d}{dt}\partial_{\dot{\varphi}}L\ \ &\Rightarrow\ \ 0 = \frac{d}{dt}mR^2\dot{\varphi}\sin^2(\theta)\ \ \Rightarrow\ \ 0=\ddot{\varphi}\sin^2(\theta)+2\dot{\varphi}\dot{\theta}\sin(\theta)\cos(\theta) \label{phi_Lagrange}
+\end{align}
+\subsection*{c)} Für $\dot{\theta}=0$ vereinfachen sich die Gleichungen folgendermaßen:
+\begin{align*}
+(\ref{phi_Lagrange})\ \ &\Rightarrow\ \ 0=\ddot{\varphi}\sin(\theta)\ \ \Rightarrow\ \ \dot{\varphi}=\textrm{const}\\  
+(\ref{theta_Lagrange})\ \ &\Rightarrow\ \ \cos(\theta)\dot{\varphi}^2=-\frac{g}{R}\ \ \Rightarrow\ \ \theta = \arccos(-\frac{g}{R\dot{\varphi}^2})\ \ \xrightarrow{\dot{\varphi}\to\infty}\ \ \frac{\pi}{2}
+\end{align*}
+\subsection*{d)} Aus \ref{phi_Lagrange} wissen wir, dass $\partial_{\varphi}L = 0$, somit ist $\varphi$ also eine zyklische Koordinate. Für den konjugierten Impuls gilt: $p_{\varphi} = \partial_{\dot{\varphi}}L = mR^2\dot{\varphi}=L_z$
+\subsection*{e)} Aus d) wissen wir, dass $\dot{\varphi} = \frac{L_z}{mR^2}$. Damit gilt für die Gesamtenergie des Systems:
+\begin{align*}
+E&=T+V=\frac{mR^2}{2}(\dot{\theta}^2+\sin^2(\theta)\dot{\varphi}^2)+mgR\cos(\theta) =\\
+&= \frac{mR^2}{2}(\dot{\theta}^2+\sin^2(\theta)\frac{L_z^2}{m^2R^4})+mgR\cos(\theta)=:\frac{mR^2\dot{\theta}^2}{2}+V_{eff}(\theta)
+\end{align*}
+
+\section*{Aufgabe 31: Teilchen auf Zylinderoberfläche}
+\subsection*{a)} Die Zwangsbedingung lautet: $x^2+y^2=R^2$. Für den Ortsvektor bedeutet das: $\vv{r}=R\vv{e_{\varrho}}+z\vv{e_z}$
+\subsection*{b)} Für die Lagrange-Funktion gilt:
+\begin{align*}
+L&=T-V=\frac{m}{2}(R^2\dot{\varphi}^2+\dot{z}^2)-mgR\sin(\varphi)\\
+&\Rightarrow\ \ \partial_z L =0\ \ \Rightarrow\ \ p_z=\partial_{\dot{z}}L=m\dot{z}=\textrm{const}
+\end{align*}
+\subsection*{c)} Für die Gesamtenergie des Systems gilt dann:
+\begin{align*}
+E&=T+V=\frac{m}{2}(R^2\dot{\varphi}^2+\frac{p_z^2}{m^2})-mgR\sin(\varphi)=:\frac{mR^2\dot{\varphi}^2}{2}+V_{eff}(\varphi)
+\end{align*}
+
+\section*{Aufgabe 32: Perle auf rotierendem Ring}
+Für die Lagrange-Funktion und die daraus resultierenden BGL gilt mit $\dot{\varphi}=\Omega$:
+\begin{align*}
+L&=T-V=\frac{mR^2}{2}(\dot{\theta}^2+\sin^2(\theta)\Omega^2)-mgR\cos(\theta)\\
+&\Rightarrow\ \ \Omega^2\sin(\theta)\cos(\theta)+\frac{g}{R}\sin(\theta)=\ddot{\theta}
+\end{align*}
+Mit $\theta = \pi +\delta\theta$ können wir aufgrund von $\delta\theta\ll 1$ die Näherungen $\sin(\theta)=-\theta$ und $\cos(\theta)=-1$ machen:
+\begin{align*}
+\Omega^2\theta-\frac{g}{R}\theta &=\ddot{\theta}\ \ \Rightarrow\ \ \ddot{\theta} + (\frac{g}{R}-\Omega^2)\theta=0\ \ \Rightarrow\ \ \theta(t)=\theta_0\cos(\sqrt{\frac{g}{R}-\Omega^2}t+t_0)\\
+&\Rightarrow\ \ \Omega \overset{!}{<} \sqrt{\frac{g}{R}}
+\end{align*}
+
+\end{document}

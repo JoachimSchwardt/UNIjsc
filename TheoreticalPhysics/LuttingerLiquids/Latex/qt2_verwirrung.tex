@@ -1,0 +1,55 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{ll_scrarticle}
+
+%\newcommand*{\titel}{TITLE}
+%\newcommand*{\autor}{Joachim Schwardt}
+
+%\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+%\subject{SUBJECT}
+%\title{\titel}
+%\author{\autor}
+%\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+%\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+Sei $H_0=\sum_{k\sigma} \epsilon_{k\sigma} c_{k\sigma}^\dagger c_{k\sigma}$ ein freier fermionischer Hamiltonian in Impulsbasis und bspw. $\sigma = \pm 1$.
+Dann ist $c_{k\sigma}(t) = c_{k\sigma} \powe{-\i \epsilon_{k\sigma} t}$ und somit
+\begin{align}
+\klc*{c_{k\sigma}(t), c_{k'\sigma'}^\dagger(0)} &= \powe{-\i \epsilon_{k\sigma} t} \klc*{c_{k\sigma}, c_{k'\sigma'}^\dagger} = \powe{-\i \epsilon_{k\sigma} t} \delta_{kk'} \delta_{\sigma\sigma'}.
+\end{align}
+Also ist die retardierte GF einfach
+\begin{align}
+G_{0,\sigma\sigma'}^\r(k,t) &= -\i\Theta(t) \bra*{\klc*{c_{k\sigma}(t), c_{k\sigma'}^\dagger(0)}}_0 = -\i\Theta(t) \delta_{\sigma\sigma'} \powe{-\i \epsilon_{k\sigma} t}. 
+\end{align}
+Sei jetzt $H=H_0 + H_1$.
+Im Wechselwirkungsbild ist die Zeitentwicklung der $c_{k\sigma}$ immer noch mit $H_0$, also sollte weiterhin (1) gelten.
+Das kann aber nicht sein, weil dann
+\begin{align}
+G_{\sigma\sigma'}^\r(k,t) &= -\i\Theta(t) \bra*{\klc*{c_{k\sigma}(t), c_{k\sigma'}^\dagger(0)}} = -\i\Theta(t) \bra*{\delta_{\sigma\sigma'} \powe{-\i \epsilon_{k\sigma} t}} = G_{0,\sigma\sigma'}^\r(k,t).
+\end{align}
+%Für andere GF passiert das nicht, und dann taucht die Störung als strings von zusätzlichen Operatoren im Erwartungswert auf.
+Das Problem ist, dass der Antikommutator trivial bleibt -- und dann kann der Erwartungswert noch so kompliziert aussehen, es ändert trotzdem nichts.
+Daran ist ganz offensichtlich etwas sehr falsch, aber ich komme nicht darauf...\\
+Für andere Erwartungswerte sieht alles -- für mich zumindest -- erstmal vernünftig aus, zB enthält
+\begin{align}
+\bra*{c_{k\sigma}(t) c_{k\sigma'}^\dagger(0)} &= \bra*{c_{k\sigma}(t) c_{k\sigma'}^\dagger(0)}_0 + \i \bra*{c_{k\sigma}(t) c_{k\sigma'}^\dagger(0) H_1}_0 - \i \bra*{c_{k\sigma}(t) c_{k\sigma'}^\dagger(0)}_0 \bra*{H_1}_0 + \dots
+\end{align}
+im Allgemeinen auch Terme mit $\sigma\neq \sigma'$, und wird in jedem Fall nicht trivial auszurechnen sein.\\
+ANTWORT: Zeitordnung betrifft auch die ursprünglichen $c$ und $c^\dagger$. (Aber hilft das? Der Antikommutator ergbit doch dann in korrekter Zeitordnung erst recht Null)
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,189 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\def\I{\text{i}}
+
+\newcommand*{\titel}{01 Introduction}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+\subject{Quantum theory 2}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Questions}
+A hilbert space is a complex valued unitary linear complete vector space. Unitary means, that a scalar product is defined.
+\section{Observables}
+Let $\hat{A}^\dagger=\hat{A}$ a hermitian operator and $\hat{A}\Ket | {n} \rangle=a_n\Ket | {n} \rangle$. Then the eigenvalues $a_n$ are real:
+\begin{align*}
+a_n&=\braket\langle {n} | {\hat{A}} | {n}\rangle=\braket\langle {n} | {\hat{A}^\dagger} | {n}\rangle=\braket\langle {n} | {\hat{A}} | {n}\rangle^\ast=a_n^\ast
+\end{align*}
+In a similar way one can show that the eigenvectors are orthogonal:
+\begin{align*}
+(a_n-a_m)\brak\langle {n}| {m}\rangle&=a_n^\ast\brak\langle {n}| {m}\rangle-a_m\brak\langle {n}| {m}\rangle=\braket\langle {n} | {\hat{A}^\dagger} | {m}\rangle-\braket\langle {n} | {\hat{A}} | {m}\rangle=0
+\end{align*}
+Thus, $\brak\langle {n}| {m}\rangle=\delta_{nm}$. Note that this is only true for pairwise unique eigenvalues $a_n$.
+\section{Projectors}
+Let $\hat{\Pi}=\sum\oper | {i} \rangle\langle {i} |$ with $\brak\langle {i}| {j}\rangle=\delta_{ij}$. The $\Ket | {i} \rangle$ are not necessarily forming a complete basis.  Since $(\oper | {\hat{a}} \rangle\langle {\hat{b}} |)^\dagger=\oper | {\hat{b}} \rangle\langle {\hat{a}} |$, and $\dagger$ being linear, $\hat{\Pi}$ is hermitian:
+\begin{align*}
+\hat{\Pi}^\dagger = \kla\left( {\sum\oper | {i} \rangle\langle {i} |} \right)^\dagger=\sum\kla\left( {\oper | {i} \rangle\langle {i} |} \right)^\dagger=\sum\oper | {i} \rangle\langle {i} |=\hat{\Pi}
+\end{align*}
+Since the $\Ket | {i} \rangle$ are orthonormal, $\hat{\Pi}$ is indeed a projection:
+\begin{align*}
+\hat{\Pi}^2&=\sum_{i,j}\oper | {i} \rangle\langle {i} |\oper | {j} \rangle\langle {j} |=\sum_i\oper | {i} \rangle\langle {i} |=\hat{\Pi}
+\end{align*}
+The eigenvalues $\lambda_j$ then follow by considering eigenvectors $\Ket | {\lambda_j} \rangle$:
+\begin{align*}
+\lambda_j\Ket | {\lambda_j} \rangle&=\hat{\Pi}\Ket | {\lambda_j} \rangle=\hat{\Pi}^2\Ket | {\lambda_j} \rangle=\lambda_j^2\Ket | {\lambda_j} \rangle
+\end{align*}
+Thus $\lambda_j=0$ or $\lambda_j=1$. Let $\lambda_j=0$:
+\begin{align*}
+0&\overset{!}{=}\hat{\Pi}\Ket | {\lambda_j} \rangle\sum_i\oper | {i} \rangle\langle {i} |\lambda_j\rangle&\Rightarrow &&\brak\langle {i}| {\lambda_j}\rangle&\overset{!}{=}0
+\end{align*}
+This does not imply $\Ket | {\lambda_j} \rangle=0$, as the $\Ket | {i} \rangle$ do not form a basis.\\
+If instead $\lambda_j=1$:
+\begin{align*}
+\Ket | {\lambda_j} \rangle&\overset{!}{=}\hat{\Pi}\Ket | {\lambda_j} \rangle=\sum_i\oper | {i} \rangle\langle {i} |\lambda_j\rangle
+\end{align*}
+This condition is consistent with $\Ket | {\lambda_j} \rangle\equiv\Ket | {j} \rangle$.
+\section{Translation operator}
+Interesting attempt using spectral representations and identities.
+\begin{proof}
+First consider operators $\hat{A},\hat{B}$ with $\klam\left[ {\hat{A},\hat{B}} \right]=c\in\mathbb{C}$. Then we can show that $\klam\left[ {\hat{A},\hat{B}^N} \right]=NcB^{N-1}$. This is true for $N=1$ by construction. Assume the statement to be true for $N$ and consider the case for $N+1$:
+\begin{align*}
+\klam\left[ {\hat{A},\hat{B}^{N+1}} \right]&=\hat{B}^N\klam\left[ {\hat{A},\hat{B}} \right]+\klam\left[ {\hat{A},\hat{B}^N} \right]\hat{B}=\hat{B}^Nc+Nc\hat{B}^{N-1}\hat{B}=(N+1)c\hat{B}^N
+\end{align*}
+\end{proof}
+Note that this is not possible for arbitrary operators $\hat{C}$ instead of $c\in\mathbb{C}$.\\
+Let $\hat{T}_a=e^{-\I \hat{p}a}$ be the translation operator. Then we can show that $\klam\left[ {\hat{x},\hat{T}_a} \right]=a\hat{T}_a$ assuming $\klam\left[ {\hat{x},\hat{p}} \right]=\I$:
+\begin{align*}
+\klam\left[ {\hat{x},\hat{T}_a} \right]&=\sum_{n\ge 0}\klam\left[ {\hat{x},\frac{(-\I \hat{p}a)^n}{n!}} \right]=\sum_{n\ge 0}\frac{(-\I a)^n}{n!}\klam\left[ {\hat{x},\hat{p}^n} \right]=\sum_{n\ge 1}\frac{(-\I a)^n}{n!}n\I\hat{p}^{n-1}=\\
+&=a\sum_{n\ge 1}\frac{(-\I \hat{p}a)^{n-1}}{(n-1)!}=a\hat{T}_a
+\end{align*}
+Applying this to a state $\Ket | {y} \rangle:=\hat{T}_a\Ket | {x_0} \rangle$ yields the following result:
+\begin{align*}
+\hat{x}\Ket | {y} \rangle&=\hat{x}\kla\left( {\hat{T}_a\Ket | {x_0} \rangle} \right)=\hat{T}_a\kla\left( {\hat{x}\Ket | {x_0} \rangle} \right)+\klam\left[ {\hat{x},\hat{T}_a} \right]\Ket | {x_0} \rangle=x_0\Ket | {y} \rangle+a\hat{T}_a\Ket | {x_0} \rangle=(x_0+a)\Ket | {y} \rangle
+\end{align*}
+Thus we can identify $\hat{T}_a\Ket | {x_0} \rangle=\Ket | {y} \rangle\equiv\Ket | {x_0+a} \rangle$.
+\section{Harmonic oscillator}
+Let $\hat{H}=\omega\kla\left( {\hat{a}^\dagger\hat{a} + \frac{1}{2}} \right)$ and $\hat{a}:=\frac{\omega \hat{x}+\I \hat{p}}{\sqrt{2\omega}}$ with $\klam\left[ {\hat{a},\hat{a}^\dagger} \right]=1$. We can represent $\hat{x},\hat{p}$ in this way:
+\begin{align*}
+\hat{x}&=\frac{\hat{a}+\hat{a}^\dagger}{\sqrt{2\omega}}\\
+\hat{p}&=-\I\sqrt{\frac{\omega}{2}}\kla\left( {\hat{a}+\hat{a}^\dagger} \right)
+\end{align*} 
+For an eigenstate $\Ket | {n} \rangle$ of the harmonic oscillator we then get
+\begin{align*}
+\bra\langle {x^2}\rangle&=\frac{1}{2\omega}\bra\langle {\kla\left( {\hat{a}+\hat{a}^\dagger} \right)^2}\rangle=\frac{1}{2\omega}\braket\langle {n} | {\hat{a}^2+\hat{a}^{\dagger 2}+\hat{a}\hat{a}^\dagger + \hat{a}^\dagger\hat{a}} | {n}\rangle=\frac{1}{\omega}\braket\langle {n} | {\hat{n}} | {n}\rangle+\frac{1}{2\omega}=\frac{1}{\omega}\kla\left( {n+\frac{1}{2}} \right)\\
+\bra\langle {p^2}\rangle&=-\frac{\omega}{2}\bra\langle {\kla\left( {\hat{a}-\hat{a}^\dagger} \right)^2}\rangle=-\frac{\omega}{2}\braket\langle {n} | {\hat{a}^2+\hat{a}^{\dagger 2}-\hat{a}\hat{a}^\dagger-\hat{a}^\dagger\hat{a}} | {n}\rangle=\omega\kla\left( {n+\frac{1}{2}} \right)
+\end{align*}
+For the groundstate $\Ket | {0} \rangle$ this simplifies to $\bra\langle {x^2}\rangle=\frac{1}{2\omega}$ and $\bra\langle {p^2}\rangle=\frac{\omega}{2}$.\\
+At the moment of measurement let the state be $\Ket | {\psi} \rangle=\frac{1}{\sqrt{74}}\kla\left( {\frac{5}{\sqrt{24}}\hat{a}^{\dagger 4}+\frac{7}{\sqrt{6}}\hat{a}^{\dagger 3}} \right)\Ket | {0} \rangle$. This state is normalized, which can be shown by making use of $\Ket | {n} \rangle=\frac{\hat{a}^{\dagger n}}{\sqrt{n!}}\Ket | {0} \rangle$:
+\begin{align*}
+\Ket | {\psi} \rangle&=\frac{5}{\sqrt{74}}\Ket | {4} \rangle+\frac{7}{\sqrt{74}}\Ket | {3} \rangle\\
+\brak\langle {\psi}| {\psi}\rangle&=\frac{1}{74}\kla\left( {\braket\langle {4} | {25} | {4}\rangle+\braket\langle {3} | {49} | {3}\rangle} \right)=1
+\end{align*} 
+Thus the possible energy eigenvalues are $E_{3,4}$ where $E_n=\omega\kla\left( {n+\frac{1}{2}} \right)$. The probabilities are given by the coefficients of the eigenstates that occur in the wavefunction:
+\begin{align*}
+P(E_4)&=P(\psi=\Ket | {4} \rangle)=\frac{25}{74}\\
+P(E_3)&=P(\psi=\Ket | {3} \rangle)=\frac{49}{74}
+\end{align*}
+\section{Spin $\frac{1}{2}$ and Pauli matrices}
+Consider the commutator of the ladder operators and $\hat{J}_3$:
+\begin{align*}
+\klam\left[ {\hat{J}_3,\hat{J}_\pm} \right]&=\klam\left[ {\hat{J}_3,\hat{J}_1} \right]\pm\I\klam\left[ {\hat{J}_3,\hat{J}_2} \right]=\I\hat{J}_2\pm\hat{J}_1=\pm\hat{J}_\pm
+\end{align*}
+This allows the following calculation for a state $\Ket | {\psi} \rangle:=\hat{J}_\pm\Ket | {j,m} \rangle$:
+\begin{align*}
+\hat{J}_3\Ket | {\psi} \rangle&=\hat{J}_3\hat{J}_\pm\Ket | {j,m} \rangle=\hat{J}_\pm\hat{J}_3\Ket | {j,m} \rangle\pm\hat{J}_\pm\Ket | {j,m} \rangle=m\hat{J}_\pm\Ket | {j,m} \rangle\pm\Ket | {\psi} \rangle=(m+1)\Ket | {\psi} \rangle
+\end{align*}
+Therefor we can identify $\hat{J}_\pm\Ket | {j,m} \rangle=\Ket | {\psi} \rangle\propto\Ket | {j,m\pm 1} \rangle$ down to a proportionality constant $\alpha(j,m)$. To determine this, consider first the product of the ladder operators
+\begin{align*}
+\hat{J}_\mp\hat{J}_\pm&=(\hat{J}_1\mp\I\hat{J}_2)(\hat{J}_1\pm\I\hat{J}_2)=\hat{J}_1^2+\hat{J}_2^2\pm\I\klam\left[ {\hat{J}_1,\hat{J}_2} \right]=\hat{\vec{J}}^2-\hat{J}_z^2\mp\hat{J}_z
+\end{align*}
+Using $\hat{\vec{J}}^2\Ket | {j,m} \rangle=j(j+1)\Ket | {j,m} \rangle$ and $\hat{J}_3\Ket | {j,m} \rangle=m\Ket | {j,m} \rangle$ we can calculate $|\alpha(j,m)|^2$ via the product
+\begin{align*}
+|\alpha(j,m)|^2&=\braket\langle {j,m} | {\hat{J}_\mp\hat{J}_\pm} | {j,m}\rangle=\braket\langle {j,m} | {\hat{\vec{J}}^2-\hat{J}_z^2-\hat{J}_z} | {j,m}\rangle=j(j+1)-m(m\pm 1)
+\end{align*}
+Thus, $\alpha(j,m)=\sqrt{j(j+1)-m(m\pm 1)}$ and
+\begin{align*}
+\hat{J}_\pm\Ket | {j,m} \rangle&=\sqrt{j(j+1)-m(m\pm 1)}\Ket | {j,m\pm 1} \rangle=\sqrt{(j\mp m)(j\pm m+1)}\Ket | {j,m\pm 1} \rangle
+\end{align*}
+For $j=\frac{1}{2}$ we have $m=\pm\frac{1}{2}$. Applying the derived relation yields
+\begin{align*}
+\hat{J}_+\Ket | {+} \rangle=\sqrt{\kla\left( {\frac{1}{2}-\frac{1}{2}} \right)\kla\left( {\frac{1}{2}+\frac{1}{2}+1} \right)}\Ket | {\frac{1}{2},\frac{1}{2}+ 1} \rangle=0\\
+\hat{J}_-\Ket | {+} \rangle=\sqrt{\kla\left( {\frac{1}{2}+\frac{1}{2}} \right)\kla\left( {\frac{1}{2}-\frac{1}{2}+1} \right)}\Ket | {\frac{1}{2},\frac{1}{2}- 1} \rangle=\Ket | {-} \rangle\\
+\hat{J}_+\Ket | {-} \rangle=\sqrt{\kla\left( {\frac{1}{2}+\frac{1}{2}} \right)\kla\left( {\frac{1}{2}-\frac{1}{2}+1} \right)}\Ket | {\frac{1}{2},-\frac{1}{2}+ 1} \rangle=\Ket | {+} \rangle\\
+\hat{J}_-\Ket | {-} \rangle=\sqrt{\kla\left( {\frac{1}{2}-\frac{1}{2}} \right)\kla\left( {\frac{1}{2}+\frac{1}{2}+1} \right)}\Ket | {\frac{1}{2},\frac{1}{2}+ 1} \rangle=0
+\end{align*}
+Calculate the following matrix elements:
+\begin{align*}
+\braket\langle {\pm} | {\hat{J}_1} | {\pm}\rangle=-\I\braket\langle {\pm} | {\hat{J}_2\hat{J}_3-\hat{J}_3\hat{J}_2} | {\pm}\rangle=0\\
+\braket\langle {\pm} | {\hat{J}_2} | {\pm}\rangle=-\I\braket\langle {\pm} | {\hat{J}_3\hat{J}_1-\hat{J}_1\hat{J}_3} | {\pm}\rangle=0\\
+\braket\langle {\pm} | {\hat{J}_1} | {\mp}\rangle=-\I\braket\langle {\pm} | {\hat{J}_2\hat{J}_3-\hat{J}_3\hat{J}_2} | {\mp}\rangle=\pm\I\braket\langle {\pm} | {\hat{J}_2} | {\mp}\rangle
+\end{align*}
+Representing $\hat{J}_{1,2}$ with $\hat{J}_\pm$ leads to the well known matrix elements.\\
+Let $\klam\left[ {A,\sigma_i} \right]=0=\klam\left[ {B,\sigma_i} \right]$. Using $\sigma_i\sigma_j=\delta_{ij}+\I\epsilon_{ijk}\sigma_k$ leads to the following relation:
+\begin{align*}
+(\sigma\cdot A)(\sigma\cdot B)&\equiv\sigma_iA_i\sigma_jB_j=A_iB_i+\I\sigma_k\epsilon_{ijk}A_iB_j\equiv A\cdot B+\I\sigma\cdot (A\times B)
+\end{align*}
+\section{Rotation matrix}
+From the definition $(l_z)_{ij}:=-\I\epsilon_{3ij}$ we can compute the elements of $l_z^2$ by 
+\begin{align*}
+(l_z^2)_{ij}&=\sum_k (l_z)_{ik}(l_z)_{kj}=-\sum_k\epsilon_{3ik}\epsilon_{3kj}=-\epsilon_{3i1}\epsilon_{31j}-\epsilon_{3i2}\epsilon_{32j}=\\
+&=\epsilon_{1i3}\epsilon_{1j3}+\epsilon_{i23}\epsilon_{j23}\equiv\begin{pmatrix}
+1&0&0\\
+0&1&0\\
+0&0&0
+\end{pmatrix}
+\end{align*}
+Since the last row and column of $l_z$ are zero, multiplying by $l_z^2$ is equivalent to multiplying by the identity. Therefor $l_z^k=l_z^{k\,\tecxt\text{mod}\,2}$ for all $k\in\mathbb{N}$. This allows us to calculate the matrix exponential:
+\begin{align*}
+e^{-\I\theta l_z}&=\sum_{n\ge 0}\frac{(-\I\theta l_z)^n}{n!}=\sum_{k\ge 0}\frac{(-\I\theta l_z)^{2k}}{(2k)!}+\sum_{k\ge 0}\frac{(-\I\theta l_z)^{2k+1}}{(2k+1)!}=\\
+&=I_3+l_z^2\sum_{k\ge 1}\frac{(-1)^k\theta^{2k}}{(2k)!}-\I l_z\sum_{k\ge 0}\frac{(-1)^k\theta^{2k+1}}{(2k+1)!}=\\
+&=I_3 + l_z^2(\cos\theta - 1)-\I l_z\sin\theta=\begin{pmatrix}
+\cos\theta&-\sin\theta&0\\
+\sin\theta&\cos\theta&0\\
+0&0&1
+\end{pmatrix}=R_z(\theta)
+\end{align*}
+
+\end{document}

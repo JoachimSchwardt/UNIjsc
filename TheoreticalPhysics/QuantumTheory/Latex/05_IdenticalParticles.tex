@@ -1,0 +1,172 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb, slashed}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{dsfont}
+
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\def\I{\text{i}}
+\def\E{\text{e}}
+
+\newcommand*{\titel}{05 Identical particles}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+\subject{Quantum theory 2}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Questions}
+All quantum numbers are the same and there can be no experiment, that is able to distinguish the particles.
+\\
+Experiments in accordance with the mathematical prediction.
+\\
+Consider a state $\Ket | {\phi} \rangle\Ket | {\psi} \rangle$. Then the following holds:
+\begin{align*}
+A_2^{(1)}B_2^{(2)}\Ket | {\phi} \rangle\Ket | {\psi} \rangle&=\kla\left( {A_2^{(1)}\Ket | {\phi} \rangle} \right)\kla\left( {B_2^{(2)}\Ket | {\psi} \rangle} \right)=B_2^{(2)}\kla\left( {A_2^{(1)}\Ket | {\phi} \rangle} \right)\Ket | {\psi} \rangle=B_2^{(2)}A_2^{(1)}\Ket | {\phi} \rangle\Ket | {\psi} \rangle
+\end{align*}
+Hence the operators commute.
+\\
+Let $\psi^\pm\in\mathcal{H}^\pm$. 
+Then these states are orthogonal, because we can insert the identity $P^2\equiv 1$, where $P=P^\dagger$ and $P\Ket | {\psi^\pm} \rangle=\pm\Ket | {\psi^\pm} \rangle$:
+\begin{align*}
+\brak\langle {\psi^+}| {\psi^-}\rangle&=\braket\langle {\psi^+} | {PP} | {\psi^-}\rangle=-\brak\langle {\psi^+}| {\psi^-}\rangle=0
+\end{align*}
+We want to prove the used properties of $P$:
+\begin{align*}
+\braket\langle {\phi\psi} | {P^\dagger} | {\phi'\psi'}\rangle&=\braket\langle {\phi'\psi'} | {P} | {\phi\psi}\rangle^\ast=\brak\langle {\phi'\psi'}| {\psi\phi}\rangle^\ast=\\
+&=\brak\langle {\psi\phi}| {\phi'\psi'}\rangle=\braket\langle {\psi\phi} | {P} | {\psi'\phi'}\rangle=\braket\langle {\phi\psi} | {P} | {\phi'\psi'}\rangle
+\end{align*}
+Hence $P=P^\dagger$. 
+We already know $P^2=1$ by construction of the parity operator, so $P=P^{-1}$, and therefore $P$ is unitary and hermitian, i.e. $P=P^\dagger = P^{-1}$.
+\section{Two-particle system}
+Distinguishable particles can be expressed as $\Ket | {U} \rangle :=\Ket | {\psi,\phi} \rangle$. 
+Thus
+\begin{align*}
+\bra\langle {(x_1-x_2)^2}\rangle_U&=\bra\langle {x_1^2}\rangle_{\psi\psi}+\bra\langle {x_2^2}\rangle_{\phi\phi}-2\bra\langle {x_1}\rangle_{\psi\psi}\bra\langle {x_2}\rangle_{\phi\phi}=:\bra\langle {\Delta x_{12}^2}\rangle_U.
+\end{align*}
+For bosons and fermions we have $\Ket | {B} \rangle\equiv\frac{1}{\sqrt{2}}\kla\left( {\Ket | {\psi,\phi} \rangle+\Ket | {\phi,\psi} \rangle} \right)$ and $\Ket | {F} \rangle\equiv\frac{1}{\sqrt{2}}\kla\left( {\Ket | {\psi,\phi} \rangle-\Ket | {\phi,\psi} \rangle} \right)$ respectively, which results in
+\begin{align*}
+\bra\langle {\Delta x_{1,2}^2}\rangle_{B,F}&=\braket\langle {\psi,\phi} | {\Delta x_{1,2}^2} | {\psi,\phi}\rangle\pm\braket\langle {\psi,\phi} | {\Delta x_{1,2}^2} | {\phi,\psi}\rangle=\\
+&=\bra\langle {\Delta x_{12}^2}\rangle_U\pm \cancel{\braket\langle {\psi,\phi} | {x_1^2} | {\phi,\psi}\rangle}+\cancel{\braket\langle {\psi,\phi} | {x_2^2} | {\phi,\psi}\rangle}\mp 2\braket\langle {\psi} | {x_1} | {\phi}\rangle\braket\langle {\phi} | {x_2} | {\psi}\rangle=\\
+&=\bra\langle {\Delta x_{12}^2}\rangle_U\mp 2\left\vert\bra\langle {x}\rangle_{\psi\phi}\right\vert^2,
+\end{align*}
+where the terms $\braket\langle {\psi,\phi} | {x_j^2} | {\phi,\psi}\rangle=\braket\langle {\psi} | {x_j^2} | {\phi}\rangle\brak\langle {\phi}| {\psi}\rangle=0$ vanish.
+\section{Gravitationally bound state of two identical particles}
+Let $H=\frac{p_1^2+p_2^2}{2m}+V(r)$. 
+Then the new momenta are
+\begin{align*}
+P&:=p_1+p_2&\tecxt\text{and}&&p&:=\frac{p_1-p_2}{2}
+\end{align*}
+with
+\begin{align*}
+p_{1,2}&=\frac{P}{2}\pm p
+\end{align*}
+Thus the new hamiltonian is 
+$$H=\frac{2p^2+P^2/2}{2m}+V(r)=:\frac{P^2}{2M}+\frac{p^2}{2\mu}+V(r),$$
+where $M=2m$ is the total mass and $\mu=\frac{m}{2}$ is the reduced mass of the system. 
+With $\psi=\phi(r)\chi(R)$ and $E=\epsilon+\xi$ the equation can be reduced to
+\begin{align*}
+\epsilon\phi&=\frac{p^2}{2\mu}\phi+V(r)\phi&\tecxt\text{and}&&\xi\chi&=\frac{P^2}{2M}\chi
+\end{align*}
+This is possible because $\klam\left[ {r,P} \right]=0=\klam\left[ {R,p} \right]$.
+\\
+An alternative is the direct coordinate transformation.
+Let $R=\frac{r_1+r_2}{2}$ and $r=r_1-r_2$. 
+Then the derivatives can be expressed in component notation, where the superscript indicates the respective space:
+\begin{align*}
+\nabla_1\phi(r,R)&\equiv\partial_j^{(1)}\phi \kla\left( {x_i^{(1)}-x_i^{(2)},\frac{x_i^{(1)}+x_i^{(2)}}{2}} \right)=\\
+&=\partial_j^{(r)}\phi\cdot \partial_j^{(1)}x_i^{(1)}+\partial_j^{(R)}\phi\cdot \partial_j^{(1)}\frac{x_i^{(1)}}{2}\equiv\nabla_r\phi+\frac{1}{2}\nabla_R\phi
+\end{align*}
+We can rewrite this as an operator equation $\nabla_{1,2}=\frac{1}{2}\nabla_R\pm\nabla_r$
+This relation allows us to compute the second order derivatives:
+\begin{align*}
+\nabla_{1,2}^2&=\frac{1}{4}\nabla_R^2 \pm \nabla_r\nabla_R + \nabla_r^2
+\end{align*}
+And finally, their sum is 
+\begin{align*}
+\nabla_1^2+\nabla_2^2&=2\nabla_r^2+\frac{1}{2}\nabla_R^2
+\end{align*}
+Particle exchange should leave the wavefunction unchanged, which lets us determine $\psi(-r)\overset{!}{=}\psi(r)$. 
+Since $\psi(-r)=(-1)^l\psi(r)$, we find $l\in 2\mathbb{N}$.
+For the fermions (?), we could also (?) have $\psi(-r)=-\psi(r)$, or $l\in 2\mathbb{N}+1$, if the spin wavefunction were asymmetric.
+That is, if $\chi\equiv\frac{1}{\sqrt{2}}\kla\left( {\uparrow\downarrow+\downarrow\uparrow} \right)$ or $\chi\equiv\uparrow\uparrow$ or $\chi\equiv\downarrow\downarrow$.
+Otherwise the spin wavefunction must be asymmetric, i.e. $\chi\equiv\frac{1}{\sqrt{2}}\kla\left( {\uparrow\downarrow-\downarrow\uparrow} \right)$.
+\\
+The binding energy is given by 
+\begin{align*}
+\epsilon_n&=-\frac{\mu\alpha^2}{2n^2}\equiv -\frac{G^2m^5}{4n^2\hbar^2}
+\end{align*}
+with $|\epsilon_1|\approx 10^{-85}\,$eV.
+\section{Symmetric and antisymmetric Hilbert subspaces}
+For $N=2$, we can construct a basis of symmetric and asymmetric states for $\mathcal{H}_N$. 
+We have $S\sim 12+21\in\mathcal{H}_2^+$ and $A\sim 12-21\in\mathcal{H}_2^-$.
+Then we retrieve the original basis by $12\sim S+A$ and $21\sim S-A$.
+\\
+For $N=3$, this is not possible. 
+Here we label the states as $abc\in\mathcal{H}_3$.
+There exist two symmetric states as before, but we need six to form a complete basis. 
+They are
+\begin{align*}
+S&\sim abc + acb + bca + bac + cab + cba\\
+A&\sim abc - acb + bca - bac + cab - cba
+\end{align*}
+It is easy to check that $P_{ij}S=+S$ and $P_{ij}A=-A$ for all pairs $i\neq j$.
+The other states are mixed:
+\begin{align*}
+M_{1a}&\sim 2abc - acb + 2bac - bca - cab - cba\\
+M_{1b}&\sim cab - acb + cba - bca\\
+M_{2a}&\sim bca - cab + cba - acb\\
+M_{2b}&\sim 2abc + acb - 2bac - bca - cab + cba
+\end{align*}
+They are not eigenstates of all $P_{ij}$ operators.
+\\
+The normalization $\brak\langle {\psi}| {\psi}\rangle\overset{!}{=}1$ of an arbitrary state 
+\begin{align*}
+\Ket | {\psi} \rangle&:=\frac{1}{N}\sum_{k}c_k\Ket | {k} \rangle
+\end{align*}
+is given by the factor
+\begin{align*}
+|N|^2&=\sum_{j,k}c_j^\ast c_k\brak\langle {j}| {k}\rangle\kom\overset{\substack{{j\perp k} \\ |}}{=}\sum_k |c_k|^2,
+\end{align*}
+given that the states $\Ket | {k} \rangle$ are orthonormal.
+
+
+\end{document}

@@ -1,0 +1,94 @@
+In this section we introduce two methods for extracting frequencies from a discrete set of points.
+The WBA are presented as a general method for computing an average with fast convergence.
+For the Naff, only a rough overview is given, as we will mostly treat this method as a black box.
+\section{Weighted Birkhoff averages}
+%Let an orbit be defined as a set of points $G(z_0):=\{f^n(z_0)\,|\,n\in\mathbb{N}_0\}$ for a given initial condition. Its frequency can defined as
+Let $h:M\rightarrow\mathbb{R}$ be a map and $Z:=\klammer\left\{{z_n\in M\,\vert\,n=\mathbb{N}_0} \right\}$ a discrete set of points. 
+For each $N\in\mathbb{N}$ we can assign an average value to the subset $Z_N:=\{z_n\,\vert\,n=0,\dots,N-1\}$ by defining
+\begin{align}
+\text{A}_N[h](Z_N):=\frac{1}{N}\sum_{n=0}^{N-1}h(z_n). \label{eqn:NormalAverage}
+\end{align}
+In general such an average is only meaningful, if the resulting sequence converges to some limit $\tecxt\text{A}[h](Z)=\lim_{N\rightarrow\infty}\tecxt\text{A}_N[h](Z_N)$. 
+However, the convergence of this is slow, as it is at best of order $\mathcal{O}(N^{-1})$ \cite{SanMei2020}. 
+\\% Note that by frequency we refer to the rate at which the orbit runs along the $q$-axis, just like a pendulum rotates if given enough momentum. Using $p_n$ instead of $q_{n+1}-q_n$ is simply a numerical trick, as the latter would require a lift in $q$.
+The rate of convergence can be improved by introducing weights defined as
+%$W_N:=\{w_{n,N}\in\mathbb{R}_{\ge 0}\,|\,n=0,\dots,N-1\}$ defined as
+\begin{align}
+w_{n,N}&:=\frac{1}{S}g\kla\left( {\frac{n}{N}} \right)&\tecxt\text{with}&&S&:=\sum_{n=0}^{N-1}g\kla\left( {\frac{n}{N}} \right),
+\end{align} 
+using an infinitely smooth function $g\in C^\infty_c (\mathbb{R})$ with compact support
+\begin{align}
+g(t)&:=\left\{\begin{matrix}
+\exp\kla\left( {-\klam\left[ {t(1-t)} \right]^{-1}} \right)&\tecxt\text{for}\ 0<t<1,\\
+0&\tecxt\text{else}
+\end{matrix}\right. .
+\end{align}
+By construction, these weights are normalized, i.e. $\sum_{n=0}^{N-1}w_{n,N}=1$. \\
+Then the weighted Birkhoff average can be defined as
+\begin{align*}
+\tecxt\text{WA}_N[h](Z_N)&:=\sum_{n=0}^{N-1}w_{n,N}h(z_n)\numberthis\label{eqn:WBAdefinition}
+\end{align*}
+Unless explicitly mentioned, we use the identity for $h$.
+We want to use the WBA for the frequency analysis of orbits obtained from quasi-periodic maps. 
+Let $f_\nu:S^1\rightarrow S^1$ be a so called pure rotation on $S^1:=[0,1)$ defined by 
+\begin{align*}
+f_\nu(q)&:=q+\nu\,\tecxt\text{mod}\,1\numberthis\label{eqn:PureRotation}
+\end{align*}
+with the frequency $\nu\in S^1$.
+Then a map $f:M\rightarrow M$ is quasi-periodic, if there exists a diffeomorphism $T:S^1\rightarrow M$, such that
+\begin{align*}
+f\circ T&\equiv T\circ f_\nu .\numberthis\label{eqn:QuasiperiodicMap}
+\end{align*}
+%FIXME: you could also just leave $h$ out entirely and just use $p_n:=\cos(2\pi q_n)$ as the input for the chaos indicator, which is the only exception anyways..\\
+%definition as approximation of Lebesgue integrals with super convergence (DasSaiSanYor2016 has link to proof)\\
+%Define WBA, cite theoretical results (expected super convergence for large $N$, expected to work better on irrational frequencies, ...). 
+The frequency $\nu$ is called diophantine, if there exist $c>0$ and $k>0$ such that
+\begin{align*}
+\left\vert\nu-\frac{n}{m}\right\vert &> \frac{c}{m^k} \numberthis\label{eqn:Diophantine}
+\end{align*}
+for all $n,m\in\mathbb{N}$. 
+Let the $z_n\in Z$ be defined as the $n$-th iterate of an initial condition under a quasi-periodic map with diophantine frequency.
+It was proven in \cite{DasYor2018}, that the WBA in such a case is super-convergent, i.e. for all $k\ge 1$ there exist constants $c_k$ such that
+\begin{align*}
+\left\vert \text{WA}_N[h](Z_N)-\nu\right\vert &\le \frac{c_k}{N^k}  \numberthis\label{eqn:SuperConvergence}
+\end{align*}
+for all $N\in\mathbb{N}$, where the frequency is defined as $\nu:=\lim_{N\rightarrow\infty}\text{A}_N[h](Z_N)$.
+%The theorem only holds, if the orbit is obtained from iterating an initial condition with a $C^\infty$-map $f$. 
+
+%FIXME: This is very brief and reduces WBA nearly to the extent that is used for this work. The general definition as a way of approximating Lebesgue integrals is not necessary here, but that does not mean it should be left out.
+%FIXME: I would avoid listing all the transformations here, as they are necessary only much further down the line.
+\section{Numerical analysis of fundamental frequencies}
+\label{sec:Naff}
+The Naff makes use of the Fourier transformation, and the following definition is a short overview of the detailed description in \cite{BarBazGioScaTod1996}, which is based on the original algorithm by Laskar in \cite{Las1993}.
+Assume that a complex valued signal $Z_N:=\{z_n\in\mathbb{C}\,\vert\,n=0,\dots,N-1\}$ may be approximated by a Fourier series with $m$ terms, such that
+\begin{align*}
+z_n&\approx\sum_{k= 1}^m a_k\E^{2\pi\I\nu_k n}\numberthis\label{eqn:FourierSeriesApproximation}
+\end{align*}
+with frequencies $\nu_k$ and decreasing amplitudes $a_k$.
+%These $z_n$ can be approximated as
+%\begin{align*}
+%z'_n&\approx\sum_{k=1}^m a'_k\E^{2\pi\I\nu'_k n}, \numberthis\label{eqn:ApproximateFourierSeries}
+%\end{align*}
+%where only a finite number of $m$ frequencies $\nu'_k$ and amplitudes $a'_k$ are used.
+%\\
+To extract the first frequency, one searches for the input $\nu$, that maximizes the quantity 
+\begin{align}
+\phi(\nu)&:=\sum_{n=0}^{N-1}\chi_n z_n \E^{-2\pi\I\nu n}. \label{eqn:FourierAmplitude}
+\end{align}
+That is, $\nu_1:=\tecxt\text{argmax\,}\vert\phi(\nu)\vert$.
+For the details of how Naff detects the peak of $\phi$, see section 4.2.4 in \cite{BarBazGioScaTod1996}. 
+Here the $\chi_n:=\frac{2}{N}\sin^2\kla\left( {\frac{\pi n}{N}} \right)$ are normalized weights, similar to the $w_n$ used for the WBA.
+\\
+It is also possible to extract higher order frequencies.
+We subtract a certain number $n_\tecxt\text{harm}$ of the harmonics of the first frequency from the original signal $z_n$, i.e. the frequencies $\nu_1,2\nu_1,\dots,n_\tecxt\text{harm}\nu_1$.
+By default we have $n_\tecxt\text{harm}=1$, and we will discuss the relevance of this parameter in section \ref{sec:FrequencySpace}.
+The required amplitudes of each frequency are given by eqn. (\ref{eqn:FourierAmplitude}), where the signal $z_n$ has to be modified after each subtracted frequency, as described in \cite{Las1993}.
+We can then apply Naff to the remaining signal, and extract a second frequency.
+\\
+To improve the convergence of Naff for signals $q_n$, that are not of oscillatory nature, e.g. a pure rotation from eqn. (\ref{eqn:PureRotation}), they can be transformed according to
+\begin{align}
+z_n&:=\cos (q_n)+\I\sin (q_n)\label{eqn:MapToCircle},
+\end{align} 
+as presented in \cite{DasBae2020}. The $z_n$ are then used as the new input for Naff. 
+In general Naff is expected to have an error of order $\mathcal{O}(N^{-4})$. 
+A prove of this statement can be found in section B.3 of the appendix in \cite{BarBazGioScaTod1996}.

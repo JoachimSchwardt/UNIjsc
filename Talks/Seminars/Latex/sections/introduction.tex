@@ -1,0 +1,134 @@
+%\begin{frame}{Table of Contents}
+%    \begin{columns}
+%        \begin{column}{0.6\textwidth}
+%            \begin{enumerate}
+%                \item \textbf{Introduction and Goal}
+%                \item \textbf{The Proof}
+%                \begin{itemize}
+%                    \item Khintchine's Theorem\\ (a.k.a. some mathematical curiosity)
+%                    \item manipulating the max-stable property
+%                    \item ``magical'' separation into three types
+%                \end{itemize}
+%                \item \textbf{Examples (FIXME: probably not, because too much?)}
+%                \begin{itemize}
+%                    \item uniform distribution
+%                    \item gaussian distribution
+%                \end{itemize}
+%                \item \textbf{Summary}
+%            \end{enumerate}
+%        \end{column}
+%        \begin{column}{0.4\textwidth}
+%            \begin{center}
+%                MAYBE\\SOME\\PICTURE
+%            \end{center}
+%        \end{column}
+%    \end{columns}
+%\end{frame}
+
+%\begin{frame}{Extreme Value Theory -- Background}
+%    \uncover<1->{Consider $N$ i.i.d. random variables $X_1,\dots,X_N$...}
+%    \begin{columns}
+%        \begin{column}{0.7\textwidth}
+%            \begin{itemize}
+%                \item[\bpt]<2-> Central Limit Theory $\longleftrightarrow$ $X_1 + \dots + X_N$
+%                \item[\bpt]<3-> Extreme Value Theory $\longleftrightarrow$ $\max\klammer\left\{ X_1, \dots, X_N \right\}$
+%            \end{itemize}
+%        \end{column}
+%        \begin{column}{0.3\textwidth}
+%            \begin{center}
+%                MAYBE\\SOME\\PICTURE
+%            \end{center}
+%        \end{column}
+%    \end{columns}
+%\end{frame}
+
+%\begin{frame}{Extreme Value Theory -- Short Recap}
+%    Consider $n$ i.i.d. random variables $X_1,\dots,X_n$
+%    \begin{itemize}
+%        \pause\item[\bpt] Central Limit Theory $\longleftrightarrow$ $Y := X_1 + \dots + X_n$
+%        \begin{itemize}
+%            \pause\item[] existence and shape of c.d.f. for $n\rightarrow\infty$?
+%        \end{itemize}
+%        \,\\
+%        \pause\item[\bpt] Extreme Value Theory $\longleftrightarrow$ $M_n := \max\klammer\left\{ X_1, \dots, X_n \right\}$
+%        \begin{itemize}
+%            \pause\item[] existence and shape of c.d.f. for $n\rightarrow\infty$?
+%            \pause\item[] Finite $n$
+%            \item[] $P\kla\left( M_n \le x \right) = P\kla\left( X_1 \le x, \dots, X_n \le x \right) \pause = \left[ F(x) \right]^n$
+%            \pause\item[] ... but $n\rightarrow \infty$ complicated
+%        \end{itemize}
+%    \end{itemize}
+%\end{frame}
+
+\begin{frame}{Extreme Value Theory -- Short Recap}
+    Consider $n$ i.i.d. random variables $\xi_1, \dots, \xi_n$ with common c.d.f. $F(x)$\,\\ \,\\
+    \begin{itemize}
+        \pause\item[\bpt] Central Limit Theory: $\qquad \Sigma_n := \xi_1 + \dots + \xi_n$
+        \begin{itemize}
+            \pause\item[ ] $P(\Sigma_n \le x)$ for $n\rightarrow\infty$?
+        \end{itemize}
+        \,\\
+        \pause\item[\bpt] Extreme Value Theory: $\qquad M_n := \max\klammer\left\{ \xi_1, \dots, \xi_n \right\}$
+        \begin{itemize}
+            \pause\item[ ] $P(M_n \le x)$ for $n\rightarrow\infty$?
+        \end{itemize}
+    \end{itemize}
+    \,\\
+%    \pause We can write down the c.d.f.
+    {\pause}Finite $n$:
+    \begin{itemize}
+        \item[] $P\kla\left( M_n \le x \right) \pause = P\kla\left( \xi_1 \le x, \dots, \xi_n \le x \right) \pause = \left[ F(x) \right]^n$
+    \end{itemize}
+%    {\pause}... but $n\rightarrow \infty$ complicated
+%    \begin{textblock}{0.35}(0.65, 0.25)
+%        \begin{center}
+%            MAYBE\\SOME\\PICTURE
+%        \end{center}
+%%        \begin{figure}[!ht]
+%%            \centering
+%%            \includegraphics[width=\linewidth]{../EE_Pictures/ev_distributions_simple.png}
+%%        \end{figure}
+%    \end{textblock}
+\end{frame}
+
+%\begin{frame}{Extreme Value Theory -- Background II}
+%    \begin{tikzpicture}[remember picture,overlay]
+%        \node[xshift=0cm,yshift=0cm] at (current page.north west) {
+%		\includegraphics{../EE_Pictures/ev_distributions_simple.png}
+%		};
+%    \end{tikzpicture}
+%\end{frame}
+
+\begin{frame}{Why do we need scaling?}
+%    Example: $F(x) = x$,\ \ $x\in [0, 1]$ (uniform distribution)\\
+%    \,\\
+%    {\pause}
+    Without scaling
+    \begin{itemize}
+        \item[\bpt] $P(M_n \le x) = \left[ F(x) \right]^n \pause \longrightarrow 0$\quad ($F(x) < 1$)
+    \end{itemize}
+    \,\\ \,\\
+    {\pause}Scaling:\quad $\tilde{M}_n := \frac{M_n - b_n}{a_n}$, ($a_n>0$)
+    \begin{itemize}
+        \pause\item[\bpt] $P(\tilde{M}_n \le x) = P\left( \frac{M_n - b_n}{a_n} \le x \right) \pause = P\big( M_n \le a_n x + b_n \big) \pause = \left[ F(a_nx + b_n) \right]^n \longrightarrow G(x)$
+        \pause\item[\bpt] Example: For $F(x) = x$ choose $a_n = \frac{1}{n}$, $b_n = 1$
+        \pause\item[\bpt] $P(\tilde{M}_n \le x) = \left[ F(a_nx + b_n) \right]^n = \left( 1 + \frac{x}{n} \right)^n \pause \longrightarrow \e^{x}$
+    \end{itemize}
+\end{frame}
+
+%\begin{frame}{Why do we need scaling?}
+%    Example: $F(x) = x$,\ \ $x\in [0, 1]$ (uniform distribution)\\
+%    \,\\
+%    {\pause}Without scaling
+%    \begin{itemize}
+%        \item[\bpt] $\left[ F(x) \right]^n = x^n \pause \longrightarrow 0$\quad ($x < 1$)
+%%        \pause\item[\bpt] not very useful...
+%    \end{itemize}
+%    \,\\
+%    {\pause}With scaling
+%    \begin{itemize}
+%        \item[\bpt] $\left[ F(a_nx + b_n) \right]^n$
+%        \pause\item[\bpt] for $F(x) = x$ choose $a_n = \frac{1}{n}$ and $b_n = 1$
+%        \pause\item[\bpt] $\left[ F(a_nx + b_n) \right]^n = \left( 1 + \frac{x}{n} \right)^n \pause \longrightarrow \e^{x}$
+%    \end{itemize}
+%\end{frame}

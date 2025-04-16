@@ -1,0 +1,221 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{xcolor, colortbl}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{04 Expansion of the universe}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{General Relativity}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+
+\section*{Problem 12: Expanding universe}
+On large scales our universe may be approximated by the metric
+\begin{align}
+\tecxt\text{d}s^2 &= \tecxt\text{d}t^2 - a(t)^2\tecxt\text{d}\vec{r}\,^2.
+\end{align}
+The Christoffel symbols are given by
+\begin{align}
+\Gamma^\rho_{\mu\nu} &= \frac{1}{2}g^{\rho\sigma}\kla\left( g_{\sigma\mu,\nu} + g_{\sigma\nu,\mu} - g_{\mu\nu,\sigma} \right) = \\
+&= \frac{1}{2} g^{\rho\rho} \kla\left( g_{\rho\rho,0} \delta_{\nu0} \delta_{\mu\rho} + g_{\rho\rho,0}\delta_{\mu0} \delta_{\nu\rho} - g_{\mu\mu,0} \delta_{\mu\nu}\delta_{\rho0} \right) \equiv \\
+&\equiv \frac{\dot{a}}{a} \kla\left( \delta_{\nu0}\delta_{\mu \rho} + \delta_{\mu0}\delta_{\nu \rho} \right) \delta_{\rho > 0} + \dot{a}a \delta_{\mu\nu} \delta_{\rho0} \delta_{\mu > 0}
+\end{align}
+We can read off $\Gamma^0_{jj} = \dot{a}a$ and $\Gamma^j_{j0} = \frac{\dot{a}}{a}$.
+The geodesics equation is $0 = \frac{\tecxt\text{d}^2x^\rho}{\tecxt\text{d}s^2} + \Gamma^\rho_{\mu\nu} \frac{\tecxt\text{d}x^\mu }{\tecxt\text{d}s} \frac{\tecxt\text{d}x^\nu }{\tecxt\text{d}s}$, which in our case simplifies to
+\begin{align}
+0 &= \frac{\tecxt\text{d}^2t}{\tecxt\text{d}s^2} + \dot{a}a  \klam\left[ \kla\left( \frac{\tecxt\text{d}x }{\tecxt\text{d}s} \right)^2 + \left( \frac{\tecxt\text{d}y }{\tecxt\text{d}s} \right)^2 + \left( \frac{\tecxt\text{d}z }{\tecxt\text{d}s} \right)^2 \right],\\
+0 &= \frac{\tecxt\text{d}^2x^j}{\tecxt\text{d}s^2} + \frac{\dot{a}}{a} \frac{\tecxt\text{d}x^j }{\tecxt\text{d}s}  \frac{\tecxt\text{d}t }{\tecxt\text{d}s}.
+\end{align}
+These equations may be solved by $x^j \equiv \tecxt\text{const}$, which leads to $t(s) = \alpha s + \beta$.
+Since $\tecxt\text{d}\vec{r} = 0$, we also find $\tecxt\text{d}s = \tecxt\text{d}t$, and may thus choose $t=s$.
+\\
+The general formula for the components of the Ricci-tensor is
+\begin{align}
+R_{\mu\nu} &= R^\rho_{\ \mu\rho\nu} = \partial_\rho\Gamma^\rho_{\mu\nu} - \partial_\nu \Gamma^\rho_{\rho\mu} + \Gamma^\sigma_{\mu\nu} \Gamma^\rho_{\rho\sigma} - \Gamma^\sigma_{\mu\rho} \Gamma^\rho_{\nu\sigma}.
+\end{align}
+Due to the symmetry in all spacial coordinates, we have $R_{11} = R_{22} = R_{33}$.
+For $\nu\neq 1$ we find
+\begin{align}
+R_{1\nu} &= \partial_0 \underbrace{\Gamma^0_{1\nu}}_{=\,0} - \partial_\nu \underbrace{\Gamma^\rho_{\rho 1}}_{=\,0} + \Gamma^\sigma_{1\nu} \Gamma^\rho_{\rho\sigma} - \Gamma^\sigma_{1\rho} \Gamma^\rho_{\nu\sigma} = \\
+&= 0 - 0 + \Gamma^1_{10}\delta_{\nu0} \underbrace{\Gamma^1_{11}}_{=\,0} - \Gamma^0_{11} \underbrace{\Gamma^1_{\nu 0}}_{=\,0} = 0.
+\end{align}
+Since there is nothing special about $1$ in our metric, we can conclude $R_{j\nu}=0$ for $\nu\neq j\in\{1,2,3\}$.
+Furthermore, the above tells us that $R_{10} = R_{01} = 0$, and thus $R_{0j} = 0$ for $j\in\{1,2,3\}$.
+Therefore the Ricci-tensor is diagonal.
+The non-zero components are 
+\begin{align}
+R_{00} &= \partial_\rho\Gamma^\rho_{00} - \partial_0 \Gamma^\rho_{\rho 0} + \Gamma^\sigma_{00} \Gamma^\rho_{\rho\sigma} - \Gamma^\sigma_{0\rho} \Gamma^\rho_{0\sigma} = \\
+&= 0 - 3\partial_0\frac{\dot{a}}{a} + 0 - \Gamma^j_{0k}\Gamma^k_{0j} = \\
+&= -\frac{3\ddot{a}}{a} + \frac{3\dot{a}^2}{a^2} - 3\kla\left( \Gamma^1_{01} \right)^2 = -\frac{3\ddot{a}}{a},\\
+R_{11} &= \partial_\rho\Gamma^\rho_{11} - \partial_1 \Gamma^\rho_{\rho 1} + \Gamma^\sigma_{11} \Gamma^\rho_{\rho\sigma} - \Gamma^\sigma_{1\rho} \Gamma^\rho_{1\sigma} = \\
+&= \partial_0\Gamma^0_{11} - 0 + \Gamma^0_{11} \Gamma^\rho_{\rho 0} - \Gamma^0_{11}\Gamma^1_{10} - \Gamma^1_{10}\Gamma^0_{11} = \\
+&= a\ddot{a} + \dot{a}^2 + 3\dot{a}^2 - 2\dot{a}^2 = a\ddot{a} + 2\dot{a}^2.
+\end{align}
+The Ricci-scalar is 
+\begin{align}
+R &= R^\mu_{\ \mu} = R_{00} - \frac{3}{a^2}R_{11} = -\frac{6\ddot{a}}{a} - \frac{6\dot{a}^2}{a^2}.
+\end{align}
+The Einstein-tensor is then given by
+\begin{align}
+G_{00} &= R_{00} - \frac{1}{2}g_{00} R = \frac{3\dot{a}^2}{a^2},\\
+G_{11} &= R_{11} - \frac{1}{2}g_{11} R = -2 a\ddot{a} - \dot{a}^2.
+\end{align}
+For an idea fluid at rest, the energy-momentum tensor is given by $T_{\mu\nu} = (p+\rho)u_\mu u_\nu - pg_{\mu\nu}$.
+Here $p$ denotes the pressure, $\rho$ the density and $u_\mu = (1,0,0,0)^\top$ the four-velocity.
+The Einstein field equations $G_{\mu\nu} = \kappa T_{\mu\nu}$ are then given by
+\begin{align}
+\frac{3\dot{a}^2}{a^2} &= \kappa T_{00} = \kappa \rho,\\
+-2a\ddot{a} - \dot{a}^2 &= \kappa T_{11} = \kappa pa^2.
+\end{align}
+We may rewrite these as
+\begin{align}
+\frac{\dot{a}^2}{a^2} &= \frac{\kappa\rho}{3},\\
+\frac{\ddot{a}}{a} &= -\frac{\dot{a}^2}{2a^2} - \frac{\kappa p}{2} = - \frac{\kappa}{6} \kla\left( \rho + 3p \right).
+\end{align}
+Usually, we assume density and pressure to be positive.
+However, $\ddot{a}>0$ implies $\rho+3p < 0$.
+Since the idea of negative density appears to be more absurd than negative pressure, as the former would imply negative masses or energies, the condition for this should probably be written as $|p| > \frac{\rho}{3}$ with $p=-|p|$.
+This ``negative pressure'' is then interpreted as a ``dark energy''.
+\\
+For a matter dominated universe we have $p=0$.
+Then the equations simplify to
+\begin{align}
+\frac{\dot{a}^2}{a^2} &= \frac{\kappa\rho}{3} = -2\frac{\ddot{a}}{a},\\
+\Rightarrow\ \ \ 0 &= \frac{\ddot{a}}{\dot{a}} + \frac{\dot{a}}{2a} = \frac{\tecxt\text{d}}{\tecxt\text{d}t} \kla\left( 2\log \dot{a} + \log a \right) = \frac{\tecxt\text{d}}{\tecxt\text{d}t} \log (a\dot{a}^2).
+\end{align}
+This implies $a\dot{a}^2=\tecxt\text{const} \equiv \beta$, which may be rewritten as
+\begin{align}
+\intx\int_{ 0}^{ t}\sqrt{a(s)}\dot{a}(s) \, \mathrm{d}s &= \intx\int_{a(0)}^{a(t)} \sqrt{a}\, \mathrm{d}a = \frac{a(t)^{3/2} - a_0^{3/2}}{3/2} = \beta t,\\
+\Rightarrow\ \ \ a(t) &= \kla\left( \frac{3\beta}{2} t + a_0^{3/2} \right)^{2/3} = a_0 \kla\left( 1 + \frac{3\beta}{2a_0^{3/2}}t \right)^{2/3}.
+\end{align}
+The density is given by
+\begin{align}
+\rho(t) &= \frac{3}{\kappa} \frac{\dot{a}^2}{a^2} = \frac{3}{\kappa} \frac{\beta}{a^3} \equiv \frac{\rho_0}{\kla\left( 1 + \frac{3\beta}{2a_0^{3/2}}t \right)^2}
+\end{align}
+where $\rho_0 = \frac{3\beta}{\kappa a_0^3}$.
+In terms of $a_0$ and $\rho_0$, we have $\beta= \frac{\kappa}{3}\rho_0 a_0^3$ and therefore
+\begin{align}
+a(t) &= a_0 \kla\left( 1 + \frac{\kappa}{2} \rho_0a_0^{3/2}t \right)^{2/3}.
+\end{align}
+For a radiation dominated universe the energy-momentum tensor should satisfy $T^\mu_{\ \mu} = 0$, which here is equivalent to $0 = p+\rho - g^{\mu\nu}g_{\mu\nu}p = \rho - 3p$, or $p = \frac{\rho}{3}$.
+The general electromagnetic energy momentum tensor is given by
+\begin{align}
+T_{\mu\nu} &= F_{\mu\rho}F^\rho_{\ \nu} + \frac{1}{4}g_{\mu\nu} F^{\rho\sigma} F_{\rho\sigma}.
+\end{align}
+It is always traceless, since
+\begin{align}
+T &= T^{\mu}_{\ \mu} = g^{\mu\nu}T_{\mu\nu} = F_{\mu \rho} g^{\mu\nu} F^\rho_{\ \nu} + F^{\rho\sigma} F_{\rho\sigma} = \\
+&= -F_{\rho\mu} F^{\rho\mu} + F^{\rho\sigma} F_{\rho\sigma} = 0.
+\end{align}
+In the mentioned case of $p=\frac{\rho}{3}$, the field equations simplify to
+\begin{align}
+\frac{\ddot{a}}{a} &= -\frac{\kappa\rho}{3} = -\frac{\dot{a}^2}{a^2},\\
+\Rightarrow\ \ \ 0 &= \frac{\ddot{a}}{\dot{a}} + \frac{\dot{a}}{a} = \frac{\tecxt\text{d}}{\tecxt\text{d}t} \kla\left( \log\dot{a} + \log a \right) = \frac{\tecxt\text{d}}{\tecxt\text{d}t} \log (a\dot{a}).
+\end{align}
+This implies $a\dot{a} = \tecxt\text{const} \equiv \beta$, which may be rewritten as
+\begin{align}
+\intx\int_{0}^{t}a(s)\dot{a}(s)\, \mathrm{d}s = \intx\int_{a(0)}^{a(t)} a\, \mathrm{d}a &= \frac{a(t)^2 - a_0^2}{2} = \beta t,\\
+\Rightarrow\ \ \ a(t) &= a_0 \sqrt{1 + \frac{2\beta}{a_0}t}.
+\end{align}
+The density is then given by
+\begin{align}
+\rho(t) &= \frac{3}{\kappa} \frac{\dot{a}^2}{a^2} = \frac{3}{\kappa} \frac{\beta^2}{a^4} = \frac{\rho_0}{\kla\left( 1 + \frac{2\beta}{a_0}t \right)^2}
+\end{align}
+where $\rho_0 = \frac{3\beta^2}{\kappa a_0^4}$.
+In terms of $\rho_0$ and $a_0$ we have $\beta=\sqrt{\frac{\kappa}{3} \rho_0a_0^4}$, and thus
+\begin{align}
+a(t) &= a_0 \sqrt{1 + a_0t \sqrt{\frac{4\kappa}{3}\rho_0}}.
+\end{align}
+This is identical to the previous result, despite the scale factor having a slightly different $t$-dependence.
+\\
+For $T_{\mu\nu} = \Lambda g_{\mu\nu}$, the field equations are simply
+\begin{align}
+\frac{3\dot{a}^2}{a^2} &= \kappa T_{00} = \kappa \Lambda,\\
+-2a\ddot{a} - \dot{a}^2 &= \kappa T_{11} = -\kappa a^2 \Lambda.
+\end{align}
+We may rewrite this as 
+\begin{align}
+0 &= \frac{\dot{a}^2}{a^2} - \frac{\ddot{a}}{a},\\
+\Rightarrow\ \ \ 0 &= \frac{\dot{a}}{a} - \frac{\ddot{a}}{\dot{a}} = \frac{\tecxt\text{d}}{\tecxt\text{d}t} \kla\left( \log a - \log \dot{a} \right) = \frac{\tecxt\text{d}}{\tecxt\text{d}t} \log\kla\left( \frac{a}{\dot{a}} \right).
+\end{align}
+This implies $\frac{\dot{a}}{a} = \tecxt\text{const} \equiv \beta$, which has the solution
+\begin{align}
+a(t) &= a_0 \e^{\beta t}.
+\end{align}
+Inserting into the field equations gives $\beta = \sqrt{\frac{\kappa}{3} \Lambda}$.
+\subsection*{Discussion of the results}
+We had the three solutions
+\begin{align}
+a_1(t) &= a_0 \kla\left( 1 + \frac{\kappa}{2} \rho_0a_0^{3/2}t \right)^{2/3},\\
+a_2(t) &= a_0 \sqrt{1 + a_0t \sqrt{\frac{4\kappa}{3}\rho_0}},\\
+a_3(t) &= a_0\e^{\sqrt{\frac{\kappa}{3}\Lambda} t}.
+\end{align}
+For $t\rightarrow 0$ we can expand in powers of $t$
+\begin{align}
+a_1 &\sim a_0\kla\left( 1 + \frac{\kappa}{3} \rho_0a_0^{3/2} t \right),\\
+a_2 &\sim a_0 \kla\left( 1 + a_0t\sqrt{\frac{\kappa}{3}\rho_0} \right),\\
+a_3 &\sim a_0 \kla\left( 1 + t\sqrt{\frac{\kappa}{3}\Lambda} \right).
+\end{align}
+Even though the solutions behave similarly for small $t$, the third does not show a ``big bang'', as $a>0$ for all $t$.
+The first two solutions start at $a=0$ for some finite time $t_0<0$.
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

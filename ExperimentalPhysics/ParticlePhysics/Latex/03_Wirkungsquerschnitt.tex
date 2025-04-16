@@ -1,0 +1,110 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea, tikz, pgffor}
+\usetikzlibrary{calc, quotes}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{03 Wirkungsquerschnitt}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 3.1: Differentieller Wirkungsquerschnitt}
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=2.5]
+\pgfmathsetmacro{\b}{0.8}
+\draw[dashed] (-2.5,0) -- (2.5,0);
+\draw[dashed] (-0.6,\b) -- (2.5,\b);
+\draw (-2.5,\b) -- (-0.6,\b);
+\draw[->] (-2,0.05) edge["$b$"] (-2,\b-0.05);
+\draw[dashed] (-0.6,\b) -- (-1.8,3*\b);
+\draw (0,0) -- (-0.6,\b);
+\node (R) at (-0.2,0.5) {$R$};
+\node (T) at (0.1,\b+0.5) {$\theta$};
+\node (A1) at (-0.7,\b+0.5) {$\alpha$};
+\node (A2) at (-1.1,\b+0.2) {$\alpha$};
+\draw[dashed] (-0.6,\b) edge["$\beta$"] (-0.6,0);
+\draw (-0.6,0.2) arc (270:323:0.4);
+\draw (-1.5,\b) arc (180:73.8:0.9);
+\draw (0.9,\b) arc (0:73.7:1.5);
+\draw[->] (-0.6,\b) --++ (73.7:1.8);
+\draw (0,0) circle (1);
+\end{tikzpicture}
+\end{figure}
+Man kann folgende Winkelbeziehungen ablesen:
+\begin{align*}
+\pi&=\alpha+\frac{\pi}{2}+\beta&\Rightarrow&&\beta&=\frac{\pi}{2}-\alpha\\
+\pi&=\alpha+\alpha+\theta&\Rightarrow&&\alpha&=\frac{\pi}{2}-\frac{\theta}{2}\\
+&\Rightarrow\ \ \beta=\frac{\theta}{2}
+\end{align*}
+Also ist $b=R\cos\beta=R\cos\frac{\theta}{2}$. Damit folgt der differentielle Wirkungsquerschnitt:
+\begin{align*}
+\frac{\tecxt\text{d}b}{\tecxt\text{d}\theta}&=-\frac{R}{2}\sin\frac{\theta}{2}\\
+\frac{\tecxt\text{d}\sigma}{\tecxt\text{d}\Omega}&=\left\vert\frac{b}{\sin\theta}\frac{\tecxt\text{d}b}{\tecxt\text{d}\theta}\right\vert=\frac{R^2}{2}\left\vert\frac{\cos\frac{\theta}{2}}{\sin\theta}\sin\frac{\theta}{2}\right\vert=\frac{R^2}{4}
+\end{align*}
+Der gesamte Wirkungsquerschnitt folgt dann durch Integration über $\Omega$:
+\begin{align*}
+\sigma_\tecxt\text{tot}&=\int_\Omega\frac{\tecxt\text{d}\sigma}{\tecxt\text{d}\Omega}\,\mathrm{d}\Omega=\intx\int_{0}^{2\pi}\intx\int_{0}^{\pi}\frac{R^2}{4}\,\sin\theta\mathrm{d}\theta\mathrm{d}\phi=\pi R^2
+\end{align*}
+\section*{Aufgabe 3.2: Ladungsverteilung in Kernen}
+Konstante $C$ aus der Normierung bestimmen:
+\begin{align*}
+1&\overset{!}{=}\intr\int_{\mathbb{R}^{3}}{\rho}\,\mathrm{d}^{3}x=\intx\int_{0}^{R}\intx\int_{0}^{2\pi}\intx\int_{0}^{\pi}C\,r^2\sin\theta\mathrm{d}\theta\mathrm{d}\phi\mathrm{d}r=\frac{4}{3}\pi R^3C\\
+&\Rightarrow\ \ C=\frac{3}{4\pi R^3}
+\end{align*}
+Fourier-Integral für $\rho=\rho(r)$:
+\begin{align*}
+F(q^2)&=\intr\int_{\mathbb{R}^{3}}\rho(\vec{r}) e^{i\vec{r}\cdot\vec{q}}\,\mathrm{d}^{3}r=\\
+&=\intx\int_{0}^{\infty}\rho(r)r^2\intx\int_{0}^{2\pi}\intx\int_{0}^{\pi}e^{iqr\cos\theta}\,\sin\theta\mathrm{d}\theta\mathrm{d}\phi\mathrm{d}r=\\
+&=2\pi\intx\int_{0}^{\infty}\rho(r)r^2\klam\left[ {\frac{-e^{iqr\cos\theta}}{iqr}} \right]_0^\pi\,\mathrm{d}r=\\
+&=\frac{4\pi}{q}\intx\int_{0}^{\infty}\rho(r)r\cdot\frac{e^{iqr}-e^{-iqr}}{2i}\,\mathrm{d}r=\\
+&=\frac{4\pi}{q}\intx\int_{0}^{\infty}\rho(r)r\sin(qr)\,\mathrm{d}r
+\end{align*}
+Für $\rho(r)=C\cdot\Theta(R-r)$:
+\begin{align*}
+F(q^2)&=\frac{4\pi}{q}\frac{3}{4\pi R^3}\intx\int_{0}^{R}r\sin(qr)\,\mathrm{d}r=\\
+&=\frac{3}{qR^3}\partial_q\intx\int_{0}^{R}-\cos(qr)\,\mathrm{d}r=\\
+&=-\frac{3}{qR^3}\partial_q\klam\left[ {\frac{\sin(qr)}{q}} \right]_0^R=\\
+&=-\frac{3}{qR^3}\kla\left( {\frac{R\cos(qR)}{q}-\frac{\sin(qR)}{q^2}} \right)=\\
+&=\frac{3}{(qR)^3}\sin(qR)-\frac{3}{(qR)^2}\cos(qR)
+\end{align*}
+\newpage
+Plot von $F(q^2)$ über $x:=qR$ von $x=0$ bis $x=4\pi$:
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{Formfaktor_Plot.png}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{Formfaktor_Plot_log.png}
+\end{figure}\,\ 
+\newpage
+\section*{Aufgabe 3.3: Absorptionslänge und Wirkungsquerschnitt}
+Die Absorptionslänge ist gegeben als $\lambda=\frac{1}{\sigma n}$. Es gilt für die Teilchendichte $n:=\frac{N}{V}=\frac{\rho}{A/N_A}$, wobei $N_A=6.022\cdot 10^{23}\,\frac{1}{\tecxt\text{mol}}$ und $A$ die molare Masse eines Teilchens ist. 
+\begin{align*}
+A_\tecxt\text{Cd}&=112,41\,\frac{\tecxt\text{g}}{\tecxt\text{mol}}&\Rightarrow&&\lambda_\tecxt\text{therm. Neutronen}&=885,7\,\mu\tecxt\text{m}\\
+A_\tecxt\text{Pb}&=207,2\,\frac{\tecxt\text{g}}{\tecxt\text{mol}}&\Rightarrow&&\lambda_\tecxt\text{MeV Photonen}&=1,939\,\tecxt\text{m}\\
+A_\tecxt\text{Erde}&\approx 2\,\frac{\tecxt\text{g}}{\tecxt\text{mol}}&\Rightarrow&&\lambda_\tecxt\text{Antineutrinos}&\approx 1,66\cdot 10^{18}\,\tecxt\text{m}
+\end{align*}
+
+\end{document}

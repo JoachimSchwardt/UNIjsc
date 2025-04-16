@@ -1,0 +1,279 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[ngerman]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrpage2}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\newcommand*{\titel}{The four articles problem and its diophantine equation}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+\subject{Number theory}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+\begin{titlepage}
+\maketitle  % Titel setzen
+\tableofcontents  % Inhaltsverzeichnis setzen
+\end{titlepage}
+
+\section{Introduction}
+The puzzle goes like this: You enter a general store to buy four articles. Upon paying, you notice that the cashier hit the multiplication button when tallying up, resulting in \$7.47. Since multiplying numbers generally leads to larger results, you complain, that the price is to be reevaluated using addition. But the cashier truthfully states, that the result would be identical. What are the four prices of your articles?\\
+In the following we will try to assess this puzzle. In particular, we want to focus on finding a fast numerical solution, which will prove to yield insights along the way.
+\section{Mathematical formulation of the original puzzle}
+Let us rephrase the problem in a more mathematical manner. We are given a total cost $c=\tecxt\text{\$}7.47$, and the four prices of our articles $n_1,n_2,n_3$ and $n_4$, all numbers with at most two decimals. We are asked to solve for their values using only
+\begin{align*}
+n_1+n_2+n_3+n_4&=c&\tecxt\text{and}&&n_1\cdot n_2\cdot n_3\cdot n_4&=c.
+\end{align*}
+Now, in the realm of real or even just rational numbers, this would be a trivial task. The problem lies in the discrete nature of our variables. Viewing each number as an integer in units of cents transforms the problem into a diophantine equation ($n_j\rightarrow 100\cdot n_j$ for $j=1,2,3,4$ and $c\rightarrow 100\cdot c$). Of course, now the multiplicative equation will yield much larger result, since we effectively introduced a factor of $100^4$ to the cost
+\begin{align*}
+n_1+n_2+n_3+n_4&=747&\tecxt\text{and}&&n_1\cdot n_2\cdot n_3\cdot n_4&=7.47\cdot 100^4=747,000,000,
+\end{align*}
+but atleast the problem is now phrased entirely using integers, which we will use for the rest of the article. Now, you could of course run a loop for all four numbers and check, which combinations satisfy both equations, and in fact, we will consider a variant of this approach further own the line. But first take a look back at the multiplicative equation. We can rewrite this in a prime factorized form, which yields
+\begin{align*}
+n_1\cdot n_2\cdot n_3\cdot n_4&=2^6\cdot 5^6\cdot 3^2\cdot 83,
+\end{align*}
+for the particular input of $c=747$. This immediately tells us, that one of our articles has to contain a factor of 83, which greatly reduces the number of possibilities. Effectively, only integer multiples of 83 smaller than 747 are possible, leaving us with $n_1\in\{83, 166, 249, 332, 415, 498, 581, 664\}$ instead of $n_1\in\{1\dots 747\}$. Due to the additive equation, all prices must of course be smaller than \$7.47. One can continue this analysis on paper and - after many attempts - find the correct combination. But compared to blindly checking $747^4$ possibilities, we can already see a major speedup. However, we are far from being able to implementing this idea.
+\section{Generalized diophantine equation}
+\subsection{Mathematical formulation}
+Let us consider a more general case, to get a better understanding of the problem. Let $n_j\in\mathbb{N}$ for $j=1,\dots,D$, where $D\in\mathbb{N}$ is the number of ``dimensions'' and denote the total ``cost'' by $c\in\mathbb{N}$. The system of equations we want to solve is then given by
+\begin{align*}
+\sum_{j=1}^Dn_j&=c\numberthis\label{eqn:sum}\\
+\prod_{j=1}^Dn_j&=c\cdot 100^{D-1}.\numberthis\label{eqn:product}
+\end{align*}
+\subsection{Overview of approaching the solution}
+We want to consider prime factors and therefor write $C:=c\cdot 100^{D-1}=:\prod_kp_k^{m_{ck}}$, where $p_k$ are all prime numbers and $m_{ck}$ are the corresponding powers of the $k$-th prime appearing in $C$. Similarly, we introduce the powers $m_{jk}$ for our numbers $n_j=:\prod_kp_k^{m_{jk}}$. Substituting into (\ref{eqn:product}) yields
+\begin{align*}
+\prod_{j=1}^D\prod_kp_k^{m_{jk}}&=\prod_kp_k^{\sum_{j=1}^Dm_{jk}}\overset{!}{=}\prod_kp_k^{m_{ck}},
+\end{align*}
+which gives us the constraint $\sum_{j=1}^Dm_{jk}=m_{ck}$ for all prime numbers $p_k$. Since $C$ is finite, there will be infinitely many values of $k$, such that $m_{ck}=0$, that is, only finitely many primes make up that number. Define $\pi_c$ as the set of unique prime factors of $C$ with the magnitude $P$. Then, we can define $m\in\mathbb{N}^{D\times P}$ as a matrix, whose rows $j$ contain the powers $m_{jk}$ of the primes $p_k\in\pi_c$ that make up $n_j$.\\
+In this formulation, we can rephrase what it means, to find a solution to the diophantine equation - we need to find the matrix $m$, under the given constraints, such that 
+\begin{align*}
+S&:=\sum_{j=1}^Dn_j=\sum_{j=1}^D\prod_kp_k^{m_{jk}}\overset{!}{=}c,
+\end{align*}
+where we introduced the abbreviation $S$ for the sum of our numbers. Consider for a moment the possibilities of $m$. We have $D$ rows, one for every number $n_j$. Each row contains $P$ columns, one for each unique prime factor of $C$. The sum of the entries $m_{jk}$ in a column corresponding to the prime factor $p_k$ is given by $m_{ck}$. Therefor, the number of possible combinations in every column is equal to the partition of $m_{ck}$ of size $D$, or $p(m_{ck}, D)$, and the total number of combinations is given by the products of $p(m_{ck}, D)$ for all $k$. For our original input, this is significantly smaller than $747^4$, but checking a guess involves the much more elaborate computation of $S$. However, this approach will prove to be quite useful in a less brute force manner.\\
+The idea is to start from an evenly distributed matrix $m$, meaning that there are as few zeros as possible, given the powers $m_{ck}$ and the dimension $D$, and then improving this guess in a such a way, that $S$ gets closer to the desired value of $c$. The initial guess is fairly bad, but the even distribution makes it faster to reach any other one.
+\subsection{Demonstration for the original values}
+Sticking to the example of $c=747$, we want to reiterate the ideas above in a little more detail. First, we need to find the prime factors and corresponding powers, which yields $\pi_c=\{2,3,5,83\}$ and $m_c=\{6,2,6,1\}$. We write these values into $m$, evenly distributing the powers while holding the column sums constant:
+\begin{align*}
+m&=\begin{pmatrix}
+6&2&6&1 \\ 0&0&0&0 \\ 0&0&0&0 \\ 0&0&0&0
+\end{pmatrix}&\longrightarrow &&m&=\begin{pmatrix}
+2&1&2&1 \\ 2&1&2&0 \\ 1&0&1&0 \\ 1&0&1&0
+\end{pmatrix}.
+\end{align*}
+By element-wise exponentiation this leads to the prime factors:
+\begin{align*}
+(p_k^{m_{jk}})_{jk}&=\tecxt\text{pow\,}(\pi_c, m)=\begin{pmatrix}
+4&3&25&83 \\ 4&3&25&1 \\ 2&1&5&1 \\ 2&1&5&1
+\end{pmatrix}
+\end{align*}
+We can calculate the corresponding numbers $n:=\{n_j\}$ by   multiplying the prime factors in each row:
+\begin{align*}
+n&=\prod_kp_k^{m_{jk}}=\begin{pmatrix}
+24940 \\ 300 \\ 10 \\ 10
+\end{pmatrix}
+\end{align*}
+Obviously, these values do not solve the puzzle, since $S=25260\gg c$.
+\subsection{Discrete gradient descent}
+The question becomes rearrange the values in the columns of $m$, such that $S=c$. For this, we will need some kind of derivative, i.e. how strongly does $S$ react to a small change in $m$. Due to our discrete problem, the smallest possible change is given by adding a 1 in some entry of $m$, and subtracting it in another entry of the same column to preserve the constraint. More formally, we consider the operation $m_{jk}\rightarrow m_{jk}'\pm 1$, combined with $m_{lk}\rightarrow m_{lk}'\mp 1$ to preserve $m_{ck}=\sum_i m_{ik}'$ for some $j,l\in\{1,\dots,D\}$ and $k\in\{1,\dots,P\}$. \\
+In the following, we will derive an analytic expression for the difference $\Delta S_{kjl}:=S'-S$ between the sum before and after the transformation. To start things off, we only consider half of the operation, i.e. $m'_{jk}=m_{jk}\pm \delta_{jj'}\delta_{kk'}$. Thus, only $n_{j'}$ is changed:
+\begin{align*}
+n_{j'}'&=\prod_kp_k^{m_{j'k}\pm\delta_{kk'}}=p_{k'}^{\pm 1}\prod_kp_k^{m_{jk}}=n_{j'}p_{k'}^{\pm 1}.\numberthis\label{eqn:nj prime}
+\end{align*}
+Therefor, the entire change of our sum $S$ is given by
+\begin{align*}
+S'-S&=n'_{j'}-n_{j'}=n_{j'}'-n_{j'}=\kla\left( {p_{k'}^{\pm 1} - 1} \right)n_{j'}\numberthis\label{eqn:S prime for single delta}
+\end{align*}
+For the full transformation, we also have to change another of $m$ in the $k'$ column. Let us finally consider the operations $m_{jk}'=m_{jk}+\delta_{jj'}\delta_{kk'}-\delta_{ll'}\delta_{kk'}$, where $l\neq j$. Thus, we change the values of $n_{j'}$ and $n_{l'}$ according to (\ref{eqn:nj prime}). The total change in $S$ is then given by 
+\begin{align*}
+\Delta S_{k'j'l'}&:=S'-S=n_{j'}'-n_{j'}+n_{l'}'-n_{l'}\overset{(\ref{eqn:S prime for single delta})}{=}\kla\left( {p_{k'}-1} \right)n_{j'}+\kla\left( {\frac{1}{p_{k'}}-1} \right)n_{l'}
+\end{align*}
+going back to less cumbersome indexes, we arrive at the final formula 
+\begin{align*}
+\Delta S_{kjl}&=(p_k-1)\kla\left( {n_j-\frac{n_l}{p_k}} \right),\numberthis\label{eqn:discrete derivative S kjl}
+\end{align*}
+which describes how our sum $S$ transforms under a minimal change in $m$. All that is left to do now, is to calculate $\Delta S_{kjl}$ for our initial guess and update $m$ according to the change, that gets $S$ the closest to $c$.
+\section{Implementing the algorithm in Python}
+Both $\pi_c=\{p_k\}$ and the corresponding set $m_c:=\{m_{ck}\}$ can be found by prime factorization of $C$. Since we already now that $C=c\cdot 100^{D-1}$ we can just factorize $c$ and add the missing factors from $100^{D-1}$, resulting in the following first part:
+\begin{minted}[frame=lines, bgcolor=bg, fontsize=\footnotesize, linenos]{python}
+from sympy.ntheory import factorint
+import numpy as np
+
+def _factorint(n, dim):
+    """
+    Returns two 'numpy-Arrays' containing the prime factors of 'n * 100**(dim - 1)'
+    in 'primes' and their number of appearances in 'powers'.
+    """
+    factor_dict = factorint(n)      # prime factors of 'n'
+    const = 2 * (dim - 1)           # constant for adding factors of '2', '5'
+    try:
+        factor_dict[2] += const
+    except KeyError:
+        factor_dict[2] = const
+    try:
+        factor_dict[5] += const
+    except KeyError:
+        factor_dict[5] = const
+    [primes, powers] = np.array(list(factor_dict.items())).T
+    return primes, powers
+\end{minted}
+The function \texttt{sympy.ntheory.factorint} returns a dictionary, where the keys correspond to prime factors and their value to the number of times, the factor appears in the number $n$. For our use, we also have to add $2 \cdot (D - 1)$ times a factor of 2 and 5 to make up for the factor $100^{D-1}$. For cases, where these do not appear in $n$, a ``try-except''-structure is used.\\
+The second step is to create $m$ with our initial guess. This can done by evenly distributing the values of $m_{ck}$ (``powers'') in every column $k$ of $m$. Since this is only done once, the performance is not critical here. The following runs in the realm of $\mu$s, just as our first step of factorization and their runtime is therefor negligible:
+\begin{minted}[frame=lines, bgcolor=bg, fontsize=\footnotesize, linenos]{python}
+def _initial_powers(powers, dim):
+    """
+    Returns a 'dim * len(powers)' - numpy-Array, where the sum of each column 'k' 
+    is given by 'pk = powers[k]'. This 'sum' is then distributed evenly 
+    among the rows of each column.
+    """
+    m = np.zeros((dim, len(powers)))
+    for k, pk in enumerate(powers):
+        min_power = pk // dim          # minimum power for each row
+        rest_power = pk % dim          # rest for uneven distribution
+        m[:, k] = min_power            # fill rows with the minimal power
+        m[:rest_power, k] += 1         # add remaining powers to first rows
+    return m
+\end{minted}
+Before implementing the formula (\ref{eqn:discrete derivative S kjl}), recapitulate how the numbers $n_j$ are calculated from our $\pi_c$ and $m$:
+\begin{minted}[frame=lines, bgcolor=bg, fontsize=\footnotesize, linenos]{python}
+def _numbers(p, m):
+    return np.prod(p**m, axis=1)
+\end{minted}
+Since $\Delta S_{kjl}$ is a three-dimensional Array, the construction avoiding loops turns out to be somewhat convoluted. The description of the function attempts to bring some order to the approach, by diving the entire function into individual steps. The latter two are already introducing new aspects. Firstly, our derivation of (\ref{eqn:discrete derivative S kjl}) was only done for $j\neq l$, the other case is trivially zero. Secondly, we are only allowed to change  $m$ in such a way, that avoids any negative entries, since these would lead to non-integral numbers $n_j$. The following code calculates the possible changes to the sum $S$: 
+\begin{minted}[frame=lines, bgcolor=bg, fontsize=\footnotesize, linenos]{python}
+def _delta(p, m, num, dim):
+    """
+    Returns a 'len(p) * dim * dim' - numpy-Array, where the elements are given by 
+        'Delta[k,j,l] = (p[k] - 1) * (num[j] - num[l] / p[k])'.
+    Step-by-step construction using numpy-Arrays:
+        1. Expand prime array 'p' to the shape of 'Delta', such that the 
+           'k'-th row contains a 'dim * dim'-subarrays filled with 'p[k]'.
+        2. Expand the numbers array 'num' to the shape of the subarrays 
+           of 'p_expand', namely 'dim * dim'.
+        3. Calculate the '(num[j] - num[l] / p[k])'-part of the formula.
+        4. Multiply by '(p[k] - 1)' to complete the formula.
+        5. Set diagonals to zero, since 'Delta[k,j,j] = 0' y construction.
+        6. Set 'Delta' to 'infinity' where 'm == 0', since changing those 
+           entries would result in negative values in 'm'.
+    """
+    p_expand = np.outer(p, np.ones((dim, dim))).reshape(len(p), dim, dim)   # Step 1
+    num_expand = np.outer(num, np.ones(dim))              # Step 2
+    diff_expand = num_expand - num_expand.T / p_expand    # Step 3
+    delta = (p_expand - 1) * diff_expand                  # Step 4
+    
+    for k in range(len(p)):                               # Step 5
+        np.fill_diagonal(delta[k], 0)
+        
+    zero_ind = (m == 0)                                   # Step 6
+    for k, row in enumerate(zero_ind.T):
+        delta[k][:, row] = np.inf
+    return delta
+\end{minted}
+Now all tools are ready to implement the actual solver. Conceptually, we find the minimal value of $|\Delta S_{kjl}+S-c|$, since the corresponding $\Delta S_{kjl}$ will minimize the distance between $S$ and $c$. Since we obviously can not expect to find the correct $m$-matrix after just changing two entries, we iterate for a given maximal number of loops. So far, the algorithm would almost never find a solution. This is due to looping back and forth between two $m$-matrices, which only differ by one step. In either state, that best step is often to just go back to the previous $m$, especially when the sum is already close to the cost. In order to prevent this, we store the absolute difference $|S-c|$ on every loop, and avoid steps which would result in any value that already appears in that array. The following code is able to find solutions in the realm of ms, but one may already notice a potential problem in the case no solution exists, which we will address later on.
+\begin{minted}[frame=lines, bgcolor=bg, fontsize=\footnotesize, linenos]{python}
+def _solver(m, num, p, cost, dim, max_depth=100):
+    """
+    Iteratively searches for a solution to the generalized article problem.
+    Step-by-step construction:
+        1. Initialize a look-up-table, to avoid repetitions during the loop.
+        2. Calculate all possible changes to the 'sum' after possible steps.
+        3. Absolute differences between 'sum' and 'cost' after possible steps.
+        4. Find the minimal absolute difference not contained in the look-up-table 
+           to make the best possible step, that has not been tried before.
+        5. Store the found absolute difference in the look-up-table.
+        6. Find the indexes of 'delta' corresponding to the absolute difference.
+        7. Update the 'sum', the powers 'm' and the numbers 'num' accordingly.
+    """
+    delta_min_array = np.full(max_depth + 1, np.inf)         # Step 1
+    _sum = np.sum(num)
+    delta_min_array[0] = abs(_sum - cost)                    # initial value
+    
+    _flag = (_sum == cost)    # flag for signaling a solution
+    depth = 0                 # initial value for while loop
+    while depth < max_depth and not _flag:
+        delta = _delta(p, m, num, dim)                       # Step 2
+        
+        abs_diff = np.abs(delta + _sum - cost)               # Step 3
+            
+        for delta_min in sorted(set(abs_diff.flatten())):    # Step 4
+            if delta_min == 0:
+                _flag = True
+                
+            if delta_min in delta_min_array:
+                continue
+            else:
+                delta_min_array[depth + 1] = delta_min       # Step 5
+                [k, j, l] = np.array(np.where(abs_diff == delta_min)).T[0]   # Step 6
+                
+                _sum += delta[k, j, l]                       # Step 7     
+                m[j, k] += 1                  
+                m[l, k] -= 1
+                num = _numbers(p, m)
+                break
+            
+        depth += 1
+    return m, num, _sum, _flag, depth
+\end{minted}
+Finally, we wrap the solver in a new function, which only takes the cost $c$, the number of dimensions $D$ and a maximum search depth as inputs to simplify the usage. It returns the array of powers $m$, the numbers $n_j$, their sum $S$, a flag signaling whether a solution was found and the number of iterations. After all the previous buildup, the structure of this final wrapper should be self-explanatory:
+\begin{minted}[frame=lines, bgcolor=bg, fontsize=\footnotesize, linenos]{python}
+def solver(cost, dim, max_depth=100):
+    p, powers = _factorint(cost, dim)
+    m = _initial_powers(powers, dim)
+    num = _numbers(p, m)
+    m, num, _sum, _flag, depth = _solver(m, num, p, cost, dim, max_depth)        
+    return m, num, _sum, _flag, depth
+\end{minted}
+
+
+\newpage
+\appendix
+\section{Here is some Python code}
+Here is some Python code: 
+\begin{minted}[frame=lines, bgcolor=bg, fontsize=\footnotesize, linenos]{python}
+from brg.datastructures import Mesh
+ 
+mesh = Mesh.from_obj('faces.obj')
+mesh.draw()
+def function():
+    return None
+    
+class newClass(object):
+    def __init__(self, inputa, inputb):
+        self.a = inputa
+        self.text = str(123) + "test string" 
+\end{minted}
+
+\end{document}

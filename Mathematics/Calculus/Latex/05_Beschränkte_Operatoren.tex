@@ -1,0 +1,114 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+
+\begin{document}
+
+\title{05 Beschränkte Operatoren}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Beschränkte lineare Operatoren}
+\begin{proof}
+Da $A$ beschränkt ist $\exists M\ge 0\forall\phi\in D(A):\|A\phi\|\le M\|\phi\|$. Sei $\phi_n\rightarrow\phi\in\mathcal{H}$ eine Folge in $D(A)$. Dann gilt:
+$$\|A\phi_n-A\phi_m\|\le M\|\phi_n-\phi_m\|\rightarrow 0$$
+Also konvergiert $A\phi_n\rightarrow B\phi\in\mathcal{H}$.\\
+Sei $\psi_n\rightarrow\phi $ eine weitere Folge in $D(A)$. Dann gilt:
+$$\|A\phi_n-A\psi_n\|\le M\|\phi_n-\psi_n\|\rightarrow 0$$
+Also der Grenzwert $B\phi$ unabhängig von der approximierenden Folge.\\
+$B$ ist linear. Sei $\phi_n,\psi_n\rightarrow\phi,\psi\in\mathcal{H}$ Folgen in $D(A)$. Dann gilt:
+$$B(\phi+\lambda\psi)=\lim A(\phi_n+\lambda\psi_n)=\lim A\phi_n+\lambda \lim A\psi_n=B\phi+\lambda B\psi$$
+$B$ ist eine Fortsetzung von $A$. Sei $\phi_n\rightarrow\phi\in D(A)$ eine Folge in $D(A)$. Dann gilt:
+$$B\phi =\lim A\phi_n=A\phi $$
+$B$ ist beschränkt. Sei $\phi\in D(A)$ mit $\|\phi\|\le 1$. Dann gilt $\|A\phi\|=\|B\phi\|$, also ist $\|A\|\le\|B\|$. \\
+Sei $\phi_n\rightarrow\phi\in\mathcal{H}$ mit $\|\phi\|\le 1$ eine Folge in $D(A)$. Dann ist $\psi_n:=\frac{\|\phi\|\phi_n}{\|\phi_n\|+1/n}$ ebenfalls eine Folge in $D(A)$ die gegen $\phi$ konvergiert:
+\begin{align*}
+\|\psi_n-\phi\|&\le \|\psi_n-\phi_n\|+\|\phi_n-\phi\|=\|\phi_n\|\cdot\kla\left( {\frac{\|\phi\|}{\|\phi_n\|+1/n}-1} \right)+\|\phi_n-\phi\|\rightarrow 0
+\end{align*}
+Also folgt (Warum nicht einfach mit $\phi_n$???):
+$$\|B\phi\|=\|\lim A\psi_n\|=\lim\|A\psi_n\|\le\sup \klammer\left\{ {\|A\chi\|\ |\ \chi\in D(A),\ \|\chi\|\le 1} \right\}$$
+$B$ ist eindeutig. Sei $\phi_n\rightarrow\phi\in\mathcal{H}$ eine Folge in $D(A)$ und für $\psi\in D(A)$ sei $B_1\psi=A\psi=B_2\psi$:
+\begin{align*}
+\|B_1\phi-B_2\phi\|&\le\|B_1\phi-A\phi_n\|+\|A\phi_n-B_2\phi\|\le\|B_1\|\cdot\|\phi-\phi_n\|+\|B_2\|\cdot\|\phi-\phi_n\|\rightarrow 0
+\end{align*}
+\end{proof}
+\section{Orts- und Impulsoperatoren}
+a)
+\begin{proof}
+Es gilt $\phi_\alpha\in L^2$. Sei $R>0$ so, dass $\phi\vert_{[-R,R]}\equiv 0$. Dann gilt:
+$$\int |\phi_\alpha|^2=\alpha\int|\phi(\alpha x)|^2\kom\overset{\substack{{y\,=\,\alpha x} \\ |}}{=}\intx\int_{-R}^{R}|\phi(y)|^2\,\mathrm{d}y<\infty $$
+Allerdings sind $Q$ und $P$ unbeschränkt:
+\begin{align*}
+\|Q\phi_\alpha\|_2^2=\alpha\int |x\phi(\alpha x)|^2=\frac{1}{\alpha^2}\int |y\phi(y)|^2=\frac{1}{\alpha^2}\|Q\phi\|_2^2\rightarrow\infty \\
+\|P\phi_\alpha\|_2^2=\alpha\int |\alpha\phi'(\alpha x)|^2=\alpha^2\int |y\phi'(y)|^2=\alpha^2\|P\phi\|_2^2\rightarrow\infty
+\end{align*}
+Die Einschränkung lässt $P$ unbeschränkt (Gleiches Argument, Einschränkung von $\phi_\alpha$ auf $(-1, 1)$). \\
+$Q$ ist dann beschränkt:
+$$\|Q\phi\|_2^2=\intx\int_{-1}^{1}|x\phi|^2\,\mathrm{d}x\le\intx\int_{-1}^{1}|\phi|^2\,\mathrm{d}x=\|\phi\|_2^2$$
+\end{proof}
+b)
+\begin{proof}
+Klar. Siehe Quantentheorie I.
+\end{proof}
+c)
+\begin{proof}
+Der Induktionsanfang entspricht den Voraussetzungen. Sei also $nB^{n-1}=AB^n-B^nA$:
+\begin{align*}
+(n+1)B^n&=B^n+nBB^{n-1}=B^n+BAB^n-B^{n+1}A\kom\overset{\substack{{[A,B]=I} \\ |}}{=}\\
+&=B^n+ABB^n-IB^n-B^{n+1}A=AB^{n+1}-B^{n+1}A
+\end{align*}
+Weil $A,B$ beschränkt sind mit $\|A\|,\|B\|\le M<\infty$ folgt dann:
+\begin{align*}
+(n+1)\|B^n\|&\le \|AB^{n+1}\|+\|B^{n+1}A\|=2\|A\|\cdot\|B\|\cdot\|B^n\|\le 2M^2\|B^n\|
+\end{align*}
+Also $\exists N\in\mathbb{N}_0:\|B^N\|=0$, da sonst $(n+1)>2M^2$ für genügend große $n$ der Ungleichung widerspricht. \\
+Andererseits gilt für $k\in\klammer\left\{ {1\dots N} \right\}$:
+$$B^{N-k}=\frac{\klam\left[ {A, B^{N-k+1}} \right]}{N-k+1}$$
+Daraus folgt dann $B^{n\le N}=0$. \\
+Hieraus folgt der Widerspruch:
+$$I=\klam\left[ {A,B} \right]=\klam\left[ {A, 0} \right]=0$$
+\end{proof}
+\section{Matrixexponentialfunktion}
+a)
+\begin{proof}
+Es gilt $\|A^k\|\le\|A\|^k$. Sei $N\in\mathbb{N}$:
+\begin{align*}
+\|e^A\|&=\lim\Big\|\sum_k^N\frac{A^k}{k!}\Big\|\le\lim\sum_k^N\frac{\|A^k\|}{k!}\le\lim\sum_k^N\frac{\|A\|^k}{k!}= e^{\|A\|}
+\end{align*}
+\end{proof}
+b)
+\begin{proof}
+Es gilt:
+\begin{align*}
+e^{A+B}&=\lim\sum_k^N\frac{(A+B)^k}{k!}=\lim\sum_k^N\sum_j^k\binom{j}{k}\frac{A^jB^{k-j}}{k!}=\lim\sum_k^N\sum_j^k\frac{A^j}{j!}\frac{B^{k-j}}{(k-j)!}=\\
+&=\lim\kla\left( {\sum_n^N\frac{A^n}{n!}} \right)\cdot\kla\left( {\sum_m^N\frac{B^m}{m!}} \right)=e^Ae^B
+\end{align*}
+Betrachte:
+\begin{align*}
+I&=e^{A-A}=e^Ae^{-A}=e^{-A}e^A\ \ \Rightarrow\ \ e^{-A}=\kla\left( {e^A} \right)^{-1}
+\end{align*}
+\end{proof}
+c)
+\begin{proof}
+Es gilt:
+\begin{align*}
+\frac{1}{h}\|e^{tA+hA}-e^{tA}-hAe^{tA}\|&=\frac{1}{h}\|e^{tA}\kla\left( {e^{hA}-1-hA} \right)\|=\frac{1}{h}\|e^{tA}\sum_{k=2}^\infty\frac{h^kA^k}{k!}\|\rightarrow 0
+\end{align*}
+\end{proof}
+\end{document}

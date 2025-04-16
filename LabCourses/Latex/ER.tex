@@ -1,0 +1,306 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+
+\begin{document}
+
+\title{Spezifische Ladung des Elektrons}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Aufgabenstellung}
+Mittels einer \textsc{Thompson}-Röhre und einem \textsc{Helmholtz}-Spulenpaar sollen vier Experimente zur Bestimmung der spezifischen Ladung des Elektrons $e/m$durchgeführt werden.
+\begin{enumerate}
+\item Ablenkung eines Elektronenstrahls in einem $\vv{B}$-Feld bei bekannter Beschleunigungsspannung $U_B$ und Ablenkradius $R$.
+\item Durch ein $\vv{E}$-Feld wird der Elektronenstrahl durch einen definierten Punkt $P=(x,y)$ gelenkt. Die Ablenkung wird durch ein $\vv{B}$-Feld ausgeglichen.
+\item Ablenkung mit $\vv{B}$-Feld und Kompensation mit einem $\vv{E}$-Feld.
+\item Überlagerung von $\vv{E}$- und $\vv{B}$-Feld so, dass sich die Wirkungen aufheben.
+\end{enumerate}
+\section{Hintergrund}
+\subsection{Ablenkung im $\vec{E}$-Feld}
+Beim Durchlaufen der Potentialdifferenz $U_B$ ändert sich die kinetische Energie von Elektronen, die mit $E_{kin,0}=0$ erzeugt wurden um den Faktor $\Delta E_{kin}=e\cdot U_B$.:
+\begin{align*}
+e\cdot U_B&=\frac{m}{2}v^2\ \ \Rightarrow\ \ \frac{e}{m}=\frac{v^2}{2\cdot U_B}\numberthis\label{e/m von v^2}
+\end{align*}
+Ein Elektron, das mit der Geschwindigkeit $\vv{v}=v_x\cdot\vv{e}_x$ in ein $\vv{E}$-Feld entgegengesetzt zur $y$-Richtung eintritt, wird gemäß $F=m\cdot a_y=e\cdot E$ in positive $y$-Richtung beschleunigt. Mit $x=v_x\cdot t$ folgt eine Parabelgleichung:
+\begin{align*}
+y&=\frac{a_y}{2}t^2=\frac{eE}{2m}t^2=\frac{eEx^2}{2mv_x^2} \numberthis\label{Parabelgleichung von E und v_x}
+\end{align*}
+\subsection{Ablenkung im $\vec{B}$-Feld}
+Tritt ein Elektron mit der Geschwindigkeit $v$ in ein homogenes, zur Bewegunsrichtung senkrecht stehendes Magnetfeld $B$ ein, so wird es auf eine Kreisbahn mit Radius $R$ gezwungen:
+\begin{align*}
+F&=\frac{m\cdot v^2}{R}=e\cdot v\cdot B\ \ \Rightarrow\ \ v=\frac{e}{m}\cdot B\cdot R  \numberthis\label{v von e/m und B}
+\end{align*}
+\subsection{Feld der \textsc{Helmholtz}-Spulen}
+Nach dem \textsc{Biot-Savart}-Gesetz gilt für das Magnetfeld einer stromdurchflossenen Leiterschleife:
+\begin{align*}
+\vv{B}&=\frac{\mu_0I}{4\pi}\int\frac{\mathrm{d}\vv{r}'\times(\vv{r}-\vv{r}')}{|\vv{r}-\vv{r}'|^3}=\frac{\mu_0I}{4\pi}\int_0^{2\pi}\frac{R\mathrm{d}\varphi'e_{\varphi'}\times (re_r+ze_z-Re_{r'})}{\sqrt{r^2+R^2+z^2-2rR\cos(\varphi -\varphi ')}^3}\kom\overset{\substack{{r=0,\, N\ \mathrm{Schleifen}} \\ |}}{=}\\
+&=\frac{\mu_0INR^2}{4\pi}\int_0^{2\pi}\frac{e_z+\frac{z}{R}\cancelto{0}{e}_{r'}}{\sqrt{R^2+z^2}^3}\mathrm{d}\varphi'=\frac{\mu_0INR^2e_z}{2(R^2+z^2)^{3/2}}\numberthis\label{B von Spule}
+\end{align*}
+Für zwei Spulen mit Radius $R_s$, die sich im Abstand $\pm R_s/2$ von $z=0$ befinden und die gleiche Windungszahl $N$ sowie Stromrichtung haben folgt mit einer Reihenentwicklung um $z=0$:
+\begin{align*}
+\vv{B}&=\frac{\mu_0INR_s^2}{2R_s^3}\klam\left[ {\kla\left( {1+\bigg(\frac{z}{R_s}-\frac{1}{2}\bigg)^2} \right)^{-3/2} + \kla\left( {1+\bigg(\frac{z}{R_s}+\frac{1}{2}\bigg)^2} \right)^{-3/2}} \right]\approx\\
+&\approx \frac{\mu_0IN}{R_s\sqrt{\frac{125}{64}}}\cdot\kla\left( {1-\frac{144}{125}\kla\left( {\frac{z}{R_s}} \right)^4+\dots} \right) \numberthis\label{B Helmholtzspulen}
+\end{align*}
+Dieses Feld ist also sehr homogen; Abweichung von 1\% erst ab $z>0,3\,R_s$.
+\subsection{Geometrische Überlegungen}
+Anhand folgender Skizze soll der Radius der Elektronenbahn in der \textsc{Thomson}röhre bestimmt werden:\\ \\
+\begin{minipage}{\textwidth}
+\begin{minipage}{0.5\textwidth}
+\centering
+\includegraphics[width=1\linewidth]{Elektronenbahn_Geometrie.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\vspace{-1cm}
+Wir kennen die Länge $K=80\,$mm und $L=|\mathrm{FA}|$ ist direkt ablesbar:
+\begin{align*}
+\Delta_{ABC}&:\ c^2=a^2+b^2-2ab\cdot\cos\gamma\\
+&\Rightarrow\ \cos\gamma = \frac{b}{2R}\ \ \ \ (a,c=R)\\
+\Delta_{ACD}&:\ R=a=\frac{b}{2}\cos\gamma=\frac{b^2}{2q}\\
+\Delta_{ACF}&:\ b^2=L^2+K^2\\
+\Delta_{AGH}&:\ 2q^2=(K-L)^2\ \Rightarrow\ q=\frac{K-L}{\sqrt{2}}\\
+\ \ \Rightarrow &\ \ R^2=\frac{b^4}{4q^2}=\frac{1}{2}\kla\left( {\frac{L^2+K^2}{K-L}} \right)^2\\
+\ \ \Rightarrow &\ \ R=\frac{1}{\sqrt{2}}K\ \ \ \ (\text{für}\ L=0)
+\end{align*}
+\end{minipage}
+\end{minipage}
+\section{Experimente}
+\subsection{Klassischer \textsc{Thomson}-Versuch}
+Gemessen wird der Bahnradius $R$ in einem homogenen Magnetfeld $B$ nach der Beschleunigung von Elektronen mit $U_B$. Aus den Gleichungen (\ref{e/m von v^2}) und (\ref{v von e/m und B}) ergibt sich:
+\begin{align*}
+\frac{e}{m}&=\frac{2U_B}{B^2R^2}\overset{(\ref{B Helmholtzspulen})}{=}\frac{125r^2(K-L)^2}{16\mu_0^2N^2(L^2+K^2)^2}\cdot\frac{U_B}{I^2} \numberthis\label{e/m von I und R}
+\end{align*}
+Wir erwarten also einen linearen Zusammenhang zwischen $I^2$ und $U_B$:\\ \\
+\begin{minipage}{\textwidth}
+\begin{minipage}{0.3\textwidth}
+\begin{tabular}{|c|c|c|}\hline
+$L/$mm & $U_B/$V & $I/$A \\ \hline
+&1000& 0,247\\
+&1500& 0,303\\
+&2000& 0,35\\
+30,0&2500& 0,391\\
+&3000& 0,428\\
+&3500& 0,463\\
+&4000& 0,495\\ \hline
+\end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}{0.7\textwidth}
+\centering
+\includegraphics[width=1\linewidth]{Experiment1_edit.png}
+\end{minipage}
+\end{minipage}
+\subsection{Feldausgleichversuch}
+Die Felder kompensieren sich, wenn sich die Bewegungsrichtung der Elektronen nicht ändert. Der Plattenabstand ist $d=8\,$mm, die Kondensatorspannung $U_A$ kann eingestellt werden. Dann gilt für die Geschwindigkeit in $x$-Richtung $v_x=E/B$ und somit folgt aus Gleichung (\ref{Parabelgleichung von E und v_x}):
+\begin{align*}
+y&=\frac{eB^2}{2mE}x^2\ \ \Rightarrow\ \ \frac{e}{m}=\frac{2Ey}{B^2x^2}\overset{(\ref{B Helmholtzspulen})}{=}\frac{125r^2y}{32\mu_0^2N^2x^2d}\cdot\frac{U_A}{I^2}\numberthis\label{e/m von I und U_A}
+\end{align*}
+Der Elektronenstrahl soll durch die Pins bei $x=47\,$mm und $y=\pm d/2=4\,$mm gelenkt werden. Hierzu wird für gegebene Kondensatorspannung $U_A$ der Strom auf $I=0$ gesetzt und $U_B$ passend variiert. Anschließend wird der Strom so eingestellt, dass der Elektronenstrahl wieder durch den Punkt G in der Skizze verläuft:\\ \\
+\begin{minipage}{\textwidth}
+\begin{minipage}{0.3\textwidth}
+\hspace{2cm}
+\begin{tabular}{|c|c|c|}\hline
+$U_B/$V & $U_A/$V & $I/$A \\ \hline
+1676&100& 0,123\\
+2576&150& 0,148\\
+3431&200& 0,171\\
+4211&250& 0,194\\
+4993&300& 0,214\\ \hline
+\end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}{0.7\textwidth}
+\centering
+\includegraphics[width=1\linewidth]{Experiment2.png}
+\end{minipage}
+\end{minipage}
+\subsection{Variante des Feldausgleichversuches}
+Aus $v=E/B$ und Gleichung (\ref{v von e/m und B}) folgt:
+\begin{align*}
+\frac{e}{m}&=\frac{U_A}{B^2Rd}=\frac{125r^2}{64\mu_0^2N^2d}\cdot\frac{U_A}{I^2R}
+\end{align*}
+Man setzt $U_B=2500\,$V und gleicht den Spulenstrom für gegebenes $U_A$ so an, dass der Elektronenstrahl wieder durch den Punkt G verläuft. Man setzt nun $U_A=0\,$V und misst die Länge $L$:\\ \\
+\begin{minipage}{\textwidth}
+\begin{minipage}{0.4\textwidth}
+\begin{tabular}{|c|c|c|c|}\hline
+$U_A/$V & $I/$A & $L/$mm & $R/$mm \\ \hline
+100&0,101& 62& 402,42\\
+150&0,151& 55& 266,58\\
+200&0,201& 49& 200,75\\
+250&0,252& 43,5& 160,64\\
+300&0,302& 38,5& 134,3\\ \hline
+\end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}{0.6\textwidth}
+\centering
+\includegraphics[width=1\linewidth]{Experiment3.png}
+\end{minipage}
+\end{minipage}
+\subsection{Weitere Variante des Feldausgleichversuches}
+Mit $v=E/B$ und Gleichung (\ref{e/m von v^2}) folgt:
+\begin{align*}
+\frac{e}{m}&=\frac{E^2}{2U_BB^2}=\frac{U_A^2}{2B^2d^2U_B}=\frac{125r^2}{128\mu_0^2N^2d^2}\cdot\frac{U_A^2}{I^2U_B}
+\end{align*}
+Man lässt diesmal $U_B=4000\,$V konstant und variiert $I$ in Abhängigkeit von $U_A$ so, dass der Elektronenstrahl erneut durch den Punkt G verläuft:\\ \\
+\begin{minipage}{\textwidth}
+\begin{minipage}{0.3\textwidth}
+\hspace{1cm}
+\begin{tabular}{|c|c|c|c|}\hline
+$U_B/$V & $U_A/$V & $I/$A \\ \hline
+&100& 0,079\\
+&150& 0,119\\
+4000&200& 0,158\\
+&250& 0,199\\
+&300& 0,240\\ \hline
+\end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}{0.7\textwidth}
+\centering
+\includegraphics[width=1\linewidth]{Experiment4.png}
+\end{minipage}
+\end{minipage}
+\section{Auswertung}
+Bei allen obigen Grafiken wurden die systematischen Unsicherheiten als Fehlerschläuche und die statistischen Unsicherheiten als Fehlerbalken dargestellt. Bekannt sind folgende Herstellerangaben (müssen noch durch $\sqrt{3}$ geteilt werden):
+\begin{table}[h!]
+\centering 
+\begin{tabular}{|c|c|}\hline
+Messgröße & $\Delta$ sys. \\ \hline
+$U_B$ & $0,025\cdot U_B$ \\
+$I$ & $0,012\cdot I+0,001\,$A \\ 
+$U_A$ & $0,003\cdot U_A +0,1\,\mathrm{V}$ \\
+$r$ & $1\,$mm \\ 
+$d$ & $0,1\,$mm \\
+$x$ & $1\,$mm \\ 
+$K$ & $1\,$mm \\ \hline
+\end{tabular}
+\end{table}\\
+Hierbei wurden alle Anstiege (Formelzeichen $\alpha_i$, wobei der Index für das jeweilige Experiment steht) sowie deren systematische Unsicherheiten über lineare Regression bestimmt. Für den maximalen und minimalen Anstieg im Hinblick auf die statistischen Unsicherheiten wurden die Geraden mit extremalem Anstieg innerhalb der Fehlerbalken gewählt. Die Unsicherheiten ergeben sich hierbei gemäß Anleitung nach der Formel:
+$$\Delta\alpha = \frac{\alpha_{max}-\alpha_{min}}{2}$$
+Es wurde hierbei immer die \textsc{Gauss}sche Fehlerfortpflanzung verwendet, also beispielsweise:
+$$\Delta I^2=|2I\cdot\Delta I|$$
+\subsection{Klassischer \textsc{Thomson}-Versuch}
+Die statistische Unsicherheit von $I$ wird mit $0,002\,$A abgeschätzt. Es ergeben sich folgende Werte und Unsicherheiten für den Anstieg:
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c}
+$\alpha_1 / \frac{\mathrm{A}^2}{\mathrm{V}}$ & $\Delta \alpha_1^{sys} / \frac{\mathrm{A}^2}{\mathrm{V}}$ & $\Delta \alpha_1^{stat} / \frac{\mathrm{A}^2}{\mathrm{V}}$ \\ \hline
+$6,128\cdot 10^{-5}$&$1,828\cdot 10^{-6}$&$9,893\cdot 10^{-7}$\\
+\end{tabular}
+\end{table}\\
+Es ist $\alpha_1:=I^2/U_B$. Die Fehlerfortpflanzung ergibt für $e/m$:
+\begin{align*}
+\Delta\frac{e}{m}&=\frac{e}{m}\sqrt{\kla\left( {\frac{\Delta\alpha_1}{\alpha_1}} \right)^2+\kla\left( \frac{2\Delta r}{r} \right)^2+\kla\left( {\bigg|\frac{2\Delta K}{K-L}-\frac{4K\Delta K}{L^2+K^2}\bigg| + \bigg|\frac{2\Delta L}{K-L}-\frac{4L\Delta L}{L^2+K^2}\bigg|} \right)^2}
+\end{align*}
+Es wird $\Delta L^{sys}=1\,$mm (analog zu $\Delta K$) verwendet. Für die statistischen Unsicherheiten fließen nur $\Delta\alpha_1^{stat}$ und der Schätzwert $\Delta L^{stat}=0,5\,$mm ein:
+\begin{align*}
+\Delta\frac{e}{m}^{sys}&=\underline{6,1266\cdot 10^{9}\,\frac{\mathrm{As}}{\mathrm{kg}}}\\
+\Delta\frac{e}{m}^{stat}&=\underline{5,0301\cdot 10^{9}\,\frac{\mathrm{As}}{\mathrm{kg}}}
+\end{align*}
+Das Ergebnis wird in diesem Abschnitt zunächst in SI-Einheiten betrachtet. In der Diskussion wird dann stattdessen das Verhältnis zum Literaturwert von $e/m$ angegeben:
+\begin{align*}
+\frac{e}{m}&=\underline{(1,76\pm 0,06\pm 0,05)\cdot 10^{11}\,\frac{\mathrm{As}}{\mathrm{kg}}}
+\end{align*}
+\subsection{Feldausgleichversuch}
+Die statistische Unsicherheit von $I$ wird mit $0,002\,$A abgeschätzt. Es ergeben sich folgende Werte und Unsicherheiten für den Anstieg:
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c}
+$\alpha_2 / \frac{\mathrm{A}^2}{\mathrm{V}}$ & $\Delta \alpha_2^{sys} / \frac{\mathrm{A}^2}{\mathrm{V}}$ & $\Delta \alpha_2^{stat} / \frac{\mathrm{A}^2}{\mathrm{V}}$ \\ \hline
+$1,541\cdot 10^{-4}$&$2,929\cdot 10^{-6}$&$6,167\cdot 10^{-6}$\\
+\end{tabular}
+\end{table}\\
+Es ist $\alpha_2:=I^2/U_A$. Die Fehlerfortpflanzung ergibt für $e/m$:
+\begin{align*}
+\Delta\frac{e}{m}&=\frac{e}{m}\sqrt{\kla\left( {\frac{\Delta\alpha_2}{\alpha_2}} \right)^2+\kla\left( \frac{2\Delta r}{r} \right)^2+\kla\left( {\frac{\Delta y}{y}} \right)^2+\kla\left( {\frac{2\Delta x}{x}} \right)^2+\kla\left( {\frac{\Delta d}{d}} \right)^2}
+\end{align*}
+Es wird $\Delta y^{sys}=0,1\,$mm (analog zu $\Delta d$) verwendet. Für die statistischen Unsicherheiten fließt nur $\Delta\alpha_2^{stat}$ ein:
+\begin{align*}
+\Delta\frac{e}{m}^{sys}&=\underline{4,9024\cdot 10^{9}\,\frac{\mathrm{As}}{\mathrm{kg}}}\\
+\Delta\frac{e}{m}^{stat}&=\underline{6,7574\cdot 10^{9}\,\frac{\mathrm{As}}{\mathrm{kg}}}
+\end{align*}
+Das Ergebnis wird in diesem Abschnitt zunächst in SI-Einheiten betrachtet. In der Diskussion wird dann stattdessen das Verhältnis zum Literaturwert von $e/m$ angegeben:
+\begin{align*}
+\frac{e}{m}&=\underline{(1,69\pm 0,05\pm 0,07)\cdot 10^{11}\,\frac{\mathrm{As}}{\mathrm{kg}}}
+\end{align*}
+\subsection{Variante des Feldausgleichversuches}
+Die statistische Unsicherheit von $I$ wird mit $0,002\,$A und von $L$ mit $0,5\,$mm abgeschätzt. Es ergeben sich folgende Werte und Unsicherheiten für den Anstieg, wobei für $R$ wieder die Fehlerfortpflanzung berücksichtigt wurde:
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c}
+$\alpha_3 / \frac{\mathrm{mA}^2}{\mathrm{V}}$ & $\Delta \alpha_3^{sys} / \frac{\mathrm{mA}^2}{\mathrm{V}}$ & $\Delta \alpha_3^{stat} / \frac{\mathrm{mA}^2}{\mathrm{V}}$ \\ \hline
+$4,082\cdot 10^{-5}$&$2,894\cdot 10^{-7}$&$3,27\cdot 10^{-6}$\\
+\end{tabular}
+\end{table}\\
+Es ist $\alpha_3:=I^2R/U_A$. Die Fehlerfortpflanzung ergibt für $e/m$:
+\begin{align*}
+\Delta\frac{e}{m}&=\frac{e}{m}\sqrt{\kla\left( {\frac{\Delta\alpha_3}{\alpha_3}} \right)^2+\kla\left( \frac{2\Delta r}{r} \right)^2+\kla\left( {\frac{\Delta d}{d}} \right)^2}
+\end{align*}
+Für die statistischen Unsicherheiten fließt nur $\Delta\alpha_3^{stat}$ ein:
+\begin{align*}
+\Delta\frac{e}{m}^{sys}&=\underline{3,4433\cdot 10^{9}\,\frac{\mathrm{As}}{\mathrm{kg}}}\\
+\Delta\frac{e}{m}^{stat}&=\underline{1,4104\cdot 10^{10}\,\frac{\mathrm{As}}{\mathrm{kg}}}
+\end{align*}
+Das Ergebnis wird in diesem Abschnitt zunächst in SI-Einheiten betrachtet. In der Diskussion wird dann stattdessen das Verhältnis zum Literaturwert von $e/m$ angegeben:
+\begin{align*}
+\frac{e}{m}&=\underline{(1,76\pm 0,03\pm 0,14)\cdot 10^{11}\,\frac{\mathrm{As}}{\mathrm{kg}}}
+\end{align*}
+\subsection{Weitere Variante des Feldausgleichversuches}
+Die statistische Unsicherheit von $I$ wird mit $0,002\,$A abgeschätzt. Es ergeben sich folgende Werte und Unsicherheiten für den Anstieg:
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c}
+$\alpha_4 / \frac{\mathrm{A}^2}{\mathrm{V}}$ & $\Delta \alpha_4^{sys} / \frac{\mathrm{A}^2}{\mathrm{V}}$ & $\Delta \alpha_4^{stat} / \frac{\mathrm{A}^2}{\mathrm{V}}$ \\ \hline
+$2,567\cdot 10^{-3}$&$6,745\cdot 10^{-5}$&$6,38\cdot 10^{-5}$\\
+\end{tabular}
+\end{table}\\
+Es ist $\alpha_4:=I^2U_B/U_A^2$. Die Fehlerfortpflanzung ergibt für $e/m$:
+\begin{align*}
+\Delta\frac{e}{m}&=\frac{e}{m}\sqrt{\kla\left( {\frac{\Delta\alpha_4}{\alpha_4}} \right)^2+\kla\left( \frac{2\Delta r}{r} \right)^2+\kla\left( {\frac{2\Delta d}{d}} \right)^2}
+\end{align*}
+Für die statistischen Unsicherheiten fließt nur $\Delta\alpha_4^{stat}$ ein:
+\begin{align*}
+\Delta\frac{e}{m}^{sys}&=\underline{6,0087\cdot 10^{9}\,\frac{\mathrm{As}}{\mathrm{kg}}}\\
+\Delta\frac{e}{m}^{stat}&=\underline{4,3498\cdot 10^{9}\,\frac{\mathrm{As}}{\mathrm{kg}}}
+\end{align*}
+Das Ergebnis wird in diesem Abschnitt zunächst in SI-Einheiten betrachtet. In der Diskussion wird dann stattdessen das Verhältnis zum Literaturwert von $e/m$ angegeben:
+\begin{align*}
+\frac{e}{m}&=\underline{(1,75\pm 0,06\pm 0,04)\cdot 10^{11}\,\frac{\mathrm{As}}{\mathrm{kg}}}
+\end{align*}
+\section{Diskussion}
+\subsection*{Experiment 1}
+Setze $\beta_i:=\frac{\mathrm{Messwert}_i}{\mathrm{Literatur}}$, also ist $\beta_i$ das Verhältnis zum Literaturwert von $e/m$. Setze $\Delta\beta_i^2:=\Delta\beta_i^{sys,2}+\Delta\beta_i^{stat,2}$:
+$$\beta_1=\underline{1,001\pm 0,035\pm 0,029}\ \ \ \ \mathrm{mit}\ \ \ \ \frac{\Delta\beta_1}{\beta_1}=\underline{4,5\,\text{\%}}$$
+Das Ergebnis kommt sehr nahe an den Literaturwert heran, allerdings ist die systematische Unsicherheit größer als die statistische. Der mit Abstand größte Beitrag kommt hierbei von der Unsicherheit des Anstieges $\Delta\alpha_1^{sys}$. Man müsste also die Genauigkeit der Strommessung verbessern. 
+\subsection*{Experiment 2}
+Hier ergibt sich:
+$$\beta_2=\underline{0,960\pm 0,028\pm 0,038}\ \ \ \ \mathrm{mit}\ \ \ \ \frac{\Delta\beta_2}{\beta_2}=\underline{4,9\,\text{\%}}$$
+Das Ergebnis ist verglichen mit den anderen Experimenten deutlich abgeschlagen. Allerdings ist die statistische Unsicherheit etwas größer als die systematische, hier ist mit mehr Messungen also noch eine Verbesserung möglich.
+\subsection*{Experiment 3}
+Man erhält:
+$$\beta_3=\underline{1,001\pm 0,02\pm 0,08}\ \ \ \ \mathrm{mit}\ \ \ \ \frac{\Delta\beta_3}{\beta_3}=\underline{8,2\,\text{\%}}$$
+Mir ist bewusst, dass dieses Ergebnis nicht nach den Vorgaben korrekt gerundet ist.  Allerdings erschien es mir nicht sinnvoll $\beta_3=1$ anzugeben, da das den interessanten Teil des Ergebnis meiner Einschätzung nach vernachlässigt. Die statistische Unsicherheit ist hier deutlich größer als die systematische, sprich, mehr Messungen sind nötig. Für mich ist dieses Experiment aufgrund der kleinen systematischen Unsicherheit allerdings am besten dazu geeignet $e/m$ zu bestimmen.
+\subsection*{Experiment 4}
+Und im letzten Versuch:
+$$\beta_4=\underline{0,995\pm 0,034\pm 0,025}\ \ \ \ \mathrm{mit}\ \ \ \ \frac{\Delta\beta_4}{\beta_4}=\underline{4,2\,\text{\%}}$$
+Das letzte Ergebnis ist dem des ersten Experimentes sehr ähnlich. Anzumerken ist allerdings ein etwas "schlechteres" Ergebnis bei einer geringfügig kleineren relativen Unsicherheit. Auch hier liefert die Unsicherheit des Anstieges den größten systematischen Beitrag. Die Ungenauigkeit der Spulenradien ist hier allerdings auch nicht zu vernachlässigen und könnte (im Labor) mit wenig Aufwand deutlich verbessert werden.
+
+\end{document}

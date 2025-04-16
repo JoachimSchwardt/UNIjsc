@@ -1,0 +1,59 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{13 Moleküle}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 37: Lennard-Jones Potential}
+Gegeben ist $V=V_0\klam\left[ {\kla\left( {\frac{a}{r}} \right)^{12}-2\kla\left( {\frac{a}{r}} \right)^6} \right]$:
+\begin{align*}
+0&\overset{!}{=}V'=V_0\klam\left[ {-\frac{12}{a}\kla\left( {\frac{a}{r}} \right)^{13}+\frac{12}{a}\kla\left( {\frac{a}{r}} \right)^7} \right]\ \ \Rightarrow\ \ r=a\ \ \Rightarrow\ \ V_\tecxt\text{min}=-V_0
+\end{align*}
+\section*{Aufgabe 38: Modellbetrachtungen zu zweiatomigen Molekülen}
+Zwei Massen $m_{1,2}$ seien durch eine Feder mit Federkonstanten $k$ verbunden. Die Gleichgewichtslage sei bei einem Abstand von $r_0$ gegeben. Betrachte die Auslenkung von $m_1$ um $\Delta r_1$, also $r_{12}=r_0+\Delta r_1$. Für die Federkraft gilt dann $F=-k(r_{12}-r_0)=-k\Delta r_1$. Die reduzierte Masse des Systems ist $\mu=\frac{1}{\frac{1}{m_1}+\frac{1}{m_2}}=\frac{m_1m_2}{m_1+m_2}$:
+\begin{align*}
+m_1\ddot{r}_1&=F_1=-k(r_{12}-r_0)=-k\Delta r_1&m_2\ddot{r}_2&=F_2=-k(r_{21}+r_0)=k\Delta r_1\\
+&\Rightarrow\ \ \ddot{r}_{12}=\Delta\ddot{r}_1=-k\kla\left( {\frac{\Delta r_1}{m_1}+\frac{\Delta r_1}{m_2}} \right)=-\frac{k}{\mu}\Delta r_1&\Rightarrow\ \ f&=\frac{1}{2\pi}\sqrt{\frac{k}{\mu}}\\
+&\Rightarrow\ \ F=m_1\Delta\ddot{r}_1=-k\frac{m_1}{\mu}\Delta r_1=-k\frac{m_1+m_2}{m_2}\Delta r_1
+\end{align*}
+Für das CO-Molekül gelten die Parameter $r_0=0,113\,$nm, $m_1=12\,$u und $m_2=14\,$u. Sei das O-Atom im Ursprung. Dann ist der Schwerpunkt des Systems bei $R_S=\frac{m_1r_1+m_2r_2}{m_1+m_2}=\frac{m_1}{m_1+m_2}r_0=\frac{6}{13}r_0$. Das Trägheitsmoment einer Punktmasse zu einer bestimmten Rotationsachse ist gegeben durch $J=mr^2$, wobei $r$ den Abstand zur Achse bezeichnet. Hier sei dies eine Schwerpunktachse senkrecht zur Kernverbindungslinie, also gilt $I=m_1(R_S-r_1)^2+m_2(R_S-r_2)^2=m_1\kla\left( {\frac{7r_0}{13}} \right)^2+m_2\kla\left( {\frac{6r_0}{13}} \right)^2=\frac{12\cdot 49+14\cdot 36}{169} r_0^2u=1,3696\cdot 10^{-46}\,\tecxt\text{kg}\,\tecxt\text{m}^2$.
+\section*{Aufgabe 39: $\pi$- und $\sigma$- Bindungen in hybridisiertem Kohlenstoff}
+Ethan ($C_2H_6$, sp${}^3$), Ethen ($C_2H_4$, sp${}^2$) und Ethin ($C_2H_2$, sp${}^1$) haben die folgenden Strukturformeln:
+\begin{align*}
+\begin{matrix}
+ H\ \ \ \ H\\ \sigma\vert\ \ \ \ \ \, \vert\sigma\\
+H\overset{\sigma}{-}C\overset{\sigma}{-}C\overset{\sigma}{-}H\\ \sigma\vert\ \ \ \ \ \, \vert\sigma\\
+ H\ \ \ \ H
+\end{matrix}&&\begin{matrix}
+H\ \ \ \ \ \ \ \ \ \ \ \ \ \ H\\ \diagdown\sigma\ \ \ \ \ \ \ \ \, \sigma\diagup\\
+C\overset{\pi,\sigma}{=}C\\ \diagup\sigma\ \ \ \ \ \ \ \ \, \sigma\diagdown\\
+H\ \ \ \ \ \ \ \ \ \ \ \ \ \ H
+\end{matrix}&&\begin{matrix}
+H\overset{\sigma}{-}C\overset{\pi,\sigma,\pi}{\equiv} C\overset{\sigma}{-}H
+\end{matrix}
+\end{align*}
+
+\end{document}

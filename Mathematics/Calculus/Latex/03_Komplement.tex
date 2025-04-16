@@ -1,0 +1,160 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+
+\begin{document}
+
+\title{03 Komplementäre Räume}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Komplement}
+a)
+\begin{proof}
+Sei $M\subseteq V$, $\chi\in M$, $\phi,\psi\in M^\bot$ und $\lambda\in\mathbb{C}$. Dann gilt Linearität:
+$$\brak\langle {\chi}| {\phi+\lambda\psi}\rangle=\brak\langle {\chi}| {\phi}\rangle+\lambda\brak\langle {\chi}| {\psi}\rangle=0$$
+Sei $\phi_n$ eine Folge in $M^\bot$ und $\phi_n\rightarrow\phi\in V$. Für $\psi\in M$ gilt dann:
+$$0\le |\brak\langle {\psi}| {\phi}\rangle|=|\brak\langle {\psi}| {\phi}\rangle-\brak\langle {\psi}| {\phi_n}\rangle|\le \|\psi\|\cdot\|\phi-\phi_n\|\rightarrow 0$$
+Also ist $\brak\langle {\psi}| {\phi}\rangle=0$ und somit $\phi\in M^\bot$.
+\end{proof}
+b)
+\begin{proof}
+Sei $\phi\in M_2^\bot$. Dann gilt $\forall\psi\in M_2:\brak\langle {\psi}| {\phi}\rangle=0$. Da aber $M_1\subseteq M_2$, gilt insbesondere auch $\forall\psi\in M_1:\brak\langle {\phi}| {\psi}\rangle=0$, also $\phi\in M_1^\bot$.
+\end{proof}
+c)
+\begin{proof}
+Sei $\phi\in M^{\bot_U}$. Dann gilt $\forall\psi\in M:\brak\langle {\psi}| {\phi}\rangle=0$. Insbesondere ist $\phi\in V$, also gilt auch $\phi\in M^{\bot_V}$. 
+\end{proof}
+d)
+\begin{proof}
+Sei $\psi\in M,\ \phi\in M^\bot$. Dann ist auch $\psi\in (M^\bot)^\bot=M^{\bot\bot}$. Da $M^{\bot\bot}\subseteq V$, gilt auch $\mathrm{lin\,}M\subseteq M^{\bot\bot}$. Da $M^{\bot\bot}$ eine abgeschlossene Teilmenge von $V$ ist, gilt auch $\overline{ \mathrm{lin\,}M} \subseteq M^{\bot\bot}$. \\
+Da $M\subseteq \overline{\mathrm{lin\,}M}$ gilt gemäß (b) zunächst $\overline{\mathrm{lin\,}M}^\bot\subseteq M^\bot$. Sei nun $\phi\in M^\bot,\ \psi\in\overline{\mathrm{lin\,}M}$. Dann gibt es eine Folge $\psi_n$ in lin\,$M$ mit $\psi_n\rightarrow\psi$ in $V$, weshalb gilt:
+$$0\le |\brak\langle {\psi}| {\phi}\rangle|=|\brak\langle {\psi}| {\phi}\rangle-\brak\langle {\psi_n}| {\phi}\rangle|\le\|\psi-\psi_n\|\cdot\|\phi\|\rightarrow 0$$
+Also folgt $\brak\langle {\psi}| {\phi}\rangle=0$. Damit ist $\phi\in\overline{\mathrm{lin\,}M}^\bot$.
+\end{proof}
+e)
+\begin{proof}
+Sei $\phi\in M^{\bot\bot}$. Da $\overline{\mathrm{lin\,}M}$ ein abgeschlossener Teilraum von $M^{\bot\bot}$ ist, gibt es nach dem Projektionssatz genau ein Paar $\kla\left( {\psi,\psi^\bot} \right)\in\overline{\mathrm{lin\,}M}\times\overline{\mathrm{lin\,}M}^{\bot_{M^{\bot\bot}}}$ mit $\phi=\psi+\psi^\bot$. Wegen (b) gilt weiterhin:
+$$\psi^\bot\in\overline{\mathrm{lin\,}M}^{\bot_{M^{\bot\bot}}}\subseteq M^{\bot_{M^{\bot\bot}}}\subseteq M^\bot$$
+Also ist $\psi^\bot\in M^\bot\cap M^{\bot\bot}=\klammer\left\{ {0} \right\}$. Somit ist $\phi=\psi+\psi^\bot=\psi\in\overline{\mathrm{lin\,}M}$.
+\end{proof}
+f)
+\begin{proof}
+Offenbar ist $M\subseteq c_c$, also genügt es $\overline{M}$ zu bestimmen. Sei also $x\in \overline{M}$. Dann gibt es eine Folge $x^n$ in $M$ mit $x^n\rightarrow x$. Mit Hilfe der CS-Ungleichung gilt dabei $x\in M$:
+$$0\le\left\vert\sum_k^\infty\frac{x_k}{k}\right\vert=\left\vert\sum_k^\infty\frac{x_k-x_k^n}{k}\right\vert\le\sqrt{\sum_k^\infty\frac{1}{k^2}}\cdot\|x-x^n\|_2\rightarrow 0$$
+Es gilt $M^\bot=\klammer\left\{ {0} \right\}$, denn:\\
+Sei $x\in M^\bot\subseteq c_c$. Dann $\exists N\in\mathbb{N}\forall k\ge N:x_k=0$. Sei $k<N$. Dann ist $ke^k-Ne^N\in M$, also gilt:
+$$0=\sum_j^\infty\overline{(ke^k-Ne^N)_j}x_j=kx_k-Nx_N=kx_k$$
+Also ist $x_k=0$. Somit folgt $M^{\bot\bot}=\klammer\left\{ {0} \right\}^\bot=V=c_c$.
+\end{proof}
+\section{Unitärer Raum}
+\begin{proof}
+$(i)\Rightarrow(ii)$:\\
+Sei $\lambda\in\mathbb{C}$:
+$$\|\phi+\lambda\psi\|^2-\|\phi-\lambda\psi\|^2=4\mathrm{Re\,}\brak\langle {\phi}| {\lambda\psi}\rangle=4\mathrm{Re\,}\lambda\brak\langle {\phi}| {\psi}\rangle=0$$
+$(ii)\Rightarrow(iii)$:\\
+Sei $\lambda\in\mathbb{C}$:
+$$2\|\phi+\lambda\psi\|^2=\|\phi+\lambda\psi\|^2+\|\phi-\lambda\psi\|^2=2\|\phi\|^2+2\|\lambda\psi\|^2\ge 2\|\phi\|^2$$
+$(iii)\Rightarrow(i)$:\\
+Sei $\lambda\in\mathbb{C}$:
+$$0\le\|\phi+\lambda\psi\|^2-\|\phi\|^2=\|\lambda\psi\|^2+2\mathrm{Re\,}\lambda\brak\langle {\phi}| {\psi}\rangle$$
+Einsetzen von $\lambda\in\klammer\left\{ {t,-t,it,-it} \right\}$ liefert vier Abschätzungen und letztlich $\mathrm{Re\,}\brak\langle {\phi}| {\psi}\rangle=0=\mathrm{Im\,}\brak\langle {\phi}| {\psi}\rangle$.
+\end{proof}
+b)
+\begin{proof}
+Da $D$ dicht in $V$ ist, gibt es eine Folge $\phi_n$ in $D$ mit $\phi_n\rightarrow\phi$ in $V$. Damit folgt $\phi=0$:
+$$0\le\|\phi\|^2=\brak\langle {\phi}| {\phi}\rangle-\brak\langle {\phi_n}| {\phi}\rangle\le\|\phi-\phi_n\|\cdot\|\phi\|\rightarrow 0$$
+\end{proof}
+c)
+\begin{proof}
+$(i)\Rightarrow(ii)$:\\
+Es ist nach Voraussetzung $\mathrm{lin\,}\phi_n$ dicht in $\mathcal{H}$. Sei $\psi\in\mathcal{H}$ mit $\brak\langle {\phi_n}| {\psi}\rangle=0$. Dann gilt auch $\forall\chi\in\mathrm{lin\,}\phi_n:\brak\langle {\chi}| {\psi}\rangle=0$. Nach Teil (a) ist somit $\psi=0$. \\
+$(ii)\Rightarrow(i)$:\\
+Nach Voraussetzung ist $\klammer\left\{ {\phi_n} \right\}^\bot=\klammer\left\{ {0} \right\}$. Mit 3.1 e) folgt dann:
+$$\overline{\mathrm{lin\,}\phi_n}=\klammer\left\{ {\phi_n} \right\}^{\bot \bot}=\klammer\left\{ 0  \right\}^\bot=\mathcal{H}$$
+Also ist $\mathrm{lin\,}\phi_n$ dicht in $\mathcal{H}$.\\
+$(ii)\Rightarrow(iii)$:\\
+Es sei $\psi_k$ ein ONS, das $\phi_n$ enthält. Es gilt dabei $\forall k\in\mathbb{N}:\psi_k\neq 0$. Also gibt es nach Voraussetzung ein $n_k\in\mathbb{N}$ mit $\brak\langle {\phi_{n_k}}| {\psi_k}\rangle\neq 0$. Da $\psi_k$ ein ONS ist, das $\phi_n$ enthält, muss daher $\psi_k=\phi_{n_k}$ gelten, d.h. $\psi_k$ ist bereits in $\phi_n$ enthalten.\\
+$(iii)\Rightarrow(ii)$:\\
+Sei $\psi\in\mathcal{H}$ mit $\brak\langle {\phi_n}| {\psi}\rangle=0$ für alle $n\in\mathbb{N}$. \\
+Angenommen $\psi\neq 0$. Dann ist $\psi_n:=\left\{\begin{matrix}
+\psi/\|\psi\| &, n=1 \\ \phi_{n-1} &, n> 1
+\end{matrix}\right.$ ein ONS in $\mathcal{H}$, das $\phi_n$ enthält. Nach Voraussetzung $\exists k\in\mathbb{N}:\psi_1=\phi_k$. Insbesondere gilt somit der Widerspruch:
+$$1=\brak\langle {\frac{\psi}{\|\psi\|}}| {\frac{\psi}{\|\psi\|}}\rangle=\brak\langle {\phi_k}| {\frac{\psi}{\|\psi\|}}\rangle=0$$
+\end{proof}
+\section{Supremumsnorm}
+\begin{proof}
+Nein, denn die Supremumsnorm erfüllt nicht die Parallelogrammidentität.
+\end{proof}
+\section{Kern stetiger Abbildungen}
+a)
+\begin{proof}
+Sei $x_n$ Folge in $\ker L$ und $x_n\rightarrow x\in V$. Da $L$ stetig ist, gilt:
+$$Lx=\lim Lx_n=\lim 0=0$$
+\end{proof}
+b)
+\begin{proof}
+Sei $\phi,\psi\in(\ker f)^\bot$. Dann gilt $\chi:=f(\phi)\psi-\phi f(\psi)\in(\ker f)^\bot$, weil $(\ker f)^\bot$ ein Teilraum von $\mathcal{H}$ ist. Da $f$ linear ist folgt zudem $\chi\in\ker f$:
+$$f(\chi)=f(\phi)f(\psi)-f(\phi)f(\psi)=0$$
+Zusammengefasst ist $\chi\in (\ker f)^\bot\cap\ker f$, d.h. es gilt $\chi=0$ und damit $f(\phi)\psi=\phi f(\psi)$.\\
+Angenommen: $\phi,\psi$ sind linear unabhängig. Dann folgt $f(\phi)=0=f(\psi)$. Also sind $\phi,\psi\in\ker f$. Da aber bereits $\phi,\psi\in(\ker f)^\bot$ gewählt wurden, muss $\phi=0=\psi$ gelten. Insbesondere sind $\phi,\psi$ dann linear abhängig - Widerspruch!\\
+Damit ist $\dim(\ker f)^\bot\le 1$. \\
+Angenommen: $\dim(\ker f)^\bot=0$. Dann ist $(\ker f)^\bot=\klammer\left\{ {0} \right\}$ und folglich:
+$$\ker f=\kla\left( {\ker f} \right)^{\bot\bot}=\klammer\left\{ {0} \right\}^\bot=\mathcal{H}$$
+Also ist $f=0$ im Widerspruch zur Definition von $f$.
+\end{proof}
+\section{Satz von Riesz}
+a)
+\begin{proof}
+Sei $\kla\left( {b_1\dots b_n} \right)$ eine Basis von $V$. Dann ist die Abbildung $J:V^\ast\rightarrow\mathbb{C}^n,\ f\mapsto \kla\left( {f(b_k)} \right)_{1\le k\le n}$ ein Vektorraumisomorphismus. Die Umkehrabbildung $J^{-1}:\mathbb{C}^n\rightarrow V^\ast$ ist dabei gegeben durch:
+$$J^{-1}(\alpha):V\rightarrow\mathbb{C}^n,\ \sum_k^nx_kb_k\mapsto\sum_k^nx_k\alpha_k$$
+\end{proof}
+b)
+\begin{proof}
+Sei $\kla\left( {b_1\dots b_n} \right)$ eine ONB von $V$. Für alle $\phi,\psi\in V$ gilt dann:
+\begin{align*}
+\|L\psi-L\phi\|_W&=\|L\sum_k^n\brak\langle {b_k}| {\psi-\phi}\rangle b_k\|_W\le\sum_k^n\|Lb_k\|_W|\brak\langle {b_k}| {\psi-\phi}\rangle|\le \\
+&\kom\overset{\substack{{\text{Hölder}} \\ |}}{\le}\kla\left( {\sum_k^n\|Lb_k\|_W^2} \right)^{1/2}\kla\left( {\sum_k^n|\brak\langle {b_k}| {\psi-\phi}\rangle|^2} \right)^{1/2}=c\cdot \|\psi-\phi\|_V 
+\end{align*}
+\end{proof}
+c)
+\begin{proof}
+Es gilt $\psi=\sum_k^n b_k f(b_k)^\ast$:
+$$\brak\langle {\psi}| {\phi}\rangle=f(\phi)=f\kla\left( {\sum_k^n b_k\brak\langle {b_k}| {\phi}\rangle} \right)=\sum_k^n f(b_k)\brak\langle {b_k}| {\phi}\rangle=\brak\langle {\sum_k^n f(b_k)^\ast b_k}| {\phi}\rangle$$
+\end{proof}
+d)
+\begin{proof}
+Betrachte die Abbildung $f:c_c\rightarrow\mathbb{C},\ x\mapsto\sum_k^\infty 2^{-k}x_k$. Damit ist $f$ linear und stetig, denn:
+\begin{align*}
+|f(x)-f(y)|&=|\sum_k^\infty 2^{-k}(x_k-y_k)|\le\sum_k^\infty 2^{-k}|x_k-y_k|\le\\
+&\le \kla\left( {\sum_k^\infty 2^{-2k}} \right)^{1/2}\kla\left( {\sum_k^\infty |x_k-y_x|^2} \right)^{1/2}=\frac{1}{\sqrt{3}}\|x-y\|_2
+\end{align*}
+Angenommen: Es gibt $y\in c_c$ mit $f(x)=\brak\langle {y}| {x}\rangle$ für alle $x\in c_c$. Dann folgt:
+$$y^n=\brak\langle {e^n}| {y}\rangle=f(e^n)^\ast=\sum_k^\infty 2^{-k}\delta_{kn}=2^{-n}$$
+Also ist $y^n\neq 0$ für alle $n$ im Widerspruch zu $y\in c_c$.
+\end{proof}
+\section{Orthogonalisierungsverfahren}
+Man erhält:
+\begin{align*}
+p_0&=m_0=1\\
+p_1&=m_1-\frac{\brak\langle {p_0}| {m_1}\rangle}{\brak\langle {p_0}| {p_0}\rangle}p_0=t\\
+p_2&=m_2-\frac{\brak\langle {p_0}| {m_2}\rangle}{\brak\langle {p_0}| {p_0}\rangle}p_0-\frac{\brak\langle {p_1}| {m_2}\rangle}{\brak\langle {p_1}| {p_1}\rangle}p_1=t^2-\frac{2/3}{2}\cdot 1=t^2-\frac{1}{3}\\
+p_3&=m_3-\frac{\brak\langle {p_0}| {m_3}\rangle}{\brak\langle {p_0}| {p_0}\rangle}p_0-\frac{\brak\langle {p_1}| {m_3}\rangle}{\brak\langle {p_1}| {p_1}\rangle}p_1-\frac{\brak\langle {p_2}| {m_3}\rangle}{\brak\langle {p_2}| {p_2}\rangle}p_2=t^3-\frac{2/5}{2/3}\cdot t=t\cdot\kla\left( {t^2-\frac{3}{5}} \right)
+\end{align*}
+\end{document}

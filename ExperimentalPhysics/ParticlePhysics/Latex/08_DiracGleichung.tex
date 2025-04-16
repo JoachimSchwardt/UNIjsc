@@ -1,0 +1,110 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{08 Dirac-Gleichung}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 8.1: Dirac-Gleichung}
+Seien $\sigma^j$ die Pauli-Matrizen $\sigma^1=\begin{pmatrix}
+0&1\\ 1&0
+\end{pmatrix}$, $\sigma^2=\begin{pmatrix}
+0&-i\\ i&0
+\end{pmatrix}$ und $\sigma^3=\begin{pmatrix}
+1&0\\ 0&-1
+\end{pmatrix}$. Dann definiert man die Dirac-Matrizen $\gamma^\mu$ über $\gamma^0=\begin{pmatrix}
+I_2&0\\ 0&-I_2
+\end{pmatrix}$ und $\gamma^j=\begin{pmatrix}
+0&\sigma^j\\ -\sigma^j&0
+\end{pmatrix}$. Betrachte die relativistische Energie-Impuls-Beziehung mit $p_\mu=\binom{E}{-\vec{p}}$:
+\begin{align*}
+m&=\sqrt{E^2-\vec{p}^2}=\sqrt{p^\mu p_\mu }\overset{!}{=}\alpha^\mu p_\mu&\Rightarrow &&p^\mu p_\mu\overset{!}{=}\alpha^\mu p_\mu\alpha^\nu p_\nu
+\end{align*}
+Dabei ist mit $g^{\mu\nu}=\begin{pmatrix}
+1&0 \\ 0&-I_3
+\end{pmatrix}$ die Minkowski-Metrik gemeint. Eine hinreichende Bedingung ist dabei $\klammer\left\{{\alpha^\mu,\alpha^\nu} \right\}=2g^{\mu\nu}$. Daraus folgt nämlich mit $\klam\left[ {p_\mu, p_\nu} \right]=0$:
+\begin{align*}
+2\alpha^\mu\alpha^\nu p_\mu p_\nu &=\alpha^\mu\alpha^\nu p_\mu p_\nu + \alpha^\nu\alpha^\mu p_\nu p_\mu=\klammer\left\{{\alpha^\mu,\alpha^\nu} \right\}p_\mu p_\nu=2g^{\mu\nu} p_\mu p_\nu=2m^2
+\end{align*}
+Die Dirac-Matrizen erfüllen gerade diese Anti-Kommutator-Relation. Die Dirac-Gleichung ergibt sich dann aus der Ersetzungsregel $p_\mu=i\partial_\mu=i\binom{\partial_t}{-\nabla}$:
+\begin{align*}
+m&=\gamma^\mu p_\mu &\Rightarrow && (i\gamma^\mu\partial_\mu - m)\psi&=0
+\end{align*}
+Betrachte die Wirkung der Dirac-Matrizen auf einen Spinor $u=(a,b,c,d)^\top$:
+\begin{align*}
+\gamma^\mu u&=\begin{pmatrix}
+(a, b, -c, -d)^\top \\ (d, c, -b, -a)^\top \\
+(-id, ic, ib, -ia)^\top \\ (c, -d, -a, b)^\top
+\end{pmatrix}
+\end{align*}
+Die gegebenen Lösungen reproduzieren mit $0=\kla\left( {\gamma^\mu p_\mu -m} \right)u_1$ wieder $m^2=p^\mu p_\mu$. Dabei ist $u_1=(E+m,0,p_z,p_x+ip_y)^\top$:
+\begin{align*}
+mu_1&=N\begin{pmatrix}
+E(E+m)&-p_x(p_x+ip_y)&+ip_y(p_x+ip_y)& -p_zp_z\\
+ 0&-p_xp_z& -ip_yp_z& +p_z(p_x+ip_y)\\
+  -Ep_z&+0 &-0& +p_z(E+m) \\
+   -E(p_x+ip_y)&+p_x(E+m)& +ip_y(E+m)&-0
+\end{pmatrix}\\
+\Rightarrow\ \ \ 0&=(E^2-\vec{p}^2,0,0,0)^\top
+\end{align*}
+\section*{Aufgabe 8.2: Nicht-relativistischer Grenzfall}
+Es gilt $p_j\le |\vec{p}|=\gamma\beta m$ und $E=\gamma m$. Damit folgt für Terme der folgenden Form:
+\begin{align*}
+\frac{p_j}{E+m}&\le \frac{\gamma\beta m}{\gamma m +m}=\frac{\beta}{1+\sqrt{1-\beta^2}}\lesssim\beta
+\end{align*}
+\section*{Aufgabe 8.3: Spinor-Normierung}
+Sei $\vec{p}=p_z\vec{e}_z$. Dann lauten die Lösungen:
+\begin{align*}
+(u_1,u_2,u_3,u_4)&=N\begin{pmatrix}
+1&0&\frac{p_z}{E-m}&0\\
+0&1&0&\frac{-p_z}{E-m}\\
+\frac{p_z}{E+m}&0&1&0\\
+0&\frac{-p_z}{E+m}&0&1
+\end{pmatrix}
+\end{align*}
+Aus der Bedingung $u^\dagger u=2E$ kann man die Konstante $N$ mit $\frac{p^2}{E+m}=E-m$ bestimmen:
+\begin{align*}
+u^\dagger u&=N^2\kla\left( {1+\frac{p_z^2}{(E+m)^2}} \right)&\Rightarrow &&N&=\sqrt{\frac{2E}{1+\frac{E-m}{E+m}}}=\sqrt{E+m}
+\end{align*}
+Es gilt $S_zu_j=\frac{1}{2}(-1)^{j-1}u_j$, wobei $S_z=\frac{1}{2}\begin{pmatrix}
+\sigma_z & 0\\ 0&\sigma_z
+\end{pmatrix} $ ist. Dann gilt für den Hamiltonian $H=\vec{\alpha}\cdot\vec{p}+\beta m$ mit $\beta=\gamma^0$ und $\alpha^j=\gamma^0\gamma^j$ bei $p_x=p_y=0$:
+\begin{align*}
+S_zH&=\frac{1}{2}\begin{pmatrix}
+\sigma_z & 0 \\ 0 & \sigma_z
+\end{pmatrix}\begin{pmatrix}
+m & p_z\sigma_z \\ 
+p_z\sigma_z & -m
+\end{pmatrix}=\frac{1}{2}\begin{pmatrix}
+m\sigma_z & p_z \\ p_z & -m\sigma_z
+\end{pmatrix}&\Rightarrow &&\klam\left[ {S_z,H} \right]&=0
+\end{align*} 
+\section*{Aufgabe 8.5: Chiralität und Helizität}
+Es gilt $\gamma^5:=i\gamma^0\gamma^1\gamma^2\gamma^3\begin{pmatrix}
+0&I_2 \\ I_2&0
+\end{pmatrix} $. Damit sind die allgemeinen Lösungen keine Eigenvektoren von $\gamma^5$. Für $m=0$ ist aber $\frac{p_z}{E+m}=1$, womit es die Eigenwerte $\lambda=(+,-,+,-)$ für die $\vec{u}=(u_1,u_2,u_3,u_4)$ gibt ($+$ steht für rechtshändig). Für $p=p_z$ gilt $h:=\frac{\vec{S}\cdot\vec{p}}{|p|}=S_z$.
+\section*{Aufgabe 8.6: Parität von Dirac-Fermionen}
+Die Parität erhält man aus $\gamma^0u_\mu\overset{?}{=}c_\mu u_\mu$ zu $c_\mu = (+,+,-,-)^\top$. 
+\end{document}

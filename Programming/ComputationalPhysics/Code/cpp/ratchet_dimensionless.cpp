@@ -1,0 +1,304 @@
+/**
+Fast simulation of a hamiltonian ratchet for a discretized parameter space.
+
+compile using ::
+    g++ -Wall -fexpensive-optimizations -O3 -std=c++2a -march=native -mavx2 -ffast-math -fopenmp
+-masm=intel main.cpp -lm -lmvec
+
+Make sure to adjust the number of available threads in '#define OMP_NUM_THREADS'.
+The length of the 'a' loop (i.e. 'num_a') should be a multiple of OMP_NUM_THREADS to make optimal
+use of the parallelization.
+
+WARNING:
+This code requires AVX2 intrinsics, check if they are available on your hadware first.
+While the simulation should not take more than ~15 minutes, note that the CPU will run on a true
+100% during that time. Also, due to the extensive use of SIMD intrinsics (AVX2), it will generate
+even more heat than other stress tests.
+This is probably not an issue (the CPU will hopefully just slow down to avoid overheating),
+but be mindful with the core temperature nonetheless.
+
+@author: Joachim Schwardt
+*/
+
+#include<iostream>
+#include<cmath>
+#include<algorithm>
+#include<random>
+#include<string>
+#include<fstream>
+#include<sstream>
+#include<chrono>
+#include<vector>
+#include<immintrin.h>
+
+#define _USE_MATH_DEFINES
+
+#define OMP_NUM_THREADS 16
+#pragma GCC target ("avx2")
+
+
+using dtype = float;
+constexpr int SIMD_SIZE = 8;                   // number of floats fitting into avx2 register
+constexpr dtype PRECISION = 7;                 // number of digits of precision (float)
+
+
+/// the sin() and cos() intrinsics for avx2 are not natively available on AMD --> rebuild using OMP
+inline __m256 _mm256_sin_ps(__m256 __A) noexcept {
+    /** assembly generated will be a call to _ZGVdN8v_sinf() (SIMD sin for 8 floats) */
+    __m256 __B;
+    #pragma omp simd
+    for (int i = 0; i < SIMD_SIZE; ++i) {
+        __B[i] = std::sin(__A[i]);
+    }
+    return __B;
+}
+
+
+inline __m256 _mm256_cos_ps(__m256 __A) noexcept {
+    /** assembly generated will be a call to _ZGVdN8v_cosf() (SIMD cos for 8 floats) */
+    __m256 __B;
+    #pragma omp simd
+    for (int i = 0; i < SIMD_SIZE; ++i) {
+        __B[i] = std::cos(__A[i]);
+    }
+    return __B;
+}
+
+
+/// data storage structs
+struct ResultType {
+    dtype a;
+    dtype theta;
+    dtype xmean;
+};
+
+
+struct Bbox {
+    dtype min_val;
+    dtype max_val;
+    int num;
+};
+
+
+struct RatchetParameters {
+    int N;
+    int num_periods;
+    dtype delta_t;
+    int num_repeat;
+    dtype D;
+    dtype x0;
+};
+
+struct PotentialParameters {
+    dtype v_0;
+    dtype alpha;
+};
+
+
+/// Potential and main event loop
+inline __m256 get_xpot_prime(const __m256 __x, const dtype a,
+                             const PotentialParameters& pot_par) noexcept {
+    /** Implement the potential using explicit SIMD vectorization
+    (autovectorize fails for this example on gcc4.9, which does cost about a factor of 2)
+
+    This function may be freely adjusted, simply put additional components into the
+    PotentialParameters struct.
+
+    This function returns 'V(x)', where the type '__m256' of 'x' denotes a
+    256-bit register containing 8 32-bit floats (assembly will be ymmX, where X=0,1,2,...).
+    */
+    dtype factor = 2.0f * M_PI;
+    __m256 __arg = _mm256_mul_ps(_mm256_set1_ps(factor), __x);
+    __m256 __sin = _mm256_sin_ps(__arg);
+    __m256 __cos = _mm256_cos_ps(__arg);
+
+    __m256 __res = _mm256_set1_ps(factor * pot_par.v_0);       // result = factor * v_0 * ...
+    __m256 __sum1 = _mm256_set1_ps(2.0f * a);                  // sum1 = 2*a * ...
+    __m256 __cos2 = _mm256_sub_ps(_mm256_mul_ps(__cos, __cos), _mm256_mul_ps(__sin, __sin));
+    __sum1 = _mm256_mul_ps(__sum1, __cos2);                    // sum1 = 2*a * (cos*cos - sin*sin)
+    __res = _mm256_mul_ps(__res, _mm256_sub_ps(__sum1, __sin));     // res *= (sum1 - sin)
+    __res = _mm256_add_ps(__res, _mm256_set1_ps(pot_par.alpha));    // add 'alpha' to the result
+    return __res;      // factor * v_0 * (2.0 * a * (cos * cos - sin * sin) - sin)
+}
+
+
+dtype simulate(const dtype a, const dtype theta,
+               const RatchetParameters& rat_par, const PotentialParameters& pot_par,
+               const auto& r_tensor) noexcept {
+    /** Main Simulation of the ratchet using the given parameters for a fixed tuple (a, theta).
+
+    Note that 'r_tensor' contains precomputed "white noise" for every timestep and every particle.
+    */
+    bool State;
+    const __m256 __diffusion_par = {_mm256_set1_ps(std::sqrt(2 * rat_par.D * rat_par.delta_t))};
+    __m256 __temp;
+    std::vector<dtype> x_vals(rat_par.N, rat_par.x0);     // particle positions
+    std::vector<dtype> r_vals(rat_par.N);                 // random values
+
+    dtype tval = 0;
+    for (size_t i_t = 0; i_t < r_tensor.size(); ++i_t) {
+        State = std::fmod(tval, 1.0f) > 1.0f / (1 + theta);
+        r_vals = r_tensor[i_t];
+
+#pragma GCC ivdep
+        for (int i = 0; i < rat_par.N; i += SIMD_SIZE) {
+            __temp = _mm256_mul_ps(_mm256_loadu_ps(&r_vals[i]), __diffusion_par);
+
+//            // this is equivalent to the code generated by "#pragma omp simd"
+//            dtype* ptr = &x_vals[i];
+//            _mm256_storeu_ps(ptr, _mm256_add_ps(_mm256_loadu_ps(ptr), __temp));
+            #pragma omp simd
+            for (int lane = 0; lane < SIMD_SIZE; ++lane) {
+                x_vals[i + lane] += __temp[lane];
+            }
+
+            if (State) {
+                #pragma omp simd
+                for (int lane = 0; lane < SIMD_SIZE; ++lane) {
+                    __temp[lane] = x_vals[i + lane];
+                }
+                __temp = _mm256_mul_ps(_mm256_set1_ps(-rat_par.delta_t),
+                                       get_xpot_prime(__temp, a, pot_par));
+                #pragma omp simd
+                for (int lane = 0; lane < SIMD_SIZE; ++lane) {
+                    x_vals[i + lane] += __temp[lane];
+                }
+            }
+        }
+
+        tval += rat_par.delta_t;    // increment the time
+    }
+    return std::accumulate(std::begin(x_vals), std::end(x_vals), 0.0) / std::size(x_vals);
+}
+
+
+void parSpace(const Bbox& a_box, const Bbox& theta_box,
+              const RatchetParameters& rat_par, const PotentialParameters& pot_par) noexcept {
+    /** Run the main simulation for many tuples (a, theta).
+    The min/max value and number of points are contained in the bounding box for each parameter.
+
+    This function also takes the ratchet and potential parameters.
+    We reuse the generate "white noise" in 'r_tensor' for every point in the parameter space,
+    and only re-compute it for potential "repeats" (in order to get an error estimate).
+    */
+    std::string filename = "results.txt";
+    std::ofstream outfile {};
+    outfile.open(filename);
+    outfile << "N,num_periods,delta_t,D,x_0,num_repeat,num_a,num_theta\n";
+    outfile << rat_par.N << ',' << rat_par.num_periods << ','
+            << rat_par.delta_t << ',' << rat_par.D << ',' << rat_par.x0 << ','
+            << rat_par.num_repeat << ',' << a_box.num << ',' << theta_box.num << '\n';
+    outfile << "v_0,alpha\n";
+    outfile << pot_par.v_0 << ',' << pot_par.alpha  << '\n';
+    outfile << "a,theta,xmean\n";
+    outfile.precision(PRECISION);
+    outfile << std::fixed;
+
+    // determine the bounding box of the parameter space
+    const dtype delta_a = {(a_box.max_val - a_box.min_val) / a_box.num};
+    const dtype delta_theta = {(theta_box.max_val - theta_box.min_val) / theta_box.num};
+    std::vector<dtype> a_vals(a_box.num);
+    std::vector<dtype> theta_vals(theta_box.num);
+    dtype a = a_box.min_val + delta_a / 2;                  // centralize the points
+    dtype theta = theta_box.min_val + delta_theta / 2;
+
+    // create the bounding box of the parameter space
+    for (int i = 0; i < a_box.num; ++i) {
+        a_vals[i] = a;
+        a += delta_a;
+    }
+    for (int i = 0; i < theta_box.num; ++i) {
+        theta_vals[i] = theta;
+        theta += delta_theta;
+    }
+
+    // generate random numbers for one cycle and reuse for all parameter tuples
+    const int num_cycles = rat_par.num_periods * static_cast<int>(1 / rat_par.delta_t);
+    std::vector<std::vector<dtype>> r_tensor(num_cycles, std::vector<dtype>(rat_par.N));
+    std::mt19937 gen(std::random_device{}());
+    std::normal_distribution normal{0.0f, 1.0f};
+
+    // temporary arrays to store the data (we want to write in serial, not parallel)
+    std::vector<ResultType> results(a_box.num * theta_box.num);
+
+    // main event loop
+    for (int i = 0; i < rat_par.num_repeat; ++i) {
+        std::cout << "Starting run (" << i + 1 << "/" << rat_par.num_repeat << ")...\n";
+
+        // generate new white noise
+        for (int i = 0; i < num_cycles; ++i) {
+            for (int p = 0; p < rat_par.N; ++p) {
+                r_tensor[i][p] = normal(gen);
+            }
+        }
+
+        #pragma omp parallel for     // automatically parallelize the outermost for-loop
+        for (int i_a = 0; i_a < a_box.num; ++i_a) {
+            dtype a = a_vals[i_a];
+            for (int i_theta = 0; i_theta < theta_box.num; ++i_theta ) {
+                dtype theta = theta_vals[i_theta];
+                dtype xmean = simulate(a, theta, rat_par, pot_par, r_tensor);
+
+                results[i_a * theta_box.num + i_theta] = ResultType{a, theta, xmean};
+            }
+        }
+
+        // write the results to file
+        for (int i_a = 0; i_a < a_box.num; ++i_a) {
+            for (int i_theta = 0; i_theta < theta_box.num; ++i_theta ) {
+                ResultType res = results[i_a * theta_box.num + i_theta];
+
+                // we do not need to store 'a' and 'theta' for the repeated runs
+                if (i == 0) {
+                    outfile << res.a << ',' << res.theta << ',' << res.xmean << '\n';
+                } else {
+                    outfile << ",," << res.xmean << '\n';
+                }
+            }
+        }
+    }
+}
+
+
+int main() {
+    /**
+    Benchmarks for a AMD Ryzen 7 5800X.
+
+    N,     num_periods,  delta_t,  D,    v_0,   x_0,  alpha,  num_repeat
+    4096,  5,            0.001,    0.08, -0.7,  0,    0,      1
+        :: 1.6 sec (for 16x16 points) (about 0.4 sec for white noise, leaving 1.2 sec)
+        :: 44.3 sec (for 96x100 points) (theta=0.0 ... 2.0, a=0.0 ... 1.0)
+    */
+
+    /// fixed parameters
+    const int N = { 4096 };                    // number of particles
+    const int num_periods = { 5 };             // number of periods
+    const dtype delta_t = { 1.0 / 3000.0 };    // time discretization
+    const dtype D = {8e-2};                    // diffusion constant
+    const dtype x0 = {0.0};                    // initial position of the particles
+    const dtype v_0 = {-0.7};                  // potential strength
+    const dtype alpha = {0.0};                 // skew parameter
+    const int num_repeat = {1};                // number of repititions
+
+    /// bounding box of the parameter space
+    const dtype a_min{0.0};
+    const dtype a_max{1.0};
+    const dtype theta_min{0.0};
+    const dtype theta_max{2.0};
+    const int num_a = {96};
+    const int num_theta = {100};
+
+    const Bbox a_box = {a_min, a_max, num_a};
+    const Bbox theta_box = {theta_min, theta_max, num_theta};
+    const RatchetParameters rat_par = {N, num_periods, delta_t, num_repeat, D, x0};
+    const PotentialParameters pot_par = {v_0, alpha};
+
+    auto t1 = std::chrono::steady_clock::now();
+    parSpace(a_box, theta_box, rat_par, pot_par);
+    auto t2 = std::chrono::steady_clock::now();
+
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
+
+    std::cout << "Total runtime: " << duration << " ms.\n";
+    return 0;
+}

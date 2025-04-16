@@ -1,0 +1,139 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{1 Van-der-Waals model near the critical point}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Soft Condensed Matter}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+We are given the dimensionless free-enthalpy function  of the Van-der-Waals model
+\begin{align}
+g &= -\frac{3}{y} - \frac{8\tau}{3}\log \kla\left( y - \frac{1}{3} \right) + y\pi,
+\end{align}
+where $\pi := \frac{p}{P_c}, \tau := \frac{T}{T_c}$ and $y := \frac{V}{V_c}$.
+The index $c$ denotes the critical point.
+We want to compute an expansion of this free-enthalpy to fourth order in the order parameter $\phi := 1 - y \ll 1$, corresponding to the deviation from the critical volume.
+It is helpful to also introduce $\delta := 1 - \pi$ and $t:= \tau - 1$, which will all be small parameters near the critical point.
+Using these coordinates, we may write 
+\begin{align}
+g(\phi) &= -\frac{3}{1-\phi} - \frac{8(1+t)}{3} \log\kla\left( \frac{2}{3} - \phi \right) + (1-\phi)(1-\delta).
+\end{align}
+We first compute the Taylor expansion of the logarithm
+\begin{align}
+\log\kla\left( a - \phi \right) &= \log a + \frac{\partial \log (a-\phi)}{\partial\phi}\Big\vert_{\phi=0} \phi + \dots = \\
+&= \log a - \frac{1}{a}\phi - \frac{1}{2}\frac{1}{a^2}\phi^2 - \frac{1}{6}\frac{2}{a^3}\phi^3 - \frac{1}{24}\frac{6}{a^4}\phi^4 + \mathcal{O}(\phi^5).
+\end{align}
+In our case $a=\frac{2}{3}$ and therefore
+\begin{align*}
+g(\phi) &= -3\kla\left( 1+\phi+\phi^2+\phi^3+\phi^4 \right) - \frac{8(1+t)}{3} \kla\left( \log \frac{2}{3} - \frac{3}{2}\phi - \frac{9}{8}\phi^2 - \frac{9}{8}\phi^3 - \frac{81}{64}\phi^4 \right) +\\
+&\hspace{1cm} + (1-\phi)(1-\delta) + \mathcal{O}(\phi^5) \simeq \numberthis \\
+&\simeq \kla\left( -3 - \frac{8(1+t)}{3}\log\frac{2}{3} + 1-\delta \right) + \phi \kla\left( -3 + 4(1+t) - 1+\delta \right) + \\
+&\hspace{1cm} + \phi^2\kla\left( -3 + 3(1+t) \right) + \phi^3\kla\left( -3 + 3(1+t) \right) + \phi^4\kla\left( -3 + \frac{27}{8}(1+t) \right) = \numberthis \\
+&= \tecxt\text{const} + (4t+\delta)\phi + 3t\phi^2 + 3t\phi^3 + \frac{3}{8}\kla\left( 1 + 9t \right) \phi^4 \numberthis.
+\end{align*}
+If we could neglect the $\phi^3$-term, this would correspond to the $\phi^4$-Landau theory with explicit symmetry breaking.
+We know that in equilibrium $g'(\phi)=0$, which gives us the equation
+\begin{align}
+0 &= 4t+\delta + 6t\phi + 9t\phi^2 + \frac{3}{2}(1+9t)\phi^3.
+\end{align}
+We want to show that $\phi(t) \sim \alpha |t|^{1/2}$ and $\delta(t) \sim \beta t$ are asymptotic solutions as $t\rightarrow 0^-$ (we approach $T_c$ from below, meaning $t=-|t|<0$).
+Inserting gives
+\begin{align}
+0 &= 4t + \beta t + 6\alpha t|t|^{1/2} + 9\alpha^2t^2+ \frac{3}{2}(1+9t) \alpha^3 |t|^{3/2} = \\
+&= t\kla\left( 4+\beta \right)  + |t|^{3/2}\kla\left( \frac{3}{2}\alpha^3 - 6\alpha \right) + \mathcal{O}(t^2).
+\end{align}
+Thus we find $\beta = -4$ and $\frac{3}{2}\alpha^2 = 6$, which is equivalent to $\alpha = \pm 2$.
+The asymptotic free-enthalpy function then becomes
+%\begin{align}
+%g(t) &\sim - \kla\left( 6\alpha + \frac{3}{2}\alpha^3 \right)t^2 + 6\alpha^2 t^2 + 9\alpha^3t^{5/2} + \frac{3}{8}\alpha^4t^2 + \frac{27}{8}\alpha^4t^3 = \\
+%&= \kla\left( 6 - 12 + 24 - 12 \right)t^2 + \mathcal{O}(|t|^{5/2}) \simeq 6t^2,
+%\end{align}
+%where we neglected the constant term.
+%Written in terms of $\phi$ this is equivalent to
+\begin{align}
+g(\phi) &\overset{\tecxt\text{as } t\,\rightarrow\, 0}{\sim} 3t\phi^2 + \frac{3}{8}\phi^4,
+\end{align}
+where we neglected the constant term.
+%Note that the field $h$ in this form becomes $h=-\gamma t^{3/2}$.
+This corresponds to a $\phi^4$-Landau theory that is symmetric under inversion $\phi \rightarrow -\phi$.
+This symmetry only appears right at the critical point, and therefore has to be of more subtle nature.
+
+%We want to show that $\phi(t) \sim \alpha t^{1/2}$ and $\delta(t) \sim \beta t + \gamma t^{3/2}$ are asymptotic solutions as $t\rightarrow 0$.
+%Inserting gives
+%\begin{align}
+%0 &= 4t + \beta t + \gamma t^{3/2} + 6\alpha t^{3/2} + 9\alpha^2t^2 + \frac{3}{2}(1+9t)\alpha^3t^{3/2} = \\
+%&= t\kla\left( 4+\beta \right)  + t^{3/2}\kla\left( 6\alpha + \frac{3}{2}\alpha^3 + \gamma \right) + \mathcal{O}(t^2).
+%\end{align}
+%Thus we find $\beta = -4$ and $\gamma = -6\alpha - \frac{3}{2}\alpha^3$.
+%The asymptotic free-enthalpy function then becomes
+%\begin{align}
+%g(t) &\sim - \kla\left( 6\alpha + \frac{3}{2}\alpha^3 \right)t^2 + 6\alpha^2 t^2 + 9\alpha^3t^{5/2} + \frac{3}{8}\alpha^4t^2 + \frac{27}{8}\alpha^4t^3 = \\
+%&= \kla\left( \frac{3}{8}\alpha^4 - \frac{3}{2}\alpha^3 + 6\alpha^2 - 6\alpha \right)t^2 + \mathcal{O}(t^{5/2}) \simeq\\
+%&\simeq \frac{3\alpha}{8}  t^2 \kla\left( \alpha^3 - 4\alpha^2 + 16\alpha - 16 \right),
+%\end{align}
+%where we neglected the constant term.
+%Written in terms of $\phi$ this is equivalent to
+%\begin{align}
+%g(\phi) &\overset{\tecxt\text{as } t\,\rightarrow\, 0}{\sim} \gamma t^{3/2}\phi + 3t\phi^2 + \frac{3}{8}\phi^4.
+%\end{align}
+%Note that the field $h$ in this form becomes $h=-\gamma t^{3/2}$.
+
+
+
+\end{document}

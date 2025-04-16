@@ -1,0 +1,80 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\begin{document}
+
+\title{Hamilton und Phasenraum}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 36: Schrödinger-Gleichung}
+\subsection*{a)} Setze zunächst den WKB-Ansatz $\psi(t, \vv{r})=e^{-iF(t, \vv{r})/\hbar}$ in die Schrödinger-Gleichung ein:
+\begin{align*}
+i\hbar \partial_t\psi&=-\frac{\hbar^2}{2m}\nabla^2\psi+V(\vv{r})\psi \ \ \Rightarrow\ \ \psi\partial_tF=\frac{i\hbar}{2m}\left(\nabla F\nabla\psi + \psi\nabla^2 F  \right)+V(\vv{r})\psi\\
+&\Rightarrow\ \ \partial_t F=\frac{1}{2m}(\vv{\nabla} F)^2 +\cancelto{\approx 0}{\frac{i\hbar}{2m}}\nabla^2 F + V(\vv{r})\simeq\frac{1}{2m}\left((\partial_x F)^2+(\partial_y F)^2+(\partial_z F)^2\right) + V(\vv{r})
+\end{align*}
+\subsection*{b)} Setze $F(t, \vv{r})=g(t)+f(\vv{r})$:
+\begin{align*}
+\partial_t g&=\frac{1}{2m}\left( (\partial_x f)^2+(\partial_y f)^2+(\partial_z f)^2 \right)+V\ \ \Rightarrow\ \ g(t)=Et\\
+&\Rightarrow\ \ 2m(E-V)=(\vv{\nabla}f)^2
+\end{align*}
+\subsection*{c)} Für $V=0$ folgt für $f(\vv{r})$:
+\begin{align*}
+2mE&=(\partial_xf_x)^2+(\partial_yf_y)^2+(\partial_zf_z)^2=k^2\vv{e_k}\cdot\vv{e_k}\ \ \Rightarrow\ \ k=\sqrt{2mE}\\
+&\Rightarrow\ \ f(\vv{r})=\vv{k}\cdot\vv{r}=\sqrt{2mE}(x+y+z)\\
+&\Rightarrow\ \ \psi(t, \vv{r})=e^{-i(Et+\sqrt{2mE}(x+y+z))/\hbar}
+\end{align*}
+\section*{Aufgabe 37: Doppelpendel}
+\subsection*{a)} Zwangsbedingungen und generalisierte Koordinaten lauten:
+\begin{align*}
+\dot{R_1}&=0=\dot{R_2}\ \textrm{ und }\ q_{1,2}=\varphi_{1,2}(t)\\
+&\Rightarrow\ \ \vv{r_1}=R_1(\sin(\varphi_1)\vv{e_x}-\cos(\varphi_1)\vv{e_y})\\
+&\ \ \ \ \ \ \ \vv{r_2}=\vv{r_1}+R_2(\sin(\varphi_2)\vv{e_x}-\cos(\varphi_2)\vv{e_y})
+\end{align*}
+\subsection*{b)} Für die Lagrange-Funktion verwenden wir $\ \cos(a\pm b)=\cos(a)\cos(b)\mp \sin(a)\sin(b)$:
+\begin{align*}
+T&=\frac{m_1}{2}(\dot{\vv{r_1}})^2+\frac{m_2}{2}(\dot{\vv{r_2}})^2 = m_1R_1^2\dot{\varphi_1}^2+\frac{m_2}{2}R_2^2\dot{\varphi_2}^2 +m_2R_1R_2\dot{\varphi_1}\dot{\varphi_2}\cos(\varphi_1-\varphi_2) \\
+V&=g(m_1R_1\cos(\varphi_1)+m_2R_1\cos(\varphi_1)+m_2R_2\cos(\varphi_2)) \\
+\partial_{\varphi_1}L&=-m_2R_1R_2\dot{\varphi_1}\dot{\varphi_2}\sin(\varphi_1-\varphi_2)-gR_1(m_1+m_2)\sin(\varphi_1)\\
+\frac{d}{dt}\partial_{\dot{\varphi_1}}L&=2m_1R_1^2\ddot{\varphi_1}+m_2R_1R_2\ddot{\varphi_2}\cos(\varphi_1-\varphi_2)-m_2R_1R_2\dot{\varphi_2}\sin(\varphi_1-\varphi_2)(\dot{\varphi_1}-\dot{\varphi_2})\\
+&\Rightarrow\ \ -g(m_1+m_2)\sin(\varphi_1) = m_2R_2\dot{\varphi_2}^2\sin(\varphi_1-\varphi_2)+2m_1R_1\ddot{\varphi_1}+m_2R_2\ddot{\varphi_2}\cos(\varphi_1-\varphi_2)\\
+\partial_{\varphi_2}L&=m_2R_1R_2\dot{\varphi_1}\dot{\varphi_2}\sin(\varphi_1-\varphi_2)-gR_2m_2\sin(\varphi_2)\\
+\frac{d}{dt}\partial_{\dot{\varphi_2}}L&=m_2R_2^2\ddot{\varphi_2}+m_2R_1R_2\ddot{\varphi_1}\cos(\varphi_1-\varphi_2)-m_2R_1R_2\dot{\varphi_1}\sin(\varphi_1-\varphi_2)(\dot{\varphi_1}-\dot{\varphi_2})\\
+&\Rightarrow\ \ -gm_2\sin(\varphi_2) = -m_2R_1\dot{\varphi_1}^2\sin(\varphi_1-\varphi_2)+m_2R_2\ddot{\varphi_2}+m_2R_1\ddot{\varphi_1}\cos(\varphi_1-\varphi_2)
+\end{align*}
+\subsection*{c)} Die Fixpunkte lauten:
+\begin{align*}
+\varphi_{1,2} &= k_{1,2}\pi \ \ \Rightarrow\ \ \varphi_1=\varphi_2=0\ \textrm{ ist stabil} \\
+(\varphi_1&=0 \land \varphi_2=\pi) \lor (\varphi_1=\pi \land (\varphi_2 =0 \lor \varphi_2 =\pi))\ \textrm{ ist instabil}
+\end{align*}
+\subsection*{d)} Nur die Gesamtenergie des Systems ist erhalten, da es aber zwei Freiheitsgrade gibt, ist das System nicht integrabel sondern chaotisch.
+\subsection*{e)} 
+\section*{Aufgabe 38: Pendel}
+\subsection*{a)} Die Bedingung $R=const$ ist skleronom, $x=R\sin(\varphi)+a\sin(\omega t)$ ist rheonom:
+\begin{align*}
+\vv{r}&=Re_r+ze_x=(R\sin(\varphi)+a\sin(\omega t))e_x+R\cos(\varphi)e_y
+\end{align*}
+\subsection*{b)}
+\begin{align*}
+L&=T-V=\frac{m}{2}([R\cos(\varphi)\dot{\varphi}+a\omega\cos(\omega t)]e_x-[R\sin(\varphi)\dot{\varphi}]e_y)^2+mgR\cos(\varphi)= \\
+&=\frac{m}{2}R^2\dot{\varphi}^2+a^2\omega^2\cos^2(\omega t)+2aR\omega \dot{\varphi}\cos(\varphi)\cos(\omega t)+mgR\cos(\varphi)
+\end{align*}
+\subsection*{c)}
+\begin{align*}
+\partial_{\varphi}L&=-mgR\sin(\varphi)-2aR\omega\dot{\varphi}\sin(\varphi)\cos(\omega t)\\
+\frac{d}{dt}\partial_{\dot{\varphi}}L&=mR^2\ddot{\varphi}-2aR\omega\dot{\varphi}\sin(\varphi)\cos(\omega t)-2aR\omega^2\cos(\varphi)\sin(\omega t) \\
+&\Rightarrow\ \ -\frac{g}{R}\sin(\varphi)=\ddot{\varphi}-\frac{2a\omega^2}{mR}\cos(\varphi)\sin(\omega t)
+\end{align*}
+Betrachte Fixpunkte, also $\ddot{\varphi}=0$:
+\begin{align*}
+mg\tan(\varphi)&=2a\omega^2\sin(\omega t)\ \ \Rightarrow\ \ \varphi =\arctan\left(\frac{2a\omega^2}{mg}\sin(\omega t)\right)+k\pi\ (k\in\mathbb{Z})
+\end{align*}
+
+\end{document}

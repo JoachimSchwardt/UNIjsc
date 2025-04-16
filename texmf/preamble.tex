@@ -1,0 +1,105 @@
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\usepackage[english,capitalise]{cleveref}
+
+\usepackage[acronym]{glossaries}
+\makenoidxglossaries
+
+%https://tex.stackexchange.com/questions/191376/autoref-and-braces-around-equation-number
+\makeatletter
+\let\oldtheequation\theequation
+\renewcommand\tagform@[1]{\maketag@@@{\ignorespaces#1\unskip\@@italiccorr}}
+\renewcommand\theequation{(\oldtheequation)}
+\makeatother
+\renewcommand{\equationautorefname}{Eq.}
+\renewcommand{\figureautorefname}{Fig.}
+\renewcommand{\tableautorefname}{Table}
+\renewcommand{\partautorefname}{Part}
+\renewcommand{\chapterautorefname}{Chapter}
+\renewcommand{\sectionautorefname}{Section}
+\renewcommand{\subsectionautorefname}{Section}
+\renewcommand{\subsubsectionautorefname}{Section}
+\renewcommand{\appendixautorefname}{Appendix}
+%https://tex.stackexchange.com/questions/458671/how-to-autoref-an-appendix-in-ieee-template
+\newcommand{\appref}[1]{\hyperref[#1]{Appendix~\ref*{#1}}}
+\newcommand{\refcite}[1]{Ref.~\cite{#1}}
+
+\renewcommand{\d}{\text{d}}
+\renewcommand{\r}{\text{r}}
+\renewcommand{\t}{\text{t}}
+\renewcommand{\a}{\text{a}}
+\renewcommand{\o}{\text{o}}
+\renewcommand{\F}{\text{F}}
+\renewcommand{\c}{\text{c}}
+\renewcommand{\i}{\text{i}}
+\renewcommand{\L}{\text{L}}
+\renewcommand{\K}{\hat{\mathcal{K}}}
+\renewcommand{\S}{\hat{\mathcal{S}}}
+
+\newcommand{\td}{\text{td.}}
+\newcommand{\U}{\hat{\mathcal{U}}}
+\newcommand{\T}{\hat{\mathcal{T}}}
+\newcommand{\C}{\hat{\mathcal{C}}}
+\newcommand{\ret}{\text{ret}}
+\newcommand{\PTR}{R}
+\newcommand{\eplus}{^{\scriptscriptstyle{(+)}}}
+\newcommand{\eminus}{^{\scriptscriptstyle{(-)}}}
+\newcommand{\epsmall}[1]{^{\scriptscriptstyle{(#1)}}}
+\newcommand{\asymeq}[1]{\overset{#1}{\simeq}}
+\newcommand{\asympropto}[1]{\overset{#1}{\sim}}
+%t == text commands, s == symbols
+\newcommand{\tint}{\text{int}}
+\newcommand{\tlin}{\text{linear}}
+\newcommand{\ttherm}{\text{therm}}
+\newcommand{\spage}{p.\,}
+\newcommand{\spages}{pp.\,}
+\newcommand{\ssec}{sec.\,}
+\newcommand{\schap}{ch.\,}
+\newcommand{\sapp}{app.\,}
+\newcommand{\seqn}{eqn.\,}
+\newcommand{\seqnl}{Equation}
+\newcommand{\sappl}{Appendix}
+\newcommand{\sact}{\mathcal{S}}
+\newcommand{\sgf}{G}
+\newcommand{\tsg}{\text{SG}}
+\newcommand{\tms}{momentum-shell}
+\newcommand{\tMs}{Momentum-shell}
+\newcommand{\rgbeta}{\bm{\beta}}
+\newcommand{\thermit}{Hermitian}
+\newcommand{\trs}{\hat{\mathcal{T}}}
+\newcommand{\phs}{\hat{\mathcal{C}}}
+\newcommand{\chs}{\hat{\mathcal{S}}}
+\newcommand{\ccg}{\hat{\mathcal{K}}}
+% https://tex.stackexchange.com/questions/30619/what-is-the-best-symbol-for-vector-matrix-transpose
+\newcommand{\transpose}{{\mkern-1.5mu\text{T}}}
+\newcommand{\eff}{\text{eff}}
+%names
+\newcommand{\nameKallen}{Källén}
+\newcommand{\myparagraph}[1]{{\vspace*{1em}}\,\\\textbf{#1.}\ }
+
+% https://tex.stackexchange.com/questions/10555/hyperref-warning-token-not-allowed-in-a-pdf-string
+\pdfstringdefDisableCommands{%
+    \def\\{}%
+}
+% glossary references not coloured (https://tex.stackexchange.com/questions/38544/glossary-links-color)
+\makeatletter
+\newcommand*{\glsplainhyperlink}[2]{%
+    \begingroup%
+      \hypersetup{hidelinks}%
+      \hyperlink{#1}{#2}%
+    \endgroup%
+}
+\let\@glslink\glsplainhyperlink
+\makeatother
+% https://tex.stackexchange.com/questions/50747/options-for-appearance-of-links-in-hyperref
+%\definecolor{mDarkBlue}{rgb}{0,0,0.4}
+\hypersetup{
+    colorlinks,
+    breaklinks,
+    citecolor=blue,
+    linkcolor=blue,
+    urlcolor=blue,
+    pdfauthor={\Author},
+    pdftitle={\Title}
+}

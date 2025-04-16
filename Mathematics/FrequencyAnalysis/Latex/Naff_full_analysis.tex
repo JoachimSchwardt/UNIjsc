@@ -1,0 +1,598 @@
+\documentclass[english, parskip=full]{scrartcl}     % default is 11pt!
+\usepackage[bottom=3.5cm, footskip=1.7cm]{geometry}    % default might be bottom=1.7cm + 4cm and footskip = 1.7cm
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopfzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning,angles}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\usepackage[compat=1.1.0]{tikz-feynman}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Generalized Numerical Analysis of Fundamental Frequencies}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Frequency Analysis}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Overview}
+In this section we will introduce the problem and sketch our approach without too many technical details.
+Consider a time-series, i.e. a sequence of $N$ complex numbers
+\begin{align}
+Z_N &:= \klammer\left\{ z_n \, \vert \, n=0,\dots,N-1 \right\}
+\end{align}
+which we will also refer to as a \emph{signal}.
+One could in principle also consider higher-dimensional variants.
+But if the components have a sufficient coupling, one can just extract all frequencies from either one of them, and otherwise the problem separates into one-dimensional problems anyway.
+As such there might be additional complications, but the general approach should still remain the same.
+\\
+We want to find the \emph{fundamental frequencies} of $Z_N$.
+For this we define a model of our signal as
+\begin{align}
+z_n^\tecxt\text{M} &:= \sum_{k=0}^K c_k \e^{2\pi\i \nu_k n}.
+\end{align}
+Here the $c_k$ are the amplitudes and phases of the frequency $\nu_k$ in our signal, and $K$ is the total number of frequencies.
+The superscript M is to remind one that this is not the measured signal, but rather a reconstruction using Fourier components.
+For this approach to work with only few such components, the Fourier transformation of the $z_n$ will generally have to contain isolated peaks at only a few frequencies.
+A slightly more precise, while still somewhat ambiguous statement of this idea is that the Fourier-components
+\begin{align}
+F_j &:= \sum_{n=0}^{N-1} z_n \e^{-2\pi\i \frac{j}{N} n}  \label{eqn:definition Fourier components}
+\end{align}
+should only have large amplitudes for a number of indices $j\in\{0,\dots,N-1\}$ that is in a certain sense small compared to the total number of components $N$.
+In this section we will only focus on the most dominant frequency.
+Thus far the setup is rather simple.
+One could search for the index $j_\tecxt\text{max}$ at which the amplitude $|F_{j_\tecxt\text{max}}|$ is maximal and then use $\nu := \nu_1 := \frac{j_\tecxt\text{max}}{N}$ as the first frequency.
+However, since the discrete Fourier transform (DFT) gives equidistant components with separation $\frac{1}{N}$, in general the error
+\begin{align}
+\Delta\nu_N &:= |\nu_N - \nu| \label{eqn:definition of error nuN minus nu}
+\end{align}
+would be of order $\mathcal{O}(N^{-1})$.
+Here we defined $\nu$ as the ``true'' dominant frequency in the signal, which we can numerically estimate by using well tested methods for large $N$.
+To reach typical double precision $\Delta\nu_N \approx 10^{-16}$ would require signals of $N\approx 10^{16}$ points, which is infeasible for reasons of storage, computational costs and also an inability to even generate such long and stable signals in a real world application.\\
+To give an example, consider 
+\begin{align}
+z_n := \e^{2\pi\i \frac{n}{N} \cdot 0.7 }. \label{eqn:discontinuous periodic signal cos 07}
+\end{align}
+The DFT assumes that the signal is periodic.
+However, in general a signal will, as is the case in our example, have discontinuities at the edges $n=0$ and $N-1$ when it is repeated to make the periodicity explicit.
+The real part of our sample signal is shown in \autoref{fig:discontinuous periodic signal cos 07}.
+\begin{figure}[!ht]
+\centering
+\includegraphics{pictures/discontinuous_periodic_signal_cos_07_repeat2_11pt.png}
+\caption{Plot of the real part of the signal in \autoref{eqn:discontinuous periodic signal cos 07}.
+The dashed vertical lines illustrate where the signal ends, the transparent dots correspond to concatenating the signal to itself from the left and right.
+Note that in this example there are discontinuities at those points, which is to be expected for an arbitrary signal.}
+\label{fig:discontinuous periodic signal cos 07}
+\end{figure}
+This is where the idea of a window or weighting function $w(x)$ comes in.
+In essence, we want to fix the discontinuities at the edges by multiplying the original $z_n$ by weights $w_n$ that drop to zero at the edges.
+Thus the window functions we consider should be defined on the interval $[0,1]$ and drop to (near) zero for $x \rightarrow 0$ and $x\rightarrow 1$.
+One such example is the (unnormalized) Hanning window of first order
+\begin{align}
+w_{H_1}(x) := 1 - \cos\kla\left( 2\pi x \right) \label{eqn:definition hanning window first order}
+\end{align}
+illustrated in \autoref{fig:first order Hanning window}.
+\begin{figure}[!ht]
+\centering
+\includegraphics{pictures/hanning_window_first_order_11pt.png}
+\caption{Plot of the unnormalized first order Hanning window.}
+\label{fig:first order Hanning window}
+\end{figure}
+Using the window function we may define weights
+\begin{align}
+W_N &:= \klammer\left\{ w_n = w\kla\left( \frac{n}{N} \right) \, \middle\vert \, n=0,\dots,N-1 \right\} \label{eqn:definition set of weights}
+\end{align}
+and then a weighted signal
+\begin{align}
+ZW_N &:= \klammer\left\{ z_nw_n \, \middle\vert \, n=0,\dots,N-1 \right\}. \label{eqn:definition set of weighted signal}
+\end{align}
+This weighted signal is shown in \autoref{fig:continuous periodic signal cos 07 hann window first order} and illustrates how $ZW_N$ is now continuous everywhere.
+\begin{figure}[!ht]
+\centering
+\includegraphics{pictures/continuous_periodic_signal_cos_07_repeat2_hann_window_first_order_11pt.png}
+\caption{Similar to \autoref{fig:discontinuous periodic signal cos 07} but now also the weighted signal is shown for the first order Hanning window.
+Note that this results in a periodic signal that is continuous everywhere.}
+\label{fig:continuous periodic signal cos 07 hann window first order}
+\end{figure}
+While this approach fixes the discontinuities, it also makes the Fourier transformation more complicated
+\begin{align}
+F_j &= \sum_{n=0}^{N-1} z_nw_n\e^{-2\pi\i \frac{j}{N}n}, \label{eqn:definition weighted Fourier components}\\
+F_j^\tecxt\text{M} &= \sum_{n=0}^{N-1} c_1 \e^{2\pi\i \nu n} w_n \e^{-2\pi\i \frac{j}{N}n}. \label{eqn:definition weighted Fourier components model}
+\end{align}
+Computing the $F_j$ is done using an FFT implementation applied to $ZW_N$ so there is no practical difference at this step.
+Computing the model coefficients now involves the arbitrary weights and can therefore no longer be evaluated explicitly.
+However, we may formally continue by defining the ratios
+\begin{align}
+R_j &:= \left\vert \frac{F_{j+1}}{F_j} \right\vert \label{eqn:definition ratio fft j+1 to fft j}
+\end{align}
+and the analogous variant for our model coefficients
+\begin{align}
+R_j^\text{M} &:= \left\vert \frac{F_{j+1}^\text{M}}{F_j^\text{M}} \right\vert. \label{eqn:definition ratio fft M j+1 to fft M j}
+\end{align}
+Around the peak index $j_\mathrm{max}$ we assume that $R_{j_\tecxt\text{max}} \approx R_{j_\tecxt\text{max}}^\tecxt\text{M}$ which gives us an equation that may be solved for the frequency $\nu$.
+In special cases it will be possible to find sufficiently accurate analytical solutions to this equation for relatively simple window functions.
+However, at least numerically one can use this approach to solve the problem for general $w(x)$.
+\section{Developing the algorithm}
+In this section we will show how the frequency analysis problem presented in the introduction can be solved for the simpler case of signals containing only one fundamental frequency.
+In the first part we will list the precise formulas and present the general approach in an abstract way.
+In the second part we will then apply the algorithm to a specific example and demonstrate how the assumptions and approximations in the first part impact the result
+\subsection{Abstract formulation of the algorithm}
+We introduced the window function $w(x)$ and used it to define the Fourier components of both the real signal $F_j$ in \autoref{eqn:definition weighted Fourier components} and our model $F_j^\tecxt\text{M}$ in \autoref{eqn:definition weighted Fourier components model}.
+Evaluating the $F_j$ for $j=0,\dots,N-1$ using \autoref{eqn:definition weighted Fourier components} is of complexity $\mathcal{O}(N^2)$, but this can be reduced to $\mathcal{O}(N\log N)$ by utilizing an FFT algorithm. 
+Then we search for the index $j_\tecxt\text{max}$ which satisfies
+\begin{align}
+|F_{j_\tecxt\text{max}}| &= \max \klammer\left\{ |F_j|\,\middle\vert\, j=0,\dots,N-1 \right\}. \label{eqn:definition j max index}
+\end{align}
+We want to work with the ratio of $F_{j_\tecxt\text{max}}$ to the larger of its two neighbours.
+To stay consistent with the definition in \autoref{eqn:definition ratio fft j+1 to fft j} we perform the shift $j_\tecxt\text{max} \rightarrow j_\tecxt\text{max} - 1$ if $|F_{j_\tecxt\text{max} - 1}| > |F_{j_\tecxt\text{max} + 1}|$, i.e. if the neighbour to the left of the peak is larger than the one to the right.\\
+At this point we make the assumption that the ratios of our model are a good approximation for the true ratios, i.e. $R_{j_\tecxt\text{max}} \approx R_{j_\tecxt\text{max}}^\tecxt\text{M}$.
+This leads to the equation
+\begin{align}
+R_{j_\tecxt\text{max}} &\approx R_{j_\tecxt\text{max}} = \frac{\sum_{n=0}^{N-1} c_1\e^{2\pi\i\nu n} w_n \e^{-2\pi\i \frac{j+1}{N}n} }{\sum_{n=0}^{N-1} c_1\e^{2\pi\i\nu n} w_n \e^{-2\pi\i \frac{j}{N}n}} = \\
+&= \frac{\sum_{n=0}^{N-1} w_n \e^{2\pi\i \kla\left( \epsilon_j - \frac{1}{N} \right) n}}{\sum_{n=0}^{N-1} w_n \e^{2\pi\i \epsilon_j n}}
+\end{align}
+where we introduced the correction terms $\epsilon_j := \nu - \frac{j}{N}$ to the discrete frequencies $\frac{j}{N}$ obtained from the FFT.
+For most $w_n$ this equation may not admit an analytical solution.
+Formally we can define
+\begin{align}
+f_\Sigma(\epsilon) &:= \left\vert \sum_{n=0}^{N-1} w_n \e^{2\pi\i \kla\left( \epsilon - \frac{1}{N} \right) n} \right\vert - \left\vert R\sum_{n=0}^{N-1} w_n \e^{2\pi\i \epsilon n} \right\vert. \label{eqn:definition f eps sum repr}
+\end{align}
+with $R := R_{j_\tecxt\text{max}}$ where by construction $f_\Sigma(\epsilon_{j_\tecxt\text{max}}) = 0$. 
+Thus we can numerically find $\epsilon_{j_\tecxt\text{max}}$ as the root of $f_\Sigma$ and thus compute the frequency
+\begin{align}
+\nu &= \frac{j_\tecxt\text{max}}{N} + \epsilon_{j_\tecxt\text{max}}.
+\end{align}
+Note that the first part corresponds to the initial approximation $\nu_\tecxt\text{init.} := \frac{j_\tecxt\text{max}}{N}$ to the true frequency purely from the identification of the peak index in the power spectrum\footnote{Modulo a shift by $\frac{1}{N}$ to the convention of shifting $j_\tecxt\text{max} \rightarrow j_\tecxt\text{max} - 1$ if $|F_{j_\tecxt\text{max} - 1}| > |F_{j_\tecxt\text{max} + 1}|$.}.
+Before we turn to an example illustrating the entire procedure, let us also note that using an approximation we can arrive at a formulation of the problem that may be more useful for analytical calculations.
+The general idea is to approximate the sum in \autoref{eqn:definition weighted Fourier components model} as an integral
+\begin{align}
+F_j^\tecxt\text{M} &\approx c_1 \intx\int_{0}^{1} w(x) \e^{2\pi\i N\epsilon_j x} \, \mathrm{d}x. \label{eqn:definition weighted Fourier components model integral approx}
+\end{align}
+We will refer to this idea as the \emph{integral approximation} of the generic $f_\Sigma$-approach from \autoref{eqn:definition f eps sum repr}.
+This approximation may be justified by several reasons.
+We are only interested in the Fourier components near the peak at index $j_\tecxt\text{max}$ and will therefore later only apply this formula for $\epsilon_{j_\tecxt\text{max}}$, which is generally of order $\mathcal{O}(N^{-1})$.
+Since $\epsilon$ is small, we are essentially integrating an almost symmetric function that becomes zero at the boundaries.
+In this case the exact formula for the $F_j^\tecxt\text{M}$ can be viewed as a quadrature formula and thus very well approximates the integral.
+Consequently, the integral also serves as a good approximation of the sum.
+Of course this is merely a qualitative statement, and a proof of a certain error bound would be desirable.
+From a practical point of view this is probably not too important of a question because the deviations from the exact sum in the particular example of $w_{H_1}(x)$ and signals from the simple kicked rotor are orders of magnitudes below the error $\Delta\nu_N$ itself, but of course this remains a potential source of errors in more complicated cases.\\
+Within the integral approximation we have
+\begin{align}
+R_{j_\tecxt\text{max}} &\approx R_{j_\tecxt\text{max}}^\tecxt\text{M} \approx \frac{\intx\int_{0}^{1} w(x) \e^{2\pi\i N \epsilon_{j_\text{max} + 1} x} \, \mathrm{d}x}{\intx\int_{0}^{1} w(x) \e^{2\pi\i N\epsilon_{j_\text{max}} x} \, \mathrm{d}x}. \label{eqn:R j integral approximation}
+\end{align}
+Similar to the exact solution determined by the root of $f_\Sigma$ we now define
+\begin{align}
+f(\epsilon) &:= \left\vert \int_{0}^{1} w(x) \e^{2\pi\i \kla\left( N\epsilon - 1 \right)x} \, \mathrm{d}x \right\vert - \left\vert R\intx\int_{0}^{1} w(x) \e^{2\pi\i N\epsilon x} \, \mathrm{d}x \right\vert \label{eqn:definition f eps integral repr}
+\end{align}
+where we will again use the root of $f$ for the computation of $\nu$.
+Numerically this approach has only disadvantages, since the integrals involved are certainly more difficult to evaluate than the summations.
+However, the goal will be to explicitly solve this problem for a sufficiently simple $w(x)$ and compare the result to a full numerical solution using $f_\Sigma$.
+The purpose of this general numeric solution within the integral approximation is to serve as a practical intermediary step in developing analytical approximations for specific window functions.
+This is because the root of $f$ may be numerically computed to arbitrary precision and thus lends itself to a lower bound for the error of any analytic expressions possibly involving additional assumptions or approximations.
+\subsection{Application to a specific example}
+To put both our generic algorithms, the exact $f_\Sigma$-approach and the integral approximation using $f$, to the test, consider a sample signal from the standard map of the kicked rotor
+\begin{align}
+q_{n+1} &= q_n + p_n,\\
+p_{n+1} &= p_n + \frac{K}{2\pi} \sin(2\pi q_{n+1})
+\end{align}
+where $q\in [0,1)$, $p\in [-\frac{1}{2}, \frac{1}{2})$.
+We will use a kicking strength of $K=0.7$ and initial conditions of $q_0=0.5$ and $p_0=0.1$, which result in an elliptical orbit illustrated in \autoref{fig:sample 2d orbit k07 q05 p01 surround}.
+For the sample images illustrating the algorithm we will always use $N=512$.
+The figure also includes some other orbits to provide some perspective.
+\begin{figure}[!ht]
+\centering
+\includegraphics{pictures/sample_2d_orbit_k07_q05_p01_surround.png}
+\caption{Visualization of the phase-space of the kicked rotor mapping at $K=0.7$.
+The sample orbit we consider is the black central elliptic orbit highlighted by the larger marker size.}
+\label{fig:sample 2d orbit k07 q05 p01 surround}
+\end{figure}\\
+The signal will be constructed from the $q_n,p_n$ via
+\begin{align}
+z_n &:= \kla\left( q_n - \frac{1}{2} \right) + \i p_n.
+\end{align}
+Here we subtract $\frac{1}{2}$ from the real part to center the signal around the origin.
+Later we will see how the algorithm can be adjusted to work for arbitrary offsets, which can be thought of as removing the $\nu=0$-component.
+As such this is part of the section on extracting multiple frequencies.
+At this point, one may choose a window function $w(x)$, draw the weights $w_n$ as defined in \autoref{eqn:definition set of weights} and define the signal $ZW_N$ as done in \autoref{eqn:definition set of weighted signal}.
+Then we numerically compute the Fourier coefficients $F_j$ using a FFT and search for the index $j_\tecxt\text{max}$ as define in \autoref{eqn:definition j max index}.
+\begin{figure}[!ht]
+\centering
+\includegraphics{pictures/sample_2d_orbit_k07_q05_p01_abs_fft_inset.png}
+\caption{Amplitudes of the Fourier components of the sample orbit. The inset contains a zoom-in on the peak in the power spectrum.
+Note that the dashed line in the inset corresponds to computing $F_j$ from \autoref{eqn:definition Fourier components} for non-integral $j$.
+This is computationally expensive, but illustrates how the true peak will generally lie to the left or right of $j_\text{max}$.}
+\label{fig:sample 2d orbit k07 q05 p01 inset}
+\end{figure}
+This will generally result in a power spectrum similar to the one for our example shown in \autoref{fig:sample 2d orbit k07 q05 p01 inset}.
+The figure also contains a zoom-in on the peak of the power spectrum and illustrates how the true peak lies between the index $j_\tecxt\text{max}$ and the neighbour with the larger amplitude $|F_j|$ for $j= j_\tecxt\text{max} \pm 1$.
+The continuation of the power spectrum is computed by naively applying \autoref{eqn:definition Fourier components} to non-integral $j$, which -- while computationally expensive -- provides a much more detailed view of the power spectrum.\\
+At this point in the algorithm we want to compute the ratio between the peak amplitude and its larger neighbour.
+Recall that we perform the shift $j_\tecxt\text{max} \rightarrow j_\tecxt\text{max} - 1$ if $|F_{j_\tecxt\text{max} - 1}| > |F_{j_\tecxt\text{max} + 1}|$ if the neighbour to the left of the peak is larger than the one to the right, which is the case for the example shown in \autoref{fig:sample 2d orbit k07 q05 p01 inset}.
+Now we arrive at \autoref{eqn:R j integral approximation} which is to be solved for $\epsilon$.
+\begin{figure}[!ht]
+\centering
+\includegraphics{pictures/sample_2d_orbit_k07_q05_p01_f_eps.png}
+\caption{Visualization of $f(\epsilon)$ for the sample orbit.
+The size of the rectangle indicating where the inset zooms in on the graph is vastly exaggerated.}% Due to the smooth and almost linear nature of the function one can find the root numerically to high accuracy with comparatively small effort.}
+\label{fig:sample 2d orbit k07 q05 p01 f eps}
+\end{figure}
+As mentioned, this is done by numerically finding the root of $f(\epsilon)$ or $f_\Sigma(\epsilon)$ as defined in \autoref{eqn:definition f eps integral repr} and \autoref{eqn:definition f eps sum repr} respectively.
+These functions are well behaved, as can be seen from the plot of $f(\epsilon)$ for our example shown in \autoref{fig:sample 2d orbit k07 q05 p01 f eps}.
+Note that the root is expected to lie in the interval $\epsilon \in [0, \frac{1}{N})$ due to the true peak of the power spectrum lying to the right of the initial guess $\nu_\tecxt\text{init}$.
+In difficult cases, for example if the signal contains two frequencies with very small separation in both amplitude and frequency, this can be violated slightly.
+But even if the condition is not met due, one should still be able to numerically find the root in a slightly larger interval.
+%Since we do not discuss this special case here, that may or may not be quite that straight-forward.
+At this point we have out correction term $\epsilon = \epsilon_{j_\tecxt\text{max}}$ to the approximation $\nu_\tecxt\text{init.}$ and have therefore computed the first frequency.
+\FloatBarrier
+\section{Rate of Convergence}
+In this section we want to analyse the rate of convergence of the algorithm presented in the previous section.
+To that end we will introduce the older method by Laskar and show how our approximation replicates the result.
+Then we will demonstrate how the new method can improve the rate of convergence without any modifications other than starting from a different window function $w(x)$.
+\subsection{NAFF by Laskar (TITLE IS WIP, SOURCES AS WELL)}
+The method by Laskar is identical to our generalized version with the first order Hanning window defined in \autoref{eqn:definition hanning window first order}.
+In this special case it is possible to find an exact solution for the $F_j^\tecxt\text{M}$.
+Without derivation, one arrives at
+\begin{align}
+R_j^\tecxt\text{M} &= \frac{\cos (\pi\epsilon_{j+1}) \sin (\pi\epsilon_{j-1}) }{\cos (\pi\epsilon_j) \sin (\pi\epsilon_{j+2})}.
+\end{align}
+Recalling the definition $\epsilon_j = \nu - \frac{j}{N}$ this equation can be solved for $\nu$ via
+\begin{align}
+\nu &= \frac{j_\tecxt\text{max}}{N} + \frac{1}{2\pi} \arcsin\kla\left( y \sin \kla\left( \frac{2\pi}{N} \right) \right), \label{eqn:Laskar exact hanning naff nu} \\
+y &= \frac{(1+Rc)(R-1) + \tecxt\text{sign}(1+Rc) \sqrt{R^2c^2(1+R)^2 - 2R^3(2c^2 - c - 1)}}{1 + R^2 + 2Rc} \label{eqn:Laskar exact hanning naff y param}
+\end{align} % y &= \frac{-(R+c)(R-1) + \tecxt\text{sign}(R+c) \sqrt{c^2(R+1)^2 - 2R(2c^2 - c - 1)}}{R^2 + 1 + 2Rc} \label{eqn:Laskar exact hanning naff y param}
+where $c := \cos \kla\left( \frac{2\pi}{N} \right)$ and $R := R_{j_\tecxt\text{max}}$ was again used as an approximation for $R_{j_\tecxt\text{max}}^\tecxt\text{M}$.\\
+Before we compare the result to our generic algorithm, we also want to demonstrate how in this example the integral approximation can help to drastically simplify both the derivation as well as the result without significant loss of precision.
+For the first order Hanning window written as $w_{H_1}(x) = 1 - \frac{1}{2} \e^{2\pi\i x} - \frac{1}{2} \e^{-2\pi\i x} $ we find\footnote{Note that $\frac{1}{x} - \frac{1}{2} \frac{1}{x - 1} - \frac{1}{2} \frac{1}{x + 1} = -\frac{1}{x(x+1)(x-1)}$.}
+\begin{align}
+\intx\int_{0}^{1} w_{H_1}(x) \e^{2\pi\i N\epsilon x} \, \mathrm{d}x &= \intx\int_{0}^{1} \kla\left( \e^{2\pi\i N\epsilon x} - \frac{1}{2} \e^{2\pi\i (N\epsilon - 1) x} - \frac{1}{2} \e^{2\pi\i (N\epsilon + 1) x} \right) \, \mathrm{d}x = \\
+&= \frac{\e^{2\pi\i N\epsilon}}{2\pi\i N \epsilon} - \frac{1}{2} \frac{\e^{2\pi\i (N\epsilon - 1)}}{2\pi\i (N\epsilon - 1)} - \frac{1}{2} \frac{\e^{2\pi\i (N\epsilon + 1)}}{2\pi\i (N\epsilon + 1)} = \\
+&= \frac{\e^{2\pi\i N\epsilon}}{2\pi\i} \klam\left[ \frac{1}{N\epsilon} - \frac{1}{2} \frac{1}{N\epsilon - 1} - \frac{1}{2} \frac{1}{N\epsilon + 1} \right] = \\
+&= \frac{\e^{2\pi\i N\epsilon}}{2\pi\i} \frac{-1}{N\epsilon (N\epsilon - 1) (N\epsilon + 1)}. 
+\end{align}
+Inserting into $f$ yields
+\begin{align}
+f(\epsilon) &= \frac{1}{2\pi} \left\vert \frac{1}{(N\epsilon - 1) (N\epsilon - 2) N\epsilon} \right\vert - \frac{R}{2\pi} \left\vert \frac{1}{N\epsilon (N\epsilon - 1) (N\epsilon + 1)} \right\vert = \\
+&= \frac{1}{2\pi |N\epsilon (N\epsilon - 1)|} \klam\left[ \frac{1}{|N\epsilon - 2|} - \frac{R}{|N\epsilon + 1|} \right].
+\end{align}
+Setting $f(\epsilon) = 0$ and using $N\epsilon \in [0, 1]$ we arrive at
+\begin{align}
+N\epsilon + 1 &= -R(N\epsilon - 2),\\
+\Rightarrow\quad N\epsilon (1+R) &= -1 + 2R,\\
+\Rightarrow\quad \epsilon &= -\frac{1}{N} \frac{1 - 2R}{1 + R}
+\end{align}
+which then gives
+\begin{align}
+\nu &= \frac{j_\tecxt\text{max}}{N} + \frac{1}{N} \frac{2R - 1}{R+1}. \label{eqn:hanning naff approx nu}
+\end{align}
+Compared to \autoref{eqn:Laskar exact hanning naff nu} this is a much simpler expression.
+At this point we have several different solutions to the problem.
+\begin{itemize}
+\item[1.] Exact solution due to Laskar using \autoref{eqn:Laskar exact hanning naff nu} and \ref{eqn:Laskar exact hanning naff y param}
+\item[2.] Numerical solution for the root of $f_\Sigma(\epsilon)$ as defined in \autoref{eqn:definition f eps sum repr}
+\item[3.] Integral approximation of the generic algorithm  given by \autoref{eqn:hanning naff approx nu}
+\item[4.] Numerical solution for the root of $f(\epsilon)$ as defined in \autoref{eqn:definition f eps integral repr}
+\end{itemize}
+To analyse the rate of convergence we now consider our sample orbit for different sizes $N$ varying between $N=32$ and $N=4096$.
+We define
+\begin{align}
+\Delta\nu_N := |\nu_N - \nu| \label{eqn:definition roc}
+\end{align}
+where $\nu_N$ is the frequency for a signal of length $N$ and $\nu$ is an estimate for the true frequency $\nu_{N\rightarrow \infty}$.
+Thus \autoref{eqn:definition roc} is a measure of the rate of convergence of any given method to its own limit.
+\begin{figure}[!ht]
+\centering
+\includegraphics{pictures/sample_2d_orbit_k07_q05_p01_roc.png}
+\caption{The left plot shows the rate of convergence for the method by Laskar, the analytical and numerical integral approximations and the $f_\Sigma(\epsilon)$-variant.
+All four methods give essentially identical results, which is why the right plot also shows the difference between the methods to the one by Laskar.
+This is done by replacing $\nu$ with $\nu_N^\tecxt\text{Laskar}$ in \autoref{eqn:definition roc}.
+Note that the analytical and numerical version of the integral approximation also give the same result here, and that the $f_\Sigma(\epsilon)$-version is manually limited to a minimal error of $10^{-16}$ to comply with the logarithmic plot.}
+\label{fig:sample 2d orbit k07 q05 p01 roc}
+\end{figure}
+\autoref{fig:sample 2d orbit k07 q05 p01 roc} also contains a visualization of the difference between the three approximations and the -- a priori more exact -- method by Laskar.
+This is done by replacing $\nu$ with $\nu_N^\tecxt\text{Laskar}$ in \autoref{eqn:definition roc}.
+We find that there is a very small numerical error for the $f_\Sigma(\epsilon)$-method.
+For the other two methods, which make use of the integral approximation, we find that the error is significantly below $\Delta\nu_N$, which is to say that the error due to the approximation is much smaller than the uncertainty in the frequency itself.
+This example justifies the general approach and allows us to use the generic $f_\Sigma(\epsilon)$-algorithm for arbitrary weights without any expected loss in precision.
+It also allows us analytically solve or approximate the $f(\epsilon)$-variant to get a much more compact version of the algorithm.
+\subsection{Gaussian and general cosine windows}
+We define a gaussian window function
+\begin{align}
+w_g(x) &:= \e^{-\alpha \kla\left( x - \frac{1}{2} \right)^2} \label{eqn:definition gaussian window}
+\end{align}
+where $\alpha \gtrsim 140$ leads to $w_g(x)$ falling below $10^{-16}$ at the boundaries $x=0,1$.
+This condition will be relevant to derive an analytical expression in the integral approximation $f(\epsilon)$, since it allows us to treat $w_g(x)$ as zero for $x$ outside the main interval $[0,1]$ leading to the approximation\footnote{Note that $\intr\int_{\mathbb{R}^{ }} \e^{-ax^2 + bx} \, \mathrm{d}x = \sqrt{\frac{\pi}{a}} \e^{\frac{b^2}{4a}}$.}
+\begin{align}
+F_j^\tecxt\text{M} &\approx \intx\int_{0}^{1} w_g(x) \e^{2\pi\i N\epsilon x} \, \mathrm{d}x = \int_{-\frac{1}{2}}^{\frac{1}{2}} \e^{-\alpha x^2} \e^{2\pi\i N\epsilon_j \kla\left( x + \frac{1}{2} \right)} \, \mathrm{d}x \approx \\
+&\approx \e^{\pi\i N\epsilon_j} \sqrt{\frac{\pi}{\alpha}} \e^{\frac{1}{4\alpha} \klam\left[ 2\pi\i N\epsilon_j \right]^2} = \e^{\pi\i N\epsilon_j} \sqrt{\frac{\pi}{\alpha}} \e^{-\frac{\pi^2}{\alpha} (N\epsilon_j)^2 }
+\end{align}
+Recalling \autoref{eqn:definition f eps integral repr} we find
+\begin{align}
+f(\epsilon) &= \left\vert F_{j+1}^\tecxt\text{M} \right\vert - R \left\vert F_j^\tecxt\text{M} \right\vert = \\
+&= \sqrt{\frac{\pi}{\alpha}} \klam\left[ \e^{-\frac{\pi^2}{\alpha} \kla\left( N\epsilon - 1 \right)^2} - R\e^{-\frac{\pi^2}{\alpha} (N\epsilon)^2}  \right] = \\
+&= \sqrt{\frac{\pi}{\alpha}} \e^{-\frac{\pi^2}{\alpha} (N\epsilon)^2} \klam\left[ \e^{-\frac{\pi^2}{\alpha} \kla\left( 1 - 2N\epsilon \right)} - R  \right]. 
+\end{align}
+Setting $f(\epsilon) = 0$ yields
+\begin{align}
+\log (R) &= \frac{\pi^2}{\alpha} \kla\left( 2N\epsilon - 1 \right)
+\end{align}
+and thus we find the frequency estimate
+\begin{align}
+\nu &= \frac{j_\tecxt\text{max}}{N} + \frac{1}{2N} + \frac{\alpha}{2N\pi^2} \log (R). \label{eqn:gauss naff approx nu}
+\end{align}
+We define a generalized cosine window function of order $k$ via
+\begin{align}
+w_k(x) &:= \sum_{m=0}^k a_m \cos (2\pi mx). \label{eqn:definition generalized cosine window}
+\end{align}
+Similarly, we define the unnormalized Hanning window of $k$-th order via
+\begin{align}
+a_m^{H_k} &:= (-1)^m \binom{2k}{k - m} \begin{cases} \frac{1}{2}, & m=0,\\ 1, & m>0 \end{cases} .
+\end{align}
+%The factor of $\frac{1}{2}$ ensures that this definition is consistent with the previous definition of $w_{H_1}$.
+In the general case we find
+\begin{align}
+F_j^\tecxt\text{M} &= \intx\int_{0}^{1} w_{k}(x) \e^{2\pi\i N\epsilon_j x} \, \mathrm{d}x = \\
+&= \sum_{m=0}^k \frac{a_m}{2} \intx\int_{0}^{1} \kla\left( \e^{2\pi\i (N\epsilon_j + m) x} + \e^{2\pi\i (N\epsilon_j - m) x} \right)\, \mathrm{d}x = \\
+&= \sum_{m=0}^k \frac{a_m}{2} \kla\left( \frac{\e^{2\pi\i (N\epsilon_j + m)} - 1}{2\pi\i (N\epsilon_j + m)} + \frac{\e^{2\pi\i (N\epsilon_j - m)} - 1}{2\pi\i (N\epsilon_j - m)} \right) = \\
+&= \sum_{m=0}^k \frac{a_m}{4\pi\i} \kla\left( \e^{2\pi\i N\nu} - 1 \right) \kla\left( \frac{1}{N\epsilon_j + m} + \frac{1}{N\epsilon_j - m} \right) = \\
+&= \e^{\pi\i N\nu} \frac{\sin(\pi N\nu)}{2\pi\i} \kla\left( \frac{2}{N\epsilon_j} + \sum_{m=-k, m\neq 0}^k \frac{a_{|m|}}{N\epsilon_j + m} \right).
+%&= \e^{\pi\i N\nu} \frac{\sin(\pi N\nu)}{2\pi\i} \sum_{m=0}^k a_m \left( \frac{1}{N\epsilon_j + m} + \frac{1}{N\epsilon_j - m} \right).
+\end{align}
+Defining new coefficients $\tilde{a}_m$ with $\tilde{a}_m := a_{|m|}$ for $m\neq 0$ and $\tilde{a}_0 := 2a_0$ allows us to write
+\begin{align}
+f(\epsilon) &= \frac{\left\vert \sin\kla\left( \pi N\nu \right) \right\vert }{2\pi} \kla\left( \left\vert \sum_{m=-k}^k \frac{\tilde{a}_m}{N\epsilon - 1 + m} \right\vert - R \left\vert \sum_{m=-k}^k \frac{\tilde{a}_m}{N\epsilon + m} \right\vert \right) = \\
+&= \frac{\left\vert \sin\kla\left( \pi N\nu \right) \right\vert }{2\pi N\epsilon (N\epsilon - 1)} \kla\left( \left\vert \sum_{m=-k}^k \frac{\tilde{a}_m N\epsilon (N\epsilon - 1)}{N\epsilon - 1 + m} \right\vert - R \left\vert \sum_{m=-k}^k \frac{\tilde{a}_m N\epsilon (N\epsilon - 1)}{N\epsilon + m} \right\vert \right).
+\end{align}
+%\begin{align}
+%f(\epsilon) &= \frac{\left\vert \sin ( \pi N\nu ) \right\vert }{2\pi} \kla\left( \left\vert \sum_{m=0}^k a_m \left( \frac{1}{N\epsilon - 1 + m} + \frac{1}{N\epsilon - 1 - m} \right) \right\vert - R \left\vert \sum_{m=0}^k a_m \left( \frac{1}{N\epsilon + m} + \frac{1}{N\epsilon - m} \right) \right\vert \right).
+%\end{align}
+Splitting of the term $N\epsilon (N\epsilon - 1)$ removes the potential divergences expected for $N\epsilon \in [0,1]$.
+While we could analytically evaluate $f(\epsilon)$ in this case, one still has to use numerical methods for solving the equation $f(\epsilon) = 0$.
+\begin{figure}[!ht]
+\centering
+\includegraphics{pictures/sample_2d_orbit_k07_q05_p01_roc_gauss_cos.png}
+\caption{Rate of convergence of the frequency for the gaussian ($\alpha = 140$) and second order Hanning window as well as for the respective generic $f_\Sigma$-approach for the sample orbit.}
+\label{fig:sample 2d orbit k07 q05 p01 roc gauss cos}
+\end{figure}
+\begin{figure}[!ht]
+\centering
+\includegraphics{pictures/sample_2d_orbit_k07_q05_p01_roc_cos.png}
+\caption{Rate of convergence of the frequency for several Hanning windows for the sample orbit.
+This demonstrates that higher order windows tend to have a higher order of convergence but do not necessarily give better results for practically relevant signal lengths.}
+\label{fig:sample 2d orbit k07 q05 p01 roc cos}
+\end{figure}
+\FloatBarrier
+\autoref{fig:sample 2d orbit k07 q05 p01 roc gauss cos} shows the rate of convergence for the gaussian ($\alpha = 140$) and second order Hanning window for the sample orbit.
+It also contains the respective $f_\Sigma$-variant using the generic algorithm, which again yields identical results from any practical point of view.
+\autoref{fig:sample 2d orbit k07 q05 p01 roc cos} shows the rate of convergence for a Hanning windows with increasing order.
+It is apparent that the order of the convergence grows with $k$, but the absolute precision for small $N$ actually gets worse.
+In the figure this is particularly evident for $k=5$ and $k=8$, which both stay above $k=1$ until $N\approx 200\dots 300$ where they rapidly overtake all other windows.
+\section{Extracting multiple frequencies}
+In this section we show how the generic algorithm can be extended to extract multiple frequencies from a single signal.
+This can also be used to deal with arbitrary offsets of the signal from the origin, since that offset can be thought of and treated as a $\nu = 0$-contribution.
+We will apply the method to the most simple toy model of multi-component signals defined via
+\begin{align}
+z_n &:= \sum_{k=0}^K c_k \e^{2\pi\i \nu_k n} \label{eqn:definition multicomponent toy model signal}
+\end{align}
+where $c_k \in \mathbb{C}$ is the amplitude of the $k$-th frequency $\nu_k$ and $K$ is the total number of frequencies in the signal. 
+We define $\nu_0$ and thus treat $c_0$ as the constant offset of the signal.
+%    flist = [0.524, np.sqrt(2) - 1, (1 - np.sqrt(5)) / 2, 0.0, 1 / np.pi, 0.2]
+%    alist = [1.0, 0.9, 0.6, 0.4 + 0.1j, 0.3, 0.1]
+The frequency amplitude pairs used for our sample signal are listed in \autoref{table:multi freq list of values} and the signal is shown in \autoref{fig:multi freq sample signal}.
+\begin{table}[!ht]
+\centering
+\begin{tabular}{ccc}
+\toprule
+$k$ & $\nu_k$ & $c_k$ \\ \midrule 
+$0$ & $0$ & $0.4 + 0.1\i$ \\
+$1$ & $0.524$ & $1$ \\
+$2$ & $\frac{3 - \sqrt{5}}{2}$ & $0.9$ \\
+$3$ & $\sqrt{2} - 1$ & $0.6$ \\
+$4$ & $\frac{1}{\pi}$ & $0.3$ \\
+$5$ & $0.2$ & $0.1$ \\
+\bottomrule
+\end{tabular}
+\caption{Frequency amplitude pairs used for the construction of a sample signal of the form defined in \autoref{eqn:definition multicomponent toy model signal}.}
+\label{table:multi freq list of values}
+\end{table}
+\begin{figure}[!ht]
+\centering
+\includegraphics{pictures/multi_freq_sample_signal.png}
+\caption{Sample signal constructed from \autoref{eqn:definition multicomponent toy model signal} with $N=512$ points and the frequency amplitude pairs as listed in \autoref{table:multi freq list of values}.}
+\label{fig:multi freq sample signal}
+\end{figure}
+\subsection{Reconstructing amplitudes and phases}
+Using the approximation $F_j \approx F_j^\tecxt\text{M}$ and \autoref{eqn:definition weighted Fourier components model} we find
+\begin{align}
+F_j &\approx \sum_{n=0}^{N-1} \sum_{k=0}^K c_k \e^{2\pi\i \nu_k n} w_n \e^{-2\pi\i \frac{j}{N}n} = \\
+&= \sum_{k=0}^K c_k \sum_{n=0}^{N-1} w_n \e^{2\pi\i \epsilon_j^{(k)} n}
+\end{align}
+where we defined $\epsilon_j^{(k)} := \nu_k - \frac{j}{N}$.
+If the frequencies are sufficiently far apart we may solve for $c_k$
+\begin{align}
+c_k &\approx \frac{F_j}{\sum_{n=0}^{N-1} w_n \e^{2\pi\i \epsilon_j^{(k)} n }}. \label{eqn:approx ck from Fj}
+\end{align}
+Of course this approximation can only be valid for $j$ close to the peak corresponding to the frequency $\nu_k$.
+More precisely, write $\nu_k =: \frac{j_k}{N} + \epsilon^{(k)}$ with $\epsilon^{(k)} \in [0, \frac{1}{N})$ and $j_k$ being an integer.
+Then \autoref{eqn:approx ck from Fj} is valid for $j$ sufficiently close to $j_k$, where the relevant parameter is the distance between $\nu_k$ and the closest fundamental frequency in the signal.
+Thus one should choose $j=j_k$ for computing $c_k$ with \autoref{eqn:approx ck from Fj}.
+Knowing the coefficient $c_k$ allows us to modify the power spectrum in a way that essentially removes the $\nu_k$-contribution.
+This is possible because within our approximation we may define
+\begin{align}
+F_j^\tecxt\text{approx.} &:= c_k \sum_{n=0}^{N-1} w_n \e^{2\pi\i \epsilon_j^{(k)} n} \approx F_{j_k} \frac{\sum_{n=0}^{N-1} w_n \e^{2\pi\i \kla\left( \epsilon^{(k)} - \frac{j - j_k}{N} \right)n}}{\sum_{n=0}^{N-1} w_n \e^{2\pi\i \epsilon^{(k)} n}}. \label{eqn:approx Fj from ck for j close to jk}
+\end{align}
+Under this assumption we may compute the frequency $\nu_k$ using our algorithm without any modifications on the conceptual level.
+However, for an implementation it is helpful to iteratively compute the frequencies starting with the most dominant frequency.
+Then using \autoref{eqn:approx Fj from ck for j close to jk} one removes the first frequency component from the power spectrum by applying the transform $|F_j| \rightarrow |F_j| - |F_j^\tecxt\text{approx.}|$ for $j\in \klammer\left\{ j_k - J, \dots, j_k + J \right\}$ where $J$ should be chosen large enough to remove the entire peak.
+In practice this number will depend on the particular window function used.\\
+For our sample signal we will use the gaussian window with $\alpha = 140$ as given in \autoref{eqn:definition gaussian window}.
+In this case \autoref{eqn:approx ck from Fj} and \ref{eqn:approx Fj from ck for j close to jk} may be simplified using the integral approximation and yield
+\begin{align}
+c_k &\approx F_j \e^{-\pi\i \left( N\nu_k - j_k \right)} \sqrt{\frac{\alpha}{\pi}} \e^{\frac{\pi^2}{\alpha} \left(N \nu_k - j_k \right)^2},\\
+|F_j^\tecxt\text{approx.}| &= |F_j| \e^{-\frac{\pi^2}{\alpha} (N\nu_k - j)^2 } \e^{\frac{\pi^2}{\alpha} \left(N \nu_k - j_k \right)^2} = |F_j| \e^{-\frac{\pi^2}{\alpha} \kla\left( [j - j_k]^2 - 2(N\nu_k - j_k) [j - j_k] \right)}. \label{eqn:approx Fj from ck for j close to jk gauss}
+\end{align}
+Note that the reconstruction of the Fourier components is a gaussian in the distance from $j-j_k$ from the peak index modified by a small shift due to the $N\nu_k - j_k = \epsilon^{(k)}$ correction term to the frequency.
+\begin{figure}[!ht]
+\centering
+\includegraphics{pictures/multi_freq_remove_peak.png}
+\caption{Power spectrum of the multicomponent sample signal before and after removing the dominant peak using \autoref{eqn:approx Fj from ck for j close to jk gauss}.}
+\label{fig:multi freq remove peak}
+\end{figure}
+\autoref{fig:multi freq remove peak} shows the power spectrum of the sample signal before and after removing the dominant peak using \autoref{eqn:approx Fj from ck for j close to jk gauss}.
+The inset shows a zoom-in on the peak and illustrates how well it is removed, despite all the approximations.
+\autoref{table:multi freq error gauss} lists the numerical error of the reconstructing of the amplitude frequency pairs using the gaussian window ($\alpha = 140, J=15$).
+We also applied the generic $f_\Sigma$-version of the algorithm using identical gaussian weights.
+The results are listed in \autoref{table:multi freq error gauss generic} and are identical to those of the specialized algorithm up to numerical errors.
+%dig = 14
+%freq, coeff = naffnd_num(z, gauss_weights, n_freq=6, num_j=15, return_coeff=True)
+%indx = np.argsort(np.abs(alist))[::-1]
+%for k in range(freq.size):
+%    diff = (freq[k] % 1.0) - flist[indx[k]]
+%    a_rec = np.abs(coeff[k])
+%    a_true = np.abs(alist[indx[k]])
+%    adiff = a_rec - a_true
+%    p_rec = np.arctan2(coeff[k].imag, coeff[k].real)
+%    p_true = np.arctan2(alist[indx[k]].imag, alist[indx[k]].real)
+%    pdiff = p_rec - p_true
+%    text = "$ & $".join([f"{k}", f"{flist[k]:.{dig}f}", f"{alist[k]:.1f}", fr"\num{{{diff:.2e}}}", fr"\num{{{adiff:.2e}}}", fr"\num{{{pdiff:.2e}}}"])
+%    text = "$" + text.replace('j', '\i') + r"$\\"
+%    print(text)
+\begin{table}[!ht]
+\centering
+\begin{tabular}{cccccc}
+\toprule
+$k$ & $\nu_k$ & $c_k$ & $\Delta\nu_k$ & $\Delta |c_k|$ & $\Delta \text{arg}\,c_k$ \\ \midrule 
+$0$ & $0.52400000000000$ & $1.0$ & $\num{-1.11e-16}$ & $\num{-1.22e-15}$ & $\num{9.55e-14}$\\
+$1$ & $0.38196601125011$ & $0.9$ & $\num{-3.48e-12}$ & $\num{-1.52e-10}$ & $\num{6.40e-09}$\\
+$2$ & $0.41421356237310$ & $0.6$ & $\num{3.41e-12}$ & $\num{-1.52e-10}$ & $\num{-1.36e-08}$\\
+$3$ & $0.31830988618379$ & $0.3$ & $\num{-5.55e-17}$ & $\num{2.44e-15}$ & $\num{4.95e-14}$\\
+$4$ & $0.20000000000000$ & $0.1$ & $\num{-2.78e-17}$ & $\num{5.55e-17}$ & $\num{1.63e-14}$\\
+$5$ & $0.00000000000000$ & $0.4+0.1\i$ & $\num{0.00e+00}$ & $\num{2.11e-15}$ & $\num{2.11e-15}$\\
+\bottomrule
+\end{tabular}
+\caption{The table lists the frequencies and amplitudes of the sample signal, as well as the error of the results using a gaussian window ($\alpha = 140, J=15$) to the respective true values.
+The amplitudes are split into modulus and phase.}
+\label{table:multi freq error gauss}
+\end{table}
+\begin{table}[!ht]
+\centering
+\begin{tabular}{cccccc}
+\toprule
+$k$ & $\nu_k$ & $c_k$ & $\Delta\nu_k$ & $\Delta |c_k|$ & $\Delta \text{arg}\,c_k$ \\ \midrule 
+$0$ & $0.52400000000000$ & $1.0$ & $\num{-1.11e-16}$ & $\num{0.00e+00}$ & $\num{9.96e-15}$\\
+$1$ & $0.38196601125011$ & $0.9$ & $\num{-3.48e-12}$ & $\num{-1.52e-10}$ & $\num{6.40e-09}$\\
+$2$ & $0.41421356237310$ & $0.6$ & $\num{3.41e-12}$ & $\num{-1.52e-10}$ & $\num{-1.36e-08}$\\
+$3$ & $0.31830988618379$ & $0.3$ & $\num{-6.03e-18}$ & $\num{2.16e-15}$ & $\num{1.18e-14}$\\
+$4$ & $0.20000000000000$ & $0.1$ & $\num{1.67e-16}$ & $\num{6.94e-15}$ & $\num{-2.84e-13}$\\
+$5$ & $0.00000000000000$ & $0.4+0.1\i$ & $\num{-2.78e-17}$ & $\num{8.33e-17}$ & $\num{2.62e-15}$\\
+\bottomrule
+\end{tabular}
+\caption{Similar to \autoref{table:multi freq error gauss}, but the generic algorithm was used for the special case of gaussian weights ($\alpha = 140, J=15$).
+Note that the results are identical up to numerical errors.}
+\label{table:multi freq error gauss generic}
+\end{table}
+\subsection{Behaviour for close frequencies}
+So far we have always assumed the separation between frequencies to be ``sufficiently large''.
+Now we want to analyse the behaviour of the frequency analysis for a signal containing very close frequencies and try to make a more precise statement about the aforementioned condition.
+To keep things simple we will consider a signal with only two freuqency amplitude pairs as given in \autoref{table:two freq error hann1 generic} and illustrated in \autoref{fig:two freq sample signal}.
+%\begin{table}[!ht]
+%\centering
+%\begin{tabular}{ccc}
+%\toprule
+%$k$ & $\nu_k$ & $c_k$ \\ \midrule 
+%$1$ & $0.224$ & $1$ \\
+%$2$ & $0.225$ & $1$ \\
+%\bottomrule
+%\end{tabular}
+%\caption{Frequency amplitude pairs used for the construction of a sample signal of the form defined in \autoref{eqn:definition multicomponent toy model signal}.}
+%\label{table:two freq list of values}
+%\end{table}
+\begin{figure}[!ht]
+\centering
+\includegraphics{pictures/two_freq_sample_signal.png}
+\caption{Sample signal constructed from \autoref{eqn:definition multicomponent toy model signal} with $N=512$ points and the two frequency amplitude pairs as listed in \autoref{table:two freq error hann1 generic}.}
+\label{fig:two freq sample signal}
+\end{figure}\\
+It is not recommendable to use the gaussian window function in this case.
+That is due to the relatively broad nature of the peaks in the power spectrum.
+Working through the details of the generic algorithm for cosine weights, it becomes apparent that for a first order window function -- i.e. containing only one cosine term -- the peaks in the power spectrum show a very fast decay. 
+Theoretically, the model coefficients actually become zero beyond the main peak \footnote{TODO: Confirm this, I am not entirely sure about the statement in this form...}.
+Thus we will makes use of the first order Hanning window
+The hope would be to able to resolve minimal separations of $\approx \frac{1}{N}$, where our sample signal has a length of $N=512$.
+While the error is significantly larger than in the previous multi-component example, using a first order Hanning window allows us to resolve differences as small as $\approx\frac{1}{2N}$ to $\lesssim 2\,\%$ accuracy.
+\autoref{fig:two freq sample signal} demonstrates this by removing the peak for one of the frequencies in the power spectrum.
+The results are listed in \autoref{table:two freq error hann1 generic}.
+\begin{table}[!ht]
+\centering
+\begin{tabular}{cccccc}
+\toprule
+$k$ & $\nu_k$ & $c_k$ & $\Delta\nu_k$ & $\Delta |c_k|$ & $\Delta \text{arg}\,c_k$ \\ \midrule 
+$1$ & $0.224$ & $1$ & $\num{3.61e-04}$ & $\num{3.41e-01}$ & $\num{-1.21e-01}$\\
+$2$ & $0.225$ & $1$ & $\num{3.19e-05}$ & $\num{5.42e-02}$ & $\num{-4.63e-01}$\\
+\bottomrule
+\end{tabular}
+\caption{Frequency, modulus and phase errors for the two frequency signal.
+These values were computed using the generic $f_\Sigma$-approach for a first order Hanning window.}
+\label{table:two freq error hann1 generic}
+\end{table}
+\begin{figure}[!ht]
+\centering
+\includegraphics{pictures/two_freq_remove_peak.png}
+\caption{Power spectrum of the multicomponent sample signal before and after removing the dominant peak using the $f_\Sigma$-approach for a first order Hanning window.
+Note that the frequency difference of $0.001$ could be resolved despite the discrete FFT-frequencies having separations of $\frac{1}{512}$.}
+\label{fig:two freq sample signal}
+\end{figure}
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

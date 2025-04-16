@@ -1,0 +1,242 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{A physicist's approach to the cubic equation}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Number Theory}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Solving the quadratic}
+Consider the general quadratic equation
+\begin{align}
+0 &= ax^2+bx+c
+\end{align}
+where $a\neq 0$.
+Dividing through $a$ reduces the number of independent parameters and yields
+\begin{align}
+0 &= x^2 + px + q
+\end{align} 
+where $p=\frac{b}{a}$ and $q=\frac{c}{a}$.
+Now there are many ways of solving this equation, but most of them get their intuition from the concept of ``completing the square''.
+However, we will take a different approach.
+\\
+From a physicist's point of view, this is a ``hard problem'', in the sense that there is no obvious way of solving it ``directly''.
+So, let us consider a special case that we \emph{can} solve.
+For $q=0$, we reduce the equation to a linear one -- that is certainly easy to solve, but will not lead to further insights.
+The other case of $p=0$ is more interesting, because it introduces a symmetry.
+Furthermore, we can very easily solve the resulting equation
+\begin{align}
+0 &= x^2+q.
+\end{align}
+The two solutions are just $x_{1,2} = \pm \sqrt{-q}$.
+Now comes the difficult step, where one has to find a way of reducing the general problem to the simple case.
+The intuition here is that the $px$-term merely results in a shift of the parabola, that breaks the symmetry.
+So, let us try to transform into a new set of coordinates, where the symmetry is restored.
+The easiest attempt at this is a simple shift $y:=x+\Delta$.
+Inserting this gives
+\begin{align}
+0 &= \kla\left( y-\Delta \right)^2 + p(y-\Delta) + q = \\
+&= y^2 + y\kla\left( p - 2\Delta \right) + \Delta^2 - p\Delta + q.
+\end{align}
+We may now choose $\Delta = \frac{p}{2}$, which will eliminate the asymmetric term.
+We have thus successfully reduced the general problem to one that we can solve.
+We know that the solution to
+\begin{align}
+0 &= y^2 + q - \kla\left( \frac{p}{2} \right)^2
+\end{align}
+is simply $y_{1,2} = \sqrt{\kla\left( \frac{p}{2} \right)^2 - q}$.
+Transforming back to our original coordinates, we have
+\begin{align}
+x_{1,2} &= -\frac{p}{2} \pm \sqrt{\kla\left( \frac{p}{2} \right)^2 - q}.
+\end{align}
+Of course, this is a somewhat lengthy derivation of a simple result -- but this technical approach will prove very useful for the more difficult cubic equation discussed in the next section.
+\section{Solving the cubic}
+Consider the general cubic equation
+\begin{align}
+0 &= ax^3+bx^2+cx+d
+\end{align}
+where $a\neq 0$.
+Let us just be as optimistic as possible, and repeat the steps we took to solve the quadratic.
+That came down to dividing through the leading coefficient and shifting the coordinate system to $y:=x+\Delta$.
+Then we find
+\begin{align}
+0 &= \kla\left( y-\Delta \right)^3 + \frac{b}{a} \kla\left( y-\Delta \right)^2 + \frac{c}{a}\kla\left( y-\Delta \right) + \frac{d}{a} = \\
+&= y^3 + y^2\kla\left( \frac{b}{a} - 3\Delta \right) + y\kla\left( \frac{c}{a} - 2\Delta\frac{b}{a} + 3\Delta^2 \right) +\frac{d}{a} - \frac{c}{a}\Delta + \frac{b}{a}\Delta^2 - \Delta^3.
+\end{align}
+Choosing $\Delta = \frac{b}{3a}$ will eliminate the quadratic term and leave us with
+\begin{align}
+0 &= y^3 + py+q
+\end{align}
+where we defined the coefficients $p := -\frac{b^2}{3a^2}$ and $q := \frac{d}{a} - \frac{bc}{3a^2} + \frac{8b^3}{27a^3}$.
+Unfortunately, this is still a hard problem. 
+But again, being very optimistic, maybe repeating the approach can help us solve the equation.
+After all, we started with one more term than before, so maybe we need an additional shift $z := y + u$
+\begin{align}
+0 &= (z-u)^3 + p(z-u)+q = \\
+&= z^3 - 3z^2u + 3zu^2 - u^3 + p(z-u) + q = \\
+&= z^3 - u^3 + (p- 3zu)(z-u) + q.
+\end{align}
+And now we choose $u$ in such a way that removes the ``problematic'' term, i.e. $u = \frac{p}{3z}$.
+Then we are left with
+\begin{align}
+0 &= z^3 - \frac{p^3}{27z^3} + q,\\
+\Rightarrow\ \ \ 0 &= (z^3)^2 + qz^3 - \kla\left( \frac{p}{3} \right)^3.
+\end{align}
+This is a quadratic equation in $z^3$!
+The solution is
+\begin{align}
+z_{1,2}^3 &= -\frac{q}{2} \pm \sqrt{\kla\left( \frac{q}{2} \right)^2 + \kla\left( \frac{p}{3} \right)^3}.
+\end{align}
+Since $u^3 = z^3 + q$ and $y=z-u$, we find the first solution to our cubic equation to be
+\begin{align}
+y_{1} &= \sqrt[3]{-\frac{q}{2} + \sqrt{\kla\left( \frac{q}{2} \right)^2 + \kla\left( \frac{p}{3} \right)^3}} - \sqrt[3]{\frac{q}{2} + \sqrt{\kla\left( \frac{q}{2} \right)^2 + \kla\left( \frac{p}{3} \right)^3}} = \\
+&= \sqrt[3]{-\frac{q}{2} + \sqrt{\kla\left( \frac{q}{2} \right)^2 + \kla\left( \frac{p}{3} \right)^3}} + \sqrt[3]{-\frac{q}{2} - \sqrt{\kla\left( \frac{q}{2} \right)^2 + \kla\left( \frac{p}{3} \right)^3}}.
+\end{align}
+Note that choosing the negative branch in the quadratic equation leads to the same result.
+%Factoring the polynomial as $y^3+py+q=(y-y_1)(y-y_2)(y-y_3)$, we find $q=-y_1y_2y_3$, $p = y_1y_2+y_1y_3+y_2y_3$ and $0 = y_1+y_2+y_3$.
+%We may then write
+%\begin{align}
+%0 &= y_1 + y_2 - \frac{q}{y_1y_2},\\
+%\Rightarrow\ \ \ 0 &= y_2^2 + y_1y_2 - \frac{q}{y_1}.
+%\end{align}
+%Note that
+%\begin{align}
+%y_1^3 &= -q -py_1
+%\end{align}
+%Thus the second and third solution are
+%\begin{align}
+%y_{2,3} &= -\frac{y_1}{2} \pm \sqrt{\frac{y_1^2}{4} + \frac{q}{y_1}} = \frac{1}{\sqrt{y_1}} \kla\left( -\frac{y_1^{3/2}}{2} \pm \sqrt{\frac{y_1^3}{4} + q} \right) = \\
+%&= y_1\kla\left( \sqrt{\frac{1}{4} + \frac{q}{-q + z}} \right)•
+%\end{align}
+%Thus the third solution is 
+%\begin{align}
+%y_3 &= -y_1-y_2 =  \sqrt[3]{\frac{q}{2} + \sqrt{\kla\left( \frac{q}{2} \right)^2 + \kla\left( \frac{p}{3} \right)^3}} - \sqrt[3]{-\frac{q}{2} + \sqrt{\kla\left( \frac{q}{2} \right)^2 + \kla\left( \frac{p}{3} \right)^3}},\\
+%&\sqrt[3]{\frac{q}{2} - \sqrt{\kla\left( \frac{q}{2} \right)^2 + \kla\left( \frac{p}{3} \right)^3}} - \sqrt[3]{-\frac{q}{2} - \sqrt{\kla\left( \frac{q}{2} \right)^2 + \kla\left( \frac{p}{3} \right)^3}}
+%\end{align}
+Figuring out the other two solutions is a little cumbersome, but the difficult step of actually finding a general solution is completed.
+\section{Solving the quartic}
+Consider the general quartic equation
+\begin{align}
+0 &= ax^4+bx^3cx^2+dx+e
+\end{align}
+where $a\neq 0$.
+What worked twice might work again. 
+We will divide through $a$ and shift to a new coordinate $y := x + \Delta$
+\begin{align*}
+0 &= (y-\Delta)^4 + \frac{b}{a} (y-\Delta)^3 + \frac{c}{a} (y-\Delta)^2 + \frac{d}{a} (y-\Delta) + \frac{e}{a} = \numberthis \\
+&= y^4 + y^3\kla\left( \frac{b}{a} - 4\Delta \right) + y^2\kla\left( \frac{c}{a} - \frac{3b}{a}\Delta + 6\Delta^2 \right) + \\
+&\hspace{0.4cm} + y\kla\left( \frac{d}{a} - \frac{2c}{a}\Delta + \frac{3b}{a}\Delta^2 - 4\Delta^3 \right) + \frac{e}{a} - \frac{d}{a}\Delta + \frac{c}{a} \Delta^2 - \frac{b}{a} \Delta^3 + \Delta^4. \numberthis 
+\end{align*}
+Choosing $\Delta = \frac{b}{4a}$ eliminates the cubic term.
+Then we are left with
+\begin{align}
+0 &= y^4 + py^2 + qy + r.
+\end{align}
+where we defined $p := \frac{c}{a} - \frac{3b^2}{8a^2}$, $q := \frac{d}{a} - \frac{bc}{2a^2} + \frac{b^3}{8a^3}$ and $r := \frac{e}{a} - \frac{bd}{4a^2} + \frac{b^2c}{16a^3} - \frac{3b^4}{256a^4}$.
+As before, let $z := y + u$.
+%Then we find
+%\begin{align}
+%0 &= (z-u)^4 + p(z-u)^2 + q(z-u) + r = \\
+%&= z^4 + u^4 - 4zu(z^2+u^2) + 6z^2u^2 + p(z^2+u^2-2zu) + q(z-u) + r = \\
+%&= z^4+u^4 + (p-4zu)(z^2+u^2) - 2zu(p - 3zu) + q(z-u)+r.
+%\end{align}
+%Choosing $u = \frac{p}{4z}$ leads to
+%\begin{align}
+%0 &= z^4 + u^4 - 2z^2u^2 + q(z-u)+r = \\
+%&= (z^2 - u^2)^2 + q(z-u) + r = \\
+%&= \kla\left( z^2 - \frac{p^2}{16z^2} \right)^2 + q\kla\left( z - \frac{p}{4z} \right) + r,\\
+%\Rightarrow\ \ \ 0 &= z^8 - \frac{p^2}{16} z^4 + \frac{p^2}{256} + qz^5 - \frac{qp}{4} z^3 + rz^4.
+%\end{align}
+%%%% NEW ATTEMPT
+%Now we will need to eliminate two terms instead of one, so it should not be too surprising that we introduce not one but two new parameters.
+%Let $z := y + u + v$.
+%Then we find
+%\begin{align*}
+%0 &= (z-u-v)^4 + p(z-u-v)^2 + q(z-u-v) + r = \\
+%&= z^4 + (u+v)^4 - 4z(u+v)\kla\left( z^2+(u+v)^2 \right) + 6z^2(u+v)^2 + \\
+%&\hspace{0.4cm} + p \kla\left( z^2+(u+v)^2-2z(u+v) \right) + q(z-u-v) + r = \\
+%&= z^4 + u^4 + v^4 + 4uv(u^2+v^2) + 6u^2v^2 + \\
+%&\hspace{0.4cm} + (p-4zu - 4zv)\kla\left( z^2 + u^2 + v^2 +2uv \right) - \\
+%&\hspace{0.4cm} - 2z(u+v) \kla\left( p - 3zu - 3zv \right) + q(z-u-v)+r .
+%\end{align*}
+%%%% NEW ATTEMPT
+Then we find
+\begin{align}
+0 &= (z-u)^4 + p(z-u)^2 + q(z-u) + r = \\
+&= z^4 + u^4 - 4z^3u + 6z^2u^2 - 4zu^3 + p(z^2+u^2-2zu) + q(z-u) + r.
+\end{align}
+Now we choose $u$ in such a way that $0 = z^4 + u^4 + r$ remains.
+This demands
+\begin{align}
+0 &= 6z^2u^2 - 4z^3u - 4zu^3 + pz^2 + pu^2 - 2pzu + qz - qu + r = \\
+&= -4zu^3 + u^2\kla\left( 6z^2 + p \right) + u\kla\left( -4z^3 - 2pz - q \right) + pz^2+qz+r,
+\end{align}
+which is just a cubic equation in $u$ -- we already know how to solve this.
+Now we can turn to solving the quartic equation, since
+\begin{align}
+0 &= z^4 + u^4... \text{this is where it gets diffucult, the attempt doesnt quite work}
+\end{align}
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

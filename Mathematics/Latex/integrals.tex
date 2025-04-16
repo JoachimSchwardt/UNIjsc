@@ -1,0 +1,384 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{myscrarticle}
+
+\newcommand{\TODO}[1]{\color{red} #1 \color{black}}
+
+\newcommand*{\titel}{Various Integral Problems}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Mathematical Methods}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{One dimensional}
+\subsection{Contour integrals}
+\subsubsection{Arc integral}
+Consider 
+\begin{align}
+I_\Gamma &= \intx{\Gamma}{}{ \frac{\powe{\i a x}}{P(x)}}{x}. \label{eqn:arc integral e i a x over P of x}
+\end{align}
+This integral vanishes for the contour $\Gamma = \klc*{R\powe{\sgn (a) \i t} \,\middle\vert\, t \in \klb*{0,\pi} } $ for any non-constant polynomial $P(x)$ (order $N>0$).
+This can be shown by considering the upper bound of the absolute value
+\begin{align}
+|I_\Gamma| &\le \intx{0}{\pi}{ \frac{1}{|P(R\powe{\i t})|} \abs*{\powe{\i a R\powe{\sgn(a) \i t}}} R }{t} \le \frac{R}{\min |P(R\powe{\i t})|} \intx{0}{\pi}{\powe{- |a| R \sin t}}{t}.
+\end{align}
+Note that the integral is symmetric about $t=\frac{\pi}{2}$ and that $\sin t \ge \frac{2t}{\pi}$ on the interval $t\in \klb*{0,\frac{\pi}{2}}$.
+Also, for sufficiently large $R$ the absolute value of $P$ is governed by the leading order term $P \sim x^N$ where $N > 0$.
+Thus we find that there exists some $C>0$ such that
+\begin{align}
+|I_\Gamma| &\le C \frac{R}{R^N} \intx{0}{\frac{\pi}{2}}{ \powe{-|a| R \frac{2t}{\pi} }}{t} = \frac{C\pi}{2|a|} \frac{1 - \powe{-|a|R}}{R^N} \koml{R\rightarrow\infty}{\longrightarrow} 0.
+\end{align}
+\subsection{Rational integrals}
+\subsubsection{Lorentz integrals}
+Consider
+\begin{align}
+I &= \intr{\frac{1}{1 + x^2}}{x}  = \pi. \label{eqn:1 over 1 plus x squared}
+\end{align}
+This is solved by substitution $x = \tan t$ since
+\begin{align}
+I &= 2\intx{0}{\frac{\pi}{2}}{ \frac{1}{1 + \tan^2t} \sec^2t}{t} = 2 \intx{0}{\frac{\pi}{2}}{1 }{t} = \pi.
+\end{align}
+\subsubsection{Logarithmic Lorentz integral}
+For $x_0\in\mathbb{C}$ with $s := \sgn \kla*{\Im x_0} \neq 0$ we have
+\begin{align}
+I &= \intr{\frac{\log \kla*{x - x_0} }{1 +x^2}}{x} = \frac{\pi}{2} \log \kla*{1 + r^2 + 2|\Im x_0|} - \i \pi \sgn (\Re x_0) \arctan \kla*{\frac{1 + |\Im x_0|}{|\Re x_0|}} . \label{eqn:log x minus x0 over 1 plus x squared}
+\end{align}
+To avoid residues of logarithms we close the contour in the plane opposite to the location of $x_0$.
+The integral over the arc then vanishes (TODO: simple estimate using max value of log for complex inputs, denominator suppresses integral).
+The residue theorem then gives
+\begin{align}
+I &= 2\pi\i \lim_{x \rightarrow -s\i} (x + s\i) \frac{\log (x - x_0)}{1 + x^2} = -s\pi \log \kla*{-s\i - x_0}.
+\end{align}
+Writing $x_0 = r \powe{\i \phi}$ gives $-s\i - x_0 = R\powe{\i \Phi}$ with $R^2 = (r\cos \phi)^2 + (r|\sin\phi| + 1)^2$ and $\tan\Phi = \frac{-s - r\sin \phi}{-r\cos\phi} = \frac{1 + r|\sin \phi|}{r|\cos\phi|} s \sgn (\cos \phi) $ where we used that $s = \sgn (\sin \phi)$.
+The integral then becomes
+\begin{align}
+I &= -s\pi  \kla*{\log R + \i \Phi} = -s\frac{\pi}{2} \log \kla*{r^2 + 1 + 2r|\sin\phi|} -  \i\pi \arctan \kla*{\frac{1 + r|\sin\phi|}{r|\cos\phi|}} \sgn (\cos\phi) .
+\end{align}
+\subsubsection{High order logarithmic Lorentz integral}
+Consider
+\begin{align}
+I &= \intr{\frac{\log (1 + x^{4N})}{1 + x^2}}{x} = \TODO{2\pi \sum_{j=1}^N \log \kla*{2 + 2 \abs*{\sin \frac{\pi}{4N}j}} } . \label{eqn:log 1 plus x to N over 1 plus x squared}
+\end{align}
+\TODO{Result only correct for $N=1$!}\\
+Writing $1+x^{4N} = \prod_{j=1}^{4N} \kla*{x - \powe{\i \frac{\pi}{4N}j }} $ gives
+\begin{align}
+I &= \sum_{j=1}^{4N} I\kla*{x_0 = \powe{\i \frac{\pi}{4N}j}} \kom{(\ref{eqn:log x minus x0 over 1 plus x squared})} \\
+&= \frac{\pi}{2} \sum_{j=1}^{4N} \log \kla*{2 + 2 \left\vert \sin \frac{\pi}{4N}j \right\vert} - \i\pi \sum_{j=1}^{4N} \sgn \left(\cos \frac{\pi}{4N}j \right) \arctan\kla*{\frac{1 + |\sin \frac{\pi}{4N}j|}{|\cos \frac{\pi}{4N}j|}} = \\
+&= 2\pi \sum_{j=1}^N \log \kla*{2 + 2 \abs*{\sin \frac{\pi}{4N}j}}.
+\end{align}
+\subsection{Fourier integrals}
+\subsubsection{Lorentz integral}
+Consider
+\begin{align}
+I(k) &= \intr{\frac{\powe{\i kx}}{1 + x^2}}{x} = \sgn(k) \pi \powe{-|k|}. \label{eqn:FFT 1 over 1 plus x squared}
+\end{align}
+This is solved by contour integration.
+The poles are $x=\pm\i$ and the integral over the arc described by $x(t) = R\e^{\sgn (k) \i t}$ for $t\in\klb*{0,\pi}$ vanishes in the limit $R\rightarrow\infty$ (follows from \autoref{eqn:arc integral e i a x over P of x}).
+The residue theorem then gives
+\begin{align}
+I(k) &= 2\pi\i \lim_{x\rightarrow \sgn(k)  \i} (x- \sgn(k) \i) \frac{\powe{\i kx}}{1 + x^2} = \frac{2\pi\i}{2\sgn (k) \i} \powe{\i k \sgn (k) \i} = \sgn(k) \pi \powe{-|k|}.
+\end{align}
+
+
+\subsection{Trigonometric integrals}
+\subsubsection{Sin integrals}
+Consider
+\begin{align}
+I &= \intr{\frac{\sin\kla*{x - \frac{1}{x}} }{x + \frac{1}{x}}}{x} &= \frac{\pi}{\e^2}. \label{eqn:sin x minus 1 over x over x plus 1 over x}
+\end{align}
+This is solved by writing $\sin(x) \equiv \Im \powe{\i x}$ and using the residual theorem to get
+\begin{align}
+I &= 2\pi\i \lim_{z\rightarrow\i} (z - \i) \frac{\powe{\i \kla*{z - \frac{1}{z}}}}{z + \frac{1}{z}} = \pi\i \powe{-2}.
+\end{align}
+The integral over the arc vanishes due to \autoref{eqn:arc integral e i a x over P of x}.
+\subsubsection{Tangent integrals}
+Consider
+\begin{align}
+I &= \intx{0}{\frac{\pi}{2}}{\frac{x}{\tan x}}{x} = \frac{\pi}{2} \log 2. \label{eqn:x over tan x}
+\end{align}
+This is solved by defining
+\begin{align}
+I(t) &= \intx{0}{\frac{\pi}{2}}{ \frac{\arctan\kla*{t \tan x} }{\tan x}}{x}.
+\end{align}
+The derivative is
+\begin{align}
+I'(t) &= \intx{0}{\frac{\pi}{2}}{ \frac{1}{1 + t^2\tan^2 x} }{x} \kom{u = \tan x} \intx{0}{\infty}{ \frac{1}{1 + t^2u^2} \frac{1}{1+u^2} }{u} = \\
+&= \intx{0}{\infty }{\kla*{\frac{\frac{t^2}{t^2-1}}{1 + t^2u^2} - \frac{\frac{1}{t^2-1}}{1 + u^2}} }{u} \kom{(\ref{eqn:1 over 1 plus x squared})} \frac{1}{t^2 - 1} \kla*{\frac{\pi}{2}t - \frac{\pi}{2}} = \frac{\pi}{2} \frac{1}{t + 1}.
+\end{align}
+Using $I(t=0) = 0$ gives
+\begin{align}
+I(t) &= I(0) + \intx{0}{t}{I'(s) }{s} =  \frac{\pi}{2} \intx{0}{t}{\frac{1}{s+1}}{s} = \frac{\pi}{2} \log\kla*{t+1}. \label{eqn:arctan t tan x over tan x}
+\end{align}
+\subsubsection{Bessel integrals}
+%https://math.stackexchange.com/questions/4944549/finding-a-general-expression-for-the-improper-integral-int-0-infty-k-1-k2
+We have 
+%r=1.351; z=0.6699; alpha=0.3153; L=50
+%f=lambda x: np.cos(x*z)*special.k0(r*np.sqrt(x**2+alpha**2))
+%print(quad(f,0,L), np.pi/2/np.sqrt(r**2+z**2) * np.exp(-alpha*np.sqrt(r**2+z**2)))
+\begin{align}
+I &= \intx{0}{\infty}{K_0\kla*{r\sqrt{\alpha^2 + x^2}} \cos(xz)}{x} = \frac{\pi}{2} \frac{1}{\sqrt{r^2+z^2}} \powe{-\alpha \sqrt{r^2+z^2}}.
+\end{align}
+%$K_0(x) = \intx{0}{\infty}{\frac{\cos(xt)}{\sqrt{t^2+1}}}{t}$
+To show this, use the integral representation $K_\nu(x) = \frac{1}{2} (x/2)^\nu \intx{0}{\infty}{t^{-\nu-1} \powe{-t-x^2/(4t)}}{t}$ (DLMF 10.32.11, Basset's Integral) to get
+\begin{align}
+I &= \frac{1}{2} \intx{0}{\infty}{ \frac{\powe{-t}}{t} \intx{0}{\infty}{ \powe{-\frac{r^2}{4t} \kla*{\alpha^2 + x^2}} \cos(xz) }{x}}{t} = \frac{1}{4} \intx{0}{\infty}{ \frac{\powe{-t}}{t} \powe{-\frac{r^2}{4t}\alpha^2} \sqrt{\frac{4t\pi}{r^2}} \powe{-\frac{t}{r^2}z^2} }{t}\\
+&= \frac{\sqrt{\pi}}{r} \intx{0}{\infty}{\powe{-u^2 \kla*{1 + \frac{z^2}{r^2}} - \frac{1}{4u^2} r^2\alpha^2}}{u}.
+\end{align}
+This integral is known ($x= (b/a)^{1/4}y$ and $y= 1/x$ and $u= x-\frac{1}{x} $) %https://math.stackexchange.com/questions/496088/how-to-evaluate-int-0-infty-exp-ax2-frac-bx2-dx-for-a-b0
+\begin{align}
+J &= \intx{0}{\infty}{\powe{-ax^2 - \frac{b}{x^2}}}{x} = \kla*{\frac{b}{a}}^{1/4} \intx{0}{\infty}{\powe{-\sqrt{ab} \kla*{y^2 + \frac{1}{y^2}}}}{y}\\
+&= \kla*{\frac{b}{a}}^{1/4} \intx{1}{\infty}{\powe{-\sqrt{ab} \kla*{y^2 + \frac{1}{y^2}}}}{y} + \kla*{\frac{b}{a}}^{1/4} \intx{1}{\infty}{\powe{-\sqrt{ab} \kla*{\frac{1}{x^2} + x^2}} \frac{1}{x^2}}{x}\\
+&= \kla*{\frac{b}{a}}^{1/4} \intx{1}{\infty}{\powe{-\sqrt{ab} \kla*{x^2 + \frac{1}{x^2}}} \kla*{1 + \frac{1}{x^2}} }{x} = \kla*{\frac{b}{a}}^{1/4} \intx{0}{\infty}{\powe{-\sqrt{ab} \kla*{2+u^2}} }{u} = \frac{1}{2} \sqrt{\frac{\pi}{a}} \powe{-2\sqrt{ab}}.
+\end{align}
+Inserting this gives
+\begin{align}
+I &= \frac{\pi}{2r} \frac{1}{\sqrt{1 + z^2/r^2}} \powe{-\sqrt{1 + z^2/r^2} \alpha r} = \frac{\pi}{2} \frac{1}{\sqrt{r^2+z^2}} \powe{-\alpha \sqrt{r^2+z^2}}.
+\end{align}
+%Or use $K_\nu(xy) = \frac{1}{\sqrt{\pi}} \Gamma\kla*{\nu + \frac{1}{2}} (2y/x)^\nu \intx{0}{\infty}{\kla*{t^2+y^2}^{-\nu-1/2} \cos(xt)}{t}$ to get
+%\begin{align}
+%I &= \intx{0}{\infty}{\cos(rt) \intx{0}{\infty}{ \frac{\cos(xz)}{\sqrt{t^2+\alpha^2+x^2}} }{x}}{t} = 
+%\end{align}%\intx{0}{\infty}{\cos(rt) K_0\kla*{z \sqrt{t^2+\alpha^2} }}{t}
+%\frac{1}{4} \intr{ \intr{ \frac{\powe{\i rt + \i xz}}{\sqrt{\alpha^2+t^2+x^2}}}{x} }{t}\\
+%&= \frac{1}{4} \intx{0}{2\pi}{\intx{0}{\infty}{\frac{\powe{\i\kla*{r\cos\phi + z\sin\phi} R}}{\sqrt{\alpha^2+R^2}} R}{R}}{\phi}
+%Or note that $\intx{0}{\infty}{t^{\mu-1} K_\nu(t)}{t} = 2^{\mu-2} \Gamma\kla*{\frac{\mu-\nu }{2}} \Gamma\kla*{\frac{\mu+\nu }{2}}$ and expand,
+%\begin{align}
+%I &=
+%\end{align}
+
+Next, let us consider the similar integral
+\begin{align}
+I &= \intx{0}{\infty}{K_1\kla*{r\sqrt{\alpha^2 + x^2}} \sin(xz)}{x}.
+\end{align}
+Using the same integral representation, we have%\footnote{$\intx{0}{\infty}{ \powe{-a^2x^2} x^n}{x} = \frac{1}{2a^{n+1}} \Gamma\kla*{\frac{n+1}{2}}$}
+%r=1.351; z=0.6699; alpha=0.9153; L=50
+%f=lambda x: np.sin(x*z)*special.k1(r*np.sqrt(x**2+alpha**2))
+%print(quad(f,0,L))
+%quad(lambda t: r/4 * np.exp(-t)/t**2 * quad(lambda x: np.sqrt(alpha**2+x**2) * np.sin(x*z) * np.exp(-r**2/4/t * (alpha**2+x**2)), 0, L)[0], 0, L)
+\begin{align}
+I &= \frac{r}{4} \intx{0}{\infty}{ \frac{\powe{-t}}{t^2} \intx{0}{\infty}{ \powe{-\frac{r^2}{4t} \kla*{\alpha^2 + x^2}} \sqrt{\alpha^2 + x^2} \sin(xz)}{x}}{t} \\
+&= \frac{r}{4} \intx{0}{\infty}{ \frac{\powe{-t}}{t^2} \intx{\alpha}{\infty}{ \powe{-\frac{r^2}{4t} u^2} u  \sin\kla*{z \sqrt{u^2-\alpha^2} } \frac{u}{\sqrt{u^2-\alpha^2}} }{u}}{t}\\
+&= \frac{r}{4} \sum_{n\ge 0} \frac{(-1)^n z^{2n+1}}{(2n+1)!} \intx{0}{\infty}{ \frac{\powe{-t}}{t^2} \intx{\alpha}{\infty}{ \powe{-\frac{r^2}{4t} u^2} u^2 \kla*{u^2-\alpha^2}^n }{u}}{t}
+\end{align}
+Or using $K_1 = -K_0'$, we may write%https://math.stackexchange.com/questions/2204475/derivative-of-bessel-function-of-second-kind-zero-order
+\begin{align}
+I &= -\partial_r \intx{0}{\infty}{K_0\kla*{r\sqrt{\alpha^2 + x^2}} \frac{\sin(xz)}{\sqrt{\alpha^2 + x^2}}}{x}
+\end{align}
+Or consider an expansion in $\alpha$.
+For example, we have
+\begin{align}
+I(\alpha=0) &= \intx{0}{\infty}{K_1(rx) \sin(xz)}{x} = \frac{r}{4} \intx{0}{\infty}{ \frac{\powe{-t}}{t^2} \intx{0}{\infty}{ x \powe{-\frac{r^2}{4t}x^2} \sin(xz) }{x} }{t}\\
+&= - \partial_z \frac{r}{8} \intx{0}{\infty}{ \frac{\powe{-t}}{t^2} \intr{ \powe{-\frac{r^2}{4t}x^2} \cos(xz) }{x} }{t} = -\partial_z\frac{r}{8} \intx{0}{\infty}{\frac{\powe{-t}}{t^2} \sqrt{\frac{4\pi t}{r^2}} \powe{- \frac{z^2}{r^2} t} }{t}\\
+&= -\partial_z\frac{\sqrt{\pi}}{4} \sqrt{1 + \frac{z^2}{r^2}} \Gamma\kla*{-\frac{1}{2}} = \frac{\pi}{2r} \frac{z}{\sqrt{r^2+z^2}}.
+\end{align}
+Similarly, note that
+\begin{align}
+\partial_{\alpha^2}I(\alpha=0) &= \intx{0}{\infty}{ K_1'(rx) \frac{1}{2x} \sin(xz) }{x}???
+\end{align}
+
+\subsection{Exponential integrals}
+\subsubsection{Gamma function}
+The Gamma function is
+\begin{align}
+\Gamma(x) &= \intx{0}{\infty}{t^{x-1} \powe{-t}}{t}. \label{eqn:gamma function}
+\end{align}
+\subsubsection{Beta function}
+The Beta function is
+\begin{align}
+B(x,y) &= \intx{0}{1}{t^{x-1} (1 - t)^{y-1}}{t} = 2\intx{0}{\frac{\pi}{2}}{\sin^{2x-1}t \cos^{2y-1} t}{t} =  \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}. \label{eqn:beta function}
+\end{align}
+The first equality is found by $t = \sin^2 \phi$.
+To derive the relation to the Gamma function consider
+\begin{align}
+\Gamma(x) \Gamma(y) &= \intx{0}{\infty}{ \intx{0}{\infty}{ t^{x-1} s^{y-1} \powe{-(s+t)}}{s}}{t} \kom{s = u - t} \\
+&= \intx{0}{\infty}{\intx{t}{\infty}{ \powe{-u} t^{x-1} (u - t)^{y-1} }{u}}{t} \kom{u = ts} \\
+&= \intx{0}{\infty}{ \intx{1}{\infty}{ \powe{-ts} t^{x-1} t^{y-1} (s - 1)^{y-1} t}{s} }{t} \kom{u = ts} \\
+&= \intx{0}{\infty}{ \intx{1}{\infty}{ \powe{-u} u^{x+y-1} s^{1-x-y} (s-1)^{y-1} \frac{1}{s} }{s} }{u} \kom{t = \frac{1}{s}} \\
+&= \Gamma(x+y) \intx{1}{0}{ t^{x+y-1} \kla*{\frac{1}{t} - 1}^{y-1} t \frac{-1}{t^2} }{t} = \Gamma(x+y) B(x,y).
+\end{align}
+\subsubsection{Gauss integral}
+Consider
+\begin{align}
+I &= \intr{\powe{-x^2}}{x} = \sqrt{\pi}. \label{eqn:e to the minus x squared}
+\end{align}
+Note that
+\begin{align}
+I^2 &= \intr{\intr{ \powe{-(x^2+y^2)}}{x}}{y} = \intx{0}{1}{\intx{0}{2\pi}{ \powe{-r^2} r}{\phi}}{r} = 2\pi \frac{-1}{2} \powe{-r^2}\Big\vert_{r=0}^{r=\infty} = \pi.
+\end{align}
+\subsubsection{General gauss integral}
+Consider
+\begin{align}
+I &= \intr{\powe{-ax^2 + bx}}{x} = \sqrt{\frac{\pi}{a}} \powe{\frac{b^2}{4a}}. \label{eqn:e to the minus a x squared plus b x}
+\end{align}
+This is derived by the substitution $x = y + \frac{b}{2a}$ and using \autoref{eqn:e to the minus x squared}
+\begin{align}
+I &= \intr{\powe{-ay^2 + \frac{b^2}{4a}}}{y}.
+\end{align}
+\subsubsection{Stirling's formula}
+Consider the integral
+\begin{align}
+\frac{\Gamma(x)}{x^{x}} &= \intx{0}{\infty}{t^{x-1}\powe{-tx}}{t} = \intx{0}{\infty}{ \powe{(x-1)\log(t) - tx} }{t} = \intr{\powe{xu - x\powe{u}}}{u}.
+\end{align}
+Using $f(u)=\powe{u}-u = 1 + \frac{u^2}{2} + g(u)$ with $g(u) = \sum_{m\ge 3} \frac{u^m}{m!}$ yields
+\begin{align}
+\frac{\Gamma(x)}{x^{x}} &= \powe{-x} \intr{\powe{-x\frac{u^2}{2} - xg(u)}}{u} = \powe{-x} \sum_{n\ge 0} \frac{x^n}{n!} \intr{g(u)^n \powe{-\frac{x}{2}u^2}}{u} \\
+&= \powe{-x} \frac{1}{\sqrt{x}} \sum_{n\ge 0} \frac{x^n}{n!} \intr{g\kla*{\frac{t}{\sqrt{x}}}^n \powe{-\frac{1}{2}t^2}}{t}.
+\end{align}
+Rearranging gives the series expansion
+\begin{align}
+\powe{x} x^{-x} \frac{1}{\sqrt{2\pi x}} x! &= \frac{1}{\sqrt{2\pi}} \sum_{n\ge 0} \sum_{m_1\ge 3} \dots \sum_{m_n\ge 3} \frac{x^{-(m_1+\dots+m_n)/2}}{m_1!\dots m_n!} \intr{t^{m_1+\dots+m_n} \powe{-\frac{1}{2}t^2}}{t}\\
+&= \frac{1}{\sqrt{\pi}} \sum_{n\ge 0} \sum_{\textbf{m}\ge 3, |\textbf{m}| \text{ even}} \frac{1}{\textbf{m}!} \Gamma\kla*{\frac{|\textbf{m}|+1}{2}} \frac{1}{(2x)^{|\textbf{m}|/2}}.
+\end{align}
+The leading order of the RHS expansion is simply 1, and since $|\textbf{m}|=2$ is impossible, the next term is $\frac{3}{4} \frac{1}{(2x)^2} = \frac{3}{16x^2}$.
+TODO something is wrong here
+\subsubsection{Exponential cosine gauss integral}
+\url{https://math.stackexchange.com/questions/4933804/exponential-cosine-gaussian-integral}
+\begin{align}
+I &= \intr{\powe{-ax^2 + b\cos(x)}}{x}.
+\end{align}
+\subsubsection{Super-exponential integrals}
+Consider
+\begin{align}
+I &= \intx{0}{1}{x^{px}}{x} = \frac{-1}{p}\sum_{n\ge 1} \frac{(-p)^n}{n^n}. \label{eqn:x to the p x}
+\end{align}
+This can be solved by rewriting $x^{px} = \powe{px\log x}$ and substituting $u = -\log x$.
+Expanding the outer exponential into a Taylor series then yields
+\begin{align}
+I &= \intx{0}{\infty}{\powe{-pu \powe{-u}} \powe{-u} }{u} = \sum_{n\ge 0} \frac{(-p)^n}{n!} \intx{0}{\infty}{u^{n} \powe{-(n+1)u}}{u} = \sum_{n\ge 0} \frac{(-p)^n}{n!} \frac{\Gamma (n+1)}{(n+1)^{n+1}}.
+\end{align}
+\subsection{Exotic integrals}
+\subsubsection{Exhaustive method for functions of bounded variation}
+If $f$ has bounded variation then
+\begin{align}
+I &= \intx{a}{b}{ f(x)}{x} = \sum_{n\ge 1} \frac{1}{2^n} \sum_{k=1}^{2^n-1} (-1)^{k+1} f \kla*{a + \frac{k}{2^n}(b-a)}. \label{eqn:exhaustive method f of x from a to b}
+\end{align}
+For a simple example let $a=0$, $b=1$ and $f(x) = x^2$.
+Then\footnote{Note that $\sum_{k=1}^n (-1)^{k+1} k^2 = (-1)^{n+1} \frac{n(n+1)}{2} $.}
+\begin{align}
+I &= \sum_{n\ge 1} \frac{1}{2^n} \sum_{k=1}^{2^n - 1} (-1)^{k+1} \frac{k^2}{2^{2n}} = \sum_{n\ge 1} \frac{1}{2^{3n}} (-1)^{2^n} \frac{(2^n - 1) 2^n}{2} = \\
+&= \frac{1}{2} \sum_{n\ge 1} \frac{1}{2^n} - \frac{1}{2} \sum_{n\ge 1} \frac{1}{2^{2n}} = \frac{1}{2} - \frac{1}{2} \frac{1}{3} = \frac{1}{3}.
+\end{align}
+For a more complicated example let $a=0$, $b=\pi$ and $f(x) = \sin(x)$.
+Then\footnote{Note that $\sum_{k=1}^n (-1)^{k+1} \sin \kla*{\frac{k\pi}{n-1}} = \Im \frac{\powe{\i \pi / n} + (-1)^{n+1}}{\powe{\i \pi / n} + 1} = \begin{cases} \tan\kla*{\frac{\pi}{2n}} & n\ \Text{even} \\ 0 & n\ \Text{odd} \end{cases}$.}
+\begin{align}
+I &= \pi \sum_{n\ge 1} \frac{1}{2^n} \sum_{k=1}^{2^n - 1} (-1)^{k+1} \sin\kla*{\frac{k\pi}{2^n} } = \pi\sum_{n\ge 1} \frac{1}{2^n} \tan\kla*{\frac{\pi}{2^{n+1}}} \TODO{=2} .
+\end{align}
+%Also note that the result can be rewritten.
+%Let the summand expression be $S(n,k)$.
+%Then
+%\begin{align}
+%I &= \sum_{n\ge 1} \sum_{k=1}^{2^n - 1} S(n,k) = \sum_{k\ge 1} \sum_{n\ge \lfloor \log_2(k+1) \rfloor} S(n,k) = \sum_{k\ge 1} \sum_{n\ge 0} S\kla*{n + \lfloor \log_2(k+1) \rfloor, k} = \\
+%&= \sum_{k\ge 1} (-1)^{k+1} \sum_{n\ge 0} \frac{1}{2^n 2^{\lfloor \log_2(k+1) \rfloor} } f \kla*{a + \frac{k}{2^n 2^{\lfloor \log_2(k+1) \rfloor} } (b-a)}.
+%\end{align}
+\subsubsection{Sin integrals}
+Consider
+\begin{align}
+I &= \intx{0}{1}{\frac{\sin(\pi x)}{x^x (1-x)^{1-x}}}{x} = \frac{\pi}{\e}. \label{eqn:sin pi x over x to x times 1 minus x to 1 minus x}
+\end{align}
+\TODO{How?}
+%%Rewriting gives
+%%\begin{align}
+%%I &= \intx{0}{1}{\frac{\sin (\pi x)}{1-x} \kla*{\frac{1}{x} - 1}^x }{x}
+%%\end{align}
+%%what is 
+%%\begin{align}
+%%x\log x + (1-x)\log (1-x) &= 
+%%\end{align}
+\section{Two dimensional}
+\subsection{Trigonometric integrals}
+\subsubsection{Light-cone integration}
+Consider, for $\Re z < b$,
+\begin{align}
+I(z) &= \intx{0}{\infty}{\powe{xz} \csch(x)^b}{x} = 2^b \intx{0}{\infty}{\powe{xz} \kla*{1 - \powe{-2x}}^{-b} \powe{-bx}}{x}\\
+&= 2^{b-1} \intx{0}{1}{u^{\frac{b-z}{2} - 1} \kla*{1 - u}^{-b}}{u} = 2^{b-1} B\kla*{1-b, \frac{b+z}{2}} = 2^{b-1} \Gamma(1-b) \frac{\Gamma\kla*{\frac{b}{2} - \frac{z}{2}}}{\Gamma\kla*{1 - \frac{b}{2} - \frac{z}{2}}}.
+\end{align}
+\subsubsection{$J$-integration problem}
+Consider
+\begin{align}
+J_{b,0}(k,\omega) &= \intx{0}{\pi}{\intr{\powe{\i kx - \i 2n \tau} \csc(\tau + \i x)^b \csc(\tau - \i x)^b}{x} }{\tau} \\
+&= 2^{2b-2} \Gamma(1-b)^2 \sin(\pi b) \frac{\Gamma\kla*{\frac{b}{2} - \i \frac{k}{4} + \frac{n}{2}}}{\Gamma\kla*{1 - \frac{b}{2} - \i \frac{k}{4} + \frac{n}{2}}} \frac{\Gamma\kla*{\frac{b}{2} + \i \frac{k}{4} + \frac{n}{2}}}{\Gamma\kla*{1 - \frac{b}{2} + \i \frac{k}{4} + \frac{n}{2}}}
+\end{align}
+%b=0.431; k=0.4331; omega=2j; L=3
+%_j_bn(k, omega, b), c_quad(lambda tau: np.exp(-omega*tau) * c_quad(lambda x: np.exp(1j*k*x)/np.sin(tau+1j*x)**b/np.sin(tau-1j*x)**b, -L, L)[0], 0, np.pi)
+%prefactor = np.pi * 2**(2*b-2) * _gamma_real(1-b) / _gamma_real(b)
+%gamma_p = _gamma_rel(b/2 - 1j*(omega+k)/4, 1 - b/2 - 1j*(omega+k)/4)
+%gamma_m = _gamma_rel(b/2 - 1j*(omega-k)/4, 1 - b/2 - 1j*(omega-k)/4)
+%prefactor * gamma_p * gamma_m
+where $\omega=\i 2n$ for $n\in\mathbb{Z}$.
+Note that $k_-z_+ + k_+z_- = \frac{\i k- 2n}{2} \kla*{x +\i \tau} + \frac{\i k+ 2n}{2} \kla*{x -\i \tau} = \i kx - \i 2n\tau$ where $z_\pm = x \pm \i \tau$ and $k_\pm = \frac{\i k \pm 2n}{2}$.
+Using $\csc(\i x) = \frac{1}{2\i} \kla*{\powe{-x} - \powe{x}} = \i \csch(x)$ we then have $\csc(\tau \pm \i x) = \csc(\pm \i z_\mp) = \pm \i \csch(z_\mp)$.
+Naive substitution would then give
+\begin{align}
+J_{b,0}^\text{naive sub.} &= \intx{?}{?}{ \intx{?}{?}{ \powe{k_-z_+} \powe{k_+z_-} \csch(z_+)^b \csch(z_-)^b }{z_+}}{z_-} \overset{?}{=} I(-k_+) I(k_-) = \csc(\pi b) J_{b,0}.
+\end{align}
+This is surprisingly close to the correct answer, but of course we are missing the $\sin(\pi b)$-factor and it is unclear how to make this multidimensional complex substitution rigourous.
+In particular, the integration region has to somehow become $[0,\infty]$ and $[-\infty, 0]$ for $z_+$ and $z_-$ respectively.
+
+Is there an alternative way to derive $J_{b,0}$ then?
+Let us try a brute-force approach (for $n\rightarrow-n$)
+\begin{align}
+J_{b,0} &= 2^b\intx{0}{\pi}{\intr{\powe{\i kx - \i 2n\tau} \klb*{\cosh(2x) - \cos(2\tau)}^{-b}}{x} }{\tau} \\
+&= 4^b \int_{|z|=1}\intx{0}{\infty}{u^\frac{\i k}{2} z^n \klb*{u + \frac{1}{u} - z - \frac{1}{z}}^{-b} \frac{1}{2u} }{u} \frac{1}{2\i z} \,\d z\\
+&= 2^{2b-2} \frac{1}{\i} \intx{0}{\infty}{ u^{\frac{\i k}{2} + b - 1} \int_{|z|=1} z^{n+b-1} \klb*{(u^2+1)z - z^2u - u}^{-b}\,\d z }{u}\\
+&= 
+\end{align}
+\section{Multi dimensional}
+\subsection{Exponential integrals}
+\subsubsection{Gaussian integral}
+Consider
+\begin{align}
+I &= \intrnd{N}{\powe{-\brc*{x}{A}{x} + \brb*{b}{x} }}{x} = \sqrt{\frac{\pi^N}{\det A}} \powe{\frac{1}{4} \brc*{b}{A^{-1}}{b} }. \label{eqn:e to the minus x A x plus b x}
+\end{align}
+This result holds for any symmetric matrix $A=UDU^T$. 
+\TODO{maybe we also have to assume positive definiteness for positive eigenvalues?}\\
+To prove it substitute $y = U^Tx$ to get
+\begin{align}
+I &= \intrnd{N}{ \powe{-\brc*{y}{D}{y} + \brc*{b}{U}{y} }}{y} = \prod_{j=1}^N \intr{\powe{-\lambda_j y^2 + (U^Tb)_j y}}{y} = \\
+&= \prod_{j=1}^N \sqrt{\frac{\pi}{\lambda_j}}  \powe{\frac{(U^Tb)_j^2}{4\lambda_j}} = \sqrt{\frac{\pi^N}{\det A}} \powe{\frac{1}{4} \sum_{j=1}^N (U^T b)_j \frac{1}{\lambda_j} (U^T b)_j } = \\
+&= \sqrt{\frac{\pi^N}{\det A}} \powe{\frac{1}{4} \brc*{b}{UD^{-1} U^T}{b} } = \sqrt{\frac{\pi^N}{\det A}} \powe{\frac{1}{4} \brc*{b}{A^{-1}}{b} }.
+\end{align}
+\subsubsection{Gaussian complex integral}
+Consider
+\begin{align}
+I &= \int_{\mathbb{C}^N}^{} \powe{-\brc*{x}{A}{x} } \,\mathrm{d}^Nx\mathrm{d}^Nx^\ast = \frac{\pi^N}{\det A}. \label{eqn:e to the minus x ast A x}
+\end{align}
+Assuming a hermitian matrix with $A=UDU^\dagger$ we can write $\brc*{x}{A}{x } = \brc*{y}{D}{y}$ with $x = Uy$.
+Then the integral becomes
+\begin{align}
+I &= \prod_{j=1}^N \intr{\intr{ \powe{-\lambda_j y^\ast y} }{y^\ast}}{y} = \prod_{j=1}^N \intr{\intr{ \powe{-\lambda_j (y_r^2 + y_i^2)}}{y_r}}{y_i} = \frac{\pi^N}{\det A}.
+\end{align}
+\subsubsection{Gaussian complex integral matrix elements}
+Consider
+\begin{align}
+I &= \frac{\int_{\mathbb{C}^N}^{} \powe{-\brc*{x}{A}{x} } x_k^\ast x_l \,\mathrm{d}^Nx\mathrm{d}^Nx^\ast}{\int_{\mathbb{C}^N}^{} \powe{-\brc*{x}{A}{x} } \,\mathrm{d}^Nx\mathrm{d}^Nx^\ast} = (A^{-1})_{lk}. \label{eqn:e to the minus x ast A x xj xk normalized}
+\end{align}
+Differentiating \autoref{eqn:e to the minus x ast A x} with respect to $A_{kl}$ gives a factor of $-x_k^\ast x_l$ in the integrand.
+Thus the integral is given by
+\begin{align}
+I &= -\frac{\det A}{\pi^N} \frac{\partial }{\partial A_{kl}} \frac{\pi^N}{ \det A} = \det A \frac{1}{(\det A)^2} \frac{\partial }{\partial A_{kl}} \det A = (A^{-1})_{lk}.
+\end{align}
+The last step involves the observation
+\begin{align}
+\frac{\partial}{\partial A_{jk}} \log \det A &= \frac{\partial}{\partial A_{jk}} \Tr \log A = \Tr A^{-1} \frac{\partial}{\partial A_{jk}} A = \\
+&= \Tr \kla*{(A^{-1})_{mn} (\delta_{jn} \delta_{kl})_{nl} }_{ml} = \sum_{mn} (A^{-1})_{mn} \delta_{jn} \delta_{km} = (A^{-1})_{kj}.
+\end{align}
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

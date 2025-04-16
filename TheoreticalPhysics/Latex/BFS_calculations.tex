@@ -1,0 +1,723 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[top=2cm, left=2cm, right=2cm, bottom=2cm, footskip=1cm]{geometry}
+\input{myscrarticle}
+
+\newcommand*{\titel}{TITLE}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+%\subject{SUBJECT}
+%\title{\titel}
+%\author{\autor}
+%\date{\today}
+
+\newcommand{\qna}[1]{\color{red}#1\color{black}}
+%\newcommand{\Tr}{\text{Tr\,}}
+
+\begin{document}
+
+%\begin{titlepage}
+%\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+
+\section{Supplemental Material for BFS in SC with TRSB}
+\subsection{Mapping to a general two-orbital model}
+Single-particle Hamiltonian
+\begin{align}
+H_N(\textbf{k}) &= \sum_{\mu,\nu=0,x,y,z} c_{\mu,\nu}(\textbf{k}) \hat{s}_\mu \otimes \hat{\sigma}_\nu
+\end{align}
+with Pauli matrices $\hat{s}_\mu$ in orbital space and $\hat{\sigma}_\nu$ in spin space.
+Hermiticity implies $c_{\mu,\nu} \in \mathbb{R}$.
+Inversion maps $H_N(\textbf{k}) \rightarrow U_PH_N(-\textbf{k})U_P^\dagger$ where $U_P=\pm 1_4$ for even and odd orbitals respectively.
+The sign is irrelevant, because $U_P$ appears twice in the transformation.
+Thus inversion symmetry simply requires $c_{\mu,\nu}(-\textbf{k}) =  c_{\mu,\nu}(k)$.
+Time reversal maps $H_N(\textbf{k}) \rightarrow U_T H_N^\ast(-\textbf{k})U_T^\dagger$ where $U_T= \hat{s}_0\otimes \i\hat{\sigma}_y$.
+Explicit Pauli matrices are
+\begin{align}
+\hat{s}_0 &= \begin{pmatrix}
+1 & 0 \\ 0 & 1
+\end{pmatrix}, &&& \hat{s}_x &= \begin{pmatrix}
+0 & 1 \\ 1 & 0
+\end{pmatrix}, &&& \hat{s}_y &= \begin{pmatrix}
+0 & -\i \\ \i & 0
+\end{pmatrix} &&\Text{and}& \hat{s}_z &= \begin{pmatrix}
+1 & 0 \\ 0 & -1
+\end{pmatrix}.
+\end{align}
+The Kronecker product then reads
+\begin{align}
+U_T &= \begin{pmatrix}
+1 & 0 \\ 0 & 1
+\end{pmatrix} \otimes \begin{pmatrix}
+0 & 1 \\ -1 & 0
+\end{pmatrix} = \begin{pmatrix}
+0 & 1 & 0 & 0 \\ -1 & 0 & 0 & 0 \\ 0&0&0 & 1 \\ 0&0&-1 & 0
+\end{pmatrix}.
+\end{align}
+There are potentially 16 Kronecker products in $H_N$.
+%\newpage
+%\begin{table}[!ht]
+%\centering
+%\begin{tabular}{ccccc}
+%\toprule
+%$\hat{s}_\mu \otimes \hat{\sigma}_\nu$ & $\nu=0$ & $\nu=1$ & $\nu=2$ & $\nu=3$\\ \midrule
+%$\mu = 0$ & $\begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \\  \end{pmatrix}$ & $\begin{pmatrix} 0 & 1 & 0 & 0 \\ 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \\  \end{pmatrix}$ & $\begin{pmatrix} 0 & -\i & 0 & 0 \\ \i & 0 & 0 & 0 \\ 0 & 0 & 0 & -\i \\ 0 & 0 & \i & 0 \\  \end{pmatrix}$ & $\begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & -1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & -1 \\  \end{pmatrix}$ \\
+%$\mu = 1$ & $\begin{pmatrix} 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \\ 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\  \end{pmatrix}$ & $\begin{pmatrix} 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \\ 0 & 1 & 0 & 0 \\ 1 & 0 & 0 & 0 \\  \end{pmatrix}$ & $\begin{pmatrix} 0 & 0 & 0 & -\i \\ 0 & 0 & \i & 0 \\ 0 & -\i & 0 & 0 \\ \i & 0 & 0 & 0 \\  \end{pmatrix}$ & $\begin{pmatrix} 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & -1 \\ 1 & 0 & 0 & 0 \\ 0 & -1 & 0 & 0 \\  \end{pmatrix}$ \\
+%$\mu = 2$ & $\begin{pmatrix} 0 & 0 & -\i & 0 \\ 0 & 0 & 0 & -\i \\ \i & 0 & 0 & 0 \\ 0 & \i & 0 & 0 \\  \end{pmatrix}$ & $\begin{pmatrix} 0 & 0 & 0 & -\i \\ 0 & 0 & -\i & 0 \\ 0 & \i & 0 & 0 \\ \i & 0 & 0 & 0 \\  \end{pmatrix}$ & $\begin{pmatrix} 0 & 0 & 0 & -1 \\ 0 & 0 & 1 & 0 \\ 0 & 1 & 0 & 0 \\ -1 & 0 & 0 & 0 \\  \end{pmatrix}$ & $\begin{pmatrix} 0 & 0 & -\i & 0 \\ 0 & 0 & 0 & \i \\ \i & 0 & 0 & 0 \\ 0 & -\i & 0 & 0 \\  \end{pmatrix}$ \\
+%$\mu = 3$ & $\begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & -1 & 0 \\ 0 & 0 & 0 & -1 \\  \end{pmatrix}$ & $\begin{pmatrix} 0 & 1 & 0 & 0 \\ 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & -1 \\ 0 & 0 & -1 & 0 \\  \end{pmatrix}$ & $\begin{pmatrix} 0 & -\i & 0 & 0 \\ \i & 0 & 0 & 0 \\ 0 & 0 & 0 & \i \\ 0 & 0 & -\i & 0 \\  \end{pmatrix}$ & $\begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & -1 & 0 & 0 \\ 0 & 0 & -1 & 0 \\ 0 & 0 & 0 & 1 \\  \end{pmatrix}$ \\
+%\bottomrule
+%\end{tabular}
+%\end{table}\\
+%Same list, but after time-reversal.
+%\begin{table}[!ht]
+%\centering
+%\begin{tabular}{ccccc}
+%\toprule
+%$\hat{s}_\mu \otimes \hat{\sigma}_\nu$ & $\nu=0$ & $\nu=1$ & $\nu=2$ & $\nu=3$\\ \midrule
+%$\mu = 0$ & $\begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \\  \end{pmatrix}$ & $\begin{pmatrix} 0 & -1 & 0 & 0 \\ -1 & 0 & 0 & 0 \\ 0 & 0 & 0 & -1 \\ 0 & 0 & -1 & 0 \\  \end{pmatrix}$ & $\begin{pmatrix} 0 & -\i & 0 & 0 \\ \i & 0 & 0 & 0 \\ 0 & 0 & 0 & -\i \\ 0 & 0 & \i & 0 \\  \end{pmatrix}$ & $\begin{pmatrix} -1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & -1 & 0 \\ 0 & 0 & 0 & 1 \\  \end{pmatrix}$ \\
+%$\mu = 1$ & $\begin{pmatrix} 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \\ 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\  \end{pmatrix}$ & $\begin{pmatrix} 0 & 0 & 0 & -1 \\ 0 & 0 & -1 & 0 \\ 0 & -1 & 0 & 0 \\ -1 & 0 & 0 & 0 \\  \end{pmatrix}$ & $\begin{pmatrix} 0 & 0 & 0 & -\i \\ 0 & 0 & \i & 0 \\ 0 & -\i & 0 & 0 \\ \i & 0 & 0 & 0 \\  \end{pmatrix}$ & $\begin{pmatrix} 0 & 0 & -1 & 0 \\ 0 & 0 & 0 & 1 \\ -1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\  \end{pmatrix}$ \\
+%$\mu = 2$ & $\begin{pmatrix} 0 & 0 & -\i & 0 \\ 0 & 0 & 0 & -\i \\ \i & 0 & 0 & 0 \\ 0 & \i & 0 & 0 \\  \end{pmatrix}$ & $\begin{pmatrix} 0 & 0 & 0 & \i \\ 0 & 0 & \i & 0 \\ 0 & -\i & 0 & 0 \\ -\i & 0 & 0 & 0 \\  \end{pmatrix}$ & $\begin{pmatrix} 0 & 0 & 0 & -1 \\ 0 & 0 & 1 & 0 \\ 0 & 1 & 0 & 0 \\ -1 & 0 & 0 & 0 \\  \end{pmatrix}$ & $\begin{pmatrix} 0 & 0 & \i & 0 \\ 0 & 0 & 0 & -\i \\ -\i & 0 & 0 & 0 \\ 0 & \i & 0 & 0 \\  \end{pmatrix}$ \\
+%$\mu = 3$ & $\begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & -1 & 0 \\ 0 & 0 & 0 & -1 \\  \end{pmatrix}$ & $\begin{pmatrix} 0 & -1 & 0 & 0 \\ -1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \\  \end{pmatrix}$ & $\begin{pmatrix} 0 & -\i & 0 & 0 \\ \i & 0 & 0 & 0 \\ 0 & 0 & 0 & \i \\ 0 & 0 & -\i & 0 \\  \end{pmatrix}$ & $\begin{pmatrix} -1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & -1 \\ 
+% \end{pmatrix}$ \\
+%\bottomrule
+%\end{tabular}
+%\end{table}\\
+%From the comparison of the tables it is apparent that all combinations with even $\nu$ are possible.
+%This may also be shown by algebraic manipulation
+The transformation of those products under time-reversal reads
+\begin{align}
+U_T\kla*{\hat{s}_\mu \otimes \hat{\sigma}_\nu}^\ast U_T^\dagger &= \hat{s}_\mu^\ast \otimes \i\hat{\sigma}_y\hat{\sigma}_\nu^\ast (-\i)\hat{\sigma}_y = \hat{s}_\mu^\ast \otimes \hat{\sigma}_y\hat{\sigma}_\nu^\ast \hat{\sigma}_y. %= \hat{s}_\mu^\ast \otimes \kla*{-\hat{\sigma}_\nu^\ast + \hat{\sigma}_y \klc*{\hat{\sigma}_\nu^\ast, \hat{\sigma}_y}}.
+\end{align}
+For $\nu=2$ the conjugation contributes a minus sign and we find $-\hat{s}_\mu^\ast \otimes \hat{\sigma}_y$ which then requires $\mu=2$.
+For $\nu=0$ the $\hat{\sigma}$-part of the product simply yields $1_2$ and thus $\mu=0,x,z$ are allowed.
+For $\nu=x,z$ the $\hat{\sigma}$-part yields $-\hat{\sigma}_\nu$ which again requires $\mu=2$.
+In total the allowed combinations are then given by 
+Thus under time reversal only the combinations $\klc*{\mu,\nu} = \klc*{0,0}, \klc*{x,0}, \klc*{z,0}, \klc*{y,y}, \klc*{y,x}, \klc*{y,z}$ are allowed.
+%We want to consider the indices $\mu,\nu$ for which this expression is identical to the one before the transformation.
+%The complex conjugate only matters for $\mu=y$ and for $\nu=y$ where it is equivalent to an additional minus sign respectively.
+%Since for $\nu=y$ the commutator vanishes this is only possible when $\mu=2$.
+%The commutator vanishes for $\nu = 0$ and $\nu = y$.
+%Thus under time reversal only the combinations $\klc*{\mu,\nu} = \klc*{0,0}, \klc*{1,0}, \klc*{2,0}, \klc*{3,0}, \klc*{1,2}, \klc*{3,2}$ are allowed.
+The five non-trivial products (i.e. other than $\klc*{0,0} \equiv 1_4$) satisfy anti-commutation relations identical to those for Dirac $\gamma$-matrices (which I simply checked by brute force on a computer), i.e. 
+\begin{align}
+\klc*{\gamma_j, \gamma_k} &= 2\delta_{jk} 1_4
+\end{align}
+where we identified $\gamma_1 = \hat{s}_x \otimes \hat{\sigma}_0$, $\gamma_2 = \hat{s}_z \otimes \hat{\sigma}_0$, $\gamma_3 = \hat{s}_y \otimes \hat{\sigma}_x$, $\gamma_4 = \hat{s}_y \otimes \hat{\sigma}_y$ and $\gamma_5 = \hat{s}_y \otimes \hat{\sigma}_z$.
+Their explicit forms are ($\gamma_1$ through $\gamma_5$ from left to right)
+\begin{align}
+\begin{pmatrix} 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \\ 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\  \end{pmatrix},
+\begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & -1 & 0 \\ 0 & 0 & 0 & -1 \\  \end{pmatrix},
+\begin{pmatrix} 0 & 0 & 0 & -\i \\ 0 & 0 & -\i & 0 \\ 0 & \i & 0 & 0 \\ \i & 0 & 0 & 0 \\  \end{pmatrix},
+\begin{pmatrix} 0 & 0 & 0 & -1 \\ 0 & 0 & 1 & 0 \\ 0 & 1 & 0 & 0 \\ -1 & 0 & 0 & 0 \\  \end{pmatrix},
+\begin{pmatrix} 0 & 0 & -\i & 0 \\ 0 & 0 & 0 & \i \\ \i & 0 & 0 & 0 \\ 0 & -\i & 0 & 0 \\  \end{pmatrix}.
+\end{align}
+%For the five non-trivial products (i.e. others than $\klc*{0,0} \equiv 1_4$) consider anti-commutation relations.
+%In general we have
+%\begin{align}
+%\kla*{\hat{s}_\mu \otimes \hat{\sigma}_\nu } \kla*{\hat{s}_{\mu'} \otimes \hat{\sigma}_{\nu'}} &= \hat{s}_{\mu}\hat{s}_{\mu'} \otimes \hat{\sigma}_{\nu}\hat{\sigma}_{\nu'} = \kla*{ \klc*{\hat{s}_{\mu}, \hat{s}_{\mu'}} - \hat{s}_{\mu'}\hat{s}_{\mu} } \otimes \kla*{\hat{\sigma}_{\nu'} \hat{\sigma}_{\nu} + \klb*{\hat{\sigma}_{\nu}, \hat{\sigma}_{\nu'}}}.
+%\end{align}
+%Note that the commutator of the $\hat{\sigma}$-terms vanishes for our case of even $\nu,\nu'$.
+%The anti-commutator of the $\hat{s}$-terms gives $2\delta_{\mu\mu'} 1_2$ since only $\mu,\mu'=1,2,3$ are possible.
+%Thus we find that
+%\begin{align}
+%\klc*{\kla*{\hat{s}_\mu \otimes \hat{\sigma}_\nu }, \kla*{\hat{s}_{\mu'} \otimes \hat{\sigma}_{\nu'}}} &= 2\delta_{\mu\mu'} 1_4.
+%\end{align}
+The angular-momentum $j=\frac{3}{2}$-matrices are
+\begin{align}
+J_x &= \frac{1}{2}\begin{pmatrix} 0 & \sqrt{3} & 0 & 0 \\ \sqrt{3} & 0 & 2 & 0 \\ 0 & 2 & 0 & \sqrt{3} \\ 0 & 0 & \sqrt{3} & 0 \\  \end{pmatrix}, &&& J_y &= \frac{\i}{2}\begin{pmatrix} 0 & -\sqrt{3} & 0 & 0 \\ \sqrt{3} & 0 & -2 & 0 \\ 0 & 2 & 0 & -\sqrt{3} \\ 0 & 0 & \sqrt{3} & 0 \\  \end{pmatrix} &&& J_z &= 
+\frac{1}{2} \begin{pmatrix} 3 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & -1 & 0 \\ 0 & 0 & 0 & -3 \\  \end{pmatrix}.
+\end{align}
+The generalized Luttinger-Kohn model involves five sets of products of these matrices.
+Again checking by brute force we find
+\begin{align}
+U^\dagger \frac{J_x^2 - J_y^2}{2\sqrt{3}}U &= \color{red}{\frac{1}{2}}  \color{black} \hat{s}_x \otimes \hat{\sigma}_0,\\
+U^\dagger \frac{2J_z^2 - J_x^2 - J_y^2}{6}U &= \color{red}{\frac{1}{2}}  \color{black} \hat{s}_z \otimes \hat{\sigma}_0,\\
+U^\dagger \frac{J_yJ_z + J_zJ_y}{2\sqrt{3}}U &= \color{red}{\frac{1}{2}}  \color{black} \hat{s}_y \otimes \hat{\sigma}_x,\\
+U^\dagger \frac{J_xJ_z + J_zJ_x}{2\sqrt{3}}U &= \color{red}{-\frac{1}{2}} \color{black} \hat{s}_y \otimes \hat{\sigma}_y,\\
+U^\dagger \frac{J_xJ_y + J_yJ_x}{2\sqrt{3}}U &= \color{red}{\frac{1}{2}} \color{black} \hat{s}_y \otimes \hat{\sigma}_z
+\end{align}
+where 
+\begin{align}
+U &= \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \\ 0 & 1 & 0 & 0 \\  \end{pmatrix}.
+\end{align}
+Note that one can pairwise swap the orbital-spin matrices by an appropriate unitary transformation so that this mapping is entirely general (\color{red}what is meant by pairwise swapping in this context?\color{black}).\\
+We can obtain six \color{red} on-site pairing states \color{black} in the orbital-spin representation by multiplying the six allowed Kronecker products by the unitary part $U_T$ of the time-reversal operator.
+For our $\gamma_0$ this yields something proportional to $\hat{s}_0 \otimes \hat{\sigma}_y$ which is orbitally trivial and for the $\gamma_i$ this yields something proportional to $\hat{s}_x \otimes \hat{\sigma}_y$, $\hat{s}_z \otimes \hat{\sigma}_y$, $\hat{s}_y \otimes \hat{\sigma}_z$, $\hat{s}_y \otimes \hat{\sigma}_0$ and $\hat{s}_y \otimes \hat{\sigma}_x$.
+These can be thought of as orbital-triplet and spin-singlet state (first three, different $\hat{s}$ but same $\hat{\sigma}$) or orbital-singlet and spin-triplet (second half, same $\hat{s}$ but different $\hat{\sigma}$).
+The first maps onto the singlet gap matrix $\eta_s$ while the anomalous gaps map onto the quintet gap matrices (\color{red}why is it obvious that the first state is ``different'' from the other five? Just because it originated from the $\gamma_0$-equivalent or other reasons?\color{black}).
+Hence we can describe any even-parity state as a linear combination of the six gap functions with coefficients $\psi_i(\textbf{k})$ without loss of generality.
+\subsection{Existence and properties of the Pfaffian}
+Our starting point is the Hamiltonian in the superconducting state
+\begin{align}
+H(\textbf{k}) &= \begin{pmatrix}
+H_N(\textbf{k}) & \Delta(\textbf{k}) \\ \Delta^\dagger(\textbf{k}) & - H_N^T(\textbf{k})
+\end{pmatrix}.
+\end{align}
+This Hamiltonian satisfies C and P-symmetries and thus also their product, i.e.\footnote{$U_{CP} = U_CU_P^\ast = (\hat{\tau}_x \otimes 1_4) (\hat{\tau}_0 \otimes 1_4)^\ast = \hat{\tau}_x \otimes 1_4$, $\hat{\tau}$ denotes Pauli matrices in particle-hole space.}
+\begin{align}
+U_{CP} H^T(\textbf{k}) U_{CP}^\dagger &= \begin{pmatrix}
+0 & 1_4 \\ 1_4 & 0
+\end{pmatrix} \begin{pmatrix}
+H_N^T(\textbf{k}) & \Delta^\ast(\textbf{k}) \\ \Delta^T(\textbf{k}) & - H_N(\textbf{k})
+\end{pmatrix} \begin{pmatrix}
+0 & 1_4 \\ 1_4 & 0
+\end{pmatrix}^\dagger = \\
+&= \begin{pmatrix}
+\Delta^T(\textbf{k}) & - H_N(\textbf{k}) \\
+H_N^T(\textbf{k}) & \Delta^\ast(\textbf{k}) 
+\end{pmatrix} \begin{pmatrix}
+0 & 1_4 \\ 1_4 & 0
+\end{pmatrix} = \begin{pmatrix}
+-H_N(\textbf{k}) & \Delta^T(\textbf{k}) \\ \Delta^\ast(\textbf{k}) & H_N^T(\textbf{k})
+\end{pmatrix} =  - H(\textbf{k}) .
+\end{align}
+\color{red} (This requires $\Delta^T = -\Delta$. 
+Where does that come from?) \color{black}.
+$(CP)^2 = (U_{CP}\mathcal{K})^2= U_{CP}U_{CP}^\ast = 1_8$ implies $U_{CP}^\ast = U_{CP}^{-1}$.
+Since $U_{CP}$ is unitary one finds $U_{CP}=U_{CP}^T$.
+Any symmetric matrix can be diagonalized by a unitary matrix $Q$ and diagonal matrix $\Lambda$ as $U_{CP} = Q\Lambda Q^T$.
+Together with the $CP$-transformation of the Hamiltonian this yields
+\begin{align}
+Q\Lambda Q^T H^T(\textbf{k}) Q^\ast \Lambda^\dagger Q^\dagger &= -H(\textbf{k}).
+\end{align}
+Since $\Lambda^\dagger\Lambda = Q^T U_{CP}^\dagger Q Q^\dagger U_{CP} Q^\ast = Q^T U_{CP}^\dagger U_{CP} Q^\ast = Q^T(Q^\dagger)^T = 1_8$ we find that $\Lambda$ is also unitary and thus $\sqrt{\Lambda} = \Text{diag}\kla*{\sqrt{\lambda}_1, \dots}$ where $|\lambda_i|=1$.
+We can then split up the product into
+\begin{align}
+Q\sqrt{\Lambda} \sqrt{\lambda}Q^T H^T(\textbf{k}) Q^\ast \sqrt{\Lambda}^\dagger \sqrt{\lambda}^\dagger Q^\dagger &= -H(\textbf{k}).
+\end{align}
+Bringing the outer factors to the right hand side yields
+\begin{align}
+\sqrt{\Lambda}Q^T H^T(\textbf{k}) Q^\ast \sqrt{\Lambda}^\dagger &= -\sqrt{\Lambda}^\dagger Q^\dagger H(\textbf{k})Q\sqrt{\Lambda}.
+\end{align}
+Defining $\Omega := \sqrt{\Lambda}^\dagger Q^\dagger$, which is also unitary, this becomes
+\begin{align}
+\Omega^\ast H^T(\textbf{k}) \Omega^T &= -\Omega H(\textbf{k}) \Omega^\dagger.
+\end{align}
+The left hand side is equal to $(\Omega H(\textbf{k}) \Omega^\dagger)^T$ and thus the matrix $\tilde{H}(\textbf{k}) := \Omega H(\textbf{k}) \Omega^\dagger$ is skew-symmetric.
+TODO: Possible choice of $\Omega$ is
+\begin{align}
+\Omega &= \frac{1}{\sqrt{2}} \begin{pmatrix}
+1 & 1 \\ \i & -\i
+\end{pmatrix} \otimes 1_4.
+\end{align}
+This yields
+\begin{align}
+\tilde{H}(\textbf{k}) &= \frac{1}{2} \begin{pmatrix}
+1 & 1 \\ \i & -\i
+\end{pmatrix} \begin{pmatrix}
+H_N(\textbf{k}) & \Delta(\textbf{k}) \\ \Delta^\dagger(\textbf{k}) & - H_N^T(\textbf{k})
+\end{pmatrix} \begin{pmatrix}
+1 & -\i \\ 1 & \i
+\end{pmatrix} = \\
+&= \frac{1}{2} \begin{pmatrix}
+1 & 1 \\ \i & -\i
+\end{pmatrix} \begin{pmatrix}
+H_N + \Delta & -\i H_N + \i \Delta \\ 
+\Delta^\dagger - H_N^T & -\i \Delta^\dagger- \i H_N^T
+\end{pmatrix} = \\
+&= \frac{1}{2} \begin{pmatrix}
+H_N + \Delta + \Delta^\dagger - H_N^T & -\i H_N + \i \Delta -\i \Delta^\dagger- \i H_N^T \\
+\i H_N + \i \Delta -\i \Delta^\dagger +\i H_N^T & H_N - \Delta - \Delta^\dagger - H_N^T
+\end{pmatrix}.
+\end{align}
+Since $\Delta^T = -\Delta$ this matrix is indeed skew-symmetric and therefore the Pfaffian $P(\textbf{k}) := \Text{Pf\,} \tilde{H}(\textbf{k})$ exists.
+The Pfaffian is a polynomial of even degree in the components of $\tilde{H}$ because the Hamiltonian dimension is a multiple of four (\color{red}assuming effective spin of $\frac{3}{2}$?\color{black}).
+Additionally $\tilde{H}$ is hermitian and thus $\tilde{H}^\ast = (\tilde{H}^\dagger)^T = \tilde{H}^T = -\tilde{H}$ and therefore the components are purely imaginary.
+Combining both arguments we find that the Pfaffian is real.
+Due to the ambiguity of the signs in the definition of $\sqrt{\Lambda}$ we may multiply $\Omega$ by a diagonal matrix with arbitrary entries of $\pm 1$ ($\Omega \rightarrow D\Omega$).
+Thus $\tilde{H} \rightarrow D^\dagger\tilde{H}D$ and $P(\textbf{k}) \rightarrow \det D P(\textbf{k}) = \pm P(\textbf{k})$.
+We may use this transformation to fix $P(\textbf{k})>0$ for very large $|\textbf{k}|$.
+However, because the sign is fixed for varying $\textbf{k}$, sign changes under a shift in $\textbf{k}$ are important.
+Since $\det H=\det\tilde{H}=P^2$, the zeros of $P(\textbf{k})$ give the nodes of the superconducting state (because these states have zero energy by definition and thus $\det H = \det (H-\omega) = 0$).
+If the multiplicity of the zero is odd this separates two regions with $P(\textbf{k})>0$ and $P(\textbf{k})<0$ which forms a two-dimensional Fermi surface.
+If the multiplicity is even, this is not necessarily the case.
+TODO: For the general $k_z(k_x+\i k_y)$ state the Pfaffian is
+\begin{align}
+P(\textbf{k}) &= (\epsilon_+\epsilon_-)^2 + 4\Delta_0^2 (\epsilon_+\epsilon_- + c_{xz}^2 + c_{yz}^2) + \Delta_1^2|\psi|^2(\epsilon_+^2 + \epsilon_-^2) + 8\Delta_0\Delta_1 c_0|\psi|^2 + \Delta_1^4|\psi|^4
+\end{align}
+where $\epsilon_\pm(\textbf{k})$ are the normal-state eigenenergies.
+For $\Delta_0=0$ the Pfaffian simplifies to
+\begin{align}
+P(\textbf{k}) &= \kla*{\epsilon_+^2 + \Delta_1^2 |\psi|^2} \kla*{\epsilon_-^2 + \Delta_1^2 |\psi|^2}.
+\end{align}
+Setting this expression to zero implies nodes for $\epsilon_\pm = 0$ and $\psi =0$ (\color{red}how to read of the locations of the zero from the symmetries?\color{black}).\\
+TODO: $\mathbb{Z}_2$ invariant becomes trivial for time-reversal symmetry squaring to $-1$.
+\subsection{Stability of TRSB states}
+Consider the spherically symmetry normal-state Hamiltonian $H_N(\textbf{k}) = \alpha k^2 + \beta (\textbf{k} \cdot \textbf{J})^2 - \mu$ and an on-site gap function that is a linear combination of $\eta_{xz},\eta_{yz}$.
+It is known (literature) that there are two distinct ground states.
+The first is described by $\Delta_r=(\bar{\Delta}/2)\eta_{xz}$ with $k_zk_x$-symmetry and the second is a TRSB state with $\Delta_a = (\bar{\Delta}/2) \frac{1}{\sqrt{2}} (\eta_{xz} + \i \eta_{yz})$ with $k_z(k_x+\i k_y)$-symmetry (\color{red}similar to above; how to read of the symmetries?\color{black}).
+Explicitly the off-diagonal blocks are
+\begin{align}
+\Delta_r &= \frac{\bar{\Delta}}{2} \begin{pmatrix} 0 & 0 & -1 & 0 \\ 0 & 0 & 0 & 1 \\ 1 & 0 & 0 & 0 \\ 0 & -1 & 0 & 0 \\  \end{pmatrix},\\
+\Delta_a &= \frac{\bar{\Delta}}{2\sqrt{2}} \begin{pmatrix} 0 & 0 & -2 & 0 \\ 0 & 0 & 0 & 0 \\ 2 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\  \end{pmatrix}.
+\end{align}
+For both $\Delta_r,\Delta_a$ we have $\Text{Tr\,}\Delta^\dagger\Delta = \bar{\Delta}^2$ (assuming $\bar{\Delta}$ is real).
+Near $T_c$ the mean-field free energy can be expressed as a power series in $\Delta$ (literature)
+\begin{align}
+F &= \frac{1}{2V} \Text{Tr\,}\Delta^\dagger\Delta + \frac{k_BT}{2} \sum_{\textbf{k},\omega_n} \sum_{l\ge 1} \frac{1}{l} \Text{Tr} \klb*{\Delta \tilde{G}(\textbf{k}, \omega_n) \Delta^\dagger G(\textbf{k},\omega_n)}^l
+\end{align}
+where $V$ is a constant describing the BCS pairing interaction, $\omega_n = k_BT\pi (2n+1)$ are the Matsubara frequencies and the normal-state Green's functions satisfy $\klb*{\i\omega_n - H_N(\textbf{k})} G(\textbf{k},\omega_n) = 1$ and $\klb*{\i\omega_n + H_N^T(\textbf{k})} \tilde{G}(\textbf{k},\omega_n) = 1$.
+Note that $H_N^T(k_y) = H_N(-k_y)$ and thus $\tilde{G}$ is determined by knowledge of $G$.
+%Also note that
+%\begin{align}
+%%(\textbf{k} \cdot \textbf{J})^2 &= k_x^2J_x^2 + k_y^2J_y^2 + k_z^2J_z^2 + k_xk_y(J_xJ_y + J_yJ_x) + k_yk_z(J_yJ_z + J_zJ_y)+ k_xk_z(J_xJ_z + J_zJ_x) = \\
+%(\textbf{k} \cdot \textbf{J})^2 &= \sum_\nu \kla*{k_\nu^2 J_\nu^2 + k_\nu k_{\nu+1} \klc*{J_\nu, J_{\nu +1}}} = \\
+%&= k^2 \textbf{J}^2 + \sum_\nu \kla*{k_\nu k_{\nu+1} \klc*{J_\nu, J_{\nu +1}} - k_\nu^2 \kla*{J_{\nu+1}^2 + J_{\nu+2}^2}} = \\
+%&= \frac{15k^2}{4} 
+%\end{align}
+%\begin{align}
+%G &= \klb*{\i\omega_n - H_N}^{-1} = \klb*{\i\omega_n + \mu - \alpha k^2 - \beta (\textbf{k} \cdot \textbf{J})^2}^{-1} = \\
+%&= 
+%\end{align}
+\subsubsection{``A bit of Algebra''}
+We want to invert the matrix is $\i\omega_n - H_N = A+B(\hat{\textbf{k}}\cdot \textbf{J})^2$ where $A=\i\omega_n + \mu - \alpha k^2$ and $B=-\beta k^2$.
+First note that defining $k_\pm := k_x\pm\i k_y$ we have
+\begin{align}
+\textbf{k}\cdot \textbf{J} &= \frac{1}{2}\begin{pmatrix}
+3k_z & \sqrt{3}k_- & 0 & 0\\
+\sqrt{3}k_+ & k_z & 2k_- & 0\\
+0 & 2k_+ & -k_z & \sqrt{3}k_-\\
+0 & 0 & \sqrt{3}k_+ & -3k_z
+\end{pmatrix},\\
+\Rightarrow\qquad (\textbf{k}\cdot \textbf{J})^2 &= \frac{1}{4} \begin{pmatrix}
+9k_z^2 + 3k_+k_- & 4\sqrt{3}k_zk_- & 2\sqrt{3}k_-^2 & 0\\
+4\sqrt{3}k_zk_+ & k_z^2 + 7k_+k_- & 0 & 2\sqrt{3}k_-^2\\
+2\sqrt{3}k_+^2 & 0 & k_z^2 + 7k_+k_- & -4\sqrt{3}k_zk_-\\
+0 & 2\sqrt{3}k_+^2 & -4\sqrt{3}k_zk_+ & 9k_z^2 + 3k_+k_-
+\end{pmatrix}.
+\end{align}
+It is convenient to subtract a factor of $\frac{5k^2}{4}$ because the resulting expression (surprisingly) squares to a unit matrix.
+Explicitly,
+\begin{align}
+I &:= (\textbf{k}\cdot \textbf{J})^2 - \frac{5k^2}{4} = \frac{1}{4} \begin{pmatrix}
+4k_z^2 -2k_+k_- & 4\sqrt{3}k_zk_- & 2\sqrt{3}k_-^2 & 0\\
+4\sqrt{3}k_zk_+ & -4k_z^2 + 2k_+k_- & 0 & 2\sqrt{3}k_-^2\\
+2\sqrt{3}k_+^2 & 0 & -4k_z^2 + 2k_+k_- & -4\sqrt{3}k_zk_-\\
+0 & 2\sqrt{3}k_+^2 & -4\sqrt{3}k_zk_+ & 4k_z^2 -2k_+k_-
+\end{pmatrix},\\
+I^2 &= \dots = \frac{1}{4} \klb*{(2k_z^2 - k_+k_-)^2 + 12k_z^2k_+k_- + 3k_+^2k_-^2} 1_4 = \\
+&= \frac{1}{4} \klb*{4k_z^4 + 8k_z^2k_+k_- + 4k_+^2k_-^2} 1_4 = k^4 1_4.
+\end{align}
+This is useful because it allows us to simplify the expression
+\begin{align}
+(\textbf{k}\cdot \textbf{J})^4 &= I^2 - \frac{25k^4}{16} + \frac{5k^2}{2}(\textbf{k}\cdot \textbf{J})^2 = \frac{5k^2}{2}(\textbf{k}\cdot \textbf{J})^2 - \kla*{\frac{3k^2}{4}}^2.
+\end{align}
+Making the ansatz $G=C+D(\hat{\textbf{k}}\cdot \textbf{J})^2$ we find the equation
+\begin{align}
+1 &= G[\i\omega - H_N] = AC + \frac{1}{k^2}\klb*{BC + A D}(\textbf{k}\cdot \textbf{J})^2 + \frac{B}{k^2}\frac{D}{k^2} (\textbf{k}\cdot \textbf{J})^4 = \\
+&= AC - BD \kla*{\frac{3}{4}}^2 + \frac{1}{k^2}\klb*{BC+AD+BD \frac{5}{2}} (\textbf{k}\cdot \textbf{J})^2.
+\end{align}
+This is satisfied by the coefficients
+\begin{align}
+C &= -\frac{D}{B} \kla*{A + \frac{5B}{2}},\\
+D &= \frac{16}{9B} \kla*{AC - 1} = -\frac{16A}{9B} \frac{D}{B} \kla*{A + \frac{5B}{2}} - \frac{16}{9B},\\
+\Rightarrow\qquad D &= \frac{-\frac{16}{9B}}{1 + \frac{16A}{9B^2} \kla*{A + \frac{5B}{2}}},\\
+\Rightarrow\qquad C &= \frac{\frac{16}{9B^2} \kla*{A + \frac{5B}{2}}}{1 + \frac{16A}{9B^2} \kla*{A + \frac{5B}{2}}}.
+\end{align}
+Thus the Green's function is
+\begin{align}
+G &= \frac{\frac{16}{9B^2} \kla*{A + \frac{5B}{2}} - \frac{16}{9B} (\hat{\textbf{k}}\cdot \textbf{J})^2}{1 + \frac{16A}{9B^2} \kla*{A + \frac{5B}{2}}} = \frac{A + B\klb*{\frac{5}{2} - (\hat{\textbf{k}}\cdot \textbf{J})^2}}{\frac{9B^2}{16} + A^2 + \frac{5AB}{2}}.
+\end{align}
+Inserting the $A,B$ from our model gives
+\begin{align}
+G &= \frac{\i\omega_n+\mu -\alpha k^2 + \beta k^2 \klb*{ (\hat{\textbf{k}}\cdot \textbf{J})^2 - \frac{5}{2}}}{\frac{9\beta^2k^4}{16} + \kla*{\i\omega_n + \mu - \alpha k^2}^2 - \frac{5\beta k^2}{2} \kla*{\i\omega_n + \mu - \alpha k^2} }.
+\end{align}
+The denominator is
+\begin{align}
+(\i\omega_n)^2 + \i\omega_n \kla*{2\mu - 2\alpha k^2 - \frac{5\beta k^2}{2}} + \frac{9\beta^2k^4}{16} - \frac{5\beta k^2}{2} \kla*{\mu - \alpha k^2} + \kla*{\mu - \alpha k^2}^2
+\end{align}
+and can be written as $(\i\omega_n - \epsilon_1) (\i\omega_n - \epsilon_2)$ where
+\begin{align}
+\epsilon_{1,2} &= \alpha k^2 - \mu + \frac{5\beta k^2}{4} \pm \sqrt{  \frac{25\beta^2k^4}{16} + \frac{5\beta k^2}{2} (\alpha k^2 - \mu) - \frac{9}{16} + \frac{5\beta k^2}{2} \kla*{\mu - \alpha k^2}} = \\
+&= \alpha k^2 - \mu + \frac{5\beta k^2}{4} \pm \frac{1}{4} \sqrt{25\beta^2 k^4 - 9\beta^2k^4} = \alpha k^2 - \mu + \frac{\beta k^2}{4}\begin{cases} 9 \\ 1  \end{cases}.
+\end{align}
+Partial fraction decomposition gives
+\begin{align}
+\frac{\beta k^2}{(\i\omega_n - \epsilon_1) (\i\omega_n - \epsilon_2)} &= \frac{1}{\i\omega_n - \epsilon_1} - \frac{1}{\i\omega_n - \epsilon_2}.
+\end{align}
+With $\i\omega_n + \mu - \alpha k^2 - \frac{5\beta k^2}{4} = \frac{\i\omega_n - \epsilon_1}{2} + \frac{\i\omega_n - \epsilon_2}{2}$ we get
+\begin{align}
+G &= \frac{\frac{\i\omega_n - \epsilon_1}{2} + \frac{\i\omega_n - \epsilon_2}{2} + \beta k^2 \klb*{ (\hat{\textbf{k}}\cdot \textbf{J})^2 - \frac{5}{4}}}{(\i\omega_n - \epsilon_1) (\i\omega_n - \epsilon_2)} = G_+ + \klb*{ (\hat{\textbf{k}}\cdot \textbf{J})^2 - \frac{5}{4}} G_-
+\end{align}
+where
+\begin{align}
+G_\pm &= \frac{1}{2} \kla*{\frac{1}{\i\omega_n - \epsilon_1} \pm \frac{1}{\i\omega_n - \epsilon_2}}.
+\end{align}
+We can obtain $\tilde{G}$ from $G$ by the transformations $\i\omega_n \rightarrow -\i\omega_n$, $k_y \rightarrow -k_y$ and an additional global minus sign.
+The $k_y$ shift is reflected in $J_y \rightarrow -J_y = J_y^T$, which together with $J_x^T = J_x$ and $J_z^T=J_z$ allows us to write
+\begin{align}
+\tilde{G} &= \tilde{G}_+ + \klb*{ (\hat{\textbf{k}}\cdot \textbf{J}^T)^2 - \frac{5}{4}} \tilde{G}_-
+\end{align}
+where
+\begin{align}
+\tilde{G}_\pm &= \frac{1}{2} \kla*{\frac{1}{\i\omega_n + \epsilon_1} \pm \frac{1}{\i\omega_n + \epsilon_2}}.
+\end{align}
+\subsubsection{Fourth order expansion}
+\color{red}Is there an elegant way to do this expansion, or just brute-force/algebra programs?\color{black}\\
+The complicated term in the expansion is the matrix
+\begin{align}
+M &:= \Delta \tilde{G} \Delta^\dagger G.
+\end{align}
+%For the $a$ and $r$ state respectively this gives
+%\begin{align}
+%M_a &= \frac{\bar{\Delta}^2}{2} \begin{pmatrix}
+%0 & 0 & -1 & 0 \\ 0 & 0 & 0 & 0 \\ 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0
+%\end{pmatrix} \frac{\bar{\Delta}^2}{2} \begin{pmatrix}
+%0 & 0 & -1 & 0 \\ 0 & 0 & 0 & 0 \\ 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0
+%\end{pmatrix},\\
+%M_r &= \frac{\bar{\Delta}^2}{4} \begin{pmatrix}
+%0 & 0 & -1 & 0 \\ 0 & 0 & 0 & 1 \\ 1 & 0 & 0 & 0 \\ 0 & -1 & 0 & 0
+%\end{pmatrix}
+%\end{align}
+The Green's functions are
+\begin{align}
+G &= G_+ + \frac{G_-}{2k^2} \begin{pmatrix}
+2k_z^2 -k_+k_- & 2\sqrt{3}k_zk_- & \sqrt{3}k_-^2 & 0\\
+2\sqrt{3}k_zk_+ & -2k_z^2 + k_+k_- & 0 & \sqrt{3}k_-^2\\
+\sqrt{3}k_+^2 & 0 & -2k_z^2 + k_+k_- & -2\sqrt{3}k_zk_-\\
+0 & \sqrt{3}k_+^2 & -2\sqrt{3}k_zk_+ & 2k_z^2 -k_+k_-
+\end{pmatrix},\\
+\tilde{G} &= \tilde{G}_+ + \frac{\tilde{G}_-}{2k^2}\begin{pmatrix}
+2k_z^2 -k_-k_+ & 2\sqrt{3}k_zk_+ & \sqrt{3}k_+^2 & 0\\
+2\sqrt{3}k_zk_- & -2k_z^2 + k_-k_+ & 0 & \sqrt{3}k_+^2\\
+\sqrt{3}k_-^2 & 0 & -2k_z^2 + k_-k_+ & -2\sqrt{3}k_zk_+\\
+0 & \sqrt{3}k_-^2 & -2\sqrt{3}k_zk_- & 2k_z^2 -k_-k_+
+\end{pmatrix}.
+\end{align}
+\begin{align}
+\Delta_a \tilde{G} &= \frac{\bar{\Delta}\tilde{G}_+ }{\sqrt{2}} \begin{pmatrix}
+0 & 0 & -1 & 0 \\ 0 & 0 & 0 & 0 \\ 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0
+\end{pmatrix} + \frac{\bar{\Delta}\tilde{G}_-}{2k^2\sqrt{2}} \begin{pmatrix}
+-\sqrt{3}k_-^2 & 0 & 2k_z^2 - k_-k_+ & 2\sqrt{3}k_zk_+ \\
+0&0&0&0 \\
+2k_z^2 -k_-k_+ & 2\sqrt{3}k_zk_+ & \sqrt{3}k_+^2 & 0 \\
+0&0&0&0
+\end{pmatrix},\\
+\Delta_a^\dagger G &= \frac{\bar{\Delta}G_+ }{\sqrt{2}} \begin{pmatrix}
+0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 0 \\ -1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0
+\end{pmatrix} - \frac{\bar{\Delta}G_-}{2k^2\sqrt{2}} \begin{pmatrix}
+-\sqrt{3}k_+^2 & 0 & 2k_z^2 - k_+k_- & 2\sqrt{3}k_zk_- \\
+0&0&0&0 \\
+2k_z^2 -k_+k_- & 2\sqrt{3}k_zk_- & \sqrt{3}k_-^2 & 0 \\
+0&0&0&0
+\end{pmatrix}
+\end{align}
+Thus
+\begin{align*}
+\frac{2M_a}{\bar{\Delta}^2} &= G_+\tilde{G}_+\begin{pmatrix}
+1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 0
+\end{pmatrix} - \\
+&- \frac{G_-\tilde{G}_-}{4k^4} \begin{pmatrix}
+4k^4 - 12k_z^2k_+k_- & 2\sqrt{3}k_zk_- (2k_z^2-k_+k_-) & 0 & -6k_zk_-^3 \\
+0&0&0&0\\
+0 & 6k_zk_-k_+^2 & 4k^4 - 8k_z^2k_+k_- & 2\sqrt{3}k_zk_- (2k_z^2 - k_-k_+) \\
+0&0&0&0
+\end{pmatrix} + \\
+&+ \dots
+\end{align*}
+\section{BFS in SC with TRSB}
+Normal-state Hamiltonian is
+\begin{align}
+H_N &= \kla*{c_0 \eta_s + c_{yz}\eta_{yz} + c_{zx}\eta_{zx} + c_{xy}\eta_{xy} + c_{3z^2-r^2} \eta_{3z^2-r^2} + c_{x^2-y^2}\eta_{x^2-y^2}}U_T
+\end{align}
+where the unitary part of time-reversal is
+\begin{align}
+U_T &= \begin{pmatrix}
+0 & 0 & 0 & 1 \\
+0 & 0 & -1 & 0 \\
+0 & 1 & 0 & 0 \\
+-1 & 0 & 0 & 0 
+\end{pmatrix}
+\end{align}
+and the six gap matrices are
+\begin{align}
+\eta_s &= U_T,&&& \eta_{\nu,\nu+1} &= \frac{J_{\nu}J_{\nu+1} + J_{\nu+1}J_{\nu}}{\sqrt{3}} U_T, \\
+\eta_{3z^2-r^2} &= \frac{2J_z^2-J_x^2-J_y^2}{3}U_T,  &&& \eta_{x^2-y^2} &= \frac{J_x^2-J_y^2}{\sqrt{3}}U_T.
+\end{align}
+The eigenvalues are $\epsilon_\pm = c_+ \pm |\vec{c}|$ where $\vec{c}=(c_{yz}, \dots)^T$.
+This follows from $\eta_j \sim \gamma_j$ and
+\begin{align}
+\kla*{H_N-c_0}^2 &= c_jc_k\eta_j\eta_k = c_jc_k \frac{1}{2} \klc*{\eta_j, \eta_k} = c_jc_k\frac{1}{2}2\delta_{jk} = \vec{c}\,^2.
+\end{align}
+For the spherically symmetric Hamiltonian $H_N=\alpha k^2 - \mu + \beta (\textbf{k}\cdot \textbf{J})^2$ one finds
+\begin{align}
+c_0 &= \frac{1}{4}\Tr\kla*{\eta_s U_T H_N^\dagger} = \kla*{\alpha k^2 - \mu + \frac{5\beta}{4}[k_x^2 + k_y^2 + k_z^2] } = \kla*{\alpha + \frac{5\beta}{4}}k^2 - \mu,\\
+c_{x^2-y^2} &= \frac{1}{4} \Tr\kla*{\eta_{x^2-y^2} U_T H_N^\dagger} = \frac{1}{4} \beta \kla*{k_x^2 \sqrt{12} - k_y^2 \sqrt{12}} = \frac{\sqrt{3}}{2} \beta \kla*{k_x^2-k_y^2},\\
+c_{3z^2-r^2} &= \frac{1}{4} \Tr\kla*{\eta_{3z^2 - r^2} U_T H_N^\dagger} = \frac{1}{4} \beta \kla*{4k_z^2-2k_x^2-2k_y^2} = \beta\frac{2k_z^2-k_x^2-k_y^2}{2},\\
+c_{yz} &= \frac{1}{4} \Tr\kla*{\eta_{yz} U_T H_N^\dagger} = \frac{1}{4} \beta \kla*{2k_yk_z \sqrt{12}} = \sqrt{3} \beta k_yk_z,\\
+c_{zx} &= \frac{1}{4} \Tr\kla*{\eta_{zx} U_T H_N^\dagger} = \frac{1}{4} \beta \kla*{2k_zk_x \sqrt{12}} = \sqrt{3} \beta k_zk_x,\\
+c_{xy} &= \frac{1}{4} \Tr\kla*{\eta_{xy} U_T H_N^\dagger} = \frac{1}{4} \beta \kla*{2k_xk_yy \sqrt{12}} = \sqrt{3} \beta k_xk_y
+\end{align}
+where we used that the matrices satisfy $\Tr\kla*{\eta_j^\dagger \eta_k} = 4\delta_{jk}$.\\
+The $\eta_s$ gap is a spin-singlet state and represents pure intraband pairing (\qna{why?}).
+The other fice describe a spin-quintet and involve both intra- and interband pairing (\qna{how do we know that they form a quintet and singlet?}).
+We consider zero-momentum Cooper pairs, which implies that quintet pairing involves states away from the Fermi energy (\qna{why/what does this mean?}).
+A general superconducting state may be described as a linear combination of the gap matrices with momentum-dependent coefficients.
+The BdG Hamiltonian generally looks like
+\begin{align}
+H(\textbf{k}) &= \begin{pmatrix}
+H_N(\textbf{k}) & \Delta (\textbf{k}) \\ \Delta^\dagger (\textbf{k}) & -H_N^T(-\textbf{k})
+\end{pmatrix}.
+\end{align}
+For concreteness consider the gap function
+\begin{align}
+\Delta(\textbf{k}) &= \Delta_1 \psi(\textbf{k}) \eta_s + \Delta_0 (\eta_{xz} + \i \eta_{yz})
+\end{align}
+with real constants $\Delta_{0,1}$.
+The latter term describes purely on-site pairing (\qna{no $\textbf{k}$-dependence, i.e. delta-peak in real space, i.e. on-site?}) and the gap matrix $\eta_{xz} + \i \eta_{yz}$ transforms under rotations as the spherical harmonic $Y_{2,1}(\textbf{k})$ and is therefore chiral (\qna{why?}).
+This so called $k_z (k_x+\i k_y)$ state breaks time-reversal symmetry because it is chiral (\qna{intuitively clear, but how would one ``proof'' this in a convenient way?}).
+For $\Delta_0=0$ the gap nodes are equivalent to the zeros of $\psi(\textbf{k})$.
+Since $\psi$ has the same symmetry (\qna{why?}) as $Y_{2,1} \propto \powe{\i\phi} \sin \theta\cos\theta$ these zeros lie in the $k_z=0$ plane ($\theta = \frac{\pi}{2}$) and on the $k_z$-axis ($\theta=0,\theta=\pi$).
+For $\Delta_0\neq 0$ the line and point nodes are replaced by BFS (\qna{how can I replicated the plot? The red lines are just the zeros of $Y_{2,1}$, but apparently it is more complicated}).
+\subsection{Existence of BFS and $\mathbb{Z}_2$ invariant}
+Charge conjugation $C$ acts as $U_C H^\ast(- \textbf{k}) U_C^\dagger = -H(\textbf{k})$ and parity $P$ as $U_P H(-\textbf{k})U_P^\dagger = H(\textbf{k})$ (\qna{why the mins sign for $C$?}).
+Hence $CP$ acts as $U_{CP} H^\ast(\textbf{k})U_{CP}^\dagger = -H(\textbf{k})$.
+Derivation of antisymmetric $\tilde{H}$ in previous section.\\
+$P(\textbf{k}) = \epsilon_+^2 \epsilon_-^2 + 4\Delta_0^2 (\epsilon_+\epsilon_- + c_{xz}^2 + c_{yz}^2)$ (\qna{Eqn. (6) in 127001 pg. 3}).
+\subsection{Pairing-induced pseudomagnetic field}
+In the normal-state the eigenvalues $\epsilon_\pm$ are two-fold degenerate and thus the eigenvectors form a pseudospin basis $\Ket{\pm ,i=1,2}$.
+In this basis the superconducting state is described by the Hamiltonian ... (\qna{Eqn. (8--12) in 127001 pg. 4}).
+\section{BFS: General theory, magnetic order and topology}
+TODO: Questions on most equations involving the pseudospin basis (in particular, explicit expressions and how to derive them)\\
+TODO: How to compute the Pfaffian?
+\subsection{Nonunitary pairing and time-reversal-odd gap product}
+The pairing potential consistent with inversion-symmetric superconducting states is
+\begin{align}
+\Delta (\textbf{k}) &= \eta_{\textbf{k},0} U_T + \vec{\eta}_\textbf{k} \cdot \vec{\gamma} U_T.
+\end{align}
+In the pseudospin basis this can be written as
+\begin{align}
+\tilde{\Delta}(\textbf{k}) &= \begin{pmatrix}
+\psi_{\textbf{k},+} & \psi_{\textbf{k},I}s_0 + \i \textbf{d}_\textbf{k} \cdot \textbf{s} \\
+\psi_{\textbf{k},I}s_0 - \i \textbf{d}_\textbf{k} \cdot \textbf{s} & \psi_{\textbf{k},-}
+\end{pmatrix} \otimes \i s_y
+\end{align}
+where 
+\begin{align}
+\psi_{\textbf{k}, \pm} &= \eta_{\textbf{k},0} \pm \frac{\vec{
+\epsilon}_\textbf{k} \cdot \vec{\eta}_\textbf{k}}{|\epsilon_\textbf{k}|}
+\end{align}
+and 
+\begin{align}
+|\psi_{\textbf{k},I}|^2 + |\textbf{d}_\textbf{k}|^2 &= |\vec{\eta}_\textbf{k}|^2 - \frac{|\vec{\epsilon}_\textbf{k} \cdot \vec{\eta}_\textbf{k}|^2}{|\vec{\epsilon}_\textbf{k}|^2}.
+\end{align}
+The gap product is (suppressing common $\textbf{k}$-arguments)
+\begin{align}
+\Delta\Delta^\dagger &= \kla*{\eta_0 + \vec{\eta} \cdot \vec{\gamma}} U_T U_T^\dagger \kla*{\eta_0 + \vec{\eta} \cdot \vec{\gamma}}^\dagger = \\
+&= |\eta_0|^2 + \vec{\eta}\cdot \vec{\gamma} \eta_0^\ast + \eta_0 \vec{\eta}^\ast \cdot \vec{\gamma}^\dagger + \vec{\eta}\cdot \vec{\gamma} \vec{\eta}^\ast \cdot \vec{\gamma}^\dagger = \\
+&= \qna{?} = \\
+&= |\eta_0|^2 + |\vec{\eta}|^2 + 2\Re \klc*{\eta_0^\ast \vec{\eta}} \cdot \vec{\gamma} + \sum_{n>m>0} 2\i\Im \klc*{\eta_n \eta_m^\ast }\gamma^n\gamma^m.
+\end{align}
+The first term represents the unitary part of the gap product (proportional to $\mathbbm{1}_4$).
+The second term is non-unitary and appears so long as $\eta_0,\eta_j\neq 0$ for some $j=1,\dots,5$ (pairing in both the internally isotropic and internally anisotropic channels).
+The third term is also non-unitary and requires that there is a phase difference between two internally anisotropic channels.
+Gap product in pseudospin basis
+\begin{align}
+\tilde{\Delta} \tilde{\Delta}^\dagger &= \dots \Text{(\qna{Eqn. (8--12) in 224509 pg. 3})}
+\end{align}
+(\qna{I see where the unitary part comes from, but the remaining terms seem mysterious}).\\
+To gain insight into the physical meaning of a non-unitary gap and its relation to TRSB we review the non-unitary pairing in a single band of spin-$\frac{1}{2}$ electrons.
+It is customary to write the gap function as $\Delta_\textbf{k} = (\psi_\textbf{k} + \textbf{d}_\textbf{k} \cdot \bm{\sigma}) \i\sigma_y$.
+Using $\sigma_j\sigma_l = \delta_{jl} + \i\epsilon_{jlm} \sigma_m$ the gap product gives
+\begin{align}
+\Delta\Delta^\dagger &= \kla*{\psi + d_j\sigma_j} \i\sigma_y (-\i \sigma_y^\dagger) \kla*{\psi^\ast + d_l^\ast \sigma_l^\dagger} = \\
+&= |\psi|^2 + d_j \sigma_j \psi^\ast + \psi d_j^\ast \sigma_j + d_jd_l^\ast \sigma_j\sigma_l = \\
+&= |\psi|^2 + |\textbf{d}|^2 + 2\Re \klc*{\psi^\ast \textbf{d}}\cdot \bm{\sigma} + \i \kla*{\textbf{d} \times \textbf{d}^\ast }\cdot \bm{\sigma}.
+\end{align}
+(Back to the multiband case)\\
+For $U_T = \gamma^1\gamma^2$ the gap transforms as
+\begin{align}
+\Delta (\textbf{k}) &\rightarrow \Delta_T(\textbf{k}) := U_T \Delta^\ast (-\textbf{k}) U_T^\dagger = U_T \kla*{\eta_{\textbf{k},0}^\ast + \vec{\eta}_\textbf{k} \cdot \vec{\gamma}^\ast} U_TU_T^\dagger = \\
+&= \eta_0^\ast  U_T + \vec{\eta}^\ast \cdot  U_T \vec{\gamma}^\ast = \\
+&= \kla*{\eta_0^\ast + \vec{\eta}^\ast \cdot \vec{\gamma}} U_T. 
+\end{align}
+Here we used that $\gamma_{3,4,5}$ are real, $\gamma_{1,2}$ are imaginary and anti-commutation relations.
+The gap product transforms as
+\begin{align}
+\Delta(\textbf{k}) \Delta(\textbf{k})^\dagger &\rightarrow U_T \Delta^\ast (-\textbf{k}) \Delta^T(-\textbf{k}) U_T^\dagger = \Delta_T(\textbf{k}) \Delta_T^\dagger (\textbf{k})
+\end{align}
+which justifies the difference\footnote{We used $z-z^\ast = 2\i\Im\klc*{z}$.}
+\begin{align}
+&\Delta(\textbf{k}) \Delta(\textbf{k})^\dagger - \Delta_T(\textbf{k}) \Delta_T^\dagger (\textbf{k}) = \\
+&\qquad = 0 + \kla*{\sum_{n>m>0} \kla*{\eta_n \eta_m^\ast - \eta_n^\ast \eta_m}\gamma^n\gamma^m } - \kla*{\sum_{n>m>0} \kla*{\eta_n^\ast \eta_m - \eta_n \eta_m^\ast}\gamma^n\gamma^m } = \\
+&\qquad = 2\sum_{n>m>0} \kla*{\eta_n \eta_m^\ast - \eta_n^\ast \eta_m}\gamma^n\gamma^m = \\
+&\qquad = \sum_{n,m>0} \kla*{\eta_n \eta_m^\ast - \eta_n^\ast \eta_m}\gamma^n\gamma^m .
+\end{align}
+\subsection{BFS}
+(Similar to derivation of $\tilde{H}_\textbf{k}$ in the supplemental material of 127001, same $\Omega$)\\
+\qna{How to derive the pfaffian?}
+\begin{align}
+P(\textbf{k}) &= \Text{Pf\,} \tilde{H}_\textbf{k} = \\
+&= \kla*{\underline{\epsilon}^2 - \underline{\eta} \cdot \underline{\eta}^\ast }^2 + 4\abs*{\underline{\epsilon} \cdot \underline{\eta}}^2 + \underline{\eta}^2 \kla*{\underline{\eta}^\ast}^2 - \kla*{\underline{\eta} \cdot \underline{\eta}^\ast}^2.
+\end{align}
+Here $\underline{\epsilon} := (\epsilon_0 - \mu, \vec{\epsilon})$, $\underline{\eta} := (\eta_0, \vec{\eta})$ and $\textbf{k}$-dependence suppressed.
+Scalar products between these ``six-vectors'' are defined as $\underline{a} \cdot \underline{b} := a_0 b_0 - \vec{a}\cdot \vec{b}$ (and $\underline{a}^2 := \underline{a}\cdot \underline{a}$).\\
+(Back to single-band case) BdG Hamiltonian in \qna{pseudospin-singlet} form
+\begin{align}
+H(\textbf{k}) &= \begin{pmatrix}
+\xi_0(\textbf{k}) \sigma_0 & \psi(\textbf{k}) \i\sigma_2 \\ 
+-\psi^\ast (\textbf{k}) \i\sigma_2 & -\xi_0(\textbf{k}) \sigma_0
+\end{pmatrix}.
+\end{align}
+(\qna{Elegant way to compute $P$, or just $P \equiv \sqrt{\det H}$?}) The Pfaffian here is
+\begin{align}
+\Text{Pf\,} H &= \xi_0^2 + |\psi|^2 \ge 0
+\end{align}
+and is non-negative.
+\section{Exceeding the Landau speed limit with BFS}
+The energy including the Doppler-shift is $E(\textbf{p}) = \epsilon(\textbf{p}) + \textbf{v}_s \cdot \textbf{p}$ where $\epsilon(\textbf{p})^2 = p_z^2c^2 + v_F^2 (p-p_F)^2$.
+Note that in cylindrical coordinates we have $\textbf{p} = p_z \textbf{e}_z + p \textbf{e}_p$ and choose a rotation such that $\textbf{v}_s \cdot \textbf{p} = pv_s\cos\phi$.
+The density of state at $T=0$ is given by
+\begin{align}
+N &= \intrndpi{3}{\delta\kla*{E(\textbf{p})} }{p} = \\
+&= \frac{1}{(2\pi)^3} \intr{ \intx{0}{\infty}{ \intx{0}{2\pi}{ \delta\kla*{pv_s\cos\phi + \sqrt{p_z^2c^2 + v_F^2 \klb*{\sqrt{p_z^2 + p^2} - p_F}^2} } p}{\phi}}{p} }{p_z}.
+\end{align}
+Since $p,v_s\ge 0$ the only zeros of the $\delta$-argument are for $\cos\phi < 0$ corresponding to $\phi \in \kla*{\frac{\pi}{2}, \frac{3\pi}{2}}$.
+Any zero will appear twice, and thus we can substitute $u = -pv_s\cos\phi$ while cutting the remaining interval in half.
+This yields
+\begin{align}
+N &= \frac{2}{(2\pi)^3} \intr{ \intx{0}{\infty}{ \intx{0}{1}{\delta \kla*{- u + \sqrt{p_z^2c^2 + v_F^2 \klb*{\sqrt{p_z^2 + p^2} - p_F}^2 }} \frac{1}{v_s\sqrt{1 - \kla*{\frac{u}{pv_s}}^2}}}{u} }{p}}{p_z} = \\
+&= \frac{1}{(2\pi)^3} \intr{ \intx{0}{\infty }{ p \kla*{p^2v_s^2 - p_z^2c^2 - v_F^2 \klb*{\sqrt{p_z^2+p^2} - p_F}^2}^{-\frac{1}{2}} }{p}}{p_z} = \\
+&= \frac{4}{(2\pi)^3} \intx{0}{\infty}{\intx{0}{\frac{\pi}{2}}{ q \cos\theta \kla*{v_s^2q^2\cos^2\theta -c^2q^2\sin^2\theta - v_F^2 \klb*{q - p_F}^2 }^{-\frac{1}{2}} q }{\theta}}{q} = \\
+&= \frac{4}{(2\pi)^3} \intx{0}{\infty}{ \intx{0}{1}{ q^2 \kla*{v_s^2q^2 - u^2 q^2 (v_s^2 + c^2) - v_F^2 \klb*{q-p_F}^2}^{-\frac{1}{2}}  }{u} }{q}.
+\end{align}
+Making use of the standard integral 
+\begin{align}
+\intx{0}{1}{  \frac{1}{\sqrt{a^2 - b^2u^2}}}{u} &= \intx{0}{\arcsin \kla*{\frac{b}{a}} }{ \frac{1}{a \cos\theta} \frac{a}{b}\cos\theta }{\theta} = \frac{1}{b} \arcsin \kla*{\frac{b}{a}}
+\end{align}
+this simplifies to
+\begin{align}
+N &= \frac{4}{(2\pi)^3} \intx{0}{\infty}{ \frac{q}{\sqrt{v_s^2+c^2}} \arcsin\kla*{\frac{q\sqrt{v_s^2 + c^2}}{\sqrt{ v_s^2q^2 - v_F^2 \klb*{q-p_F}^2 }}} }{q} = \\
+&= \qna{???} = N_F \frac{v_s}{c} = \frac{p_F^2v_s}{\pi^2 c v_F}.
+\end{align}
+\section{BFS in Noncentrosymmetric Multicomponent SC}
+Breaking of TRS generically leads to (mini-)BFS in multicomponent SC without inversion symmetry.
+Stable with respect to weak perturbations, increase in order parameter may make BFS disappear by means of a Lifshitz transition.
+\subsection{BdG Hamiltonian}
+The QM action for the Bogoliubov quasiparticles in the SC state is
+\begin{align}
+S &= k_BT \sum_{\omega_n,\textbf{p}} \Psi^\dagger(\omega_n, \textbf{p}) \klb*{-\i\omega_n + H_\Text{BdG}(\textbf{p})} \Psi(\omega_n, \textbf{p})
+\end{align}
+where $\omega_n = \frac{(2n+1)\pi}{\beta}$ are the fermionic Matsubara frequencies and $\Psi = \kla*{\psi, \mathcal{T}\psi}$.
+Here $\psi$ has $N$ components describing $N$ energy bands and the time-reversal acts as $\mathcal{T}\psi(\omega_n,\textbf{p}) = U\psi^\ast (-\omega_n, -\textbf{p})$ where $U$ is the unitary part.
+The BdG Hamiltonian is
+\begin{align}
+H_\Text{BdG}(\textbf{p}) &= \begin{pmatrix}
+H(\textbf{p})-\mu & \Gamma \\ \Gamma^\dagger & -\klb*{H(\textbf{p}) - \mu }
+\end{pmatrix}.
+\end{align}
+We assume that the $N$-dimensional Hamiltonian $H(\textbf{p})$ is TR symmetric, i.e. $U^\dagger H(\textbf{p}) U = H^\ast(-\textbf{p})$, but not inversion symmetric.
+The action then becomes
+\begin{align}
+S &= k_BT \sum_{\omega_n, \textbf{p}} \kla*{ \psi^\dagger [H-\mu] \psi + \psi^\dagger \Gamma U\psi^\ast_- + \psi^T_- U^\dagger \Gamma^\dagger \psi - \psi^T_- U^\dagger [H-\mu] U\psi^\ast_-} = \\
+&= k_BT \sum_{\omega_n, \textbf{p}} \kla*{ \psi^\dagger H \psi + \psi^\dagger \Gamma U\psi^\ast_- + \psi^\dagger \Gamma U\psi^\ast_- - \psi^T H^\ast \psi^\ast} = \\
+&= 2k_BT \sum_{\omega_n, \textbf{p}} \klc*{\Im\kla*{ \psi^\dagger H \psi } + \Re\kla*{\psi^\dagger \Gamma U\psi^\ast_-} } .
+\end{align}
+\qna{Textbook form?}\\
+Assuming that $\Gamma$ is constant, which corresponds to pairing being local in real space, the matrix can be expanded as $\Gamma = \sum_a\Delta_aM_a$ where $\Delta_a = \Delta_{1a} + \i \Delta_{2a}$ and $M_a$ are Hermitian matrices forming a basis.\\
+If $\mathcal{T}^2 = -1$ the $M_a$ are TR-even, otherwise TR-odd (\qna{why?}).
+The BdG Hamiltonian then becomes
+\begin{align}
+H_\Text{BdG} &= \sigma_3 \otimes \klb*{H - \mu } + \sum_a \kla*{\Delta_{1a} \sigma_1 -\Delta_{2a}\sigma_2} \otimes M_a.
+\end{align}
+The $\sigma_2$ terms break TRS when $M_a$ are even, and the $\sigma_1$-terms break TRS when $M_a$ are odd.
+Thus $\Gamma\neq \Gamma^\dagger$ is generically required for TRSB.
+\subsection{Effective Hamiltonian}
+Let $H(\textbf{p}) \phi_j(\textbf{p}) = E_j \phi_j(\textbf{p})$ describe the eigenstates of the normal-state Hamiltonian $H$.
+Due to the lack of inversion symmetry there is no generic degeneracy, and thus there is one \emph{light} state $\phi_1$ whose energy $E_1$ is arbitrarily close to the Fermi surface, and \emph{heavy} states with $|E_j - \mu| > 0$ for $j=2,\dots,N$.
+\subsubsection{Overview of the approach}
+Write the BdG-Hamiltonian in the form
+\begin{align}
+H_\Text{BdG} &= \begin{pmatrix}
+H_l & H_{lh} \\ H_{lh}^\dagger & H_h
+\end{pmatrix}.
+\end{align}
+We care about the solutions to $\det \kla*{H_\Text{BdG} - \omega} = 0$, which is equivalent to
+\begin{align}
+\det\kla*{H_h - \omega} \det \kla*{L_\Text{eff}} &= 0
+\end{align}
+where $L_\Text{eff}$ is the Schur complement of the $H_h$-block and is given by\footnote{For $M=\begin{pmatrix}
+A & B \\ C & D
+\end{pmatrix}$ we have $\det(M) = \det (D) \det (A - BD^{-1}C)$.}
+\begin{align}
+L_\Text{eff} &= (H_l - \omega) - H_{lh} \kla*{H_h-\omega}^{-1} H_{lh}^\dagger.
+\end{align}
+For the zero modes ($\omega=0$) the heavy block is invertible, and thus we care only about the solutions to $\det (H_\Text{eff}) = 0$ where the effective Hamiltonian is
+\begin{align}
+H_\Text{eff} &= L_\Text{eff}(\omega=0) = H_l - H_{lh} H_h^{-1} H_{lh}^\dagger.
+\end{align}
+Since this is a two-dimensional matrix, we can expand it as
+\begin{align}
+H_\Text{eff} &= \sum_{\alpha=0}^3 f_\alpha (\textbf{p}) \sigma_\alpha = \begin{pmatrix}
+f_0 + f_3 & f_1 -\i f_2 \\ f_1 + \i f_2 & f_0 - f_3
+\end{pmatrix}.
+\end{align}
+In this form, we arrive at the equation
+\begin{align}
+0 &= \det (H_\Text{eff}) = (f_0 + f_3)(f_0-f_3) - (f_1 -\i f_2) (f_1 + \i f_2) = f_0^2 - \sum_{j=1}^3 f_j^2.
+\end{align}
+In the normal-state $\Delta_a \equiv 0$ and the BdG-Hamiltonian reduces to $\sigma_3\otimes \klb*{H - \mu }$, which in our new basis reads as $\klb*{H - \mu } \otimes \sigma_3$.
+Thus $H_\Text{eff} = (E_1 - \mu) \sigma_3$, or equivalently, $f_3 = E_1 - \mu$ and $f_\beta \equiv 0$ for $\beta=0,1,2$.\\
+A more detailed perturbative analysis of $\Delta_a$ leads to the observations that $f_0,f_3$ pick up a $\Delta^2$-correction and $f_{1,2} = \mathcal{O}(\Delta) + \mathcal{O}(\Delta^3)$.
+When the linear contribution vanishes, there will generically be two momenta $p_1\neq p_2$ in the same direction where $\det (H_\Text{eff}) = 0$ (\qna{Is this, because the gap due to a linear contribution would generally push the bands so far apart, that there are no zeros?}).
+This yields two conditions on the polar angles $\phi_0,\theta_0$, so the BFS will be an inflated point node.
+If the conditions are the same, we instead get an inflated line node (\qna{argument being one more d.o.f., right?}).\\
+The detailed analysis also shows that if TRS is not broken in the SC state, $f_{0,2} \equiv 0$ and thus $p_1 = p_2$ (no gap opening between bands, and no shift).
+Since this leads to 
+\begin{align}
+0 &= \det (H_\Text{eff}) = -(f_1^2 + f_3^2)
+\end{align}
+we get the two conditions $f_{1,3} = 0$ for the three d.o.f. of $\textbf{p}$, leading to line nodes.
+\subsubsection{Detailed analysis}
+What is left to show is that the functions $f_\alpha$ have the stated leading order terms for non-zero $\Delta$ and that $f_{0,2} \equiv 0$ if TRS is preserved in the SC state.
+Instead of writing the BdG-Hamiltonian as blocks of light and heavy modes, we now write
+\begin{align}
+(H_\Text{BdG}^{(0)})_{jk} &= \Phi_j^\dagger \kla*{ (H - \mu) \otimes \sigma_3 + \sum_a M_a \otimes (\Delta_{1a} \sigma_1 - \Delta_{2a} \sigma_2) } \Phi_k = \\
+&= \delta_{jk} (E_j - \mu)\sigma_3 + \sum_a (\phi_j^\dagger M_a \phi_k) (\Delta_{1a}\sigma_1 - \Delta_{2a} \sigma_2).
+\end{align}
+The Schur decomposition now reads as 
+\begin{align}
+\det \kla*{H_\Text{BdG}^{(0)}} &= \det \kla*{H_{NN}^{(0)} } \det \kla*{H_\Text{BdG}^{(1)}}
+\end{align}
+where $H_\Text{BdG}^{(1)} = H_\Text{BdG}^{(0)} - \kla*{H_{jN}^{(0)}}_{j=1,\dots,N-1} \kla*{H_{NN}^{(0)}}^{-1} \kla*{H_{jN}^{(0)\dagger}}_{j=1,\dots,N-1}$ (here only the upper left $(N-1)\times (N-1)$ two-dimensional blocks of $H_\Text{BdG}^{(0)}$ are meant).
+Explicitly
+\begin{align}
+H_\Text{BdG}^{(0)} - H_\Text{BdG}^{(1)} &= \begin{pmatrix}
+H_{1,N}^{(0)} \\ \vdots \\ H_{N-1,N}^{(0)}
+\end{pmatrix} \kla*{H_{N,N}^{(0)}}^{-1} \begin{pmatrix}
+H_{1,N}^{(0)\dagger} & \hdots & H_{N-1,N}^{(0)\dagger}
+\end{pmatrix}.
+\end{align}
+Iterating this leads to
+\begin{align}
+\det \kla*{H_\Text{BdG}^{(0)}} &= \det \kla*{H_{NN}^{(0)}} \dots \det \kla*{H_{11}^{(N-1)}}
+\end{align}
+where the last two-dimensional matrix is our effective Hamiltonian.
+It will consist of a very large number of complicated terms, but we only need the second order corrections (\qna{I would have expected the result to look much more complicated. Why do the following terms cover every second order contribution?})
+\begin{align}
+H_\Text{eff} &= H_{11}^{(0)} - \sum_{k=2}^N H_{k,1}^{(0)} \kla*{H_{k,k}^{(0)} \big\vert_{Delta=0} }^{-1} H_{k,1}^{(0)\dagger} + \mathcal{O}(\Delta^3).
+\end{align}
+If TRS is preserved one can set $\Delta_{2a} \equiv 0$.
+Then every step in the iteration involves multiplying three terms given by linear combinations of $\sigma_1,\sigma_3$.
+In general we have
+\begin{align}
+\sigma_j\sigma_k\sigma_l &= \delta_{jk} \sigma_l + \i\epsilon_{jkm} \sigma_m\sigma_l = \delta_{jk} \sigma_l + \i \epsilon_{jkl} \sigma_0 - \epsilon_{jkm} \epsilon_{mln} \sigma_n = \\
+&= \delta_{jk} \sigma_l + \i \epsilon_{jkl}\sigma_0 + \kla*{\delta_{jn} \delta_{kl} -\delta_{jl} \delta_{kn}} \sigma_n = \\
+&= \delta_{jk} \sigma_l + \i \epsilon_{jkl} \sigma_0 + \delta_{kl} \sigma_j - \delta_{jl} \sigma_k.
+\end{align}
+If $j,k,l\in\klc*{1,3}$ the $\sigma_0$-term vanishes and all remaining terms are again $\sigma_1$ or $\sigma_3$.
+Thus the final effective Hamiltonian will also be a linear combination of $\sigma_1$ and $\sigma_3$.\\
+The more difficult result is that regarding the corrections to $f_\alpha$ (\qna{How to derive eqns. (17) -- (19) in  237004 pg. 4?}).
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

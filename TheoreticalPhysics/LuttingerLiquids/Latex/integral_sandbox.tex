@@ -1,0 +1,754 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{ll_scrarticle}
+
+\newcommand*{\titel}{Integrals}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+%\subject{SUBJECT}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{First model}
+\subsection{Symmetry analysis of the self-energy}
+Define $f_1(r,r') := F_1(r-r') + F_1(r')$ and $f_2(r,r') := F_2(r-r') - F_2(r')$.
+Then to first order in $g$ the self-energy can be written as
+\begin{align}
+\Sigma(r) &= g\powe{-\frac{1}{2} \klb*{K + \frac{1}{K}}F_1(r)} \begin{pmatrix}
+0 & \i I_+(r) \\ -\i I_-(r) & 0
+\end{pmatrix}
+\end{align}
+where the special functions are slightly changed to
+\begin{align}
+I_\ell(r) &= \frac{1}{4} \intx{0}{\beta}{\intr{\powe{-Kf_1(r,r') - \ell f_2(r,r')} \nabla'^3 \kla*{Kf_1(r,r') + \ell f_2(r,r')}}{x'}}{\tau'}.
+\end{align}
+We have the following reflection identities
+\begin{align}
+f_1(x,-\tau, x',\tau') &= F_1(x-x',-\tau-\tau') + F_1(x',\tau') = f_1(x,\tau,x',-\tau'),\\
+f_1(-x,\tau,x',\tau') &= F_1(-x-x',\tau-\tau') + F_1(x',\tau') = f_1(x,\tau,-x',\tau'),\\
+f_2(x,-\tau,x',\tau') &= F_2(x-x',-\tau-\tau') - F_2(x',\tau') = \\
+&= \kla*{F_2(-x+x',\tau + \tau') -\i\pi} - \kla*{F_2(-x',-\tau') - \i\pi} = f_2(-x,\tau,-x',-\tau'),\\
+f_2(-x,\tau,x',\tau') &= F_2(-x-x',\tau-\tau') - F_2(x',\tau') = \\
+&= \kla*{F_2(x+x',-\tau + \tau') -\i\pi} - \kla*{F_2(-x',-\tau') - \i\pi} = f_2(x,-\tau,-x',-\tau').
+\end{align}
+Defining $s=0^+ \sgn(t)$ we now find
+\begin{align}
+\Sigma^\dagger(k,\omega) &= \intrnd{2}{\powe{\i (kx-\omega t)} \klb*{\Sigma \kla*{-x, \i t - s}}^\dagger}{(x,t)}.
+\end{align}
+Since the self-energy in real time is
+\begin{align}
+\Sigma(x,t) &= \Sigma(x, \i t + s) = g\powe{-\frac{1}{2} \klb*{K + \frac{1}{K}} F_1(x,\i t + s)} \begin{pmatrix}
+0 & \i I_+(x,\i t + s) \\ -\i I_-(x,\i t + s) & 0
+\end{pmatrix}
+\end{align}
+we find the hermitian conjugate to be
+\begin{align}
+\Sigma^\dagger(x,t) &= g\powe{-\frac{1}{2} \klb*{K + \frac{1}{K}} F_1(x,-\i t + s)} \begin{pmatrix}
+0 & \i \klb*{I_-(x,\i t + s)}^\ast \\ -\i \klb*{I_+(x,\i t + s)}^\ast & 0
+\end{pmatrix}.
+\end{align}
+At this point we need to consider
+\begin{align}
+\klb*{I_\ell(x,\i t + s)}^\ast &= \frac{1}{4} \intx{0}{\beta}{\intr{\powe{-Kf_1(x,-\i t + s, x',\tau') + \ell f_2(x, -\i t + s,x',\tau')} \nabla'^3 \kla*{Kf_1 - \ell f_2} }{x'} }{\tau'} = \\
+&= I_{-\ell}(x, -\i t + s)
+\end{align}
+which yields $\Sigma^\dagger(x,t) = \Sigma(x,-t)$ and thus
+\begin{align}
+\Sigma^\dagger(k,\omega) &= \intrnd{2}{\powe{\i (kx-\omega t)} \Sigma(-x, t) }{(x,t)}.
+\end{align}
+Since the prefactor of the self-energy is symmetric under $x\rightarrow -x$, the question of whether the self-energy in momentum space is hermitian boils down to the transformation of the special functions.
+These satisfy
+\begin{align}
+I_\ell(-x,\i t + s) &= \frac{1}{4} \intx{0}{\beta}{\intr{\powe{-Kf_1(-x,\i t+s,x',\tau') - \ell f_2(-x,\i t+s,x',\tau')} \nabla'^3 \kla*{Kf_1 + \ell f_2}}{x'} }{\tau'} = \TODO{???}
+\end{align}
+\QnA{Probably not hermitian? At least not in a very obvious way. Also, I am not sure how to treat the derivative term. Maybe there should already have been an additional minus sign due to the substitution of $x'$. The $f_2$ function is somewhat difficult to treat...}
+\subsection{Analytical solution of the special integrals}
+In this section we want to analytically compute the integrals $I_\ell(r)$ in order to simplify the subsequent analytical continuation and Fourier transformation to momentum space.
+Of course an exact solution is too much to hope for, but we will try to find a very good approximation.
+This is reasonable as the integrand drops of very quickly around the two isolated peaks at $r'=0$ and $r'=r$.
+First note that writing $f(r,r') = Kf_1(r,r') + \ell f_2(r,r')$ we have
+\begin{align}
+I_\ell(r) &= \frac{u}{4} \intx{0}{\beta}{\intr{\powe{-f(r,r')} \nabla'^3 f(r,r')}{x'}}{\tau'} = \frac{u}{8} \intx{0}{\beta}{\intr{\powe{-f(r,r')} \klb*{\nabla' f(r,r')}^3}{x'}}{\tau'}.
+\end{align}
+This is due to partial integration of the form
+\begin{align}
+\intr{\powe{-f(x)} f'''(x)}{x} &= -\intr{\powe{-f}(-f')f''}{x} = \intr{\powe{-f} (-f')^2f'}{x} + \intr{\powe{-f}(-f'') f'}{x}
+\end{align}
+and solving for the desired integral.
+Due to this trick we only need the first derivatives\footnote{Note that $\arg(z) = \arg(x+\i y)$ has the derivatives $\partial_x \arg(z) = \frac{-y}{x^2 + y^2}$ and $\partial_y \arg(z) = \frac{x}{x^2 + y^2}$.}
+\begin{align}
+\nabla F_1(r) &= \frac{\sinh\kla*{\frac{\pi x}{\beta u}} \cosh\kla*{\frac{\pi x}{\beta u}} \frac{\pi}{\beta u}}{\sin^2\kla*{\frac{\pi\tau}{\beta}} + \sinh^2\kla*{\frac{\pi x}{\beta u}}},\\
+\nabla F_2(r) &= -\i \frac{\tanh\kla*{\frac{\pi x}{\beta u}} \sech^2 \kla*{\frac{\pi x}{\beta u}} \frac{\pi}{\beta u}}{\tan^2\kla*{\frac{\pi\tau}{\beta} + \frac{\pi\alpha \sgn(\tau)}{\beta u}} + \tanh^2\kla*{\frac{\pi x}{\beta u}}}.
+\end{align}
+Introducing the variables $y = \frac{\pi\tau}{\beta} + \frac{\pi\alpha \sgn(\tau)}{\beta u}$ and $\xi = \frac{\pi x}{\beta u}$ we find
+\begin{align}
+\bsplit{I_\ell(y,\xi) = \frac{\pi}{8\beta u} \intx{0}{\pi}{\intr{&\kla*{\frac{\pi\alpha}{\beta u}}^{2K} \frac{\powe{-\i\ell\arg \klb*{\tan(y') + \i \tanh(\xi')}}}{\klb*{\sin^2(y') + \sinh^2(\xi')}^{K/2}} \frac{\powe{\i\ell\arg \klb*{\tan(y-y') + \i \tanh(\xi-\xi')}}}{\klb*{\sin^2(y-y') + \sinh^2(\xi-\xi')}^{K/2}} \times \\
+& \times\klb[\bigg]{K\frac{\sinh(\xi')\cosh(\xi')}{\sin^2(y') + \sinh^2(\xi')} - K\frac{\sinh(\xi-\xi')\cosh(\xi-\xi')}{\sin^2(y-y') + \sinh^2(\xi-\xi')} + \\
+&\qquad + \i\ell \frac{\tanh(\xi') \sech^2(\xi')}{\tan^2(y') + \tanh^2(\xi')} - \i\ell \frac{\tanh(\xi-\xi') \sech^2(\xi-\xi')}{\tan^2(y-y') + \tanh^2(\xi-\xi')}}^3}{\xi'} }{y'}.}
+\end{align}
+Using the definition of the complex argument we can write $\powe{\i \arg(z)} = \frac{z}{|z|}$.
+Substituting $w = \cot(y)$ gives\footnote{$\sin^2(y') = \frac{1}{1 + w'^2}$, $\sin^2(y'-y) = \frac{(w'-w)^2}{(1+w^2)(1+w'^2)}$, $\tan^2(y') = \frac{1}{w'^2}$ and $\tan^2(y'-y) = \frac{(w'-w)^2}{(1 + ww')^2}$}
+\begin{align}
+\bsplit{I_\ell(w,v) = \frac{\pi}{8\beta u} \intr{\intr{&\kla*{\frac{\pi\alpha}{\beta u}}^{2K} \frac{1}{1 + w'^2} \klb*{\frac{1}{1 + w'^2} + \sinh^2(\xi')}^{-K/2} \times \\
+&\times \klb*{\frac{(w'-w)^2}{(1+w^2)(1+w'^2)} + \sinh^2(\xi'-\xi)}^{-K/2} \times \\
+&\times \frac{\frac{1}{w'} - \i\ell \tanh(\xi')}{\frac{1}{w'^2} + \tanh^2(\xi')} \frac{\frac{w - w'}{1 + ww'} - \i\ell \tanh(\xi'-\xi)}{\frac{(w'-w)^2}{(1+ww')^2} + \tanh^2(\xi'-\xi)} \times \\
+&\times \klb[\Bigg]{K \frac{\sinh(\xi')\cosh(\xi')}{\frac{1}{1 + w'^2} + \sinh^2(\xi')} + K\frac{\sinh(\xi'-\xi) \cosh(\xi'-\xi)}{\frac{(w'-w)^2}{(1+w^2)(1+w'^2)} + \sinh^2(\xi'-\xi)} + \\
+&\qquad + \i\ell \frac{\tanh(\xi') \sech^2(\xi')}{\frac{1}{w'^2} + \tanh^2(\xi')} + \i\ell \frac{\tanh(\xi'-\xi) \sech^2(\xi'-\xi)}{\frac{(w'-w)^2}{(1+ww')^2} + \tanh^2(\xi'-\xi)}}^3}{\xi'} }{w'}.}
+\end{align}
+%There are simple poles at $w'=\pm\i$ and higher order poles at $w'=\pm\i\coth(\xi')$ and $w' = \frac{w \pm\i\tanh(\xi'-\xi)}{1 \pm\i w\tanh(\xi'-\xi)}$.
+%%There are two types of denominators in the integrand, $\sin^2(y) + \sinh^2(\xi)$ and $\tan^2(y) + \tanh^2(\xi)$.
+%%Note that the poles of these coincide, since $\xi_0 = \pm \i y$ gives\footnote{$\sinh(\i x) = \i\sin (x)$ and $\cosh(\i x) = \cos(x)$}
+%%\begin{align}
+%%\sinh^2(\xi_0) &= -\sin^2(y) \qquad \text{and} \qquad \tanh^2(\xi_0) = \frac{-\sin^2(y)}{\cos^2(y)} = -\tan^2(y).
+%%\end{align}
+%%Thus our integrand has a total of four poles in the complex plane, explicitly $\xi' = \pm\i |y'|$ and $\xi' = \xi \pm \i |y'-y|$.
+\subsection{Cosecant 2d Fourier transform}
+In order to compute the self-energy for the general case of $K\neq 1$ we need to solve integrals of the form
+\begin{align}
+I_{ab} &= \intx{0}{\pi}{\intr{ \frac{\powe{\i (kx - \omega y)}}{\sin^a(y + \i x) \sin^b(y - \i x)}}{x} }{y} \equiv J_{ab}(k,\omega) + J_{ba}(-k,\omega).
+\end{align}
+Note that
+\begin{align}
+\sin(y+\i x) &= \frac{\powe{\i y - x} - \powe{-\i y + x}}{2\i} = \powe{x - \i y} \frac{1 - \powe{ - 2x + 2\i y}}{-2\i}.
+\end{align}
+Then $v= 2y$ and $u = \powe{-2x}$ give
+\begin{align}
+J_{ab} &= (2\i)^{a+b} \intx{0}{\pi}{\intx{0}{\infty}{ \powe{-(x-\i y)a} \powe{-(x+\i y)b} \frac{\powe{\i (kx - \omega y)}}{ \kla*{1 - \powe{-2x+2\i y}}^a \kla*{1 - \powe{-2x-2\i y}}^b}}{x} }{y}\\
+&= (2\i)^{a+b} \frac{1}{4} \intx{0}{2\pi}{ \powe{\i \frac{v}{2} (a -b - \omega)} \intx{0}{1}{u^{\frac{a+b - \i k}{2} - 1} \klb*{1 - u \powe{\i v}}^{-a} \klb*{1 - u \powe{-\i v}}^{-b} }{u} }{v}\\
+&= (2\i)^{a+b} \frac{1}{4p} \intx{0}{2\pi}{\powe{\i vq } F_1\kla*{p; -b,-a;p+1; \powe{-\i v}, \powe{\i v}}}{v}
+\end{align}
+where $q = \frac{a-b-\omega}{2}$, $p = \frac{a+b-\i k}{2}$ and $F_1$ is the Appell hypergeometric function defined by
+\begin{align}
+F_1\kla*{a;b_1,b_2;c;x,y} &= \sum_{n,m\ge 0} \frac{x^m y^n}{m!n!} \frac{\Gamma(a+m+n)}{\Gamma(a)} \frac{\Gamma(c)}{\Gamma(c+m+n)} \frac{\Gamma(b_1 + m)}{\Gamma(b_1)} \frac{\Gamma(b_2 + n)}{\Gamma(b_2)}.
+\end{align}
+%%Since the remaining integral is over $\powe{\i vq} \powe{-\i vm} \powe{\i vn}$ this merely contributes an additional factor of 
+%%\begin{align}
+%%
+%%\end{align}
+In our case we have
+\begin{align}
+J_{ab} &= \frac{(2\i)^{a+b}}{\Gamma(-b)\Gamma(-a)} \frac{1}{4p} \sum_{n,m\ge 0} \frac{\Gamma(m-b)\Gamma(n-a)}{n!m!} \frac{p}{p+m+n} \intx{0}{2\pi}{\powe{\i vq} \powe{-\i vm} \powe{\i vn} }{v}\\
+&= \frac{(2\i)^{a+b}}{\Gamma(-b)\Gamma(-a)} \i \frac{\powe{2\pi\i q} - 1}{4} \sum_{n,m\ge 0} \frac{\Gamma(m-b)\Gamma(n-a)}{n!m!} \frac{1}{p+m+n} \frac{1}{q+n-m}.
+\end{align}
+\TODO{Result is numerically inconsistent. Also setting $a=1$, $b=0$ does not really seem to reproduce the known result...}
+\subsubsection{Contour integration}
+We already found
+\begin{align}
+J_{ab} &= (2\i)^{a+b} \frac{1}{4} \intx{0}{2\pi}{ \powe{\i \frac{v}{2} (a -b - \omega)} \intx{0}{1}{u^{\frac{a+b - \i k}{2} - 1} \klb*{1 - u \powe{\i v}}^{-a} \klb*{1 - u \powe{-\i v}}^{-b} }{u} }{v}.
+\end{align}
+Note that the $v$-integration corresponds to parametrizing the integral
+\begin{align}
+(2\i)^{a+b} \frac{1}{4\i} \oint_{|z|=1} z^{\frac{a+b-\omega}{2}-1} \intx{0}{1}{u^{\frac{a+b - \i k}{2} - 1} \klb*{1 - u z}^{-a} \klb*{z - u}^{-b} }{u} \,\d z
+\end{align}
+with $z=\powe{\i v}$.
+This $z$-integration has poles at $z=u$, $z=\frac{1}{u}$ and $z=0$.
+Now let $z=\alpha\powe{\i v}$ and consider the limit $\alpha\ll 1$
+\begin{align}
+J_{ab} &\simeq (2\i)^{a+b} \frac{1}{4} \alpha^\frac{a+b-\omega}{2} \intx{0}{2\pi}{ \powe{\i v \frac{a+b-\omega}{2}} \intx{0}{1}{u^{\frac{a+b - \i k}{2} - 1} \klb*{\alpha\powe{\i v} - u}^{-b} }{u} }{v} \\
+&= (2\i)^{a+b} \frac{1}{4p} \alpha^\frac{a-b-\omega}{2} \intx{0}{2\pi}{\powe{\i v\frac{a-b-\omega}{2}} {}_2F_1\kla*{p, b, p + 1, \frac{1}{\alpha} \powe{-\i v}} }{v}\\
+&= (2\i)^{a+b} \frac{1}{4p} \alpha^\frac{a-b-\omega}{2} \sum_{n\ge 0} \intx{0}{2\pi}{\powe{\i v\frac{a-b-\omega}{2}} \frac{\powe{-\i vn}}{\alpha^n n!} \frac{1}{p+n} \frac{\Gamma(b+n)}{\Gamma(b)} }{v}\\
+&= (2\i)^{a+b} \frac{1}{4\i p} \alpha^\frac{a-b-\omega}{2} \sum_{n\ge 0} \frac{1}{\alpha^n n!} \frac{1}{p+n} \frac{\Gamma(b+n)}{\Gamma(b)} \frac{\powe{\i 2\pi \frac{a-b-\omega}{2}} - 1}{\frac{a-b-\omega}{2} - n}
+\end{align}
+%%\subsection{Generalized cosecant 2D Fourier transform}
+%\begin{align}
+%f(\i\omega_n^\F, \xi) &= (-4)^K \frac{2\beta\i}{\Gamma(K)} \frac{\Gamma(n+K+1)}{\Gamma(n+2)} \frac{\powe{\xi} \powe{-2\xi (n+1)}}{\kla*{-2\sinh(2\xi)}^{K+1}} {}_2F_1\kla*{1-K, 1+K; n + 2; \frac{1}{1 - \powe{4\xi}}}\\
+%&= -\beta \i 2^K \frac{\Gamma(n+K+1)}{\Gamma(K) \Gamma(n+2)} \frac{\powe{-\xi (2n+1)}}{\sinh^{K+1} (2\xi)} {}_2F_1\kla*{1 - K, 1+K; n+2; \frac{1}{1 - \powe{4\xi}}}.
+%\end{align}
+%For $x<0$ the result picks up an additional minus sign, so we can write
+%\begin{align}
+%f(\i\omega_n^\F, x) &= -\beta \i \sgn(x) 2^K \binom{n+K}{K-1} \frac{\powe{-\frac{x}{u} \omega_n^\F}}{\sinh^{K+1} \kla*{\frac{2\pi x}{\beta u}}} {}_2F_1\kla*{1 - K, 1+K; n+2; \frac{-\powe{-\frac{2\pi x}{\beta u}}}{2\sinh\kla*{\frac{2\pi x}{\beta u}}}}.
+%\end{align}
+%%The spatial Fourier transform requires solving integrals of the form
+%%\begin{align}
+%%I(a,b) &= \intx{0}{\infty}{\powe{-ax} \frac{1}{\sinh^b(x)} }{x} = 2^{b} \intx{0}{\infty}{\frac{\powe{-ax} \powe{-bx}}{\kla*{1 - \powe{-2x}}^b}}{x}\\
+%%&= 2^b \intx{0}{1}{y^{-b} \powe{-(a+b) \frac{-1}{2} \log(1-y)} \frac{1}{2(1-y)} }{y}\\
+%%&= 2^{b-1} \intx{0}{1}{y^{-b} (1-y)^{\frac{a+b}{2}-1}}{y} = 2^{b-1} B\kla*{1-b, \frac{b+a}{2}}.
+%%\end{align}
+%%%Using the substitution $x\rightarrow -x$ we can similarly compute the integral from $x=-\infty$ to $x=0$ giving
+%%%\begin{align}
+%%%\intr{\powe{-ax} \frac{1}{\sinh^b(x)}}{x} &= 2^{b-1} B\kla*{1 - b, \frac{b+a}{2}} + (-1)^b 2^{b-1} B\kla*{1 - b, \frac{b-a}{2}}.
+%%%\end{align}
+%%%Using the substitution $x\rightarrow -x$ we can similarly compute the integral from $x=-\infty$ to $x=0$ giving
+%%%\begin{align}
+%%%\intr{\powe{-ax} \frac{1}{\sinh^b(x)}}{x} &= 2^{b-1} B\kla*{1 - b, \frac{b+a}{2}} + (-1)^b 2^{b-1} B\kla*{1 - b, \frac{b-a}{2}}.
+%%%\end{align}
+%%%With this formula we may now compute the transform using the series expansion
+%%%\begin{align}
+%%%f(\i\omega_n^\F, k) &= \intr{\powe{\i kx} f(\i\omega_n^\F, x)}{x}\\
+%%%&= -\beta \i 2^K \binom{n+K}{K-1} \sum_{j\ge 0} \frac{c_j}{j!} (-1)^j \intr{\powe{\i kx} \frac{\powe{- \frac{x}{u} \omega_n^\F}}{\sinh^{K+1} \kla*{\frac{2\pi x}{\beta u}}} \frac{\powe{-\frac{2\pi x}{\beta u} j}}{2^j\sinh^j \kla*{\frac{2\pi x}{\beta u}}} }{x}
+%%%\end{align}
+%%%with the coefficients $c_j = \frac{\Gamma(1 - K + j)}{\Gamma(1 - K)} \frac{\Gamma(1 + K + j)}{\Gamma(1 + K)} \frac{\Gamma(n+2)}{\Gamma(n+2+j)}$ from the hypergeometric function.
+%%%The integrals evaluate to
+%Using this formula we may now compute the integral
+%\begin{align}
+%f(\i\omega_n^\F, k) &= \intx{0}{\infty}{\powe{\i kx} f(\i\omega_n^\F, x)}{x}.
+%\end{align}
+%With the coefficients $c_j = \frac{\Gamma(1 - K + j)}{\Gamma(1 - K)} \frac{\Gamma(1 + K + j)}{\Gamma(1 + K)} \frac{\Gamma(n+2)}{\Gamma(n+2+j)}$ from the hypergeometric function the first part evaluates to
+%\begin{align}
+%f(\i\omega_n^\F, k) &= -\beta \i 2^K \binom{n+K}{K-1} \sum_{j\ge 0} \frac{c_j}{j!} (-1)^j \intx{0}{\infty}{\powe{\i kx} \frac{\powe{- \frac{x}{u} \omega_n^\F}}{\sinh^{K+1} \kla*{\frac{2\pi x}{\beta u}}} \frac{\powe{-\frac{2\pi x}{\beta u} j}}{2^j\sinh^j \kla*{\frac{2\pi x}{\beta u}}} }{x} \\
+%&= -\beta \i 2^K \binom{n+K}{K-1} \sum_{j\ge 0} \frac{c_j}{j!} (-1)^j \frac{\beta u}{2\pi} \intx{0}{\infty}{\powe{\i \frac{\beta ku}{2\pi} y} \frac{\powe{- \frac{\beta y}{2\pi} \omega_n^\F} \powe{-yj}}{2^j\sinh^{K+1+j} \kla*{y}} }{y}\\
+%&= -\beta \i 2^K \binom{n+K}{K-1} \sum_{j\ge 0} \frac{c_j}{j!} (-1)^j \frac{\beta u}{2\pi} 2^{K} B\kla*{-K-j, \frac{K+1+j}{2} + \frac{j}{2} + \frac{\beta}{4\pi} \omega_n^\F - \i \frac{\beta ku}{4\pi}}.
+%\end{align}
+%Writing $z = \frac{\beta}{4\pi} \kla*{\omega_n^\F - \i ku}$ and leaving out the prefactor of $4^K \frac{\beta^2u}{2\pi\i}\binom{n+K}{K-1}$  yields\footnote{Gauss's summation theorem is ${}_2F_1(a,b;c;1) = \frac{\Gamma(c) \Gamma(c - a - b)}{\Gamma(c - a) \Gamma(c - b)}$.}
+%\begin{align}
+%\sum_{j\ge 0} &\frac{(-1)^j}{j!} \frac{\Gamma(1 - K + j)}{\Gamma(1 - K)} \frac{\Gamma(1 + K + j)}{\Gamma(1 + K)} \frac{\Gamma(n+2)}{\Gamma(n+2+j)} \frac{\Gamma(-K-j) \Gamma\kla*{\frac{K+1}{2} + j + z}}{\Gamma\kla*{\frac{-K+1}{2} + z}}\\
+%&= \Gamma(-K) \frac{\Gamma\kla*{\frac{1+K}{2} + z}}{\Gamma\kla*{\frac{1-K}{2} + z}} {}_2F_1\kla*{1-K, \frac{1+K}{2}+z; n+2; 1}\\
+%&= \Gamma(-K) \frac{\Gamma\kla*{\frac{1+K}{2} + z}}{\Gamma\kla*{\frac{1-K}{2} + z}} \frac{\Gamma(n+2) \Gamma\kla*{n+2 - z + K - 1 - \frac{1 + K}{2}}}{\Gamma\kla*{n+2 + K - 1} \Gamma\kla*{n+2 - z - \frac{1+K}{2}}}.
+%\end{align}
+%%% 4**K * beta**2 / (2*sy.pi*sy.I) * sy.binomial(n+K, K-1) * sy.gamma(-K) * sy.gamma((1+K)/2 + z) / sy.gamma((1-K)/2 + z) * sy.gamma(n+2) * sy.gamma(n+2 - z + K - 1 - (1+K)/2) / sy.gamma(n+1+K) / sy.gamma(n+2-z-(1+K)/2)
+%Recombining with the prefactor gives
+%\begin{align}
+%f(\i\omega_n^\F, k) &= 4^K \frac{\beta^2u}{2\pi\i} \frac{\Gamma(n+1+K)}{\Gamma(n+2)} \frac{\Gamma(-K)}{\Gamma(K)} \frac{\Gamma\kla*{\frac{1+K}{2} + z}}{\Gamma\kla*{\frac{1-K}{2} + z}} {}_2F_1\kla*{1-K, \frac{1+K}{2}+z; n+2; 1}.
+%\end{align}
+\subsection{Generalized cosecant 2D Fourier transform}
+Consider the function
+\begin{align}
+f(\tau, x) &= \csc\kla*{\frac{\pi}{\beta u} \klb*{u\tau + \i x}} \klb*{\sin^2\kla*{\frac{\pi \tau}{\beta}} + \sinh^2\kla*{\frac{\pi x}{\beta u}}}^{-K}.
+\end{align}
+Let $\xi = \frac{\pi x}{\beta u} > 0$.
+The temporal Fourier transform is\footnote{Note that $z^2 + 1 - 2\cosh (2\xi) = \kla*{z - \powe{2\xi}} \kla*{z - \powe{-2\xi}}$}
+\begin{align}
+f(\i\omega_n^\F, \xi) &= \intx{0}{\beta}{\powe{\i\omega_n^\F \tau} \frac{2\i}{\powe{\i \frac{\pi\tau}{\beta}} \powe{- \xi} - \powe{-\i \frac{\pi\tau}{\beta}} \powe{\xi}} \klb*{\frac{1}{2}\cosh\kla*{2\xi} - \frac{1}{2} \cos\kla*{\frac{2\pi\tau}{\beta}}}^{-K}}{\tau}\\
+&= 2\i \frac{\beta}{2\pi} \intx{0}{2\pi}{\powe{\i (n+1) y} \powe{\xi} \frac{1}{\powe{\i y} - \powe{2\xi}} \klb*{\frac{1}{2} \cosh\kla*{2\xi} - \frac{1}{4} \powe{\i y} - \frac{1}{4} \powe{-\i y}}^{-K}}{y}\\
+&= \frac{\beta}{\pi} 4^K \powe{\xi} \oint_{|z|=1} z^n \frac{1}{z - \powe{2\xi}} \frac{1}{\klb*{2\cosh\kla*{2\xi} - z - \frac{1}{z}}^K}\,\d z\\
+&= (-4)^K \frac{\beta}{\pi} \powe{\xi} \oint_{|z|=1} z^{n+K} \frac{1}{\klb*{z - \powe{2\xi}}^{K+1}} \frac{1}{\klb*{z - \powe{-2\xi}}^K}\,\d z\\
+&= (-4)^K \frac{\beta}{\pi} \powe{\xi} \frac{2\pi\i}{\Gamma(K)} \lim_{z\rightarrow \powe{-2\xi}} \partial_z^{K-1} \kla*{z^{n+K} \klb*{z - \powe{2\xi}}^{-K-1}}.
+\end{align}
+We can compute the derivative using the product rule and $\partial_z^a z^b = \frac{\Gamma(b+1)}{\Gamma(b-a+1)} z^{b-a}$.
+Then we have\footnote{Note the transformation formula ${}_2F_1\kla*{a,b;c;z} = (1-z)^{-b} {}_2F_1\kla*{b,c-a;c; \frac{z}{z-1}}$.}
+\begin{align}
+\partial_x^m \kla*{x^p (x-c)^q} &= \sum_{j=0}^m \frac{m!}{j!(m-j)!} \kla*{\partial_x^{m-j} x^p} \kla*{\partial_x^j (x-c)^q}\\
+&= \sum_{j=0}^m \frac{\Gamma(m+1)}{\Gamma(j+1) \Gamma(m-j+1)} \frac{\Gamma(p+1)}{\Gamma(p-m+j+1)} x^{p-m+j} \frac{\Gamma(q+1)}{\Gamma(q-j+1)} (x-c)^{q-j} \\
+&= \frac{\Gamma(p+1)}{\Gamma(p-m+1)} (x - c)^q x^{p - m} {}_2F_1\kla*{-m, -q; -m + p + 1; \frac{x}{x - c}}\\
+&= \frac{\Gamma(p+1)}{\Gamma(p-m+1)} x^{p - m} (-c)^q {}_2F_1\kla*{-q, p+1; -m + p + 1; \frac{x}{c}}. \label{eqn:product_rule_hypergeometric}
+\end{align}
+In our case we have $m = K-1$, $p = n+K$, $q = -K-1$, $c = \powe{2\xi}$ and $x= \powe{-2\xi}$
+\begin{align}
+f(\i\omega_n^\F, \xi) &= (-4)^K \frac{2\beta\i}{\Gamma(K)} \frac{\Gamma(n+K+1)}{\Gamma(n+2)} \frac{\powe{\xi} \powe{-2\xi (n+1)}}{\kla*{-\powe{2\xi}}^{K+1}} {}_2F_1\kla*{1+K, n+1+K; n + 2; \powe{-4\xi}}\\
+&= -2\beta \i 4^K \binom{n+K}{K-1} \powe{-\xi(2n+1)} \powe{-2\xi (K+1)} {}_2F_1\kla*{1 + K, n+1+K; n+2; \powe{-4\xi}}.
+\end{align}
+The spatial transform requires both $x<0$ and $x>0$.
+Let us write $f(\i\omega_n^\F, k) = f^{+}(\i\omega_n^\F, k) + f^{-}(\i\omega_n^\F, k)$ where the sign indicates whether the function contains an integration over positive or negative $x$.
+The positive part is now simple and gives
+\begin{align}
+f^{+}(\i\omega_n^\F, k) &= -2\beta \i 4^K \binom{n+K}{K-1} \sum_{j\ge 0} \frac{c_j}{j!} \intx{0}{\infty}{\powe{-\i kx} \powe{-\frac{x}{u} \omega_n^\F} \powe{-\frac{2\pi x}{\beta u} (K+1)} \powe{- \frac{4\pi x}{\beta u}j} }{x}\\
+&= -2\beta \i 4^K \binom{n+K}{K-1} \sum_{j\ge 0} \frac{c_j}{j!} \frac{1}{\i k + \frac{1}{u} \omega_n^\F + \frac{2\pi}{\beta u} (K+1) + \frac{4\pi}{\beta u}j}
+\end{align}
+with the coefficients $c_j = \frac{\Gamma(1 + K + j)}{\Gamma(1 + K)} \frac{\Gamma(n + 1 + K + j)}{\Gamma(n + 1 + K)} \frac{\Gamma(n+2)}{\Gamma(n+2+j)}$ from the hypergeometric function.
+This can be rewritten as
+\begin{align}
+f^{+}(\i\omega_n^\F, k) &= 4^K \frac{\beta^2u}{2\pi\i} \binom{n+K}{K-1} \frac{\Gamma\kla*{\frac{K+1}{2} + z}}{\Gamma\kla*{\frac{K+3}{2} + z}} {}_3F_2\kla*{1 + K, n+1+K, \frac{K+1}{2} + z; n+2, \frac{K+3}{2} + z; 1}
+\end{align}
+%%% complex((4**K*beta**2 / (2*sy.pi*sy.I) * sy.binomial(n+K, K-1) * sy.hyper((1+K, n+1+K, (K+1) / 2 + z), (n+2, (K+1) / 2 + z + 1), 1) / sy.gamma((K+1) / 2 + z + 1) * sy.gamma((K+1) / 2 + z)).evalf())
+with $z = \frac{\beta}{4\pi} \kla*{\omega_n^\F + \i ku}$.
+\\
+Of course we have only solved half of the problem and now need to also include the contribution from $\xi = \frac{\pi x}{\beta u} < 0$.
+For this we have to go back to the temporal Fourier transform.
+Part of the calculation can be reused, but the pole is now different and thus we fine
+\begin{align}
+f(\i\omega_n^\F, \xi) &= (-4)^K \frac{\beta}{\pi} \powe{\xi} \oint_{|z|=1} z^{n+K} \frac{1}{\klb*{z - \powe{2\xi}}^{K+1}} \frac{1}{\klb*{z - \powe{-2\xi}}^K}\,\d z\\
+&= (-4)^K \frac{\beta}{\pi} \powe{\xi} \frac{2\pi\i}{\Gamma(K+1)} \lim_{z\rightarrow \powe{2\xi}} \partial_z^{K} \kla*{z^{n+K} \klb*{z - \powe{-2\xi}}^{-K}}.
+\end{align}
+This time the parameters from \autoref{eqn:product_rule_hypergeometric} are $m = K$, $p = n+K$, $q = -K$, $c = \powe{-2\xi}$ and $x= \powe{2\xi}$ giving
+\begin{align}
+f(\i\omega_n^\F, \xi) &= (-4)^K \frac{2\beta\i}{\Gamma(K+1)} \frac{\Gamma(n+K+1)}{\Gamma(n+1)} \frac{\powe{\xi} \powe{2\xi n}}{\kla*{-\powe{-2\xi}}^{K}} {}_2F_1\kla*{K, n+1+K; n + 1; \powe{4\xi}}\\
+&= 2\beta \i 4^K \binom{n+K}{K} \powe{\xi(2n+1)} \powe{2\xi K} {}_2F_1\kla*{K, n+1+K; n+1; \powe{4\xi}}.
+\end{align}
+%%% (2*beta * 1j * 4**K * special.binom(n+K, K) * np.exp(x*omega) * np.exp(2*np.pi*x / beta * K) * special.hyp2f1(K, n+1+K, n+1, np.exp(4*np.pi*x/beta)))
+The spatial transform is again simple and gives
+\begin{align}
+f^{-}(\i\omega_n^\F, k) &= 2\beta \i 4^K \binom{n+K}{K} \sum_{j\ge 0} \frac{c_j}{j!} \intx{-\infty}{0}{\powe{-\i kx} \powe{\frac{x}{u} \omega_n^\F} \powe{\frac{2\pi x}{\beta u} K} \powe{\frac{4\pi x}{\beta u}j} }{x}\\
+&= 2\beta \i 4^K \binom{n+K}{K} \sum_{j\ge 0} \frac{c_j}{j!} \frac{1}{-\i k + \frac{1}{u} \omega_n^\F + \frac{2\pi}{\beta u} K + \frac{4\pi}{\beta u}j}
+\end{align}
+with the coefficients $c_j = \frac{\Gamma(K + j)}{\Gamma(K)} \frac{\Gamma(n + 1 + K + j)}{\Gamma(n + 1 + K)} \frac{\Gamma(n+1)}{\Gamma(n+1+j)}$ from the hypergeometric function.
+This can be rewritten as
+\begin{align}
+f^{-}(\i\omega_n^\F, k) &= -4^K \frac{\beta^2u}{2\pi\i} \binom{n+K}{K} \frac{\Gamma\kla*{\frac{K}{2} + \bar{z}}}{\Gamma\kla*{\frac{K}{2} + 1 + \bar{z}}} {}_3F_2\kla*{K, n+1+K, \frac{K}{2} + \bar{z}; n+1, \frac{K}{2} + 1 + \bar{z}; 1}
+\end{align}
+%%% complex((-4**K*beta**2 / (2*sy.pi*sy.I) * sy.binomial(n+K, K) * sy.hyper((K, n+1+K, K / 2 + z_bar), (n+1, K / 2 + z_bar + 1), 1) / sy.gamma(K / 2 + z_bar + 1) * sy.gamma(K / 2 + z_bar)).evalf())
+with $\bar{z} = \frac{\beta}{4\pi} \kla*{\omega_n^\F - \i ku}$.
+Noting that $n = \frac{1}{2} \kla*{\frac{\beta}{\pi} \omega_n^\F - 1}$ we can combine our results into
+\begin{align}
+f(\i\omega_n^\F, k) &= \bsplit{4^K \frac{\beta^2u}{2\pi\i} \klc[\bigg]{ & \binom{n + K}{K-1} \frac{1}{\frac{K+1}{2} + z} {}_3F_2\kla*{1 + K, n + 1 + K, \frac{K + 1}{2} + z; n + 2, \frac{K + 3}{2} + z; 1}\\
+& - \binom{n+K}{K} \frac{1}{\frac{K}{2} + \bar{z}} {}_3F_2\kla*{K, n+1+K, \frac{K}{2} + \bar{z}; n+1, \frac{K}{2} + 1 + \bar{z}; 1}}.}
+\end{align}
+Now the analytic continuation $\i\omega_n^\F \rightarrow \omega$ yields
+\begin{align}
+f(\omega, k) &= \bsplit{4^K \frac{\beta^2u}{2\pi\i} & \Gamma\kla*{K + \frac{1}{2}\kla*{\frac{\beta \omega}{\pi\i} + 1}}\\ 
+\times \klc[\bigg]{&\frac{{}_3F_2\kla*{K+1, K + \frac{1}{2}\kla*{\frac{\beta \omega}{\pi\i} + 1}, \frac{K+1}{2} + \frac{\beta \kla*{\omega - ku}}{4\pi\i}; \frac{1}{2}\kla*{\frac{\beta \omega}{\pi\i} + 3}, \frac{K+3}{2} + \frac{\beta \kla*{\omega - ku}}{4\pi\i}; 1}}{\Gamma(K) \Gamma\kla*{\frac{1}{2}\kla*{\frac{\beta \omega}{\pi\i} + 3}} \klb*{\frac{K+1}{2} + \frac{\beta}{4\pi\i} \kla*{\omega - ku}}}\\
+&- \frac{{}_3F_2\kla*{K, K + \frac{1}{2}\kla*{\frac{\beta \omega}{\pi\i} + 1}, \frac{K}{2} + \frac{\beta \kla*{\omega + ku}}{4\pi\i}; \frac{1}{2}\kla*{\frac{\beta \omega}{\pi\i} + 1}, \frac{K}{2} + 1 + \frac{\beta \kla*{\omega + ku}}{4\pi\i}; 1}}{\Gamma(K+1) \Gamma\kla*{\frac{1}{2}\kla*{\frac{\beta \omega}{\pi\i} + 1}} \klb*{\frac{K}{2} + \frac{\beta}{4\pi\i} \kla*{\omega + ku}}}}.}
+\end{align}
+%%%n_val = (beta*omega / (np.pi*1j) - 1) / 2)
+%%%z_val = beta / (4*np.pi*1j) * (omega - k)
+%%%z_bar_val = beta / (4*np.pi*1j) * (omega + k)
+%%%part1 = sy.hyper((K+1, K+1 + n_val, (K+1)/2 + z_val), (n_val + 2, (K+3)/2 + z_val), 1) / (special.gamma(K) * special.gamma(n_val + 2) * ((K+1)/2 + z_val));
+%%%part2 = sy.hyper((K, K+1 + n_val, K/2 + z_bar_val), (n_val + 1, K/2 + 1 + z_bar_val), 1) / (special.gamma(K+1) * special.gamma(n_val + 1) * (K/2 + z_bar_val))
+%%%analytic = 4**K * beta**2/(2*np.pi*1j) * special.gamma(K + n_val + 1) * (part1 - part2)
+To get the Fourier transform of the generalized $f_-$-function we may simply replace $k\rightarrow -k$ in the final result, since the two calculations are related by the substitution $x\rightarrow -x$ leaving everything else unchanged.
+Note that in the limit $K\rightarrow 0$ the first part vanishes due to $\frac{1}{\Gamma(K)} \rightarrow 0$.
+The rest yields
+\begin{align}
+f(\omega, k) &= -\frac{\beta^2u}{2\pi\i} \frac{{}_3F_2\kla*{0, n+1, \bar{z}; n+1, \bar{z}+1; 1}}{\bar{z}} = -\frac{\beta^2u}{2\pi\i} \frac{1}{\bar{z}} = -\frac{\beta^2 u}{2\pi\i} \frac{4\pi\i}{\beta \kla*{\omega + ku}} = -\frac{2\beta u}{\omega + ku}.
+\end{align}
+\subsubsection{Different approach}
+The essence of the integrals we have to solve is captured by the expression
+\begin{align}
+J_\ell(k,n) &= \intx{0}{\infty}{\intx{0}{2\pi}{\powe{\i \kla*{n + \frac{1}{2}}y - \i kx} \csc\kla*{\frac{y}{2} + \i\ell x} \klb*{\sinh^2(x) + \sin^2\kla*{\frac{y}{2}}}^{-M}}{y} }{x}
+\end{align}
+%%% integrate E^(I (2 + 1/2) y - I 0.76 x) csc(y/2 + I x) (cosh(2x) - cos(y))^(-2) from x=0 to inf, y=0 to 2pi
+for some non-negative integers $n,M\in\mathbb{N}_0$ and $k\in\mathbb{R}$.
+Of course in general we need to also need to integrate over  negative $x$, but with the substitution $x\rightarrow -x$ those correspond to $J_{-\ell}(-k,n)$.
+Let us start by rewriting $J_+$ for $n\ge 0$ using the substitution $z = \powe{\i y}$ and $u = \powe{-2x}$
+\begin{align}
+J_+(k,n) &= \intx{0}{1}{\intx{0}{2\pi}{ \powe{\i (n+1) y} u^\frac{\i k}{2} \frac{2\i u^{-\frac{1}{2}}}{\powe{\i y} - \powe{-\i y} \frac{1}{u}} \klb*{\frac{u}{4} + \frac{1}{4u} - \frac{1}{4}\powe{\i y} - \frac{1}{4} \powe{-\i y}}^{-M} \frac{1}{2u} }{y}}{u}\\
+&= (-4)^M \intx{0}{1}{\oint_{|z|=1} z^n u^{\frac{\i k - 1}{2}-1} \frac{1}{z - \frac{1}{u}} \frac{1}{\klb*{z + \frac{1}{z} - u - \frac{1}{u}}^M}\,\d z }{u}\\
+&= (-4)^M \intx{0}{1}{\oint_{|z|=1} z^{n+M} u^{\frac{\i k - 1}{2}-1} \frac{1}{\klb*{z - \frac{1}{u}}^{M+1}} \frac{1}{\klb*{z - u}^M}\,\d z }{u}.
+\end{align}
+At this point we make use of the series expansion $\kla*{x + c}^{-a} = \sum_{j\ge 0} \binom{-a}{j} x^j c^{-a-j}$ giving\footnote{With the Pochhammer symbol $(a)_n = \frac{\Gamma(a+n)}{\Gamma(a)}$ we have $\partial_z^a z^b = (b-a+1)_a z^{b-a}$}
+\begin{align}
+J_+(k,n) &= (-4)^M \sum_{j\ge 0} \binom{-M-1}{j} \intx{0}{1}{ u^{\frac{\i k - 1}{2} - 1} \kla*{-\frac{1}{u}}^{-M-1-j} \oint_{|z|=1} z^{n+M+j} \frac{1}{\klb*{z - u}^M} \,\d z}{u}\\
+&= (-4)^M \sum_{j\ge 0} \binom{-M-1}{j} \intx{0}{1}{ u^{\frac{\i k - 1}{2} - 1} \kla*{-\frac{1}{u}}^{-M-1-j} \frac{2\pi\i}{\Gamma(M)} \partial_z^{M-1} z^{n+M+j} \Big\vert_{z=u}}{u}\\
+&= (-4)^M \sum_{j\ge 0} \binom{-M-1}{j} \intx{0}{1}{ u^{\frac{\i k - 1}{2} - 1} \kla*{-\frac{1}{u}}^{-M-1-j} \frac{2\pi\i}{\Gamma(M)} \kla*{n+j+2}_{M-1} u^{n+j+1} }{u}\\
+&= \frac{2\pi\i}{\Gamma(M)} 4^M \sum_{j\ge 0} \binom{-M-1}{j} (-1)^{j+1} \kla*{n+j+2}_{M-1} \frac{1}{\frac{\i k - 1}{2} + n+j+1 + M+j+1}\\
+&= -\pi\i 4^M \sum_{j\ge 0} \frac{\Gamma(-M)}{\Gamma(M)} \frac{(-1)^j}{j!} \frac{(n+j+2)_{M-1}}{\Gamma(-M-j)} \frac{1}{\frac{\i k + 3}{4} + \frac{n+M}{2} + j}\\
+&= -\pi\i 4^M \binom{n+M}{M-1} \frac{1}{z} {}_3F_2\kla*{M+1, n+M+1, z; n+2, z+1; 1}
+\end{align}
+%%% Sum[1/Gamma[M] (-1)^(j+1) Binomial[-M-1, j] Gamma[n+j+M+1] / Gamma[n+j+2] / (z+j), {j, 0, inf}]
+% z = (1j*k+3)/4 + (n+M)/2;
+% -np.pi*1j * 4**M*special.gamma(n+M+1)/special.gamma(M) / special.gamma(n+2) / z * complex(sy.hyper((M+1, n+M+1, z), (n+2,z+1), 1).evalf())
+where $z = \frac{\i k + 3}{4} + \frac{n+M}{2}$.
+% 1j*np.pi/special.gamma(M) * 4**M * np.sum([sy.binomial(-M-1, j) * (-1)**(j+1) * sy.RisingFactorial(n+j+2, M-1) / (z2 + j) for j in range(100)])
+%%% Sum[1/j! (M+j)!/M! (M+n+j)!/(M+n)! (n+1)!/(n+1+j)! / (z+j), {j, 0, inf}]
+\subsubsection{Approximate solution}
+%f1 = lambda x,y,M: (np.sinh(x)**2 + np.sin(y/2)**2)**(-M)
+%f1a = lambda x,y,M: np.exp(M * np.log(4) - 2*M*np.abs(x))
+%f1b = lambda x,y,M: (x**2 + (y/2)**2)**(-M)
+%f1c = lambda x,y,M: (x**2 + np.sin(y/2)**2)**(-M)
+%##Plot3D
+%xv=np.linspace(-10, 10, 500)
+%yv=np.linspace(-np.pi, np.pi, 500)
+%x2,y2=np.meshgrid(xv,yv)
+%M=0.3
+%fv=f1(x2,y2,M)
+%fva=f1a(x2,y2,M)
+%fvb=f1b(x2,y2,M)
+%fvc=f1c(x2,y2,M)
+%fig = plt.figure()
+%ax = fig.add_subplot(projection="3d")
+%for vals in [fv,fva,fvb]:
+%    ax.plot_surface(x2,y2,np.log(vals))
+We once again consider the integral $J_+$.
+Note that with $z=\powe{\i y}$ we can write
+\begin{align}
+\csc\kla*{\frac{y}{2} + \i x} &= \frac{2\i \powe{\i \frac{y}{2}}}{\powe{\i y} \powe{-x} - \powe{x}} = \frac{2\i\sqrt{z} \powe{x}}{z - \powe{2x}},\\
+\klb*{\sinh^2(x) + \sin^2\kla*{\frac{y}{2}}}^{-M} &= 4^M z^M \klb*{\powe{2x} - z}^{-M} \klb*{z - \powe{-2x}}^{-M}.
+\end{align}
+%(0.5*np.cosh(2*x) - 0.5*np.cos(y))**(-M)
+%np.exp(M * np.log(4) + 1j*y*M - M * np.log(np.exp(2*x) - np.exp(1j*y)) - M * np.log(-np.exp(-2*x) + np.exp(1j*y)))
+This yields the representation
+\begin{align}
+J_+(k,n) &= -4^M \intr{\oint_{|z|=1} \powe{-\i kx} \powe{x} \frac{2z^{n+M}}{\klb*{\powe{2x} - z}^{M+1} \klb*{z - \powe{-2x}}^{M}} \,\d z }{x}.
+\end{align}
+We have already seen that this integral admits an exact solution, but neither the result nor the procedure are particularly useful for further analysis.
+Instead we want to approximate the problematic term in two regimes
+\begin{align}
+\klb*{\sinh^2(x) + \sin^2\kla*{\frac{y}{2}}}^{-M} &\approx \begin{cases} \klb*{x^2 + \sin^2\kla*{\frac{y}{2}}}^{-M} & \text{for } x<2M \\ 4^M \powe{- 2M|x|} &\text{for } x>2M \end{cases}.
+\end{align}
+Both approximations are asymptotically exact as $x\rightarrow 0$ or $x\rightarrow \infty$ respectively, and they also hold up reasonably well to the artificial ``boundary'' at $x=2M$.
+For $|x|>2M$ the $z$-integral becomes
+\begin{align}
+4^M \powe{(1-\i k)x} \powe{-2M|x|} \oint_{|z|=1} \frac{2z^n}{z-\powe{2x}}\,\d z &= 4^M \powe{(1-\i k)x} \powe{-2M|x|} \Theta(-x) 4\pi\i \powe{2nx}.
+\end{align}
+Integrating over $x$ is now straight-forward and yields
+\begin{align}
+4^M 4\pi\i \intx{-\infty}{-2M}{\powe{(1-\i k)x} \powe{-2M|x|} \powe{2nx}}{x} &= 4^M 4\pi\i \frac{\powe{-2M (2M + 2n + 1 - \i k)}}{2M + 2n + 1 - \i k}.
+\end{align}
+Treating the region $|x|<2M$ is more challenging.
+The $z$-integral becomes
+\begin{align}
+-4^M \powe{(1-\i k) x} \oint_{|z|=1} \frac{2 z^{n+M}}{\klb*{1+2x-z}^{M+1} \klb*{z - 1 + 2x}^M} \,\d z.
+\end{align}
+We will work under the assumption that $M<1$ such that exactly one of the poles at $1 \pm 2x$ always lies inside the contour.
+For $x>0$ the relevant pole is $1 - 2x$ and the integral gives
+%\begin{align}
+%-4^M \powe{(1-\i k)x} \frac{4\pi\i}{\Gamma(M)} \lim_{z\rightarrow 1-2x} \partial_z^{M-1} \frac{z^{n+M}}{\klb*{1+2x - z}^{M+1}}
+%\end{align}
+\begin{align}
+\oint_{|z|=\epsilon} \frac{2 \kla*{1-2x + z}^{n+M} }{\klb*{4x - z}^{M+1} z^M}\,\d z
+\end{align}
+\subsubsection{Brute force}
+Let $N\in\mathbb{N}$ and consider
+\begin{align}
+I &= \intx{0}{\pi}{\intr{\powe{\i (2n+1)\tau - \i kx} \csc (\tau + \i x)^{-N+b} \csc(\tau - \i x)^b}{x} }{\tau}\\
+&= \frac{1}{(2\i)^N} \sum_{j=0}^N\binom{N}{j} \intx{0}{\pi}{\intr{\powe{\i (2n+1)\tau - \i kx} \kla*{\powe{\i\tau - x}}^j \kla*{\powe{-\i\tau + x}}^{N-j} \csc\kla*{\tau + \i x}^b \csc\kla*{\tau - \i x}^b}{x} }{\tau}\\
+&= \frac{(2\i)^{2b}}{(2\i)^N} \sum_{j=0}^N\binom{N}{j} \intx{0}{\pi}{\intr{\powe{\i (2n+1)\tau - \i kx} \powe{\i\tau (2j-N)} \powe{x(N-2j)} \frac{1}{\kla*{\powe{\i\tau - x} - \powe{-\i\tau + x}}^b} \frac{1}{\kla*{\powe{\i\tau + x} - \powe{-\i\tau - x}}^b}}{x} }{\tau}\\
+&= \frac{(2\i)^{2b}}{(2\i)^N} \sum_{j=0}^N\binom{N}{j} \intx{0}{\pi}{\intr{\powe{\i (2n+1+2j-N)\tau - (2j-N + \i k)x} \frac{1}{\kla*{\powe{\i\tau - x} - \powe{-\i\tau + x}}^b} \frac{1}{\kla*{\powe{\i\tau + x} - \powe{-\i\tau - x}}^b}}{x} }{\tau}???
+\end{align}
+\subsection{General cosecant product 2D Fourier transform}
+We need to solve integrals of the type
+\begin{align}
+J_\ell(k,n) &= \intr{\intx{0}{2\pi}{\intr{\intx{0}{2\pi}{\frac{\powe{\i \kla*{n + \frac{1}{2}}y - \i kx}}{\klb*{\sinh^2(x) + \sin^2\kla*{\frac{y}{2}}}^N} \frac{\csc\kla*{\frac{y'}{2} + \i\ell x'}}{\klb*{\sinh^2(x') + \sin^2\kla*{\frac{y'}{2}}}^M} \frac{\csc\kla*{\frac{y-y'}{2} - \i\ell (x-x')}}{\klb*{\sinh^2(x-x') + \sin^2\kla*{\frac{y-y'}{2}}}^M} }{y'}}{x'} }{y}}{x}.
+\end{align}
+Let us start with the case $\ell=+1$ and both $x$-integrations restricted to positive values.
+With $u = \powe{-2x}$, $u' = \powe{-2x'}$, $z=\powe{\i y}$ and $z'=\powe{\i y'}$ we have
+\begin{align}
+\intr{\intx{0}{2\pi}{\intr{\intx{0}{2\pi}{ \dots }{y'}}{x'}}{y}}{x} &= \int_1^0 \oint_{|z|=1} \int_1^0 \oint_{|z'|=1} \dots \frac{1}{\i z'} \d z'\, \frac{-1}{2u'} \d u'\, \frac{1}{\i z} \d z\, \frac{-1}{2u} \d u
+\end{align}
+and making use of the relation
+\begin{align}
+\klb*{\sinh^2(x) + \sin^2\kla*{\frac{y}{2}}}^{-N} &= \klb*{\frac{1}{4} \powe{2x} + \frac{1}{4} \powe{-2x} - \frac{1}{4} \powe{\i y} - \frac{1}{4} \powe{-\i y}}^{-N} \\
+&= (-4)^N \kla*{\powe{\i y}}^N \klb*{\powe{\i y} - \powe{2x}}^{-N} \klb*{\powe{\i y} - \powe{-2x}}^{-N}
+\end{align}
+the integrand becomes
+\begin{align}
+&(-4)^{N+2M} \frac{z^{n+\frac{1}{2}+N} u^\frac{\i k}{2} }{\klb*{z-\frac{1}{u}}^N \klb*{z - u}^N} \frac{2\i \sqrt{z'u'}}{z'u' - 1} \frac{z'^M}{\klb*{z' - \frac{1}{u'}}^M \klb*{z' - u'}^M}  \frac{2\i \sqrt{\frac{z}{z'} \frac{u'}{u}}}{ \frac{z}{z'} \frac{u'}{u} - 1} \frac{z^M z'^{-M}}{\klb*{\frac{z}{z'} - \frac{u'}{u}}^M \klb*{\frac{z}{z'} - \frac{u}{u'}}^M}\\
+&= (-4)^{N+2M} (2\i)^2 \frac{z^{n+1+N+M} z'^{2M+1} u^{\frac{\i k + 1}{2}} u'^{-1}}{\klb*{z-\frac{1}{u}}^N \klb*{z - u}^N \klb*{z' - \frac{1}{u'}}^{M+1} \klb*{z' - u'}^M \klb*{z - \frac{u'}{u} z'}^{M} \klb*{z - \frac{u}{u'} z'}^{M+1}}.
+\end{align}
+%%%def replace_all(s):
+%%%    return s.replace("}{", "}/{").replace("}", ")").replace("{", "(").replace(r"\frac", "").replace(r"u'", "up").replace(r"z'", "zp").replace("^", "**").replace(r"\klb*", "").replace(r"\kla*", "").replace(r"\i", "1j*").replace(r"\sqrt", "np.sqrt")
+%def test3():
+%    #u,up,z,zp,x,xp,y,yp,M,N,n,k = sy.symbols("u u' z z' x x' y y' M N n k")
+%    N=2; M=2; k=0.76; n=2; x = 3.5; xp = 2.76
+%    y = 0.23; yp = 0.45
+%    z = np.exp(1j * y); zp = np.exp(1j * yp)
+%    u = np.exp(-2 * x); up = np.exp(-2 * xp)
+%    def fell(x,y,ell=+1):
+%        return sy.csc(y/2+sy.I*x*ell)
+%    def f1(x,y,p):
+%        return (sy.sin(y/2)**2 + sy.sinh(x)**2)**p
+%    integ = sy.exp(sy.I * (n+1/2) * y - sy.I * k * x) * f1(x,y,-N) * f1(xp,yp,-M) * f1(x-xp, y-yp, -M) * fell(xp,yp,1) * fell(x-xp, y-yp, -1)
+%    res2 = (-4)**(N+2*M)* (2*1j)**2 *(z**(n+1+N+M) *zp**(2*M+1) *u**((1j* k + 1)/(2)) * up**(-1))/((z-1/u)**N *(z - u)**N *(zp - 1/up)**(M+1) *(zp - up)**M *(z - up/u *zp)**(M) *(z - u/up* zp)**(M+1))
+%    ratio = complex(integ.evalf()) / res2
+%    print(ratio, np.log(ratio), np.abs(ratio))
+%    #print(sy.exp(sy.I * (n+1/2) * y - sy.I * k * x).evalf(), z**(n+1/2) * u**(1j*k/2))
+%    #print(f1(x,y,-N).evalf(), (-4)**N * z**N * (z-1/u)**(-N) * (z-u)**(-N))
+%    #print(f1(xp,yp,-M).evalf(), (-4)**M * zp**M * (zp-1/up)**(-M) * (zp-up)**(-M))
+%    #print(f1(x-xp,y-yp,-M).evalf(), (-4)**M * z**M / zp**M * (z/zp-u/up)**(-M) * (z/zp-up/u)**(-M))
+%    #print(fell(xp,yp,1).evalf(), 2j*np.sqrt(zp*up) / (zp*up-1))
+%    #print(fell(x-xp,y-yp,-1).evalf(), 2j*np.sqrt(z/zp*up/u) / (z/zp*up/u-1))
+%    return
+%test3()
+At this point we insert the series representations
+\begin{align}
+\klb*{z - \frac{1}{u}}^{-N} &= \sum_{j\ge 0} \binom{-N}{j} z^j (-u)^{N+j},\\
+\klb*{z - u}^{-N} &= \sum_{j\ge 0} (-u)^j \binom{-N}{j} z^{-N-j}
+\end{align}
+%z=np.exp(0.43j); u = 0.13; a=3
+%print((z-1/u)**(-a), np.sum([sy.binomial(-a, j) * z**j * (-u)**(j+a) for j in range(100)]).evalf())
+%print((z-u)**(-a), np.sum([sy.binomial(-a, j) * (-u)**j * z**(-j-a) for j in range(100)]).evalf())
+resulting in
+\begin{align}
+%(-4)^{N+2M} (2\i)^2 \frac{z^{n+1+N+M} z'^{2M+1} u^{\frac{\i k + 1}{2}} u'^{-1}}{\klb*{z - \frac{u'}{u} z'}^{M} \klb*{z - \frac{u}{u'} z'}^{M+1}} 
+\sum_{j_1,\dots,j_4} c_{j_1}(N) c_{j_2}(N) c_{j_3}(M+1) c_{j_4}(M) z^{j_1 -N-j_2} z'^{j_3 -M-j_4} (-u)^{N+j_1+j_2} (-u')^{M+1+j_3+j_4}
+\end{align}
+with the coefficients $c_j(N) = \binom{-N}{j}$.
+For $u'<u$ we also find
+\begin{align}
+\sum_{j_5,j_6} c_{j_5}(M) c_{j_6}(M+1) \kla*{-\frac{u'}{u}z'}^{j_5} z^{-M-j_5} z^{j_6} \kla*{-\frac{u'}{uz'}}^{M+1+j_6}.
+\end{align}
+The part relevant to the integrations is then
+\begin{align}
+z^{n+1+j_1-j_2-j_5 + j_6} z'^{j_3-j_4+j_5-j_6} u^{\frac{\i k + 1}{2} + N+j_1+j_2-j_5-M-1-j_6} u'^{2M+1+j_3+j_4+j_5+j_6} \frac{1}{zz'uu'}
+\end{align}
+and the prefactor is
+\begin{align}
+4^{N+2M} (-1)^{j_1+j_2+j_3+j_4+j_5+j_6} c_{j_1}(N) c_{j_2}(N) c_{j_3}(M+1) c_{j_4}(M) c_{j_5}(M) c_{j_6}(M+1).
+\end{align}
+The integrals are now simple and yield\footnote{Note that $\intx{0}{1}{\intx{0}{u}{u^{a-1} u'^{b-1}}{u'}}{u} = \intx{0}{1}{u^{a-1+b} \frac{1}{b}}{u} = \frac{1}{b(a+b)}$.}
+\begin{align}
+(2\pi\i)^2 \frac{\delta_{n+1+j_1-j_2-j_5+j_6,0} \delta_{j_3-j_4+j_5-j_6,0}}{\kla*{\frac{\i k + 1}{2} + N+M+j_1+j_2+j_3+j_4} \kla*{2M+1+j_3+j_4+j_5+j_6}}.
+\end{align}
+Similarly, for $u'>u$ we find
+\begin{align}
+\sum_{j_5,j_6} c_{j_5}(M+1) c_{j_6}(M) \kla*{-\frac{u}{u'}z'}^{j_5} z^{-M-1-j_5} z^{j_6} \kla*{-\frac{u}{u'z'}}^{M+j_6}.
+\end{align}
+The part relevant to the integrations is then
+\begin{align}
+z^{n+j_1-j_2-j_5 + j_6} z'^{j_3-j_4+j_5-j_6+1} u^{\frac{\i k + 1}{2} + N+j_1+j_2+j_5+M+j_6} u'^{j_3+j_4-j_5-j_6} \frac{1}{zz'uu'}
+\end{align}
+and the prefactor is identical up to a minus sign and swapping $M$ and $M+1$ in $c_{j_5}$ and $c_{j_6}$.
+The integrals are again simple and yield\footnote{Note that $\intx{0}{1}{\intx{u}{1}{u^{a-1} u'^{b-1}}{u'}}{u} =\frac{1}{ab}- \frac{1}{b(a+b)} = \frac{1}{a(a+b)}$.}
+\begin{align}
+(2\pi\i)^2 \frac{\delta_{n+j_1-j_2-j_5+j_6,0} \delta_{j_3-j_4+j_5-j_6+1,0}}{\kla*{\frac{\i k + 1}{2} + N+M+j_1+j_2+j_5+j_6} \kla*{\frac{\i k + 1}{2} + N+M+j_1+j_2+j_3+j_4}}.
+\end{align}
+\subsection{General cosecant power 2D Fourier transform}
+We can solve the integral\footnote{$\frac{1}{x^a} = \frac{1}{\Gamma(a)} \intx{0}{\infty}{v^{a-1} \powe{-vx}}{v}$}
+\begin{align}
+I &= \intr{\powe{-\i kx} \csc(\tau + \i x)^a}{x} = (2\i)^a \powe{-\i \tau a} \intr{\powe{-\i kx} \powe{-ax} \kla*{\powe{-2x} - \powe{-2\i \tau}}^{-a}}{x}\\
+&= \frac{2^a}{\Gamma(a)} \powe{-\i \tau a} \powe{\i \frac{\pi}{2}a} \intx{0}{\infty}{ v^{a-1} \powe{v \powe{-2\i\tau}} \intr{\powe{-x (a + \i k)} \powe{-v \powe{-2x}}}{x} }{v}\\
+&= \frac{2^{a-1}}{\Gamma(a)} \powe{-\i \tau a} \powe{\i \frac{\pi}{2}a} \intx{0}{\infty}{ v^{a-1} \powe{v \powe{-2\i\tau}} \intx{0}{\infty}{u^{\frac{a+\i k}{2}-1} \powe{-vu}}{u} }{v}\\
+&= \frac{2^{a-1} \Gamma\kla*{\frac{a+\i k}{2}}}{\Gamma(a)} \powe{-\i\tau a} \powe{\i \frac{\pi}{2}a} \intx{0}{\infty}{ v^{\frac{a-\i k}{2}-1} \powe{v\powe{-2\i\tau}}}{v}\\
+&= \frac{2^{a-1} \Gamma\kla*{\frac{a+\i k}{2}} \Gamma\kla*{\frac{a-\i k}{2}}}{\Gamma(a)} \powe{-\i\tau a} \powe{\i \frac{\pi}{2}a} \kla*{-\powe{2\i\tau}}^\frac{a-\i k}{2} = 2^{a-1} B\kla*{\frac{a+\i k}{2}, \frac{a-\i k}{2}} \powe{k\kla*{\tau - \frac{\pi}{2}}}.
+\end{align}
+%#csc integral
+%beta=np.pi; u=1.0; omega=(2 * 1 + 1) * 1; k=-0.43; tau=0.89; a = 1.3; L = 50
+%c_quad(lambda x: np.exp(-1j*k*x) / np.sin(tau + 1j*x)**a, -L, L), special.gamma(a/2 + 1j*k/2) * special.gamma(a/2 - 1j*k/2) / special.gamma(a) * 2**(a-1) * np.exp(tau*k) * np.exp(-np.pi/2 *k), c_quad(lambda v: (2j)**a * np.exp(-1j*tau*a)/special.gamma(a) * np.exp(v*np.exp(-2j*tau)) * v**(a/2-1j*k/2-1) / 2 * special.gamma(a/2+1j*k/2), 0, L)
+%%In a similar way we can also treat the more complicated integral
+%%\begin{align}
+%%I &= \intr{\powe{-\i kx} \csc(\tau + \i x)^a \csc(\tau - \i x)^b}{x} \\
+%%&= (2\i)^a (2\i)^b \powe{-\i \tau a} \powe{\i\tau b} \intr{\powe{-\i kx} \powe{-ax} \kla*{\powe{-2x} - \powe{-2\i \tau}}^{-a} \powe{-bx} \kla*{\powe{2\i\tau} - \powe{-2x}}^{-b}}{x}\\
+%%&= \frac{2^{a+b}(-1)^{-b}}{\Gamma(a)\Gamma(b)} \powe{\i\tau(b-a)} \powe{\i\frac{\pi}{2}(a+b)} \intx{0}{\infty}{\intx{0}{\infty}{v^{a-1} w^{b-1} \powe{v\powe{-2\i\tau}} \powe{w\powe{2\i\tau}} \intr{\powe{-x (a+b+\i k)} \powe{-(v+w) \powe{-2x}}}{x} }{w}}{v}\\
+%%&= \frac{2^{a+b-1}}{\Gamma(a)\Gamma(b)} \powe{\i\tau(b-a)} \powe{\i\frac{\pi}{2}(a-b)} \intx{0}{\infty}{\intx{0}{\infty}{\intx{0}{\infty}{ v^{a-1} w^{b-1} \powe{v\powe{-2\i\tau}} \powe{w\powe{2\i\tau}} u^{\frac{a+b+\i k}{2}-1} \powe{-(v+w) u} }{u} }{w} }{v}\\
+%%&= \frac{2^{a+b-1}}{\Gamma(a)\Gamma(b)} \powe{\i\tau(b-a)} \powe{\i\frac{\pi}{2}(a-b)} \intx{0}{\infty}{\intx{0}{\infty}{ v^{a-1} w^{b-1} \powe{v\powe{-2\i\tau}} \powe{w\powe{2\i\tau}} \frac{\Gamma\kla*{\frac{a+b+\i k}{2}}}{\kla*{v+w}^\frac{a+b+\i k}{2}} }{w} }{v}.
+%%\end{align}
+%beta=np.pi; u=1.0; omega=(2 * 1 + 1) * 1; k=-0.43; tau=0.89; a = 1.3; b=1.1; L = 50
+%c_quad(lambda x: np.exp(-1j*k*x)/ np.sin(tau + 1j*x)**a/ np.sin(tau - 1j*x)**b, -L, L)
+%2**(a+b-1)/special.gamma(a)/special.gamma(b) * np.exp(1j*tau*(b-a)) * np.exp(1j*np.pi/2*(a-b))* special.gamma((a+b+1j*k)/2) * c_dblquad(lambda v,w: v**(a-1) * w**(b-1) * np.exp(v*np.exp(-2j*tau)) * np.exp(w*np.exp(2j*tau)) / (v+w)**((a+b+1j*k)/2), 0, 100, 0, 100)[0]
+%At this point suppose that $N=-\frac{a+b+\i k}{2} \in\mathbb{N}$ and expand
+%%Sum[Binomial[N,j] Gamma[a+j] Gamma[b+N-j] z^j, {j, 0, N}]
+%\begin{align}
+%I_N &= \sum_{j=0}^N \binom{N}{j} \intx{0}{\infty}{\intx{0}{\infty}{v^{a-1}w^{b-1} \powe{v\powe{-2\i\tau}} \powe{w\powe{2\i\tau}} v^j w^{N-j} }{w} }{v}\\
+%&= \sum_{j=0}^N \binom{N}{j} \Gamma(a+j)\Gamma(b+N-j) \kla*{-\powe{2\i\tau}}^{a+j} \kla*{-\powe{-2\i\tau}}^{b+N-j}\\
+%&= \kla*{-\powe{2\i\tau}}^{a-b-N} \Gamma(a)\Gamma(b+N) {}_2F_1\kla*{a,-N;-b-N+1; \powe{4\i\tau}}.
+%\end{align}
+%By analytic continuation we thus find
+%\begin{align}
+%I &= 2^{a+b-1} \powe{\i\tau(b-a)} \powe{\i\frac{\pi}{2}(b-a)} \powe{\i\pi (N+a)} \powe{2\i\tau(a-b-N)} \frac{\Gamma(b+N)\Gamma(-N)}{\Gamma(b)} {}_2F_1\kla*{a,-N;-b-N+1; \powe{4\i\tau}}\\
+%&= 2^{a+b-1} \powe{\i\tau \kla*{2a+\i k}} B\kla*{\frac{b-a-\i k}{2}, \frac{a+b+\i k}{2}} {}_2F_1\kla*{a,\frac{a+b+\i k}{2}; \frac{a-b+\i k}{2} +1; \powe{4\i\tau}}. %%%(TODO, wrong; analytic cont. doesn't work somehow...)
+%\end{align}
+Using convolutions we can then also compute
+\begin{align}
+I &= \intr{\powe{-\i kx} \csc(\tau + \i x)^a \csc(\tau - \i x)^b}{x} \\
+&= \intr{ \frac{1}{2\pi} \intr{ \intr{\powe{-\i kx} \powe{\i k'(x-x')} \csc(\tau + \i x)^a \csc(\tau - \i x')^b}{x'} }{x} }{k'}\\
+&= \frac{2^{a+b-2}}{2\pi} \intr{ B\kla*{\frac{a+\i (k-k')}{2}, \frac{a-\i (k-k')}{2}} \powe{(k-k') \kla*{\tau - \frac{\pi}{2}}} B\kla*{\frac{b+\i k'}{2}, \frac{b-\i k'}{2}} \powe{-k' \kla*{\tau - \frac{\pi}{2}}} }{k'}\\
+&= \frac{2^{a+b-2}}{2\pi \Gamma(a) \Gamma(b)} \powe{k \kla*{\tau - \frac{\pi}{2}}} \intr{\abs*{\Gamma\kla*{\frac{a+\i k}{2} - \frac{\i k'}{2}} \Gamma\kla*{\frac{b}{2} + \frac{\i k'}{2}}}^2 \powe{k' (\pi - 2\tau)}}{k'}.
+\end{align}
+%a=1.29; b=1.53; k=0.43; L=50
+%c_quad(lambda x: 2**(a+b-2) / (2*np.pi) / special.gamma(a) / special.gamma(b) * np.exp(k*(tau-np.pi/2)) * np.abs(special.gamma((a+1j*k)/2 - 1j*x/2) * special.gamma(b/2 - 1j*x/2))**2 * np.exp(x*(np.pi-2*tau)), -L, L)
+The temporal transform is now simple
+\begin{align}
+I_n &= \intx{0}{\pi}{\powe{\i (2n+1) \tau} I}{\tau}\\
+&= \frac{2^{a+b-3}}{\pi\Gamma(a)\Gamma(b)} \intr{\abs*{\Gamma\kla*{\frac{a+\i k}{2} - \frac{\i k'}{2}} \Gamma\kla*{\frac{b}{2} + \frac{\i k'}{2}}}^2 \powe{\pi k'} \powe{-k \frac{\pi}{2}} \intx{0}{\pi}{\powe{\i (2n+1)\tau} \powe{\tau (k-2k')}}{\tau} }{k'}\\
+&= \frac{2^{a+b-2}}{2\pi\Gamma(a)\Gamma(b)} \intr{\abs*{\Gamma\kla*{\frac{a+\i k}{2} - \frac{\i k'}{2}} \Gamma\kla*{\frac{b}{2} + \frac{\i k'}{2}}}^2 \powe{\pi k'} \powe{-k \frac{\pi}{2}} \frac{-\powe{\pi (k-2k')} - 1}{\i (2n+1) + k - 2k'} }{k'}\\
+&= -\frac{2^{a+b-2}}{\pi\Gamma(a)\Gamma(b)} \intr{\abs*{\Gamma\kla*{\frac{a+\i k}{2} - \frac{\i k'}{2}} \Gamma\kla*{\frac{b}{2} + \frac{\i k'}{2}}}^2 \frac{ \cosh\kla*{\frac{\pi}{2}k - \pi k'} }{\omega + k - 2k' + \i\delta} }{k'}.
+\end{align}
+%%% CONFIRMED!
+%k=0.85; n=3; a=1.3; b=0.8
+%c_quad(lambda tau: np.exp(1j*(2*n+1)*tau) * c_quad(lambda x: np.exp(-1j*k*x) / np.sin(tau+1j*x)**a / np.sin(tau-1j*x)**b, -10, 10)[0], 0, np.pi), c_quad(integrand, -L, L, k)[0] / (-special.gamma(a) * special.gamma(b) * np.pi / 2**(a+b-2))
+We can approximate the result as TODO
+%#regularization
+%x=100; k=1e3
+%integrand = lambda x, k: np.abs(special.gamma((a+1j*k)/2 - 1j*x/2) * special.gamma(b/2 - 1j*x/2))**2 * np.cosh(np.pi/2 * k - np.pi*x) / (1j*(2*n+1) + k - 2*x)
+%coshln = lambda x: -np.log(2) + np.abs(x) + np.log(1 + np.exp(-2*np.abs(x)))
+%integrand2 = lambda x, k: np.exp(special.loggamma((a+1j*k)/2 - 1j*x/2) + special.loggamma((a-1j*k)/2 + 1j*x/2) + special.loggamma(b/2 - 1j*x/2) + special.loggamma(b/2 + 1j*x/2) + coshln(np.pi/2 * k - np.pi*x)) / (1j*(2*n+1) + k - 2*x)
+%%% real time result; partially exact
+%n=3; om = 1j*(2*n+1); omega=0.15; k=0.43; K=0.8; M=(K+1/K-2)/2; a=1+M/2; b=M/2; L=np.inf
+%km=(omega-k)/2; kp=(omega+k)/2
+%I_0 = lambda k, a: 2**(a-1) / special.gamma(a) * np.abs(special.gamma(a/2+1j*k/2))**2 * np.sin(np.pi*a/2 + 1j*k*np.pi/2)/np.sin(np.pi*a)
+%print(1j*np.sin(np.pi*M/2) * I_0(km, a) * I_0(kp, b))
+%print(-1/2 * 2**(a+b-2)/special.gamma(a)/special.gamma(b) * np.abs(special.gamma(a/2+1j*km/2) * special.gamma(b/2+1j*kp/2))**2 * np.cosh(omega*np.pi/2))
+%integrand = lambda x, k: np.exp(special.loggamma((a+1j*k)/2 - 1j*x/2) + special.loggamma((a-1j*k)/2 + 1j*x/2) + special.loggamma(b/2 - 1j*x/2) + special.loggamma(b/2 + 1j*x/2) + coshln(np.pi/2 * k - np.pi*x)) / (om + k - 2*x)
+%print(c_quad(integrand, -L, L, k)[0] * 2**(a+b-2)/special.gamma(a)/special.gamma(b)/np.pi)
+%#approx
+%n = 4; L = np.inf; a=1.27; b=0.79
+%kv = np.geomspace(1e-5, 1e5, 50)
+%integrand = lambda x, k: np.exp(special.loggamma((a+1j*k)/2 - 1j*x/2) + special.loggamma((a-1j*k)/2 + 1j*x/2) + special.loggamma(b/2 - 1j*x/2) + special.loggamma(b/2 + 1j*x/2) + coshln(np.pi/2 * k - np.pi*x)) / (1j*(2*n+1) + k - 2*x)
+%yv = np.array([c_quad(integrand, -L, L, k)[0] for k in kv])
+%_, ax = plt.subplots()
+%ax.set_xscale('log')
+%ax.set_yscale('log')
+%ax.scatter(kv, yv.real)
+%ax.scatter(kv, -yv.imag)
+\subsubsection{Specific values}
+At $\tau = \frac{\pi}{2}$ the integral simplifies to\footnote{$B(x,y) = \intx{0}{\infty}{u^{x-1} (1+u)^{-x-y}}{u}$}
+\begin{align}
+I &= \intr{\powe{-\i kx} \sec(\i x)^{a+b}}{x} = 2^{a+b} \intr{\powe{-\i kx} \powe{(a+b)x} \kla*{1 + \powe{2 x}}^{-(a+b)} }{x}\\
+&= 2^{a+b-1} \intx{0}{\infty}{u^{\frac{a+b-\i k}{2}-1} (1+u)^{-(a+b)}}{u}\\
+&= 2^{a+b-1} B\kla*{\frac{a+b-\i k}{2}, a+b-\frac{a+b-\i k}{2}} = \frac{2^{a+b-1}}{\Gamma(a+b)} \abs*{\Gamma\kla*{\frac{a+b}{2} + \frac{\i k}{2}}}^2.
+\end{align}
+At $a=b+1$ with $b>0$ we have
+\begin{align}
+I &= \intx{0}{\pi}{\intr{\powe{\i (2n+1)\tau - \i kx} \csc\kla*{\tau + \i x}^a \csc\kla*{\tau - \i x}^b}{x} }{\tau} \\
+&= -\i \sin\kla*{\pi b} I_0\kla*{\frac{\i (2n+1) - k}{2}, a} I_0\kla*{\frac{\i(2n+1) + k}{2}, b}
+\end{align}
+where we defined $I_0(z,a) = \frac{2^{a-1}}{\Gamma(a) \sin(\pi a)} \Gamma\kla*{\frac{a+\i z}{2}} \Gamma\kla*{\frac{a - \i z}{2}} \sin\kla*{\frac{\pi a}{2} + \frac{\i \pi z}{2}}$.
+%n=3; om = 1j*(2*n+1); k=0.43; K=0.8; M=(K+1/K-2)/2; a=1+M/2; b=M/2; L=np.inf
+%I_0 = lambda z, a: 2**(a-1) / special.gamma(a)* special.gamma(a/2+1j*z/2)* special.gamma(a/2-1j*z/2) * np.sin(np.pi*a/2 + 1j*z*np.pi/2)/np.sin(np.pi*a)
+%print(c_quad(lambda tau: np.exp(1j*(2*n+1)*tau) * c_quad(lambda x: np.exp(-1j*k*x) / np.sin(tau+1j*x)**a / np.sin(tau-1j*x)**b, -10, 10)[0], 0, np.pi))
+%coshln = lambda x: -np.log(2) + np.abs(x) + np.log(1 + np.exp(-2*np.abs(x)))
+%integrand = lambda x, k: np.exp(special.loggamma((a+1j*k)/2 - 1j*x/2) + special.loggamma((a-1j*k)/2 + 1j*x/2) + special.loggamma(b/2 - 1j*x/2) + special.loggamma(b/2 + 1j*x/2) + coshln(np.pi/2 * k - np.pi*x)) / (om + k - 2*x)
+%print(c_quad(integrand, -L, L, k)[0] / (-special.gamma(a) * special.gamma(b) * np.pi / 2**(a+b-2)))
+%print(-1j * np.sin(np.pi*b) * I_0((om-k)/2, a) * I_0((om+k)/2, b))
+At $a=b$ we have
+\begin{align}
+I &= \intx{0}{\pi}{\intr{\powe{\i 2n\tau - \i kx} \csc\kla*{\tau + \i x}^a \csc\kla*{\tau - \i x}^a}{x} }{\tau} \\
+&= \sin\kla*{\pi a} I_0\kla*{\frac{\i 2n - k}{2}, a} I_0\kla*{\frac{\i 2n + k}{2}, a}.
+\end{align}
+%#beta csc a,a
+%beta=2.6; u=1.2
+%n=-3; om = 1j*(2*n)*np.pi/beta; k=-0.43; K=0.7; M=(K+1/K-2)/2; a=M/2; b=a; L=np.inf
+%I_0 = lambda z, a: 2**(a-1) / special.gamma(a)* special.gamma(a/2+1j*z/2)* special.gamma(a/2-1j*z/2) * np.sin(np.pi*a/2 + 1j*z*np.pi/2)/np.sin(np.pi*a)
+%print(c_quad(lambda tau: np.exp(om*tau) * c_quad(lambda x: np.exp(-1j*k*x) / np.sin(np.pi/(beta*u)*(tau*u+1j*x))**a / np.sin(np.pi/(beta*u)*(tau*u-1j*x))**b, -10, 10)[0], 0, beta))
+%print(u * beta**2 / np.pi**2 * np.sin(np.pi*b) * I_0(beta*(om-k*u)/(2*np.pi), a) * I_0(beta*(om+k*u)/(2*np.pi), b))
+General solution for $a=0,-1,-2,\dots$
+\begin{align}
+I &= \intx{0}{\pi}{\intr{\powe{\i (2n+1)\tau-\i kx} \csc(\tau-\i x)^a \csc(\tau + \i x)^b}{x} }{\tau}\\
+&= \sum_{j\ge 0} \binom{-a}{j} (2\i)^{a+b} (-1)^{a-j} \intx{0}{\pi}{\powe{\i \tau (2n+1+2j+a-b)} \intr{\powe{x(a-b+2j-\i k)} \kla*{\powe{-2x} - \powe{-2\i\tau}}^{-b} }{x}  }{\tau}\\
+&= \sum_{j\ge 0} \binom{-a}{j} \frac{(2\i)^{a+b}}{\Gamma(b)} (-1)^{a-j} \intx{0}{\pi}{\powe{\i \tau (2n+1+2j+a-b)} \intx{0}{\infty}{v^{b-1} \powe{v\powe{-2\i\tau}} \intr{\powe{x(a-b+2j-\i k)} \powe{-v\powe{-2x}} }{x}}{v} }{\tau}\\
+&= \sum_{j\ge 0} \binom{-a}{j} \frac{(2\i)^{a+b}}{\Gamma(b)} (-1)^{a-j} \intx{0}{\pi}{\powe{\i \tau (2n+1+2j+a-b)} \intx{0}{\infty}{v^{b-1} \powe{v\powe{-2\i\tau}} \frac{1}{2} \Gamma\kla*{\frac{b-a+\i k}{2} - j} v^{-\frac{b-a+\i k-2j}{2}}}{v} }{\tau}\\
+&= \sum_{j\ge 0} \binom{-a}{j} \frac{(2\i)^{a+b}}{\Gamma(b)} (-1)^{a-j} \intx{0}{\pi}{\powe{\i \tau (2n+1+2j+a-b)} \frac{1}{2} \Gamma\kla*{\frac{b-a+\i k}{2} - j} \Gamma\kla*{\frac{b+a-\i k}{2} + j} \kla*{\powe{2\i\tau-\i\pi}}^{\frac{b+a-\i k}{2} + j} }{\tau}\\
+&=\dots \\
+&= \frac{\Gamma(x)\Gamma(y)}{z} \frac{2^{a+b}}{4\i} \frac{\cosh\kla*{\frac{\pi}{2}k}}{\Gamma(b)} \powe{\i\pi (1+a)} {}_3F_2\kla*{a,y,z;1-x,z+1;1}
+\end{align}
+%print(np.sum([special.gamma(1-a) /special.gamma(j+1)/special.gamma(1-a-j)*(-1)**(a-j) * (2j)**(a+b)/special.gamma(b)/2* special.gamma((b-a+1j*k)/2-j)* special.gamma((b+a-1j*k)/2+j) * c_quad(lambda tau: np.exp(1j*tau*(2*n+1+2*j+a-b)) * np.exp((2j*tau-1j*np.pi) * (j + (b+a-1j*k)/2)), 0, np.pi)[0] for j in range(5)]))
+where $x=\frac{b+a+\i k}{2}$, $y=\frac{b-a-\i k}{2}$ and $z=\frac{\i (2n+1) + k - 2\i a}{4\i}$. 
+%%%Sum[Binomial[a,j] / (z+j) Gamma[x-j] Gamma[y+j], {j,0,inf}]
+%#csc a csc b
+%n=2; om = 1j*(2*n+1); k=0.43; a=-1.01; b=1.43; L=30
+%print(c_quad(lambda tau: np.exp(1j*(2*n+1)*tau) * c_quad(lambda x: np.exp(-1j*k*x) / np.sin(tau+1j*x)**b / np.sin(tau-1j*x)**a, -L, L)[0], 0, np.pi))
+%x=(b-a+1j*k)/2; y=(b+a-1j*k)/2; z=(1j*(2*n+1) + k + 2j*a) / 4j
+%#print(np.sum([special.gamma(1-a) /special.gamma(j+1)/special.gamma(1-a-j) * special.gamma(y+j) * special.gamma(x-j) / (z+j) for j in range(1-a)])/ special.gamma(b) * np.cosh(np.pi*k/2)* np.exp(1j*np.pi*(1+a)) *2**(a+b) / 4j)
+%complex(sy.hyper((a,y,z), (1-x,1+z), 1).evalf())*special.gamma(x)*special.gamma(y)/z / special.gamma(b)*np.exp(-np.pi*k/2+1j*np.pi*a)/2 * (np.exp(np.pi*k - 2j*np.pi*a)+1)* np.exp(1j*np.pi*(1+a)) *2**(a+b) / 4j
+\subsubsection{Approximations}
+The integral is hard to approximate.
+A very simple but crude estimate is given by
+%#int tauv csc gamma
+%a = 1.3
+%b = 0.7
+%k = 1
+%#tauv = np.concatenate((np.geomspace(1e-4, 1e-1, 10), np.linspace(0.15, np.pi-0.15, 9), 
+%#                       np.pi - np.geomspace(1e-4, 1e-2, 5)[::-1]))
+%linv = np.linspace(0.15, np.pi/2, 9)
+%logv = np.geomspace(1e-4, 1e-1, 10)
+%#tauv = np.concatenate((-linv[::-1], -logv[::-1], logv, linv))
+%tauv = np.concatenate((logv, linv, np.pi - linv[-2::-1], np.pi -logv[::-1]))
+%yv = np.array([integral_gamma(k, tau % np.pi, a, b)[0] for tau in tauv])
+%#plot tauv csc gamma
+%_, ax = plt.subplots()
+%ax.set_yscale("log")
+%zv = 2**(a+b-1)/special.gamma(a+b) * np.abs(special.gamma((a+b)/2 + 1j*k/2))**2 * np.cosh(np.abs(k)*(tauv - np.pi/2)) * (2*tauv/np.pi * (2 - 2*tauv / np.pi))**(-(a+b)/2)
+%ax.plot(tauv, zv, alpha=0.5, c=line[0].get_color())
+\begin{align}
+I &\approx I\kla*{\tau = \frac{\pi}{2}} \cosh\kla*{k\tau - \frac{k\pi}{2}} \kla*{\frac{\pi}{2}}^{a+b} \klb*{\tau \kla*{\pi - \tau}}^{-\frac{a+b}{2}}.
+\end{align}
+\section{Hyperbolic cosecant integrals}
+\subsection{Fourier transform}
+\begin{align}
+I(z,K) &= \intx{0}{\infty}{\powe{\i zx} \csch^K(ax)}{x} = 2^K \intx{0}{\infty}{\powe{\i zx} \kla*{1 - \powe{-2ax}}^{-K} \powe{-Kax}}{x}\\
+&= 2^{K-1} \intx{0}{1}{v^{-K} \kla*{1 - v}^{-1 + \frac{K}{2} - \frac{\i z}{2a}}}{v} = 2^{K-1} B\kla*{1 - K, \frac{K}{2} - \frac{\i z}{2a}}.
+\end{align}
+\subsection{Product integral}
+%Using $x = - \frac{1}{2} \log(v)$ one finds
+%\begin{align}
+%I(z,K) &= \intr{\csch^{K+1}\kla*{x + \frac{z}{2} - \i 0^+} \csch^{K}\kla*{x - \frac{z}{2} - \i 0^+}}{x}\\
+%&= 2^{2K+1} \intr{\kla*{1 - \powe{-z}\powe{-2x}}^{-K-1} \powe{-\frac{K+1}{2}z} \powe{-(K+1)x} \kla*{1 - \powe{z}\powe{-2x}}^{-K} \powe{\frac{K}{2}z} \powe{-Kx}}{x}\\
+%&= 2^{2K+1} \powe{-\frac{z}{2}} \intr{\frac{1}{1 - \powe{-z} \powe{-2x}} \kla*{1 - 2\cosh(z) \powe{-2x} + \powe{-4x}}^{-K} \powe{-(2K+1)x}}{x}\\
+%&= 2^{2K} \powe{-\frac{z}{2}} \intx{0}{\infty}{\frac{1}{1 - \powe{-z} v} \kla*{1 - 2\cosh(z)v + v^2}^{-K} v^{\frac{2K+1}{2} - 1}}{v}
+%\end{align}
+%\begin{align}
+%v &= \sinh\kla*{x - \frac{z}{2}},\qquad x = \frac{z}{2} + \arsinh(v),\\
+%\csch\kla*{x + \frac{z}{2}} &= \csch\kla*{z + \arsinh(v)} = \frac{1}{v\cosh(z) + \sqrt{1+v^2} \sinh(z)},\\
+%I(z,K) &= \intr{v^{-K} \frac{1}{\sqrt{1+v^2}} \frac{1}{\klb*{v\cosh(z) + \sqrt{1 + v^2} \sinh(z)}^{K+1}}}{v},\\
+%\csch(x+y) \csch(x-y) &= \frac{4}{\kla*{\powe{x+y} - \powe{-x-y}} \kla*{\powe{x-y} - \powe{-x+y}}} = \frac{2}{\cosh(2x) - \cosh(2y)}
+%\end{align}
+%%%NUMERICAL solution
+%K=-0.45; delta=1e-1
+%xv = np.linspace(-6, 6, 101)
+%yv = np.array([c_quad(lambda xp: 1/np.sinh(xp+x/2-1j*delta)**(K+1) * 1/np.sinh(xp-x/2-1j*delta)**K, -50, 50)[0] for x in xv])
+%yv = np.abs(yv.real) + 1j * np.abs(yv.imag)
+%zv = yv[xv.size//2] / np.cosh(xv)**(K) * 2**K
+%plot_complex(plt.subplots()[1], xv, yv)
+%plt.gca().plot(xv, zv.real, ls='--')
+%plt.gca().plot(xv, zv.imag, ls='--')
+%plt.gca().set_yscale('log')
+%fig, ax = plt.subplots()
+%ydata = np.abs(zv.real/yv.real-1)
+%ax.plot(xv, ydata)
+%ax.plot(xv, ydata[xv.size//2] / np.cosh(xv)**((K+1/K)/2))
+%ax.set_yscale('log')
+%%##zv = yv[100] * 2**K / np.cosh(xv)**K / (1 + (2**K-1) / np.cosh(xv)**(1+(K-1)/5)) ## INSANE approximation!!!!
+One can numerically check that within acceptable tolerance we have
+\begin{align}
+I(z,K) &= \intr{\csch^{K+1}\kla*{x + \frac{z}{2} - \i 0^+} \csch^{K}\kla*{x - \frac{z}{2} - \i 0^+}}{x}\\
+&\approx I(0,K) \frac{2^K \sech^K(z)}{1 + (2^K-1) \sech^\frac{K+4}{5}(z)}.
+\end{align}
+Thus we are left with the task of evaluating the significantly easier integral
+\begin{align}
+I(0,K) &= \intr{\csch^{2K+1}(x-\i 0^+)}{x} = \kla*{1 + (-1)^{2K + 1}} 2^{2K+1} \intx{0}{\infty}{\kla*{1 - \powe{-2x}}^{-2K-1} \powe{-(2K+1)x}}{x}\\
+&= \kla*{1 - \powe{2\pi\i K}} 2^{2K} \intx{0}{1}{v^{-2K-1} \kla*{1 - v}^{K + \frac{1}{2} -1}}{v} = \kla*{1 - \powe{2\pi\i K}} 2^{2K} B\kla*{-2K, K + \frac{1}{2}}.
+\end{align}
+Combining with our previous result yields
+\begin{align}
+I(z,K) &\approx \kla*{1 - \powe{2\pi\i K}} \frac{8^K B\kla*{K + \frac{1}{2}, -2K} \sech^K(z)}{1 + \kla*{2^K - 1} \sech^\frac{K+4}{5}(z)}.
+\end{align}
+%(1 - np.exp(2*np.pi*1j*K)) * 8**K * special.beta(K+1/2, -2*K) / np.cosh(x)**K / (1 + (2**K-1) / np.cosh(x)**((K+4)/5))
+\subsection{Hyperbolic secant product Fourier transform}
+Making use of the substitution $v = \powe{-2x}$ or equivalently $x = -\frac{1}{2} \log(v)$ we find
+\begin{align}
+I(z) &= \intx{0}{\infty}{\powe{\i zx} \csch^A(x) \frac{\sech^B(x)}{1 + r \sech^C(x)}}{x}\\
+&= 2^{A+B-C} \intx{0}{\infty}{\powe{\i zx} \kla*{1 - \powe{-2x}}^{-A} \powe{-Ax} \kla*{1 + \powe{-2x}}^{C-B} \powe{(C-B)x} \frac{1}{r + 2^{-C} \kla*{1 + \powe{-2x}}^C \powe{Cx}} }{x}\\
+&= 2^{A+B-C-1} \intx{0}{1}{v^{\frac{A+B}{2} -\frac{\i z}{2} -1} (1-v)^{-A} \frac{(1+v)^{C-B}}{rv^\frac{C}{2} + 2^{-C} (1+v)^C}}{v}.
+\end{align}
+%ALTERNATIVE
+%\begin{align}
+%I(z) &= \intx{0}{\infty}{\powe{\i zx} \csch^A(x) \frac{\sech^B(x)}{1 + r \sech^C(x)}}{x}\\
+%&= \sum_{n\ge 0} (-r)^n \intx{0}{\infty}{\powe{\i zx} \csch^A(x) \sech^{B+Cn}(x)}{x}\\
+%&= \sum_{n\ge 0} (-r)^n 2^{A+B+Cn} \intx{0}{\infty}{\powe{\i zx} \kla*{1 - \powe{-2x}}^{-A} \powe{-Ax} \kla*{1 + \powe{-2x}}^{-B-Cn} \powe{-(B+Cn)x}}{x}\\
+%&= \sum_{n\ge 0} (-r)^n 2^{A+B+Cn-1} \intx{0}{1}{v^{\frac{A+B+Cn - \i z}{2} - 1} (1-v)^{-A} (1+v)^{-B-Cn}}{v}.
+%\end{align}
+%Using the integral representation of the Hypergeometric function
+%\begin{align}
+%{}_2F_1(a,b;c;z) &= \frac{\Gamma(c)}{\Gamma(b)\Gamma(c-b)} \intx{0}{1}{v^{b-1} (1-v)^{c-b-1} (1 - zv)^{-a}}{v}
+%\end{align}
+%we can rewrite our integral where $a=B+Cn$, $b = \frac{A+B+Cn-\i z}{2} = Z + \frac{Cn}{2}$, $c = b+1-A$ and $z=-1$
+%\begin{align}
+%I(z) &= \sum_{n\ge 0} (-r)^n 2^{A+B+Cn-1} \frac{\Gamma\kla*{Z + \frac{Cn}{2}} \Gamma\kla*{1-A}}{\Gamma\kla*{Z + 1 - A + \frac{Cn}{2}}} {}_2F_1\kla*{B+Cn, Z + \frac{Cn}{2}; Z + 1 - A + \frac{Cn}{2}; -1}\\
+%&= \sum_{n,m\ge 0} \frac{(-1)^m (-r)^n}{m!} 2^{A+B+Cn-1} \frac{\Gamma\kla*{Z + \frac{Cn}{2}} \Gamma\kla*{1-A}}{\Gamma\kla*{Z + 1 - A + \frac{Cn}{2}}} \frac{\Gamma(B+Cn+m)}{\Gamma(B+Cn)} \frac{\Gamma\kla*{Z + \frac{Cn}{2} + m}}{\Gamma\kla*{Z + \frac{Cn}{2}}} \frac{\Gamma\kla*{Z + 1 - A + \frac{Cn}{2}}}{\Gamma\kla*{Z + 1 - A + \frac{Cn}{2} + m}}.
+%\end{align}
+%A=0.534; B=0.232; C=1.43; r=0.26; z=2.314
+%c_quad(lambda x: np.exp(1j*z*x) / np.sinh(x)**A / (np.cosh(x)**B + r * np.cosh(x)**(B-C)), 0, np.inf)
+%c_quad(lambda x: 2**(A+B-C-1) * x**((A+B-1j*z)/2 - 1) * (1-x)**(-A) * (1+x)**(C-B) / (r*x**(C/2) + 2**(-C) * (1+x)**C), 0, 1)
+\section{Polynomial Integrals}
+\subsection{Minkowski power-law 2D Fourier transform}
+We can use $\i (2n\tau - kx) = k_+ (\tau-\i x) - k_- (\tau+\i x)$ with $k_\pm = \frac{k \pm \i 2n}{2}$ to solve the following integral
+%\begin{align}
+%I &= \intx{0}{\pi}{\powe{2\i n\tau} \intr{\powe{-\i kx} \kla*{x^2+\tau^2}^{-b}}{x} }{\tau} = \intx{0}{\pi}{\powe{2\i n\tau} \frac{1}{\Gamma(b)} \intx{0}{\infty}{v^{b-1} \intr{\powe{-\i kx} \powe{-v\kla*{x^2+\tau^2}} }{x} }{v} }{\tau}\\
+%&= \frac{1}{\Gamma(b)} \intx{0}{\pi}{\powe{2\i n\tau} \intx{0}{\infty}{v^{b-1} \powe{-v\tau^2} \sqrt{\frac{\pi}{v}} \powe{-\frac{k^2}{4v}}}{v} }{\tau}\\
+%&= \frac{\sqrt{\pi}}{\Gamma(b)} \sum_{j\ge 0} \frac{1}{j!} \kla*{-\frac{k^2}{4}}^j \intx{0}{\pi}{\powe{2\i n\tau} \intx{0}{\infty}{v^{b-1-j-\frac{1}{2}} \powe{-v\tau^2} }{v}}{\tau}\\
+%&= \frac{\sqrt{\pi}}{\Gamma(b)} \sum_{j\ge 0} \frac{1}{j!} \kla*{-\frac{k^2}{4}}^j \intx{0}{\pi}{\powe{2\i n\tau} \frac{\Gamma\kla*{b-j-\frac{1}{2}}}{\tau^{2b-2j-1}}}{\tau}\\
+%&= \frac{\sqrt{\pi}}{\Gamma(b)} \sum_{j\ge 0} \frac{1}{j!} \kla*{-\frac{k^2}{4}}^j \frac{\Gamma\kla*{b-j-\frac{1}{2}}}{\Gamma\kla*{2b-2j-1}} \intx{0}{\infty}{v^{2b-2j-1} \intx{0}{\pi}{\powe{2\i n\tau} \powe{-v\tau}}{\tau}}{v}\\
+%&= \frac{\sqrt{\pi}}{\Gamma(b)} \sum_{j\ge 0} \frac{1}{j!} \kla*{-\frac{k^2}{4}}^j \frac{\Gamma\kla*{b-j-\frac{1}{2}}}{\Gamma\kla*{2b-2j-1}} \intx{0}{\infty}{v^{2b-2j-1} \frac{\powe{-\pi v} - 1}{2\i n-v}}{v}
+%\end{align}
+\begin{align}
+I &= \intx{0}{\pi}{\intr{\powe{\i 2n\tau - \i kx} \kla*{\tau-\i x}^{a} \kla*{\tau+\i x}^{b}}{x} }{\tau}\\
+&= \partial_{k_+}^a \partial_{k_-}^b \intx{0}{\pi}{\intr{\powe{\i 2n\tau - \i kx} }{x} }{\tau} = \partial_{k_+}^a \partial_{k_-}^b 2\pi^2 \delta_{n,0} \delta(k).
+\end{align}
+Alternatively write
+\begin{align}
+I &= \intx{0}{\pi}{\intr{\powe{\i 2n\tau - \i kx} \kla*{\tau-\i x}^{-a} \kla*{\tau+\i x}^{-b}}{x} }{\tau}\\
+&= \frac{1}{\Gamma(a)\Gamma(b) }\intx{0}{\infty}{\intx{0}{\infty}{\intx{0}{\pi}{ v^{a-1} w^{b-1} \intr{\powe{\i 2n\tau - \i kx} \powe{-v(\tau - \i x)} \powe{-w(\tau + \i x)}}{x} }{\tau}}{w}}{v}\\
+&= \frac{2\pi}{\Gamma(a)\Gamma(b) }\intx{0}{\infty}{\intx{0}{\infty}{v^{a-1} w^{b-1} \delta\kla*{k+w-v} \frac{\powe{-\pi (v+w)} - 1}{\i 2n - v - w}}{w}}{v}\\
+&= \frac{2\pi}{\Gamma(a)\Gamma(b) }\intx{k}{\infty}{v^{a-1} (v-k)^{b-1} \frac{\powe{-\pi (2v-k)} - 1}{\i 2n - 2v+k}}{v}\\
+&= \frac{2\pi}{\Gamma(a) \Gamma(b)} \intx{1}{\infty}{ k^{a+b-2} v^{a-1} (v-1)^{b-1} \frac{\powe{-\pi k (2v-1)} - 1}{\i \frac{2n}{k} - 2v + 1}}{v}\\
+&= \frac{2\pi}{\Gamma(a) \Gamma(b)} \intx{0}{1}{ k^{a+b-1} v^{1-a-b} (1-v)^{b-1} \frac{\powe{-\pi k \kla*{\frac{2}{v}-1}} - 1}{\i 2nv - 2k + kv}}{v}.
+\end{align}
+%a=0.123; b=0.234; k=0.2; n=3
+%c_quad(lambda v: 2*np.pi/special.gamma(a)/special.gamma(b) * k**(a+b-1)*v**(1-a-b) * (1-v)**(b-1) * (np.exp(-np.pi*k*(2/v-1))-1) / (2j*n*v-2*k+k*v), 0, 1), 
+%c_quad(lambda tau: np.exp(1j*(2*n)*tau) * c_quad(lambda x: np.exp(-1j*k*x) / (tau-1j*x)**a / (tau+1j*x)**b, -100, 100)[0], 0, np.pi)
+Or using the residue theorem we have for $k>0$
+\begin{align}
+I &= \intx{0}{\pi}{\intr{\powe{\i 2n\tau + \i kx} \kla*{\tau+\i x}^{-a} \kla*{\tau-\i x}^{-b}}{x} }{\tau}\\
+&= \intx{0}{\pi}{\powe{\i 2n\tau} \frac{2\pi\i}{\Gamma(a)} \i^{-a} \lim_{x\rightarrow\i\tau} \partial_x^{a-1} \klb*{\powe{\i kx} \kla*{\tau - \i x}^{-b}} }{\tau}\\
+&= \frac{2\pi\i}{\Gamma(a)\i^a} \sum_{j=0}^{a-1} \binom{a-1}{j} \intx{0}{\pi}{\powe{\i 2n\tau} (\i k)^{a-1-j} \powe{-k\tau} \i^{j} \frac{b!}{(b-j)!} (2\tau)^{-b-j} }{\tau}\\
+&= \frac{2\pi}{\Gamma(a)} k^{a-1} \sum_{j=0}^{a-1} \binom{a-1}{j} \frac{1}{k^j 2^{b+j}} \frac{b!}{(b-j)!} \frac{1}{\Gamma(b+j)} \intx{0}{\infty}{v^{b+j-1} \intx{0}{\pi}{\powe{\i 2n\tau - k\tau - v\tau}}{\tau}  }{v}\\
+&= \frac{2\pi}{\Gamma(a)} k^{a-1} \sum_{j=0}^{a-1} \binom{a-1}{j} \frac{1}{k^j 2^{b+j}} \frac{b!}{(b-j)!} \frac{1}{\Gamma(b+j)} \intx{0}{\infty}{v^{b+j-1} \frac{\powe{-\pi (k+v)} - 1}{\i 2n - k - v}  }{v}
+\end{align}
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

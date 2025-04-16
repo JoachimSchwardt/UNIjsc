@@ -1,0 +1,619 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[ngerman]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+%\pagestyle{scrheadings}  % Stil für die Seite setzen
+%\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+%\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{03 Vorkonditionierung und Eigenwerte}
+\newcommand*{\autor}{Joachim Schwardt und Julian Fleck}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Numerik II - Aufgaben}
+\title{\titel}
+%\author{\autor}
+\author{\begin{tabular}{l|l}
+Joachim Schwardt & 4768711 \\ 
+Julian Fleck & 4759587\\ 
+\end{tabular}}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Aufgabe 1}
+Gegeben sei eine symmetrische positiv definite matrix $A\in\mathbb{R}^{n\times n}$ und ein Vektor $b\in\mathbb{R}^n$.
+Sei $D$ die Diagonale von $A$.
+Die \textsc{Jacobi}-Vorkonditionierung verwendet $W:= D$. 
+Seien die Diagonaleinträge nun alle gleich, also $D \equiv hI_{n\times n}$.
+Dann lautet ein Iterationsschritt des vorkonditionierten CG-Verfahrens
+\begin{align}
+r_0 &= b - Ax_0 = \tilde{r}_0,\\
+d_0 &= W^{-1}r_0 = \frac{1}{h}r_0 = \frac{1}{h} \tilde{d}_0,\\
+\alpha_0 &= \frac{r_0^\top W^{-1} r_0}{d_0^\top Ad_0} = h\frac{r_0^\top r_0}{r_0^\top Ar_0} = h\tilde{\alpha}_0,\\
+x_{1} &= x_0 + \alpha_0 d_0 = x_0 + \frac{r_0^\top r_0}{r_0^\top Ar_0} r_0 = x_0 + \tilde{\alpha}_0 \tilde{d}_0 = \tilde{x}_1,\\
+r_1 &= r_0 - \alpha_0 Ad_0 = r_0 - \frac{r_0^\top r_0}{r_0^\top Ar_0} r_0 = \tilde{r}_0 - \tilde{\alpha}_0 \tilde{d}_0 = \tilde{r}_1,\\
+\beta_1 &= \frac{r_1^\top r_1}{r_0^\top r_0} = \tilde{\beta}_1.
+\end{align}
+Die Variablen mit Tilde entsprechen dem Ergebnis ohne Vorkonditionierung. 
+Im ersten Schritt ändert sich also nichts, und wir vermuten nun, dass obige Zusammenhänge allgemein gelten.
+Die Induktionsvoraussetzung lautet also
+\begin{align}
+\beta_{k} &= \tilde{\beta}_{k},\\
+r_k &= \tilde{r}_k,\\
+d_k &= \frac{1}{h} \tilde{d}_k,\\
+\alpha_k &= h\tilde{\alpha}_k,\\
+x_{k+1} &= \tilde{x}_{k+1}.
+\end{align}
+Dann lautet ein Iterationsschritt des vorkonditionierten CG-Verfahrens
+\begin{align}
+r_{k+1} &= r_{k} - \alpha_kAd_k = \tilde{r}_k - h\tilde{\alpha}_k A \frac{1}{h} \tilde{d}_k = \tilde{r}_{k+1},\\
+\beta_{k+1} &= \frac{r_{k+1}^\top r_{k+1}}{r_k^\top r_k} = \tilde{\beta}_{k+1},\\
+d_{k+1} &= W^{-1}r_{k+1} + \beta_{k+1}d_{k} = \frac{1}{h}\tilde{r}_{k+1} + \tilde{\beta}_{k+1} \frac{1}{h} \tilde{d}_k = \frac{1}{h} \tilde{d}_{k+1},\\
+\alpha_{k+1} &= \frac{r_{k+1}^\top W^{-1} r_{k+1}}{d_{k+1}^\top Ad_{k+1}} = h\frac{\tilde{r}_{k+1}^\top \tilde{r}_{k+1}}{\tilde{d}_k^\top A\tilde{d}_k} = h\tilde{\alpha}_{k+1},\\
+x_{k+2} &= x_{k+1} + \alpha_{k+1} d_{k+1} = \tilde{x}_{k+1} + h \tilde{\alpha}_{k+1} \frac{1}{h} \tilde{d}_{k+1} = \tilde{x}_{k+2}.
+\end{align}
+Die Vorkonditionierung hat in diesem Fall also keinen Einfluss auf das CG-Verfahren.
+(Das war irgendwie ziemlich umständlich, geht vermutlich deutlich kürzer...)
+
+\section*{Aufgabe 2}
+Wir betrachten einen Algorithmus zur Berechnung der LR-Zerlegung einer Matrix $A\in\mathbb{R}^{n\times n}$, wobei $L$ eine linke untere Dreiecksmatrix mit $L_{jj} = 1$ und $R$ eine rechte obere Dreiecksmatrix sein sollen, sodass $LR=A$.
+%(Anmerkung: Wir glauben dass die innerste Summe von $j=1$ bis $j=k$ (statt $k-1$) bzw. $j=1$ bis $j=i$ (statt $i-1$) laufen sollte, weil bei uns sonst der Algorithmus nicht funktioniert.)
+%Wir wollen zunächst zeigen, dass der Algorithmus für symmetrische positiv definite Matrizen immer explizit durchführbar ist.
+%Wir wollen zunächst zeigen, dass für beliebige Matrizen immer alle Informationen vorliegen, um den Algorithmus (prinzipiell) durchzuführen.
+%Hier ignorieren wir noch, ob durch Null geteilt wird.
+%Wir unterschiden also nur zwischen besetzten ($\ast$) und unbesetzten (0) Einträgen.
+%Neue Einträge sind blau markiert, und Einträge, die im ächsten Schritt benötigt werden, sind unterstrichen.
+%\\
+%Initialisierung:
+%\begin{align}
+%L &= \begin{pmatrix}
+%\color{red}{\ast} & 0 & \dots & 0 \\
+%0 & \ast & \dots & 0 \\
+%\vdots & \vdots & \ddots & \vdots \\
+%0 & 0 & \dots & \ast
+%\end{pmatrix} &&\tecxt\text{und} & R &= \begin{pmatrix}
+%0 & 0 & \dots & 0  \\
+%0 & 0 & \dots & 0 \\
+%\vdots & \vdots & \ddots & \vdots \\
+%0 & 0 & \dots & 0
+%\end{pmatrix}.
+%\end{align}
+%Schritt $i=1$: $k=1,\dots,0 \rightarrow$ entfällt. 
+%Für $k=1,\dots,n$:
+%\begin{align}
+%R_{1k} &= A_{1k} - \sum_{j=1}^0 L_{1j}R_{jk} = A_{1k}
+%\end{align}
+%Jetzt ist
+%\begin{align}
+%L &= \begin{pmatrix}
+%\ast & 0 & \dots & 0 \\
+%0 & \ast & \dots & 0 \\
+%\vdots & \vdots & \ddots & \vdots \\
+%0 & 0 & \dots & \ast
+%\end{pmatrix} &&\tecxt\text{und} & R &= \begin{pmatrix}
+%\underline{\color{blue}{\ast}} & \color{blue}{\ast} & \dots & \color{blue}{\ast}  \\
+%0 & 0 & \dots & 0 \\
+%\vdots & \vdots & \ddots & \vdots \\
+%0 & 0 & \dots & 0
+%\end{pmatrix}.
+%\end{align}
+%Schritt $i=2$: 
+%Für $k=1$:
+%\begin{align}
+%L_{2k} &= \frac{1}{R_{kk}} \kla\left( A_{2k} - \sum_{j=1}^{k-1}L_{2j}R_{jk} \right)
+%\end{align} 
+%Jetzt ist
+%\begin{align}
+%L &= \begin{pmatrix}
+%\ast & 0 & \dots & 0 \\
+%\underline{\color{blue}{\ast}} & \ast & \dots & 0 \\
+%\vdots & \vdots & \ddots & \vdots \\
+%0 & 0 & \dots & \ast
+%\end{pmatrix} &&\tecxt\text{und} & R &= \begin{pmatrix}
+%\underline{\ast} & \ast & \dots & \ast  \\
+%0 & 0 & \dots & 0 \\
+%\vdots & \vdots & \ddots & \vdots \\
+%0 & 0 & \dots & 0
+%\end{pmatrix}.
+%\end{align}
+%und für $k=2,\dots,n$:
+%\begin{align}
+%R_{2k} &= A_{2k} - \sum_{j=1}^1 L_{2j}R_{jk}
+%\end{align}
+%Jetzt ist
+%\begin{align}
+%L &= \begin{pmatrix}
+%\ast & 0 & \dots & 0 \\
+%\ast & \ast & \dots & 0 \\
+%\vdots & \vdots & \ddots & \vdots \\
+%0 & 0 & \dots & \ast
+%\end{pmatrix} &&\tecxt\text{und} & R &= \begin{pmatrix}
+%\ast & \ast & \dots & \ast  \\
+%0 & \color{blue}{\ast} & \dots & \color{blue}{\ast} \\
+%\vdots & \vdots & \ddots & \vdots \\
+%0 & 0 & \dots & 0
+%\end{pmatrix}.
+%\end{align}
+%Schritt $i=3$: 
+%Für $k=1$:
+%\begin{align}
+%L_{3k} &= \frac{1}{R_{kk}} \kla\left( A_{3k} - \sum_{j=1}^{k-1}L_{3j}R_{jk} \right)
+%\end{align} 
+%Jetzt ist
+%\begin{align}
+%L &= \begin{pmatrix}
+%\ast & 0 & \dots & 0 \\
+%\ast & \ast & \dots & 0 \\
+%\vdots & \vdots & \ddots & \vdots \\
+%0 & 0 & \dots & \ast
+%\end{pmatrix} &&\tecxt\text{und} & R &= \begin{pmatrix}
+%\ast & \ast & \dots & \ast  \\
+%0 & \color{blue}{\ast} & \dots & \color{blue}{\ast} \\
+%\vdots & \vdots & \ddots & \vdots \\
+%0 & 0 & \dots & 0
+%\end{pmatrix}.
+%\end{align}
+%Für $k=2$:
+%\begin{align}
+%L_{3k} &= \frac{1}{R_{kk}} \kla\left( A_{3k} - \sum_{j=1}^{k-1}L_{3j}R_{jk} \right)
+%\end{align} 
+%Jetzt ist
+%\begin{align}
+%L &= \begin{pmatrix}
+%\ast & 0 & \dots & 0 \\
+%\underline{\color{blue}{\ast}} & \ast & \dots & 0 \\
+%\vdots & \vdots & \ddots & \vdots \\
+%0 & 0 & \dots & \ast
+%\end{pmatrix} &&\tecxt\text{und} & R &= \begin{pmatrix}
+%\underline{\ast} & \ast & \dots & \ast  \\
+%0 & 0 & \dots & 0 \\
+%\vdots & \vdots & \ddots & \vdots \\
+%0 & 0 & \dots & 0
+%\end{pmatrix}.
+%\end{align}
+%und für $k=3,\dots,n$:
+%\begin{align}
+%R_{3k} &= A_{3k} - \sum_{j=1}^1 L_{3j}R_{jk}
+%\end{align}
+%Jetzt ist
+%\begin{align}
+%L &= \begin{pmatrix}
+%\ast & 0 & \dots & 0 \\
+%\ast & \ast & \dots & 0 \\
+%\vdots & \vdots & \ddots & \vdots \\
+%0 & 0 & \dots & \ast
+%\end{pmatrix} &&\tecxt\text{und} & R &= \begin{pmatrix}
+%\ast & \ast & \dots & \ast  \\
+%0 & \color{blue}{\ast} & \dots & \color{blue}{\ast} \\
+%\vdots & \vdots & \ddots & \vdots \\
+%0 & 0 & \dots & 0
+%\end{pmatrix}.
+%\end{align}
+\subsection*{a) Durchführbarkeit des Algorithmus}
+Für $i=1$ wird nur die erste Zeile von $A$ in $R$ kopiert, dieser Schritt ist also immer durchführbar.
+Angenommen wir haben die ersten $i$ Schritte durchgeführt.
+Jetzt haben die Matrizen also die Form
+\begin{align}
+L &= \begin{pmatrix}
+1 & 0 & \dots & 0 & 0 & \dots & 0 \\
+\ast & 1 & \dots & 0 & 0 & \dots & 0 \\
+\vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+\ast_{i1} & \ast_{i2} & \dots & 1_{ii} & 0 & \dots & 0 \\
+0 & 0 & \dots & 0 & 1 & \dots & 0 \\
+\vdots & \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \dots & 0 & 0 & \dots & 1
+\end{pmatrix}, && & R &= \begin{pmatrix}
+\ast & \ast & \dots & \ast & \ast & \dots & \ast \\
+0 & \ast & \dots & \ast & \ast & \dots & \ast \\
+\vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \dots & \ast_{ii} & \ast_{i,i+1} & \dots & \ast_{in} \\
+0 & 0 & \dots & 0 & 0 & \dots & 0 \\
+\vdots & \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \dots & 0 & 0 & \dots & 0
+\end{pmatrix}.
+\end{align}
+Dann betrachten wir Schritt $i+1$, wobei zunächst $k=1,\dots,i$:
+\begin{align}
+L_{i+1,k} &= \frac{1}{R_{kk}} \kla\left( A_{ik} - \sum_{j=1}^{k-1} L_{i+1,j}R_{jk} \right).
+\end{align}
+Wir benötigen hier die ersten $i$ Spalten von $R$, und davon jeweils die Zeilen $j=1,\dots,k-1$.
+Insbesondere ist der Zeilenindex also immer kleiner als der Spaltenindex, womit alle Informationen bezüglich $R$ hier vorhanden sind.
+Von $L$ benötigen wir im Schritt $k$ (also für $L_{i+1,k}$) immer die ersten $j=1,\dots,k-1$ Spalten der Zeile $i+1$.
+Damit sind also auch hier immer die Einträge vorhanden (es wird in jedem Schritt zuletzt der Eintrag $L_{i+1,k-1}$ verwendet, welcher gerade im Schritt davor berechnet wird).
+\\
+Im zweiten Teil des Algorithmus ist $k=i+1,\dots,n$:
+\begin{align}
+R_{i+1,k} &= A_{i+1,k} - \sum_{j=1}^{i} L_{i+1,j}R_{jk}.
+\end{align}
+Wir benötigen hier von $R$ die Spalten $k=i+1,\dots,n$, und davon jeweils die Zeilen $j=1,\dots,i$.
+Auch hier ist $k>j$, es sind also alle relevanten Einträge bekannt.
+Von $L$ benötigen wir in der Zeile $i+1$ die Einträge $j=1,\dots,i$, welche alle im ersten Teil von Schritt $i+1$ des Algorithmus bestimmt wurden.
+Damit sollte gezeigt sein, dass die notwendigen Informationen immer vorliegen.
+\\
+Für die Durchführbarkeit fehlt aber noch $R_{kk} \neq 0$, was insbesondere mit der positiven Definitheit zusammenhängen muss.
+Das kann nur im zweiten Teil passieren, und dort nur für $k=i+1$.
+Hier gilt
+\begin{align}
+R_{i+1,i+1} &= A_{i+1,i+1} - \sum_{j=1}^i L_{i+1,j}R_{j,i+1}.
+\end{align}
+Jetzt müsste man vermutlich irgendetwas sehen... 
+\\ 
+Wir wissen, dass $A_{jj} > 0$ für pos. def. Matrizen, aber das reicht natürlich noch nicht für $R_{kk}\neq 0$.
+Da $A$ s.p.d., können wir $R=DL^\top$ schreiben, wobei $D$ eine Diagonalmatrix ist.
+Dann erhalten wir (unter Verwendung von $L_{jj} = 1$) den Zusammenhang
+\begin{align}
+D_{i+1,i+1} &= A_{i+1,i+1} - \sum_{j=1}^i L_{i+1,j}^2 D_{jj}.
+\end{align}
+(Jetzt müsste $D_{i+1,i+1} \neq 0$ sein, damit kommen wir aber auch nicht wirklich weiter.)
+%Die andere Gleichung ergibt für $k=j$ dann
+%\begin{align}
+%L_{ij} &= \frac{1}{D_{jj}} \kla\left( A_{ij} - \sum_{l=1}^{j-1} L_{il} D_{ll} L_{jl} \right)•
+%\end{align}
+%Andererseits ist $A=LDL^\top$, also $A_{jj} = \sum_{k=1}^n L_{jk}D_{kk}L_{jk}$.
+%Damit folgt
+%\begin{align}
+%D_{i+1,i+1} &= \sum_{j=1}^n L_{i+1,j}^2 D_{jj} - \sum_{j=1}^i L_{i+1,j}^2 D_{jj} = \sum_{j=i+1}^n L_{i+1,j}^2 D_{jj} = L_{i+1,i+1}D_{i+1,i+1}
+%\end{align}
+
+\subsection*{b) Spezialfall}
+Für den speziellen Fall
+\begin{align}
+A &= \begin{pmatrix}
+1 & 2 & 5 \\ 2 & 4 & 2 \\ 5 & 2 & 2
+\end{pmatrix}
+\end{align}
+schlägt der Algorithmus fehl. 
+Die Matrix ist zwar symmetrisch und invertierbar, da
+\begin{align}
+\det A &= 8 + 20 + 20 - 100 - 4 - 8 \neq 0,
+\end{align}
+aber sie ist nicht positiv definit.
+Initialisierung:
+\begin{align}
+L &= \begin{pmatrix}
+1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1
+\end{pmatrix} && \tecxt\text{und} & R &= \begin{pmatrix}
+0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0
+\end{pmatrix}.
+\end{align}
+Schritt $i=1$: $k=1,\dots,0 \rightarrow$ entfällt. 
+Für $k=1,\dots,3$:
+\begin{align}
+R_{1k} &= A_{1k} - \sum_{j=1}^0 L_{1j}R_{jk} = A_{1k}
+\end{align}
+Jetzt ist
+\begin{align}
+L &= \begin{pmatrix}
+1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1
+\end{pmatrix} && \tecxt\text{und} & R &= \begin{pmatrix}
+1 & 2 & 5 \\ 0 & 0 & 0 \\ 0 & 0 & 0
+\end{pmatrix}.
+\end{align}
+Schritt $i=2$: Für $k=1,\dots,1$:
+\begin{align}
+L_{21} &= \frac{1}{R_{11}} \kla\left( A_{21} - \sum_{j=1}^{0}L_{2j}R_{j1} \right) = 2
+\end{align} 
+und für $k=2,\dots,3$:
+\begin{align}
+R_{22} &= A_{22} - \sum_{j=1}^1 L_{2j}R_{j2} = 4 - 2\cdot 2 = 0,\\
+R_{23} &= \dots
+\end{align}
+Da $R_{22} = 0$ wird im nächsten Schritt durch Null geteilt, womit der Algorithmus fehlschlägt.
+
+%A2 = np.array([[1,2,5],[2,4,2],[5,2,2]])    # NICHT POSITIV DEFINIT!!
+%
+%def lr_decomp(A):
+%    n = A.shape[0]
+%    L = np.eye(n)
+%    R = np.zeros((n,n))
+%    for i in range(n):
+%        print(f"{i = }")
+%        for k in range(i):
+%            print("INNER FIRST:", [(L[i, j], R[j, k]) for j in range(k)])
+%            L[i, k] = (A[i, k] - np.sum([L[i, j] * R[j, k]  for j in range(k)])) / R[k, k]
+%            print(f"FIRST: Write to L[{i},{k}] = {L[i, k]}")
+%        for k in range(i, n):
+%            print("INNER SECOND:", [(L[i, j], R[j, k]) for j in range(i)])
+%            R[i, k] = A[i, k] - np.sum([L[i, j] * R[j, k] for j in range(i)])
+%            print(f"SECOND: Write to R[{i},{k}]= {R[i, k]}")
+%        print()
+%    return L, R
+%
+%L, R = lr_decomp(A2)
+%print(L, R, L@R)
+
+
+\section*{Aufgabe 3}
+Sei $A\in\mathbb{C}^{n\times n}$.
+Sei $A^\dagger := (A^\ast)^\top$, wobei ${}^\ast$ die elementweise komplexe Konjugation beschreibt.
+Sei $\lambda\in\mathbb{C}$ ein Eigenwert von $A$.
+Dann gilt
+\begin{align}
+0 &= \det \kla\left( A - \lambda I_{n\times n} \right) = \chi_A(\lambda).
+\end{align}
+Da $\chi_A$ ein Polynom in $\lambda$ ist, bei dem die Koeffizienten von den Einträgen von $A$ abhängen, gilt 
+\begin{align}
+\chi_A(\lambda) &= \sum_{k=0}^n \lambda^k c_k(A).
+\end{align}
+Dabei enthalten die $c_k$ nur Summen und Produkte der $A_{jk}$, weshalb $c_k(A)^\ast = c_k(A^\ast)$ gilt.
+Daraus folgt dann
+\begin{align}
+\chi_A(\lambda)^\ast &= \sum_{k=0}^n \kla\left( \lambda^\ast \right)^k c_k(A^\ast) = \chi_{A^\ast}(\lambda^\ast).
+\end{align}
+Als Determinante geschrieben ergibt sich dann
+\begin{align}
+0 &= \det\kla\left( A^\ast - \lambda^\ast I_{n\times n} \right) \kom\overset{\substack{{\det B = \det B^\top} \\ |}}{=} \det\kla\left( A^\dagger - \lambda^\ast I_{n\times n} \right),
+\end{align}
+womit also $\lambda^\ast$ ein Eigenwert von $A^\dagger$ ist.
+
+\section*{Aufgabe 4}
+Gegeben ist die Matrix
+\begin{align}
+B &= \begin{pmatrix}
+3 & 0 & 0 \\ -1 & 1 & 2 \\ 1 & -2 & 1
+\end{pmatrix}.
+\end{align}
+Das charakteristische Polynom lautet
+\begin{align}
+\chi(\lambda) &= \det\kla\left( B - \lambda I_{3\times 3} \right) = \det\begin{pmatrix}
+3-\lambda & 0 & 0 \\ -1 & 1-\lambda & 2 \\ 1 & -2 & 1-\lambda
+\end{pmatrix} = \\
+&= (3-\lambda) \det\begin{pmatrix}
+1-\lambda & 2 \\ -2 & 1 -\lambda
+\end{pmatrix} = \\
+&= (3-\lambda) \kla\left( (1-\lambda)^2 + 4 \right) \overset{!}{=} 0.
+\end{align}
+Ein Eigenwert lässt sich also direkt als $\lambda_1=3$ ablesen.
+Die anderen beiden ergeben sich aus $0 = \lambda^2 - 2\lambda + 5$, woraus 
+\begin{align}
+\lambda_{2,3} = 1 \pm \sqrt{1 - 5} = 1 \pm 2\i,
+\end{align}
+folgt.
+Also sind $\lambda_2 = 1 + 2\i$ und $\lambda_3 = 1 - 2\i$.
+Sei $v=(a,b,c)^\top$ ein Eigenvektor. 
+Dann gilt für $\lambda=\lambda_1$
+\begin{align}
+0 &= \begin{pmatrix}
+3-\lambda & 0 & 0 \\ -1 & 1-\lambda & 2 \\ 1 & -2 & 1-\lambda
+\end{pmatrix} \begin{pmatrix}
+a \\ b \\ c
+\end{pmatrix} = \begin{pmatrix}
+0 & 0 & 0 \\ -1 & -2 & 2 \\ 1 & -2 & -2
+\end{pmatrix} \begin{pmatrix}
+a \\ b \\ c
+\end{pmatrix},
+\end{align}
+also $a=2(c-b)$ und $a=2(c+b)$.
+Daraus folgt $b=0$ und $a=2c$.
+Für $\lambda=\lambda_{2,3}$
+\begin{align}
+0 &= \begin{pmatrix}
+3-\lambda & 0 & 0 \\ -1 & 1-\lambda & 2 \\ 1 & -2 & 1-\lambda
+\end{pmatrix} \begin{pmatrix}
+a \\ b \\ c
+\end{pmatrix} = \begin{pmatrix}
+2 \mp 2\i & 0 & 0 \\ -1 & \mp 2\i & 2 \\ 1 & -2 & \mp 2\i
+\end{pmatrix} \begin{pmatrix}
+a \\ b \\ c
+\end{pmatrix},
+\end{align} 
+also $a=0$ und $b=\mp \i c$.
+Die Eigenvektoren lauten dann
+%\begin{align}
+%v_1 &= \frac{1}{\sqrt{5}}\begin{pmatrix}
+%2 \\ 0 \\ 1
+%\end{pmatrix}, &&& v_2 &= \frac{1}{\sqrt{2}}\begin{pmatrix}
+%0 \\ -\i \\ 1
+%\end{pmatrix}, &&& v_3 &= \frac{1}{\sqrt{2}}\begin{pmatrix}
+%0 \\ \i \\ 1
+%\end{pmatrix}.
+%\end{align}
+\begin{align}
+v_1 &= \begin{pmatrix}
+2 \\ 0 \\ 1
+\end{pmatrix}, &&& v_2 &= \begin{pmatrix}
+0 \\ -\i \\ 1
+\end{pmatrix}, &&& v_3 &= \begin{pmatrix}
+0 \\ \i \\ 1
+\end{pmatrix}.
+\end{align}
+Allerdings ist $v_1$ nicht orthogonal zu $v_{2,3}$.
+Die Linearkombination $v_1 - \frac{1}{2}(v_2+v_3) = (2,0,0)^\top$ erfüllt dies, womit wir eine orthonormale Basis gefunden haben.
+Diese lautet
+\begin{align}
+a_1 &= \begin{pmatrix}
+1 \\ 0 \\ 0
+\end{pmatrix}, &&& a_2 &= \frac{1}{\sqrt{2}}\begin{pmatrix}
+0 \\ -\i \\ 1
+\end{pmatrix}, &&& a_3 &= \frac{1}{\sqrt{2}}\begin{pmatrix}
+0 \\ \i \\ 1
+\end{pmatrix}.
+\end{align}
+%Die Transformationsmatrix können wir dann als
+%\begin{align}
+%S &= \frac{1}{\sqrt{2}} \begin{pmatrix}
+%\sqrt{2} & 0 & 0 \\ 0 & -\i & \i \\ 0 & 1 & 1
+%\end{pmatrix}
+%\end{align}
+%schreiben, wobei $S^{-1} = S^\dagger$.
+%Es gilt $B = S DS^\dagger$, wobei $D=\tecxt\text{diag\,}(\lambda_1,\lambda_2,\lambda_3)$
+%\begin{align}
+%S DS^\dagger &= \frac{1}{2} \begin{pmatrix}
+%\sqrt{2} & 0 & 0 \\ 0 & -\i & \i \\ 0 & 1 & 1
+%\end{pmatrix}\begin{pmatrix}
+%3 & 0 & 0 \\ 0 & 1+2\i & 0 \\ 0 & 0 & 1-2\i
+%\end{pmatrix}\begin{pmatrix}
+%\sqrt{2} & 0 & 0 \\ 0 & \i & 1 \\ 0 & -\i & 1
+%\end{pmatrix} = \\
+%&= \frac{1}{2} \begin{pmatrix}
+%\sqrt{2} & 0 & 0 \\ 0 & -\i & \i \\ 0 & 1 & 1
+%\end{pmatrix}\begin{pmatrix}
+%3\sqrt{2} & 0 & 0 \\ 0 & -2+\i & 1+2\i \\ 0 & -2-\i & 1-2\i
+%\end{pmatrix} = \\
+%&= \frac{1}{2} \begin{pmatrix}
+%6 & 0 & 0 \\ 0 & 2 & 4 \\ 0 & -4 & 2
+%\end{pmatrix} = \begin{pmatrix}
+%3 & 0 & 0 \\ 0 & 1 & 2 \\ 0 & -2 & 1
+%\end{pmatrix} \neq B.
+%\end{align}
+Für die Transformationsmatrix können wir die $a_{1,2,3}$ allerdings nicht direkt verwenden.
+Stattdessen ist
+\begin{align}
+S &= \begin{pmatrix}
+2 & 0 & 0 \\ 0 & -\i & \i \\ 1 & 1 & 1
+\end{pmatrix}.
+\end{align}
+Wir berechnen die Inverse
+\begin{align}
+S= \begin{pmatrix}
+2 & 0 & 0 \\ 0 & -\i & \i \\ 1 & 1 & 1
+\end{pmatrix} &\Bigg\vert \begin{pmatrix}
+1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1
+\end{pmatrix},\\
+\begin{pmatrix}
+1 & 0 & 0 \\ 0 & 1 & -1 \\ 0 & 1 & 1
+\end{pmatrix} &\Bigg\vert \begin{pmatrix}
+\frac{1}{2} & 0 & 0 \\ 0 & \i & 0 \\ -\frac{1}{2} & 0 & 1
+\end{pmatrix},\\
+\begin{pmatrix}
+1 & 0 & 0 \\ 0 & 1 & -1 \\ 0 & 0 & 1
+\end{pmatrix} &\Bigg\vert \begin{pmatrix}
+\frac{1}{2} & 0 & 0 \\ 0 & \i & 0 \\ -\frac{1}{4} & -\frac{\i}{2} & \frac{1}{2}
+\end{pmatrix},\\
+\begin{pmatrix}
+1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1
+\end{pmatrix} &\Bigg\vert \begin{pmatrix}
+\frac{1}{2} & 0 & 0 \\ -\frac{1}{4} & \frac{\i}{2} & \frac{1}{2} \\ -\frac{1}{4} & -\frac{\i}{2} & \frac{1}{2}
+\end{pmatrix} = S^{-1}.
+\end{align}
+Es gilt $B = S DS^{-1}$, wobei $D=\tecxt\text{diag\,}(\lambda_1,\lambda_2,\lambda_3)$
+\begin{align}
+S DS^{-1} &= \begin{pmatrix}
+2 & 0 & 0 \\ 0 & -\i & \i \\ 1 & 1 & 1
+\end{pmatrix}\begin{pmatrix}
+3 & 0 & 0 \\ 0 & 1+2\i & 0 \\ 0 & 0 & 1-2\i
+\end{pmatrix}\frac{1}{2} \begin{pmatrix}
+1 & 0 & 0 \\ -\frac{1}{2} & \i & 1 \\ -\frac{1}{2} & -\i & 1
+\end{pmatrix} = \\
+&= \frac{1}{2} \begin{pmatrix}
+2 & 0 & 0 \\ 0 & -\i & \i \\ 1 & 1 & 1
+\end{pmatrix}\begin{pmatrix}
+3 & 0 & 0 \\ -\i-\frac{1}{2} & \i-2 & 1+2\i \\ \i - \frac{1}{2} & -\i-2 & 1 - 2\i
+\end{pmatrix} = \\
+&= \frac{1}{2} \begin{pmatrix}
+6 & 0 & 0 \\ -2 & 2 & 4 \\ 2 & -4 & 2
+\end{pmatrix} = B.
+\end{align}
+Daraus folgt insbesondere auch $B^k = (SDS^{-1})^k = SDS^{-1}SDS^{-1} \dots SDS^{-1} = SD^kS^{-1}$.
+Damit lässt sich das Matrixexponential dann einfach berechnen, da
+\begin{align}
+\exp(B) &= \sum_{k\ge 0} \frac{1}{k!}B^k = S \kla\left( \sum_{k\ge 0} \frac{1}{k!}D^k \right) S^{-1} = S \begin{pmatrix}
+\e^{\lambda_1} & 0 & 0 \\
+0 & \e^{\lambda_2} & 0 \\
+0 & 0 & \e^{\lambda_3}
+\end{pmatrix} S^{-1} = \\
+&= \begin{pmatrix}
+2 & 0 & 0 \\ 0 & -\i & \i \\ 1 & 1 & 1
+\end{pmatrix}\begin{pmatrix}
+\e^3 & 0 & 0 \\ 0 & \e^{1+2\i} & 0 \\ 0 & 0 & \e^{1-2\i}
+\end{pmatrix} \frac{1}{2} \begin{pmatrix}
+1 & 0 & 0 \\ -\frac{1}{2} & \i & 1 \\ -\frac{1}{2} & -\i & 1
+\end{pmatrix} = \\
+&= \frac{1}{2} \begin{pmatrix}
+2 & 0 & 0 \\ 0 & -\i & \i \\ 1 & 1 & 1
+\end{pmatrix} \begin{pmatrix}
+\e^3 & 0 & 0 \\ 
+-\frac{\e}{2} \e^{2\i} & \e\i\e^{2\i} & \e\e^{2\i} \\
+-\frac{\e}{2} \e^{-2\i} & -\e\i\e^{-2\i} & \e\e^{-2\i}
+\end{pmatrix} = \\
+&= \frac{1}{2} \begin{pmatrix}
+2\e^3 & 0 & 0 \\
+\frac{\e\i}{2}\kla\left( \e^{2\i} - \e^{-2\i} \right) & \e\kla\left( \e^{2\i} + \e^{-2\i} \right) & \e\i\kla\left( -\e^{2\i} + \e^{-2\i} \right) \\
+\e^3 - \frac{\e}{2}\kla\left( \e^{2\i} + \e^{-2\i} \right) & \e\i \kla\left( \e^{2\i} - \e^{-2\i} \right) & \e\kla\left( \e^{2\i} + \e^{-2\i} \right)
+\end{pmatrix} = \\
+&= \begin{pmatrix}
+\e^3 & 0 & 0 \\
+-\e\sin(2) & 2\e\cos(2) & 2\e\sin(2) \\
+\frac{1}{2}\e^3 - \frac{1}{2}\e\cos(2) & -2\e\sin(2) & 2\e\cos(2)
+\end{pmatrix}.
+\end{align}
+Im Allgemeinen ist $S$ nicht dünnbesetzt, da die Eigenvektoren einer nicht notwendiger dünnbesetzt sind.
+Daher eignet sich dieses Vorgehen schlecht für große dünnbesetzte Matrizen $B$.
+
+%B = np.array([[3,0,0],[-1,1,2],[1,-2,1]])
+% scipy.linalg.expm(B)
+% expB = np.array([[np.exp(3), 0, 0], [-np.e * np.sin(2), 2 * np.e * np.cos(2), 2*np.e*np.sin(2)], [0.5 * np.exp(3) - 0.5*np.e * np.cos(2), -2*np.e*np.sin(2), 2*np.e*np.cos(2)]]) #### FALSCH!!!
+%S = np.array([[np.sqrt(2),0,0],[0,-1j,1j],[0,1,1]]) / np.sqrt(2)
+
+
+\section*{Programmieraufgabe 3 (schriftlicher Teil)}
+Bei der unvollständigen LR-Zerlegungn lassen wir im Algorithmus alle Einträge weg, bei denen $A_{ik} = 0$.
+Insbesondere werden alle Summen nur über solche $L_{ij},R_{ij}$ ausgeführt, für die $A_{ij}\neq 0$.
+Im Folgenden lassen wir die Tilde über den Matrizen weg.
+\\
+Mit dem Zusammenhang $R=DL^\top$ folgt $R_{jk} = D_{jj}L_{kj}$.
+Einsetzen in den Algorithmus liefert dann unter Ausnutzen von $L_{jj}=1$
+\begin{align}
+L_{ik} &= \frac{1}{R_{kk}} \kla\left( A_{ik} - \sum_{j=1}^{k-1}L_{ij}R_{jk} \right) = \frac{1}{D_{kk}} \kla\left( A_{ik} - \sum_{j=1}^{k-1}L_{ij}D_{jj}L_{kj} \right).
+\end{align}
+Der zweite Teil lautet unter Verwendung von $A=A^\top$
+\begin{align}
+R_{ik} &= A_{ik} - \sum_{j=1}^{i-1} L_{ij}R_{jk},\\
+\Rightarrow\ \ \ D_{ii}L_{ki} &= A_{ki} - \sum_{j=1}^{i-1} L_{ij}D_{jj}L_{kj}, \label{eqn:R ik incomplete choelsky} \\
+\Rightarrow\ \ \ L_{i'k'} &= \frac{1}{D_{k'k'}} \kla\left( A_{i'k'} - \sum_{j=1}^{k'-1} L_{k'j}D_{jj}L_{i'j} \right). \label{eqn:L ik incomplete choelsky} 
+\end{align} 
+Hier haben wir die Indizes umbenannt ($i\rightarrow k'$ und $k\rightarrow i'$).
+In dieser Form entspricht \autoref{eqn:L ik incomplete choelsky} genau dem vorherigen Ergebnis, es müssen ledigleich die Striche der Indizes weggelassen und die Reihenfolge der $L$-Terme in der Summe vertauscht werden.
+Inbesondere kann dieser Teil also einfach weggelassen werden, da er bereits im ersten Teil berechnet wird.
+Allerdings fehlt uns dann noch der Spezialfall von $k=i$.
+Dann gilt $R_{ii} = D_{ii}L_{ii} = D_{ii}$ und wir können direkt \autoref{eqn:R ik incomplete choelsky} verwenden, also
+\begin{align}
+D_{ii} &= A_{ii} - \sum_{j=1}^{i-1}L_{ij}D_{jj}L_{ij}.
+\end{align}
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

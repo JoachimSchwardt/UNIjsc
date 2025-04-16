@@ -1,0 +1,59 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{10 Fermi-Größen}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 10.1: Fermi-Energie und Bändermodell}
+Allgemein gelten für die gesamte Anzahl an Zuständen $N$ folgende Formeln:
+\begin{align*}
+N&=\intr\int_{\mathbb{R}^{d}}{Z(\vec{k)}}\,\mathrm{d}^{d}k&\tecxt\text{und}&&N&=\intx\int_{0}^{\infty}D(E)\,\mathrm{d}E
+\end{align*}
+Dabei ist $Z(\vec{k)}$ die Zustandsdichte im $\vec{k}$-Raum, also die Anzahl an Zustanden für einen bestimmten $\vec{k}$-Vektor und $D(E)$ die Zustandsdichte im Energieraum, also die Anzahl an Zustanden mit der Energie $E$. Üblicherweise verschwinden beide Zustandsdichten beim Fermi-Vektor $\vec{k}_F$ bzw. der Fermi-Energie $E_F$ und können somit über Heaviside-Funktionen beschrieben werden. Aus den beiden Integral-Darstellungen folgt außerdem noch
+\begin{align*}
+D(E)&=\frac{\partial N}{\partial E}=\frac{\partial N}{\partial k}\frac{\partial k}{\partial E}
+\end{align*}
+Für $d=3$ Dimensionen und $Z(\vec{k})=2\cdot\frac{V}{(2\pi)^3}$ kann der Fermi-Wellenvektor als Funktion der Elektronendichte $n=\frac{N}{V}$ hergeleitet werden:
+\begin{align*}
+N&=\intr\int_{\mathbb{R}^{3}}{2\cdot\frac{V}{(2\pi)^3}\Theta\kla\left( {k_F-|\vec{k}|} \right)}\,\mathrm{d}^{3}k=\frac{2V}{(2\pi)^3}\intx\int_{0}^{k_F}\,4\pi k^2\mathrm{d}k=\frac{Vk_F^3}{3\pi^2}\\
+\Rightarrow\ \ \ k_F&=\sqrt[3]{3\pi^2n}
+\end{align*}
+Für ein kubisches FCC-Gitter mit Gitterkonstanten $a^\tecxt\text{Cu}=3.62\,\tecxt\text{\AA}$ bzw. $a^\tecxt\text{Al}=4.05\,\tecxt\text{\AA}$ ergeben sich dann unter Verwendung von $n^\tecxt\text{Cu}=\frac{4}{a^3}$ bzw. $n^\tecxt\text{Al}=\frac{12}{a^3}$ die Fermi-Größen in der Tabelle. Es gelten $E_F=\frac{\hbar^2k_F^2}{2m_e}$, $T_F=\frac{E_F}{k_B}$ und $v_F=\frac{\hbar k_F}{m_e}$.
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c|c}
+&$k_F\,/\,10^9\tecxt\text{m}^{-1}$&$E_F\,/\,$eV&$T_F\,/\,10^3$K&$v_F\,/\,10^6\frac{\tecxt\text{m}}{\tecxt\text{s}}$\\ \hline
+Kupfer&13.566 & 7.012 & 81.368 & 1.571 \\ \hline
+Aluminium&17.488 & 11.652 & 135.22 & 2.025 \\ 
+\end{tabular}
+\end{table}\\
+Die Linie zwischen dem Mittelpunkt G der Brillouin-Zone und dem Mittelpunkt L einer sechseckigen Randfläche ist am kürzesten. Die Länge beträgt gerade $s=\frac{2\pi}{a}\cdot \frac{\sqrt{3}}{2}$. Für Kupfer ist $s^\tecxt\text{Cu}=15.03\cdot 10^9\,\tecxt\text{m}^{-1}\ge k_F^\tecxt\text{Cu}$ und für Aluminium ist $s^\tecxt\text{Al}=13.43\cdot 10^9\,\tecxt\text{m}^{-1}\le k_F^\tecxt\text{Al}$. Die Fermi-Kugel liegt also nur für Kupfer vollständig in der ersten Brillouin-Zone.
+\section*{Aufgabe 10.2: Fermi-Dirac-Verteilung}
+Verwendet man Fermi-Dirac-Statistik, so enthält die Verteilung der Geschwindigkeiten von Leitungselektronen (und anderer Größen) auch einen Term der Form $\rho(E)=\frac{1}{\exp\kla\left( {\beta (E-E_F)} \right)+1}$. Dabei ist $\beta=\frac{1}{k_BT}$ die inverse Temperatur und $E_F$ die Fermi-Energie. Schreibe $T=\frac{T_F}{\alpha} $:
+\begin{align*}
+\rho&=\frac{1}{\exp\kla\left( {\alpha\klam\left[ {\frac{E}{E_F}-1} \right]} \right)+1}
+\end{align*}
+\end{document}

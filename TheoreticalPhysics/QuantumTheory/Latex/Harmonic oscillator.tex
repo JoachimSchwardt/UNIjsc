@@ -1,0 +1,91 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\begin{document}
+
+\title{Quantum mechanical harmonic oscillator}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Derivation of discrete energy states and corresponding wave functions for a $x^2$-potential}
+We want to find solutions to the time-independant Schrödinger equation (TISE) for a potential of the form $V(x)=\frac{1}{2}m\omega^2 x^2$:
+$$E\psi=\hat{H}\psi=\left(-\frac{\hbar^2}{2m}\partial_x^2+\frac{1}{2}m\omega^2 x^2\right)\psi\overset{\substack{\hat{p}:=-i\hbar\partial_x \\|}}{=}\frac{1}{2m}\left(\hat{p}^2+(m\omega x)^2\right)\psi$$
+Now we define the ladder operators as follows:
+\begin{align*}
+\hat{a}_\pm&:=\frac{1}{\sqrt{2m\hbar\omega}}\left(\mp i\hat{p}+m\omega x\right) \label{a pm}\numberthis
+\end{align*}
+We can rewrite the Hamiltonian in terms of these operators:
+\begin{align*}
+\hat{a}_\pm\hat{a}_\mp&=\frac{1}{2m\hbar\omega}(\mp i\hat{p}+m\omega x)(\pm i\hat{p}+m\omega x)=\frac{1}{2m\hbar\omega}\left(\hat{p}^2\pm m\omega x\,i\hat{p}\mp i\hat{p}\,m\omega x+(m\omega x)^2\right)=\\
+&=\frac{1}{2m\hbar\omega}\left(\hat{p}^2+(m\omega x)^2\pm im\omega [x,\hat{p}]\right)\overset{(a)}{=}\frac{1}{2m\hbar\omega}\left(\hat{p}^2+(m\omega x)^2\mp m\hbar\omega\right)=\\
+&=\frac{1}{\hbar\omega}\hat{H}\mp\frac{1}{2}\ \ \Rightarrow\ \ \ \hat{H}=\hbar\omega (\hat{a}_\pm\hat{a}_\mp\pm\frac{1}{2})\\
+&(a):\ [x,\hat{p}]f=-i\hbar (x\partial_xf-\partial_xxf)=-i\hbar(xf'-f-xf')=i\hbar f\ \ \Rightarrow\ \ [x,\hat{p}]\equiv i\hbar
+\end{align*}
+Now consider a new wavefunction $\psi=:\hat{a}_\pm\phi$:
+\begin{align*}
+E_\psi\psi&=\hat{H}\hat{a}_\pm\phi=\hbar\omega (\hat{a}_\pm\hat{a}_\mp\pm\frac{1}{2})\hat{a}_\pm\phi=\hbar\omega \hat{a}_\pm(\hat{a}_\mp \hat{a}_\pm\pm\frac{1}{2})\phi\overset{(b)}{=}\hbar\omega\hat{a}_\pm(\hat{a}_\pm\hat{a}_\mp\pm\frac{1}{2}\pm 1)\phi=\\
+&=\hat{a}_\pm\hat{H}\phi\pm\hbar\omega\hat{a}_\pm\phi=\hat{a}_\pm E_\phi\phi\pm\hbar\omega\psi=(E_\phi\pm\hbar\omega)\psi\ \ \Rightarrow\ \ E_\psi=E_\phi\pm\hbar\omega\\
+&(b):\ [\hat{a}_\pm,\hat{a}_\mp]=\hat{a}_\pm\hat{a}_\mp-\hat{a}_\mp\hat{a}_\pm=\frac{1}{\hbar\omega}\hat{H}\mp\frac{1}{2}-(\frac{1}{\hbar\omega}\hat{H}\pm\frac{1}{2})=\mp 1
+\end{align*}
+Since the energy must be greater than zero, we can reach the ground state by repeatedly applying the $\hat{a}_-$ operator. Therefor there must also exist a $\psi_0$ for which $\hat{a}_-\psi_0=0$, because we would otherwise get a wavefunction with negative energy:
+\begin{align*}
+0&=\hat{a}_-\psi_0=\frac{1}{\sqrt{2m\hbar\omega}}(i\hat{p}+m\omega x)\psi_0\ \ \Rightarrow\ \ \hbar\partial_x\psi_0=-m\omega x\psi_0\\
+&\Rightarrow\ \ \int\frac{\partial_x\psi_0}{\psi_0}\,\mathrm{d}x=-\int\frac{m\omega x}{\hbar}\,\mathrm{d}x\ \ \Rightarrow\ \ \psi_0=B_0e^{-\frac{m\omega}{2\hbar}x^2}\label{psi_0}\numberthis\\
+E_0\psi_0&=\hat{H}\psi_0=\hbar\omega (\hat{a}_+\cancelto{0}{\hat{a}_-}+\frac{1}{2})\psi_0=\frac{\hbar\omega}{2}\psi_0\ \ \Rightarrow\ \ E_0=\frac{\hbar\omega}{2} \label{E_0}\numberthis\\
+&\Rightarrow\ \ E_n=E_0+n\cdot\hbar\omega=\hbar\omega \left(n+\frac{1}{2}\right) \label{E_n}\numberthis\\
+&\Rightarrow\ \ \psi_n=A_n(\hat{a}_+)^n\psi_0 \label{psi_n}\numberthis
+\end{align*}
+The wavefunctions have to be normalizable, which means that $\langle\psi_n,\psi_n\rangle\overset{!}{=}1$: 
+\begin{align*}
+1&\overset{!}{=}\langle\psi_0,\psi_0\rangle =\int_\mathbb{R}\psi_0^\ast\psi_0\,\mathrm{d}x\overset{(\ref{psi_0})}{=}|B_0|^2\int_\mathbb{R}e^{-\frac{m\omega}{\hbar}x^2}\,\mathrm{d}x=|B_0|^2\sqrt{\frac{\pi\hbar}{m\omega}}\ \ \Rightarrow\ \ B_0=\left(\frac{m\omega}{\pi\hbar}\right)^{1/4}\label{B_0}\numberthis
+\end{align*}
+For the other $\psi_n$ we will first derive a useful identity for $\mathbb{R}-$integrable functions $f,\, g$:
+\begin{align*}
+\int_\mathbb{R}f^\ast\hat{a}_+g\,\mathrm{d}x&=\frac{1}{\sqrt{2m\hbar\omega}}\int_\mathbb{R}-\hbar f^\ast \partial_x g+m\omega x f^\ast g\,\mathrm{d}x=\\
+&=\underbrace{\frac{1}{\sqrt{2m\hbar\omega}}\hbar f^\ast g\bigg\vert_{-\infty}^\infty}_{=0}+\frac{1}{\sqrt{2m\hbar\omega}}\int_\mathbb{R}(\hbar\partial_x f)^\ast g+m\omega x f^\ast g\,\mathrm{d}x=\\
+&=\frac{1}{\sqrt{2m\hbar\omega}}\int_\mathbb{R}\left((i\hat{p}+m\omega x) f\right)^\ast g\,\mathrm{d}x=\int_\mathbb{R}(\hat{a}_-f)^\ast g\,\mathrm{d}x\label{f stern g integral}\numberthis
+\end{align*}
+Applying this formula to $\psi_n=\frac{A_n}{A_{n-1}}\hat{a}_+\psi_{n-1}$ gives us:
+\begin{align*}
+1&\overset{!}{=}\langle\psi_n,\psi_n\rangle=\int_\mathbb{R}\psi_n^\ast\psi_n\,\mathrm{d}x=\frac{|A_n|^2}{|A_{n-1}|^2}\int_\mathbb{R}(\hat{a}_+\psi_{n-1})^\ast\hat{a}_+\psi_{n-1}\,\mathrm{d}x\overset{(\ref{f stern g integral})}{=}\\
+&=\frac{|A_n|^2}{|A_{n-1}|^2}\int_\mathbb{R}(\hat{a}_-\hat{a}_+\psi_{n-1})^\ast \psi_{n-1}\,\mathrm{d}x=\frac{|A_n|^2}{|A_{n-1}|^2}\int_\mathbb{R}\left(\frac{1}{\hbar\omega}E_{n-1}+\frac{1}{2}\right)\psi_{n-1}^\ast\psi_{n-1}\,\mathrm{d}x\overset{(\ref{E_n})}{=}\\
+&=\frac{|A_n|^2}{|A_{n-1}|^2}\left((n-1)+\frac{1}{2}+\frac{1}{2}\right)\underbrace{\langle\psi_{n-1},\psi_{n-1}\rangle}_{=1}=\frac{|A_n|^2}{|A_{n-1}|^2}n\\
+&\Rightarrow\ \ |A_n|=\frac{|A_{n-1}|}{\sqrt{n}}=\dots=\frac{|A_0|}{\sqrt{n!}}=\frac{1}{\sqrt{n!}}\ \ \Rightarrow\ \ \frac{A_n}{B_0}=\left(\frac{m\omega}{\pi\hbar (n!)^2}\right)^{1/4}\label{A_n}\numberthis
+\end{align*}
+This gives us our solution:
+\begin{align*}
+\psi_n(x)&\overset{(\ref{A_n})}{=}\left(\frac{m\omega}{\pi\hbar (n!)^2}\right)^{1/4}(\hat{a}_+)^ne^{-\frac{m\omega}{2\hbar}x^2}\ \ \ \ \mathrm{with }\ \ \ E_n=\hbar\omega \left(n
++\frac{1}{2}\right)
+\end{align*}
+\section{Derivation of discrete energy states and corresponding wave functions for the $\frac{1}{x^2}$-potential}
+We want to find solutions to the Schrödinger equation for a potentia of the form $V(x)=\frac{ma^2}{2x^2}$:
+$$E\psi =\hat{H}\psi = \left(-\frac{\hbar^2}{2m}\partial_x^2+\frac{ma^2}{2x^2}\right)\psi \overset{\substack{ \hat{p}:=-i\hbar\partial_x\\|}}{=}\frac{1}{2m}\left(\hat{p}^2 +(\frac{ma}{x})^2\right)$$
+Now we define the ladder operators as follows:
+\begin{align*}
+\hat{a}_\pm&:=\frac{1}{\sqrt{2m\hbar\omega}}\left(\mp i\hat{p}+\frac{ma}{x}\right) \label{a2 pm}\numberthis
+\end{align*}
+We can rewrite the Hamiltonian in terms of these operators:
+\begin{align*}
+\hat{a}_\pm\hat{a}_\mp&=\frac{1}{2m\hbar\omega}\left(\mp i\hat{p}+\frac{ma}{x}\right)\left(\pm i\hat{p}+\frac{ma}{x}\right)=\frac{1}{2m\hbar\omega}\left(\hat{p}^2+(\frac{ma}{x})^2\pm ima\,\frac{1}{x}\hat{p}\mp ima\,\hat{p}\,\frac{1}{x}\right)=\\
+&=\frac{1}{\hbar\omega}\hat{H}\pm \frac{ima}{2m\hbar\omega}\,[\frac{1}{x},\hat{p}]\overset{(a)}{=}\frac{1}{\hbar\omega}\hat{H}\pm\frac{a}{2\omega x^2}\ \ \Rightarrow\ \ \hat{H}=\hbar\omega\left(\hat{a}_\pm\hat{a}_\mp\mp\frac{a}{2\omega x^2}\right)\\
+&(a):\ [\frac{1}{x},\hat{p}]\psi =-i\hbar (\frac{1}{x}\partial_x\psi-\partial_x \frac{1}{x}\psi)=-i\hbar\frac{1}{x^2}\psi\ \ \Rightarrow\ \ [\frac{1}{x},\hat{p}]=-\frac{i\hbar}{x^2}
+\end{align*}
+Now consider a new wavefunction $\psi=:\hat{a}_\pm\phi$:
+\begin{align*}
+E_\psi\psi&=\hat{H}\hat{a}_\pm\phi=\hbar\omega (\hat{a}_\pm\hat{a}_\mp\mp\frac{a}{2\omega x^2})\hat{a}_\pm\phi=\hbar\omega\hat{a}_\pm (\hat{a}_\mp\hat{a}_\pm\mp\frac{a}{2\omega x^2})\phi+\hbar\omega\frac{a}{2\omega}\sqrt{\frac{2\hbar}{m\omega}}\frac{1}{x^3}\phi=\\
+&=\hbar\omega\hat{a}_\pm(\hat{a}_\pm\hat{a}_\mp\mp\frac{a}{2\omega x^2})\phi\mp\hbar\omega\hat{a}_\pm\frac{a}{\omega x^2}\phi+\hbar\omega\frac{a}{2\omega}\sqrt{\frac{2\hbar}{m\omega}}\frac{1}{x^3}\phi=\\
+&=E_\phi\hat{a}_\pm\phi+\hbar\omega\left(\frac{a}{2\omega}\sqrt{\frac{2\hbar}{m\omega}}\frac{1}{x^3}\phi\mp\frac{1}{\sqrt{2m\hbar\omega}}\frac{ma}{x}\frac{a}{\omega x^2}\phi +\frac{1}{\sqrt{2m\hbar\omega}}\hbar\partial_x\frac{a}{\omega x^2}\phi\right)=\\
+&=E_\phi\psi+\hbar\omega\left(\right)\\
+&(b):\ [\frac{1}{x^2},\hat{a}_\pm]\psi=\frac{1}{\sqrt{2m\hbar\omega}}\left(\frac{1}{x^2}(\mp\hbar\partial_x+\frac{ma}{x})-(\mp\hbar\partial_x+\frac{ma}{x})\frac{1}{x^2}\right)\psi=\mp\sqrt{\frac{2\hbar}{m\omega}}\frac{1}{x^3}\psi\\
+&(c):\ [\hat{a}_\pm,\hat{a}_\mp]=\hat{a}_\pm\hat{a}_\mp-\hat{a}_\mp\hat{a}_\pm =\frac{1}{\hbar\omega}\hat{H}\pm\frac{a}{2\omega x^2}-\left(\frac{1}{\hbar\omega}\mp\frac{a}{2\omega x^2}\right)=\pm\frac{a}{\omega x^2}
+\end{align*}
+
+
+\end{document}

@@ -1,0 +1,92 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{4 Mischung und Verteilungen}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 4.1: Mischung und Entmischung}
+\subsection*{a)}Betrachte ein Teilchen aus $A$. Die Wahrscheinlichkeit, mit einem anderen Teilchen aus $A$ zu interagieren, ist gegeben durch $P_{AA}=\frac{z}{N}\cdot\frac{N_A}{N}$. Analog ist $P_{AB}=\frac{z}{N}\cdot\frac{N_B}{N}$. Die mittlere Energie des Teilchens ist dann gegeben durch $E_A=P_{AA}\frac{\epsilon_{AA}}{2}+P_{AB}\frac{\epsilon_{AB}}{2}$. Da $\epsilon_{AA}=0$, vereinfacht sich dieser Ausdruck zu $E_A=\frac{z\epsilon_{AB}x_B}{2N}$.
+\subsection*{b)}
+\subsection*{c)}
+\subsection*{d)}
+\section*{Aufgabe 4.2: Gaussintegrale}
+\subsection*{a)}Es gilt $\Gamma(z)\Gamma(1-z)=\frac{\pi}{\sin(\pi z)}$. Daraus folgt direkt $\Gamma\kla\left( {\frac{1}{2}} \right)=\sqrt{\pi}$. Durch die Substitution $z:=x^2$ entspricht das Integral dann gerade $\Gamma\kla\left( {\frac{1}{2}} \right)$.
+\subsection*{b)}Man setze $z:=\sqrt{a}x+\frac{b}{2\sqrt{a}}$. Dann ist $I=\sqrt{\frac{\pi}{a}}e^{b^2/4a}$.
+\subsection*{c)}Symmetrische reelle Matrizen sind immer orthogonal diagonalisierbar. Also gilt $A=U^\top DU$, wobei $D$ die Diagonalmatrix der Eigenwerte $\lambda_i$ von $A$ ist, und $U$ eine orthogonale Matrix mit $U^{-1}=U^\top$. Es gilt $\brak\langle {B}| {A^{-1}B}\rangle=\brak\langle {UB}| {D^{-1}UB}\rangle=\sum_k(UB)_k^2\lambda_k^{-1}$.
+\begin{align*}
+I&=\intr\int_{\mathbb{R}^{n}}\exp\kla\left( -\brak\langle {x}| {Ax}\rangle+\brak\langle {B}| {x}\rangle \right)\,\mathrm{d}^{n}x=\intr\int_{\mathbb{R}^{n}}\exp\kla\left( -\brak\langle {Ux}| {DUx}\rangle+\brak\langle {UB}| {Ux}\rangle \right)\,\mathrm{d}^{n}x\kom\overset{\substack{{y\,:=\,Ux} \\ |}}{=}\\
+&=\intr\int_{\mathbb{R}^{n}}\exp\kla\left( -\brak\langle {y}| {Dy}\rangle+\brak\langle {UB}| {y}\rangle \right)\,|\det U^\top|\mathrm{d}^{n}y=\prod_{k=1}^n\intr\int_{\mathbb{R}^{ }}\exp\kla\left( -\lambda_ky_k^2+(UB)_ky_k \right)\,\mathrm{d}^{ }y_k=\\
+&=\prod_{k=1}^n\sqrt{\frac{\pi}{\lambda_k}}\exp\kla\left( {{\frac{1}{4}\lambda_k^{-1}(UB)_k^2}} \right)=\sqrt{\frac{\pi^n}{\det A}}\exp\kla\left( {\frac{1}{4}\brak\langle {B}| {A^{-1}B}\rangle} \right)
+\end{align*}
+\section*{Aufgabe 4.3: Entropie-maximierende Verteilungen}
+\subsection*{a)}Sei $p(0)=p_0$. Man erhält $p_0=\frac{1}{2}$:
+\begin{align*}
+S&=-p_0\log p_0-(1-p_0)\log(1-p_0)&\Rightarrow &&\frac{\tecxt\text{d}S}{\tecxt\text{d}p_0}&=-\log p_0+\log(1-p_0)\overset{!}{=}0
+\end{align*}
+\subsection*{b)}
+\subsection*{c)}Für Funktionale der Form $S[\rho]=\intr\int_{\Omega}{s(\rho)}\,\mathrm{d}^{ }x$ gilt mit $s(\rho)=-\rho\log\rho$
+\begin{align*}
+0&\overset{!}{=}\frac{\delta S[\rho]}{\delta \rho}=\frac{\tecxt\text{d}s(\rho)}{\tecxt\text{d}\rho}=-\log\rho-1&\Rightarrow &&\rho(x)=c=\tecxt\text{const.}
+\end{align*}
+Aus der Normierung $\int_\Omega\rho(x)\,\mathrm{d}x\overset{!}{=}1$ erhält man für die Konstante in diesem Fall $c=1$. Also gilt $\rho(x)=1$. \\
+Das Konzept von Nebenbedingungen kann noch verallgemeinert werden. Seien $\lambda_j$ zunächst beliebige Parameter. Dann können wir Nebenbedingungen allgemein formulieren:
+\begin{align*}
+\intr\int_{\mathbb{R}^{ }}{f_j(x)\rho(x)}\,\mathrm{d}^{ }x&=a_j
+\end{align*}
+Für die Normierung wäre $f_0(x)=1$ und $a_0=1$. Unser Entropie-Funktional kann dann erweitert werden, ohne den tatsächlichen Wert zu ändern:
+\begin{align*}
+S[\rho]&=-\intr\int_{\mathbb{R}^{ }}{\rho\log\rho}\,\mathrm{d}^{ }x+\eta_0\kla\left( {\intr\int_{\mathbb{R}^{ }}{\rho}\,\mathrm{d}^{ }x-1} \right)+\sum_j\lambda_j\kla\left( {\intr\int_{\mathbb{R}^{ }}{f_j\rho}\,\mathrm{d}^{ }x-a_j} \right)
+\end{align*}
+Durch Ableiten erhält man hier wieder eine Bedingung für extremale Entropie:
+\begin{align*}
+0&\overset{!}{=}\frac{\delta S[\rho]}{\delta \rho}=-\log\rho -1+\eta_0+\sum_j\lambda_jf_j&\Rightarrow && \rho&=C\exp\kla\left( {\sum_j\lambda_jf_j} \right)
+\end{align*}
+Dabei wird die Normierung durch die Konstante $C=e^{\eta_0-1}$ berücksichtigt.
+\subsection*{d)}Hier ist $f_1(x)=x$, da die gegebene Nebenbedingung der Erwartungswert
+\begin{align*}
+E[X]&=\intr\int_{\mathbb{R}^{ }}{x\rho(x)}\,\mathrm{d}^{ }x\overset{!}{=}\mu 
+\end{align*}
+ist. Also hat die Verteilungsfunktion die Form $\rho(x)=Ce^{-\lambda x}$. Die Normierung liefert
+\begin{align*}
+1&\overset{!}{=}\intr\int_{\mathbb{R}^{ }}{\rho}\,\mathrm{d}^{ }x\kom\overset{\substack{{\lambda\,\overset{!}{>}\,0} \\ |}}{=}\frac{C}{\lambda}e^{-\lambda x}\Big\vert_\infty^0=\frac{C}{\lambda}&\Rightarrow &&C&=\lambda
+\end{align*}
+Aus dem Erwartungswert $\mu$ ergibt sich dann der Parameter $\lambda=\frac{1}{\mu}$:
+\begin{align*}
+\mu&\overset{!}{=}E[X]=\intr\int_{0}^\infty{x\lambda e^{-\lambda x}}\,\mathrm{d}^{ }x=xe^{-\lambda x}\Big\vert_\infty^0+\intx\int_{0}^{\infty}e^{-\lambda x}\,\mathrm{d}x=\frac{1}{\lambda}
+\end{align*}
+Damit folgt $\rho(x)=\frac{1}{\mu}e^{-x/\mu}$.
+\subsection*{e)}Hier haben wir die Nebenbedingungen $f_1(x)=x$ und $f_2(x)=(x-E[X])^2=x^2$. Also ist $\rho=Ce^{-ax^2-bx}$, wobei die Normierung gerade $C=\frac{1}{\sqrt{\pi/a}}e^{-b^2/4a}$ ergibt. Aus dem Erwartungswert bestimmt man $b=0$, wobei man verwenden kann, dass das Integral antisymmetrischer Funktionen verschwindet:
+\begin{align*}
+E[X]&=C\intr\int_{\mathbb{R}^{ }}{x\exp\kla\left( {-ax^2-bx} \right)}\,\mathrm{d}^{ }x\overset{!}{=}0&\Rightarrow &&b&=0
+\end{align*}
+Zuletzt betrachtet man noch die Varianz:
+\begin{align*}
+\tecxt\text{Var}[X]&=C\intr\int_{\mathbb{R}^{ }}{x^2e^{-ax^2}}\,\mathrm{d}^{ }x\kom\overset{\substack{{u\,:=\,ax^2} \\ |}}{=}2C\intx\int_{0}^{\infty}\frac{u}{a}e^{-u}\,\frac{\mathrm{d}u}{2\sqrt{au}}=\\
+&=\frac{1}{\sqrt{\pi/a}}\frac{1}{\sqrt{a^3}}\Gamma\kla\left( {\frac{3}{2}} \right)=\frac{1}{2a}\overset{!}{=}\sigma^2
+\end{align*}
+Damit folgt $a=\frac{1}{2\sigma^2}$ und $\rho(x)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp\kla\left( {-\frac{x^2}{2\sigma^2}} \right)$.
+
+\end{document}

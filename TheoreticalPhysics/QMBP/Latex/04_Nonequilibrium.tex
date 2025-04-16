@@ -1,0 +1,293 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\usepackage[compat=1.1.0]{tikz-feynman}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{4 Tunneling Hamiltonian}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Quantum Many-Body Physics}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+We consider the Hamiltonian $\hat{H} = \hat{H}_0 + \hat{V}$ where 
+\begin{align}
+\hat{H}_0 &= \hat{H}_L + \hat{H}_R = \sum_{\textbf{k}\sigma} \epsilon_\textbf{k}^L \hat{c}_{\textbf{k}\sigma}^\dagger \hat{c}_{\textbf{k}\sigma} + \sum_{\textbf{k}\sigma} \epsilon_\textbf{k}^R \hat{d}_{\textbf{k}\sigma}^\dagger \hat{d}_{\textbf{k}\sigma},\\
+\hat{V} &= \hat{H}_T = \sum_{\textbf{k}\textbf{q}\sigma} T\hat{c}_{\textbf{k}\sigma}^\dagger \hat{d}_{\textbf{q}\sigma} + \tecxt\text{h.c..}
+\end{align}
+This describes a system of two leads with a weak tunneling described by $T$.
+The left lead $L$ is gated by a voltage $V$ and $\epsilon_\textbf{k}^L - \epsilon_\textbf{k}^R = \mu_R - \mu_L =: \Delta\mu = eV$ where $e>0$ is the elementary charge.
+The current between the leads is given by\footnote{Note that $\i\hbar \partial_t \hat{A} = \klam\left[ \hat{A}, \hat{H} \right]$.}
+\begin{align}
+I(V,t) &= -e \left\langle \frac{\tecxt\text{d}}{\tecxt\text{d}t} \hat{N}_R(t) \right\rangle = -e \left\langle \frac{\tecxt\text{d}}{\tecxt\text{d}t} \sum_{\textbf{k}\sigma} \hat{d}_{\textbf{k}\sigma}^\dagger \hat{d}_{\textbf{k}\sigma} \right\rangle = \\
+&= -\frac{e}{\i\hbar} \left\langle \sum_{\textbf{k}\sigma} \kla\left(  \hat{d}_{\textbf{k}\sigma}^\dagger \left[ \hat{d}_{\textbf{k}\sigma}, \hat{H} \right] + \left[ \hat{d}_{\textbf{k}\sigma}^\dagger, \hat{H} \right] \hat{d}_{\textbf{k}\sigma} \right) \right\rangle = \\
+&= \frac{e}{\hbar} \left\langle \sum_{\textbf{k}\sigma} \i \kla\left( \epsilon_\textbf{k}^R \hat{d}_{\textbf{k}\sigma}^\dagger \hat{d}_{\textbf{k}\sigma} + \sum_\textbf{q} T^\ast \hat{d}_{\textbf{q}\sigma}^\dagger \hat{c}_{\textbf{k}\sigma}\right) \right\rangle - \tecxt\text{h.c.}  = \\
+&= \frac{e}{\hbar} \left\langle \sum_{\textbf{k}\textbf{q}\sigma} \i \kla\left( T^\ast \hat{d}_{\textbf{q}\sigma}^\dagger \hat{c}_{\textbf{k}\sigma} + \tecxt\text{h.c.} \right) \right\rangle = \\
+&= \frac{2e}{\hbar} \tecxt\text{Re\,} \klammer\left\{ T^\ast \sum_{\textbf{k}\textbf{q}\sigma} F_{\textbf{k} \textbf{q}\sigma}^{-+}(0) \right\}.
+\end{align}
+Here $F_{\textbf{k}\textbf{q}\sigma}^{-+}(t) := \i \bra\langle \hat{d}_{\textbf{q}\sigma}^\dagger (0) \hat{c}_{\textbf{k}\sigma}(t) \rangle$ is the $\eta,\eta' = -+$-element of the real-time formalism matrix Green's function $\hat{F}_{\textbf{k}\textbf{q}\sigma}(t)$. mixing state in the left and right leads.\\
+In the Larkin-Ovchinnikov representation we have
+\begin{align}
+\bar{G} &= \hat{U} \check{G} \hat{U} = \hat{U} \hat{\tau}_3 \hat{G} \hat{U}^\dagger = \begin{pmatrix}
+G^R & G^K \\ 0 & G^A
+\end{pmatrix}
+\end{align}
+where $G^{R/K/A}$ are the retarded, Keldysh and advanced Green's function and
+\begin{align}
+\hat{U} &= \frac{1}{\sqrt{2}} \begin{pmatrix}
+1 & -1 \\ 1 & 1
+\end{pmatrix}, &&& \hat{\tau}_3 &= \begin{pmatrix}
+1 & 0 \\ 0 & -1
+\end{pmatrix}.
+\end{align}
+Here the symbol $\hat{\cdot}$ refers to a $2\times 2$-matrix with Keldysh indices $\eta,\eta'$ and $\check{\cdot} := \hat{\tau}_3 \hat{\cdot}$.
+The notation is somewhat ambiguous, since we also use it to denote operators, but this should not be too much of an issue.
+Note that we also have a $2\times 2$-matrix structure in the Hamiltonian with indices $A,A'$ where $A\in\{L,R\}$.
+To that end we may write
+\begin{align}
+\kla\left( \hat{H}_{AA'} \right) &= \kla\left( \hat{H}_{0,AA'} \right) + \kla\left( \hat{H}_{T,AA'} \right) =  \begin{pmatrix}
+\hat{h}_L & 0 \\ 0 & \hat{h}_R
+\end{pmatrix} + \begin{pmatrix}
+0 & \hat{h}_T \\ \hat{h}_T^\dagger & 0
+\end{pmatrix}.
+\end{align}
+The important point is that the perturbation only contains off-diagonal elements in $A,A'$-space, while $\hat{H}_0$ is diagonal.
+Thus 
+\begin{align}
+\kla\left( \hat{H}_{T,AA'} \right)^{2\ell} &= \begin{pmatrix}
+\dots & 0 \\ 0 & \dots
+\end{pmatrix},\\
+\kla\left( \hat{H}_{T,AA'} \right)^{2\ell + 1} &= \begin{pmatrix}
+0 & \dots \\ \dots & 0
+\end{pmatrix}.
+\end{align}
+Since we are interested in the $LR$-elements of $A,A'$-space, we can ignore any even powers of the perturbation, since those terms only influence the diagonal elements.
+Essentially we can write down a Dyson equation for $4\times 4$-matrices \footnote{At least this is Tim's/my idea (mostly his), hopefully my wording is not \emph{too} wrong...}
+\begin{align}
+\kla\left( \hat{G}_{AA'} \right) &= \begin{pmatrix}
+\hat{G}_{LL} & \hat{G}_{LR} \\ \hat{G}_{RL} & \hat{G}_{RR}
+\end{pmatrix}
+\end{align}
+given by
+\begin{align}
+G_{AA',\eta\eta'} &= G_{0,AA',\eta\eta'} + (G_0 V G)_{AA',\eta\eta'}
+\end{align}
+where we are ultimately interested in the $LR$-component subject to the Dyson equation
+\begin{align}
+\check{F} &:= \check{G}_{LR} = \check{F}_0 + \check{F}_0 \check{V} \check{F}.
+\end{align}
+Iteratively inserting into itself, this becomes
+\begin{align}
+\check{F} &= \check{F}_0 \kla\left( \check{V} + \check{V} \check{F}_0 \check{V} \check{F}_0 \check{V} + \dots \right) \check{F}_0.
+\end{align}
+Let us define
+\begin{align}
+\rho_{L/R} (\omega) &:= \sum_{\textbf{k}} \delta \kla\left( \omega - \epsilon_\textbf{k}^{L/R} \right).
+\end{align}
+Assuming the density of state of the leads to be approximately constant, the hint allows us to make use of the approximations
+\begin{align}
+g_{L/R}^{R/A}(\omega) &:= \sum_{\textbf{k}} G_{0,L/R}^{R/A}(\textbf{k}, \omega) \approx \\
+&\approx \mp \i\pi \sum_{\textbf{k}} \delta \kla\left( \omega - \kla\left( \epsilon_{\textbf{k}}^{L/R} - \mu_{L/R} \right) \right) = \mp\i \rho_{L/R} \kla\left( \omega + \mu_{L/R} \right),\\
+g_{L/R}^{K}(\omega) &:= \sum_{\textbf{k}} G_{0,L/R}^{K}(\textbf{k}, \omega) \approx -2\pi \i \klam\left[ 1 - 2n_F \kla\left( \omega + \mu_{L/R} \right) \right] \rho_{L/R}\left( \omega + \mu_{L/R} \right).
+\end{align}
+One of the relevant diagrams in our Dyson series is
+\begin{align}
+&\begin{tikzpicture}
+    \begin{feynman}
+        \vertex (i);
+%        \vertex[left=1cm of i] (a1);
+        \vertex[left=0.5cm of i] (a1);
+        \vertex[left=1cm of a1] (a2);
+        \vertex[left=1cm of a2] (a3);
+%        \vertex[left=1cm of a3] (f);
+        \vertex[left=0.5cm of a3] (f);
+        \vertex[above=1cm of a1] (v1);
+        \vertex[above=1cm of a2] (v2);
+        \vertex[above=1cm of a3] (v3);
+        \diagram* {
+%            (i) -- [fermion] (a1) -- [fermion] (a2) -- [fermion] (a3) -- [fermion] (f),
+            (i) -- (a1) -- [fermion] (a2) -- [fermion] (a3) -- (f),
+            (a1) -- [dashed, insertion={[style=solid]1.0}] (v1),
+            (a2) -- [dashed, insertion={[style=solid]1.0}] (v2),
+            (a3) -- [dashed, insertion={[style=solid]1.0}] (v3),
+        };
+    \end{feynman}
+    \draw[fill] (a1) circle (0.5mm);
+    \draw[fill] (a2) circle (0.5mm);
+    \draw[fill] (a3) circle (0.5mm);
+\end{tikzpicture} = \kla\left( \check{V} \check{G}_0 \check{V} \check{G}_0 \check{V} \right)_{\eta'\eta} = \\
+%&\hspace{0.5cm} = (-\i)^3 \i^2 \sum_{\textbf{k}_1 \textbf{k}_2 } \sum_{\eta_1\eta_2} \check{V}(\textbf{k}_1)_{\eta'\eta_1} \check{G}_{0,\eta'\eta_1} (\textbf{k}_1, \omega) \check{V}(\textbf{k}_1)_{\eta_1\eta_2} \check{G}_{0,\eta_1\eta_2} (\textbf{k}_2, \omega) \check{V}(\textbf{k}_1)_{\eta_2\eta} = \\
+%&\hspace{0.5cm} = -\i \sum_{\textbf{k}_1 \textbf{k}_2 } \sum_{\eta_1\eta_2} T^\ast \hat{\tau}_{3,\eta'\eta_1} \hat{G}_{0,L}(\textbf{k}_1, \omega) \hat{\tau}_{3,\eta'\eta_1} T \hat{\tau}_{3,\eta_1\eta_2} \hat{G}_{0,R} (\textbf{k}_2, \omega) \hat{\tau}_{3,\eta_1\eta_2} T^\ast \hat{\tau}_{3,\eta_2\eta} = \\
+%&\hspace{0.5cm} = -\i |T|^2 T^\ast \sum_{\eta_1\eta_2} \delta_{\eta'\eta_1} \delta_{\eta_1\eta_2} \hat{\tau}_{3, \eta_2\eta} g_{L}(\omega) g_{R}(\omega) = \\
+%&\hspace{0.5cm} = (\i T)^\ast |T|^2 \hat{\tau}_{3,\eta'\eta} \hat{g}_{L}(\omega) \hat{g}_{R}(\omega).
+%%%%%%%%%%%%%%%
+&\hspace{0.5cm} = (-\i)^3 \i^2 \sum_{\textbf{k}_1 \textbf{k}_2 } \sum_{\eta_1\eta_2} \check{V}(\textbf{k}_1)_{\eta'\eta_1} \check{G}_{0,\eta'\eta_1} (\textbf{k}_1, \omega) \check{V}(\textbf{k}_1)_{\eta_1\eta_2} \check{G}_{0,\eta_1\eta_2} (\textbf{k}_2, \omega) \check{V}(\textbf{k}_1)_{\eta_2\eta} = \\
+&\hspace{0.5cm} = -\i \sum_{\textbf{k}_1 \textbf{k}_2 } \sum_{\eta_1\eta_2} T^\ast \hat{\tau}_{3,\eta'\eta_1} \check{G}_{0,L,\eta'\eta_1}(\textbf{k}_1, \omega) T \hat{\tau}_{3,\eta_1\eta_2} \check{G}_{0,R,\eta_1\eta_2} (\textbf{k}_2, \omega) T^\ast \hat{\tau}_{3,\eta_2\eta} = \\
+&\hspace{0.5cm} = (\i T)^\ast |T|^2 \kla\left( \hat{\tau}_3 \check{g}_L(\omega) \hat{\tau}_3 \check{g}_R(\omega) \hat{\tau}_3 \right)_{\eta'\eta}
+\end{align}
+Similarly
+\begin{align}
+\check{F} &= \check{F}_0 \kla\left( (\i T)^\ast + (\i T)^\ast |T|^2 \check{g}_{L}(\omega) \check{g}_{R}(\omega) + \dots \right) \hat{\tau}_3 \check{F}_0 = \\
+&= \check{F}_0 (\i T)^\ast \kla\left( 1 - |T|^2 \hat{\tau}_3 \hat{g}_L(\omega) \hat{\tau}_3 \hat{g}_R(\omega) \right)^{-1} \check{F}_0 = \\
+&= (\i T)^\ast \hat{\tau}_3 \hat{g}_L \kla\left( 1 + |T|^2 \check{g}_L(\omega) \check{g}_R(\omega) \right)^{-1} \hat{\tau}_3 \hat{g}_R.
+\end{align}
+In the following we will omit the argument $\omega$.
+We can invert the $2\times 2$-matrix
+\begin{align}
+\left( 1 + |T|^2 \check{g}_L(\omega) \check{g}_R(\omega) \right)^{-1} &= \klam\left[ \begin{pmatrix}
+1 & 0 \\ 0 & 1
+\end{pmatrix} + |T|^2 \begin{pmatrix}
+g_L^R & g_L^K \\ 0 & g_L^A
+\end{pmatrix} \begin{pmatrix}
+g_R^R & g_R^K \\ 0 & g_R^A
+\end{pmatrix} \right]^{-1} = \\
+&= \begin{pmatrix}
+1 + |T|^2 g_L^Rg_R^R & |T|^2 \kla\left( g_L^R g_R^K + g_L^K g_R^A \right) \\ 
+0 & 1 + |T|^2g_L^A g_R^A
+\end{pmatrix}^{-1} = \\
+&= \frac{1}{\alpha^R \alpha^A} \begin{pmatrix}
+\alpha^A & \alpha^K \\ 
+0 & \alpha^R
+\end{pmatrix}
+\end{align}
+where we defined the functions
+\begin{align}
+\alpha^R &:= 1 + |T|^2g_L^R g_R^R,\\
+\alpha^K &:= -|T|^2 \kla\left( g_L^R g_R^K + g_L^K g_R^A \right),\\
+\alpha^A &:= 1 + |T|^2g_L^A g_R^A.
+\end{align}
+Then we find
+\begin{align}
+\hat{F} &= \frac{(\i T)^\ast }{\alpha^R\alpha^A} \begin{pmatrix}
+g_L^R & g_L^K \\ 0 & g_L^A
+\end{pmatrix} \begin{pmatrix}
+\alpha^A & \alpha^K \\ 0 & \alpha^R
+\end{pmatrix} \begin{pmatrix}
+g_R^R & g_R^K \\ 0 & -g_R^A
+\end{pmatrix} = \\
+&= \frac{(\i T)^\ast }{\alpha^R\alpha^A} \begin{pmatrix}
+g_L^R & g_L^K \\ 0 & g_L^A
+\end{pmatrix} \begin{pmatrix}
+\alpha^A g_R^R & \alpha^A g_R^K - \alpha^K g_R^A \\ 0 & \alpha^R g_R^A
+\end{pmatrix} = \\
+&= \frac{(\i T)^\ast}{\alpha^R \alpha^A} \begin{pmatrix}
+g_L^R\alpha^A g_R^R & g_L^R \alpha^A g_R^K - g_L^R \alpha^K g_R^A + g_L^K \alpha^R g_R^A \\ 
+0 & g_L^A \alpha^R g_R^A
+\end{pmatrix}.
+\end{align}
+The $K$-component of the matrix can be simplified further using our approximations.
+In particular we will make use of $g_{L/R}^A \approx -g_{L/R}^{R}$
+\begin{align*}
+g_L^R &\alpha^A g_R^K - g_L^R \alpha^K g_R^A + g_L^K \alpha^R g_R^A = \\
+&= g_L^Rg_R^K \kla\left( 1 + |T|^2 g_L^Ag_R^A \right) + g_L^R g_R^A |T|^2 \kla\left( g_L^Rg_R^K + g_L^Kg_R^A \right) + g_L^K g_R^A \kla\left( 1 + |T|^2 g_L^Rg_R^R \right) = \numberthis \\
+&= g_L^Rg_R^K \kla\left( 1 + |T|^2 \klam\left[ g_L^A g_R^A + g_R^Ag_L^R \right] \right) + g_L^K g_R^A \kla\left( 1 + |T|^2 \klam\left[ g_L^R g_R^R + g_L^Rg_R^A \right] \right) \approx  \numberthis \\
+&\approx g_L^R g_R^K + g_L^K g_R^A. \numberthis
+\end{align*}
+To get from the $R/K/A$-components to the $+-$-components note 
+\begin{align}
+\begin{pmatrix}
+F^{--} & F^{-+} \\ F^{+-} & F^{++}
+\end{pmatrix} &= U^\dagger \check{F} U = \frac{1}{2} \begin{pmatrix}
+1 & 1 \\ -1 & 1
+\end{pmatrix} \begin{pmatrix}
+F^R & F^K \\ 0 & F^A
+\end{pmatrix} \begin{pmatrix}
+1 & -1 \\ 1 & 1
+\end{pmatrix} = \\
+&= \frac{1}{2} \begin{pmatrix}
+1 & 1 \\ -1 & 1
+\end{pmatrix}  \begin{pmatrix}
+F^R + F^K & -F^R + F^K \\ F^A & F^A
+\end{pmatrix} = \\
+&= \frac{1}{2} \begin{pmatrix}
+F^R + F^K + F^A & -F^R + F^K + F^A \\ -F^R - F^K + F^A & F^R - F^K + F^A
+\end{pmatrix}.
+\end{align}
+Thus we find
+\begin{align}
+F^{-+} &= \frac{-F^R + F^K + F^A}{2} = \\
+&= \frac{(\i T)^\ast}{2\alpha^R \alpha^A} \kla\left( g_L^Rg_R^K + g_L^Kg_R^A - g_L^R\alpha^Ag_R^R + g_L^A \alpha^R g_R^A \right) = \\
+&= \frac{(\i T)^\ast}{2\alpha^R \alpha^A} \kla\left( g_L^Rg_R^K + g_L^Kg_R^A - g_L^R g_R^R + g_L^A g_R^A + |T|^2 \klam\left[ -g_L^R g_R^R + g_L^A g_R^A \right] \right) \approx \\
+&\approx (\i T)^\ast \frac{g_L^Rg_R^K + g_L^Kg_R^A}{2\kla\left( 1 + |T|^2 g_L^Rg_R^R \right) \kla\left( 1 + |T|^2 g_L^A g_R^A \right)} \approx \\
+&\approx \frac{(\i T)^\ast}{2} \frac{-2\pi\i [1 - n_{F,R}]\rho_R (-\i\pi) \rho_L - 2\pi\i [1 - n_{F,L}] \rho_L \i\pi \rho_R }{\kla\left( 1 - |T|^2 \pi^2 \rho_L\rho_R \right)^2} = \\
+&= (\i T)^\ast \pi^2 \rho_L \rho_R \frac{n_{F,R} - n_{F,L}}{\left( 1 - |T|^2 \pi^2 \rho_L\rho_R \right)^2} = \\
+&= (\i T)^\ast \pi^2 \rho_L\kla\left( \omega - \frac{eV}{\hbar} \right) \rho_R(\omega) \frac{n_{F}(\omega) - n_{F}\left( \omega - \frac{eV}{\hbar} \right)}{\left( 1 - |T|^2 \pi^2 \rho_L\left( \omega - \frac{eV}{\hbar} \right) \rho_R(\omega) \right)^2}.
+\end{align}
+NOTE: There are probably more mistakes here (at least I myself would complain about several steps, but trying is better than not trying...), but at the very least we have the wrong sign in the denominator.
+Also the $n_{F,R} - n_{F,L}$-term should probably reduce to unity somehow and we should have $T$ rather than $T^\ast$.\\
+The current is given by (assuming all of the corrections from the note)
+\begin{align}
+I(V,t) &= \frac{2e}{\hbar} \tecxt\text{Re\,} \klammer\left\{ T^\ast \sum_\sigma \intr\int_{\mathbb{R}^{ }} F^{-+}(\omega) \e^{\i \omega t} \, \frac{\mathrm{d}\omega}{2\pi} \right\} \bigg\vert_{t=0} = \\
+&= \frac{2e}{\hbar} \tecxt\text{Re\,} \klammer\left\{ -2\i |T|^2\pi^2 \intx\int_{0}^{\frac{eV}{\hbar}} \frac{\rho_L\left( \omega - \frac{eV}{\hbar} \right) \rho_R(\omega)}{\left( 1 + |T|^2 \pi^2 \rho_L\left( \omega - \frac{eV}{\hbar} \right) \rho_R(\omega) \right)^2} \, \frac{\mathrm{d}\omega}{2\pi} \right\}.
+\end{align}
+Let us just say that this result shares features of the correct solution, but that's about it.\\
+Anyway, the correct result is
+\begin{align}
+I &= \frac{4e}{\hbar^2} 2\pi^2 |T|^2 \intx\int_{0}^{\frac{eV}{\hbar}}  \frac{\rho_L\left( \omega - \frac{eV}{\hbar} \right) \rho_R(\omega)}{\left( 1 + \frac{|T|^2 \pi^2}{\hbar^2} \rho_L\left( \omega - \frac{eV}{\hbar} \right) \rho_R(\omega) \right)^2} \, \frac{\mathrm{d}\omega}{2\pi}
+\end{align}
+Introducing the quantum of conductance $G_0 := \frac{e^2}{\pi\hbar}$ and approximating the integrand by its static value for $\omega=0$ we find
+\begin{align}
+I &\approx \frac{4e}{\hbar^2} \pi |T|^2 \frac{eV}{\hbar} \frac{\rho_L\kla\left( -\frac{eV}{\hbar} \right) \rho_R(0)}{ \left( 1 + \frac{|T|^2 \pi^2}{\hbar^2} \rho_L\left( - \frac{eV}{\hbar} \right) \rho_R(0) \right)^2 } \approx \\
+&\approx  G_0 V \frac{|T_\tecxt\text{eff}|^2}{\kla\left( 1 + \frac{|T_\tecxt\text{eff}|^2}{4} \right)^2}
+\end{align}
+where we defined the effective parameter $|T_\tecxt\text{eff}|^2 := \frac{4\pi^2 |T|^2}{\hbar^2} \rho_L(0)\rho_R(0)$ and assumed very small voltages.
+$G = \frac{I}{V}$ gives the desired result.
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

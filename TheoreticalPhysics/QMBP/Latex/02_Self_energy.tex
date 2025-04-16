@@ -1,0 +1,376 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\usepackage[compat=1.1.0]{tikz-feynman}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{2 Self Energy and Coulomb interaction}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Quantum Many-Body Physics}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Self-energy of the Fermi-Hubbard model}
+%\feynmandiagram [large, vertical=e to f] {
+%a -- [fermion] b -- [photon, momentum'=\(k\)] c -- [fermion] d,
+%b -- [fermion, momentum=\(p_{1}\)] e -- [fermion, momentum=\(p_{2}\)] c,
+%e -- [gluon]
+%f,
+%h -- [fermion] f -- [fermion] i;
+%};
+%\feynmandiagram [vertical=e to f]  {
+%    a -- [fermion] b -- [photon, momentum=$k$] c -- [fermion] d,
+%    b -- [fermion, momentum'=$p_1$] e -- [fermion, momentum'=$p_2$] c,
+%    e -- [gluon] f,
+%    g -- [fermion] f -- [fermion] i;
+%};
+Consider the Fermi-Hubbard model described by the Hamiltonian
+\begin{align}
+\hat{H} &= \sum_{jk\sigma} t_{jk} \hat{c}_{j\sigma}^\dagger \hat{c}_{k\sigma} + \frac{U}{2} \sum_{j\sigma} \hat{n}_{j\sigma} \hat{n}_{j,-\sigma}
+\end{align}
+where the $t_{jk}$ denote the (spin-independent) hopping amplitudes, $U > 0$ the Hubbard interaction strength and $\hat{n}_{j\sigma} = \hat{c}_{j\sigma}^\dagger \hat{c}_{j\sigma}$. 
+Note that the Hubbard interaction only couples to opposite spins.
+This is evident from the the interaction term containing $\hat{c}_{j\sigma} \hat{c}_{j,-\sigma}$, which requires the interacting states to have opposite spin.
+Note that the Feynman rules may be expressed as
+\begin{align}
+\feynmandiagram [small, horizontal=i to f, baseline={-0.5ex}] {
+    f [particle=$\sigma'$] -- [dashed, momentum'=$P$] i [particle=$\sigma$];
+}; &= -\i U(P) \delta_{\sigma,-\sigma'} = -\i \delta_{\sigma, -\sigma'} \frac{U}{2},\\
+\feynmandiagram [small, horizontal=a to b, layered layout] {
+   a [nudge=(0:10mm)] -- b [dot] -- [out=135, in=45, loop, min distance=1cm] b,
+ }; &= n_0(\mu),\\
+\feynmandiagram [small, horizontal=i to f, baseline={-0.5ex}] {
+    f [particle=$\sigma'$] -- [fermion, momentum'=$P$] i [particle=$\sigma$];
+}; &= \i G_{0,\sigma\sigma'}^\tecxt\text{c}(P) = \i \delta_{\sigma\sigma'} G_0^\tecxt\text{c}(P) = \i\delta_{\sigma\sigma'} \frac{1}{\omega - \epsilon_\textbf{k}(1 - \i 0^+)},\\
+\feynmandiagram [small, horizontal=i to f, baseline={-0.5ex}] {
+    f [particle=$\sigma'$] -- [double, double distance=0.2ex, with arrow=0.5, arrow size=0.11em, momentum'=$P$] i [particle=$\sigma$];
+}; &= \i G_{\sigma\sigma'}^\tecxt\text{c}(P).
+\end{align}
+The full propagator is
+\begin{align}
+\feynmandiagram [small, horizontal=i to f, baseline={-0.5ex}] {
+    f [particle=$\sigma'$] -- [double, double distance=0.2ex, with arrow=0.5, arrow size=0.11em, momentum'=$P$] i [particle=$\sigma$];
+}; &= \feynmandiagram [small, horizontal=i to f, baseline={-0.5ex}] {
+    f [particle=$\sigma'$] -- [fermion, momentum'=$P$] i [particle=$\sigma$];
+}; + \feynmandiagram [small, horizontal=i to f, baseline={-0.5ex}] {
+    f [particle=$\sigma'$, nudge=(180:0.3cm)] -- [fermion, momentum'=$P$] a [dot, label=-90:$\sigma_1$] -- [fermion, momentum'=$P$] i [particle=$\sigma$, nudge=(0:0.3cm)],
+     a -- [draw=none] c [nudge=(90:1.5cm)],
+     a -- [scalar] b [dot, nudge=(-90:0.6cm), label=0:$\sigma_2$] -- [out=135, in=45, loop, min distance=1cm] b;
+}; + \feynmandiagram [small, layered layout, horizontal=i to f, baseline={-0.5ex}] {
+    f [particle=$\sigma'$] -- [fermion, momentum'=$P$] a [dot, label=-90:$\sigma_2$] -- [fermion, momentum=$P-Q$] b [dot, label=-90:$\sigma_1$] -- [fermion, momentum'=$P$] i [particle=$\sigma$],
+    a -- [scalar, half right, momentum'=$Q$] b;
+}; + \dots
+\end{align}
+The first diagram is of course just the free propagator.
+The third diagram is also simple, because it contains a term $\sim \delta_{\sigma_1\sigma_2}$ from the free propagator but also a term $\sim \delta_{\sigma_1, -\sigma_2}$ from the Hubbard interaction and hence vanishes.
+The second diagram gives
+\begin{align}
+\feynmandiagram [small, horizontal=i to f, baseline={-0.5ex}] {
+    f [particle=$\sigma'$, nudge=(180:0.3cm)] -- [fermion, momentum'=$P$] a [dot, label=-90:$\sigma_1$] -- [fermion, momentum'=$P$] i [particle=$\sigma$, nudge=(0:0.3cm)],
+     a -- [draw=none] c [nudge=(90:1.5cm)],
+     a -- [scalar] b [dot, nudge=(-90:0.6cm), label=0:$\sigma_2$] -- [out=135, in=45, loop, min distance=1cm] b;
+}; &= \sum_{\sigma_1\sigma_2} \i \delta_{\sigma\sigma_1} G_0^\tecxt\text{c}(P) \i \delta_{\sigma_1\sigma'} G_0^\tecxt\text{c}(P) n_0(\mu) \kla\left( -\i \frac{U}{2} \right) \delta_{\sigma_1, -\sigma_2} = \\
+&= \i\delta_{\sigma\sigma'} \frac{U}{2} \big( G_0^\tecxt\text{c}(P) \big)^2 n_0(\mu).
+\end{align}
+The self-energy to first order in perturbation theory is given by
+\begin{align}
+-\i\Sigma &= \feynmandiagram [small, horizontal=i to f, baseline={-0.5ex}] {
+    f [nudge=(180:1cm)] -- [draw=none] a [dot, label=-90:{$\sigma_1, \delta_{\sigma\sigma'}$}] -- [draw=none] i [nudge=(0:1cm)],
+     a -- [draw=none] c [nudge=(90:1.5cm)],
+     a -- [scalar] b [dot, nudge=(-90:0.6cm), label=0:$\sigma_2$] -- [out=135, in=45, loop, min distance=1cm] b;
+}; + \feynmandiagram [small, layered layout, horizontal=i to f, baseline={-0.5ex}] {
+    f -- [draw=none] a [dot, label=0:$\sigma_2$] -- [fermion, momentum=$P-Q$] b [dot, label=180:$\sigma_1$] -- [draw=none] i,
+    a -- [scalar, half right, momentum'=$Q$] b;
+}; + \mathcal{O}(U^2) \simeq \\
+&\simeq \i\delta_{\sigma\sigma'} \frac{U}{2} n_0(\mu).
+\end{align}
+The Dyson equation is
+\begin{align}
+G^\tecxt\text{c} &= \kla\left( G_0^\tecxt\text{c}(P)^{-1} - \Sigma(P)^{-1} \right)^{-1}.
+\end{align}
+But since the spin structure is completely diagonal, we only need to consider the scalar part 
+\begin{align}
+G^\tecxt\text{c}(\omega,\textbf{k},\sigma) &= \kla\left( G_0^\tecxt\text{c}(\omega,\textbf{k},\sigma)^{-1} - \Sigma(\omega,\textbf{k},\sigma)^{-1} \right)^{-1} = \frac{1}{\omega - \epsilon_\textbf{k}(1 - \i 0^+) + \frac{U}{2} n_0(\mu)} + \mathcal{O}(U^2).
+\end{align}
+One of the second order diagrams for the self-energy that does not vanish due to the spin structure is
+\begin{align*}
+&\feynmandiagram [small, layered layout, horizontal=i to f, baseline={-0.5ex}] {
+    f [particle=$\sigma'$] -- [fermion, momentum'=$P$] a[dot, label=90:$\sigma_1$] -- [fermion] b[dot, label=90:$\sigma_2$] -- [fermion, momentum'=$P$] i [particle=$\sigma$],
+    a -- [scalar, quarter left, momentum=$Q_1$] c[dot, label=0:$\sigma_3$] -- [fermion, half right, momentum'=$Q_1 + Q_2$] d[dot, label=180:$\sigma_4$],
+    d -- [fermion, half right, momentum'=$Q_2$] c,
+    d -- [scalar, quarter left, momentum=$Q_1$] b;
+}; = \\
+&= (-1)^1 \sum_{\sigma_1 \sigma_2 \sigma_3 \sigma_4} \intr\int_{\mathbb{R}^{4}} \intr\int_{\mathbb{R}^{4}} \i\delta_{\sigma\sigma_2} G_0^\tecxt\text{c}(P) \i\delta_{\sigma\sigma_2} G_0^\tecxt\text{c}(P-Q_1) \i \delta_{\sigma_1\sigma'} G_0^\tecxt\text{c}(P) \times \\
+&\hspace{4cm} \times \left( -\i \frac{U}{2} \right) \delta_{\sigma_1, -\sigma_3} \left( -\i \frac{U}{2} \right) \delta_{\sigma_2, -\sigma_4} \i\delta_{\sigma_3\sigma_4} G_0^\tecxt\text{c}(Q_1 + Q_2)  \times \\
+&\hspace{4cm} \times \i\delta_{\sigma_3\sigma_4} G_0^\tecxt\text{c}(Q_2)  \, \frac{\mathrm{d}^{4}Q_1}{(2\pi)^4} \, \frac{\mathrm{d}^{4}Q_2}{(2\pi)^4}. \numberthis
+\end{align*}
+\section{Thomas-Fermi screening of the Coulomb interaction}
+Consider the degenerate electron gas in three dimensions described by the Hamiltonian
+\begin{align}
+\hat{H} &= \sum_{\textbf{k}\sigma} \epsilon_\textbf{k} \hat{c}_{\textbf{k}\sigma}^\dagger \hat{c}_{\textbf{k}\sigma} + \frac{1}{2N} \sum_{\textbf{kk}'\sigma\sigma'} \sum_{\textbf{q}\neq 0} V_{\textbf{q}} \hat{c}_{\textbf{k} + \textbf{q} \sigma}^\dagger \hat{c}_{\textbf{k}' - \textbf{q}\sigma'}^\dagger \hat{c}_{\textbf{k}'\sigma'} \hat{c}_{\textbf{k}\sigma}
+\end{align}
+where $\epsilon_\textbf{k} = \frac{k^2}{2m} - \epsilon_F$, $V_\textbf{q} = \frac{1}{q^2}$ and $N$ denoting the total number of sites.
+The vacuum polarization diagram in momentum-frequency space to lowest order in perturbation theory is given by 
+\begin{align}
+\i\Pi &= \feynmandiagram [layered layout, small, horizontal=a to b, baseline={-0.5ex}] {
+    i [nudge=(0:5mm)] -- [small] a [dot] -- [fermion, half left, looseness=1.5, momentum={$k+q, \omega + \epsilon$}] b [dot] -- [fermion, half left, looseness=1.5, momentum={$q, \epsilon$}] a, 
+    b -- f [nudge=(180:5mm)];
+}; = \underbrace{(-1)^1}_{\tecxt\text{1 closed loop}} \sum_\sigma \intr\int_{\mathbb{R}^{4}} \i G_0^\tecxt\text{c}(\textbf{k} + \textbf{q}, \omega + \epsilon) \i G_0^\tecxt\text{c}(\textbf{q}, \epsilon) \, \frac{\mathrm{d}^{4}Q}{(2\pi)^4}.
+\end{align}
+Since $G_0^\tecxt\text{c}(\textbf{k},\omega) = \frac{1}{\omega - \epsilon_\textbf{k} + \tecxt\text{sign\,} \epsilon_\textbf{k} \i 0^+} = \frac{1}{\omega - \epsilon_\textbf{k} (1 - \i 0^+)}$ we find
+\begin{align}
+\Pi &= \underbrace{2}_\text{spin} \frac{1}{2\pi\i} \intr\int_{\mathbb{R}^{3}} \intr\int_{\mathbb{R}^{ }} \frac{1}{\omega + \epsilon - \epsilon_{\textbf{k} + \textbf{q}} (1 - \i 0^+)} \frac{1}{\epsilon - \epsilon_{\textbf{q}} (1 - \i 0^+)} \, \mathrm{d}^{ }\epsilon \, \frac{\mathrm{d}^{3}q}{(2\pi)^3}.
+\end{align}
+The integrand has poles at $\epsilon = \epsilon_{\textbf{q}}(1 - \i 0^+)$ and $\epsilon = \epsilon_{\textbf{k} + \textbf{q}} (1 - \i 0^+) - \omega$.
+If both poles lie on the same half of the complex plane, we can close the contour on the opposing half and get a result of zero.
+Thus the signs of $\epsilon_{\textbf{k} + \textbf{q}}$ and $\epsilon_\textbf{q}$ must be different, which is encapsulated by including the term $\Theta(\epsilon_{\textbf{k} + \textbf{q}}) \Theta(-\epsilon_\textbf{q})$.
+Using the residue theorem and $\Theta(\epsilon) = n_0(\epsilon)$ for $T=0$ the integral becomes
+\begin{align}
+\Pi &= 2 \frac{1}{2\pi\i} \intr\int_{\mathbb{R}^{3}} 2\pi\i \klam\left[ \frac{\Theta(\epsilon_{\textbf{k} + \textbf{q}}) \Theta(-\epsilon_\textbf{q})}{\omega + \epsilon_\textbf{q} - \epsilon_{\textbf{k} + \textbf{q}} + \i 0^+} + \frac{\Theta( - \epsilon_{\textbf{k} + \textbf{q}}) \Theta( \epsilon_\textbf{q})}{-\omega + \epsilon_{\textbf{k} + \textbf{q}} - \epsilon_\textbf{q} + \i 0^+} \right]  \, \frac{\mathrm{d}^{3}q}{(2\pi)^3} = \\
+&= 2 \intr\int_{\mathbb{R}^{3}} \left[ \frac{n_0(\epsilon_{\textbf{k} + \textbf{q}}) n_0( -\epsilon_\textbf{q})}{\omega + \epsilon_\textbf{q} - \epsilon_{\textbf{k} + \textbf{q}} + \i 0^+} - \frac{n_0(\epsilon_{\textbf{k} + \textbf{q}}) n_0( -\epsilon_\textbf{q})}{\omega + \epsilon_{\textbf{k} + \textbf{q}} - \epsilon_\textbf{q} - \i 0^+} \right] \, \frac{\mathrm{d}^{3}}{(2\pi)^3}.
+\end{align}
+Using the following identities 
+\begin{align}
+n_0(-\epsilon_\textbf{q}) &= \Theta(-\epsilon_\textbf{q}) = \Theta \kla\left( -\frac{q^2 - k_F^2}{2m} \right) = \Theta (k_F - q),\\
+n_0(\epsilon_{\textbf{k} + \textbf{q}}) &= \Theta (\epsilon_{\textbf{k} + \textbf{q}}) = \Theta \kla\left( \frac{(\textbf{k} + \textbf{q})^2 - k_F^2}{2m} \right) = \Theta ( |\textbf{k} + \textbf{q}| - k_F)
+\end{align}
+we finally arrive at
+\begin{align*}
+\Pi(\textbf{k},\omega) &= 2 \intr\int_{\mathbb{R}^{3}} \Theta(|\textbf{k} + \textbf{q}| - k_F) \Theta(k_F - q) \times \\
+&\hspace{2cm} \times \left[ \frac{1}{\omega + \epsilon_\textbf{q} - \epsilon_{\mathbf{k} + \textbf{q}} + \i 0^+} - \frac{1}{\omega - \epsilon_\textbf{q} + \epsilon_{\textbf{k} + \textbf{q}} - \i 0^+} \right] \,\frac{ \mathrm{d}^{3}q}{(2\pi)^3}. \numberthis
+\end{align*}
+%LINDHARD:
+%\begin{align}
+%\Pi(\textbf{k}, 0) &= -\frac{2mk_F}{(2\pi)^2} \klam\left[ 1 + \frac{k_F - (k/2)^2}{k_Fk} \log \left\vert \frac{k_F + k/2}{k_F - k/2} \right\vert \right].
+%\end{align}
+Using the substitution $k^2 + q^2 + 2kq\cos\theta = u$ with $\tecxt\text{d}u = 2kq \tecxt\text{d}(\cos\theta)$ we find
+\begin{align}
+\Pi(\textbf{k},0) &= \lim_{\alpha \rightarrow 0^+} \frac{2}{(2\pi)^2} \intx\int_{0}^{k_F} \intx\int_{-1}^{1} \frac{2\Theta\kla\left( \sqrt{k^2 + q^2 + 2kq\cos \theta} - k_F \right)}{\frac{q^2}{2m} - \frac{q^2 + k^2 + 2kq\cos\theta}{2m} + \i\alpha} \, \mathrm{d}(\cos\theta) \, q^2\mathrm{d}q = \\
+&= \lim_{\alpha \rightarrow 0^+} \frac{8m}{(2\pi)^2} \intx\int_{0}^{k_F} \intx\int_{(k-q)^2}^{(k+q)^2} \frac{\Theta(\sqrt{u} - k_F)}{q^2 - u + \i\alpha} \, \frac{1}{2kq}\mathrm{d}u \, q^2\mathrm{d}q.
+\end{align}
+We first need to evaluate the Theta-function.
+Since $0\le q,k\le k_F$ the lower bound satisfies $(k-q)^2 \le k_F^2$, so we may replace it by $k_F^2$.
+However, this is only justified given $(k+q)^2 \ge k_F^2$.
+This condition is equivalent to $q\ge k_F - k$, which allows us to write
+%It is helpful to split the $q$-integration into two parts via
+%\begin{align}
+%\int_0^{k_F - k} \int_{(k-q)^2}^{(k+q)^2} &\Theta(\sqrt{u} - k_F) \dots + \int_{k_F - k}^{k_F} \intx\int_{(k-q)^2}^{(k+q)^2} \Theta(\sqrt{u} - k_F) \dots = \\
+%&= 0 + \int_{k_F - k}^{k_F} \int_{k_F^2}^{(k+q)^2}\dots 
+%\end{align}
+%Integrating by parts yields
+%\begin{align*}
+%\Pi &= \lim_{\alpha \rightarrow 0^+} \frac{4m/k}{(2\pi)^2} \intx\int_{0}^{k_F} q \Theta(u-k_F) \log |q^2 - u + \i\alpha| \bigg\vert_{(k-q)^2}^{(k+q)^2} \mathrm{d}q\ - \\
+%&\hspace{1.5cm} - \frac{4m/k}{(2\pi)^2} \int_0^{k_F} q\int_{(k-q)^2}^{(k+q)^2} \delta(u - k_F) \log |q^2 - u + \i\alpha|  \, \mathrm{d}u\, \mathrm{d}q 
+%\end{align*}
+%\begin{align}
+%%%% BEGIN FOUR INTEGRALS
+%\Pi(\textbf{k},0) &= \lim_{\alpha \rightarrow 0^+} \frac{4m/k}{(2\pi)^2} \intx\int_{k_F - k}^{k_F} \intx\int_{k_F^2}^{(k+q)^2} \frac{1}{q^2 - u + \i\alpha} \,\mathrm{d}u \, q\mathrm{d}q = \\
+%&= \lim_{\alpha \rightarrow 0^+} \frac{4m/k}{(2\pi)^2} \intx\int_{k_F - k}^{k_F} \log \left\vert \frac{q^2 - (k+q)^2 + \i\alpha}{q^2 - k_F^2 + \i\alpha} \right\vert \, q\mathrm{d}q = \\
+%&= \frac{4m/k}{(2\pi)^2} \intx\int_{k_F - k}^{k_F} \kla\left( \log |2k| + \log \left\vert q + \frac{k}{2} \right\vert  - \log |q - k_F| - \log |q + k_F|  \right) \, q\mathrm{d}q.
+%\end{align}
+%%%% END FOUR INTEGRALS
+%%%% BEGIN TWO INTEGRALS
+%\begin{align}
+%\Pi(\textbf{k},0) &= \lim_{\alpha \rightarrow 0^+} \frac{4m/k}{(2\pi)^2} \intx\int_{k_F - k}^{k_F} \intx\int_{k_F^2}^{(k+q)^2} \frac{1}{q^2 - u + \i\alpha} \,\mathrm{d}u \, q\mathrm{d}q = \\
+%&= \lim_{\alpha \rightarrow 0^+} \frac{4m/k}{(2\pi)^2} \intx\int_{k_F - k}^{k_F} \log \left\vert \frac{q^2 - (k+q)^2 + \i\alpha}{q^2 - k_F^2 + \i\alpha} \right\vert \, q\mathrm{d}q = \\
+%&= \frac{4m/k}{(2\pi)^2} \intx\int_{k_F - k}^{k_F} \kla\left( \log |k(2q - k)| - \log |q^2 - k_F^2|  \right) \, q\mathrm{d}q = \\
+%&= \frac{4m/k}{(2\pi)^2} \klam\left[ I_1 - I_2 \right].
+%\end{align}
+%%%% END TWO INTEGRALS
+\begin{align}
+\Pi(\textbf{k},0) &= \lim_{\alpha \rightarrow 0^+} \frac{4m/k}{(2\pi)^2} \intx\int_{k_F - k}^{k_F} \intx\int_{k_F^2}^{(k+q)^2} \frac{1}{q^2 - u + \i\alpha} \,\mathrm{d}u \, q\mathrm{d}q = \\
+&= \lim_{\alpha \rightarrow 0^+} \frac{4m/k}{(2\pi)^2} \intx\int_{k_F - k}^{k_F} \log \left\vert \frac{q^2 - (k+q)^2 + \i\alpha}{q^2 - k_F^2 + \i\alpha} \right\vert \, q\mathrm{d}q = \\
+&= \frac{4m/k}{(2\pi)^2} \intx\int_{k_F - k}^{k_F} q \log \left\vert \frac{k^2 + 2qk}{q^2 - k_F^2} \right\vert \,\mathrm{d}q.
+\end{align}
+%Note that 
+%\begin{align}
+%\int x\log x\, \mathrm{d}x &= \frac{x^2}{2} \log x - \int \frac{x^2}{2} \frac{1}{x}\, \mathrm{d}x = \frac{x^2}{2} \log x - \frac{x^2}{4},\\
+%\intx\int_{ }^{ } x \log |x+b|\, \mathrm{d}x &= \intx\int_{ }^{ } (u-b) \log |u|\, \mathrm{d}u = \frac{u^2}{2} \log |u| - \frac{u^2}{4} - b u\log |u| + bu = \\
+%&= \frac{u}{2} \klam\left[ (u - 2b) \log |u| - \frac{u}{2} + 2b \right] = \\
+%&= \frac{x+b}{2} \klam\left[ (x-b) \log |x+b| - \frac{x+b}{2} + 2b \right].
+%\end{align}
+%CORRECT DERIVATIVE CHECK
+%\begin{align}
+%&\frac{1}{2}\left[ (x-b) \log |x+b| - \frac{x+b}{2} + 2b \right] + \frac{x+b}{2} \left[ \log |x+b| + \frac{x-b}{x+b} - \frac{1}{2} \right] = \\
+%&= x\log |x+b| - \frac{x+b}{4} + b + \frac{x-b}{2} - \frac{x+b}{4} = x\log |x+b|.
+%\end{align}
+%%%%% FOUR INTEGRAL APPROACH
+%We solve the four integrals separately
+%\begin{align}
+%I_1 &= \intx\int_{k_F - k}^{k_F} q \log |2k|\, \mathrm{d}q = \frac{k_F^2 - (k_F-k)^2}{2} \log |2k|,\\
+%I_2 &= \intx\int_{k_F - k}^{k_F} q \log \left\vert q + \frac{k}{2} \right\vert \, \mathrm{d}q = \\
+%&= \frac{q + k/2}{2} \klam\left[ (q - k/2) \log \left\vert q + \frac{k}{2} \right\vert - \frac{q + 3k/2}{2} \right]_{k_F - k}^{k_F} = \\
+%&= \frac{q^2 - (k/2)^2}{2} \log \left\vert q + \frac{k}{2} \right\vert_{k_F - k}^{k_F} - \frac{(k_F + 3k/2)^2}{4} + \frac{(k_F + k/2)^2}{4} = \\
+%&= \frac{k_F^2 - (k/2)^2}{2} \log \left\vert k_F + \frac{k}{2} \right\vert - \frac{(k_F - k)^2 - (k/2)^2}{2} \log \left\vert k_F - \frac{k}{2} \right\vert - \frac{k(k_F + k)}{2},\\
+%I_3 &= \intx\int_{k_F - k}^{k_F} q \log |q - k_F| \, \mathrm{d}q = \frac{q - k_F}{2} \klam\left[ (q+k_F) \log |q-k_F| - \frac{q + 3k_F/2}{2} \right]_{k_F - k}^{k_F} = \\
+%&= \frac{k}{2} \klam\left[ -k \log |k| - \frac{k_F/2 - k}{2} \right] = -\frac{k^2}{2}\log |k| + \frac{k^2}{4} - \frac{k_Fk}{8},\\
+%I_4 &= \intx\int_{k_F - k}^{k_F} q \log |q + k_F| \, \mathrm{d}q = \frac{q + k_F}{2} \klam\left[ (q-k_F) \log |q+k_F| - \frac{q - 3k_F/2}{2} \right]_{k_F - k}^{k_F} = \\
+%&= \frac{k_F^2}{4} - \frac{2k_F - k}{2} \klam\left[ -k\log |k| + \frac{k + k_F/2}{2} \right] = (k_F - k/2) k\log |k| + \frac{k^2}{4} - \frac{3k_Fk}{2}.
+%\end{align}
+%Before inserting these into our original expression note that
+%\begin{align}
+%I_3 + I_4 &= k(k_F-k) \log |k| + \frac{k^2}{2} - \frac{13k_Fk}{8},\\
+%I_1 + I_2 &= \frac{2k_Fk - k^2}{2} \log |2k| + \frac{k_F^2 - (k/2)^2}{2} \log \left\vert \frac{k_F + k/2}{k_F - k/2} \right\vert - \frac{k^2 -k_Fk}{2} \log |k_F - k/2| - \frac{k(k_F + k)}{2}
+%\end{align}
+%and
+%\begin{align}
+%\sum I_j &= 2k(k_F - k)\log k -\frac{17k_Fk}{8} + \frac{2k_Fk-k^2}{2} \log 2 
+%\end{align}
+%%%% CORRECT SOLUTION USING ONLINE INTEGRATION
+%\begin{align}
+%&\frac{4x^2\ln\left(\frac{\left|k\right|\left|2x+k\right|}{\left|x-k_F\right|\left|x+k_F\right|}\right) - k^2\ln\left(\left|2x+k\right|\right)+2\left(2k_F^2\cdot\left(\ln\left(\left|x+k_F\right|\right)+\ln\left(\left|x-k_F\right|\right)\right)+x\cdot\left(x+k\right)\right)}{8}\bigg\vert_{k_F - k}^{k_F}\\
+%&= \frac{4k_F^2 \log \frac{k(2k_F+k)}{2k_F} - k^2 \log (2k_F+k) + 4k_F^2 \log (2k_F) + k_F(k_F + k)}{8} - \\
+%&\quad -\frac{4(k_F - k)^2 \log \frac{k(2k_F - k)}{k(2k_F - k)} - k^2 \log (2k_F - k) + 4k_F^2 \log (2k_F - k) + 4k_F^2 \log k + k_F (k_F - k)}{8}\\
+%&= \frac{k_F^2}{2} \log |k(2k_F + k)| - \frac{k^2}{8} \log |2k_F + k| + k_F^2 + k_Fk + \\
+%&\quad + \frac{k^2}{8} \log |2k_F - k| - \frac{k_F^2}{2} \log |2k_F - k| - \frac{k_F^2}{2} \log k - k_F^2 + k_Fk = \\
+%&= \frac{k_F^2 - (k/2)^2}{2} \log \left\vert \frac{k_F + k/2}{k_F - k/2} \right\vert  + 2k_Fk.
+%\end{align}
+%%%% NEW ATTEMPT
+%The first integral gives
+%\begin{align}
+%I_1 &= \int_{k_F-k}^{k_F} q\log |k(2q-k)| \, \mathrm{d}q = \intx\int_{k_F - k/2}^{k_F + k/2} (q + k/2) \log |2kq| \, \mathrm{d}q = \\
+%&= \intx\int_{2k_Fk - k^2}^{2k_Fk + k^2} \frac{u}{(2k)^2} \log |u| \, \mathrm{d}u + k\frac{k}{2} \log |2k| + \intx\int_{k_F - k/2}^{k_F + k/2} \frac{k}{2} \log |q| \, \mathrm{d}q = \\
+%&= \frac{2u^2\log |u| - u^2}{4(2k)^2} \Big\vert_{k(2k_F - k)}^{k(2k_F + k)} + \frac{k^2}{2} \log |2k| + \frac{k}{2} \klam\left[ q \log |q| - q \right]_{k_F - k/2}^{k_F + k/2} = \\
+%&= \frac{(2k_F + k)^2 \kla\left( 2\log |k(2k_F + k)| - 1 \right) - (2k_F - k)^2 \kla\left( 2\log |k(2k_F - k)| - 1 \right)}{16} + \\
+%&\quad + \frac{k^2}{2} \log |2k| + \frac{k}{2} \left[ k_F \log \left\vert \frac{k_F + k/2}{k_F - k/2} \right\vert + \frac{k}{2} \log |k_F^2 - (k/2)^2| - k \right] = \\
+%&= -\frac{k_Fk}{4} + \frac{k_F^2 + (k/2)^2}{4} \log \left\vert \frac{k_F + k/2}{k_F - k/2} \right\vert + \frac{k_Fk}{4} \log \left\vert 4k^2 \left(k_F^2 - (k/2)^2\right) \right\vert + \dots = \\
+%&= \frac{k_F^2 + (k/2)^2 + 2k_Fk}{4} \log\left\vert \frac{k_F + k/2}{k_F - k/2} \right\vert  + \frac{k(k_F + k)}{4} \left\vert 4k^2 \left(k_F^2 - (k/2)^2\right) \right\vert - \frac{k_Fk + 2k^2}{4}
+%\end{align}
+%The second integral gives
+%\begin{align}
+%I_2 &= \int_{k_F - k}^{k_F} q \log |q^2 - k_F^2|\, \mathrm{d}q = \intx\int_{0}^{k} (k_F - q) \log |q^2 - 2qk_F| \, \mathrm{d}q = \\
+%&= \intx\int_{0}^{k} (k_F - q) \log |q| \, \mathrm{d}q + \intx\int_{0}^{k} (k_F - q) \log |q - 2k_F|\, \mathrm{d}q = \\
+%&= k_Fk (\log k - 1) - \frac{q^2 (2\log |q| - 1)}{4} \Big\vert_0^k - \intx\int_{-2k_F}^{k-2k_F} q \log |q| \, \mathrm{d}q - k_F \intx\int_{0}^{k} \log |q - 2k_F|\, \mathrm{d}q
+%\end{align}
+%%%% NEW ATTEMPT
+In this case we can actually find an anti-derivative
+\begin{align}
+I&= \int x\log \left\vert \frac{k(2x + k)}{x^2 - f^2} \right\vert = \\
+&= \frac{x^2}{2} \log \left\vert \frac{k(2x + k)}{x^2 - f^2} \right\vert - \int \frac{x^2}{2} \frac{x^2 - f^2}{k(2x + k)} \klam\left[ \frac{2k}{x^2 - f^2} - \frac{k(2x + k)2x}{(x^2 - f^2)^2} \right] + C = \\
+&= \frac{x^2}{2} \log \left\vert \frac{k(2x + k)}{x^2 - f^2} \right\vert  - \int \frac{x^2}{2x+k} + \int \frac{x^3}{x^2 - f^2} + C = \\
+&= \frac{x^2}{2} \log \left\vert \frac{k(2x + k)}{x^2 - f^2} \right\vert - \frac{1}{8} \int \frac{(u - k)^2}{u} + \int \frac{z + f^2}{2z} + C = \\
+&= \frac{x^2}{2} \log \left\vert \frac{k(2x + k)}{x^2 - f^2} \right\vert - \frac{1}{8} \klam\left[ \frac{u^2}{2} - 2ku + k^2 \log u \right] + \frac{z}{2} + \frac{f^2}{2} \log |z| + C.
+\end{align}
+The second integral was obtained by substituting $u := 2x + k$, going back to $x$ yields
+\begin{align}
+ - &\frac{\frac{(2x + k)^2}{2} - 2k(2x + k) + k^2 \log |2x + k|}{8} = \\
+ &= \frac{-x^2}{4} + \frac{kx}{4} - \frac{k^2\log |2x + k|}{8} + C
+\end{align}
+Putting everything back together with $z := x^2 - f^2$ we find
+\begin{align}
+I &= \frac{x^2}{2} \log \left\vert \frac{k(2x + k)}{x^2 - f^2} \right\vert - \frac{ k^2 }{8}\log |2x + k|  + \frac{x(k+x)}{4} + \frac{f^2}{2} \log |x^2 - f^2| + C = \\
+&= \frac{x^2}{2} \log |k| - \frac{x^2 - f^2}{2} \log |x^2 - f^2| + \frac{x^2 - (k/2)^2}{2}\log |2x+k| + \frac{x(k+x)}{4} + C.
+\end{align}
+When evaluating the integral at the bounds we may drop the arbitrary constant.
+In our case $f=k_F$ and the bounds give
+\begin{align*}
+I\Big\vert_{k_F - k}^{k_F} &= \frac{k_F^2}{2}\log |k| + \frac{k_F^2 - (k/2)^2}{2} \log |2k_F + k| + \frac{k_F(k+k_F)}{4} - \\
+&\quad -\frac{(k_F - k)^2}{2} \log |k| + \frac{k^2 - 2k_Fk}{2} \log |k^2 - 2k_Fk| - \\
+&\quad - \frac{(k_F - k)^2 - (k/2)^2}{2} \log |2k_F - k| - \frac{k_F(k_F - k)}{4} = \numberthis \\
+&= \frac{k_F^2 - (k/2)^2}{2} \log |2k_F + k| + \frac{k_Fk}{2} +\\
+&\quad + \frac{k^2 - 2k_Fk - (k_F - k)^2 + (k/2)^2}{2} \log |2k_F - k| = \numberthis  \\
+&= \frac{k_Fk}{2} + \frac{k_F^2 - (k/2)^2}{2} \log \left\vert \frac{k_F + k/2}{k_F - k/2} \right\vert. \numberthis 
+\end{align*}
+Inserting into the polarization we arrive at the Lindhard result
+\begin{align}
+\Pi(\textbf{k},0) &= \frac{4m/k}{(2\pi)^2} \klam\left[ \frac{k_Fk}{2} + \frac{k_F^2 - (k/2)^2}{2} \log \left\vert \frac{k_F + k/2}{k_F - k/2} \right\vert \right] = \\
+&= \frac{2mk_F}{(2\pi)^2} \klam\left[ 1 + \frac{k_F^2 - (k/2)^2}{k_Fk} \log \left\vert \frac{k_F + k/2}{k_F - k/2} \right\vert \right].
+\end{align}
+%FIXME: Global minus sign missing, this \emph{has} to come from an error on the sheet (right?)\\
+Note that we are missing a global minus sign in this result.\\
+%Since we were also missing such a sign in the result for $\Pi(\textbf{k},\omega)$, maybe there is just a typo on the problem sheet in Equation (3), since we definitely need the minus sign in the Lindhard result to get the correct effective interaction potential.\\
+The Dyson equation gives rise to an effective interaction $V^\tecxt\text{eff}(\textbf{k}, 0)$ of the form
+\begin{align}
+V^\tecxt\text{eff}(\textbf{k}, 0) &= \frac{V(\textbf{k}, 0)}{1 - V(\textbf{k}, 0) \Pi(\textbf{k}, 0)} = \frac{1}{k^2 + \frac{2mk_F}{(2\pi)^2} \left[ 1 + \frac{k_F^2 - (k/2)^2}{k_Fk} \log \left\vert \frac{k_F + k/2}{k_F - k/2} \right\vert \right]}.
+\end{align}
+In the long wavelength limit $k\rightarrow 0$ the polarization behaves like
+\begin{align}
+\Pi(\textbf{k},0) &= \frac{2mk_F}{(2\pi)^2} \klam\left[ 1 + \frac{k_F^2 - (k/2)^2}{k_Fk} \kla\left( 2\frac{k}{2k_F} + 2\frac{k^3}{3(2k_F)^3} + \mathcal{O}(k^5) \right) \right] = \\
+&= \frac{2mk_F}{(2\pi)^2} \klam\left[ 1 + \kla\left( 1 - \frac{k^2}{4k_F^2} \right) \kla\left( 1 + \frac{k^2}{12k_F^2} + \mathcal{O}(k^4) \right) \right] = \\
+&= \frac{2mk_F}{(2\pi)^2} \klam\left[ 2 - \frac{k^2}{6k_F^2} + \mathcal{O}(k^4) \right].
+\end{align}
+Inserting into the effective interaction yields
+\begin{align}
+V^\tecxt\text{eff}(\textbf{k},0) &= \frac{1}{k^2 \kla\left( 1 - \frac{m}{(2\pi)^2 3k_F} \right) + \frac{4mk_F}{(2\pi)^2} + \mathcal{O}(k^4)} \simeq \\
+&\simeq \frac{1}{k^2 + \frac{4mk_F / (2\pi)^2}{1 - \frac{m}{(2\pi)^2 3k_F}}} =: \frac{1}{k^2 + k_\text{TF}^2}.
+\end{align}
+The Fourier transform of this potential is
+\begin{align}
+V^\tecxt\text{eff}(\textbf{r}) &= \intr\int_{\mathbb{R}^{3}} \frac{\e^{\i \textbf{k}\cdot \textbf{r}}}{k^2 + k_\text{TF}^2} \, \frac{\mathrm{d}^{3}k}{(2\pi)^3} = \\
+&= \frac{1}{(2\pi)^2} \intx\int_{0}^{\infty} \intx\int_{-1}^{1} \frac{\e^{\i kr\cos\theta} }{k^2 + k_\text{TF}^2} \, \mathrm{d}(\cos\theta)\, k^2\mathrm{d}k = \\
+&= \frac{1}{(2\pi)^2} \intx\int_{0}^{\infty} \frac{1}{\i kr} \frac{\e^{\i kr} - \e^{-\i kr}}{k^2 + k_\text{TF}^2} \, k^2\mathrm{d}k = \\
+&= \frac{1}{(2\pi)^2 r} \tecxt\text{Im\,} \klammer\left\{ \intr\int_{\mathbb{R}^{ }} \frac{k\e^{\i kr}}{k^2 + k_\text{TF}^2} \, \mathrm{d}k \right\}.
+\end{align}
+The integrand has two poles at $k = \pm\i k_\text{TF}$, but only one of them lies above the real axis.
+Since the integral along the arc vanishes, the residual theorem gives
+\begin{align}
+I &= 2\pi\i \lim _{k \rightarrow \i k_\tecxt\text{TF}} \frac{k\e^{\i kr}}{k + \i k_\text{TF}} = \pi\i \e^{-k_\text{TF}r}
+\end{align}
+and thus the effective interaction becomes
+\begin{align}
+V^\tecxt\text{eff}(\textbf{k},0) &= \frac{\e^{-k_\text{TF}r}}{4\pi r}.
+\end{align}
+The only issue is that the Thomas-Fermi wavevector was found to be
+\begin{align}
+k_\text{TF}^2 &= \frac{4mk_F}{(2\pi)^2} \frac{(2\pi)^2 3k_F}{(2\pi)^2 3k_F - m}
+\end{align}
+which is incompatible with the given $k_\text{TF}^2 = \frac{2mk_F}{(2\pi)^2}$ (for what it's worth, this is apparently the ``more precise'' result :) )
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

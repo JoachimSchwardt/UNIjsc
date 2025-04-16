@@ -1,0 +1,98 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\begin{document}
+
+\title{Hamilton und Poisson-Klammern}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 33: Poisson-Klammer}
+\subsection*{a)} Es gilt $L_z=xp_y-yp_x$, $\vv{p}^2=p_x^2+p_y^2+p_z^2$ und $\vv{L}^2=(yp_z-zp_y)^2+(zp_x-xp_z)^2+(xp_y-yp_x)^2$:
+\begin{align*}
+\{p_a, L_z\}&=\sum_{j=1}^{3}\cancelto{0}{\partial_{q_j}p_a}\partial_{p_j}L_z-\partial_{p_j}p_a\partial_{q_j}L_z=-\partial_{q_a}L_z=\begin{cases} p_y,& a=x \\ -p_x,& a=y \\ 0,& a=z
+\end{cases}\\
+\{\vv{p}^2, L_z\}&=\sum_{j=1}^{3}\cancelto{0}{\partial_{q_j}\vv{p}^2}\partial_{p_j}L_z-\partial_{p_j}\vv{p}^2\partial_{q_j}L_z=-2p_xp_y-2p_y(-p_x)=0\\
+\{\vv{L}^2, L_z\}&=\sum_{j=1}^{3}\partial_{q_j}\vv{L}^2\partial_{p_j}L_z-\partial_{p_j}\vv{L}^2\partial_{q_j}L_z=\\
+&=2[-p_z(zp_x-xp_z)+p_y(xp_y-yp_x)](-y)-2[z(zp_x-xp_z)-y(xp_y-yp_x)]p_y\\
+&\ \ \ +2[p_z(yp_z-zp_y)-p_x(xp_y-yp_x)]x-2[-z(yp_z-zp_y)+x(xp_y-yp_x)](-p_x)=\\
+&=2yp_zL_y-2zp_yL_y+2xp_zL_x-2zp_xL_x=2L_xL_y+2(-L_y)L_x=0
+\end{align*}
+\subsection*{b)}
+\begin{align*}
+\{p_a, L_z\}&=\sum_{jk}\{p_a,x_jp_k\}\epsilon_{zjk}\overset{\substack{\{p_a,p_b\}=0\\|}}{=}\sum_{jk}p_k\{p_a,x_j\}\epsilon_{zjk}=-\sum_{jk}p_k\delta_{aj}\epsilon_{zjk}=-\sum_{k}p_k\epsilon_{zak}\\
+\{\vv{p}^2, L_z\}&=\sum_j\{p_j^2, xp_y\}-\{p_j^2,yp_x\}=\sum_j x\cancelto{0}{\{p_j^2,p_y\}}+p_y\{p_j^2,x\}-y\cancelto{0}{\{p_j^2, p_x\}}-p_x\{p_j^2, y\}=\\
+&=\sum_j -2p_yp_j\delta_{jx}+2p_xp_j\delta_{jy}=-2p_yp_x+2p_xp_y=0\\
+\{\vv{L}^2, L_z\}&=\sum_i \{L_i^2, L_z\}=\sum_{ijk} 2L_i\cancelto{0}{\{x_jp_k,x_jp_k\}}\epsilon_{ijk}\epsilon_{zjk}=0
+\end{align*}
+\subsection*{c)} Es gilt hier $\partial_t H=0$, also ist die Gesamtenergie des Systems $E=H=\textrm{const}$. Außerdem wissen wir, dass die Poisson-Klammer zweier Erhaltungsgrößen wieder eine Erhaltungsgröße ist, also:
+\begin{align*}
+\{p_x,L_z\}&=p_y=const.\ \ \Rightarrow \\
+0&=\frac{d}{dt}L_z=\dot{x}p_y-\dot{y}p_x\ \ \Rightarrow\ \ \dot{x}=\frac{p_x}{p_y}\dot{y}\ \ \Rightarrow\ \ x=\frac{p_x}{p_y}y+c
+\end{align*}
+
+\section*{Aufgabe 34: Zeitabhängige Lagrange-Funktion}
+\subsection*{a)} Gegeben ist $L=\frac{m}{2} (\dot{x}^2+\dot{y}^2)+\alpha(t)(x\dot{y}-y\dot{x})$:
+\begin{align*}
+\alpha(t)\dot{y}&=\frac{d}{dt}(m\dot{x}-\alpha(t)y)=m\ddot{x}-\dot{\alpha}y-\alpha\dot{y}\ \ \Rightarrow\ \ m\ddot{x}=\dot{\alpha}y+2\alpha\dot{y}\\
+-\alpha(t)\dot{x}&=\frac{d}{dt}(m\dot{y}+\alpha(t)x)=m\ddot{y}+\dot{\alpha}x+\alpha\dot{x}\ \ \Rightarrow\ \ m\ddot{y}=-\dot{\alpha}x-2\alpha\dot{x}
+\end{align*}
+Multiplikation mit $\dot{x},\ x$ respektive $\dot{y},\ y$ und Addition ergibt:
+\begin{align*}
+m\ddot{x}\dot{x}+m\ddot{y}\dot{y}&=\dot{\alpha}(y\dot{x}-x\dot{y})\\
+m\ddot{x}x+m\ddot{y}y&=-2\alpha(y\dot{x}-x\dot{y})
+\end{align*}
+Multiplikation mit $\alpha$ respektive $\frac{1}{2}\dot{\alpha}$ und Addition ergibt:
+\begin{align*}
+0&=m\ddot{x}(\dot{x}\alpha+\frac12 x\dot{\alpha})+m\ddot{y}(\dot{y}\alpha +\frac12 y\dot{\alpha})
+\end{align*}
+\subsection*{b)}
+\begin{align*}
+p_x&=\partial_{\dot{x}}L=m\dot{x}-\alpha y\ \ \Rightarrow\ \ \dot{x}=\frac{1}{m}(p_x+\alpha y) \\
+p_y&=\partial_{\dot{y}}L=m\dot{y}+\alpha x\ \ \Rightarrow\ \ \dot{y}=\frac{1}{m}(p_y-\alpha x) \\
+&\Rightarrow\ \ H=p_x\dot{x}+p_y\dot{y}-L=\frac{p_x^2+p_y^2}{m}+\frac{\alpha}{m}(yp_x-xp_y)-\frac{p_x^2+p_y^2+\alpha (yp_x-xp_y)+\alpha^2(y^2+x^2)}{2m}\\
+&=\frac{p_x^2+p_y^2}{2m}+\frac{\alpha}{2m}(yp_x-xp_y)-\frac{\alpha^2}{2m}(x^2+y^2)
+\end{align*}
+Mit den Hamilton-Gleichungen können wieder die Bewegungsgleichungen bestimmt werden:
+\begin{align*}
+\dot{x}&=\partial_{p_x}H=\frac{p_x}{m}+\frac{\alpha y}{2m}\ \ \Rightarrow\ \ y = \frac{2m\dot{x}-2p_x}{\alpha}\ \ \Rightarrow\ \ \dot{y}=\frac{(2m\ddot{x}-2\dot{p_x})\alpha-\dot{\alpha}(2m\dot{x}-2p_x)}{\alpha^2} \\
+\dot{p_x}&=-\partial_{x}H=\frac{\alpha p_y}{2m}+\frac{\alpha^2 x}{m}\\
+\dot{y}&=\partial_{p_y}H=\frac{p_y}{m}-\frac{\alpha x}{2m} \\
+\dot{p_y}&=-\partial_{y}H=-\frac{\alpha p_x}{2m}+\frac{\alpha^2 y}{m}\ \ \Rightarrow\ \ y=\frac{2m\dot{p_y}+\alpha p_x}{2\alpha^2}\ \ \Rightarrow\ \ \dot{y}=\frac{(2m\ddot{p_y}+\alpha\dot{p_x})\alpha-8\dot{\alpha}m\dot{p_y}-3\dot{\alpha}\alpha p_x}{4\alpha^3} \\
+&\Rightarrow\ \ 2m\alpha \ddot{p_y}+\alpha^2\dot{p_x}-8m\dot{\alpha}\dot{p_y}-3\alpha\dot{\alpha}p_x=8m\alpha^2\ddot{x}-8\alpha^2\dot{p_x}-8m\alpha\dot{\alpha}\dot{x}+8\alpha\dot{\alpha}p_x
+\end{align*}
+\subsection*{c)}
+\subsection*{d)}
+\subsection*{e)}
+\begin{align*}
+\{\dot{x},\dot{y}\}&=\sum_{j=1}^{2}\partial_{q_j}\dot{x}\partial_{p_j}\dot{y}-\partial_{p_j}\dot{x}\partial_{q_j}\dot{y}=\frac{\alpha}{2m}\frac{1}{m}+\frac{1}{m}\frac{\alpha}{2m}=\frac{\alpha}{m^2}
+\end{align*}
+
+\section*{Aufgabe 35: Doppelmuldenpotential}
+\subsection*{a)}
+\subsection*{b)} Zunächst muss die Hamilton-Funktion bestimmt werden:
+\begin{align*}
+p&=\partial_{\dot{x}}L=m\dot{x}\ \ \Rightarrow\ \ H=p\dot{x}-L=\frac{p^2}{2m}+bx^4-ax^2\ \textrm{ mit }\ V(x)=x^2(bx^2-a) \\
+&\Rightarrow\ \ 0\overset{!}{=}V'(x)=2x(2bx^2-a)\ \ \Rightarrow\ \ x_1=0,\ x_{2,3}=\pm\sqrt{\frac{a}{2b}}\\
+&\Rightarrow\ \ V''(x)=12bx^2-2a\ \ \Rightarrow\ \ V''(x_1)=-2a,\ V''(x_{2,3})=4a
+\end{align*}
+Wir wissen also, dass es drei Fixpunkte im Phasenraum-Diagramm gibt, deren Stabilität wir nun prüfen wollen:
+\begin{align*}
+\textrm{Für } x_1=0:\ H&=E\simeq \frac{p^2}{2m}-2ax^2+\mathcal{O}(x^3)\ \ \Rightarrow\ \ \textrm{Hyperbeln in der Umgebung von }x_1\\
+\textrm{Für } x_{2,3}=\pm\sqrt{\frac{a}{2b}}:\ H&=E\simeq \frac{p^2}{2m}+4ax^2+\mathcal{O}(x^3)\ \ \Rightarrow\ \ \textrm{Ellipsen in der Umgebung von }x_{2,3}
+\end{align*}
+\subsection*{c)} Wir wenden die Beltrami-Identität an:
+\begin{align*}
+C&=L-\dot{x}\partial_{\dot{x}}L=\frac{m}{2}\dot{x}^2-bx^4+ax^2-m\dot{x}^2\ \ \Rightarrow\ \ T=2\sqrt{\frac{m}{2}}\int_{x_A}^{x_E}\frac{dx}{\sqrt{-bx^4+ax^2-C}}\\
+T_{x_A=\delta x}&\overset{\substack{C=0\\|}}{=}\sqrt{\frac{2m}{a}}\int_{\delta x}^{\sqrt{a/b}}\frac{dx}{x\sqrt{1-\frac{b}{a}x^2}}\overset{\substack{x=\sqrt{a/b}\sin(\varphi)\\|}}{=}\sqrt{\frac{2m}{a}}\int\frac{d\varphi}{\sin(\varphi)}\overset{\substack{u=\csc(\varphi)\\|}}{=}-\sqrt{\frac{2m}{a}}\int \frac{du}{\sqrt{u^2-1}}\\
+&=-\sqrt{\frac{2m}{a}}\textrm{arcosh}(\csc(\varphi))=-\sqrt{\frac{2m}{a}}\textrm{arcosh}(\frac{1}{x}\sqrt{\frac{a}{b}})\bigg\vert_{\delta x}^{\sqrt{a/b}}=\sqrt{\frac{2m}{a}}\textrm{arcosh}(\frac{1}{\delta x}\sqrt{\frac{a}{b}})
+\end{align*}
+
+\end{document}

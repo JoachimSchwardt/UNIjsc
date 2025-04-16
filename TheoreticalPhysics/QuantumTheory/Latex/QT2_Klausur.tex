@@ -1,0 +1,547 @@
+\documentclass[german, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[ngerman]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\newcommand{\I}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Klausur}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Quantentheorie 2}
+\title{\titel}
+\author{100 Punkte entsprechen 100\%}
+\date{am 05.08.2021}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Diracgleichung freies Teilchen (20 Punkte)}
+Betrachten Sie einen 4-Impuls 
+\begin{align}
+(p^\mu)&=(E,p,p,0)^\top\ \tecxt\text{mit}\ E^2=m^2+2p^2 \label{eqn:VierImpuls}
+\end{align}
+und einen Diracspinor der Form
+\begin{align}
+u(p)&=(1,\e^{I\frac{\pi}{4}},a,b)^\top .  \label{eqn:Diracspinor}
+\end{align}
+\begin{enumerate}
+\item[a)] Werten Sie $p^\mu p_\mu$ aus! (2 Punkte)
+\item[b)] Bestimmen Sie in dem Spinor $u(p)$ die Koeffizienten $a$ und $b$ so, dass $\psi(x^\mu) = u(p)\e^{-\I x^\mu p_\mu}$ die freie Diracgleichung löst. 
+Nutzen Sie die Diracdarstellung der $\gamma^\mu $-Matrizen! (8 Punkte)
+\item[c)] Ist der erhaltene Spinor ein Eigenspinor zum Spin-$z$-Operator $S_z$? 
+Interpretieren/kommentieren Sie das Ergebnis! (3 Punkte)
+\item[d)] Bei Drehungen im 3-dimensionalen Raum werden Spinoren mit gewissen Matrizen multi-
+pliziert (s. Anhang mit Formelsammlung). 
+Um welche Achse ($x$-, $y$-, oder $z$-Achse) und um
+welchen Winkel müssen Sie den Spinor drehen, um einen Eigenspinor zum Spin-$x$-Operator
+$S_x$ zu erhalten? 
+Zeigen Sie die expliziten Rechenschritte! (7 Punkte)
+\end{enumerate}
+\newpage
+\subsubsection*{Lösungsvorschlag}
+\begin{enumerate}
+\item[a)] Wie zu erwarten gilt $p^\mu p_\mu = (p^0)^2-(p^1)^2-(p^2)^2-(p^3)^2=E^2-2p^2=m^2$. 
+\item[b)] Die Diracgleichung lautet hier
+\begin{align*}
+0&=(\I\gamma^\mu\partial_\mu -m)\psi=\e^{-\I x^\mu p_\mu}(\gamma^\mu p_\mu -m)u(p)\propto (E\gamma^0-p(\gamma^1+\gamma^2)-m)u(p).
+\end{align*}
+Mit dem gegebenen Spinor findet man das Gleichungssystem
+\begin{align*}
+0&=\begin{pmatrix}
+E-m&0&0&-p(1-\I)\\
+0&E-m&-p(1+\I)&0\\
+0&p(1-\I)&-(E+m)&0\\
+p(1+\I)&0&0&-(E+m)
+\end{pmatrix}\begin{pmatrix}
+1\\ \e^{\I\frac{\pi}{4}}\\ a\\ b
+\end{pmatrix}=\begin{pmatrix}
+(E-m)-pb(1-\I)\\ (E-m)\e^{\I\frac{\pi}{4}}-pa(1+\I)\\ p(1-\I)\e^{\I\frac{\pi}{4}}-a(E+m)\\ p(1+\I) -b(E+m)
+\end{pmatrix}.
+\end{align*}
+Kombinieren der ersten zwei Gleichungen liefert
+\begin{align*}
+pb(1-\I)&=pa(1+\I)\e^{-\I\frac{\pi}{4}}&&\Rightarrow &b&=a\e^{\I\frac{\pi}{4}}.
+\end{align*}
+Analog erhält man aus dem zweiten Paar die äquivalente Bedingung
+\begin{align*}
+pa(1+\I)&=pb(1-\I)\e^{\I\frac{\pi}{4}}&&\Rightarrow &a&=b\e^{-\I\frac{\pi}{4}}.
+\end{align*}
+Einsetzen in die erste Gleichung liefert
+\begin{align*}
+E-m&=pb(1-\I)=pa\sqrt{2}\e^{-\I\frac{\pi}{4}}\e^{\I\frac{\pi}{4}}=pa\sqrt{2}&&\Rightarrow &a&=\frac{E-m}{\sqrt{2}p}.
+\end{align*}
+Über die vorherige Relation erhält man auch
+\begin{align*}
+b&=a\e^{\I\frac{\pi}{4}}=\frac{E-m}{p}(1+\I).
+\end{align*}
+Definiere $\kappa:=\frac{E-m}{\sqrt{2}p}$.
+Dann lautet der Eigenspinor
+\begin{align*}
+u(p)&=(1,\e^{\I\frac{\pi}{4}},\kappa,\kappa\e^{\I\frac{\pi}{4}})^\top .
+\end{align*}
+\item[c)] Dieser Spinor ist kein Eigenspinor zu $S_z$.
+Betrachte dazu das Eigenwertproblem
+\begin{align*}
+S_zu(p)&=\frac{1}{2}\begin{pmatrix}
+1&0&0&0\\
+0&-1&0&0\\
+0&0&1&0\\
+0&0&0&-1
+\end{pmatrix}\begin{pmatrix}
+1\\ \e^{\I\frac{\pi}{4}} \\ \kappa \\ \kappa \e^{\I\frac{\pi}{4}}
+\end{pmatrix}=\frac{1}{2}\begin{pmatrix}
+1\\ -\e^{\I\frac{\pi}{4}} \\ \kappa \\ -\kappa \e^{\I\frac{\pi}{4}}
+\end{pmatrix}\overset{!}{=}\lambda u(p).
+\end{align*}
+Offensichtlich sind die erste und dritte Gleichung durch $\lambda=+\frac{1}{2}$ erfüllt.
+Allerdings ergibt sich aus der zweiten und vierten Gleichung $\lambda=-\frac{1}{2}$,  woraus sich ein Widerspruch ergibt.
+Folglich ist $u(p)$ kein Eigenspinor zu $S_x$.
+\item[d)] Es ist sinnvoll, zunächst die allgemeine Eigenwertgleichung für $S_x$ zu betrachten.
+Mit $u=(u_1,u_2,u_3,u_4)^\top$ lautet diese
+\begin{align*}
+S_xu&=\frac{1}{2}\begin{pmatrix}
+0&1&0&0\\
+1&0&0&0\\
+0&0&0&1\\
+0&0&1&0
+\end{pmatrix}\begin{pmatrix}
+u_1\\ u_2 \\ u_3 \\ u_4
+\end{pmatrix}=\frac{1}{2}\begin{pmatrix}
+u_2 \\ u_1 \\ u_4 \\ u_3
+\end{pmatrix}\overset{!}{=}\lambda u.
+\end{align*}
+Aus $u_2=2\lambda u_1$ und $u_1=2\lambda u_2$ folgt dann $1=4\lambda^2$, bzw. $\lambda=\pm\frac{1}{2}$.
+Damit lautet die allgemeine Form eines $S_x$-Eigenspinors
+\begin{align*}
+u=(u_1,\pm u_1,u_3,\pm u_3)^\top .
+\end{align*}
+Um diese Form für $u(p)$ zu erreichen, ist es ausreichend, den Spinor in die Form $(\e^{\I\frac{\pi}{8}},\e^{\I\frac{\pi}{8}},\kappa\e^{\I\frac{\pi}{8}},\kappa\e^{\I\frac{\pi}{8}})^\top$ zu überführen.
+Dazu genügt eine Drehung um die $z$-Achse mit $\theta=\frac{\pi}{4}\equiv 45\degree$.
+Betrachte zum Nachweis 
+\begin{align*}
+S\kla\left( {R_x\kla\left( {\theta=\frac{\pi}{4}} \right)} \right)u(p)&=\begin{pmatrix}
+\e^{\I\frac{\pi}{8}}&0&0&0\\
+0&\e^{-\I\frac{\pi}{8}}&0&0\\
+0&0&\e^{\I\frac{\pi}{8}}&0\\
+0&0&0&\e^{-\I\frac{\pi}{8}}
+\end{pmatrix}\begin{pmatrix}
+1\\ \e^{\I\frac{\pi}{4}} \\ \kappa \\ \kappa \e^{\I\frac{\pi}{4}}
+\end{pmatrix}=\begin{pmatrix}
+\e^{\I\frac{\pi}{8}} \\ \e^{\I\frac{\pi}{8}} \\ \kappa\e^{\I\frac{\pi}{8}} \\ \kappa\e^{\I\frac{\pi}{8}}
+\end{pmatrix}.
+\end{align*}
+Dieser Eigenspinor hat den Eigenwert $\lambda=+\frac{1}{2}$.
+\end{enumerate}
+\newpage
+\section{Diracgleichung mit Potential (20 Punkte)}
+Betrachten Sie die Diracgleichung für ein Elektron mit Ladung $Q=-e$ und Wechselwirkung mit dem elektromagnetischen Feld (d.h. kovariante Ableitung $\I D_\mu =\I\partial_\mu +eA_\mu$ ).
+Spezialisieren Sie auf den folgenden Fall einer zeitunabhängigen Potentialstufe 
+\begin{align}
+-e\vec{A}(x^\mu)&=0\\
+-e A^0(x^\mu)&=V(z)=\begin{cases}0&\tecxt\text{für}\ z<0 \\ V_0&\tecxt\text{für}\ z\ge 0\end{cases}.
+\end{align}
+Für die Wellenfunktion machen wir den einfachen Ansatz $\psi (x^\mu)=f_{1,2}(z)\e^{-\I Et}$ mit
+\begin{align}
+z<0:\ \ f_1(z)&=\begin{pmatrix}
+1\\ 0\\ a\\ 0
+\end{pmatrix}\e^{\I pz}+\alpha\begin{pmatrix}
+1\\ 0\\ -a\\ 0
+\end{pmatrix}\e^{-\I pz},&&\tecxt\text{und}&z\ge 0:\ \ f_2(z)&=\beta\begin{pmatrix}
+1\\ 0\\ a'\\ 0
+\end{pmatrix}\e^{\I p'z}.\label{eqn:AnsatzPotentialstufe}
+\end{align}
+Ferner betrachten wir den konkreten Fall eines leicht relativistischen Teilchens und einer sehr
+hohen Potentialstufe
+\begin{align}
+E&=\frac{5}{4}m&&\tecxt\text{und}&V_0&=E+\frac{13}{5}m.\label{eqn:KonkreteEnergieWerte}
+\end{align}
+\begin{enumerate}
+\item[a)] Zeigen Sie zunächst, dass die Diracgleichung (mit Diracdarstellung der $\gamma^\mu$-Matrizen) für $z\ge 0$ mit dem entsprechenden Ansatz (\ref{eqn:AnsatzPotentialstufe}) gelöst wird -- bestimmen Sie die nötigen Parameter $p'>0$ und $a'$! 
+Setzen Sie auch die Werte (\ref{eqn:KonkreteEnergieWerte}) ein! (6 Punkte)
+\item[b)] Zeigen Sie dann, dass die Diracgleichung für $z < 0$ mit dem Ansatz (\ref{eqn:AnsatzPotentialstufe}) gelöst wird --
+bestimmen Sie die nötigen Parameter $p>0$ und $a$!
+Hierbei können Sie auch ohne Rechnung eine
+einfache Ersetzungsregel auf das Ergebnis für $z \ge 0$ anwenden. 
+Setzen Sie auch die Werte
+(\ref{eqn:KonkreteEnergieWerte}) ein! (6 Punkte)
+\item[c)] Bei $z = 0$ sollte die Anschlussbedingung $f_1 (0) = f_2 (0)$ gelten. 
+Geben Sie einen kurzen
+Kommentar, warum die Anschlussbedingung $f_1'(0)=f_2'(0)$ hier nicht gilt. 
+Bestimmen Sie
+damit den Reflexionskoeffizienten $R = |\alpha|^2$ für die Werte (\ref{eqn:KonkreteEnergieWerte})! (5 Punkte)
+\item[d)] Geben Sie einen kurzen Kommentar zum Ergebnis. 
+Welche Tatsache deutet sich durch
+das Ergebnis an? (3 Punkte)
+\end{enumerate}
+\newpage
+\subsubsection*{Lösungsvorschlag}
+\begin{enumerate}
+\item[a)] Mit $\psi = u\e^{\I pz}$ und $u=(1,0,a',0)^\top$ lautet hier die Diracgleichung
+\begin{align*}
+0&=(\I\gamma^\mu D_\mu -m)\psi\propto(p^\mu\partial_\mu + e\gamma^\mu A_\mu  -m)u=([E-V_0]\gamma^0-p'\gamma^3-m)u=\\
+&=\begin{pmatrix}
+E-V_0-m&0&-p'&0\\
+0&E-V_0-m&0&p'\\
+p'&0&V_0-E-m&0\\
+0&-p'&0&V_0-E-m
+\end{pmatrix}\begin{pmatrix}
+1 \\ 0 \\ a' \\ 0
+\end{pmatrix} .
+\end{align*}
+Daraus folgen die Gleichungen
+\begin{align*}
+p'a'&=E-V_0-m&&\tecxt\text{und}&p'&=a'(E-V_0+m),
+\end{align*}
+und somit schließlich
+\begin{align*}
+a'&=\sqrt{\frac{E-V_0-m}{E-V_0+m}}\overset{(\ref{eqn:KonkreteEnergieWerte})}{=}\sqrt{\frac{\frac{13}{5}-1}{\frac{13}{5}+1}}=\frac{2}{3},\\
+p'&=\sqrt{(E-V_0-m)(E-V_0+m)}\overset{(\ref{eqn:KonkreteEnergieWerte})}{=}\sqrt{\kla\left( {\frac{13}{5}-1} \right)\kla\left( {\frac{13}{5}+1} \right)}m=\frac{12}{5}m.
+\end{align*}
+\item[b)] Für $z<0$ führt die Rechnung auf ein sehr ähnliches Erebnis.
+Zunächst entällft $V_0$, man verwende also die Ersetzungsregel $E-V_0\rightarrow E$.
+Im zweiten Term gilt dazu noch $a\rightarrow -a$ und $p\rightarrow -p$.
+Diese ändern allerdings nichts an den zwei relevanten Gleichungen, da dort $p$ und $a$ nur als Produkt bzzw. Quotient vorkommen.
+Folglich erhalten wir
+\begin{align*}
+a&=\sqrt{\frac{E-m}{E+m}}\overset{(\ref{eqn:KonkreteEnergieWerte})}{=}\sqrt{\frac{\frac{5}{4}-1}{\frac{5}{4}+1}}=\frac{1}{3},\\
+p&=\sqrt{(E-m)(E+m)}\overset{(\ref{eqn:KonkreteEnergieWerte})}{=}\sqrt{\kla\left( {\frac{5}{4}-1} \right)\kla\left( {\frac{5}{4}+1} \right)}m=\frac{3}{4}m.
+\end{align*}
+\item[c)] Die Ableitungen können bei $z=0$ unstetig sein, da auch das Potential hier unstetig ist.
+Aus $f_1(0)=f_2(0)$ folgt zunächst
+\begin{align*}
+1+\alpha&=\beta&&\tecxt\text{und}&a-\alpha a&=\beta a'.
+\end{align*}
+Einsetzen liefert dann
+\begin{align*}
+\frac{a}{a'}\kla\left( {1-\alpha} \right)&=1+\alpha\\
+\Rightarrow\ \ \ \alpha &=\frac{\frac{a}{a'}-1}{\frac{a}{a'}+1}=\frac{a-a'}{a+a'}\overset{(\ref{eqn:KonkreteEnergieWerte})}{=}\frac{\frac{1}{3}-\frac{2}{3}}{\frac{1}{3}+\frac{2}{3}}=-\frac{1}{3}.
+\end{align*}
+Damit ist der Reflexionskoeffizient gegeben durch $R=|\alpha|^2=\frac{1}{9}$. 
+\item[d)] Der Transmissionskoeffizient ist mit $T=1-R=\frac{8}{9}$ überraschend groß.
+Im nichtrelativistischen Fall wird der größte Anteil einer Welle reflektiert, wenn die Energie signifikant kleiner als die Potentialstufe ist.
+Anscheinend ist dies bereits für leicht relativistische Teilchen nicht mehr der Fall.
+\end{enumerate}
+\newpage
+\section{Identische Teilchen (20 Punkte)}
+Es seien folgende 1-Teilchenzustände bekannt.
+Orthonormierte Eigenzustände $\Ket | {\alpha} \rangle$ für $\alpha\in\{a,b\}$ zu irgendeiner Observablen $\hat{O}$, sowie orthonormierte Energieeigenzustände $\Ket | {j} \rangle$ für $j\in\{1,2\}$.
+Diese seien über
+\begin{align}
+\Ket | {1} \rangle&=c\Ket | {a} \rangle-s\Ket | {b} \rangle&&\tecxt\text{und}&\Ket | {2} \rangle&=s\Ket | {a} \rangle+c\Ket | {b} \rangle
+\end{align}
+miteinander verknüpft, wobei $c^2+s^2=1$.
+\begin{enumerate}
+\item[a)] Betrachten Sie zwei unterscheidbare Teilchen, präpariert im Zustand $|a,b\rangle$. 
+Geben Sie die Wahrscheinlichkeitsamplituden an, bei einer Energiemessung die Endzustände
+\begin{align}
+\Ket | {1,1} \rangle,&&\Ket | {1,2} \rangle,&&\Ket | {2,1} \rangle,&&\Ket | {2,2} \rangle
+\end{align}
+zu finden. (4 Punkte)
+\item[b)] Was ist die Summe der vier entsprechenden Wahrscheinlichkeiten? (2 Punkte)
+\item[c)] Betrachten Sie zwei identische Bosonen, präpariert im auf 1 normierten Zustand $\Ket | {a,b} \rangle^+$. 
+Geben Sie die Wahrscheinlichkeitsamplituden an, bei einer Energiemessung die Endzustände
+\begin{align}
+\Ket | {1,1} \rangle^+,&&\Ket | {1,2} \rangle^+,&&\Ket | {2,2} \rangle^+
+\end{align}
+zu finden. (6 Punkte)
+\item[d)] Was ist die Summe der drei entsprechenden Wahrscheinlichkeiten? (2 Punkte)
+\item[e)] Betrachten Sie nun einen $N$-Teilchenzustand $\Ket | {\underbrace{abb\dots b}_N} \rangle^+$. 
+Was ist die Wahrscheinlichkeitsamplitude, bei einer Energiemessung den Zustand $\Ket | {\underbrace{1\dots 1}_N} \rangle^+$ zu erhalten? 
+Diese Zustände seien ernaut auf 1 normiert. (6 Punkte)
+\end{enumerate}
+\newpage
+\subsubsection*{Lösungsvorschlag}
+\begin{enumerate}
+\item[a)] Zunächst einmal gilt
+\begin{align*}
+\Ket | {a} \rangle&=c\Ket | {1} \rangle+s\Ket | {2} \rangle&&\tecxt\text{und}&\Ket | {b} \rangle&=-s\Ket | {1} \rangle+c\Ket | {2} \rangle.
+\end{align*}
+Damit lautet dann $\brak\langle {a}| {1}\rangle=c$, $\brak\langle {a}| {2}\rangle=s$, $\brak\langle {b}| {1}\rangle=-s$ und $\brak\langle {b}| {2}\rangle=c$.
+Daraus folgen mit $\brak\langle {i,j}| {a,b}\rangle=\brak\langle {i}| {a}\rangle\brak\langle {j}| {b}\rangle$
+\begin{align*}
+\brak\langle {1,1}| {a,b}\rangle&=c(-s),&&&\brak\langle {1,2}| {a,b}\rangle&=cc,&&&\brak\langle {2,1}| {a,b}\rangle&=s(-s),&&&\brak\langle {2,2}| {a,b}\rangle&=sc.
+\end{align*}
+\item[b)] Die Summe der vier Wahrscheinlichkeiten ist
+\begin{align*}
+\sum_{ij}\vert\brak\langle {i,j}| {a,b}\rangle|^2=c^2s^2+c^2c^2+s^2s^2+c^2s^2=c^2(c^2+s^2)+s^2(c^2+s^2)=c^2+s^2=1.
+\end{align*}
+\item[c)] Für den symmetrisierten Zustand gilt $\Ket | {a,b} \rangle^+=\frac{1}{\sqrt{2}}\kla\left( {\Ket | {a,b} \rangle+\Ket | {b,a} \rangle} \right)$. 
+Außerdem ist $\Ket | {1,2} \rangle^+=\frac{1}{\sqrt{2}}\kla\left( {\Ket | {1,2} \rangle+\Ket | {2,1} \rangle} \right)$.
+Daraus folgen
+\begin{align*}
+{}^+\brak\langle {1,1}| {a,b}\rangle^+&=\frac{2}{\sqrt{2}}\brak\langle {1,1}| {a,b}\rangle=-\sqrt{2}cs,\\
+{}^+\brak\langle {2,2}| {a,b}\rangle^+&=\frac{2}{\sqrt{2}}\brak\langle {2,2}| {a,b}\rangle=\sqrt{2}cs,\\
+{}^+\brak\langle {1,2}| {a,b}\rangle^+&=\frac{2}{\sqrt{2}\sqrt{2}}\kla\left( {\brak\langle {1,2}| {a,b}\rangle+\brak\langle {2,1}| {a,b}\rangle} \right)=c^2-s^2.
+\end{align*}
+\item[d)] Die Summe der Wahrscheinlichkeiten ist
+\begin{align*}
+\sum_{ij}\left\vert {}^+\brak\langle {i,j}| {a,b}\rangle^+ \right\vert^2 =2c^2s^2+2c^2s^2+(c^2-s^2)^2=c^4+2c^2s^2+s^4=(c^2+s^2)^2=1.
+\end{align*}
+\item[e)] Für den symmetrisierten Zustand gilt explizit
+\begin{align*}
+\Ket | {\underbrace{abb\dots b}_N} \rangle&=\frac{1}{\sqrt{N}}\kla\left( {\Ket | {\underbrace{abb\dots b}_N} \rangle+\dots +\Ket | {\underbrace{bb\dots ba}_N} \rangle} \right).
+\end{align*}
+Daraus folgt für die Wahrscheinlichkeitsamplitude
+\begin{align*}
+{}^+\brak\langle {\underbrace{1\dots 1}_N}| {\underbrace{abb\dots b}_N}\rangle^+=\frac{N}{\sqrt{N}}\brak\langle {1}| {a}\rangle\brak\langle {1}| {b}\rangle^{N-1}=\sqrt{N}c(-s)^{N-1}.
+\end{align*}
+\end{enumerate}
+\newpage
+\section{Identische Teilchen (20 Punkte)}
+Gegeben sei ein fermionisches Vielteilchensystem mit
+fermionischen Erzeugungs- bzw. Vernichtungsoperatoren mit $\{c_i,c_j\}=0$ und $\{c_i,c_j^\dagger\}=\delta_{ij}$. 
+Betrachten Sie nun die drei Operatoren
+\begin{align}
+A&=\frac{1}{2}\kla\left( {c_1^\dagger c_1-c_2^\dagger c_2} \right),&&&B&=\frac{1}{2}\kla\left( {c_1^\dagger c_2+c_2^\dagger c_1} \right),&&&C&=\frac{-\I}{2}\kla\left( {c_1^\dagger c_2-c_2^\dagger c_1} \right).
+\end{align}
+\begin{enumerate}
+\item[a)] Berechnen Sie den Kommutator $[A, B]$.
+Woran erinnert Sie die entstehende Vertauschungsrelation? (8 Punkte)
+\item[b)] Der Vakuumzustand $|0\rangle $ ist durch die Eigenschaft $c_j |0\rangle = 0$ sowie $\langle 0|0\rangle = 1$ definiert.\\ 
+Bestimmen Sie \hfill (3 Punkte)
+\begin{align}
+\braket\langle {0} | {A} | {0}\rangle,&&\braket\langle {0} | {B} | {0}\rangle,&&\braket\langle {0} | {C} | {0}\rangle.
+\end{align}
+\item[c)] Beweisen Sie die Relation $c_1c_1^\dagger\Ket | {0} \rangle=\Ket | {0} \rangle$. (2 Punkte)
+\item[d)] In Besetzungszahldarstellung definieren wir $\Ket | {10} \rangle=c_1^\dagger\Ket | {0} \rangle$.\\
+Bestimmen Sie \hfill (7 Punkte)
+\begin{align}
+\brak\langle {10}| {10}\rangle,&&\braket\langle {10} | {A} | {10}\rangle,&&\braket\langle {10} | {A^2+B^2+C^2} | {10}\rangle.
+\end{align}
+\end{enumerate}
+\newpage
+\subsubsection*{Lösungsvorschlag}
+\begin{enumerate}
+\item[a)] Definiere zunächst $n_j:=c_j^\dagger c_j$ und $a:=c_1^\dagger c_2$.
+Dann gilt
+\begin{align*}
+A&=\frac{1}{2}\kla\left( {n_1-n_2} \right),&&&B&=\frac{1}{2}\kla\left( {a+a^\dagger} \right),&&&C&=\frac{-\I}{2}\kla\left( {a-a^\dagger} \right).
+\end{align*}
+Damit kann der Kommutator $[A,B]$ in einfachere Bestandteile zerlegt werden.
+Für diese gilt
+\begin{align*}
+\klam\left[ {n_1,a} \right]&=c_1^\dagger c_1c_1^\dagger c_2-c_1^\dagger c_2c_1^\dagger c_1=c_1^\dagger \{c_1, c_1^\dagger\}c_2-c_1^{\dagger 2}c_1c_2+c_1^{\dagger 2}c_2c_1=c_1^\dagger c_2=a,\\
+\klam\left[ {n_1,a^\dagger} \right]&=\klam\left[ {a,n_1^\dagger} \right]^\dagger=-a^\dagger,\\
+\klam\left[ {n_2,a^\dagger} \right]&=\klam\left[ {n_1,a} \right]_{1\leftrightarrow 2}=(c_1^\dagger c_2)_{1\leftrightarrow 2}=c_2^\dagger c_1=a^\dagger,\\
+\klam\left[ {n_2,a} \right]&=\klam\left[ {a^\dagger,n_2^\dagger} \right]^\dagger = -a,
+\end{align*}
+wobei $c_j^2=0=c_j^{\dagger 2}$ verwendet wurden. 
+Daraus folgt dann 
+\begin{align*}
+\klam\left[ {A,B} \right]&=\frac{1}{4}\kla\left( {\klam\left[ {n_1,a} \right]+\klam\left[ {n_1,a^\dagger} \right]+\klam\left[ {-n_2,a} \right]+\klam\left[ {-n_2,a^\dagger} \right]} \right)=\\
+&=\frac{1}{4}\kla\left( {a-a^\dagger +a-a^\dagger} \right)=\frac{1}{2}\kla\left( {a-a^\dagger} \right)=\I C.
+\end{align*}
+Dieser Zusammenhang erinnert an die Struktur einer Drehimpulsalgebra.
+\item[b)] Aus $c_j |0\rangle = 0$ folgt auch $n_j\Ket | {0} \rangle=c_j^\dagger c_j\Ket | {0} \rangle=0$, $a\Ket | {0} \rangle=0$ und $a^\dagger\Ket | {0} \rangle=0$.
+Somit gilt trivialerweise
+\begin{align}
+\braket\langle {0} | {A} | {0}\rangle&=0,&&&\braket\langle {0} | {B} | {0}\rangle&=0,&&&\braket\langle {0} | {C} | {0}\rangle&=0.
+\end{align}
+\item[c)] Es gilt $c_1c_1^\dagger = \{c_1,c_1^\dagger\}-c_1^\dagger c_1=1-n_1$ und somit $c_1c_1^\dagger\Ket | {0} \rangle=(1-n_1)\Ket | {0} \rangle=\Ket | {0} \rangle$.
+\item[d)] Es gilt
+\begin{align}
+\brak\langle {10}| {10}\rangle&=\braket\langle {0} | {c_1c_1^\dagger} | {0}\rangle=\brak\langle {0}| {0}\rangle=1.
+\end{align}
+Für die anderen Ausdrücke ist es zunächst hilfreich drei Kommutatoren zu berechnen. 
+Mit $\klam\left[ {\alpha\beta,\gamma} \right]=\alpha\{\beta,\gamma\}-\{\alpha,\gamma\}\beta$ lauten diese
+\begin{align*}
+\klam\left[ {A,c_1^\dagger} \right]&=\frac{1}{2}\kla\left( {\klam\left[ {c_1^\dagger c_1,c_1^\dagger} \right]-\klam\left[ {c_2^\dagger c_2,c_1^\dagger} \right]} \right)=\\
+&=\frac{1}{2}\kla\left( {c_1^\dagger\{c_1,c_1^\dagger\}-\{c_1^\dagger,c_1^\dagger\}c_1-c_2^\dagger\{c_2,c_1^\dagger\}+\{c_2^\dagger,c_1^\dagger\}c_2} \right)=\frac{1}{2}c_1^\dagger,\\
+\klam\left[ {B,c_1^\dagger} \right]&=\frac{1}{2}\kla\left( {\klam\left[ {c_1^\dagger c_2,c_1^\dagger} \right]+\klam\left[ {c_2^\dagger c_1,c_1^\dagger} \right]} \right)=\frac{1}{2}\kla\left( {0-0+c_2^\dagger\{c_1,c_1^\dagger\}-0} \right)=\frac{1}{2}c_2^\dagger,\\
+\klam\left[ {C,c_1^\dagger} \right]&=\frac{-\I}{2}\kla\left( {\klam\left[ {c_1^\dagger c_2,c_1^\dagger} \right]-\klam\left[ {c_2^\dagger c_1,c_1^\dagger} \right]} \right)=\frac{-\I}{2}\kla\left( {0-0-c_2^\dagger +0} \right)=\frac{\I}{2}c_2^\dagger.
+\end{align*}
+Damit folgen dann
+\begin{align*}
+\braket\langle {10} | {A} | {10}\rangle&=\braket\langle {10} | {\klam\left[ {A,c_1^\dagger} \right]-c_1^\dagger A} | {0}\rangle=\frac{1}{2}\braket\langle {10} | {c_1^\dagger} | {0}\rangle=\brak\langle {10}| {10}\rangle=\frac{1}{2},\\
+\braket\langle {10} | {A^2} | {10}\rangle&=\braket\langle {0} | {A\klam\left[ {A,c_1^\dagger} \right]-Ac_1^\dagger A} | {0}\rangle=\frac{1}{2}\braket\langle {10} | {A c_1^\dagger} | {0}\rangle=\frac{1}{2}\braket\langle {10} | {A} | {10}\rangle=\frac{1}{4},\\
+\braket\langle {10} | {B^2} | {10}\rangle&=\braket\langle {10} | {B\klam\left[ {B,c_1^\dagger} \right]} | {0}\rangle=\frac{1}{2}\braket\langle {10} | {Bc_2^\dagger} | {0}\rangle=\\
+&=\frac{1}{2}\braket\langle {10} | {\klam\left[ {B,c_1^\dagger} \right]_{1\leftrightarrow 2}} | {0}\rangle=\frac{1}{4}\braket\langle {10} | {(c_2^\dagger)_{1\leftrightarrow 2}} | {0}\rangle=\frac{1}{4},\\
+\braket\langle {10} | {C^2} | {10}\rangle&=\braket\langle {10} | {C\klam\left[ {C,c_1^\dagger} \right]} | {0}\rangle=\frac{\I}{2}\braket\langle {10} | {Cc_2^\dagger} | {0}\rangle=\\
+&=\frac{\I}{2}\braket\langle {10} | {\klam\left[ {-C,c_1^\dagger} \right]_{1\leftrightarrow 2}} | {0}\rangle=-\frac{\I^2}{4}\braket\langle {10} | {c_1^\dagger} | {0}\rangle=\frac{1}{4}.
+\end{align*}
+Aus den letzten drei Relationen folgt auch 
+\begin{align*}
+\braket\langle {10} | {A^2+B^2+C^2} | {10}\rangle=\frac{3}{4}\equiv S(S+1)
+\end{align*}
+mit $S=\frac{1}{2}$.
+\end{enumerate}
+\newpage
+\section{Streuung und Born´sche Näherung (20 Punkte)}
+Betrachten Sie die Streuung eines Teilchens mit einlaufender ebener Welle $\e^{\I kz}$ in $z$-Richtung an den Potentialen
+\begin{align}
+V_1(\vec{x})&=2V_0\delta^{(3)}(\vec{x})\\
+V_2(\vec{x})&=V_0\kla\left( {\delta^{(3)}(\vec{x})+\delta^{(3)}(\vec{x}-\vec{a})} \right),
+\end{align}
+wobei $\vec{a}=(0,0,a)^\top$.
+\begin{enumerate}
+\item[a)] Geben Sie die Streuamplitude $f_1^{(1)}(\theta,\phi)$ für $V_1$ in erster Born'scher Näherung an. (4 Punkte)
+\item[b)] Geben Sie die Streuamplitude $f_2^{(1)}(\theta,\phi)$ für $V_2$ in erster Born´scher Näherung an. 
+Nutzen Sie im Ergebnis die Größe \hfill (5 Punkte)
+\begin{align}
+A&:=\vec{q}\cdot\vec{a}=ka(\cos\theta -1)=-2ka\sin^2\frac{\theta}{2}.
+\end{align}
+\item[c)] Skizzieren Sie das Schaubild von $\tecxt\text{d}\sigma / \tecxt\text{d}\Omega$ für beide Potentiale als Funktion von $\cos\theta$ für $ka=0.01$ und $ka=2\pi$. (6 Punkte)
+\item[d)] Es sei $k$ fixiert und $|A|\ll 1$. 
+Für welchen Winkel $\theta$ ist der Unterschied zwischen $(\tecxt\text{d}\sigma / \tecxt\text{d}\Omega)_{V_1}$ und $(\tecxt\text{d}\sigma / \tecxt\text{d}\Omega)_{V_2}$ maximal?
+Wie groß muß $k$ mindestens sein, damit der relative Unterschied mehr als 1 Prozent beträgt (Näherungslösung reicht)? (5 Punkte)
+\end{enumerate}
+\newpage
+\subsubsection*{Lösungsvorschlag}
+\begin{enumerate}
+\item[a)] Die Streuamplitude in erster Born'scher lautet
+\begin{align*}
+f_1^{(1)}(\theta,\phi)=-\frac{m}{2\pi}\intr\int_{\mathbb{R}^{3}}{V_1(\vec{x})\e^{-\I \vec{q}\cdot\vec{x}}}\,\mathrm{d}^{3}x=-\frac{V_0m}{\pi}.
+\end{align*}
+\item[b)] Die Streuamplitude in erster Born'scher lautet
+\begin{align*}
+f_2^{(1)}(\theta,\phi)=-\frac{m}{2\pi}\intr\int_{\mathbb{R}^{3}}{V_2(\vec{x})\e^{-\I \vec{q}\cdot\vec{x}}}\,\mathrm{d}^{3}x=-\frac{V_0m}{2\pi}-\frac{V_0m}{2\pi}\e^{-\I\vec{q}\cdot\vec{a}}=-\frac{\kappa}{2}\kla\left( {1+\e^{-\I A}} \right) .
+\end{align*}
+Dabei ist $\kappa:=\frac{V_0m}{\pi}$ und $A=ka(\cos\theta -1)$.
+\item[c)] Der Plot in \ref{figure:DifferentialCrossSections} zeigt die differentiellen Wirkungsquerschnitte 
+\begin{align*}
+\kla\left( {\frac{\tecxt\text{d}\sigma}{\tecxt\text{d}\Omega}} \right)_{V_1}&=|-\kappa|^2=\kappa^2,\\
+\kla\left( {\frac{\tecxt\text{d}\sigma}{\tecxt\text{d}\Omega}} \right)_{V_2}&=\frac{\kappa^2}{4}\kla\left( {1+\e^{-\I A}} \right)\kla\left( {1+\e^{\I A}} \right)=\frac{\kappa^2}{2}\kla\left( {1+\cos A} \right)
+\end{align*}
+für die geforderten Parameter.
+Beachte wieder $A=ka(\cos\theta -1)$.
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\linewidth]{DifferentialCrossSections.png}
+\caption{Differentielle Wirkungsquerschnitte für $ka\in\{0.1,2\pi\}$.
+Der Wert $ka=0.1$ zeigt den Anstieg der Funktion, welcher für $ka=0.01$ kaum zu erkennen ist.}
+\label{figure:DifferentialCrossSections}
+\end{figure}
+\item[d)] Betrachte die Differenz 
+\begin{align*}
+\Delta&:=\kla\left( {\frac{\tecxt\text{d}\sigma}{\tecxt\text{d}\Omega}} \right)_{V_1}-\kla\left( {\frac{\tecxt\text{d}\sigma}{\tecxt\text{d}\Omega}} \right)_{V_2}=\kappa^2-\frac{\kappa^2}{2}\kla\left( {1+\cos A} \right)\kom\overset{\substack{{A\,\ll\,1} \\ |}}{\simeq}\frac{\kappa^2}{4}A^2=\\
+&=\kappa^2(ka)^2\sin^4\frac{\theta}{2}.
+\end{align*}
+Offensichtlich ist $\Delta$ maximal für $\theta=\pi$, also Rückstreuung. 
+Hier ist dann $|A|=2ka$ und die relative Differenz beträgt
+\begin{align*}
+\frac{\Delta}{\kla\left( {\frac{\tecxt\text{d}\sigma}{\tecxt\text{d}\Omega}} \right)_{V_1}}&\simeq (ka)^2\sin^4\frac{\theta}{2}\Big\vert_{\theta=\pi}=(ka)^2.
+\end{align*}
+Damit diese Differenz größer als 1 Prozent ist, muss $ka>\frac{1}{10}$ gelten.
+\end{enumerate}
+\newpage
+\section{Streuung und Partialwellen (20 Punkte)}
+Es wird die Streuung eines Teilchens an einigen Potentialen mit der Partialwelle für $l = 0$ untersucht. 
+Alle Potentiale haben die Reichweite $R_0$ und der betrachtete Impuls ist $k$, wobei $kR_0 = 14\pi$. 
+Jemand hat bereits die radialen Schrödingergleichungen $(\partial_r^2 + k^2 - v(r))u(r) = 0$ für die Potentiale $v(r)$ exakt gelöst und die Ergebnisse für $u(r)$ als Funktion von $kr$ geplottet, siehe die beiden Plots.
+\begin{enumerate}
+\item[a)] Beschreiben Sie, welches Verhalten die radiale Wellenfunktion $u(r)$ im Plot aufweist und
+warum. 
+Beschreiben Sie, wie Sie aus dem Plot die Streuphase $\delta_0$ ablesen können. (5 Punkte)
+\item[b)] Lesen Sie dann jeweils für beide Potentiale die Streuphase $\delta_0$ mit vernünftiger Genauigkeit ab und bestimmen Sie damit die Streuamplitude $f(\theta)$ in der Näherung,
+dass nur $l = 0$-Streuung beiträgt. (10 Punkte) 
+\item[c)] Welches der beiden Potentiale ist anziehend $(v(r) < 0)$, welches abstoßend $(v(r) > 0)$? (5 Punkte)
+\end{enumerate}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{u_for_v1.png}
+\caption{$u(\rho=kr)$ für das Potential $v_1(r)$.}
+\label{figure:uForV1}
+\includegraphics[width=\linewidth]{u_for_v2.png}
+\caption{$u(\rho=kr)$ für das Potential $v_2(r)$.}
+\label{figure:uForV2}
+\end{figure}
+\newpage
+\subsubsection*{Lösungsvorschlag}
+\begin{enumerate}
+\item[a)] Beschreiben Sie, welches Verhalten die radiale Wellenfunktion $u(r)$ im Plot aufweist und
+warum. 
+Beschreiben Sie, wie Sie aus dem Plot die Streuphase $\delta_0$ ablesen können. (5 Punkte)
+\item[b)] Lesen Sie dann jeweils für beide Potentiale die Streuphase $\delta_0$ mit vernünftiger Genauigkeit ab und bestimmen Sie damit die Streuamplitude $f(\theta)$ in der Näherung,
+dass nur $l = 0$-Streuung beiträgt. (10 Punkte) 
+\item[c)] Welches der beiden Potentiale ist anziehend $(v(r) < 0)$, welches abstoßend $(v(r) > 0)$? (5 Punkte)
+\end{enumerate}
+%\begin{minted}[frame=lines, bgcolor=bg, fontsize=\footnotesize, linenos]{python}
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+\newpage
+\appendix
+\section{Nützliche Formeln und Ausdrücke}
+Pauli-Matrizen
+\begin{align}
+\sigma^1&=\begin{pmatrix}
+0&1\\ 1&0
+\end{pmatrix},&&&\sigma^2&=\begin{pmatrix}
+0&-\I\\ \I&0
+\end{pmatrix},&&&\sigma^3&=\begin{pmatrix}
+1&0\\ 0&-1
+\end{pmatrix}.\label{eqn:PauliMatrizen}
+\end{align}
+$\gamma$-Matrizen in Diracdarstellung
+\begin{align}
+\gamma^0&=\begin{pmatrix}
+I_2 & 0 \\ 0 & -I_2
+\end{pmatrix},&&&\gamma^j&=\begin{pmatrix}
+0&\sigma^j\\-\sigma^j &0
+\end{pmatrix}. \label{eqn:GammaMatrizenDirac}
+\end{align}
+(Lorentz) Rotations-Matrizen für Diracspinoren
+\begin{align}
+S(R_x(\theta))&=\e^{-\I S_x\theta}=\begin{pmatrix}
+\cos\frac{\theta}{2}&-\I\sin\frac{\theta}{2}&0&0\\
+-\I\sin\frac{\theta}{2}&\cos\frac{\theta}{2}&0&0\\
+0&0&\cos\frac{\theta}{2}&-\I\sin\frac{\theta}{2}\\
+0&0&-\I\sin\frac{\theta}{2}&\cos\frac{\theta}{2}
+\end{pmatrix}, \label{eqn:RotationsMatrizenSX}\\
+S(R_y(\theta))&=\e^{-\I S_y\theta}=\begin{pmatrix}
+\cos\frac{\theta}{2}&-\sin\frac{\theta}{2}&0&0\\
+\sin\frac{\theta}{2}&\cos\frac{\theta}{2}&0&0\\
+0&0&\cos\frac{\theta}{2}&-\sin\frac{\theta}{2}\\
+0&0&\sin\frac{\theta}{2}&\cos\frac{\theta}{2}
+\end{pmatrix}, \label{eqn:RotationsMatrizenSY}\\
+S(R_z(\theta))&=\e^{-\I S_z\theta}=\begin{pmatrix}
+\e^{-\I\frac{\theta}{2}}&0&0&0\\
+0&\e^{\I\frac{\theta}{2}}&0&0\\
+0&0&\e^{-\I\frac{\theta}{2}}&0\\
+0&0&0&\e^{\I\frac{\theta}{2}}
+\end{pmatrix}. \label{eqn:RotationsMatrizenSZ}
+\end{align}
+
+\end{document}

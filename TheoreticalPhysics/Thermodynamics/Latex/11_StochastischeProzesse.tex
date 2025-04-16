@@ -1,0 +1,165 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{11 Stochastische Prozesse}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 11.1: Charakteristische Funktionen und Random Walks}
+Die charakteristische Funktion sei definiert als $\phi_X(z):=\tecxt\text{E}\klam\left[ {e^{izX}} \right]$, wobei wieder $E[g(X)]=\int g(x)\rho(x)\,\mathrm{d}x$ der Erwartungswert ist. Aufgrund der Linearität gilt unter Verwendung von $e^x=\sum_n\frac{x^n}{n!}$:
+\begin{align*}
+\phi_X(z)&=\sum_n\frac{(iz)^n}{n!}\tecxt\text{E}\klam\left[ {X^n} \right]&\Rightarrow &&\tecxt\text{E}\klam\left[ {X^n} \right]&=(-i)^n\lim_{z\rightarrow 0}\frac{\tecxt\text{d}^n\phi_X(z)}{\tecxt\text{d}z^n}
+\end{align*}
+Sei $X=X_1+X_2$ mit unabhängigen Zufallsvariablen $X_1,X_2$. Dann gilt für die Wahrscheinlichkeitsdichte $\rho\equiv\rho(x_1,x_2)=\rho_1(x_1)\rho_2(x_2)$. Daraus folgt für die charakteristische Funktion:
+\begin{align*}
+\phi_X&=\tecxt\text{E}\klam\left[ {e^{iz(X_1+X_2)}} \right]=\iint e^{izX_1}e^{izX_2}\rho(x_1)\rho(x_2)\,\mathrm{d}x_1\mathrm{d}x_2=\tecxt\text{E}\klam\left[ {e^{izX_1}} \right]\tecxt\text{E}\klam\left[ {e^{izX_2}} \right]=\phi_{X_1}\phi_{X_2}
+\end{align*}
+Seien $Y_k\in\{a,-a\}$ identisch uniform verteilte Zufallsvariablen. Dann gilt für die charakteristische Funktion von $X_{t_n}=\sum_kY_k$ folgender Zusammenhang:
+\begin{align*}
+\phi_{X_{t_n}}&=\prod_k\phi_{Y_k}=\prod_k\sum_{y_k\in\{a,-a\}}e^{izy_k}P(y_k)=\prod_k \frac{1}{2}\kla\left( {e^{iza}+e^{-iza}} \right)=\cos^n(za)
+\end{align*}
+Dabei ist $t_n=n\Delta t$ eine diskrete Zeit mit $n\in\mathbb{N}$ und $X_t\in a\cdot\mathbb{Z}$ ein Random-Walk mit Anfangsbedingung $X_0=0$. Über die Ableitungen kann nun Mittelwert und Varianz von $X_{t_n}$ berechnet werden:
+\begin{align*}
+\tecxt\text{E}\klam\left[ {X_{t_n}} \right]&=(-i)^k\lim_{z\rightarrow 0}\frac{\tecxt\text{d}^k\phi_X(z)}{\tecxt\text{d}z^k}\bigg\vert_{k=1}=(-i)\lim_{z\rightarrow 0}n\cos(za)^{n-1}\kla\left( {-\sin(za)} \right) a=0\\
+\tecxt\text{E}\klam\left[ {X_{t_n}^2} \right]&=(-i)^k\lim_{z\rightarrow 0}\frac{\tecxt\text{d}^k\phi_X(z)}{\tecxt\text{d}z^k}\bigg\vert_{k=2}=\\
+&=(-i)^2\lim_{z\rightarrow 0}n(n-1)\cos(za)^{n-2}\sin(za)^2a^2-n\cos^n(za)a^2=na^2
+\end{align*}
+Die Varianz ergibt sich einfach zu $\tecxt\text{Var}\klam\left[ {X} \right]=\tecxt\text{E}\klam\left[ {X^2} \right]-\tecxt\text{E}\klam\left[ {X} \right]^2=na^2$. Damit stimmt die Verteilung $\rho(x,t)$ mit einer Gaussverteilung überein. Betrachte eine feste Zeit $t=n\Delta t$ mit $D=\frac{a^2}{2\Delta t}$ im Grenzwert $\Delta t\rightarrow 0$:
+\begin{align*}
+\rho (x,t)&=C\exp\kla\left( {-\frac{x^2}{2\tecxt\text{Var}\klam\left[ {X} \right]}} \right)=C\exp\kla\left( {-\frac{\Delta tx^2}{2ta^2}} \right)=\frac{1}{\sqrt{4\pi Dt}}\exp\kla\left( {-\frac{x^2}{4Dt}} \right)
+\end{align*}
+Betrachte die partiellen Ableitungen der Dichte:
+\begin{align*}
+\partial_t\rho&=-\frac{1}{2t}\rho+\frac{x^2}{4Dt^2}\rho\\
+\partial_x\rho&=-\frac{x}{2Dt}\rho &\Rightarrow &&\partial_x^2\rho &=-\frac{1}{2Dt}\rho+\frac{x^2}{4D^2t^2}
+\end{align*}
+Man kann folgenden Zusammenhang zwischen den Ableitungen ablesen:
+\begin{align*}
+\partial_t\rho &=D\partial_x^2\rho
+\end{align*}
+Diese Gleichung kann über Fourier-Transformation wieder gelöst werden:
+\begin{align*}
+\frac{1}{\sqrt{2\pi}}\intr\int_{\mathbb{R}^{ }}{\partial_t\rho(x,t) e^{-ikx}}\,\mathrm{d}^{ }x&=\frac{D}{\sqrt{2\pi}}\intr\int_{\mathbb{R}^{ }}{\partial_x^2\rho(x,t)e^{-ikx}}\,\mathrm{d}^{ }x\\
+\Rightarrow\ \ \ \partial_t\mathcal{F}[\rho](k,t)&=-Dk^2\mathcal{F}[\rho](k,t)\\
+\Rightarrow\ \ \ \mathcal{F}[\rho](k,t)&=f(k)e^{-Dk^2t}
+\end{align*}
+Für die Bestimmung von $f(k)$ benötigt man nun eine Anfangsbedingung $\rho(x,0)$. Die allgemeine Lösung findet man dann über inverse Fourier-Transformation:
+\begin{align*}
+f(k)&=\mathcal{F}[\rho](k,0)=\frac{1}{\sqrt{2\pi}}\intr\int_{\mathbb{R}^{ }}{\rho(x,0)e^{-ikx}}\,\mathrm{d}^{ }x\\
+\Rightarrow\ \ \ \rho(x,t)&=\frac{1}{2\pi}\intr\int_{\mathbb{R}^{ }}\intr\int_{\mathbb{R}^{ }}{\rho(x,0)e^{-ikx}}\,\mathrm{d}^{ }x\,e^{-Dk^2t}e^{ikx}\mathrm{d}^{ }k
+\end{align*}
+Für $\rho(x,0)=\delta (x)$ kann die Lösung exakt bestimmt werden:
+\begin{align*}
+\rho(x,t)&=\frac{1}{2\pi}\intr\int_{\mathbb{R}^{ }}{e^{-Dtk^2+ikx}}\,\mathrm{d}^{ }k=\frac{1}{2\pi}\sqrt{\frac{\pi}{Dt}}e^{\frac{(ix)^2}{4Dt}}=\frac{1}{\sqrt{4\pi Dt}}e^{-\frac{x^2}{4Dt}}
+\end{align*}
+\section*{Aufgabe 11.2: Detailed Balance}
+Für den Netto-Fluss gilt hier $J_{ba}^\tecxt\text{net}=J_{ba}-J_{ab}=p_{ba}\rho(a)-p_{ab}\rho(b)=0$. Dabei sind $\rho$ die Wahrscheinlichkeiten dafür, in einem Zustand zu sein, und $p$ die Rate, von einem Zustand in einen anderen überzugehen. Betrachte zwei verschiedene, zeitdiskrete Markow-Prozesse:
+\begin{align*}
+P_1&=\begin{pmatrix}
+0&0&1 \\ 1&0&0 \\ 0&1&0
+\end{pmatrix}&\tecxt\text{und}&&P_2&=\frac{1}{3}\begin{pmatrix}
+1&1&1 \\ 1&1&1 \\1&1&1
+\end{pmatrix}
+\end{align*}
+Die Matrizen beschreiben dabei die Änderung des Zustandsvektors $\vec{\rho}(t)=P_k\vec{\rho}(t-1)$. Für einen stationären Zustand müsste $\vec{\rho}(t)=\vec{\rho}(t-1)$ gelten, wir suchen also Eigenvektoren der Matrizen zum Eigenwert 1. Also kann es nur für $\det (P-1)=0$ eine stationäre Lösung geben. Diese muss dann die Bedingung $(P-1)\vec{\rho}=0$ erfüllen:
+\begin{align*}
+0&\overset{!}{=}\begin{pmatrix}
+-1&0&1 \\ 1&-1&0 \\ 0&1&-1
+\end{pmatrix}\vec{\rho}_1=\begin{pmatrix}
+-a_1+c_1 \\ a_1-b_1 \\ b_1-c_1
+\end{pmatrix}&\Rightarrow &&a_1&=b_1=c_1=\frac{1}{3} \\
+0&\overset{!}{=}\frac{1}{3}\begin{pmatrix}
+-2&1&1 \\ 1&-2&1 \\1&1&-2
+\end{pmatrix}\vec{\rho}_2\propto\begin{pmatrix}
+-2a_2+b_2+c_2 \\ a_2-2b_2+c_2 \\ a_2+b_2-2c_2
+\end{pmatrix}&\Rightarrow &&a_2&=b_2=c_2=\frac{1}{3}
+\end{align*}
+Die stationäre Lösung lautet in beiden Fällen also $\vec{\rho}=\frac{1}{3}(1,1,1)^\top$. Allerdings erfüllt nur der zweite Markow-Prozess detailed balance. Dazu muss nur die Matrix $J_{ab}=P_{ab}\rho(b)$ bestimmt werden; ist sie symmetrisch, so verschwindet der Netto-Strom zwischen allen Zuständen per Konstruktion. Dazu muss jede Spalte mit dem jeweiligen Wert von $\rho$ multipliziert werden:
+\begin{align*}
+J_{ab}^1&=\begin{pmatrix}
+0&0&1/3 \\ 1/3&0&0 \\ 0&1/3&0
+\end{pmatrix}&\tecxt\text{und}&&J_{ab}^2&=\frac{1}{3}\begin{pmatrix}
+1/3&1/3&1/3 \\ 1/3&1/3&1/3 \\ 1/3&1/3&1/3
+\end{pmatrix}
+\end{align*}
+Gegeben seien nun drei Energien $E_{1,2,3}$ und ein stationärer Zustand, der die Boltzmann-Verteilung erfüllt. Also gilt $\vec{\rho}=\frac{1}{Z}\kla\left( {e^{-\beta E_1}, e^{-\beta E_2}, e^{-\beta E_3}} \right)^\top$ mit der üblichen kanonischen Zustandssumme $Z=\sum_j e^{-\beta E_j}$. Für die folgenden Matrizen sollen dehelende Einträge nun so bestimmt werden, dass $\vec{\rho}$ ein stationärer Zustand ist:
+\begin{align*}
+P_3&=\begin{pmatrix}
+p_{11}&0&1 \\ p_{21}&p_{22}&0 \\ 0&p_{32}&0
+\end{pmatrix}&\tecxt\text{und}&&P_4&=\begin{pmatrix}
+p_{11}&1/2&0 \\ p_{21}&p_{22}&1/2 \\ 0&p_{32}&1/2
+\end{pmatrix}
+\end{align*}
+Wir fordern also wieder $(P-1)\vec{\rho}=0$:
+\begin{align*}
+0&\overset{!}{=}\begin{pmatrix}
+p_{11}-1&0&1 \\ p_{21}&p_{22}-1&0 \\ 0&p_{32}&-1
+\end{pmatrix}\vec{\rho}=\begin{pmatrix}
+(p_{11}-1)e^{-\beta E_1}+e^{-\beta E_3} \\
+p_{21}e^{-\beta E_1} + (p_{22}-1)e^{-\beta E_2} \\
+p_{32}e^{-\beta E_2}-e^{-\beta E_3}
+\end{pmatrix}
+\end{align*}
+Definiere $\Delta_{ij}:=e^{\beta E_j-\beta E_i}$. Die ersten Parameter lauten dann $p_{11}=1-\Delta_{31}$ und $p_{32}=\Delta_{32}$. Aus der Normierung der Spaltensummen findet man dann $p_{21}=1-p_{11}=\Delta_{31}$ und $p_{22}=1-p_{32}=1-\Delta_{32}$.
+Für die zweite Matrix finden wir analog:
+\begin{align*}
+0&\overset{!}{=}\begin{pmatrix}
+p_{11}-1&1/2&0 \\ p_{21}&p_{22}-1&1/2 \\ 0&p_{32}&-1/2
+\end{pmatrix}\vec{\rho}=\begin{pmatrix}
+(p_{11}-1)e^{-\beta E_1}+e^{-\beta E_2}/2 \\
+p_{21}e^{-\beta E_1} + (p_{22}-1)e^{-\beta E_2} + e^{-\beta E_3}/2 \\
+p_{32}e^{-\beta E_2}+e^{-\beta E_3}/2
+\end{pmatrix}
+\end{align*}
+Die ersten Parameter lauten diesmal $p_{11}=1-\Delta_{21}/2$ und $p_{32}=\Delta_{32}/2$. Aus der Normierung erhält man dann $p_{21}=1-p_{11}=\Delta_{21}/2$ und $p_{22}=1/2-p_{32}=(1-\Delta_{32})/2$. Außerdem fordern wir detailed balance:
+\begin{align*}
+J_{ab}^4&=\frac{1}{2}\begin{pmatrix}
+(1-\Delta_{21})\rho(1)&\rho(2)&0 \\ 
+\Delta_{21}\rho(1)&(1-\Delta_{32})\rho(2)&\rho(3) \\ 
+0&\Delta_{32}\rho(2)&\rho(3)
+\end{pmatrix}=\\
+&=\frac{1}{2}\begin{pmatrix}
+e^{-\beta E_1} - e^{-\beta E_2}&e^{-\beta E_2}&0\\
+e^{-\beta E_2}&e^{-\beta E_2}-e^{-\beta E_3}&e^{-\beta E_3}\\
+0&e^{-\beta E_3}&e^{-\beta E_3}
+\end{pmatrix}=(J_{ab}^4)^\top
+\end{align*}
+Es zeigt sich allerdings, dass die detailed balance bereits erfüllt ist. Die Energieniveaus können also allgemein gelassen werden.
+\section*{Aufgabe 11.3: Chemische Reaktionen}
+In Matrixform lautet die zeit-kontinuierliche Mastergleichung:
+\begin{align*}
+\dot{\vec{\rho}}&=K\vec{\rho}=\begin{pmatrix}
+-k_{AB}&k_{BA} \\ k_{AB} &- k_{BA}
+\end{pmatrix}\vec{\rho}=k_0\begin{pmatrix}
+-e^{-2\beta}&e^{-3\beta} \\ e^{-2\beta}& -e^{-3\beta}
+\end{pmatrix}
+\end{align*}
+Dabei ist $\vec{\rho}=(\rho_A,\rho_B)$ und $k_{AB}=k_0e^{-\beta [E(M_{AB})-E(A)]}$. Im letzten Schritt wurden noch die Werte $E(A)=1$, $E(B)=0$ und $E(M_{AB})=3$ eingesetzt. Berechne nun die Eigenwerte der Matrix $K$ mit der Substitution $x:=e^{-\beta}$:
+\begin{align*}
+\chi_K(\lambda)&=\det (K/k_0-\lambda)=\lambda^2 - (-x^2-x^3)+\kla\left( {(-x^2)(-x^3)-x^2x^3} \right)=\\
+&=\lambda (\lambda +x^2+x^3)\overset{!}{=}0
+\end{align*} 
+Es ergeben sich $\lambda=0$ und $\lambda = -k_0(x^2+x^3)$.
+\end{document}

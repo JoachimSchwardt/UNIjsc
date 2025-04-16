@@ -1,0 +1,126 @@
+\usepackage[english, ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\usepackage{caption}
+\usepackage{scrhack}    % helps suppress some warnings
+\captionsetup{
+    % width=.8\textwidth,
+    % indention=1cm,
+    margin=0.5cm,
+    format=plain,
+    labelfont=bf
+}
+%\usepackage{subcaption}
+%\subcaptionsetup{
+%    indention=0cm,
+%    format=hang,
+%    margin=0.5cm,
+%    labelfont=normalfont
+%}
+\usepackage[english,capitalise]{cleveref}
+\usepackage[
+    backend=biber,
+    sorting=none,
+    style=phys,
+    giveninits=true,
+    sortcites=true,
+    citestyle=numeric-comp,
+    % url=false,
+    % doi=false,
+    biblabel=brackets,
+    % eprint=false,
+    maxcitenames=3]{biblatex}
+
+\DeclareFieldFormat{doi}{}
+\DeclareFieldFormat{titlecase}{#1}
+
+\usepackage[toc,acronym]{glossaries}
+\makenoidxglossaries
+
+
+\renewcommand{\figureautorefname}{Figure}
+\renewcommand{\tableautorefname}{Table}
+\renewcommand{\partautorefname}{Part}
+\renewcommand{\appendixautorefname}{Appendix}
+\renewcommand{\chapterautorefname}{Chapter}
+\renewcommand{\sectionautorefname}{Section}
+\renewcommand{\subsectionautorefname}{Section}
+\renewcommand{\subsubsectionautorefname}{Section}
+
+\renewcommand{\d}{\text{d}}
+\renewcommand{\r}{\text{r}}
+\renewcommand{\t}{\text{t}}
+\renewcommand{\a}{\text{a}}
+\renewcommand{\o}{\text{o}}
+\renewcommand{\F}{\text{F}}
+\renewcommand{\c}{\text{c}}
+\renewcommand{\i}{\text{i}}
+\renewcommand{\L}{\text{L}}
+
+\newcommand{\td}{\text{td.}}
+\newcommand{\ret}{\text{ret}}
+\newcommand{\PTR}{R}
+\newcommand{\mmln}[4]{\{\gray{m':\,}#1\,| \gray{\,m:\,}#2\,| \gray{\,l:\,}#3\,| \gray{\,n_{k'}:\,}#4\}}
+\newcommand{\mmlnx}[4]{\{#1|#2|#3|#4\}}
+\newcommand{\eplus}{^{\scriptscriptstyle{(+)}}}
+\newcommand{\eminus}{^{\scriptscriptstyle{(-)}}}
+\newcommand{\epsmall}[1]{^{\scriptscriptstyle{(#1)}}}
+\newcommand{\asymeq}[1]{\overset{#1}{\simeq}}
+\newcommand{\asympropto}[1]{\overset{#1}{\sim}}
+%t == text commands, s == symbols
+\newcommand{\tint}{\text{int}}
+\newcommand{\tlin}{\text{linear}}
+\newcommand{\ttherm}{\text{therm}}
+\newcommand{\spage}{p.\,}
+\newcommand{\spages}{pp.\,}
+\newcommand{\ssec}{sec.\,}
+\newcommand{\schap}{ch.\,}
+\newcommand{\sapp}{app.\,}
+\newcommand{\seqn}{eqn.\,}
+\newcommand{\seqnl}{Equation}
+\newcommand{\sappl}{Appendix}
+\newcommand{\sact}{\mathcal{S}}
+\newcommand{\sgf}{G}
+\newcommand{\tsg}{\text{SG}}
+\newcommand{\tms}{momentum-shell}
+\newcommand{\tMs}{Momentum-shell}
+\newcommand{\trspace}{real space}
+\newcommand{\tpspace}{momentum space}
+\newcommand{\rgbeta}{\bm{\beta}}
+\newcommand{\thermit}{Hermitian}
+\newcommand{\trs}{\hat{\mathcal{T}}}
+\newcommand{\phs}{\hat{\mathcal{C}}}
+\newcommand{\chs}{\hat{\mathcal{S}}}
+\newcommand{\ccg}{\hat{\mathcal{K}}}
+% https://tex.stackexchange.com/questions/30619/what-is-the-best-symbol-for-vector-matrix-transpose
+\newcommand{\transpose}{{\mkern-1.5mu\text{T}}}
+\newcommand{\eff}{\text{eff}}
+%names
+\newcommand{\nameKallen}{Källén}
+\newcommand{\myparagraph}[1]{{\vspace*{1em}}\,\\\textbf{#1.}\ }
+
+% https://tex.stackexchange.com/questions/10555/hyperref-warning-token-not-allowed-in-a-pdf-string
+\pdfstringdefDisableCommands{%
+    \def\\{}%
+}
+% glossary references not coloured (https://tex.stackexchange.com/questions/38544/glossary-links-color)
+\makeatletter
+\newcommand*{\glsplainhyperlink}[2]{%
+    \begingroup%
+      \hypersetup{hidelinks}%
+      \hyperlink{#1}{#2}%
+    \endgroup%
+}
+\let\@glslink\glsplainhyperlink
+\makeatother
+% https://tex.stackexchange.com/questions/50747/options-for-appearance-of-links-in-hyperref
+\definecolor{mDarkBlue}{rgb}{0,0,0.4}
+\hypersetup{
+    colorlinks,
+    breaklinks,
+    citecolor=mDarkBlue,
+    linkcolor=mDarkBlue,
+    urlcolor=mDarkBlue,
+    pdfauthor={\Author},
+    pdftitle={\Title}
+}

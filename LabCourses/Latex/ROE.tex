@@ -1,0 +1,164 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+
+\begin{document}
+
+\title{X-ray spectra}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Tasks}
+\begin{enumerate}
+\item[a)] Analysis of the charakteristic x-ray spectra of copper, iron, molebdenum and tungsten using a KBr- or LiF-crystal.\\ Identification of the atomic transisitons corresponding to the measured x-ray lines and calculation the respective energies.
+\item[c)] Calculation of the \textsc{Planck} constant from the dependance of the short-wave limit of the x-ray photons in the brems spectrum obtained from the acceleration voltage of the electrons.
+\end{enumerate}
+\section{Theoretical remarks}
+\subsection{The x-ray spectrum}
+The upper limit for the energy of photons in a x-ray tube is equal to the kinetic energy of the electrons accelerated by a voltage $U_A$. Hence, a lower limit for the wavelength $\lambda$ can be derived:
+\begin{align*}
+E=\hbar\omega = \frac{hc}{\lambda}\overset{!}{=}E_{e,kin}=e\cdot U_A\ \ \Rightarrow\ \ \lambda_{min} = \frac{hc}{eU_A}\numberthis\label{lambda min von U_A}
+\end{align*}
+The continuous "Brems-spectrum" from the energy released by electrons being decelerated in the Coulomb field of nuclei in the anode is superimposed by the characteristic material lines, as can be seen in Figure \ref{x-ray spectrum}.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{Bremsstrahlung_spectrum.png}
+\caption{Schematic figure of a x-ray spectrum}
+\label{x-ray spectrum}
+\end{figure}\\
+
+\subsection{Bragg-reflection}
+Let $d$ be the distance between neighboring lattice planes and $\vartheta$ the angle the planes make with two incident rays of the wavelength $\lambda$. Under the condition that the rays must constructively interfere one can then obtain the \textsc{Bragg}-equation by considering the path length difference between both rays ($n\in\mathbb{N}$ is the order of deflection):
+\begin{align*}
+2d\sin\vartheta &\overset{!}{=}n\lambda\numberthis\label{Bragg eq}
+\end{align*}
+We can insert this result into (\ref{lambda min von U_A}) for crystals with well-known values for $d$ like LiF or KBr:
+\begin{align*}
+E&=\frac{nhc}{2d\sin\vartheta}\numberthis\label{Bragg energy}
+\end{align*}
+\section{Measurements}
+\subsection*{Task a)}
+Properties of the first measurement: \\
+Iron, 1:2 coupling, KBr-crystal, $d=1\,$mm collimator, $U_A=35\,$kV, $\mathrm{emission\ current}=1\,$mA, $\mathrm{angle\ increment}=0,1\,\degree$ and $\mathrm{integration\ time}=4,0\,$s.\\
+A total of 6 peaks were found; their energies are caluclated using (\ref{Bragg energy}). The optimal fit values and their uncertainties were calculated using the recommended scipy.optimize.curve{\_}fit function and the following model for the peaks. 
+$$f(\vartheta, \vartheta_m, \sigma, c)=c\cdot\exp\kla\left( {-\frac{(\vartheta - \vartheta_m)^2}{2\sigma}} \right)$$
+An example of the resulting fit can be seen in Figure \ref{Curve fit}: \\
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{Curve_fit.png}
+\caption{Curve fit for an energy peak at $\vartheta_m\approx 5,5\,\degree$}
+\label{Curve fit}
+\end{figure}
+The systematical and statistical uncertainties of the energies are then given by $\mathrm{FWHM}=2\sigma$ (full width half maximum), $\Delta d_{LiF}^{sys}=\frac{1}{\sqrt{3}}\cdot 0,0004\,$nm and $\Delta\vartheta_m^{stat}$ using the following formulas:
+\begin{align*}
+\Delta E^{sys}&=E\cdot\sqrt{\kla\left( {2\sigma\cot\vartheta_m} \right)^2+\kla\left( {\frac{\Delta d_{LiF}^{sys}}{d_{LiF}}} \right)^2} \\
+\Delta E^{stat}&=E\cdot |\Delta\vartheta_m^{stat}\cot\vartheta_m|
+\end{align*}
+Let $n$ be the order of diffraction. Due to the large systematic uncertainties originating from the characteristic peak width the $K_\alpha$ splitting could not be observed:
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c|c}
+$n$&$E\,/\,$eV&$\Delta E^{sys}\,/\,$eV&$\Delta E^{stat}\,/\,$eV&Transition \\ \hline
+1&7056,1&144,76&2,5478&$K_\beta$\\ \hline
+1&6399,1&122,52&0,6120&$K_\alpha$\\ \hline
+2&7056,0&121,19&2,2181&$K_\beta$\\ \hline
+2&6398,8&105,69&0,2787&$K_\alpha$\\ \hline
+3&7058,2&114,89&1,3379&$K_\beta$\\ \hline
+3&6398,4&102,80&0,8227&$K_\alpha$
+\end{tabular}
+\end{table}\\ \\ \\ \\
+Properties of the second measurement: \\ 
+Molybdenum, 1:2 coupling, KBr-crystal, $d=1\,$mm collimator, $U_A=35\,$kV, $\mathrm{emission\ current}=1\,$mA, $\mathrm{angle\ increment}=0,1\,\degree$ and $\mathrm{integration\ time}=4,0\,$s.\\
+A total of 8 peaks were found. Fit values and uncertainties were obtained the same way as for iron, except for $\Delta d_{KBr}^{sys}=\frac{1}{\sqrt{3}}\cdot 0,009\,$nm, since the KBr-crystaly was used. 
+Let $n$ be the order of diffraction. Similarly to iron, the $K_\alpha$-splitting could not be observed:
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c|c}
+$n$&$E\,/\,$eV&$\Delta E^{sys}\,/\,$eV&$\Delta E^{stat}\,/\,$eV&Transition \\ \hline
+1&19621,7&922,709&28,0008&$K_\beta$\\ \hline
+1&17442,0&624,116&2,5834 &$K_\alpha$\\ \hline
+2&19597,4&676,428&28,0991&$K_\beta$\\ \hline
+2&17438,0&403,342&3,2543 &$K_\alpha$\\ \hline
+3&19634,2&584,373&23,4734&$K_\beta$\\ \hline
+3&17439,8&349,220&1,6177 &$K_\alpha$\\ \hline
+4&19609,0&511,628&16,2547&$K_\beta$\\ \hline
+4&17438,7&333,452&2,4977 &$K_\alpha$
+\end{tabular}
+\end{table}\\
+\subsection*{Task b)}
+The measurements were made using the 1\,mm collomator and the LiF-crystal ($d_{LiF}=0,2014\,$nm) for $U_A\in [15, 31]\,$kV with 2\,kV steps. The systematic uncertainties are $\Delta d_{LiF}^{sys}=\frac{1}{\sqrt{3}}\cdot 0,0004\,$nm and $\Delta\vartheta^{sys}=\frac{1}{\sqrt{3}}\cdot 0,1\,\degree$:
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c|c}
+$\frac{1}{U}\,/\,\frac{1}{\mathrm{kV}}$&$\vartheta\,/\,\degree$&$\lambda_{min}\,/\,$nm&$\Delta\frac{1}{U}\,/\,\frac{1}{\mathrm{MV}}$&$\Delta\lambda_{min}^{sys}\,/\,$pm \\ \hline
+0,0667&11,6 &0,081&0,962&0,40830\\ \hline
+0,0588&10,5&0,0734&0,849&0,40787\\ \hline
+0,0526&9,4&	0,0658&0,76 &0,40748\\ \hline
+0,0476&8,4&	0,0588&0,687&0,40716\\ \hline
+0,0435&7,8&	0,0547&0,628&0,40699\\ \hline
+0,04&7,1&	0,0498&0,577&0,4068\\ \hline
+0,0370&6,5&	0,0456&0,535&0,40665\\ \hline
+0,0345&6,1&	0,0428&0,498&0,40656\\ \hline
+0,0323&5,8&	0,0407&0,466&0,4065
+\end{tabular}
+\end{table}\\
+The linear regression was made using "LibreOffice Calc". From (\ref{lambda min von U_A}) we can define the slope of the following graph as $\alpha:=\frac{hc}{e}$. The slope of the boundary curves is given implicitly as the difference to $\alpha$:
+\begin{align*}
+\alpha &= \underline{\kla\left( {1,207_{-0,071}^{+0,077
+}} \right)\,\frac{\mathrm{nm}}{\mathrm{kV}}}
+\end{align*}
+Assuming constant statistical errors $\Delta\vartheta^{stat}\simeq 0,1\,\degree$ and $\Delta U_A^{stat}=0,2\,$kV, the statistical error of $\alpha$ simplifies to:
+\begin{align*}
+\Delta\alpha^{stat}&=\frac{\Delta\lambda_{min}^{stat}}{\sqrt{\frac{1}{N}\sum_i \kla\left( {\frac{1}{U_i}-\left\langle\frac{1}{U}\right\rangle} \right)^2}}=\underline{0,0641\,\frac{\mathrm{nm}}{\mathrm{kV}}}
+\end{align*}
+Therefor the \textsc{Planck} constant can be calculated as follows:
+\begin{align*}
+h&=\frac{e}{c}\cdot\alpha = \underline{\kla\left( {6,45_{-0,38}^{+0,41}\pm 	0,34} \right)\cdot 10^{-34}\,\mathrm{Js}}
+\end{align*}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=1.1]{Planck_constant.png}
+\caption{$\lambda_{min}$ with respect to $\frac{1}{U}$ including boundary curves}
+\label{lambda to U}
+\end{figure}
+\section{Discussion}
+\subsection*{Task a)}
+The final results for iron including the deviation $|E-E_{i}|$ ($i=\alpha_{1,2},\ \beta$) to the literature value for the respective transition:
+\begin{align*}
+K_\beta :\ &E=\underline{(7056,8\pm 127,0\pm 2,0)\,\mathrm{eV}}\\
+&|E-E_{\beta}| = 1,2\,\mathrm{eV} \\
+K_\alpha :\ &E=\underline{(6398,8\pm 110,3\pm 0,6)\,\mathrm{eV}}\\
+&|E- E_{\alpha 1}| = 5,1\,\mathrm{eV}\ \ \ \ \mathrm{and}\ \ \ \ |E- E_{\alpha 2}| = 7,9\,\mathrm{eV}
+\end{align*}
+And for molybdenum:
+\begin{align*}
+K_\beta :\ &E=\underline{(19616\pm 674\pm 24)\,\mathrm{eV}}\\
+&|E-E_{\beta}| = 26\,\mathrm{eV} \\
+K_\alpha :\ &E=\underline{(17439,6\pm 427,5\pm 2,5)\,\mathrm{eV}}\\
+&|E- E_{\alpha 1}| = 39,7\,\mathrm{eV}\ \ \ \ \mathrm{and}\ \ \ \ |E- E_{\alpha 2}| = 65,2\,\mathrm{eV}
+\end{align*}
+Because the statistical error arises from the uncertainty of the $\vartheta_m$ value and the systematical error of the actual peak width given by the fit, the latter one is much larger.\\ 
+Note: This might come down to a misinterpretation on my side considering the method we were supposed to use for the error calculation. Please let me know if I got a bit too far off track here; I will gladly implement corrections.\\
+Due to this it seems impossible to observe the $K_\alpha$-splitting via this method, since the uncertainties are 1-2 orders larger than the deviations between the energy levels. Enourmous improvements of the angle resolution would have to be made; atleast down to a step size of $0,01\,\degree$.\\
+Employing a crystal with larger lattice constant leads to smaller values $\vartheta_m$ for the same peaks aswell as smaller peak widths. However, I can not see how this would help in observing the $K_\alpha$-splitting, since this would also decrease the distance between the $K_{\alpha1}$ and $K_{\alpha2}$ peaks by the same scaling factor.
+\subsection*{Task b)}
+The final result relative to the literature value of $h_{lit}=6,6256\cdot 10^{-34}\,$Js:
+$$\frac{h_{meas}}{h_{lit}}=\underline{\kla\left( {0,97_{-0,06}^{+0,06}\pm 0,05} \right)}$$
+Since the "correct" value of $1$ is well within the uncertainties there is good agreement between the measurement and the literature value. However, said uncertainties are quite large ($\Delta_{relative}\approx 8,1\,$\%). In Figure \ref{lambda to U} one can see how the boundary curves are mainly deviating in the $\frac{1}{U}$-direction. Therefor $\Delta U_A$ is mainly responsible for the systematic error of the slope $\alpha$ and would have to improved first. The contribution from $\Delta d_{KBr}^{sys}$ is relatively small. The statistical error is proportional to $\sin\Delta\vartheta^{stat}$, which means that increasing the number of measurements or the accuracy of the goniometer leads to significantly lower statistical errors.
+\end{document}

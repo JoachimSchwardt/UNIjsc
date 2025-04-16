@@ -1,0 +1,39 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{ll_scrarticle}
+
+\newcommand*{\titel}{One-dimensional chain with 2-atomic basis and linear dispersion}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Quantum Physics in 1D}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Hamiltonian}
+The sine-Gordon Hamiltonian is described by $H=H_0+H_\Text{int}$ where
+\begin{align}
+H_0 &= \frac{u}{2\pi} \intr{\normord{\klb*{K\kla*{\partial_x\theta}^2 + \frac{1}{K} \kla*{\partial_x\phi}^2}}}{x},\\
+H_\Text{int} &= \frac{g}{2\pi\alpha} \sum_\ell \eta_{\ell}\eta_{-\ell} \intr{\powe{2\i\ell \phi}}{x}
+\end{align}
+$u$ is the renormalized Fermi velocity, $K$ the Luttinger parameter and $g$ a coupling constant and we set $\hbar=1$.
+\section{Single-particle Green's function in perturbation theory}
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

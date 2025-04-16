@@ -1,0 +1,156 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{11 Hamilton-Jacobi Formalismus}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Zeitabhängige Störung}
+Sei der ungestörte Hamilton $H_0$ zeitunabhängig und $H=H_0(r)+\lambda H_1(r,t)$. Sei zudem $\Ket | {\psi(t=0)} \rangle=\Ket | {N} \rangle$ ein Eigenzustand des ungestörten Systems. Entwickle $\Ket | {\psi(t)} \rangle=\sum_nc_ne^{-\frac{i}{\hbar}E_nt}\Ket | {n} \rangle$. Einsetzen in die zeitabhängige Schrödinger-Gleichung liefert mit $\omega_{mn}:=\frac{1}{\hbar}\kla\left( {E_m-E_n} \right)$:
+\begin{align*}
+i\hbar\sum_nc_n'e^{-\frac{i}{\hbar}E_nt}\Ket | {n} \rangle&=\lambda\sum_nc_ne^{-\frac{i}{\hbar}E_nt}H_1\Ket | {n} \rangle &\big\vert\ \cdot\ \Bra\langle {m} |e^{-\frac{i}{\hbar}E_mt}\dots\\
+\Rightarrow\ \ i\hbar c_m'&=\lambda\sum_nc_ne^{i\omega_{mn}t}\braket\langle {m} | {H_1} | {n}\rangle
+\end{align*}
+Ein Potenzreihenansatz $c_n=\sum_k\lambda^kc_{nk}$ liefert dann durch Koeffizientenvergleich folgende Rekursionsformel:
+\begin{align*}
+0&=i\hbar\sum_k\lambda^kc_{nk}'-\sum_m\sum_k\lambda^{k+1}c_{mk}e^{i\omega_{nm}t}\braket\langle {n} | {H_1} | {m}\rangle\\
+\underline{k=0:}&\ \ 0=i\hbar\partial_tc_{n0}\ \ \Rightarrow\ \ c_{n0}\equiv\tecxt\text{const.}=\brak\langle {n}| {\psi(t=0)}\rangle=\brak\langle {n}| {N}\rangle=\delta_{nN}\\
+\underline{k\ge 1:}&\ \ i\hbar\partial_tc_{nk}=\sum_mc_{m,k-1}e^{i\omega_{nm}t}\braket\langle {n} | {H_1} | {m}\rangle\\
+\underline{k= 1:}&\ \ i\hbar\partial_tc_{n1}=\sum_mc_{m0}e^{i\omega_{nm}t}\braket\langle {n} | {H_1} | {m}\rangle=e^{i\omega_{nN}t}\braket\langle {n} | {H_1} | {N}\rangle\\
+&\Rightarrow\ \ c_{n1}=\frac{1}{i\hbar}\intx\int_{0}^{t}e^{i\omega_{nN}t'}\braket\langle {n} | {H_1} | {N}\rangle\,\mathrm{d}t'
+\end{align*}
+Für das gegebene Problem gilt $\omega_{nN}=\frac{\hbar\omega}{\hbar}\kla\left( {n+\frac{1}{2}-N-\frac{1}{2}} \right)=\omega (n-N)$ und $H_1=\alpha\kla\left( {a^\dagger + a} \right)\Theta(t)\Theta(\tau -t)$:
+\begin{align*}
+c_{n1}(t)&=\frac{\alpha}{i\hbar}\intx\int_{0}^{\min\klammer\left\{{\tau,t} \right\}}e^{i\omega (n-N)t'}\braket\langle {n} | {a^\dagger +a} | {N}\rangle\,\mathrm{d}t'=\\
+&=\frac{\alpha}{i\hbar}\frac{e^{i\omega (n-N)\tau}-1}{i\omega(n-N)}\klam\left[ {\sqrt{N+1}\delta_{n,N+1}+\sqrt{N}\delta_{n,N-1}} \right]\\
+\Ket | {\psi(t)} \rangle&\simeq \sum_n(c_{n0}+\lambda c_{n1})e^{-\frac{i}{\hbar}E_nt}\Ket | {n} \rangle=\\
+&=e^{-\frac{i}{\hbar}E_Nt}\Ket | {N} \rangle-\frac{\lambda\alpha}{\hbar\omega}\klam\left[ {\sqrt{N+1}\kla\left( {e^{i\omega t}-1} \right) e^{-\frac{i}{\hbar}E_{N+1}t}\Ket | {N+1} \rangle-\sqrt{N}\kla\left( {e^{-i\omega t}-1} \right)e^{-\frac{i}{\hbar}E_{N-1}t}\Ket | {N-1} \rangle} \right]=\\
+&=e^{-i\omega\kla\left( {N+\frac{1}{2}} \right)t}\klammer\left\{{\Ket | {N} \rangle-\frac{2i\lambda\alpha\sin\frac{\omega t}{2}}{\hbar\omega}\klam\left[ {\sqrt{N+1}e^{-\frac{i\omega t}{2}}\Ket | {N+1} \rangle+\sqrt{N}e^{\frac{i\omega t}{2}}\Ket | {N-1} \rangle} \right]} \right\}
+\end{align*}
+Die Übergangswahrscheinlichkeiten sind gegeben durch $P_{N\,\rightarrow\, n}=|\brak\langle {n}| {\psi(t)}\rangle|^2$:
+\begin{align*}
+P_{N+1}&=\frac{4\alpha^2}{\hbar^2\omega^2}(N+1)\sin^2\frac{\omega\tau}{2}\\
+P_{N-1}&=\frac{4\alpha^2}{\hbar^2\omega^2}N\sin^2\frac{\omega\tau}{2}\\
+P_N&=1-\sum_nP_n=1-\frac{4\alpha^2}{\hbar^2\omega^2}(2N+1)\sin^2\frac{\omega\tau}{2}
+\end{align*}
+\subsection{Exakte(?) Lösung}
+Alternativ kann man das \textsc{Dirac}- oder Wechselwirkungsbild betrachten. Man führt eine unitäre Transformation $U(t)=\exp\kla\left( {-\frac{i}{\hbar}H_0t} \right)S(t)$ ein und schreibt $\Ket | {\psi(t)} \rangle=U(t)\Ket | {\psi(0)} \rangle$. Operatoren transformieren mit $A_D=U^\dagger A_SU$, wobei die Indizes für das \textsc{Dirac}- oder \textsc{Schrödinger}-Bild stehen. Einsetzen liefert dann eine Gleichung für $S(t)$:
+\begin{align*}
+i\hbar\partial_t|\psi(t)\rangle &=i\hbar S'e^{-\frac{i}{\hbar}H_0t}\Ket | {\psi(0)} \rangle +H_0\Ket | {\psi(t)} \rangle\overset{!}{=}H_0\Ket | {\psi(t)} \rangle+H_{1S}e^{-\frac{i}{\hbar}H_0t}\Ket | {\psi(0)} \rangle\\
+&\Rightarrow\ \ i\hbar S'=H_{1D}S\numberthis\label{Schroedinger fuer S}
+\end{align*}
+Die heuristische Lösung dieser Gleichung ignoriert, dass es sich um eine Operatorgleichung handelt. Trennung der Variablen führt dabei fast auf das richtige Ergebnis, nur muss noch der Zeitordnungsoperator $\mathcal{T}$ hinzugefügt werden:
+\begin{align*}
+\intx\int_{0}^{t}\frac{S'(\tau)}{S(\tau)}\,\mathrm{d}\tau&=\frac{1}{i\hbar}\intx\int_{0}^{t}H_{1D}(\tau)\,\mathrm{d}\tau\ \ \Rightarrow\ \ S(t)=\mathcal{T}\exp\kla\left( {-\frac{i}{\hbar}\intx\int_{0}^{t}H_{1D}(\tau)\,\mathrm{d}\tau} \right)\numberthis\label{Neumann-Reihe fuer S}
+\end{align*}
+Da der gegebene Hamilton nur einen Einfluss auf die Integralgrenzen hat, können wir $\mathcal{T}$ hier auch weglassen und das Problem exakt lösen. Betrachte zunächst $H_{1D}$ genauer:
+\begin{align*}
+H_{1D}&\propto e^{i\omega t\kla\left( {a^\dagger a+\frac{1}{2}} \right)}\kla\left( {a^\dagger +a} \right)e^{-i\omega t\kla\left( {a^\dagger a+\frac{1}{2}} \right)}=e^{i\omega ta^\dagger a}a^\dagger e^{-i\omega ta^\dagger a}+e^{i\omega ta^\dagger a}a e^{-i\omega ta^\dagger a}=\\
+&=\klam\left[ {\sum_n\frac{(i\omega ta^\dagger a)^n}{n!}a^\dagger + e^{-i\omega t}\sum_n\frac{(i\omega taa^\dagger)^n}{n!}a} \right]e^{-i\omega ta^\dagger a}=\\
+&=\klam\left[ {a^\dagger\sum_n\frac{(i\omega taa^\dagger )^n}{n!}+e^{-i\omega t}a\sum_n\frac{(i\omega ta^\dagger a)^n}{n!}} \right]e^{-i\omega ta^\dagger a}=e^{i\omega t}a^\dagger +e^{-i\omega t}a\numberthis\label{Kommutatoren fuer H1D}
+\end{align*}
+Außerdem werden wir auf Terme folgender Art stoßen:
+\begin{align*}
+S_{nm}^{bc}&:=\braket\langle {n} | {(a^\dagger)^ba^c} | {m}\rangle=\braket\langle {n-b} | {\frac{\sqrt{n!}}{\sqrt{(n-b)!}}\frac{\sqrt{m!}}{\sqrt{(m-c)!}}} | {m-c}\rangle=\\
+&=\sqrt{\frac{n!m!}{(n-b)!(m-c)!}}\delta_{n-b,m-c}\numberthis\label{S nm bc Elemente}
+\end{align*}
+Beachte hierbei noch $n\ge b,\,m\ge c$, was sich durch das Ignorieren von Termen mit negativen Fakultäten realisieren lässt. Zuletzt benötigt man auch noch die \textsc{Baker-Campbell-Hausdorff}-Formel für die Operator-Exponentialfunktion. Die erste Eigenschaft gilt allgemein und hätte ebenso gut verwendet werden können, um Gleichung (\ref{Kommutatoren fuer H1D}) zu zeigen. Für die anderen Eigenschaften wird noch $\klam\left[ {x,\klam\left[ {x,y} \right]} \right]=0=\klam\left[ {y,\klam\left[ {x,y} \right]} \right]$ benötigt:
+\begin{align*}
+e^xye^{-x}&=\sum_k\frac{1}{k!}\klam\left[ {x,y} \right]_k=y+\klam\left[ {x,y} \right]+\dots &\tecxt\text{mit }\ \ \klam\left[ {x,y} \right]_k&:=\klam\left[ {x,\klam\left[ {x,y} \right]_{k-1}} \right]\ \ \tecxt\text{ und }\ \ \klam\left[ {x,y} \right]_0:=y\\
+e^{x+y}&=e^xe^ye^{-\frac{[x,y]}{2}}\numberthis\label{Hausdorff Exponential}\\
+e^xe^y&=e^ye^xe^{[x,y]}
+\end{align*}
+Definiere noch $\phi:=\frac{2i\alpha}{\hbar\omega}\sin\frac{\omega\tau}{2}e^{-i\frac{\omega\tau}{2}}$. Dann folgt für die Amplituden $\brak\langle {n}| {\psi(t)}\rangle$:
+\begin{align*}
+\brak\langle {n}| {\psi(t)}\rangle&=\braket\langle {n} | e^{ -\frac{i}{\hbar}H_0t}S | {N}\rangle=\\
+&=e^{-\frac{i}{\hbar}E_{n0}t}\braket\langle {n} | {\exp\kla\left( {-\frac{i\alpha}{\hbar}\intx\int_{0}^{\tau}e^{\frac{i}{\hbar}H_0t}(a^\dagger +a)e^{-\frac{i}{\hbar}H_0t}\,\mathrm{d}t} \right)} | {N}\rangle\kom\overset{\substack{{(\ref{Kommutatoren fuer H1D})} \\ |}}{=}\\
+&=e^{-i\omega t\kla\left( {n+\frac{1}{2}} \right)}\braket\langle {n} | {\exp\kla\left( {-\frac{i\alpha}{\hbar}\intx\int_{0}^{\tau}e^{i\omega t}a^\dagger +e^{-i\omega t}a\,\mathrm{d}t} \right)} | {N}\rangle=\\
+&=e^{-i\omega t\kla\left( {n+\frac{1}{2}} \right)}\braket\langle {n} | {\exp\kla\left( {-\frac{\alpha}{\hbar\omega}\klam\left[ {(e^{i\omega\tau}-1)a^\dagger + (1-e^{-i\omega\tau})a} \right]} \right)} | {N}\rangle=\\
+&=e^{-i\omega t\kla\left( {n+\frac{1}{2}} \right)}\braket\langle {n} | {\exp\kla\left( {-\frac{2i\alpha\sin\frac{\omega\tau}{2}}{\hbar\omega}\klam\left[ {e^{i\frac{\omega\tau}{2}}a^\dagger + e^{i\frac{-\omega\tau}{2}}a} \right]} \right)} | {N}\rangle=\\
+&=e^{-i\omega t\kla\left( {n+\frac{1}{2}} \right)}\braket\langle {n} | {\exp\kla\left( {\phi^\dagger a^\dagger-\phi a} \right)} | {N}\rangle\kom\overset{\substack{{(\ref{Hausdorff Exponential})} \\ |}}{=}\\
+&=e^{-i\omega t\kla\left( {n+\frac{1}{2}} \right)}\braket\langle {n} | {e^{\phi^\dagger a^\dagger}e^{-\phi a}e^{\klam\left[ {\phi^\dagger a^\dagger,\phi a} \right]/2}} | {N}\rangle=\\
+&=e^{-i\omega t\kla\left( {n+\frac{1}{2}} \right)}e^{-\frac{2\alpha^2}{\hbar^2\omega^2}\sin^2\frac{\omega\tau}{2}}\braket\langle {n} | {\kla\left( {\sum_k\frac{(\phi^\dagger a^\dagger)^k}{k!}} \right)\kla\left( {\sum_j\frac{(-\phi a)^j}{j!}} \right)} | {N}\rangle=\\
+&=f(t)\braket\langle {n} | {\sum_k\sum_j^k\frac{(\phi^\dagger)^j\phi^{k-j}}{j!(k-j)!}(a^\dagger)^ja^{k-j}} | {N}\rangle\kom\overset{\substack{{(\ref{S nm bc Elemente})} \\ |}}{=}\\
+&=f(t)\sum_k\sum_j^k\frac{(\phi^\dagger)^j\phi^{k-j}}{j!(k-j)!}\sqrt{\frac{n!N!}{(n-j)!(N-k+j)!}}\delta_{n-j,N-k+j}\kom\overset{\substack{{2j\,=\,n-N+k} \\ |}}{=}\\
+&=e^{-i\omega t\kla\left( {n+\frac{1}{2}} \right)}e^{-\frac{2\alpha^2}{\hbar^2\omega^2}\sin^2\frac{\omega\tau}{2}}\sum_{k=|n-N|}^{n+N}\frac{\sqrt{n!N!}}{\kla\left( {\frac{n+N-k}{2}} \right)!\kla\left( {\frac{n-N+k}{2}} \right)!\kla\left( {\frac{-n+N+k}{2}} \right)!}(\phi^\dagger)^{\frac{n-N+k}{2}}\phi^{\frac{-n+N+k}{2}}
+\end{align*}
+Übergang in den Grundzustand oder Ausgangszustand mit $x\equiv\frac{2\alpha}{\hbar\omega}\sin\frac{\omega\tau}{2}$:
+\begin{align*}
+P_{N\rightarrow 0}&=|\brak\langle {0}| {\psi}\rangle|^2=\left\vert e^{-\frac{x^2}{2}}\frac{\phi^N}{\sqrt{N!}}\right\vert^2=\frac{(2\alpha\sin\frac{\omega\tau}{2})^{2N}}{N!(\hbar\omega)^{2N}}\exp\kla\left( {-\klam\left[ {\frac{2\alpha\sin\frac{\omega\tau}{2}}{\hbar\omega}} \right]^2} \right)\equiv\frac{x^{2N}e^{-x^2}}{N!}\le 1\\
+P_{N\rightarrow N}&=|\brak\langle {N}| {\psi}\rangle|^2=e^{-x^2}\left\vert\sum_{k=0}^{2N}\frac{N!|\phi|^k}{\kla\left( {N-\frac{k}{2}} \right)!\kla\left( {\frac{k}{2}} \right)!^2}  \right\vert^2=e^{-x^2}\left\vert\sum_{k=0}^{2N}\frac{N!x^k}{\kla\left( {N-\frac{k}{2}} \right)!\kla\left( {\frac{k}{2}} \right)!^2}  \right\vert^2\overset{?}{\le}1\\
+P_{N\rightarrow n}&=e^{-x^2}n!N!\left\vert\sum_{k=|n-N|}^{n+N}\frac{x^k}{\kla\left( {\frac{n+N-k}{2}} \right)!\kla\left( {\frac{n-N+k}{2}} \right)!\kla\left( {\frac{-n+N+k}{2}} \right)!}  \right\vert^2\overset{?}{\le}1\numberthis\label{PNn}
+\end{align*}
+Der Spezialfall $N=0$ liefert folgende Vereinfachung:
+\begin{align*}
+P_{0\rightarrow n}&=e^{-x^2}n!\left\vert\frac{x^n}{n!}\right\vert^2=\frac{x^{2n}}{n!}e^{-x^2}\\
+\sum_{n=0}^\infty P_{0\rightarrow n}&=e^{-x^2}\sum_{n=0}^\infty\frac{x^{2n}}{n!}=1
+\end{align*}
+Wir erhalten dann mit $\phi:=\frac{2i\alpha}{\hbar\omega}\sin\frac{\omega\tau}{2}e^{-i\frac{\omega\tau}{2}}$ und $x:=|\phi|$ folgende Amplituden $c_n:=\brak\langle {n}| {\psi(t)}\rangle$:
+\begin{align*}
+c_n&=e^{-i\omega t\kla\left( {n+\frac{1}{2}} \right)}e^{-\frac{x^2}{2}}\sum_{kj}\frac{(\phi^\dagger)^k(-\phi)^j}{k!j!}\braket\langle {n} | {(a^\dagger)^ka^j} | {N}\rangle\kom\overset{\substack{{(\ref{S nm bc Elemente}),\ j=N-n+k} \\ |}}{=}\\
+&=e^{-i\omega t\kla\left( {n+\frac{1}{2}} \right)}e^{-\frac{x^2}{2}}\sum_{k}\frac{(-1)^kx^{2k}(-\phi)^{N-n}\sqrt{n!N!}}{k!(N-n+k)!(n-k)!}=\\
+&=e^{-i\omega t\kla\left( {n+\frac{1}{2}} \right)}e^{-\frac{x^2}{2}}(-\phi)^{N-n}\sqrt{\frac{N!}{n!}}\sum_{k=\max\klammer\left\{{0,n-N} \right\}}^n\binom{n}{k}\frac{(-1)^kx^{2k}}{(N-n+k)!}
+\end{align*}
+Mit dem Index-shift $j:=k+N-n$ folgt dann für die Übergangswahrscheinlichkeiten $P_{N\rightarrow n}:=|\brak\langle {n}| {\psi(\tau)}\rangle|^2$:
+\begin{align*}
+P_{N\rightarrow n}&=\frac{N!x^{2n}}{n!x^{2N}}e^{-x^2}\left\vert\sum_{j=\max\klammer\left\{{0,N-n} \right\}}^N\binom{n}{n-N+j}\frac{(-1)^jx^{2j}}{j!}\right\vert^2\\
+P_{N\rightarrow n}&=\frac{N!}{n!}e^{-x^2}\left\vert\sum_{k=\max\klammer\left\{{0,n-N} \right\}}^{n}\binom{n}{k}\frac{(-1)^kx^{2k+N-n}}{(N-n+k)!}\right\vert^2
+\end{align*}
+\section{Eichtransformation}
+Es gelten die Ersetzungsregeln $p'=p-qA$ und $i\hbar\partial_t'=i\hbar\partial_t-q\phi$:
+\begin{align*}
+i\hbar\partial_t\Psi=\klam\left[ {\frac{1}{2m}\kla\left( {p-qA} \right)^2+V+q\phi} \right]\Psi=H\Psi
+\end{align*}
+Betrachte $\Psi'=e^{\tecxt\text{i}\frac{q}{\hbar}\chi(\vec{r}, t)}\Psi$ mit $A'=A+\nabla\chi$ und $\phi'=\phi-\partial_t\chi$:
+\begin{align*}
+p'\Psi'&=\kla\left( {p-qA-q\nabla\chi} \right)e^{\tecxt\text{i}\frac{q}{\hbar}\chi}\Psi=e^{\tecxt\text{i}\frac{q}{\hbar}\chi}\kla\left( {q\nabla\chi + p-qA-q\nabla\chi} \right)\Psi=e^{\tecxt\text{i}\frac{q}{\hbar}\chi}(p-qA)\Psi\\
+p'^2\Psi'&=(p-qA-q\nabla\chi)e^{\tecxt\text{i}\frac{q}{\hbar}\chi}(p-qA)\Psi=e^{\tecxt\text{i}\frac{q}{\hbar}\chi}(p-qA)^2\Psi\\
+H'\Psi'&=\klam\left[ {\frac{p'^2}{2m}+V+q\phi'} \right]\Psi'=e^{\tecxt\text{i}\frac{q}{\hbar}\chi}\klam\left[ {\frac{1}{2m}(p-qA)^2+V+q\phi-q\partial_t\chi} \right]\Psi=\\
+&=e^{\tecxt\text{i}\frac{q}{\hbar}\chi}\klam\left[ {H-q\partial_t\chi} \right]\Psi\\
+i\hbar\partial_t\Psi'&=e^{\tecxt\text{i}\frac{q}{\hbar}\chi}\klam\left[ {H-q\partial_t\chi} \right]\Psi=e^{\tecxt\text{i}\frac{q}{\hbar}\chi}\klam\left[ {i\hbar\partial_t-q\partial_t\chi} \right]\Psi=H'\Psi'
+\end{align*}
+Mit $p^\mu=\binom{E/c}{\vec{p}}$, $\partial^\mu=\binom{\partial_t/c}{-\nabla}$ und $A^\mu=\binom{\phi/c}{\vec{A}}$ folgt dann jeweils eine Ersetzungsregel für die Transformation der klassischen Felder in der Elektrodynamik und des Impulsoperators:
+\begin{align*}
+A^\mu\ \ &\longrightarrow\ \ A^\mu -\partial^\mu\chi &p^\mu\ \ &\longrightarrow\ \ i\hbar\partial^\mu - qA^\mu 
+\end{align*}
+\section{Hamilton-Jacobi Gleichung}
+Setze $\psi=e^{\frac{i}{\hbar}S(r,t)}$ in die zeitabhängige Schrödinger-Gleichung ein:
+\begin{align*}
+0&=H\psi-i\hbar\partial_t\psi=\frac{1}{2m}\klam\left[ {(\nabla S)^2+\frac{\hbar}{i}\nabla^2S} \right]\psi+V\psi+\partial_tS\psi
+\end{align*}
+In nullter Ordnung von $\hbar$ ergibt sich damit die Hamilton-Jacobi Gleichung:
+\begin{align*}
+0&=\frac{1}{2m}\kla\left( {\nabla S} \right)^2+V+\partial_tS
+\end{align*}
+Für ein zeitunabhängiges Potential kann die Gleichung mit $S=W(r)-Et$ separiert werden:
+\begin{align*}
+(\nabla W)^2&=2m(E-V(r))\ \ \ \ \tecxt\text{mit }\ \ \ \partial_tS=-E
+\end{align*}
+Mit dem Ansatz $W=\intx\int_{r_0}^{r}p\,\mathrm{d}q$ erhält man zudem $\nabla W=p$. Damit folgt wieder die klassische 'Energie-Gleichung':
+\begin{align*}
+E&=\frac{p^2}{2m}+V
+\end{align*}
+
+\end{document}

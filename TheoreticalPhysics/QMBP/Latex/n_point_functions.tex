@@ -1,0 +1,194 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+
+\newcommand*{\Title}{$n$-point functions}
+\newcommand*{\Author}{Joachim Schwardt}
+
+\input{preamble_shared.tex}
+\input{preamble.tex}
+
+%\titlehead{titlehead}
+\subject{Quantum Many-Body Physics}
+\title{\Title}
+\author{\Author}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+Here, we derive the $n$-point functions for fermionic and bosonic operators for a quadratic Hamiltonian.
+\section{2-point functions}
+Consider $H=\sum_k \epsilon(k) n_k$, where $n_k=a_k^\dagger a_k$ is a number operator and $k$ is some arbitrary set of indices.
+We denote the set of all number operators by $\klc*{\textbf{n}}$
+The partition function is then given by
+\begin{align}
+Z &= \tr \powe{-\beta H} = \sum_{\klc*{\textbf{n}}} \brc*{\textbf{n}}{\powe{-\beta H}}{\textbf{n}} = \sum_{n_1} \sum_{n_2} \dots \prod_k \brc*{n_k}{\powe{-\beta \epsilon(k)n_k}}{n_k} = \prod_k \sum_{n_k} \powe{-\beta \epsilon(k)n_k}.
+\end{align}
+For fermions, the sum runs from $n_k=0$ to $n_k=1$, and for bosons it runs to $n_k=\infty$.
+Thus,
+\begin{align}
+Z &= \prod_k Z_k = \prod_k \kla*{1 + \zeta \powe{-\beta \epsilon(k)}}^\zeta,
+\end{align}
+where $\zeta=+1$ for fermions and $\zeta=-1$ for bosons.
+Note that the operators satisfy $\klb[\big]{a_k, a_{k'}^\dagger}_\zeta = \delta_{k,k'}$ and $\klb[\big]{a_k, a_{k'}}_\zeta = 0$, where the subscript denotes the sign between the two terms of the commutator.
+The time-evolution of the operators can be obtained from the Heisenberg equation, 
+\begin{align}
+\i\frac{\d}{\d t} a_k &= \klb*{a_k, H} = \sum_q \epsilon(q) \klb*{a_k, a_q^\dagger a_q} = \epsilon(k)a_k,
+\end{align}
+where we used $\klb*{a, bc} = \klb*{a,b}_\zeta c - \zeta b\klb*{a,c}_\zeta$.
+Integrating the equation yields $a_k(t) = a_k \powe{-\i \epsilon(k) t}$, and similarly $a_k^\dagger(t) = a_k^\dagger \powe{+\i\epsilon(k)t}$.
+
+Let us now turn to computing the 2-point function.
+It is defined by
+\begin{align}
+\bra*{a_k^\dagger(t) a_{k'}} &= \frac{1}{Z} \tr \klb*{\powe{-\beta H} a_k^\dagger a_{k'}} \powe{\i\epsilon(k) t} = \zeta \delta_{k,k'} \powe{\i\epsilon(k) t} - \zeta \frac{1}{Z} \tr \klb*{\powe{-\beta H} a_{k'} a_k^\dagger} \powe{\i\epsilon(k) t}.
+\end{align}
+Note that we have
+\begin{align}
+a_k\powe{-\beta H} &= a_k \prod_q \powe{-\beta \epsilon(q) n_q} = \kla[\Big]{\prod_{q\neq k} \powe{-\beta \epsilon(q) n_q}} a_k \powe{-\beta \epsilon(k)n_k} = \powe{-\beta H} \powe{\beta \epsilon(k)n_k}a_k \powe{-\beta \epsilon(k)n_k},
+\end{align}
+and using the Lie-Hadamard relation $\powe{x}y\powe{-x} = y + \klb*{y,x} + \frac{1}{2!} \klb*{y,\klb*{y,x}} + \dots$ then yields
+\begin{align}
+a_k\powe{-\beta H} &= \powe{-\beta H} \kla*{a_k - \beta \epsilon(k)a_k + \frac{1}{2!} \kla*{-\beta\epsilon(k)}^2 a_k + \dots} = \powe{-\beta H} \powe{-\beta\epsilon(k)} a_k.
+\end{align}
+Inserting into the 2-point function and using the cyclic property of the trace then gives
+\begin{align}
+\bra*{a_k^\dagger(t) a_{k'}} &= \zeta\delta_{k,k'} \powe{\i\epsilon(k)t} - \zeta \frac{1}{Z} \tr\klb*{\powe{-\beta H} \powe{\beta \epsilon(k')} a_k^\dagger(t) a_{k'}} = \zeta \delta_{k,k'} \powe{\i\epsilon(k)t} - \zeta \powe{\beta\epsilon(k')} \bra*{a_k^\dagger(t) a_{k'}},
+\end{align}
+and rearranging yields
+\begin{align}
+\bra*{a_k^\dagger(t) a_{k'}} &= \delta_{k,k'} \powe{\i\epsilon(k) t} \frac{\zeta}{1 + \zeta \powe{\beta \epsilon(k)}} = \delta_{k,k'} \powe{\i\epsilon(k) t} n_\zeta(k) \equiv G_{k,k'}(t) \equiv \delta_{k,k'} G_k(t),
+\end{align}
+where we introduced the Fermi-Dirac ($\zeta=+1$) and Bose-Einstein ($\zeta=-1$) distribution functions $n_\zeta(k) = \frac{1}{\powe{\beta \epsilon(k)} + \zeta}$.
+
+\section{Bosonic $n$-point functions}
+The generalization to bosonic $n$-point functions can be obtained by first considering the generalized partition function
+\begin{align}
+Z &= Z_0 \bra*{\prod_k \powe{\sum_k J_k a_k^\dagger}\prod_k \powe{K_k a_k}} = Z_0 \powe{\sum_{k,k'} J_1(k) J_2(k') \bra*{a_k^\dagger a_{k'}}} = Z_0 \powe{\sum_{k}J_1(k)J_2(k) G_{k}}.
+\end{align}
+Here, we made use of the ``master theorem'' for expectation values for quadratic Hamiltonians,
+\begin{align}
+\bra[\Big]{\prod_j \powe{C_j}} &= \powe{\frac{1}{2} \sum_j \bra{C_j^2}} \powe{\sum_{j<l} \bra*{C_j C_{l}}},
+\end{align}
+where $C_j$ are some linear combinations of $a_k$ and $a_k^\dagger$ (note that in our case $C_1$ and $C_2$ respectively only contain annihilators or creators, so $\bra[\big]{C_j^2} = 0$).
+The proof of this theorem is given in \autoref{sec:general_expval}.
+
+With the generalized partition function, we can then compute $n$-point functions by repeatedly taking derivatives.
+For notational convenience we now identify $J_1\equiv J$, $J_2 \equiv K$ and $k_j\equiv j$ for $j=1,\dots,n$.
+For $n=2$, we have
+\begin{align}
+G(1,2) &\equiv \bra*{a_1^\dagger a_{2}} = \frac{1}{Z_0} \frac{\partial}{\partial J(1)} \frac{\partial}{\partial K(2)} Z \Big\vert_{J=0,K=0} = \frac{1}{Z_0} \partial_{J_1} J(2) G_{2} Z = \delta_{12} G_1.
+\end{align}
+For $n=4$ we similarly get
+\begin{align}
+G(1,2,3,4) &\equiv \bra*{a_1^\dagger a_{2}^\dagger a_{3} a_{4}} = \frac{1}{Z_0} \partial_{J_2} \partial_{J_1} \partial_{K_3} \partial_{K_4} Z \\
+&= \frac{1}{Z_0} \partial_{J_2} \partial_{J_1} J_3G_3J_4G_4 Z = \delta_{13}G_3 \delta_{24}G_4 + \delta_{14}G_4 \delta_{23}G_3.
+\end{align}
+And for $n=6$ we get
+\begin{align}
+G &\equiv \bra*{a_1^\dagger a_{2}^\dagger a_{3}^\dagger a_{4} a_{5} a_6} = \frac{1}{Z_0} \partial_{J_1} \partial_{J_2} \partial_{J_3} \partial_{K_4} \partial_{K_5} \partial_{K_6} Z \\
+&= \frac{1}{Z_0} \partial_{J_1} \partial_{J_2} \partial_{J_3} J_4G_4J_5G_5J_6G_6 Z \\
+&= \kla*{\delta_{14} \kla*{\delta_{25} \delta_{36} + \delta_{26} \delta_{35}} + \delta_{15}\kla*{\delta_{24} \delta_{36} + \delta_{26} \delta_{35}} + \delta_{16} \kla*{\delta_{24} \delta_{35} + \delta_{25} \delta_{34}}} G_4G_5G_6.
+\end{align}
+
+\section{Fermionic $n$-point functions}
+For fermions, the generalized partition function depends on the order of the operators.
+There is no simple analogue of the bosonic ``master formula'', but the fermionic case turns out to be much easier anyway.
+Note that we can explicitly compute
+\begin{align}
+Z &= \tr \klb*{\powe{-\beta H} \powe{J_1a_1^\dagger} \powe{J_2a_2^\dagger} \dots \powe{K_2a_2} \powe{K_1a_1}} \\
+&= \sum_{n_1=0}^1 \sum_{n_2=0}^1 \dots \prod_k \powe{-\beta \epsilon(k)n_k} \brc*{n_1n_2\dots}{ \powe{J_1a_1^\dagger} \powe{J_2a_2^\dagger} \dots \powe{K_2a_2} \powe{K_1a_1} }{n_1n_2\dots }\\
+&= \prod_k \sum_{n_k=0}^1 \powe{-\beta \epsilon(k)n_k} \brc*{n_k}{ \powe{J_ka_k^\dagger} \powe{K_ka_k} }{n_k} = \prod_k \kla*{1 + \powe{-\beta \epsilon(k)} \kla*{1 + J_kK_k}} \\
+&\equiv \prod_k \kla*{Z_k + J_kK_k \powe{-\beta\epsilon(k)}},
+\end{align}
+where $Z_0 = \prod_k Z_k$.
+Computing $n$-point functions can now be done by taking derivatives, i.e.
+\begin{align}
+G(1,2) &= \bra*{a_1^\dagger a_2} = \frac{1}{Z_0} \partial_{J_1} \partial_{K_2} Z = \frac{1}{Z_0} \partial_{J_1} J_2 \powe{-\beta\epsilon(2)} \prod_{k\neq 2} \kla*{Z_k + J_kK_k\powe{-\beta\epsilon(k)}} \\
+&= \frac{\delta_{12}}{Z_0} \powe{-\beta\epsilon(2)} \prod_{k\neq 2} Z_k = \frac{\delta_{12}}{Z_2} \powe{-\beta \epsilon(2)} = \delta_{12} G_2 = G_{12}.
+\end{align}
+Similarly, 
+\begin{align}
+G(1,2,3,4) &= \bra*{a_1^\dagger a_2^\dagger a_3a_4} = \frac{1}{Z_0} \partial_{J_1} \partial_{J_2} \partial_{K_3}\partial_{K_4} Z = \frac{1}{Z_0} \partial_{J_1} \partial_{J_2} J_3\powe{-\beta\epsilon(3)} J_4 \powe{-\beta\epsilon(4)} \prod_{k\neq 3,4}\\
+&= \frac{1}{Z_0} \partial_{J_1} \kla*{\delta_{23} J_4 \color{red} - \color{black} \delta_{24} J_3} \powe{-\beta\epsilon(3)} \powe{-\beta\epsilon(4)} \prod_{k\neq 3,4} = G_{23} G_{14} - G_{24}G_{13}.
+\end{align}
+The minus sign requires some careful explanation, but other than that the calculation is essentially similar to the $n=2$-case and yields the same ``sum of all partitions of two elements''-structure from the bosonic case.
+
+To understand the origin of the minus sign, we need to once again take a look at the original partition function.
+Implicitly, in the derivation we made the assumption that $\powe{K_ka_k}$ commute among themselves, when we factorized the expectation value into products of expectation values for the individual modes.
+The reason we have not ended up with a completely arbitrary result is that there is actually an easy way to fix this ``mistake'' by treating the $J_k$ and $K_k$ not as ordinary numbers, but rather as Grassmann variables.
+Then, we do indeed find
+\begin{align}
+\powe{K_2a_2} \powe{K_1a_1} &= \kla*{1 + K_2a_2} \kla*{1 + K_1a_1} = 1 + K_1a_1+K_2a_2 - K_2K_1 a_1a_2 \\
+&= 1 + K_1a_1+K_2a_2 + K_1K_2 a_1a_2 = \powe{K_1a_1} \powe{K_2a_2}.
+\end{align}
+The consequence of using such variables is that derivatives no longer commute, i.e. $\partial_{J_2} J_1J_2 = -J_1\partial_{J_2} J_2 = -J_1$, which immediately follows from the observation $\partial_{J_2} J_1J_2 = \partial_{J_2} (-J_2J_1) = -J_1$.
+
+For illustrative purposes, $n=6$ yields
+\begin{align}
+G &= \bra*{a_1^\dagger a_{2}^\dagger a_{3}^\dagger a_{4} a_{5} a_6} = \frac{1}{Z_0} \partial_{J_1} \partial_{J_2} \partial_{J_3} \partial_{K_4} \partial_{K_5} \partial_{K_6} Z \\
+&= \frac{1}{Z_0} \partial_{J_1} \partial_{J_2} \partial_{J_3} J_4J_5J_6 \powe{-\beta\epsilon(4)} \powe{-\beta\epsilon(5)} \powe{-\beta\epsilon(6)} \prod_{k\neq 4,5,6}\\
+&= \partial_{J_1} \partial_{J_2} \kla*{\delta_{34} J_5J_6 - \delta_{35} J_4J_6 + \delta_{36} J_4J_5} G_4G_5G_6 = \\
+&= \partial_{J_1} \kla*{\delta_{34} \delta_{25}J_6 - \delta_{34} \delta_{26}J_5 - \delta_{35} \delta_{24} J_6 + \delta_{35} \delta_{26} J_4 + \delta_{36} \delta_{24} J_5 - \delta_{36} \delta_{25} J_4} G_4G_5G_6 = \\
+&= \kla*{\delta_{34} \delta_{25}\delta_{16} - \delta_{34} \delta_{26}\delta_{15} - \delta_{35} \delta_{24} \delta_{16} + \delta_{35} \delta_{26} \delta_{14} + \delta_{36} \delta_{24} \delta_{15} - \delta_{36} \delta_{25} \delta_{14}} G_4G_5G_6.
+\end{align}
+Defining $1'=6$, $2'=5$ and $3'=4$ makes the pattern more apparent,
+\begin{align}
+G &= G_{11'}G_{22'}G_{33'} - G_{12'}G_{21'}G_{33'} + G_{13'} G_{21'}G_{32'}  - G_{11'}G_{23'}G_{32'} + G_{12'}G_{23'}G_{31'} - G_{13'}G_{22'}G_{31'}.
+\end{align}
+The first variable is always $1,2,3$ in the natural order, while the second variable is any permutation of $1',2',3'$.
+The associated sign is given by the Levi-Civita, e.g. $\epsilon_{1'2'3'} = +1$ or $\epsilon_{3'2'1'} = -1$.
+
+\section{Wick's Theorem}
+In this section, we only state Wick's theorem for fermions.
+The bosonic case trivially follows from ignoring all minus signs.
+
+The $n$-point function is given by
+\begin{align}
+G &= \bra*{a_1^\dagger a_2^\dagger \dots a_n^\dagger a_{n'} \dots a_{2'} a_{1'}} = \sum_{\pi\in \mathcal{P}(n)} (-1)^{\abs*{\pi}} \prod_{j=1}^n G_{j, \pi(j)},
+\end{align}
+where $\abs*{\pi}$ is the order of the permutation $\pi$, i.e. $(-1)^{\abs*{\pi}} = \epsilon_{\pi(1),\pi(2),\dots,\pi(n)}$, and $\mathcal{P}(n)$ is the set of all permutations of $n$ objects.
+
+\section{General expectation value for quadratic Hamiltonians}\label{sec:general_expval}
+Here, we calculate the general expectation value $\bra*{\powe{C_1} \powe{C_2} \powe{C_3} \dots}$, where $C_j$ are linear combinations of bosonic operators $a_k$ and $a_k^\dagger$.
+Thus, $\klb*{C_j,C_l}\in\mathbb{C}$, and we can use the Baker-Campbell-Hausdorff relation $\powe{A} \powe{B} = \powe{A+B+\frac{1}{2} \klb*{A,B}}$ to rewrite the operator as
+\begin{align}
+\powe{C_1} \powe{C_2} \powe{C_3} \dots &= \powe{C_1+C_2} \powe{C_3} \dots \powe{\frac{1}{2} \klb*{C_1,C_2}} \\
+&= \powe{C_1+C_2+C_3} \powe{C_4} \dots \powe{\frac{1}{2} \klb*{C_1,C_2} + \frac{1}{2} \klb*{C_1,C_3} + \frac{1}{2} \klb*{C_2,C_3}} = \dots = \powe{C_1+C_2+C_3+\dots} \powe{\frac{1}{2} \sum_{j<l} \klb*{C_j,C_l}}.
+\end{align}
+This reduces the problem to that of computing $\bra*{\powe{C}}$ for a single linear combination $C=\sum_k \kla*{u_ka_k + v_ka_k^\dagger}$.
+A simple method is to write $C=C_-+C_+$ with $C_- = \sum_k u_ka_k$ and $C_+=\sum_k v_ka_k^\dagger$, and to realize that
+\begin{align}
+\bra*{\powe{C}} &= \bra*{\powe{C_-} \powe{C_+} \powe{-\frac{1}{2} \klb*{C_-, C_+}}} = \bra*{\powe{C_-} \powe{C_+}} \powe{-\frac{1}{2} \sum_k u_kv_k}.
+\end{align}
+Similarly, however, we may also express the same quantity as
+\begin{align}
+\bra*{\powe{C}} &= \bra*{\powe{C_+} \powe{C_-} \powe{- \frac{1}{2} \klb*{C_+, C_-}}} = \bra*{\powe{C_+} \powe{C_-}} \powe{\frac{1}{2} \sum_k u_kv_k},
+\end{align}
+from which it follows that $g(u,v) \equiv \bra*{\powe{C_-} \powe{C_+}}$ satisfies
+\begin{align}
+g(u,v) &= \powe{\sum_ku_kv_k} \bra*{\powe{C_+} \powe{C_-}} = \powe{\sum_ku_kv_k} \bra*{ \powe{\beta H} \powe{C_-} \powe{-\beta H} \powe{C_+} } = \powe{\sum_ku_kv_k} \bra*{ \powe{\powe{\beta H} C_- \powe{-\beta H}} \powe{C_+} }\\
+&= \powe{\sum_ku_kv_k} \bra*{ \powe{\sum_k u_k \powe{-\beta \epsilon(k)} a_k} \powe{C_+} } = \powe{\sum_ku_kv_k} g\kla*{\klc*{u_k\powe{-\beta \epsilon(k)}}, v}\\
+&= \powe{\sum_ku_kv_k} \powe{\sum_ku_k \powe{-\beta \epsilon(k)} v_k} g\kla*{\klc*{u_k\powe{-2\beta \epsilon(k)}}, v} = \dots = \powe{\sum_ku_k \kla*{1 + \powe{-\beta\epsilon(k)} + \powe{-2\beta\epsilon(k)} + \dots} v_k} g\kla*{0, v}.
+\end{align}
+The last step involves the limit $\lim_{n\rightarrow\infty} \powe{-n\beta\epsilon(k)} = 0$, which assumes that $\epsilon(k) > 0$.
+This is justified, because potential zero-modes could just be dropped in $H$.
+By construction, $g(0,v) = \bra*{\powe{C_+}} = 1$, and thus we end up with\footnote{$\frac{2}{1 - \powe{-x}} - 1 = \frac{1 + \powe{-x}}{1 - \powe{-x}} = \coth\kla*{\frac{x}{2}}$}
+\begin{align}
+\bra*{\powe{C}} &= g(u,v) \powe{-\frac{1}{2} \sum_k u_kv_k} = \powe{\sum_k u_kv_k \kla*{\frac{1}{1 - \powe{-\beta \epsilon(k)}} - \frac{1}{2}}} = \powe{\frac{1}{2} \sum_k u_kv_k \coth\kla*{\frac{1}{2} \beta\epsilon(k)}}.
+\end{align}
+On the other hand, we find that
+\begin{align}
+\bra*{C^2} &= \sum_{k,k'} \bra*{\kla*{u_ka_k+v_ka_k^\dagger} \kla*{u_{k'} a_{k'} + v_{k'} a_{k'}^\dagger}} = \sum_k u_kv_k \bra*{\kla*{1 + 2n_k}} \\
+&= \sum_k u_kv_k \frac{\powe{\beta\epsilon(k)} + 1}{\powe{\beta\epsilon(k)} - 1} = \frac{1}{2} \sum_k u_kv_k \coth\kla*{\frac{1}{2} \beta\epsilon(k)},
+\end{align}
+which finally yields $\bra*{\powe{C}} = \powe{\frac{1}{2} \bra*{C^2}}$, and thus
+\begin{align}
+\bra*{\powe{C_1} \powe{C_2} \dots} &= \powe{\frac{1}{2} \bra*{\kla*{C_1+C_2+\dots}^2}} \powe{\frac{1}{2} \sum_{j<l} \klb*{C_j,C_l}} = \powe{\frac{1}{2} \sum_{j,l} \bra*{C_jC_l}} \powe{\frac{1}{2} \sum_{j<l} \klb*{C_j,C_l}} = \powe{\frac{1}{2} \sum_j \bra{C_j^2}} \powe{\sum_{j<l} \bra*{C_jC_l}}.
+\end{align}
+(see Altland-Simons for complementary derivations of Wick's theorem)
+
+
+\end{document}

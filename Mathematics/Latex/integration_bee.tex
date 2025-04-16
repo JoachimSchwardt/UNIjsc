@@ -1,0 +1,92 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{myscrarticle}
+
+\newcommand*{\titel}{MIT Integration Bee}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Mathematical Methods}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{2023}
+Finals, fifth integral.
+\begin{align}
+I &= \intx{0}{1}{\kla*{\sum_{n\ge 1} \frac{1}{p^n} \lfloor q^n x \rfloor }^2}{x}.
+\end{align}
+Apparently
+\begin{align}
+I &= \sum_{n,m \ge 1} \frac{1}{p^np^m} \intx{0}{1}{\lfloor q^nx \rfloor \lfloor q^mx \rfloor}{x} = \sum_{n,m \ge 1} \frac{q^{-n}}{p^np^m} \intx{0}{q^n}{\lfloor y \rfloor \lfloor q^{m-n}y \rfloor}{y}.
+\end{align}
+For $p,q\in\mathbb{N}$ we have
+\begin{align}
+I &= \sum_{n,m \ge 1} \frac{q^{-n}}{p^np^m} \sum_{k=0}^{q^n-1} \intx{k}{k+1}{k \lfloor q^{m-n}y \rfloor}{y} = I_1 + 2I_2
+\end{align}
+where $I_1$ contains the $n=m$-terms and $I_2$ contains the terms $m>n$.
+The contribution from $n=m$ reads
+\begin{align}
+I_1 &= \sum_{n\ge 1} \frac{1}{q^np^{2n}} \sum_{k=0}^{q^n-1} k^2 = \sum_{n\ge 1} \frac{1}{q^np^{2n}} \frac{(q^n-1)q^n(2q^n - 1)}{6}.
+\end{align}
+Using
+\begin{align}
+\intx{k}{k+1}{\lfloor lx \rfloor }{x} &= kl + \intx{0}{1}{\lfloor lx \rfloor }{x} = kl + \sum_{j=0}^{l-1} \intx{\frac{j}{l}}{\frac{j+1}{l}}{\lfloor lx \rfloor }{x} = kl + \frac{l(l-1)}{2}
+\end{align}
+for $l\in\mathbb{N}$ we get
+\begin{align}
+I_2 &= \sum_{m>n \ge 1} \frac{q^{-n}}{p^np^m} \sum_{k=0}^{q^n-1} k \kla*{kq^{m-n} + \frac{q^{m-n} (q^{m-n} - 1)}{2}  } = \\
+&= \sum_{m>n \ge 1} \frac{q^{m-2n}}{p^np^m} \kla*{ \frac{(q^n-1) q^n (2q^n - 1)}{6} + \frac{q^{m-n}-1}{2} \frac{q^n(q^n-1)}{2} }.
+\end{align}
+The integral is now reduced to a summation
+\begin{align}
+I &= \sum_{n\ge 1} \frac{2q^{2n} - 3q^n + 1 }{6p^{2n}} + 2\sum_{m>n\ge 1} \frac{q^{m-n}}{p^{m+n}} \kla*{\frac{2q^{2n} - 3q^n + 1}{6} + \frac{q^m - q^n - q^{m-n} + 1}{2} }.  
+\end{align}
+The first part gives
+\begin{align}
+I_1 &= \frac{1}{3} \sum_{n\ge 1} \kla*{\frac{q^2}{p^2}}^{n} - \frac{1}{2} \sum_{n\ge 1} \kla*{\frac{q}{p^2}}^n + \frac{1}{6} \sum_{n\ge 1} \kla*{\frac{1}{p^2}}^n = \frac{1}{3} \frac{q^2}{p^2 - q^2} - \frac{1}{2} \frac{q}{p^2 - q} + \frac{1}{6} \frac{1}{p^2 - 1}.
+\end{align}
+The second part is more elaborate.
+The contribution from the terms not containing additional $m$-dependence in the parentheses gives
+\begin{align}
+& \sum_{n\ge 1} \frac{1}{(pq)^n} \kla*{\frac{2q^{2n} - 3q^n + 1}{6} + \frac{1-q^n}{2} } \sum_{m > n} \kla*{\frac{q}{p}}^m = \\
+&= \sum_{n\ge 1} \frac{1}{(pq)^n} \kla*{\frac{2q^{2n} - 3q^n + 1}{6} + \frac{1-q^n}{2} } \kla*{\frac{q}{p}}^n \frac{q}{p-q} = \\
+&= \frac{q}{p-q} \sum_{n\ge 1} \klb*{ \frac{1}{3} \kla*{\frac{q^2}{p^2}}^n - \kla*{\frac{q}{p^2}}^n + \frac{2}{3} \kla*{\frac{1}{p^2}}^n } = \\
+&= \frac{q}{p-q} \klb*{\frac{1}{3} \frac{q^2}{p^2-q^2} - \frac{q}{p^2 -q} + \frac{2}{3} \frac{1}{p^2 - 1} }.
+\end{align}
+\color{red} PROBABLY CORRECT TO THIS POINT \color{black}
+The remaining contributions give
+\begin{align}
+&\sum_{n\ge 1} \frac{1}{(pq)^n} \frac{1}{2} \sum_{m>n} \klb*{ \kla*{\frac{q^2}{p}}^m - \frac{1}{q^n} \kla*{\frac{q^2}{p}}^m  } = \\
+&= \frac{1}{2} \sum_{n\ge 1} \frac{1}{(pq)^n} \kla*{\frac{q^2}{p}}^n  \klb*{1 - \frac{1}{q^n}} \frac{q^2}{p - q^2} = \\
+&= \frac{1}{2} \frac{q^2}{p - q^2} \sum_{n\ge 1}  \klb*{ \kla*{\frac{q}{p^2}}^n - \kla*{\frac{1}{p^2}}^n } = \\
+&= \frac{1}{2} \frac{q^2}{p-q^2} \klb*{ \frac{q}{p^2 - q} - \frac{1}{p^2 - 1} }.
+\end{align}
+Putting everything together we find
+\begin{align}
+%%%I &= \frac{1}{3} \frac{q^2}{p^2 - q^2} - \frac{1}{2} \frac{q}{p^2 - q} + \frac{1}{6} \frac{1}{p^2 - 1} + 2\frac{q}{p-q} \klb*{\frac{1}{3} \frac{q^2}{p^2-q^2} - \frac{q}{p^2 -q} + \frac{2}{3} \frac{1}{p^2 - 1} } + \frac{q^2}{p-q^2} \klb*{ \frac{q}{p^2 - q} - \frac{1}{p^2 - 1} }\\
+I &= \frac{q^2}{p^2 - q^2} \klb*{\frac{1}{3} +\frac{2}{3} \frac{q}{p-q} } + \frac{q}{p^2 - q} \klb*{-\frac{1}{2} + 2\frac{q}{p-q} + \frac{q^2}{p - q^2} } + \frac{1}{p^2 - 1} \klb*{\frac{1}{6} + \frac{4}{3}\frac{q}{p-q} - \frac{q^2}{p - q^2} }. 
+\end{align}
+For $q=2$ and $p=3$ this simplifies to 
+\begin{align}
+I &= \frac{4}{5} \klb*{\frac{1}{3} + \frac{4}{3}} + \frac{2}{7} \klb*{-\frac{1}{2} + 4 - 4} + \frac{1}{8} \klb*{\frac{1}{6} + \frac{8}{3} + 1} = \frac{4}{3} - \frac{1}{7} + \frac{25}{24} = ...
+\end{align}
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

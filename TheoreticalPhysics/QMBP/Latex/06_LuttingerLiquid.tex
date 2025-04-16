@@ -1,0 +1,153 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{myscrarticle}
+
+\newcommand*{\titel}{6 Infinite spinless Luttinger Liquid}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Quantum Many-Body Physics}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+
+Our starting point is a clean spinless Luttinger liquid as described in bosonized language by the Hamiltonian
+\begin{align}
+H_0 &= \frac{\hbar u}{2} \intx{ }{ }{\klb*{K\kla*{\theta'(x)}^2 + \frac{1}{K} \kla*{\phi'(x)}^2}}{x}
+\end{align}
+where $K$ is the dimensionless Luttinger parameter and $u$ is the renormalized velocity of particle-hole excitations different from the bare $v_F$.
+The bosonization identity of the slow moving fermionic field here reads as 
+\begin{align}
+\psi_r(x) &= \frac{\eta_r}{\sqrt{2\pi a}} \powe{-\i \sqrt{\pi} \kla*{r\phi(x) - \theta(x)}}
+\end{align}
+where $\klb*{\phi(x), \theta'(x')} = \i\delta(x-x')$. 
+Consider the coupling to a weak external electromagnetic potential described by
+\begin{align}
+H(t) &= H_0 + \intx{ }{ }{A(x,t)J(x)}{x}
+\end{align}
+with the vector potential $A$ and the electron current operator $J$.
+The basic ingredient for the calculation of the conductance of the system is the Kubo formula of linear response theory which here reads as
+\begin{align}
+\bra*{J(x)}(t) &= \bra*{J(x)}_0(t) + \intx{ }{ }{\intr{G_{JJ}^R(x,x'|t,t') A(x',t') + \mathcal{O}(A^2)}{t'}}{x'}
+\end{align}
+where $\bra*{\cdot}$ denotes the perturbed expectation value and $G_{JJ}^R$ is the retarded current-current correlation function defined by
+\begin{align}
+G_{JJ}^R(x,x'|t,t') &= G_{JJ}^R(x-x'|t-t') = \frac{1}{\i\hbar} \Theta(t-t') \bra*{\klb*{J(x,t), J(x',t')} }_0.
+\end{align}
+Approximate the fermionic density as $\rho(x,t) \approx\rho_R(x,t) + \rho_L(x,t)$ and note the the continuity equation reads as $q\dot{\rho} = - \partial_xJ$ where $q$ is the electric charge of the fermions.
+Then the current can be written as
+\begin{align}
+J(x,t) &= \intx{ }{ }{-q\partial_t \rho(x,t)}{x} \approx -q\partial_t \intx{ }{ }{\kla*{\rho_R + \rho_L}}{x}.
+\end{align}
+At this point we evaluate the densities from their definition using $\eta_r^{-1} = \eta_r^\dagger$ and $\klb*{\phi(x),\theta(x')} = \frac{\i}{2} \Text{sgn\,}(x-x')$
+\begin{align}
+\rho_r &= \psi_r^\dagger \psi_r = \powe{\i \sqrt{\pi} \kla*{r\phi^\dagger - \theta^\dagger} } \frac{\eta_r^\dagger}{\sqrt{2\pi a}} \frac{\eta_r}{\sqrt{2\pi a}} \powe{-\i \sqrt{\pi} \kla*{r\phi - \theta}} = \\
+&= \frac{1}{2\pi a} \powe{\i\sqrt{\pi}r\phi^\dagger} \powe{-\i\sqrt{\pi} \theta^\dagger} \powe{\i\sqrt{\pi}\theta} \powe{-\i\sqrt{\pi} r\phi}.
+\end{align}
+????
+We find $J(x,t) = \frac{-e}{\sqrt{\pi}} \partial_t\phi(x,t)$.\\
+Using $E=-\partial_tA$ the Fourier transform of the expectation value becomes
+\begin{align}
+\bra*{J(x)}(\omega) &= \intr{\bra*{J(x)}(t) \powe{\i\omega t}}{t} = \bra*{J(x)}_0(\omega) + f(\omega)
+\end{align}
+where the non-trivial part is contained in the function
+\begin{align}
+f(\omega) &= \intr{\intx{ }{ }{\intr{G_{JJ}^R(x-x'|t-t') A(x',t') \powe{\i\omega t}}{t'}}{x'}}{t} = \\
+&= \intr{\intx{ }{ }{\intr{G_{JJ}^R(x-x'|t'') A(x',t') \powe{\i\omega (t''+t')}}{t'}}{x'}}{t''} = \\
+&= \intx{ }{ }{G_{JJ}^R(x-x'|\omega) \intr{A(x',t') \powe{\i\omega t'}}{t'}}{x'} = \\
+&= \intx{ }{ }{G_{JJ}^R(x-x'|\omega) \intr{A(x',t') \frac{\partial_{t'} }{\i\omega} \powe{\i\omega t'}}{t'}}{x'} = \\
+&= \intx{ }{ }{G_{JJ}^R(x-x'|\omega) \intr{E(x',t') \frac{-1}{\i\omega}  \powe{\i\omega t'}}{t'}}{x'} = \\
+&= \intx{ }{ }{G_{JJ}^R(x-x'|\omega) E(x',\omega)}{x'}.
+\end{align}
+We now want to make use of the fact that the Fourier transform of a retarded correlation function in real time can be computed as the analytical continuation of the Matsubara correlation function in imaginary time as 
+\begin{align}
+G_{JJ}^R(x-x'|\omega) &= G_{JJ}^M (x-x'|\i\omega_n \rightarrow\omega + \i 0^+)
+\end{align}
+where, rotating to imaginary time $t\rightarrow -\i\tau$, we have
+\begin{align}
+G_{JJ}^M(x-x'|\i\omega_n) &= -\frac{1}{\hbar} \intx{ }{ }{\powe{\i\omega_n\tau } \bra*{\mathcal{T}_\tau J(x,\tau) J(x',0)}_0}{\tau}.
+\end{align}
+In order to calculate imaginary time correlation functions it is convenient to switch to the path integral representation of the partition function.
+%Using the Fourier decomposition 
+%\begin{align}
+%\phi(x,\tau) &= \sum_{\i\omega_n} \powe{-\i\omega_n\tau} \phi_{\i\omega_n} (x) = \sum_{q,\i\omega_n} \powe{\i (qx - \omega_n\tau)} \phi_{q,\i\omega_n}
+%\end{align}
+%we now now want to consider the unperturbed expectation value $V := \bra*{\phi_{-q,-\i\omega_n} \phi_{q',\i\omega_{n'}}}_0$.
+%In frequency-momentum space one can show that the action for the $\phi$ fields is given by
+%\begin{align}
+%S_0[\phi] &= \hbar\beta L \frac{\hbar u}{2K} \sum_{q,\i\omega_n} \kla*{q^2 + \frac{\omega_n^2}{u^2}} \phi_{-q,-\i\omega_n} \phi_{q,\i\omega_{n}}.
+%\end{align}
+%%Thus the desired expectation value $V$ is most readily evaluated as a derivative of the partition function $Z_0$
+%Write
+%\begin{align}
+%V &= \hbar\beta L \frac{u^2q^2 + \omega_n^2}{uK} \bra*{\phi_{-q,-\i\omega_n} \phi_{q',\i\omega_{n'}} \frac{1}{\hbar\beta L} \frac{uK}{u^2q^2 + \omega_n^2}  }_0
+%\end{align}
+%\begin{align}
+%\phi_{q,\i\omega_n} &= \sum_{q',n'} \delta_{qq'}\delta_{nn'} \phi_{q',\i\omega_{n'}} = \\
+%&= \sum_{q',n'} \phi_{q',\i\omega_{n'}} \frac{1}{L} \frac{1}{\hbar\beta} \intx{0}{L}{\intx{0}{\hbar\beta}{\e^{\i(\omega_n - \omega_{n'})\tau} \powe{\i (q'-q)x}}{\tau}}{x} = \\
+%&= \frac{1}{\hbar\beta L} \intx{0}{L}{\intx{0}{\hbar\beta}{\phi(x,\tau) \powe{\i\omega_n\tau} \powe{-\i qx}}{\tau}}{x}.
+%\end{align}
+%Partition function
+%\begin{align}
+%Z_0[\phi] &= \int \powe{-\frac{1}{\hbar}S_0[\phi]} \mathcal{D}\phi = \\
+%&= \int \prod_{q,\i\omega_n} \exp\kla*{-\hbar\beta L \frac{u}{2K} \klb*{q^2 + \frac{\omega_n^2}{u^2}} \phi_{-q,-\i\omega_n} \phi_{q,\i\omega_{n}}} \mathcal{D}\phi = \\
+%&= \prod_{q,\i\omega_n} \intr{\exp\kla*{-\hbar\beta L \frac{u}{2K} \klb*{q^2 + \frac{\omega_n^2}{u^2}} \phi_{-q,-\i\omega_n} \phi_{q,\i\omega_{n}}}}{\phi_{q,\i\omega_n}}???
+%\end{align}
+Using $\bra*{\phi_{-q,-\i\omega_n} \phi_{q',\i\omega_{n'}}}_0 = \delta_{q,q'} \delta_{n,n'} \frac{1}{\hbar\beta L} \frac{uK}{u^2q^2 + \omega_n^2}$ and the Fourier decomposition 
+\begin{align}
+\phi(x,\tau) &= \sum_{\i\omega_n} \powe{-\i\omega_n\tau} \phi_{\i\omega_n} (x) = \sum_{q,\i\omega_n} \powe{\i (qx - \omega_n\tau)} \phi_{q,\i\omega_n}
+\end{align} 
+we find in the limit $L\rightarrow \infty$ that
+\begin{align}
+G_{JJ}^M (x-x'|\i\omega_n) &= -\frac{1}{\hbar} \intx{0}{\hbar\beta}{\powe{\i\omega_n\tau} \sum_{\i\omega_m, \i\omega_{m'}} \kla*{\frac{-e}{\sqrt{\pi}}}^2 \omega_m\omega_{m'} \powe{\i\omega_m \tau} \bra*{\phi_{\i\omega_m}(x) \phi_{\i\omega_{m'}}(x')}_0  }{\tau} = \\
+&= -\frac{e^2}{\hbar\pi} \hbar\beta \sum_{\i\omega_{m}} \omega_n(-\omega_{m}) \sum_{q,q'} \powe{\i qx} \powe{\i q'x'} \bra*{\phi_{q,\i\omega_n} \phi_{q',-\i\omega_{m}}}_0 = \\
+&= \frac{\beta e^2}{\pi} \sum_{\i\omega_{m}} \omega_n\omega_{m} \sum_{q,q'} \delta_{q,-q'} \delta_{n,m} \frac{1}{\hbar\beta L} \frac{uK}{u^2q^2 + \omega_n^2} \powe{\i qx} \powe{\i q'x'} = \\
+&= \frac{\beta e^2}{\pi} \frac{1}{\hbar\beta L} \sum_q \omega_n^2 \frac{uK}{u^2q^2 + \omega_n^2} \powe{\i q(x-x')} \simeq \\
+&\simeq \frac{e^2}{\hbar \pi} \intr{\frac{uK\omega_n^2}{u^2q^2 + \omega_n^2} \powe{\i q(x-x')}}{q} = \\
+&= \frac{e^2K \omega_n}{\hbar \pi} \intrpi{\frac{y}{y^2 + 1} \powe{\i \frac{\omega_n}{u}(x-x') y}}{y}.
+\end{align}
+At this point we make use of contour integration to evaluate
+\begin{align}
+I &:= \intr{\frac{z}{z^2 + 1} \powe{\i za}}{z} = 2\pi\i \lim_{z \rightarrow \i} \frac{z}{z + \i} \powe{\i za} = \pi\i \powe{-a}.
+\end{align}
+This result is only correct for $a\ge 0$, because otherwise the contour has to be closed in the lower half plane\footnote{There appears a factor of the form $\powe{\mp aR\sin (t)}$ in the estimate for the magnitude of the arc-integral where the negative sign corresponds to the upper half plane and $R$ is the radius of the circle.}.
+In that case one instead finds
+\begin{align}
+I &= \intr{\frac{z}{z^2 + 1} \powe{\i za}}{z} = 2\pi\i \lim_{z \rightarrow -\i} \frac{z}{z - \i} \powe{\i za} = \pi\i \powe{a}
+\end{align}
+and thus in general
+\begin{align}
+G_{JJ}^M(x-x'|\i\omega_n) &= \frac{e^2K\omega_n}{2\hbar\pi} \powe{- \frac{\omega_n}{u} |x-x'|}.
+\end{align}
+Performing the analytic continuation then yields
+\begin{align}
+G_{JJ}^R(x|\omega) &= G_{JJ}^M(x|\omega) = \frac{e^2K (-\i\omega)}{2\hbar\pi} \powe{\i\frac{\omega}{u}|x|}.
+\end{align}
+Inserting into the expectation value of the current operator in the DC limit gives
+\begin{align}
+\bra*{J(x)}(\omega) &= \bra*{J(x)}_0(\omega) + \intr{\frac{e^2K (-\i\omega)}{2\hbar \pi} \powe{\i \frac{\omega}{u} |x-x'|} \frac{\i}{\omega} E(x',\omega)}{x'}  \\
+& \overset{\omega\,\rightarrow\, 0}{\longrightarrow}  J_0 + \frac{e^2K}{h} \intr{E(x',0)}{x'}.
+\end{align}
+Due to the poor choice of the order of limits in my calculation I know have to approximate $\intr{E}{x} \approx L E$ to get $G= \frac{\sigma}{L} = \frac{e^2}{h}K$.
+This can probably be made more rigorous by assuming a homogenous electric field and only letting $L\rightarrow\infty$ in the very end.
+
+\subsubsection*{Unperturbed expectation value}
+We still have to prove the relation $\bra*{\phi_{-q,-\i\omega_n} \phi_{q',\i\omega_{n'}}}_0 = \delta_{q,q'} \delta_{n,n'} \frac{1}{\hbar\beta L} \frac{uK}{u^2q^2 + \omega_n^2}$ used in the calculation.
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

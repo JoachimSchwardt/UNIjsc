@@ -1,0 +1,104 @@
+\input{preamble}
+\begin{document}
+
+\frontmatter
+
+% Fill out the titlepage:
+\input{chapters/titlepage}
+
+% Write an abstract in English and German:
+\input{chapters/abstractpage}
+
+% Inhaltsverzeichnis
+\cleardoublepage
+%\vspace*{-1cm}\tableofcontents
+\tableofcontents
+\mainmatter
+
+% Hauptteil
+
+\chapter{Introduction}
+\input{chapters/introduction}  % Use input and divide your work into different chapters to keep an overview
+
+\chapter{Frequency analysis}
+\input{chapters/foundations}
+%\lipsum[1-5]
+
+\chapter{Weighted Birkhoff averages in two dimensions}
+\input{chapters/twoDimensions}
+
+%\lipsum[1-5]     % Some example citations using the CPG-Bibtex Repository
+\chapter{Weighted Birkhoff averages in four dimensions}
+\input{chapters/fourDimensions}
+
+\chapter{Conclusion and outlook}
+In this thesis we utilize the WBA method for the computation of frequencies.
+We provide a proof of concept for this method by applying it to artificial signals with known frequencies, and show how a problem for the oscillatory signals with two frequencies from eqn. (\ref{eqn:TwoFrequencySignal}) can be solved.
+For this we adapt a simple variant of the method presented in \cite{DasSaiSanYor2019}.
+We find hints for the super-convergence predicted in \cite{DasSaiSanYor2017}, and show that the WBA is at least as good as Naff for the frequency analysis in two dimensions.
+%WBA even proved to be superior to Naff in the context of trapped orbits and when used as an indication for chaotic dynamics.
+For the trapped orbits, WBA gives a more continuous time-dependent frequency than Naff, which better corresponds to the rapid, but steady changes of the trajectory.
+WBA also proves to be superior for indicating chaotic dynamics, i.e. much shorter signal lengths are required to give decisive results, relative to Naff.
+\\
+While WBA turns out to be at least as good as Naff in the two dimensional settings we analyze, this is not true for all cases of orbits in the four dimensional standard map.
+In the weakly coupled case, WBA no longer shows a faster rate of convergence than Naff, but is still easier to implement and less computationally expensive.
+But in the case of strong coupling, we encounter a difficulty with the frequency analysis of certain tori near the EE fixed point using WBA.
+We propose a solution based on the diagonalization of the inertia tensor, and show that in many cases it allows for extracting two frequencies with WBA, without further modifications.
+Especially for the second frequency, the rate of convergence is often slightly slower than that of Naff, but still comparable.
+Furthermore, in the computation of the frequency space, we find missing regions compared to the calculation by Naff.
+We show, that the vast majority of the respective tori are identified as resonant by the WBA, in accordance with the Naff for $n_\tecxt\text{harm}=1$, and how the result of the latter is in very good agreement with WBA.
+Nevertheless, we also find tori, for which our transformation does not suffice.
+More precisely, we can only identify the first frequency with the WBA method in these cases.
+A general solution for frequency analysis with WBA for all four dimensional orbits therefore appears to be out of reach of the transformation described by eqn. (\ref{eqn:TransformPointsND}).
+A future task would be to implement the full algorithm of \cite{DasSaiSanYor2019}, to check whether the problem described in section \ref{sec:FailureWBASpecificOrbit} persists.
+There the authors additionally introduced an embedding of the torus, to make the assignment of angle differences to compartments from section \ref{sec:FailureWBASpecificOrbit} of the appendix more rigorous.
+%Here the rules for assigning angle differences to compartments presented in section \ref{sec:WBAforDualFrequencySignals} are refined.
+%But, if such a method could be found, WBA might become a better tool for computing the frequency space, because contrary to Naff, no unimodular transformations had to be applied.
+\\
+Since the problem in all these examples is only with the second frequency, it may be possible to use the same approach as Naff here, i.e. to subtract the first frequency from the signal.
+This results in a new signal, that might again allow for the use of WBA.
+Another advantage of this approach would be the generalization to a higher dimensional setting, as it is unclear, how one would efficiently choose the correct projections from eqn. (\ref{eqn:TransformPointsND}) in that case.
+% More example citations using the CPG-Bibtex Repository
+% If you want to cite articles not yet present in the Repo, please add them
+% Questions: check the CPG-wiki (http://141.30.17.24:9673/BibTeX)
+
+
+% Anhang
+% old version: \appendix\addchap{Anhang}
+% \section{Interessante Rechnung}
+\begin{appendix}
+\appendix
+\renewcommand{\thesection}{\Alph{section}}
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+    
+%\addchap{test appendix custom title}
+%\addcontentsline{toc}{chapter}{Appendix}
+\chapter*{Appendix}
+\input{chapters/appendix}
+\end{appendix}
+
+% Verzeichnisse
+\backmatter
+\listoffigures
+%{\tt FIXME: If you write your thesis in English, then use
+%     \emph{cpg\_unsrt\_title\_ger} as bib style}. 
+%\bibliographystyle{cpg_unsrt_thesis}
+% If .bst file cannot be found, please add Bibtex/bibstyles to your PATHs in your .zshrc
+%\bibliography{abbrevs,4D_maps,accelerator_modes,arnold_diffusion,baecker,bec,bifurk,billiards,bleh_lit,books_on_chaos,branched_flows,canonical_transformations,cavities,celestial,chemistry,chimera,classm,cold_atoms,complexified_systems,continued_fractions,coupled_billiards,CP_theses,desy_pp,diffr,diffusion,dissipative_maps,div_lit,driven_coulomb,eigenval,emerging,entanglement,erg,ev_statistics,exceptional_points,experiments,extreme_events,floquet,fractals,fractal_weyl,frequency_analysis,fun,geholt,general,Hamiltonian_systems,higher_dim,higher_dim_bif,higher_dim_billiards,higher_dim_manifolds,hreg_lie_canon_trans,inside_outside,interessant_nicht_geholt,libraries,lyapunov_exponents,manifolds,many_body,maps,matrix_models,mesoscopic,misc_jb,mjk_unsrt,naff,near_integrable,negcurv,neu,nhim,NMsRandomFindings,nn_lit,noninvertible_maps,n_particle,numerical_algorithms,Numerics,open_systems,part_barr,pot,prim_lit,pseudoint,pt_symmetry,quantized_maps,quantum_transport,random_waves,recurrence_time_distribution,resonances,resonance_trapping,return_times,rob_lit,scars,scattering,scientific_computing,sd_beta,semiclassics,shadowing,stadion,statistical,steven_creagh,stochastic_maps,symbd,synchronization,teaching,time_dev,time_evolution,time_series_analysis,torus_bifurcations,transport_in_Hamiltonian_systems,tunneling,velocities,verlorene,visualization,volume_preserving_maps,wave}
+%\printbibliography
+{%\scriptsize
+\bibliographystyle{cpg_unsrt_title}
+\bibliography{abbrevs,4D_maps,accelerator_modes,arnold_diffusion,baecker,bec,bifurk,billiards,bleh_lit,books_on_chaos,branched_flows,celestial,chemistry,classm,cold_atoms,complexified_systems,continued_fractions,coupled_billiards,CP_theses,desy_pp,diffr,diffusion,dissipative_maps,div_lit,driven_coulomb,eigenval,emerging,entanglement,erg,ev_statistics,exceptional_points,experiments,extreme_events,floquet,fractals,fractal_weyl,frequency_analysis,fun,geholt,general,Hamiltonian_systems,higher_dim,higher_dim_bif,higher_dim_billiards,higher_dim_manifolds,hreg_lie_canon_trans,inside_outside,interessant_nicht_geholt,libraries,lyapunov_exponents,manifolds,many_body,maps,matrix_models,mesoscopic,misc_jb,mjk_unsrt,naff,near_integrable,negcurv,neu,nhim,NMsRandomFindings,nn_lit,noninvertible_maps,n_particle,numerical_algorithms,Numerics,open_systems,part_barr,pot,prim_lit,pseudoint,pt_symmetry,quantized_maps,quantum_transport,random_waves,recurrence_time_distribution,resonances,resonance_trapping,return_times,rob_lit,scars,scientific_computing,sd_beta,shadowing,stadion,statistical,steven_creagh,stochastic_maps,symbd,synchronization,time_dev,time_evolution,time_series_analysis,torus_bifurcations,transport_in_Hamiltonian_systems,tunneling,velocities,verlorene,volume_preserving_maps,wave,chimera}
+}
+
+%\begin{thebibliography}{9}
+%\bibitem{test} test
+%\end{thebibliography}
+
+% DO NOT forget to acknowledge anyone who deserves it, and fill in the declaration
+% about your independent work:
+\input{chapters/declaration}
+
+\end{document}

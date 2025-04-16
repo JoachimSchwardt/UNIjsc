@@ -1,0 +1,57 @@
+\documentclass[a4paper, cdfont=off, cdgeometry=twoside, fontsize=11pt, parskip=half, listof=toc, BCOR=6mm, DIV=calc]{tudscrbook}
+
+% COMMENTS
+% tudscr package is provided in texlive-publishers (see e.g. https://packages.debian.org/bookworm/all/texlive-publishers/filelist) (or install texlive-full)
+
+
+
+\newcommand*{\Title}{Emergence\\of Non-Hermitian Topology\\in Coupled Luttinger Liquids}
+\newcommand*{\Author}{Joachim Schwardt}
+\date{23.04.2024}
+
+\input{preamble_shared.tex}    % common commands and packages
+\input{preamble.tex}           % custom commands and packages
+%
+\AtEveryBibitem{\clearlist{language}}
+\addbibresource{bibliography.bib}
+\input{glossary.tex}
+
+\begin{document}
+
+\frontmatter
+
+\input{titlepage_info.tex}
+\maketitle
+\TUDoption{abstract}{section, multiple, notoc}
+\begin{abstract}[ngerman, pagestyle=empty.tudheadings]
+    \input{abstract.tex}
+\end{abstract}
+
+\selectlanguage{english}
+
+\tableofcontents
+\printnoidxglossary[type=acronym, nonumberlist, title=List of Acronyms]
+\printacronyms
+
+\mainmatter
+
+\input{chapters/introduction.tex}
+\input{chapters/bosonization.tex}
+\input{chapters/perturbative_gf.tex}
+\input{chapters/topology.tex}
+\input{chapters/renormalization.tex}
+\glsresetall
+\input{chapters/exceptional_ll.tex}
+\input{chapters/summary.tex}
+
+\appendix
+\input{chapters/appendix.tex}
+
+\backmatter
+
+\listoffigures
+\printbibliography[heading=bibintoc]
+\input{declaration}
+\confirmation[ngerman]
+
+\end{document}

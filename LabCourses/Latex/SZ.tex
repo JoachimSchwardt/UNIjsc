@@ -1,0 +1,335 @@
+\documentclass[german, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[ngerman]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrpage2}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\newcommand*{\titel}{Solarzelle}
+\newcommand*{\autor}{Joachim Schwardt und Ludwig Romstedt}
+\newcommand*{\abk}{SZ}
+\newcommand*{\betreuer}{Miguel Albaladejo}
+\newcommand*{\messung}{4. Dezember 2020}
+\newcommand*{\ort}{KRO/1.25 (OPEC)}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+\titlehead{F-Praktikum \abk \hfill TU Dresden}
+\subject{Versuchsprotokoll}
+\title{\titel}
+\author{Ludwig Romstedt und Joachim Schwardt}
+\date{\begin{tabular}{ll}
+Protokoll: & \today\\
+Messung: & \messung\\
+Betreuer: & \betreuer\\
+Ort: & \ort\end{tabular}}
+
+\begin{document}
+
+\begin{titlepage}
+\maketitle  % Titel setzen
+\tableofcontents  % Inhaltsverzeichnis setzen
+\end{titlepage}
+
+\section{Aufgabenstellung}
+Ziel des Experiments war es, die Funktionsweise einer Solarzelle zu verstehen. Dazu wurden mehrere Teilversuche durchgeführt, die jeweils den Einfluss eines Parameters auf die Effizienz der Solarzelle verdeutlichen sollten.
+\section{Physikalische Grundlagen}
+\subsection{Bändermodell}
+Die Energieniveaus eines einzelnen Atoms sind diskret. Bringt man mehrere Atome zusammen, kommt es zur Aufspaltung dieser Niveaus. Diese ist unter anderem auf die elektromagnetische Wechselwirkung der Elektronen und das Pauli-Prinzip zurückzuführen. In Abb. \ref{figure:Baendermodell} ist diese Aufspaltung dargestellt. Bei einem makroskopischen Festkörper mit typischerweise mehr als $10^{23}$ Atomen kommt es zur Ausbildung von Energiebändern, in welchen die Verteilung der Zustände dann als kontinuierlich angenommen werden kann. Es gibt allerdings trotzdem Bereiche, in denen gar keine Zustände möglich sind. Diese nennt man im Modell daher Bandlücken.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.65]{Baendermodell.png}
+\caption{Schematische Darstellung der Energiezustände in Abhängigkeit von der Anzahl an Atomen \cite{Baendermodell Bild}.}
+\label{figure:Baendermodell}
+\end{figure}\\
+Ein unvollständig besetztes Band heißt \emph{Leitungsband}. Um zum Stromfluss beitragen zu können, müssen Elektronen Energie aufnehmen können. Das geht allerdings nur dann, wenn ihnen Zustände mit geringfügig höherer Energie zur Verfügung stehen, was gerade für unvollständige Bänder der Fall ist \cite{SZ Theorie}. Das Band mit der nächstkleineren Energie nennt man \emph{Valenzband}. Die Fermi-Verteilung gibt die temperaturabhängige Verteilung der Zustände an:
+\begin{align*}
+\rho(E,T)&\propto\frac{1}{1+\exp\kla\left( {\frac{E-E_\tecxt\text{F}}{k_\tecxt\text{B} T}} \right)}\numberthis\label{eqn:Fermi Verteilung}
+\end{align*}
+Die Fermi-Energie $E_\tecxt\text{F}$ ist daher charakteristische für die leitenden Eigenschaften eines Materials. Im Grenzwert kleiner Temperaturen $T\rightarrow 0$ geht die Verteilung in eine Heaviside-Funktion $\rho\rightarrow\Theta(E_\tecxt\text{F}-E)$ über, es gibt dann also keine Zustände mit $E>E_\tecxt\text{F}$. In Metallen überlappen Leitungs- und Valenzband, hier ist $E_\tecxt\text{F}$ daher äquivalent zur Energie des höchsten, bei $T=0\,$K besetzten Zustandes. Liegt das zu $E_\tecxt\text{F}$ zugehörige Niveau in einer Bandlücke, so wird das Valenzband voll besetzt und die Leitfähigkeit verschwindet. Man spricht dann je nach der Größe der Bandlücke $E_\tecxt\text{g}$ von einem Halbleiter oder einem Isolator. Ersteres ist der Fall, wenn bereits thermische Anregungen zur Überwindung der Bandlücke ausreichen \cite{SZ Theorie}.
+\subsection{Dotierte Halbleiter und pn-Übergang}
+Die thermischen Anregungen führen in Halbleitern wie Silizium durch die spontane Anregung von Elektron-Loch-Paaren zu einer Eigenleitungsdichte. Durch das Einbringen von Atomen mit fünf Valenzelektronen wie Phosphor, kann man die Dichte freier Elektronen erhöhen, da im vier-wertigen Silizium eines der Außenelektronen des Phosphors nur sehr schwach gebunden ist. Aufgrund der überwiegend negativen Ladungsträger spricht man von \emph{n-Dotierung}. Der Kristall ist als Ganzes allerdings immer noch elektrische neutral.\\
+Bei der \emph{p-Dotierung} bringt man Atome mit nur drei Valenzelektronen in den Silizium-Kristall, wodurch überwiegend positive Ladungsträger in Form von Elektronenlöchern vorhanden sind. Bringt man ein p-dotiertes und ein n-dotiertes Gebiet zusammen, so entsteht ein \emph{Diffusionsstrom}, der auf das Ungleichgewicht der Ladungsträger zurückzuführen ist. Im Bereich der Kontaktstelle kommt es zur Rekombination von Elektronen und Löchern, wodurch geladene Atomrümpfe in der \emph{Raumladungszone} zurückbleiben (s. Abb. \ref{figure:pn Uebergang}). Durch das entstehende elektrische Feld wird ein sogenannter \emph{Driftstrom} erzeugt, welcher der Diffusion entgegen wirkt, bis sich ein Gleichgewicht bildet.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.8]{pn_Uebergang.png}
+\caption{Skizze eines pn-Übergangs. Atomrümpfe sind durch quadratische Symbole, Ladungsträger durch kreisförmige gekennzeichnet. Das p-Gebiet ist hier stärker dotiert, was man an der größeren Anzahl an Symbolen erkennt \cite{SZ Theorie}.}
+\label{figure:pn Uebergang}
+\end{figure}
+\subsection{Funktionsweise von Diode und Solarzelle}
+Die Besonderheit eines pn-Übergangs besteht im Diodenverhalten, also einer Asymmetrie beim Anlegen einer äußeren Spannung $U$. Legt man das größere Potential an das p-Gebiet, so werden die Ladungsträger auf beiden Seiten in die Raumladungszone gedrückt, wodurch sich der Stromfluss verstärkt. Kehrt man die Spannung um, so werden die Ladungsträger in ihrem jeweiligen Gebiet festgehalten. Tatsächlich fließt auch hier noch ein (sehr kleiner) Sperrstrom. Mit dem Sättigungsstrom $I_\tecxt\text{S}$ und einem freien Parameter $n$ wird die $I-U$-Kennlinie durch die Shockley-Gleichung beschrieben:
+\begin{align*}
+I_\tecxt\text{D}(U)&=I_\tecxt\text{S}\cdot\kla\left( {e^{\frac{eU}{nk_\tecxt\text{B}T}} - 1} \right)\numberthis\label{eqn:ID von U ideal}
+\end{align*}
+Die Funktionsweise einer Solarzelle beruht auf der Erzeugung von Elektron-Loch-Paaren durch die Absorption von Licht. Die Energie $\hbar\omega$ des Photons muss dabei größer als die Bandlücke sein, damit das Elektron durch die Anregung überhaupt ins Leitungsband gelangen kann. Um möglichst viele Photonen nutzen zu können, sollte $E_\tecxt\text{g}$ also eher klein sein. Die 'überschüssige Energie' des Photons, also $\hbar\omega -E_\tecxt\text{g}$ gibt das angeregte Elektron allerdings durch Relaxation wieder an den Kristall in Form von Wärme ab. Jedes Photon kann also höchstens $E_\tecxt\text{g}$ zur nutzbaren Energie beitragen, weshalb die Bandlücke groß sein sollte. Je nach der Energieverteilung des Lichts ergibt sich aus diesen gegensätzlichen Bedingungen eine (theoretisch) optimale Bandlücke, bei der allerdings trotzdem maximal nur etwa $30\,\%$ der eingestrahlten Leistung nutzbar gemacht werden kann. Damit ist dieser Effekt die größte Limitierung der Effizienz von Solarzellen.\\
+Wenn die Elektron-Loch-Paare in der Raumladungszone entstehen, oder durch zufällige Stöße dorthin geraten, werden sie im elektrischen Feld getrennt, was zum \emph{Photostrom} $I_\tecxt\text{Ph}>0$ führt. Dieser ist dem Diodenstrom $I_\tecxt\text{D}$ entgegengesetzt. Aus dem Ersatzschaltbild in Abb. \ref{figure:Ersatzschaltbild SZ} wird dann folgender Zusammenhang zwischen dem Gesamtstrom $I$ und der äußeren Spannung $U$ erkenntlich:
+\begin{align*}
+I(U)&=-I_\tecxt\text{Ph}-I_S\cdot\kla\left( {e^{\frac{e(U-IR_\tecxt\text{S})}{nk_\tecxt\text{B}T}} -1} \right)-\frac{U-IR_\tecxt\text{S}}{R_\tecxt\text{p}}\numberthis\label{eqn:I von U real}
+\end{align*}
+Durch den Serienwiderstand $R_\tecxt\text{S}$ unterscheidet sich die über der Diode anliegende Spannung $U_\tecxt\text{D}$ gerade um den Faktor $-IR_\tecxt\text{S}$ von der angelegten Spannung $U$.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{Ersatzschaltbild_SZ.png}
+\caption{Ersatzschaltbild einer Solarzelle mit Serienwiderstand $R_\tecxt\text{S}$ und Parallelwiderstand $R_\tecxt\text{P}$, sowie einer Stromquelle $I_\tecxt\text{Ph}$.}
+\label{figure:Ersatzschaltbild SZ} 
+\end{figure}
+\subsection{Unterschiede zwischen anorganischen und organischen Solarzellen}
+Der namensgebende Unterschied liegt in den verwendeten Materialien. Für organische Solarzellen werden solche Kohlenwasserstoffe verwendet, die Eigenschaften von Halbleitern aufweisen. Die erzeugten Elektron-Loch-Paare sind im Allgemeinen viel stärker an das jeweilige Molekül gebunden.\\
+Anstelle des in der Raumladungszone erzeugten elektrischen Feldes benötigt man hier für die Trennung ein weiteres Molekül. Dessen Energiezustände müssen so geartet sein, dass sie die Ladungstrennung begünstigen. In anorganischen Solarzellen kann die Erzeugung der Paare weiter von der Raumladungszone entfernt sein, da sie durch Diffusion noch in diese gelangen können. Bei den organischen Zellen ist die mittlere Diffusionslänge allerdings deutlich geringer. \\
+Die kleinere Beweglichkeit der Ladungsträgern erfordert bei organischen Solarzellen die Verwendung von dünneren Schichten. Damit genügend Licht aufgenommen werden kann, ist auch ein größerer Absorptionskoeffizient nötig. 
+\section{Durchführung und Auswertung der Experimente}
+Im Verlauf des Experiments werden größtenteils Kennlinien aufgenommen. In Abb. \ref{figure:Kennlinie SZ} ist der qualitative Verlauf mit und ohne Beleuchtung der Solarzelle dargestellt. Interessant sind dabei der Kurzschlussstrom $I_\tecxt\text{K}:=I(U=0)$, die Leerlaufspannung $U_\tecxt\text{L}:=U(I=0)$ und der maximale Leistungspunkt (MLP) mit $U_\tecxt\text{MLP}\cdot I_\tecxt\text{MLP}:=\max\klammer\left\{{U\cdot I(U)\,\vert\, U} \right\}$. Der Füllfaktor (FF) ist dann mit $P_\tecxt\text{MLP}:=U_\tecxt\text{MLP}I_\tecxt\text{MLP}$ definiert als das Verhältnis $\tecxt\text{FF}:=\frac{P_\tecxt\text{MLP}}{U_\tecxt\text{L}I_\tecxt\text{K}}\le 1$ und ist maßgeblich für die Effizienz 
+\begin{align*}
+\eta &:=\frac{P_\tecxt\text{MLP}}{P_\tecxt\text{ein}}=\tecxt\text{FF}\cdot\frac{U_\tecxt\text{L}I_\tecxt\text{K}}{P_\tecxt\text{ein}}\numberthis\label{eqn:Effizienz SZ}
+\end{align*}
+der Solarzelle bei einer eingestrahlten (Leucht-)Leistung $P_\tecxt\text{ein}$. 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{Kennlinie_SZ.png}
+\caption{Kennlinie einer Solarzelle mit charakteristischen Größen mit und ohne Beleuchtung \cite{SZ Theorie}.}
+\label{figure:Kennlinie SZ}
+\end{figure}\\ \\
+In der bereitgestellten Software zur Aufnahme der Kennlinien mit einer Source-Measure-Unit (SMU) haben wir immer die in Tab. \ref{table:Allgemeine Einstellungen} aufgelisteten Parameter verwendet, Abweichungen werden bei jeder Messung explizit erwähnt.
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c}
+Spannung:&$U_\tecxt\text{min}=-1\,$V und $U_\tecxt\text{max}>U_\tecxt\text{K}$ (je nach Aufbau)\\ \hline
+Anzahl Messpunkte:& $100$ äquidistante Spannungen\\ \hline
+Mittelwert:& jeweils über $10$ Werte pro Messpunkt\\ \hline
+Wartezeit:&$0.5\,$s (beide Einträge)\\ \hline
+Strombegrenzung:&$1\,$A (anorganisch) und $10\,$mA (organisch)\\
+\end{tabular}
+\caption{Allgemeine Einstellungen in der Messsoftware}
+\label{table:Allgemeine Einstellungen}
+\end{table}\\
+Die Beleuchtungsintensität der Halogenlampen wurde manuell eingestellt. Dafür stand eine geeichte Si-Diode zur Verfügung, die $U_\tecxt\text{Si}= 32.2\,$mV bei einer Sonne ($100\,\frac{\tecxt\text{mW}}{\tecxt\text{cm}^2}$) erzeugt. Die Spannung wurde dabei mit einem Multimeter gemessen. Es sollte ein linearer Zusammenhang zwischen Spannung und Lichtintensität angenommen werden. Die Lampen sollten im Allgemeinen aufgrund der Erwärmung nur so kurz wie nötig angeschaltet sein. Für die Kontrolle der Temperatur standen regelbare externe Lüfter und ein Thermoelement zur Verfügung.
+\subsection{Vergleich verschiedener Solarzellen-Typen}
+Bei einer Sonne Intensität wurden jeweils für eine anorganische (Abb. \ref{figure:KL anorganisch}) und eine organische Zelle (Abb. \ref{figure:KL organisch}) die Dunkel- und Hellkennlinie aufgenommen. Gemessen wurde bei $U_\tecxt\text{Si}=31.5\,$mV, also einer Intensität von $L=97.8\,\frac{\tecxt\text{mW}}{\tecxt\text{cm}^2}$. Gewählt wurde zudem $U_\tecxt\text{max}=1\,$V.\\
+Die Verläufe entsprechen in beiden Fällen qualitativ der Erwartung. Unter Beleuchtung erhält die Kennlinie einen Offset durch den Photostrom $I_\tecxt\text{ph}$ und der exponentielle Anstieg wird durch die Erwärmung von der Raumtemperatur $T_0\approx 21\,\degree$C zu $T\approx 29\,\degree$C etwas steiler.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{Plot_A_KL_an.png}
+\caption{Hell- und Dunkelkennlinie einer anorganischen Zelle.}
+\label{figure:KL anorganisch}
+\end{figure}\\
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{Plot_A_KL_or.png}
+\caption{Hell- und Dunkelkennlinie einer organischen Zelle.}
+\label{figure:KL organisch}
+\end{figure}\\ \\
+Für die Dunkelkennlinie gilt die Gleichung (\ref{eqn:ID von U ideal}), wobei hier $U\rightarrow U-IR_S$ eingesetzt und nach $U(I)$ umgestellt wurde:
+\begin{align*}
+U(I)&=\frac{k_\tecxt\text{B}Tn}{e}\log\kla\left( {\frac{I+I_\tecxt\text{S}}{I_\tecxt\text{S}}} \right)+IR_\tecxt\text{S}\numberthis\label{eqn:U von I dunkel}
+\end{align*}
+Zunächst betrachtet man den Teil der Daten, der eine lineare Abhängigkeit $U(I)$ aufweist und bestimmt daraus $R_\tecxt\text{S} = 0.352\,\Omega$. Dieser Teil ist im rechten Plot von Abb. \ref{figure:Parameter Fits A} dargestellt. Im linken Teil wurde zunächst die lineare Abhängigkeit über $U'=U-IR_\tecxt\text{S}$ herausgerechnet, um dann mit (\ref{eqn:U von I dunkel}) die Parameter $I_\tecxt\text{S}=6.17\,$mA und $n=7.4$ zu bestimmen. Dazu wird der Term $IR_\tecxt\text{S}$ entsprechend weggelassen.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{Plot_A_Fits.png}
+\caption{Kurvenfits zur Bestimmung der Kennlinien-Parameter einer anorganischen Solarzelle.}
+\label{figure:Parameter Fits A}
+\end{figure}\\
+Für die organische Zelle findet man analog $R_\tecxt\text{S} = 243.42\,\Omega$, $I_\tecxt\text{S}=0.495\,\mu$A und $n= 8.6$ (grafische Darstellung in Abb. \ref{figure:Parameter Fits A or}). Um einen konvergenten Fit zu erhalten, muss hier allerdings ein nicht zu vernachlässigender Offset $I_\tecxt\text{off}=4.31\,\mu$A mit in das Modell eingebaut werden, der dann ebenfalls als Parameter in den Kurvenfit eingeht. Man ersetzt dazu $I\rightarrow I+I_\tecxt\text{off}$ in (\ref{eqn:U von I dunkel}).
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{Plot_A_Fits_or.png}
+\caption{Kurvenfits zur Bestimmung der Kennlinien-Parameter einer organischen Solarzelle.}
+\label{figure:Parameter Fits A or}
+\end{figure}\\
+Die Parameter der beiden Solarzellen sind in Tab. \ref{table:KL Parameter A} aufgelistet.
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c|c|c}
+&$j_\tecxt\text{K}\,/\,\frac{\tecxt\text{mA}}{\tecxt\text{cm}^2}$&$U_\tecxt\text{K}\,/\,$V&$\tecxt\text{MPP}\,/\,$mW&FF&$\eta$\\ \hline
+anorg.&31.03&0.58&215.4&0.46&$8.5\,\%$\\ \hline
+org.&4.51&0.93&0.20&0.65&$2.8\,\%$\\
+\end{tabular}
+\caption{Parameter der Solarzellen bei Beleuchtung.}
+\label{table:KL Parameter A}
+\end{table}\\
+Die bestimmten Parameter ergeben allerdings keinen guten Fit der experimentellen Daten beim Einsetzen in (\ref{eqn:I von U real}). Man kann diese Gleichung zwar mit ein paar Tricks in Python plotten, aufgrund technischer Probleme mit der \texttt{scipy.optimize.curve{\_}fit} -Funktion mussten wir die Parameter allerdings ``per Hand'' an die Messwerte anpassen. Die gefundenen Parameter sind in der Bildüberschrift von Abb. \ref{figure:Plot A Theorie Fit} angegeben. Motivation für diese Methode war die gute Übereinstimmung mit den Messwerten. Der Wert $n=$ für die Nicht-Idealität der Solarzelle ist dem typischen Wert von $n\approx 1\dots 2$ deutlich näher als der zuvor bestimmte Wert von $n=7.4$.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{Plot_A_Theorie.png}
+\caption{Kurvenanpassung an die Messdaten der anorganischen Solarzelle aus der ersten Messreihe.}
+\label{figure:Plot A Theorie Fit}
+\end{figure}
+\subsection{Einfluss der Beleuchtungsintensität}
+Für eine anorganische Solarzelle wurde die Hellkennlinie (Abb. \ref{figure:KL von I}) bei fünf Intensitäten gemessen ($U_\tecxt\text{Si}=(1.7, 3.2, 15.8, 23.6, 31.5)\,$mV). Analog zum vorherigen Experiment war wieder $U_\tecxt\text{max}=1\,$V. Die zu berechnenden Parameter sind in Tab. \ref{table:KL Parameter B} aufgeführt. Die Fläche war mit $A_\tecxt\text{anorg.}=26\,\tecxt\text{cm}^2$ angegeben.
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c|c|c}
+$L\,/\,\frac{\tecxt\text{mW}}{\tecxt\text{cm}^2}$&$j_\tecxt\text{K}\,/\,\frac{\tecxt\text{mA}}{\tecxt\text{cm}^2}$&$U_\tecxt\text{K}\,/\,$V&$\tecxt\text{MPP}\,/\,$mW&FF&$\eta$\\ \hline
+5.28&1.55 &0.50&13.93&0.69&$10.1\,\%$\\ \hline
+9.94&2.93 &0.52&26.77&0.69&$10.4\,\%$\\ \hline
+49.1&15.23&0.56&131.1&0.59&$10.3\,\%$\\ \hline
+73.3&23.66&0.57&180.9&0.52&$9.5\,\%$\\ \hline
+97.8&30.81&0.58&211.3&0.45&$8.3\,\%$\\ 
+\end{tabular}
+\caption{Parameter der Kennlinien einer anorganischen Zelle für fünf Leuchtintensitäten.}
+\label{table:KL Parameter B}
+\end{table}\\
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{Plot_B_KL.png}
+\caption{Kennlinie einer anorganischen Zelle bei fünf Intensitäten. Die Angabe $100\,\%$ bezieht sich auf eine Intensität von $L=97.8\,\tecxt\text{mW}/\tecxt\text{cm}^2$.}
+\label{figure:KL von I}
+\end{figure}\,\\
+Die Leerlaufspannung zeigt die Abhängigkeit $U_\tecxt\text{L}=\alpha_\tecxt\text{L}\log(L)+\tecxt\text{const}$ von der Intensität, wobei $\alpha_\tecxt\text{L}=27.4\,$mV ist. Die Stromdichte zeigt eine lineare Abhängigkeit von der Lichtintensität $j_\tecxt\text{K}=-\alpha_\tecxt\text{K}L$, wobei $\alpha_\tecxt\text{K}=0.319\,\frac{\tecxt\text{A}}{\tecxt\text{W}}$ ist. Die Parameter wurde wieder mittels Fit bestimmt, die Ergebnisse sind in Abb. \ref{figure:Fits zu B} dargestellt.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{Plot_B_Fits.png}
+\caption{Kurven Fit der Parameter $U_\tecxt\text{L}$ und $j_\tecxt\text{K}$ als Funktion von der Intensität $L$.}
+\label{figure:Fits zu B}
+\end{figure}
+\subsection{Versuche an realistischen Verschaltungen}
+Wir haben zunächst sechs anorganische Zellen zu einem Solarmodul in Reihe geschaltet und eine Hellkennlinie bei einer Intensität von $L=32.0\,\frac{\tecxt\text{mW}}{\tecxt\text{cm}^2}$ ($U_\tecxt\text{Si}=10.3\,$mV) aufgenommen (Abb. \ref{figure:C1 KL}). Die Reihenschaltung ermöglicht eine möglichst hohe Spannung des Moduls. Die 'Delle' in der Kennlinie stammt vermutlich von einem Ärmel. Leider haben wir vergessen, die Linie noch einmal aufzunehmen.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{Plot_C_KL1.png}
+\caption{Hellkennlinie einer Reihenschaltung von sechs anorganischen Solarzellen.}
+\label{figure:C1 KL}
+\end{figure}\\ \\
+Nun sollten Parallel- und/oder Serienwiderstände außerhalb des Moduls verschaltet werden. In Abb. \ref{figure:KL Widerstaende} sind die Hellkennlinien aufgetragen. Gemäß der farblichen Kodierung ist der Wert des verwendeten Serienwiderstandes $R_\tecxt\text{S}=3.3\,\Omega$ und der des Parallelwiderstandes $R_\tecxt\text{P}=68\,\Omega$. 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{Plot_C_KL2.png}
+\caption{Hellkennlinien für die drei Kombinationen von Widerständen.}
+\label{figure:KL Widerstaende}
+\end{figure}\\
+Die Auswirkung des kleinen Parallelwiderstandes zeigt sich im linearen Anstieg um $U\simeq 0\,$V. Gemäß Gleichung (\ref{eqn:I von U real}) wächst $I(U)$ mit $\frac{U}{R_\tecxt\text{P}}$ an. Ablesen könnte man näherungsweise $R_\tecxt\text{P}=\frac{\Delta U}{\Delta I}\approx\frac{2\,\tecxt\text{V}}{0.19\,\tecxt\text{A}-0.15\,\tecxt\text{A}}=50\,\Omega$, was in dieser groben Näherung ganz gut mit dem angegebenen Wert übereinstimmt. Analog kann man den Serienwiderstand im Bereich um $U\simeq U_\tecxt\text{L}$ als $R_\tecxt\text{S}\approx\frac{3.5\,\tecxt\text{V}-3.0\,\tecxt\text{V}}{0.03\,\tecxt\text{A}-(-0.03\,\tecxt\text{A})}=8.3\,\Omega$, wobei dieser Wert um mehr als einen Faktor 2 von der farblichen Kennzeichnung abweicht. \\ \\
+Die Widerstände wurden wieder entfernt. Dann sollten die Kennlinien für drei qualitativ unterschiedliche Möglichkeiten einer teilweisen Verschattung des Moduls aufgenommen werden. Die Verläufe sind in Abb. \ref{figure:KL Verschattung} grafisch dargestellt. 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{Plot_C_KL3.png}
+\caption{Hellkennlinien für die drei Teilverschattungen. In der jeweiligen Legende steht, welche Zellen wie stark abgedunkelt wurden.}
+\label{figure:KL Verschattung}
+\end{figure}\\
+Das schematische Ersatzschaltbild besteht einfach in sechs in Reihe geschalteten Dioden. Sobald eine Zelle vollständig abgedunkelt wird, nimmt die Kennlinie des Moduls die Form einer Dunkelkennlinie an. Das ist letztlich auf die Reihenschaltung zurückzuführen, da der Gesamtstrom nur so groß wie der Strom der einzelnen Zellen sein kann. Durch die Verdunkelung fällt der Kurzschlussstrom aber auf Null und die Leistung des gesamten Moduls in sich zusammen. Der Unterschied zu der Verschattung zusätzlicher Zellen ist dann an der Kennlinie optisch schon gar nicht mehr zu erkennen.\\
+Bei realen Solarzellen würde eine reine Reihenschaltung dazu führen, dass das Modul bei der starken Verschattung einzelner Zellen bereits eine sehr starke Leistungsminderung erleidet. Dieses Problem kann zum Beispiel dadurch umgangen werden, dass man die Zellen zu Ketten in Reihe schaltet, diese Ketten dann aber parallel. \\ \\
+Zuletzt sollte das Modul so erweitert werden, dass eine Spannung von $6\,$V ausgegeben wird. Dazu haben wir insgesamt zwölf anorganische Zelle in Reihe geschaltet. Nun wurde jeweils einmal mit und einmal ohne Verbraucher die Dunkelkennlinie bzw. die Hellkennlinie aufgenommen (Abb. \ref{figure:12 Zellen}).
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{Plot_C_KL4.png}
+\caption{Kennlinien des Solarmoduls ohne (links) und mit Verbraucher (rechts).}
+\label{figure:12 Zellen}
+\end{figure}\\
+Die Arbeitsspannung und der Arbeitsstrom des kleinen Lüfters wurden grafisch bestimmt. Der Arbeitspunkt ist in der Hellkennlinie durch den Punkt $U_\tecxt\text{AP}\approx 2.4\,\tecxt\text{V}$, $I_\tecxt\text{AP}\approx 60\,\tecxt\text{mA})$ gegeben. Die Parameter aller Kennlinien dieses Aufgabenteils sind in Tab. \ref{table:KL Parameter C} aufgelistet.
+\begin{table}[h!]
+\centering
+\begin{tabular}{r|c|c|c|c|c|c}
+&&$j_\tecxt\text{K}\,/\,\frac{\tecxt\text{mA}}{\tecxt\text{cm}^2}$&$U_\tecxt\text{K}\,/\,$V&$\tecxt\text{MPP}\,/\,$mW&FF&$\eta$\\ \hline
+6 Zellen:&Hellkennlinie&8.14&3.26&438.5&0.64&$8.79\,\%$\\ \hline
+&mit $R_\tecxt\text{P}$&7.43&3.15&330.9&0.54&$6.63\,\%$\\ \hline
+&mit $R_\tecxt\text{S}$&5.39&3.25&259.1&0.57&$5.19\,\%$\\ \hline
+&mit $R_\tecxt\text{P}, R_\tecxt\text{S}$&6.01&3.08&212.6&0.44&$4.26\,\%$\\ \hline
+Schatten&$3,4$ halb&5.44&3.28&373.5&0.80&$7.49\,\%$\\ \hline
+&Zelle 2 total&0.06&2.75&1.04&0.24&$0.02\,\%$\\ \hline
+&Zellen 3,\,4 halb, 5,\,6 total&0.17&2.55&2.49&0.22&$0.05\,\%$\\ \hline
+12 Zellen:&Hellkennlinie&8.38&6.63&1006&0.70&$10.08\,\%$\\ \hline
+&HKL mit Verbraucher&8.13&4.95&459.6&0.44&$4.61\,\%$\\ \hline
+&Dunkelkennlinie&0.07&3.76&3.68&0.53&$0.04\,\%$\\ \hline
+&DKL mit Verbraucher&0.05&1.05&1.10&0.76&$0.01\,\%$\\ \hline
+\end{tabular}
+\caption{Parameter der Kennlinien der Solarmodule.}
+\label{table:KL Parameter C}
+\end{table}
+\subsection{Einfluss der Temperatur}
+Bei einer Intensität von $L=100.0\,\frac{\tecxt\text{mW}}{\tecxt\text{cm}^2}$ ($U_\tecxt\text{Si}=32.2\,$V) wurde jeweils die Hellkennlinie einer anorganischen Solarzelle bei einer Temperatur von $T_\tecxt\text{min}=30\,$\degree C und $T_\tecxt\text{max}=65\,$\degree C aufgenommen. Es war wieder $U_\tecxt\text{max}=1\,$V. Zwischen diesen Temperaturen wurde die Leerlaufspannung $U_\tecxt\text{L}$ in $5\,$\degree C Schritten gemessen. Zur Erwärmung diente die Dauerbestrahlung bei verringerter Leistung der Lüfter. Die Messwerte sind in Tab. \ref{table:UL von T} aufgelistet, eine grafische Darstellung mit linearem Fit findet sich in Abb. \ref{figure:UL von T} ($U_\tecxt\text{L}=\alpha_\tecxt\text{T}T+\tecxt\text{const}$). Der Anstieg ist $\alpha_\tecxt\text{T}=-1.27\,\frac{\tecxt\text{V}}{\degree\tecxt\text{C}}$. In Abb. \ref{figure:KL von T} sind die beiden Kennlinien dargestellt. Die lineare Abhängigkeit von der Temperatur kann man näherungsweise aus (\ref{eqn:I von U real}) herleiten:
+\begin{align*}
+I(U_\tecxt\text{L})=0&=-I_\tecxt\text{ph}-I_\tecxt\text{S}\kla\left( {e^{\frac{eU_\tecxt\text{L}}{nk_\tecxt\text{B}T}}-1} \right)-\frac{U_\tecxt\text{L}}{R_\tecxt\text{P}}\\
+\Rightarrow\ \ \ 1-\frac{I_\tecxt\text{ph}}{I_\tecxt\text{S}}&\approx e^\frac{eU_\tecxt\text{L}}{nk_\tecxt\text{B}T}\\
+\Rightarrow\ \ \ U_\tecxt\text{L}&\approx \frac{nk_\tecxt\text{B}T}{e}\log\kla\left( {1-\frac{I_\tecxt\text{ph}}{I_\tecxt\text{S}}} \right)<0
+\end{align*}
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c}
+$T\,/\,$\degree C&$U_\tecxt\text{L}\,/\,$mV\\ \hline
+30&570\\ \hline
+35&565\\ \hline
+40&555\\ \hline
+45&550\\ \hline
+50&546\\ \hline
+55&541\\ \hline
+60&533\\ \hline
+65&523\\
+\end{tabular}
+\caption{Leerlaufspannungen bei verschiedenen Temperaturen der Solarzelle.}
+\label{table:UL von T}
+\end{table}\\
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{Plot_D_UL.png}
+\caption{Leerlaufspannung einer anorganischen Zelle als Funktion der Temperatur.}
+\label{figure:UL von T}
+\end{figure}\,\\
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{Plot_D_KL.png}
+\caption{Hellkennlinie einer anorganischen Zelle bei zwei Temperaturen.}
+\label{figure:KL von T}
+\end{figure}
+\subsection{Einfluss des Einfallswinkels}
+Bei einer Intensität von $L=100.0\,\frac{\tecxt\text{mW}}{\tecxt\text{cm}^2}$ ($U_\tecxt\text{Si}=32.2\,$V) wurde der Kurzschlussstrom $I_\tecxt\text{K}$ einer anorganischen und einer organischen Zelle gemessen. Der Tisch wurde dabei in $\Delta\alpha=10\,$\degree Schritten gekippt. Für die Messung wurde jeweils die SMU verwendet. Dazu wurde der Spannungsbereich $U_\tecxt\text{min}=0\,$V und $U_\tecxt\text{max}=0.01\,$V mit genau zwei Messpunkte eingestellt. Vermutlich hätte man auch einfach einen einzelnen Messpunkt einstellen können. Oder man hätte die Anleitung genauer lesen können, da dort beschrieben wird, wie man den Strom direkt am Messgerät ablesen kann. Die Werte für die Kurschluss-Stromdichten sind in Tab. \ref{table:jK von Winkel} aufgelistet. 
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c}
+$\alpha\,/\,$\degree &$j_\tecxt\text{K}^\tecxt\text{anorg.}\,/\,\frac{\tecxt\text{mA}}{\tecxt\text{cm}^2}$&$j_\tecxt\text{K}^\tecxt\text{org.}\,/\,\frac{\tecxt\text{mA}}{\tecxt\text{cm}^2}$\\ \hline
+0&33.20&4.06\\ \hline
+10&31.05&4.04\\ \hline
+20&30.22&4.15\\ \hline
+30&28.25&3.74\\ \hline
+40&26.34&3.42\\ \hline
+50&22.40&3.01\\ \hline
+60&17.69&2.42\\ \hline
+70&12.52&1.86\\
+\end{tabular}
+\caption{Kurzschluss-Stromdichten einer anorganischen und einer organischen Solarzelle bei verschiedenen Einfallswinkeln.}
+\label{table:jK von Winkel}
+\end{table}\\
+In Abb. \ref{figure:normierter Strom von Winkel} ist die Winkelabhängigkeit des Kurzschlussstroms aufgetragen, wobei auf $\frac{I_K(\theta)}{I_K(0)}$ normiert wurde. Durch die Neigung wird die effektiv beleuchtete Fläche gemäß $A'=A\cos\theta$ mit steigendem Winkel immer kleiner. Dementsprechend wäre der erwartete Verlauf $I_K'(\theta)=I_K(0)\cos\theta$. Das Verhältnis der Messwerte zu dieser Erwartung ist in Abb. \ref{figure:normierter projezierter Strom von Winkel} für beide Solarzellen dargestellt.\\ 
+Dass die Zellen für höhere Winkel mehr Strom liefern als erwartet, führen wir daher auf das Streulicht zurück, welches unabhängig vom Winkel ist.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{Plot_E_IK.png}
+\caption{Gemessene Winkelabhängigkeit des normierten Stroms der beiden Solarzellen.}
+\label{figure:normierter Strom von Winkel}
+\end{figure}\,\\
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{Plot_E_IK_proj2.png}
+\caption{Verhältnis von gemessenem und erwarteten Strom bezüglich der Winkelabhängigkeit.}
+\label{figure:normierter projezierter Strom von Winkel}
+\end{figure}\\
+Eine ``überzeugende'' Erklärung für das unterschiedliche Verhalten haben wir nicht gefunden. Allerdings mag die Positionierung der organischen Zelle aufgrund der angeschlagenen Halterung eine Abweichung vom Winkel der anorganischen Zelle aufweisen. Statistische Unsicherheiten erscheinen unzureichend für die Abweichungen, eventuell kann die organische Zelle Streulicht besser ``verwerten''. Um herauszufinden, inwiefern das Verhalten der Solarzellen wirklich voneinander und von der Erwartung abweicht, müsste man den Einfluss des Tageslichts ausschließen und eine genauere Einstellung des Winkel der einzelnen Zellen ermöglichen.
+\begin{thebibliography}{9}
+\bibitem{SZ Theorie} Theoretische Grundlagen zur Vorbereitung auf den Versuch \emph{Solarzelle} (SZ, 2012), \url{https://tu-dresden.de/mn/physik/iap/ressourcen/dateien/FO-Praktikum_Solarzelle_Theorie.pdf}, 5.\,Dez.~2020.
+\bibitem{Baendermodell Bild} Grundlagen zu Halbleitern, \url{https://www.halbleiter.org/grundlagen/leiter-nichtleiter-halbleiter/}, 5.\,Dez.~2020
+\end{thebibliography}
+
+
+\end{document}

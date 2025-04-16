@@ -1,0 +1,87 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{05 Schalenmodell}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 5.1: Coulomb-Term in der Massenformel}
+Sei $\rho(\vec{r})=\rho_0\Theta(R-r)$. Dann gilt
+\begin{align*}
+Q&=\intr\int_{\mathbb{R}^{3}}{\rho(\vec{r})}\,\mathrm{d}^{3}r=4\pi\rho_0\intx\int_{0}^{R}\,r^2\mathrm{d}r=\frac{4}{3}\pi R^3\rho_0&\Rightarrow &&\rho_0&=\frac{3Q}{4\pi R^3}
+\end{align*}
+Für die Coulomb-Energie einer Ladungsverteilung $\rho(\vec{r})$ gilt in natürlichen Einheiten
+\begin{align*}
+E_C&=\frac{\alpha}{2}\intr\int_{\mathbb{R}^{3}}{\intr\int_{\mathbb{R}^{3}}{\frac{\rho(\vec{r})\rho(\vec{r}')}{|\vec{r}-\vec{r}'|}}\,\mathrm{d}^{3}r'}\mathrm{d}^{3}r=\frac{1}{2}\intr\int_{\mathbb{R}^{3}}{\rho(\vec{r})\phi(\vec{r})}\,\mathrm{d}^{3}r=\frac{1}{2}\intr\int_{\mathbb{R}^{3}}{\phi\nabla\vec{E}}\,\mathrm{d}^{3}r=\\
+&=\frac{1}{2}\oint\phi\vec{E}\cdot\,\mathrm{d}^2\vec{r}-\frac{1}{2}\intr\int_{\mathbb{R}^{3}}{\vec{E}\cdot\nabla\phi}\,\mathrm{d}^{3}r=\frac{1}{2}\intr\int_{\mathbb{R}^{3}}{|\vec{E}|^2}\,\mathrm{d}^{3}r
+\end{align*}
+Das elektrische Feld kann man aus $\nabla\vec{E}=\rho$ bestimmen:
+\begin{align*}
+\oint\vec{E}\cdot\,\mathrm{d}^2\vec{r}&=4\pi r^2E(r)\overset{!}{=}4\pi\rho_0\intx\int_{0}^{r}\Theta(R-r')\,r'^2\mathrm{d}r'\\
+\Rightarrow\ \ \ E(r)&=\frac{\alpha Q}{R^3}\left\{\begin{matrix}
+r &\tecxt\text{für}&r\le R \\ \frac{R^3}{r^2}&\tecxt\text{für}&r>R
+\end{matrix}\right.
+\end{align*}
+Mit $Q=Z$ folgt dann für die Energie:
+\begin{align*}
+E_C&=\frac{4\pi\alpha^2Z^2}{2R^6}\kla\left( {\intx\int_{0}^{R}|r|^2\,r^2\mathrm{d}r+\intx\int_{R}^{\infty}\left\vert\frac{R^3}{r^2}\right\vert^2\,r^2\mathrm{d}r} \right)=\\
+&=\frac{\alpha Z^2}{2}\kla\left( {\frac{1}{5R}-\frac{1}{r}\Big\vert_R^\infty} \right)=\frac{3\alpha Z^2}{5R}
+\end{align*}
+Das Volumen des Kerns sei $V=A\cdot V_n\overset{!}{=}\frac{4}{3}\pi R^3$. Dann gilt $R=\sqrt[3]{3\alpha V_nA}$. Der Coulomb-Term hat in der Massenformel die Form $M_C=a_C\frac{Z^2}{\sqrt[3]{A}}$, woraus folgt:
+\begin{align*}
+a_C&=\frac{\sqrt[3]{A}}{Z^2}\frac{3\alpha Z^2}{5\sqrt[3]{3\alpha V_nA}}=\frac{3\sqrt[3]{\alpha^2}}{5\sqrt[3]{3V_n}}=\sqrt[3]{\frac{27\alpha^2}{375}}\cdot\frac{\hbar}{c\sqrt[3]{V_n}}=3.1\cdot\frac{\sqrt[3]{V_n}}{\tecxt\text{fm}}\frac{\tecxt\text{MeV}}{\tecxt\text{c}^2}
+\end{align*}
+Dabei ist $V_n$ das Volumen eines Neutrons. Der empirische Radius eines Kerns ist $R=r_0A^{1/3}$ mit $r_0\simeq 1.25\,$. Also gilt
+\begin{align*}
+a_C&=\frac{A^{1/3}}{Z^2}\frac{3\alpha Z^2}{5r_0A^{1/3}}=\frac{3\alpha}{5r_0}=0.691\,\tecxt\text{MeV}
+\end{align*}
+Unter der Annahme, dass die Massendifferenz zwischen den Spiegelkernen Si-27 und Al-27 nur durch den Coulomb-Term bei gleichem Kernradius gegeben ist, kann letzterer berechnet werden:
+\begin{align*}
+R&\simeq\frac{3\alpha}{5\Delta E}(Z_\tecxt\text{Si}^2-Z_\tecxt\text{Al}^2)=3.89\,\tecxt\text{fm}\\
+R&\simeq\frac{3\alpha}{5\Delta E}\klam\left[ {Z_\tecxt\text{Si}(Z_\tecxt\text{Si}-1)-Z_\tecxt\text{Al}(Z_\tecxt\text{Al}-1)} \right]=3.74\,\tecxt\text{fm}
+\end{align*}
+\section*{Aufgabe 5.2: Energien im Schalenmodell}
+\section*{Aufgabe 5.5: Kinematik des $\alpha$-Zerfalls}
+Wir betrachten den Prozess
+\begin{align*}
+X(A,Z)&\longrightarrow Y(A-4,Z-2)+\alpha+Q
+\end{align*}
+Sei $p_2=P-p_1$ mit $P=(M,0)$ und $M=Q+m_1+m_2$:
+\begin{align*}
+p_2^2&=(P-p_1)^2=P^2-2p_1\cdot P+p_1^2\\
+m_2^2&=M^2+m_1^2-2E_1M\\
+\Rightarrow\ \ \ E_1&=\frac{M^2+m_1^2-m_2^2}{2M}\\
+\Rightarrow\ \ \ E_\tecxt\text{kin,1}&=E_1-m_1=\frac{(M-m_1)^2-m_2^2}{2M}=\frac{Q^2+2Qm_2}{2(Q+m_1+m_2)}
+\end{align*}
+Daraus folgt auch $Q=E_\tecxt\text{kin,1}+E_\tecxt\text{kin,2}$. Speziell für $m_1=m_\tecxt\text{He}\simeq 4\,$u und $m_2\simeq A\,$u folgt daraus
+\begin{align*}
+E_\tecxt\text{kin,1}&\simeq Q\cdot\frac{\frac{Q}{\tecxt\text{2\,u}}+A}{\frac{Q}{\tecxt\text{u}}+4+A}\simeq Q\cdot\frac{A}{4+A}=Q-Q\cdot\frac{1}{1+\frac{A}{4}}\kom\overset{\substack{{A\gg 1} \\ |}}{\approx} Q
+\end{align*}
+\section*{Aufgabe 5.6: Neutronenstern}
+Es gilt die empirische Formel $R=r_0A^{1/3}$ mit $r_0\simeq 1.25\,$fm. Daraus folgt mit $R_\tecxt\text{Ball}=\frac{u_\tecxt\text{Ball}}{2\pi}$:
+\begin{align*}
+m_\tecxt\text{Ball}&=V_\tecxt\text{Ball}\rho=\frac{4}{3}\pi R_\tecxt\text{Ball}^3\cdot\frac{A\cdot m}{\frac{4}{3}\pi R^3}=m_u\cdot\frac{R_\tecxt\text{Ball}^3}{r_0^3}=1.2\cdot 10^{15}\,\tecxt\text{kg}
+\end{align*}
+\end{document}

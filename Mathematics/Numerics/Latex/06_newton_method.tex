@@ -1,0 +1,232 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+%\pagestyle{scrheadings}  % Stil für die Seite setzen
+%\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+%\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{06 Newton-Verfahren}
+\newcommand*{\autor}{Joachim Schwardt und Julian Fleck}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Numerik I - Aufgaben}
+\title{\titel}
+%\author{\autor}
+\author{\begin{tabular}{l|l}
+Joachim Schwardt & 4768711 \\ 
+Julian Fleck & 4759587\\ 
+\end{tabular}}
+%\author{\begin{tabular}{|l|l|}
+%\hline
+%Joachim Schwardt & 4768711 \\ \hline
+%Julian Fleck & 4759587\\ \hline
+%\end{tabular}}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Aufgabe 1}
+Sei $\phi : \mathbb{R} \rightarrow \mathbb{R}$ eine Funktion gegeben durch
+\begin{align}
+\phi(x) &= |x| + \frac{1}{1 + |x|}.
+\end{align}
+\subsection*{a)}
+Sei $x\neq y\in\mathbb{R}$. 
+Dann gilt
+\begin{align}
+|\phi(x) - \phi(y)| &= \left\vert |x| - |y| + \frac{1}{1 + |x|} - \frac{1}{1 + |y|} \right\vert = \\
+&=  \left\vert |x| - |y| + \frac{|y| - |x| }{(1+|x|)(1+|y|)} \right\vert = \\
+&= \big||x| - |y| \big| \left\vert 1 - \frac{1}{(1+|x|)(1+|y|)} \right\vert \le \\
+&\le |x-y| \left\vert \frac{|x| + |y| + |xy|}{1+|x| +  |y| + |xy|} \right\vert < |x-y|,
+\end{align}
+also ist $\phi$ eine streng kontrahierende Abbildung.
+\subsection*{b)}
+Angenommen es gibt ein $c\in (0,1)$, sodass für alle  $x,y\in\mathbb{R}$ die Ungleichung
+\begin{align}
+|\phi(x) - \phi(y)| &\le c|x-y|
+\end{align}
+erfüllt ist.
+Sei nun $y=0$.
+Dann gilt
+\begin{align}
+|\phi(x) - \phi(0)| &= \left\vert |x| + \frac{1}{1 + |x|} - 1 \right\vert = \\
+&= |x|\left\vert 1 - \frac{1}{1 + |x|} \right\vert = : c(x) |x - 0|.
+\end{align}
+Die Ungleichung ist verletzt, falls $c(x) > c$.
+Daraus erhalten wir eine Bedingung für $x$, durch Umstellen erhält man 
+\begin{align}
+c &\overset{!}{<} c(x) = \frac{|x|}{1 + |x|}\\
+\Rightarrow\ \ \ |x| &> (1+|x|)c\\
+\Rightarrow\ \ \ |x| &> \frac{1}{1 - c}.
+\end{align}
+Für $c<1$ gibt es also immer ein $x$, sodass die Ungleichung verletzt ist.
+\subsection*{c)}
+Wir suchen einen Fixpunkt von $\phi$, also ein $x^\ast\in\mathbb{R}$ mit $x^\ast = \phi(x^\ast)$.
+Da $\phi(x) > 0$ für alle $x\in\mathbb{R}$, muss auch $x^\ast > 0$ gelten.
+Allerdings ist
+\begin{align}
+\phi(x^\ast) &= x^\ast + \frac{1}{1 + x^\ast} > x^\ast.
+\end{align}
+Es gibt also keinen Fixpunkt.
+Für den Banach'schen Fixpunktsatz sind tatsächlich nicht alle Voraussetzungen erfüllt.
+Zwar ist die Funktion $\phi$ Lipschitz-stetig, allerdings ist $L=1$.
+Der Satz garantiert den Fixpunkt nur für $L<1$.
+%TODO: Warum geht hier Banach nicht? 
+%Ist die Konvergenz nur für $c<1$ garantiert?
+
+\newpage
+\section*{Aufgabe 2}
+Gegeben sei $a>0$ und die Iteration
+\begin{align}
+x_{k+1} &:= \frac{x_k}{2} + \frac{a}{2x_k},
+\end{align}
+wobei wir als Startwert $x_0 > \sqrt{a}$ annehmen.
+\subsection*{a)}
+Sei $k=0$.
+Dann gilt
+\begin{align}
+x_{k+1} - \sqrt{a} &= x_1 - \sqrt{a} = \frac{x_0}{2} + \frac{a}{2x_0} - \sqrt{a} = \frac{x_0^2 + a - 2\sqrt{a} x_0}{2x_0} = \frac{(x_0 - \sqrt{a})^2}{2x_0}.
+\end{align}
+Daraus folgt offensichtlich $x_1 - \sqrt{a} > 0$ und
+\begin{align}
+x_{1} - \sqrt{a} &=  \frac{1}{2} (x_0 - \sqrt{a})  \frac{(x_0 - \sqrt{a})}{x_0} = \frac{1}{2} (x_0 - \sqrt{a}) \kla\left( {1 - \frac{\sqrt{a}}{x_0}} \right) \le \frac{1}{2} (x_0 - \sqrt{a}) .
+\end{align}
+Der Induktionsanfang ist damit gezeigt. 
+Sei also nun 
+\begin{align}
+0 &\le x_k - \sqrt{a} \le \frac{1}{2} (x_{k-1} - \sqrt{a}) .
+\end{align}
+Insbesondere ist also $x_k \ge \sqrt{a}$.
+Dann gilt
+\begin{align}
+x_{k+1} - \sqrt{a} &= \frac{x_{k}}{2} + \frac{a}{2x_{k}} - \sqrt{a} = \frac{(x_{k} - \sqrt{a})^2}{2x_{k}}.
+\end{align}
+Wie zuvor folgt daraus $x_{k+1} -\sqrt{a} \ge 0$ und
+\begin{align}
+x_{k+1} - \sqrt{a} &= \frac{1}{2} (x_{k} - \sqrt{a})  \kla\left( {1 - \frac{\sqrt{a}}{x_{k}}} \right) \kom\overset{\substack{{x_k \ge \sqrt{a}} \\ |}}{\le} \frac{1}{2} (x_k - \sqrt{a}). 
+\end{align}
+Zusammengefasst gilt also für alle $k\in\mathbb{N}_0$, dass
+\begin{align}
+0 &\le x_{k+1} - \sqrt{a} \le \frac{1}{2}(x_k - \sqrt{a}).
+\end{align}
+Sei $y_k := x_k - \sqrt{a}$.
+Dann gilt $y_k \ge 0$ und 
+\begin{align}
+y_{k+1} &\le \frac{1}{2}y_k \le \dots \le \frac{1}{2^{k+1}}y_0 \kom\overset{\substack{{k \, \rightarrow\, \infty} \\ |}}{\longrightarrow} 0.
+\end{align}
+Also gilt $x_k \rightarrow \sqrt{a}$ für $k \rightarrow\infty$.
+
+\subsection*{b)}
+Wir hatten bereits gezeigt, dass
+\begin{align}
+y_{k+1} &= x_{k+1} - \sqrt{a} = \frac{(x_k - \sqrt{a})^2}{2x_k} = \frac{y_k^2}{2(y_k + \sqrt{a})}.
+\end{align}
+Aus $y_k\ge0$ folgt dann direkt
+\begin{align}
+y_{k+1} &\le \frac{y_k^2}{2\sqrt{a}},
+\end{align}
+die Folge konvergiert also quadratisch.
+
+\subsection*{c)}
+Sei $f(x) = x^2 - a$.
+Dann lautet die Newton-Vorschrift für das iterative Bestimmen einer Nullstelle
+\begin{align}
+x_{k+1} &= x_k - \frac{f(x_k)}{f'(x_k)} = x_k - \frac{x_k^2 - a}{2x_k} = \frac{x_k}{2} - \frac{a}{2x_k},
+\end{align}
+was mit der obigen Vorschrift übereinstimmt.
+
+\newpage
+\section*{Aufgabe 3}
+Gegeben sei die Funktion $f:\mathbb{R} \rightarrow\mathbb{R}$ mit $f(x) = x^3 - 3x^2 + 1$.
+
+\subsection*{a)}
+In der Tabelle \ref{table:f of x} sind einige Funktionswerte aufgeführt.
+Jeder Vorzeichenwechsel bedeutet dabei, dass es in dem entsprechenden Intervall mindestens eine Nullstelle gibt.
+Es gibt also mindestens eine für $x\in(-1,0)$, mindestens eine für $x\in(0,1)$ und mindestens eine für $x\in(2,3)$.
+Da $f(x)$ ein Polynom dritten Grades ist, gibt es genau drei Nullstellen (bzw. im reellen unter Umständen weniger).
+Daher muss es in jedem der drei Intervalle genau eine Nullstelle geben.
+\begin{table}[!ht]
+\centering
+\begin{tabular}{c||c|c|c|c|c}
+$x$ & $-1$ & $0$ & $1$ & $2$ & $3$ \\ \hline
+$f(x)$ & $-3$ & $1$ & $-1$ & $-3$ & $1$\\
+\end{tabular}
+\caption{Einige Funktionswerte von $f(x)$.}
+\label{table:f of x}
+\end{table}
+Diese Nullstellen seien im Folgen mit $x_j^\ast$ bezeichnet, wobei $j=1,2,3$ das entsprechende Interval angibt.
+
+
+\subsection*{b)}
+%Die Suche nach den Nullstellen von $f(x)$ ist äquivalent zur Suche nach den Fixpunkten von $g(x) = f(x) + x$.
+In der Vorlesung hatten wir bewiesen, dass das Newton-Verfahren quadratisch konvergiert, wenn der Startwert nahe genug an der Nullstelle liegt.
+Voraussetzung hierfür war, dass $f'(x)$ in der jeweiligen Umgebung einer Nullstelle Lipschitz-stetig und invertierbar ist.
+Hier ist $f'(x) = 3x^2 - 6x$, wobei $f'(x) = 0$ für $x\in\{0,2\}$.
+Insbesondere ist die Lipschitz-Konstante gegeben durch
+\begin{align}
+L_{f'} &= \max_{x\in [-1,3]} |f''(x)| =  \max_{x\in [-1,3]} 6|x-1| = 12,
+\end{align}
+also ist $f'(x)$ in allen Umgebungen der Nullstellen Lipschitz-stetig.
+Die Nullstellen von $f'$ liegen jeweils auf Randpunkten der Intervalle, in denen wir Nullstellen von $f$ suchen.
+Wir können also für alle $j=1,2,3$ Zahlen $r_j>0$ finden, sodass die Newton-Iteration für einen beliebigen Startwert $x_0\in [x_j^\ast - r_j, x_j^\ast + r_j]$ (quadratisch) konvergiert.
+
+%Hier garantiert der Banach'sche Fixpunktsatz deren Existenz, wenn die Lipschitz-Konstante von $g$, also $L = \max_{x\in I} g'(x)$, auf dem jeweiligen Intervall streng kleiner 1 ist.
+%In der Vorlesung hatten wir bewiesen, dass eine Fixpunktiteration konvergiert, falls der Startwert $x_0$ nahe genug an am Fixpunkt $x^\ast$ liegt.
+%Genauer muss $|x_0 - x^\ast| < \rho := \frac{1}{\max_{x\in U} g''(x)}$ gelten, wobei $U=(x^\ast - r, x^\ast + r)$.
+%Es ist $g''(x) = 6x - 6$, und somit 
+
+\subsection*{c)}
+Die Newton-Vorschrift lautet hier
+\begin{align}
+x_{k+1} &= x_k - \frac{f(x_k)}{f'(x_k)} = x_k - \frac{x_k^3 - 3x_k^2 + 1}{3x_k^2 - 6x_k} = \frac{2x_k^3 - 3x_k^2 - 1}{3x_k(x_k - 2)}.
+\end{align}
+Für $x_0=1$ ist dann $x_1 = \frac{2}{3}$.
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

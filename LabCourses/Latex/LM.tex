@@ -1,0 +1,110 @@
+\documentclass[german, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[ngerman]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrpage2}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\newcommand*{\titel}{Lebensdauer von Myonen}
+\newcommand*{\autor}{Joachim Schwardt und Ludwig Romstedt}
+\newcommand*{\abk}{LM}
+\newcommand*{\betreuer}{Nick Fritzsche}
+\newcommand*{\messung}{20. November 2020}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+\titlehead{F-Praktikum \abk \hfill TU Dresden}
+\subject{Versuchsprotokoll}
+\title{\titel}
+\author{Ludwig Romstedt und Joachim Schwardt}
+\date{\begin{tabular}{ll}
+Protokoll: & \today\\
+Messung: & \messung\\
+Betreuer: & \betreuer\end{tabular}}
+
+\begin{document}
+
+\begin{titlepage}
+\maketitle  % Titel setzen
+\tableofcontents  % Inhaltsverzeichnis setzen
+\end{titlepage}
+
+\section{Aufgabenstellung}
+Myonen aus der Höhenstrahlung werden in einem Kupferblock gestoppt. Diese Ereignisse werden mit Szintillatoren über Koinzidenzen detektiert. Die mittlere Lebensdauer $\tau$ der Myonen wird dann mit der Max-Likelihood-Methode bestimmt.
+\section{Physikalische und statistische Grundlagen}
+\subsection{Myonen im Standardmodell der Teilchenphysik}
+Myonen sind als elementare Spin-$\frac{1}{2}$-Teilchen Fermionen und tragen eine elektrische, sowie eine schwache Ladung. Sie können daher über die elektromagnetische und schwache Kraft wechselwirken, nicht aber über die starke Kraft. Damit gehören sie zur Untergruppe der Leptonen. Die Quarks bilden die andere Untergruppe und tragen zusätzlich noch eine Farbladung, welche die starke Wechselwirkung ermöglicht.\\
+Die Leptonen sind in die drei Familien/Generationen $e,\mu,\tau$ eingeteilt, wobei jede davon noch ein Neutrino enthält, welches allerdings elektrisch neutral ist. Die Masse wächst mit den Generationen stark an, das Myon ist bereits etwa 200 Mal schwerer als das Elektron. Die Eigenschaften der Antiteilchen sind bis auf die Ladung identisch.\\
+\subsection{Entstehung von Myonen in der oberen Atmosphäre}
+Die Höhenstrahlung besteht zu etwa 85\,\% aus schnellen Protonen mit Energien bis zu $10^8\,$TeV (LHC: $\approx 10^1\,$TeV). Bei Kollisionen mit Neutronen oder Protonen können Pionen erzeugt werden. Zwei einfache Prozesse sind dabei
+\begin{align*}
+p+p&\longrightarrow p+n+\pi^+\\
+p+n&\longrightarrow p+p+\pi^-
+\end{align*}
+Die Lebensdauer von Pionen beträgt etwa $26\,$ns. Im Mittel zerfallen sie nach dieser Zeit über ein $W^\pm$-Boson zu einem Myon:
+\begin{align*}
+\pi^\pm &\longrightarrow\mu^\pm +\nu_\mu
+\end{align*}
+Für das $\mu^-$ muss dabei allerdings ein Myon-Antineutrino $\overline{\nu}_\mu$ entstehen. Im Gegensatz zum Elektron ist das Myon nicht stabil und zerfällt ebenfalls über die schwache Wechselwirkung:
+\begin{align*}
+\mu^+ &\longrightarrow e^+ +\overline{\nu}_\mu +\nu_e\\
+\mu^- &\longrightarrow e^- +\nu_\mu+\overline{\nu}_e 
+\end{align*}
+Die Myonen haben eine mittlere Energie von 2\,GeV und sind damit relativistische Teilchen. Um genügend Zerfälle detektieren zu können, müssen die Myonen in diesem Versuch daher gestoppt werden.
+\subsection{Statistische Auswertung mit der Maximum-Likelihood-Methode}
+Seien $x_j$ mit $j=1,\dots,n$ die gemessenen Daten und der Zusammenhang $P(x_j|\tau)$ bekannt, wobei $\tau$ die gesuchte Größe ist. Für die Anwendung der Methode muss also die Wahrscheinlichkeitsverteilung der Messwerte in Abhängigkeit des gesuchten Parameters bekannt sein. Der beste Schätzwert für $\tau$ ist durch den Wert gegeben, welcher die Likelihood-Funktion $L(\tau|\vec{x})$ maximiert. Diese ist als
+\begin{align*}
+L&:=\prod_{j=1}^nP(x_j|\tau)\numberthis\label{eqn:L von tau Definition}
+\end{align*}
+definiert. Es ist meist einfacher, die Ableitung von $\log L$ zu betrachten, da sich das Produkt durch den Logarithmus zu einer Summe vereinfacht:
+\begin{align*}
+0&\overset{!}{=}\frac{\tecxt\text{d}\log L}{\tecxt\text{d}\tau}=\frac{\tecxt\text{d}}{\tecxt\text{d}\tau}\sum_{j=1}^n\log P(x_j|\tau)=\sum_{j=1}^n\frac{\frac{\tecxt\text{d}}{\tecxt\text{d}\tau}P(x_j|\tau)}{P(x_j|\tau)}\numberthis\label{eqn:dlog L dtau gleich 0}
+\end{align*}
+\section{Durchführung des Experiments}
+Es gibt zwei unterschiedliche Detektoren, wobei beide Gruppen jeweils nur einen verwenden. Wir haben das Experiment mit dem Messaufbau 1 \cite{LM Anleitung} durchgeführt.
+\subsection{Funktionsprinzip und Aufbau des Detektors}
+Der Detektor besteht aus einer Kupferplatte, in der die Myonen gestoppt werden sollen, sowie drei Szintillatoren, die jeweils mit einem Lichtleiter und einem Photomultiplier ausgestattet sind. 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.8]{Aufbau_LM1.png}
+\caption{Schematischer Aufbau des Detektors}
+\label{figure:Aufbau Detektor Schematik}
+\end{figure}
+\subsection{Vorversuche zur Kalibrierung}
+\subsection{Start der Langzeitmessung}b
+\section{Auswertung der Langzeitmessung}4
+\subsection{Exponentielles Zerfallsgesetz}a
+\subsection{Poissonverteilung}b
+\subsection{Gaussverteilung}c
+\section{Diskussion}5
+\begin{thebibliography}{9}
+\bibitem{Einfuehrung Praktikum} Einführung in das physikalische Praktikum (2015), \url{https://tu-dresden.de/mn/physik/ressourcen/dateien/studium/lehrveranstaltungen/praktika/pdf/Einfuehrung_Physik.pdf}, 10.\,Nov.~2020.
+\bibitem{LM Anleitung} Anleitung zum Versuch \emph{Lebensdauer von Myonen} (LM, Datum unbekannt), \url{https://tu-dresden.de/mn/physik/iktp/ressourcen/dateien/studium/praktikum/LM_Anleitung_komplett.pdf}, 21.\,Nov.~2020.
+\end{thebibliography}
+
+
+\end{document}

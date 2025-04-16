@@ -1,0 +1,469 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{04 Quantum master equations}
+\newcommand*{\autor}{Joachim Schwardt and Julian Fleck}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Stochastic processes}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+
+\section*{Problem 4.1: Linear first order partial differential equation}
+We are given a vector field $\vec{v}(\vec{r},t)$ and a scalar field $\rho(\vec{r},t)$ which satisfies
+\begin{align}
+\partial_t\rho &= -\nabla\cdot \kla\left( \vec{v}\rho \right).
+\end{align}
+The initial condition is $\rho(\vec{r},t=0)=\rho_0(\vec{r})$.
+Let $\vec{x}(t)$ be the trajectory of the dynamical system described by
+\begin{align}
+\dot{\vec{x}}(t) &= \vec{v}(\vec{x}(t), t)
+\end{align}
+with initial value $\vec{x}(t=0) = \vec{x}_0$.
+Then we can write the solution for the PDE as
+\begin{align}
+\rho(\vec{r},t) &= \intr\int_{} \rho_0(\vec{x}_0)\delta\kla\left( \vec{r} - \vec{x}(t) \right) \, \mathrm{d}^{ }\vec{x}_0.
+\end{align}
+%We find $\vec{x}(t) = \vec{x}_0 + \intx\int_{ }^{ }\vec{v}\, \mathrm{d}t$, which allows us to compute
+%\begin{align}
+%\partial_t\rho &= \intx\int_{ }^{ } \rho_0(\vec{x}_0) \delta'\kla\left( \vec{x} - \vec{x}(t) \right)\kla\left( -\vec{v} \right) \, \mathrm{d}\vec{x}_0 = \\
+%&= \intx\int_{ }^{ } \nabla_0\kla\left( \rho_0(\vec{x}_0) \vec{v} \right) \delta\kla\left( \vec{x} - \vec{x}(t) \right) \, \mathrm{d}\vec{x}_0.
+%\end{align}
+%Similarly, we can compute the right-hand-side
+%\begin{align}
+%-\nabla\cdot \kla\left( \vec{v}\rho \right) &= -\intx\int_{ }^{ } \rho_0(\vec{x}_0) \nabla \cdot \klam\left[ \vec{v}\delta\kla\left( \vec{x} - \vec{x}(t) \right) \right] \, \mathrm{d}\vec{x}_0 = \\
+%&= -\intx\int_{ }^{ } \rho_0(\vec{x}_0) \delta\kla\left( \vec{x} - \vec{x}(t) \right) \nabla \cdot \vec{v} \, \mathrm{d}\vec{x}_0  + \intx\int_{ }^{ } \vec{v} \rho_0(\vec{x}_0) \delta\kla\left( \vec{x} - \vec{x}(t) \right)\, \mathrm{d}\vec{x}_0 = ?
+%\end{align}
+The time derivative of this expression is given by
+\begin{align}
+\partial_t\rho(\vec{r},t) &= \intr\int_{} \rho_0(\vec{x}_0)\partial_t\delta\kla\left( \vec{r} - \vec{x}(t) \right) \, \mathrm{d}^{ }\vec{x}_0 = \\
+&= \intr\int_{} \rho_0(\vec{x}_0) \nabla \delta\kla\left( \vec{r} - \vec{x}(t) \right) \cdot \partial_t\kla\left( \vec{r} - \vec{x}(t) \right)  \, \mathrm{d}^{ }\vec{x}_0 = \\
+&= -\nabla\cdot \intx\int_{ }^{ } \rho_0(\vec{x}_0) \vec{v}\kla\left( \vec{x}(t), t \right) \delta\kla\left( \vec{r} - \vec{x}(t) \right) \, \mathrm{d}\vec{x}_0 = \\
+&= -\nabla\cdot \vec{v}\kla\left( \vec{r}, t \right)\intx\int_{ }^{ } \rho_0(\vec{x}_0)  \delta\kla\left( \vec{r} - \vec{x}(t) \right) \, \mathrm{d}\vec{x}_0 = -\nabla\cdot\kla\left( \vec{v}\rho \right),
+\end{align}
+which is exactly our PDE.
+Note that we simply replaced the argument $\vec{x}(t)$ of $\vec{v}$ in the integrand with $\vec{r}$.
+This should be justified, since the expression $\delta\kla\left( \vec{r} - \vec{x}(t) \right)$ should only give contributions whenever $\vec{x}(t) = \vec{r}$, where $\vec{x}(t)$ is really a function of $\vec{x}_0$.
+However, this does not feel completely rigorous.
+\\
+To get a more intuitive understanding of this solution, consider the special case of $\vec{v} = \vec{v}(t)$.
+Then we find 
+\begin{align}
+\vec{x}(t) &= \vec{x}_0 + \intx\int_{0}^{t}\vec{v}(s)\, \mathrm{d}s,
+\end{align} 
+which allows us to write the solution in the much more explicit form
+\begin{align}
+\rho(\vec{r},t) &= \intx\int_{ }^{ }\rho_0(\vec{x}_0) \delta\kla\left( \vec{x}_0 + \intx\int_{0}^{t}\vec{v}(s)\, \mathrm{d}s - \vec{r} \right) \, \mathrm{d}\vec{x}_0 = \rho_0\kla\left( \vec{r} - \intx\int_{0}^{t}\vec{v}(s)\, \mathrm{d}s \right).
+\end{align}
+This can be interpreted as the initial distribution moving in the direction of $\vec{v}(t)$, which may now be understood as the time-dependent velocity of the distribution.
+\\
+For a Hamiltonian dynamical system we have the phase-space density $\rho=\rho(q,p,t)$.
+Then the Liouville theorem states the evolution equation
+\begin{align}
+\partial_t\rho &= -\partial_q\rho\dot{q} - \partial_p\rho\dot{p}\equiv -\kla\left( \vec{v}\cdot\nabla \right)\rho
+\end{align}
+with $\vec{v} = (\dot{q},\dot{p})^\top$ and $\nabla \equiv (\partial_q, \partial_p)^\top$.
+However, despite the similarities, the solution to this equation has little to due with what was shown above.
+This is because we only considered $\vec{v}=\vec{v}(\vec{x},t)$, where we now have $\vec{v}=\vec{v}(\dot{\vec{x}})$.
+
+\newpage
+\section*{Problem 4.2: Quantum master equation for damped harmonic oscillator in heat bath}
+The Dynamics of a damped harmonic oscillator may be described by a Lindblad master equation with Hamiltonian $H = \Omega a^\dagger a$ and two Lindblad operators
+\begin{align}
+L_1 &= \sqrt{2\gamma \kla\left( \bar{n}+1 \right)} a &&\tecxt\text{and}& L_2 &= \sqrt{2\gamma\bar{n}} a^\dagger.
+\end{align}
+The time-evolution of the density operator is then given by
+\begin{align}
+\dot{\rho} &= -\i\klam\left[ \Omega a^\dagger a,\rho \right] + \gamma\kla\left( \bar{n}+1 \right)\kla\left( \klam\left[ a\rho,a^\dagger \right] + \klam\left[ a,\rho a^\dagger \right] \right) + \gamma\bar{n} \kla\left( \klam\left[ a^\dagger \rho, a \right] + \klam\left[ a^\dagger, \rho a \right] \right).
+\end{align}
+Here $a,a^\dagger$ are bosonic annihilation/creation operators with $\klam\left[ a,a^\dagger \right] = 1$ and the value
+\begin{align}
+\bar{n} &= \frac{1}{\e^{\frac{\hbar\Omega}{kT}} - 1}
+\end{align}
+incorporates the temperature of the heat bath.
+Let $\Ket | n \rangle$ be the eigenstates of $H$ and let the coherent states
+\begin{align}
+\Ket | \alpha \rangle &= \exp\kla\left( -\frac{|\alpha|^2}{2} + \alpha a^\dagger \right)\Ket | 0 \rangle
+\end{align}
+with $\alpha\in\mathbb{C}$ be eigenstates of the annihilation operator $a\Ket | \alpha \rangle = \alpha\Ket | \alpha \rangle$.
+\subsection*{a)}
+Let $p_n(t) = \braket\langle n | \rho(t) | n \rangle$.
+Then these satisfy a classical ``one-step'' master-equation with transition probabilities $W_{n-1,n} = 2\gamma\kla\left( \bar{n} + 1 \right)n$ and $W_{n+1,n} = 2\gamma\bar{n}\kla\left( n+1 \right)$.
+To show this, we will first consider the terms individually.
+We find the expressions
+\begin{align}
+\braket\langle n | \klam\left[ H,\rho \right] | n \rangle &= \Omega \braket\langle n | a^\dagger a\rho - \rho a^\dagger a | n \rangle = \Omega\braket\langle n | n\rho - \rho n | n \rangle = 0,\\
+\braket\langle n | \klam\left[ a\rho, a^\dagger \right] | n \rangle &= \braket\langle n | a\rho a^\dagger - a^\dagger a\rho | n \rangle = \\
+&= \braket\langle n+1 | \sqrt{n+1}\rho\sqrt{n+1} | n+1 \rangle - \braket\langle n | n\rho  | n \rangle = \\
+&= \kla\left( n+1 \right)p_{n+1} - np_n,\\
+\braket\langle n | \klam\left[ a,\rho a^\dagger \right] | n \rangle &= \braket\langle n | a\rho a^\dagger - \rho a^\dagger a | n \rangle = \kla\left( n+1 \right)p_{n+1} - np_n,\\
+\braket\langle n | \klam\left[ a^\dagger\rho, a \right] | n  \rangle &= \braket\langle n | a^\dagger\rho a - aa^\dagger\rho | n \rangle = \\
+&= \braket\langle n-1 | \sqrt{n}\rho \sqrt{n} | n-1 \rangle - \braket\langle n | (n+1)\rho | n \rangle = \\
+&= np_{n-1} - (n+1)p_n,\\
+\braket\langle n | \klam\left[ a^\dagger, \rho a \right] | n  \rangle &= \braket\langle n | a^\dagger\rho a - \rho aa^\dagger | n \rangle = np_{n-1} - (n+1)p_n.
+\end{align}
+With these, we can now compute
+\begin{align}
+\dot{p}_n &= \braket\langle n | \dot{\rho} | n \rangle = \\
+&= 0 + 2\gamma\kla\left( \bar{n}+1 \right)\klam\left[ (n+1)p_{n+1} - np_n \right] + 2\gamma\bar{n}\klam\left[ np_{n-1} - (n+1)p_n \right] = \\
+&= -\klam\left[ 2\gamma\kla\left( \bar{n}+1 \right)n + 2\gamma\bar{n}(n+1) \right]p_n + 2\gamma (\bar{n}+1)(n+1)p_{n+1} + 2\gamma\bar{n}np_{n-1} = \\
+&= -\klam\left[ W_{n-1,n} + W_{n+1,n} \right]p_n + W_{n,n+1}p_{n+1} + W_{n,n-1}p_{n-1}.
+\end{align}
+To determine the stationary distribution $p_s(n)\equiv\vec{p}_s$, we may write this equation as
+\begin{align}
+\dot{\vec{p}}(t) &= W\vec{p}(t) \overset{!}{=} 0.
+\end{align}
+Here we express the discrete probabilities as a vector.
+As a matrix equation, we therefore want to solve
+\begin{align}
+W\vec{p}_s &= \begin{pmatrix}
+-\bar{n} & \bar{n} + 1 & 0 & 0 & \dots \\
+\bar{n} & -3\bar{n} - 1 & 2\bar{n} + 2 & 0 & \dots \\ 
+0 & 2\bar{n} & -5\bar{n} - 2 & 3\bar{n} + 3 & \dots \\
+\vdots & \vdots & \vdots & \vdots & \ddots
+\end{pmatrix}\begin{pmatrix}
+p_0 \\ p_1 \\ p_2 \\ \vdots 
+\end{pmatrix} \overset{!}{=} 0.
+\end{align}
+We can solve this system of equations iteratively.
+The first equation is $\bar{n} p_0 = (\bar{n}+1)p_1$, giving $p_0 = \kla\left( 1 + \frac{1}{\bar{n}} \right)p_1$.
+The second equation is 
+\begin{align}
+(3\bar{n}+1)p_1 &= \bar{n}p_0 + 2(\bar{n}+1)p_2 = (\bar{n}+1)p_1 + 2(\bar{n}+1)p_2,
+\end{align}
+giving $p_1 = \kla\left( 1 + \frac{1}{\bar{n}} \right)p_2$.
+The third equation is
+\begin{align}
+(5\bar{n}+2)p_2 &= 2\bar{n}p_1 + 3(\bar{n}+1)p_3 = 2(\bar{n}+1)p_2 + 3(\bar{n}+1)p_3,
+\end{align}
+giving $p_2 = \kla\left( 1 + \frac{1}{\bar{n}} \right)p_3$.
+At this point the pattern becomes clear.
+In general, we find
+\begin{align}
+p_n &= \kla\left( 1 + \frac{1}{\bar{n}} \right)p_{n+1},
+\end{align}
+or in a more useful form
+\begin{align}
+p_n &= \frac{\bar{n}}{\bar{n} + 1}p_{n-1} = \dots = \kla\left( \frac{\bar{n}}{\bar{n} + 1} \right)^n p_0.
+\end{align}
+Conservation of probability allows us to eliminate the last parameter
+\begin{align}
+1 &\overset{!}{=} \sum_{n\ge 0} p_n = p_0 \sum_{n\ge 0} \kla\left( \frac{\bar{n}}{\bar{n} + 1} \right)^n = \frac{p_0}{1 - \frac{\bar{n}}{\bar{n} + 1}} = p_0\kla\left( \bar{n} + 1 \right).
+\end{align}
+Thus $p_0 = \frac{1}{\bar{n} + 1}$ and therefore the stationary distribution is given by
+\begin{align}
+p_s (n) &= \frac{1}{\bar{n} + 1}\kla\left( \frac{\bar{n}}{\bar{n} + 1} \right)^n = \frac{1}{\frac{1}{\exp\kla\left( \frac{\hbar\Omega}{kT} \right) - 1} + 1}\kla\left( \frac{1}{1 + \exp\kla\left( \frac{\hbar\Omega}{kT} \right) - 1}\right)^n = \\
+&= \e^{-\frac{\hbar\Omega n}{kT}} \frac{\exp\kla\left( \frac{\hbar\Omega}{kT} \right) - 1}{\exp\kla\left( \frac{\hbar\Omega}{kT} \right)} = \e^{-\frac{\hbar\Omega n}{kT}} \kla\left( 1 - \e^{-\frac{\hbar\Omega}{kT}} \right).
+\end{align}
+
+\subsection*{b)}
+We now want to express the density operator in terms of the coherent states
+\begin{align}
+\rho(t) &= \intx\int_{ }^{ } P(\alpha,\alpha^\ast,t)\oper | \alpha \rangle\langle \alpha | \, \mathrm{d}^2\alpha,
+\end{align}
+where the integral should be understood as one over the real and imaginary part of $\alpha$ respectively.
+Note that $a\Ket | \alpha \rangle = \alpha\Ket | \alpha \rangle$ trivially allows for the replacement of expressions
+\begin{align}
+a\oper | \alpha \rangle\langle \alpha  |&\rightarrow \alpha\oper | \alpha \rangle\langle \alpha |.
+\end{align}
+Consider the creation operator applied to a coherent state, i.e.
+\begin{align}
+a^\dagger\Ket | \alpha  \rangle \langle \alpha  | &= a^\dagger \e^{-\alpha\alpha^\ast} \sum_{n,m\ge 0} \frac{\alpha^n(\alpha^\ast)^m \kla\left( a^\dagger \right)^n}{n!m!}\Ket | 0 \rangle \langle 0  | a^n = \\
+&= \e^{-\alpha\alpha^\ast} \partial_\alpha \sum_{n,m\ge 0} \frac{\alpha^{n+1}(\alpha^\ast)^m \kla\left( a^\dagger \right)^{n+1}}{(n+1)!} \Ket | 0 \rangle \langle 0  | a^m = \\
+&= \e^{-\alpha\alpha^\ast} \partial_\alpha \e^{\alpha\alpha^\ast} \Ket | \alpha \rangle \langle \alpha  | = \kla\left( \partial_\alpha + \alpha^\ast \right)\Ket | \alpha \rangle.
+\end{align}
+Note that for this replacement rule it was important to consider the action on $\oper | \alpha \rangle\langle \alpha |$ rather than just $\Ket | \alpha \rangle$, since this would have resulted in the $\alpha^\ast$-term having a wrong factor of $\frac{1}{2}$.
+%Note that this is not quite the expected result.
+%We will follow the instructions and use the replacement rule
+%\begin{align}
+%a^\dagger\oper | \alpha \rangle\langle \alpha | &\rightarrow \kla\left( \partial_\alpha + \alpha^\ast \right)\Ket | \alpha \rangle
+%\end{align}
+%regardless of this discrepancy.
+Similarly to part a), we consider the individual parts of the quantum master equation separately
+\begin{align}
+\klam\left[ a^\dagger a, \oper | \alpha \rangle\langle \alpha | \right] &= a^\dagger a\oper | \alpha \rangle\langle \alpha | - \tecxt\text{h.c.} = \alpha (\partial_\alpha + \alpha^\ast)\oper | \alpha \rangle\langle \alpha | - \tecxt\text{h.c. } = \\
+&= \alpha\partial_\alpha \oper | \alpha \rangle\langle \alpha  | - \alpha^\ast \partial_{\alpha^\ast} \Ket | \alpha \rangle \Bra\langle \alpha | ,\\
+\klam\left[ a\oper | \alpha \rangle\langle \alpha |, a^\dagger \right] &= a \oper | \alpha \rangle\langle \alpha |a^\dagger - a^\dagger a\oper | \alpha \rangle\langle \alpha |= \\
+&= \kla\left( \alpha\alpha^\ast  - \alpha\partial_\alpha - \alpha\alpha^\ast \right) \oper | \alpha \rangle\langle \alpha | = -\alpha\partial_\alpha \oper | \alpha \rangle\langle \alpha |, \\
+\klam\left[ a, \oper | \alpha \rangle\langle \alpha | a^\dagger  \right] &= \klam\left[ a\oper | \alpha \rangle\langle \alpha |, a^\dagger \right]^\dagger = -\alpha^\ast \partial_{\alpha^\ast} \oper | \alpha \rangle  \langle \alpha |,\\
+\klam\left[ a^\dagger \oper | \alpha \rangle\langle \alpha |, a \right] &= a^\dagger \oper | \alpha \rangle\langle \alpha | a - \kla\left( a^\dagger a + 1 \right)\oper | \alpha \rangle\langle \alpha | = \\
+&= (\partial_{\alpha} + \alpha^\ast) (\partial_{\alpha^\ast} + \alpha) \oper | \alpha \rangle  \langle \alpha |  - \kla\left( \alpha (\partial_\alpha + \alpha^\ast)  + 1 \right) \oper | \alpha \rangle\langle \alpha | = \\
+&= \kla\left( \partial_\alpha +  \alpha^\ast \right) \partial_{\alpha^\ast}\oper | \alpha \rangle  \langle \alpha |,\\
+\klam\left[ a^\dagger, \oper | \alpha \rangle\langle \alpha  |a \right] &= \klam\left[ a^\dagger\oper | \alpha \rangle\langle \alpha |, a \right]^\dagger = \alpha\partial_\alpha \oper | \alpha \rangle\langle \alpha | + \partial_\alpha \partial_{\alpha^\ast} \oper | \alpha \rangle \langle \alpha |.
+\end{align}
+Inserting these into the quantum master equation leads to
+\begin{align*}
+\dot{\rho} &= -\i\klam\left[ \Omega a^\dagger a,\rho \right] + \gamma\kla\left( \bar{n}+1 \right)\kla\left( \klam\left[ a\rho,a^\dagger \right] + \klam\left[ a,\rho a^\dagger \right] \right) + \gamma\bar{n} \kla\left( \klam\left[ a^\dagger \rho, a \right] + \klam\left[ a^\dagger, \rho a \right] \right) = \numberthis \\
+ &= \intx\int_{ }^{ }  P(\alpha,\alpha^\ast,t)\kla\left(  - \i\Omega \alpha \partial_\alpha - \gamma (\bar{n}+1) \alpha\partial_\alpha +\gamma\bar{n}  \alpha\partial_\alpha   \right) \oper | \alpha \rangle\langle \alpha | + \\
+&\hspace{0.9cm} +  P(\alpha,\alpha^\ast,t) \kla\left( \i\Omega\alpha^\ast  \partial_{\alpha^\ast}  - \gamma (\bar{n}+1) \alpha^\ast \partial_{\alpha^\ast}  + \gamma\bar{n}[2\partial_\alpha + \alpha^\ast]  \partial_{\alpha^\ast}  \right)\Ket | \alpha \rangle \Bra\langle \alpha | \, \mathrm{d}^2\alpha =  \numberthis \\
+&= \intx\int_{ }^{ }  P\kla\left(  - \i\Omega \alpha \partial_\alpha - \gamma \alpha\partial_\alpha + \i\Omega\alpha^\ast \partial_{\alpha^\ast}   - \gamma \alpha^\ast \partial_{\alpha^\ast}  + 2\gamma\bar{n}\partial_\alpha \partial_{\alpha^\ast}  \right)\Ket | \alpha \rangle \Bra\langle \alpha | \, \mathrm{d}^2\alpha =  \numberthis \\
+&= \intx\int_{ }^{ } \oper | \alpha \rangle\langle \alpha | \klam\left[ (\gamma + \i\Omega)\partial_\alpha\alpha + (\gamma - \i\Omega)\partial_{\alpha^\ast}\alpha^\ast + 2\gamma\bar{n}\partial_{\alpha}\partial_{\alpha^\ast} \right]P\, \mathrm{d}^2\alpha. \numberthis
+%&= \intx\int_{ }^{ } -2\gamma\bar{n} P \oper | \alpha \rangle\langle \alpha | +  \oper | \alpha \rangle\langle \alpha |  \kla\left( \gamma + \i\Omega \right) \partial_\alpha (\alpha P) + \\
+%&\hspace{0.9cm} +  2\gamma\bar{n}\partial_{\alpha^\ast} \partial_\alpha P\oper | \alpha \rangle  \langle \alpha | +  \Ket | \alpha \rangle \Bra\langle \alpha | \kla\left( \gamma - \i\Omega  \right) \partial_{\alpha^\ast}(\alpha^\ast P) \, \mathrm{d}^2\alpha. \numberthis 
+\end{align*}
+Therefore it is sufficient for $P$ to satisfy the differential equation
+\begin{align}
+\partial_tP &= 2\gamma\bar{n} \partial_\alpha  \partial_{\alpha^\ast} P +  \klam\left[ \kla\left( \gamma + \i\Omega \right) \partial_\alpha (\alpha P) + \kla\left( \gamma -  \i\Omega \right) \partial_{\alpha^\ast}(\alpha^\ast P) \right].
+\end{align}
+This (sort of) has the form of a Fokker-Planck equation 
+\begin{align}
+\partial_t P(x,y,t) &= \nabla^2[D(x,y,t)P] - \nabla\cdot \klam\left[ \vec{\mu}(x,y,t)P \right].
+\end{align}
+%However, the mixed derivative term looks odd.
+%Also, above we simply assumed that these complex derivatives may be transformed via partial integration just like normal derivatives.
+%Furthermore, there may have been mistakes or oversights regarding the hermitian conjugates of the replacement rules and related identities.
+
+%\begin{align}
+%\klam\left[ a^\dagger a, \rho \right] &= \intx\int_{ }^{ } P \klam\left[ a^\dagger a, \oper | \alpha \rangle\langle \alpha | \right] \, \mathrm{d}^2\alpha  =  \intx\int_{ }^{ }P \alpha \klam\left[ \partial_\alpha + \alpha^\ast \right] \oper | \alpha \rangle\langle \alpha | - \tecxt\text{h.c.}\, \mathrm{d}^2\alpha,\\
+%\klam\left[ a\rho, a^\dagger  \right] &= \intx\int_{ }^{ } P \klam\left[ a \oper | \alpha \rangle\langle \alpha |, a^\dagger \right] \, \mathrm{d}^2\alpha = \intx\int_{ }^{ }P\alpha \klam\left[ \alpha^\ast - (\partial_\alpha + \alpha^\ast) \right]\oper | \alpha \rangle\langle \alpha | \, \mathrm{d}^2\alpha = \\
+%&= -\intx\int_{ }^{ } P \alpha\partial_\alpha\oper | \alpha \rangle\langle \alpha | \, \mathrm{d}^2\alpha = \rho + \intx\int_{ }^{ } \partial_\alpha P \oper | \alpha \rangle\langle \alpha | \, \mathrm{d}^2\alpha , \\
+%\klam\left[ a^\dagger \rho, a \right] &= \intx\int_{ }^{ } P \klam\left[ a^\dagger \oper | \alpha \rangle\langle \alpha |, a \right] \, \mathrm{d}^2\alpha = \\
+%&= \intx\int_{ }^{ } P [\partial_\alpha + \alpha^\ast] \oper | \alpha \rangle\langle \alpha |a - P \alpha \klam\left[ \partial_\alpha + \alpha^\ast \right] \oper | \alpha \rangle\langle \alpha |  \, \mathrm{d}^2\alpha - \rho. \\
+%%\klam\left[ a^\dagger, \rho a \right] &= \intx\int_{ }^{ } P \klam\left[ a^\dagger, \oper | \alpha \rangle\langle \alpha | a \right] \, \mathrm{d}^2\alpha = \intx\int_{ }^{ } P \klam\left[ a^\dagger \oper | \alpha \rangle\langle \alpha |,  a \right]^\dagger \, \mathrm{d}^2\alpha = 
+%%\klam\left[ a^\dagger a, \rho \right] &= \intx\int_{ }^{ } P \klam\left[ a^\dagger a, \oper | \alpha \rangle\langle \alpha | \right] \, \mathrm{d}^2\alpha  = \intx\int_{ }^{ } P a^\dagger \klam\left[ a,\oper | \alpha \rangle\langle \alpha  | \right] + \klam\left[ a^\dagger ,\oper | \alpha \rangle\langle \alpha | \right]a\, \mathrm{d}^2\alpha = \\
+%%&= \intx\int_{ }^{ } P  (\alpha - \alpha^\ast) \kla\left( \partial_\alpha + \alpha^\ast \right) \oper | \alpha \rangle\langle \alpha | + (\partial_\alpha + \alpha^\ast)\oper | \alpha \rangle\langle \alpha |a -  \alpha^\ast \oper | \alpha \rangle\langle \alpha |  a\, \mathrm{d}^2\alpha = \\
+%%&= \intx\int_{ }^{ } P (\alpha - \alpha^\ast)(\partial_\alpha + \alpha^\ast)\oper | \alpha \rangle\langle \alpha | + \partial_\alpha\oper | \alpha \rangle \kla\left( (\partial_\alpha + \alpha^\ast ) \Ket | \alpha \rangle \right)^\dagger \, \mathrm{d}^2\alpha = \\
+%%&= \intx\int_{ }^{ } P \alpha (\partial_\alpha + \alpha^\ast) \oper | \alpha \rangle\langle \alpha | - P \alpha^\ast \oper | \alpha \rangle \kla\left( (\partial_\alpha + \alpha^\ast) \Ket | \alpha \rangle \right)^\dagger\, \mathrm{d}^2\alpha = \\
+%%&= \intx\int_{ }^{ }P\alpha\partial_\alpha +\, \mathrm{d}•
+%\end{align}
+%Note that the other two commutators are simply the hermitian conjugate of their respective counterpart.
+%Now these expressions are still a bit difficult to work with, so let us consider
+%\begin{align}
+%\klam\left[ a\rho, a^\dagger  \right] + \klam\left[ a\rho, a^\dagger  \right]^\dagger &= 
+%\end{align}
+
+%%%%% DIFFERENT APPROACH FOR P REPRESENTATION %%%%%
+%Let us start by bringing the quantum master equation into the more useful form
+%\begin{align*}
+%\dot{\rho} &= -\i\klam\left[ \Omega a^\dagger a,\rho \right] + \gamma\kla\left( \bar{n}+1 \right)\kla\left( \klam\left[ a\rho,a^\dagger \right] + \klam\left[ a,\rho a^\dagger \right] \right) + \gamma\bar{n} \kla\left( \klam\left[ a^\dagger \rho, a \right] + \klam\left[ a^\dagger, \rho a \right] \right) =  \numberthis \\
+%&= -\i\Omega\klam\left[ a^\dagger a,\rho \right] + \gamma\kla\left( \klam\left[ a\rho,a^\dagger \right] + \klam\left[ a,\rho a^\dagger \right] \right) + \\
+%&\hspace{2.57cm} + \gamma\bar{n}\kla\left( \klam\left[ a\rho,a^\dagger \right] + \klam\left[ a,\rho a^\dagger \right] + \klam\left[ a^\dagger \rho, a \right] + \klam\left[ a^\dagger, \rho a \right] \right) = \numberthis  \\
+%&= -\i\Omega\klam\left[ a^\dagger a,\rho \right] + \gamma \kla\left( 2a\rho a^\dagger - a^\dagger a\rho - \rho a^\dagger a \right) + \\
+%&\hspace{2.57cm} + \gamma\bar{n} \kla\left( 2a\rho a^\dagger + 2a^\dagger\rho a - a^\dagger a\rho - \rho a^\dagger a - aa^\dagger \rho - \rho aa^\dagger \right) =  \numberthis \\
+%&= -\i\Omega\klam\left[ a^\dagger a,\rho \right] + \gamma \kla\left( 2a\rho a^\dagger - a^\dagger a\rho - \rho a^\dagger a \right) + 2\gamma\bar{n} \kla\left( a\rho a^\dagger + a^\dagger\rho a - a^\dagger a\rho - \rho aa^\dagger \right). \numberthis 
+%\end{align*}
+
+
+\subsection*{c)}
+The zero-temperature limit leads to the parameter
+\begin{align}
+\bar{n} &= \frac{1}{\e^{\frac{\hbar\Omega}{kT}} - 1} \kom\overset{\substack{{T\,\rightarrow\, 0} \\ |}}{\longrightarrow} 0.
+\end{align}
+For the result from a), this obviously leads to the stationary distribution
+\begin{align}
+p_s(n) &= \delta_{n0}.
+\end{align}
+Thus all bosons occupy the lowest energy state.\\
+For b), we find the simplified differential equation
+\begin{align}
+\partial_tP &= (\gamma + \i\Omega) \partial_\alpha\alpha P + (\gamma - \i\Omega)\partial_{\alpha^\ast}\alpha^\ast P.
+\end{align}
+Note that due to normalization $\tecxt\text{tr\,}\rho = 1$ we have the additional constraint
+\begin{align}
+1 &\overset{!}{=} \tecxt\text{tr\,}\rho = \sum_{n\ge 0} \braket\langle n | \rho | n \rangle = \intx\int_{ }^{ } P\sum_{n\ge 0}|\brak\langle n | \alpha \rangle|^2 \, \mathrm{d}^2\alpha = \\
+&= \intx\int_{ }^{ } P \sum_{n\ge 0} \left\vert \e^{-\alpha\alpha^\ast/2} \frac{\alpha^n}{\sqrt{n!}} \right\vert^2\, \mathrm{d}^2\alpha = \intx\int_{ }^{ } P \, \mathrm{d}^2\alpha
+\end{align}
+for the function $P$.
+As a first step we substitute $P=\frac{f}{\alpha\alpha^\ast}$ and multiply the equation by $\alpha\alpha^\ast$ to obtain
+\begin{align}
+\partial_t f &= \alpha\alpha^\ast \cdot \kla\left( \frac{\gamma + \i\Omega}{\alpha^\ast}\partial_\alpha f + \frac{\gamma - \i\Omega}{\alpha}\partial_{\alpha^\ast} f \right) = (\gamma + \i\Omega)\alpha\partial_\alpha f + (\gamma - \i\Omega) \alpha^\ast\partial_{\alpha^\ast} f.
+\end{align}
+%While the PDE reduces the equation to first order, it is still a hard problem.
+NOTE: The following approach did not really lead to a solution, but we found a better idea further down.\\
+To make any further progress, we now switch to a polar representation.
+This is probably possible in a single step, but we will first replace the $\alpha,\alpha^\ast$-coordinates with cartesian $q,p$-coordinates.
+Note that $\alpha = \frac{q}{\sqrt{2}} + \i\frac{p}{\sqrt{2}}$ and $\partial_\alpha = \frac{\partial_q}{\sqrt{2}} - \i\frac{\partial_p}{\sqrt{2}}$.
+Then for $f= f(q,p,t)$ we find
+\begin{align}
+\partial_t f &= \frac{1}{2}(\gamma + \i\Omega) \kla\left( q + \i p \right) \kla\left( \partial_q - \i \partial_p \right) f + \frac{1}{2} (\gamma - \i\Omega) \kla\left( q - \i p \right) \kla\left( \partial_q + \i \partial_p \right) f = \\
+%&= \frac{1}{2}(\gamma + \i\Omega) \kla\left( q\partial_q + p\partial_p + \i p\partial_q - \i q\partial_p \right)f + \frac{1}{2}(\gamma - \i\Omega)  \kla\left( q\partial_q + p\partial_p - \i p\partial_q + \i q\partial_p \right)f = \\
+&= \gamma \kla\left( q\partial_q + p\partial_p \right)f + \Omega \kla\left( q\partial_p - p\partial_q \right)f .
+\end{align}
+In polar coordinates $r = \sqrt{q^2 + p^2}$ and $\phi = \arctan\kla\left( \frac{p}{q} \right)$, thus $q = r\cos\phi$ and $p = r\sin\phi$.
+Therefore 
+\begin{align}
+\partial_q &= \frac{\partial r}{\partial q} \partial_r + \frac{\partial \phi}{\partial q} \partial_\phi = \cos\phi\partial_r - \frac{1}{r}\sin\phi \partial_\phi, \\
+\partial_p &= \frac{\partial r}{\partial p} \partial_r + \frac{\partial \phi}{\partial p} \partial_\phi = \sin\phi\partial_r + \frac{1}{r}\cos\phi \partial_\phi.
+\end{align}
+Inserting into the PDE gives
+\begin{align}
+\partial_t f &= \gamma  r\partial_r f +  \Omega \partial_\phi f.
+\end{align}
+Assuming a stationary distribution, we may now let $\partial_t f=0$.
+Note that we can not assume radial symmetry here, since then the only possible solution would be $f = \tecxt\text{const.}$.
+Since $P = \frac{f}{r^2}$ has to be integrable, this is not a valid solution.
+%Assuming further a radially symmetric distribution, we may also let $\partial_\phi f = 0$.
+Separation of variables via $f = R(r)g(\phi)$ leads to
+\begin{align}
+\frac{rR'}{R} &=  -  \frac{\Omega g'}{\gamma g} \equiv \tecxt\text{const} =: \lambda .
+\end{align}
+Thus we find the solution $g(\phi) = \exp\kla\left( -\frac{\gamma\lambda}{\Omega}\phi \right)$ and 
+\begin{align}
+\lambda R &= rR',
+\end{align}
+which can be integrated to yield
+\begin{align}
+ R &= \exp\kla\left( \intx\int_{ }^{ } \frac{\lambda}{r} \, \mathrm{d}r \right) = cr^\lambda .
+\end{align}
+Unfortunately this will not lead to an integrable function, so separation of variables is not a possible approach here.
+\\
+NOTE: Different approach starting here.
+\\
+Note that we can write our differential equation as
+%\begin{align}
+%\partial_t f &= \vec{v}\cdot\nabla f
+%\end{align} 
+%where $\vec{v} = ( \gamma q - \Omega p, \gamma p + \Omega p )^\top$
+\begin{align}
+\partial_t P &= -\nabla\cdot \kla\left( \vec{v}P \right)
+\end{align}
+where $\vec{v} = \kla\left( g_+\alpha, g_-\alpha^\ast \right)^\top$ and $g_\pm = -\gamma \mp \i\Omega$.
+From 4.1 the solution can be found by first considering
+\begin{align}
+\dot{\vec{x}} &= \vec{v} = \begin{pmatrix}
+g_+ & 0 \\ 0 & g_- 
+\end{pmatrix} \vec{x}.
+\end{align}
+This system has the simple solution
+\begin{align}
+\vec{x}(t) &= \begin{pmatrix}
+\e^{g_+ t} & 0 \\ 0 & \e^{g_- t}
+\end{pmatrix} \vec{x}_0.
+\end{align}
+Then the full solution can then be written as
+\begin{align}
+P(\vec{\alpha},t) &= \intx\int_{ }^{ } P_0(\vec{x}_0) \delta\kla\left( \vec{\alpha} - \vec{x}(t) \right) \, \mathrm{d}\vec{x}_0 = \\
+&= \intx\int_{ }^{ } P_0(\alpha_0,\alpha_0^\ast) \delta\kla\left(
+\alpha - \e^{g_+t}\alpha_0 
+ \right) \delta\kla\left( \alpha^\ast - \e^{g_-t}\alpha_0^\ast \right) \, \mathrm{d}\vec{\alpha}_0 = \\
+ &=  \frac{1}{|\e^{g_+t}\e^{g_-t}|} P_0 \kla\left( \alpha\e^{-g_+t}, \alpha^\ast\e^{-g_-t} \right) = \\
+ &= \e^{2\gamma t} P_0\kla\left( \alpha\e^{\gamma t}\e^{\i\Omega t}, \alpha^\ast\e^{\gamma t} \e^{-\i\Omega t} \right).
+\end{align}
+%Now assuming the simplest initial condition $P_0 = \delta (\alpha - \alpha_0)\delta (\alpha^\ast - \alpha_0^\ast )$ we find
+%\begin{align}
+%\rho (t) &= \intx\int_{ }^{ } \e^{-2\gamma t} \delta \kla\left( \alpha\e^{-\gamma t}\e^{-\i\Omega t} - \alpha_0 \right) \delta \kla\left( \alpha^\ast\e^{-\gamma t} \e^{\i\Omega t} - \alpha_0^\ast \right) \oper | \alpha \rangle\langle \alpha | \, \mathrm{d}^2\alpha = \\
+%&= \e^{-2\gamma t}
+%\end{align}
+We could use this solution in the integral for $\rho(t)$.
+However, for an arbitrary initial distribution $P_0$ we can just as well express the density operator as
+\begin{align}
+\rho(t) &= \intx\int_{ }^{ } \intx\int_{ }^{ } P_0(\alpha_0,\alpha_0^\ast) \delta \kla\left( \vec{\alpha} - \vec{x}(t) \right) \, \mathrm{d}^2 \alpha_0 \oper | \alpha \rangle\langle \alpha | \, \mathrm{d}^2 \alpha = \\
+&= \intx\int_{ }^{ } P_0(\alpha_0, \alpha_0^\ast) \oper | \alpha_0\e^{-\gamma t}\e^{-\i\Omega t} \rangle\langle \alpha_0\e^{-\gamma t}\e^{-\i\Omega t} | \, \mathrm{d}^2 \alpha_0.
+\end{align}
+Now assuming the simplest initial condition $P_0 = \delta (\alpha - \alpha_0)\delta (\alpha^\ast - \alpha_0^\ast )$ we find
+\begin{align}
+\rho (t) &= \oper | \alpha_0\e^{-\gamma t}\e^{-\i\Omega t} \rangle\langle \alpha_0\e^{-\gamma t}\e^{-\i\Omega t} | = \\
+&= \e^{-|\alpha_0\e^{-\gamma t} |^2} \sum_{n,m\ge 0} \frac{\kla\left( \alpha_0\e^{-\gamma t}\e^{-\i\Omega t} \right)^n (\alpha_0^\ast\e^{-\gamma t}\e^{\i\Omega t})^m}{\sqrt{n!m!}} \oper | n \rangle\langle m |.
+\end{align}
+%Now we would expect $\gamma$ to represent the dampening of the system, so the sign in the exponent should probably be reversed.
+Interestingly the resulting density operator is only normalized for $t\rightarrow\infty $
+\begin{align}
+\tecxt\text{tr\,}\rho &= \e^{-|\alpha_0\e^{-\gamma t} |^2} \sum_{k\ge 0} \frac{ \left\vert  \alpha_0^2 \e^{-2\gamma t} \right\vert^k }{k!} = 1.
+\end{align}
+Additionally we find $\rho \rightarrow \oper | 0 \rangle\langle 0 |$ as $t\rightarrow\infty$ for arbitrary initial conditions, which agrees with the result from a).
+
+%\begin{align}
+%0 &= g_+ \partial_\alpha\alpha P + g_- \partial_{\alpha^\ast}\alpha^\ast P,
+%%0 &= \gamma\klam\left[ 2 + \alpha\partial_\alpha + \alpha^\ast \partial_{\alpha^\ast} \right]P + \i\Omega \klam\left[ \alpha\partial_\alpha - \alpha^\ast \partial_{\alpha^\ast} \right] P,
+%\end{align}
+%where $g_\pm = \gamma \pm \i\Omega$.
+%Then the equation further simplifies to
+%\begin{align}
+%0 &= g_+ \kla\left( \alpha\partial_\alpha + 1 \right) P + g_-\kla\left( \alpha^\ast \partial_{\alpha^\ast} + 1 \right) P,
+%%0 &= \gamma\klam\left[ 2 + \alpha\partial_\alpha + \alpha^\ast \partial_{\alpha^\ast} \right]P + \i\Omega \klam\left[ \alpha\partial_\alpha - \alpha^\ast \partial_{\alpha^\ast} \right] P,
+%\end{align}
+%where $g_\pm = \gamma \pm \i\Omega$.
+%It is a reasonable guess to write $P=f(\alpha,\alpha^\ast) \e^{-\lambda \alpha\alpha^\ast}$, since we want $P$ to decay rapidly for large $|\alpha|$.
+%Then we find
+%\begin{align}
+%0 &= g_+ (\partial_\alpha\alpha + 1) f - g_+ \lambda\alpha \alpha^\ast f + g_- (\partial_{\alpha^\ast}\alpha^\ast + 1) f - g_- \lambda\alpha \alpha^\ast f = \\
+%&= \klam\left[ (g_+ + g_-)(1 - \lambda\alpha\alpha^\ast) + g_+ \alpha \partial_\alpha + g_- \partial_{\alpha^\ast}\alpha^\ast \right]f
+%\end{align}
+
+
+
+%As a first step we substitute $P=\frac{f}{\alpha\alpha^\ast}$ and multiply the equation by $\alpha\alpha^\ast$ to obtain
+%\begin{align}
+%0 &= \alpha\alpha^\ast \cdot \kla\left( \frac{g_+}{\alpha^\ast}\partial_\alpha f + \frac{g_-}{\alpha}\partial_{\alpha^\ast} f \right) = g_+\alpha\partial_\alpha f + g_-\alpha^\ast\partial_{\alpha^\ast} f.
+%\end{align}
+%Since $g_- = g_+^\ast$, this may also be written as
+%\begin{align}
+%\partial_\alpha f &= -\frac{(g_+\alpha)^\ast}{g_+\alpha}\partial_{\alpha^\ast} f.
+%\end{align}
+%Thus we may attempt an ansatz of the form $f = b(\alpha)c(\alpha^\ast)$
+%\begin{align}
+%cb' &= -\frac{(g_+\alpha)^\ast}{g_+\alpha} bc'\\
+%\frac{g_+\alpha b'}{b} &= -\frac{g_-\alpha^\ast c'}{c} \equiv \tecxt\text{const.} =: k.
+%\end{align}
+%Then we find
+%\begin{align}
+%b' &= \frac{k}{g_+\alpha}b.
+%\end{align}
+%This has the obvious solution $b=\alpha^{\frac{k}{g_+}}$
+
+
+
+%which has a simple solution of the form $P=-\alpha - \alpha^\ast$ ( of course this is far from a unique answer -- we have considered neither initial nor boundary conditions).
+%The distribution then takes the form
+%\begin{align}
+%\rho &= -\intx\int_{ }^{ }(\alpha + \alpha^\ast)\oper | \alpha \rangle\langle \alpha  | \, \mathrm{d}^2\alpha = 0?
+%\end{align}
+%Obviously something has gone wrong...
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{numerical levy stable distributions} S.Ament, M. O'Neil: Accurate and efficient numerical calculation of stable
+%densities via optimized quadrature and asymptotics, \url{https://arxiv.org/pdf/1607.04247.pdf}, 31.\,August~2021.
+%\end{thebibliography}
+
+\end{document}

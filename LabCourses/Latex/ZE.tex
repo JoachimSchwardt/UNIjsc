@@ -1,0 +1,214 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{Zeeman effect}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Tasks}
+\begin{enumerate}
+\item Determination of the polarization of the different transition lines for $\lambda=643,847\,$nm and $\lambda=508,588\,$nm in the transversal and longitudinal setup
+\item Calculation of the Bohr magneton from the energy splitting for different magnetic fields 
+\item Discussion of the Zeeman effect
+\end{enumerate}
+\section{Theoretical remarks}
+\subsection{Semiclassical energy splitting}
+In a classical view, an orbital moving electron corresponds to a current $I=\frac{Q}{T}=-\frac{ev}{2\pi r}$. This generates a magnetic moment, where $\vv{n}$ denotes the normal unit vector to the orbit:
+$$\vv{\mu}=I\vv{A}=I\pi r^2\vv{n}=-\frac{e}{2}vr\vv{n}$$
+The orbital angular momentum of the electron is also proportional to this unit vector by $\vv{l}=\vv{r}\times\vv{p}=m_erv\vv{n}$. We find a relation between the magnetic moment and the orbital angular momentum. Using the Bohr magneton $\mu_B=\frac{e\hbar}{2m_e}$:
+\begin{align*}
+\vv{mu}&=-\frac{e}{2m_e}\vv{l}=:-\frac{\mu_B}{\hbar}\vv{l}\numberthis\label{mu ist Bohr mal L}
+\end{align*}
+Consider an external $B$-field in the $z$-direction. The quantisation rules for orbital angular momentum are $|\vv{l}|=\hbar\sqrt{l(l+1)}$, $l\ge 0$ and $|m_l|\le l$. Then we find that the potential energy due to the magnetic field obeys:
+\begin{align*}
+E=-\vv{\mu}\cdot\vv{B}=\frac{\mu_B}{\hbar}l_zB_z=\mu_Bm_lB\numberthis\label{E von ml und B}
+\end{align*}
+Hence, the energy difference between two neighboring energy levels is always $\Delta E=\mu_BB$. Therefor a singlet state of the form $n^1L_J$ ($S=0$ and multiplicity $2S+1=1$) splits into $2J+1$ different energy levels under the influence of an external magnetic field. 
+\subsection{Anomalous Zeeman effect}
+A more general approuch is required to derive the anomalous Zeeman effect, since the spin has to be considered for systems that are not situated in a singlet state. Analogous to the orbital angular momentum, the magnetic moment of a spin is given by $\vv{\mu}_S=-g_S\frac{\mu_B}{\hbar}\vv{S}$, where $g_S\approx 2$ is the gyromagnetic factor of the spin. With the total angular momentum $\vv{J}=\vv{L}+\vv{S}$ we get:
+\begin{align*}
+\vv{\mu}_J&=\vv{\mu}_L+\vv{\mu}_S\approx -\frac{\mu_B}{\hbar}\kla\left( {\vv{L}+2\vv{S}} \right)\overset{!}{=}-g_J\frac{\mu_B}{\hbar}\vv{J}\\
+g_J\hbar^2J(J+1)&=\vv{J}\cdot\kla\left( {\vv{L}+2\vv{S}} \right)=\vv{L}^2+2\vv{S}^2+3\vv{L}\cdot\vv{S}=-\frac{1}{2}\vv{L}^2+\frac{1}{2}\vv{S}^2+\frac{3}{2}\kla\left( {\vv{L}+\vv{S}} \right)^2=\\
+&=\frac{\hbar^2}{2}\kla\left( {3J(J+1)-L(L+1)+S(S+1)} \right)\\
+&\Rightarrow\ \ g_J=\frac{3}{2}+\frac{S(S+1)-L(L+1)}{2J(J+1)}\numberthis\label{gJ}
+\end{align*}
+Finally, using $J_z=\hbar M_J$ and a magnetic field in the $z$-direction:
+\begin{align*}
+E=-\vv{\mu}_J\cdot\vv{B}=g_J\mu_BM_JB\numberthis\label{E von MJ und B}
+\end{align*}
+\subsection{Fabry-Pérot Interferometer}
+With the order of diffraction $z\in\mathbb{N}$, the wavelength $\lambda$, the angle $\theta$ between the incident ray and the surface normal, the refractive index $n$ of the quartz plate and the thickness $t$, the condition for constructive interference is:
+\begin{align*}
+z\lambda&=2nt\cos\theta\numberthis\label{z lambda ist 2nt cos theta}
+\end{align*}
+With the focal length $f$ of the optical lens, the angles from the interference condition correspond to radii:
+\begin{align*}
+r_z=f\tan\theta_z\approx f\theta_z\numberthis\label{rz of theta z}
+\end{align*}
+With $z_0=\frac{2nt}{\lambda}$ we also get:
+\begin{align*}
+z=z_0\cos\theta_z\approx z_0\kla\left( {1-\frac{\theta_z^2}{2}} \right)\ \ \Rightarrow\ \ \theta_z\approx\sqrt{\frac{2(z_0-z)}{z_0}}\numberthis\label{theta z von z}
+\end{align*}
+Let $z_p=(z_0-\epsilon) - (p-1)$ denote the order of the $p$-th ring, where $z_0-z_1=\epsilon$ and use Eq. (\ref{rz of theta z}), (\ref{theta z von z}). Then the radii increase with $p$, so we count the $z_p$ from the center outwards:
+\begin{align*}
+r_p&=\sqrt{\frac{2f^2}{z_0}}\sqrt{p-1+\epsilon}\numberthis\label{rp of p and epsilon}
+\end{align*}
+The splitting of a spectral line into two close neighboring components $a$ and $b$ with $\lambda_a$ and $\lambda_b$ each gives an expression for $\epsilon_{a,b}$ under $z_{1a}=z_{1b}\equiv z_1$:
+\begin{align*}
+z_1&=\frac{2nt}{\lambda_a}-\epsilon_a=\frac{2nt}{\lambda_b}-\epsilon_b\numberthis\label{z1 of a b}
+\end{align*}
+Using the wavenumbers $k_{a,b}=\frac{2\pi}{\lambda_{a,b}}$ in (\ref{z1 of a b}) gives us:
+\begin{align*}
+\Delta k&=k_a-k_b=\frac{\pi}{nt}(\epsilon_a-\epsilon_b)\numberthis\label{delta k of epsilon}
+\end{align*}
+From (\ref{rp of p and epsilon}) we find that the difference of the squared radii is constant. We also get another expression for $\epsilon_{a,b}$:
+\begin{align*}
+r_{p+1}^2-r_p^2&=\frac{2f^2}{z_0}\numberthis\label{delta rp2 of z0}\\
+\frac{r_{p+1,a}^2}{r_{p+1,a}^2-r_{p,a}^2}&=p+\epsilon_{a}\numberthis\label{epsilon of delta rp2}
+\end{align*}
+Using both (\ref{delta rp2 of z0}) and (\ref{epsilon of delta rp2}) in (\ref{delta k of epsilon}) with $z_{0a}=z_{0b}\equiv z_0$, $\Delta=r_{p+1,a}^2-r_{p,a}^2=$ const. and $\delta=r_{p+1,a}^2-r_{p+1,b}^2=$ const. leads to:
+\begin{align*}
+\Delta k&=\frac{\pi}{nt}\frac{\delta}{\Delta}\ \ \Rightarrow\ \ \Delta E=c\hbar\Delta k=\frac{c\hbar\pi}{nt}\frac{\delta}{\Delta}\numberthis\label{Delta E von delta Delta}
+\end{align*}
+\section{Experiment}
+\subsection{Specifics of the virtual experiment}
+The experiment is conducted virtually with a python simulation. The user interface with some specific setup can be seen in Fig. \ref{User interface}. \\ \\
+Longitudinal, red filter: \\
+For each order of diffraction there are two peaks denoted with indices $a,b$. Inserting a $\lambda/4$-plate and varying the Polarization filter $\phi$ leads to a change in the measured line spectrum. For $\phi=0$ the $a$-lines reach peak intensity ($\sigma^+$-transition, $\Delta M_J=+1$) and the $b$-lines vanish ($\sigma^-$-transition, $\Delta M_J=-1$); vice versa for $\phi=\frac{\pi}{2}$. Since the plate was used, the polarization of these transition lines is circular. \\
+Longitudinal, green filter: \\
+Similar situation, but the $a,b$ lines each split into three. Other than that, one also finds a circular polarization and peak intensity of the $a$-lines at $\phi=0$. \\ \\
+Transversal, red filter: \\
+Here, each order of diffraction has three peaks, denoted with $a_1,b,a_2$. Linear polarization is observed with the $a_1,a_2$-lines having peak intensity at $\phi=0$ ($\sigma$-transition, $\Delta M_J=\pm 1$) and the $b$-line vanishes ($\pi$-transition, $\Delta M_J=0$). \\
+Transversal, green filter: \\
+Once again, similar to the case with red filter. All three peaks of a certain diffraction order split into three lines of equal intensity respectively. The dependance on $\phi$ is equivalent, as is the linear polarization.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=1]{Virtueller_Aufbau_1.png}
+\caption{User interface of the animation ZE{\_}Animation.pyc}
+\label{User interface}
+\end{figure}
+\subsection{Quantitative measurements}
+Setup: Longitudinal, Red filter, polarization filter, $\lambda/4$-plate, $\phi=\frac{\pi}{3}$ (introducing a slight asymmetry in the $a$- and $b$-lines to avoid confusing different orders of diffraction).
+Measurement of all radii for six different flux values (see Table \ref{Radii for six different flux values red filter}).
+\begin{table}[h!]
+\centering
+\begin{tabular}{c||c|c|c|c|c|c|c|c}
+$B\,/\,$T&$r_{1a}\,/\,$mm&$r_{1b}\,/\,$mm&$r_{2a}\,/\,$mm&$r_{2b}\,/\,$mm&$r_{3a}\,/\,$mm&$r_{3b}\,/\,$mm&$r_{4a}\,/\,$mm&$r_{4b}\,/\,$mm \\ \hline
+0,25&	28,2&	36	  &  56,1	&60,5	&74,1	&77,5	&88,7	&91,3\\ \hline
+0,3	 &   27,4&	36,6	&55,7	&60,7	&73,9	&77,7	&88,5	&91,7\\ \hline
+0,35&	26,6&	37,4	&55,3	&61,3	&73,7	&78,1	&88,1	&91,9\\ \hline
+0,4	 &   25,6&	37,8	&54,9	&61,5	&73,3	&78,3	&87,9	&92,3\\ \hline
+0,45&	24,6	&38,6	&54,5	&61,9	&72,9	&78,7	&87,5	&92,5\\ \hline
+0,5	&    23,4&	39	    &53,9	&62,3	&72,5	&79,1	&87,3	&92,7
+\end{tabular}
+\caption{Radii for six different flux values (red filter)}
+\label{Radii for six different flux values red filter}
+\end{table}\\
+The following expressions were calulated: 
+\begin{align*}
+\delta_i&=r_{i,b}^2-r_{i,a}^2&\tecxt\text{for }i&=1,2,3,4\\
+\Delta_{ik}&=r_{i+1,k}^2-r_{ik}^2&\tecxt\text{for }i&=1,2,3\ \tecxt\text{and }k=a,b\\
+\delta &= \frac{1}{4}\sum_i\delta_i &\Delta &=\frac{1}{6}\sum_{ik}\Delta_{ik}\\
+\end{align*}
+The uncertainties were then obtained assuming maximal correlation. The manufacturer's note on the uncertainty is $\frac{\Delta r}{r}=\frac{1}{\sqrt{3}}\cdot 0,01$:
+\begin{align*}
+\Delta^\tecxt\text{stat}x&=\sqrt{\frac{1}{N-1}\sum_{i=1}^N\kla\left( {x-x_i} \right)^2}\\
+\Delta^\tecxt\text{sys}\delta&=\left\vert 2r_{i,a}\Delta r_{i,a} -2r_{i,b}\Delta r_{i,b}\right\vert\\
+\Delta^\tecxt\text{sys}\Delta&=\left\vert 2r_{i,k}\Delta r_{i,k}-2r_{i+1,k}\Delta r_{i+1,k}\right\vert
+\end{align*} 
+The results are shown in Table \ref{delta and Delta with statistical deviation} for all six flux values. The systematical deviation is taken as the maximum of the individual values.
+\begin{table}[h!]
+\centering
+\begin{tabular}{c||c|c|c|c|c|c}
+$B\,/\,$T&$\delta\,/\,\tecxt\text{mm}^2$&$\Delta^\tecxt\text{stat}\delta\,/\,\tecxt\text{mm}^2$&$\Delta^\tecxt\text{sys}\delta\,/\,\tecxt\text{mm}^2$&$\Delta\,/\,\tecxt\text{mm}^2$&$\Delta^\tecxt\text{stat}\Delta\,/\,\tecxt\text{mm}^2$&$\Delta^\tecxt\text{sys}\Delta\,/\,\tecxt\text{mm}^2$\\ \hline
+0,25&501,03&	11,401&5,924   &2358,12&	11,256&27,404\\ \hline
+0,3&580,88&	     5,916&6,799   &2358,47&	10,875&27,385\\ \hline
+0,35&685,68&	13,447&8,078   &2350,15&	14,976&27,408\\ \hline
+0,4&773,15&	    14,640&9,155   &2360,25&	14,309&27,579\\ \hline
+0,45&881,36&	15,954&10,392  &2352,9&	    11,415&27,31\\ \hline
+0,5&980,52&	    13,466&11,553  &2357,67&	13,212&27,43
+\end{tabular}
+\caption{$\delta$ and $\Delta$ with statistic and systematic deviation}
+\label{delta and Delta with statistical deviation}
+\end{table}\\
+Finally, using (\ref{Delta E von delta Delta}) we obtain the energy differences. The constants $c=2,9976\cdot 10^8\,\frac{\tecxt\text{m}}{\tecxt\text{s}}$, $e = 1,6022\cdot 10^{-19}\,$As and $\hbar=1,0546\cdot 10^{-34}\,$Js were used without assuming any errors. The manufacturere's notes needed here are $n=1,4560\pm \frac{1}{\sqrt{3}}\cdot 0,0001$, $t=3,00\pm\frac{1}{\sqrt{3}}\cdot 0,01\,$mm and $\frac{\Delta B}{B}=\frac{1}{\sqrt{3}}\cdot 0,01$. The results can be seen in Table \ref{Energy difference per Flux with deviations} and Figure \ref{E von B png}. The errorbars represent the statstical deviation, the boundary curves the systemtic.
+\begin{table}[h!]
+\centering
+\begin{tabular}{c||c|c|c}
+$B\,/\,$T&$\Delta E\,/\,$eV&$\Delta^\tecxt\text{stat}\Delta E\,/\,$eV&$\Delta^\tecxt\text{sys}\Delta E\,/\,$eV\\ \hline
+0,25&3,0151$\cdot 10^{-5}$&	7,0103$\cdot 10^{-7}$&	5,0323$\cdot 10^{-7}$\\ \hline
+0,3&3,4952$\cdot 10^{-5}$&	3,9076$\cdot 10^{-7}$&	5,8016$\cdot 10^{-7}$\\ \hline
+0,35&4,1404$\cdot 10^{-5}$&	8,5377$\cdot 10^{-7}$&	6,9097$\cdot 10^{-7}$\\ \hline
+0,4&4,6486$\cdot 10^{-5}$&	9,2426$\cdot 10^{-7}$&	7,7849$\cdot 10^{-7}$\\ \hline
+0,45&5,3157$\cdot 10^{-5}$&	9,962$\cdot 10^{-7}$&	8,8544$\cdot 10^{-7}$\\ \hline
+0,5&5,9018$\cdot 10^{-5}$&	8,7543$\cdot 10^{-7}$&	9,8386$\cdot 10^{-7}$
+\end{tabular}
+\caption{Energy difference per flux with deviations}
+\label{Energy difference per Flux with deviations}
+\end{table}\\
+\begin{figure}
+\centering
+\includegraphics[scale=1]{E_von_B.png}
+\caption{$\Delta E$ as a function of the magnetic flux including boundary curves}
+\label{E von B png}
+\end{figure}
+\subsection{Calulating the Bohr magneton}
+Since these energy differences correspond to a transition from $M_J=+1$ to $M_J=-1$, we can calulate the Bohr magneton from the slope $\alpha$ of the regression as $\mu_B=\frac{\alpha}{2}$. The systematic uncertainties of $\alpha$ are the difference to the slope of the boundary curves ($\Delta^\tecxt\text{sys}\alpha =_{-2,605}^{+2,635}\cdot 10^{-6}\,\frac{\tecxt\text{eV}}{\tecxt\text{T}}$). Note that these values correspond to $\Delta^\tecxt\text{sys}\mu_B\approx 1,3\cdot 10^{-6}\frac{\tecxt\text{eV}}{\tecxt\text{T}}$, while just taking the maximum of the systematic uncertainties from Table \ref{Energy difference per Flux with deviations} results in $\Delta^\tecxt\text{sys}\mu_B\approx 0,5\cdot 10^{-6}\frac{\tecxt\text{eV}}{\tecxt\text{T}}$. The given formula is of course equivalent to $\alpha=\frac{\Delta E}{2B}$, which was used to obtain the statistical deviations for each flux value respectively (see Table \ref{mu B for each B with statistical deviation}). 
+\begin{table}[h!]
+\centering
+\begin{tabular}{c||c|c}
+$B\,/\,$T&$\mu_B\,/\,\frac{\tecxt\text{eV}}{\tecxt\text{T}}$&$\Delta^\tecxt\text{stat}\mu_B\,/\,\frac{\tecxt\text{eV}}{\tecxt\text{T}}$\\ \hline
+0,25&	6,03$\cdot 10^{-5}$&	1,402$\cdot 10^{-6}$\\ \hline
+0,3&	5,825$\cdot 10^{-5}$&	6,513$\cdot 10^{-7}$\\ \hline
+0,35&	5,915$\cdot 10^{-5}$&	1,22$\cdot 10^{-6}$\\ \hline
+0,4&	5,811$\cdot 10^{-5}$&	1,155$\cdot 10^{-6}$\\ \hline
+0,45&	5,906$\cdot 10^{-5}$&	1,107$\cdot 10^{-6}$\\ \hline
+0,5& 	5,902$\cdot 10^{-5}$&	8,754$\cdot 10^{-7}$
+\end{tabular}
+\caption{Bohr magneton for each flux value with statistical deviation}
+\label{mu B for each B with statistical deviation}
+\end{table}
+Using the weighted average with $\Delta^\tecxt\text{stat}\mu_B$, $p_i=\frac{1}{\sigma_i^2}$ and $p=\sum_ip_i$ gives the following results for the Bohr magneton and the statistical deviation:
+\begin{align*}
+\mu_B&=\frac{1}{p}\sum_ip_i\mu_{B,i}=\underline{5,874\cdot 10^{-5}\,\frac{\tecxt\text{eV}}{\tecxt\text{T}}}\\
+\Delta^\tecxt\text{int}\mu_B&=\frac{1}{\sqrt{p}}=\underline{3,95\cdot 10^{-7}\,\frac{\tecxt\text{eV}}{\tecxt\text{T}}}\\
+\Delta^\tecxt\text{ext}\mu_B&=\sqrt{\frac{1}{p(N-1)}\sum_ip_i\kla\left( {\mu_B-\mu_{B,i}} \right)^2}=\underline{2,737\cdot 10^{-7}\,\frac{\tecxt\text{eV}}{\tecxt\text{T}}}\\
+\Delta^\tecxt\text{stat}\mu_B&=\max\klammer\left\{{\Delta^\tecxt\text{int}\mu_B,\,\Delta^\tecxt\text{ext}\mu_B} \right\}=\underline{3,95\cdot 10^{-7}\,\frac{\tecxt\text{eV}}{\tecxt\text{T}}}
+\end{align*}
+Therefor the final result is:
+\begin{align*}
+\mu_B&=\underline{\kla\left( {5,87_{-0,13}^{+0,13}\pm 0,04} \right)\cdot 10^{-5}\,\frac{\tecxt\text{eV}}{\tecxt\text{T}}}
+\end{align*}
+\section{Discussion}
+The final result for the Bohr magneton is presented as a ratio $\beta:=\frac{\mu_B}{\mu_{B,\tecxt\text{lit.}}}$, where $\mu_{B,\tecxt\text{lit.}}=\frac{e\hbar}{2m_e}=5,7884\cdot 10^{-5}\,\frac{\tecxt\text{eV}}{\tecxt\text{T}}$:
+\begin{align*}
+\beta=\underline{\kla\left( {1,015_{-0,023}^{+0,023}\pm 0,007
+} \right)}
+\end{align*}
+The literature value of 1 is within the uncertainty, but the agreement is not ideal. Especially considering the very "generous" systematical error, this value could have been quite a bit smaller if the other mentioned method was used - and hence the literature value barely within the uncertainty. I went back to measure a few values again with larger zoom onto the peaks, which lead to a decent reduction of the statistical error (roughly 50\%\,!), but a neglible change in the actualy result (less than 1\%). However, the accuracy of the simulation is bounded at $0,1\,$mm, which might still be the reason for the deviation. This is, because the redone measurements could only polish some $\pm 0,1\,$mm misreads, but not "fix" the relatively high bound for the accuracy of the radial measurement.\\
+There are nine lines per diffraction order for the anomalous Zeeman effect. For large flux values the line furthest away from the center reappears in the center of the fringe pattern. This should be the $\sigma^+$-transition from $M_J=+1\rightarrow 0$. The effect seems to be related to the characteristics of the Fabry-Pérot Interferometer; after a certain maximal radius the line appears in the center, which is not in agreement with the equations $\delta,\Delta=$ const. Therefor I assume that this effect is not directly related to the Zeeman effect. However, I can not pinpoint an explanation as to why this would happen.\\
+An improvement of the systematic uncertainty $\frac{\Delta r}{r}$ scales almost linear with the resulting deviation, atleast in the "maximum of systematic uncertainties"-method. The statistic uncertainty seems to be related mostl to the accuracy of the radial measurement aswell, see the explanation above. \\
+A key step in the calculation of $\mu_B$ was knowing the quantum numbers involved in the transitions, i.e. $\Delta M_J=2$. To deduce the Bohr magneton from the anomalous Zeeman effect requires additional care since $g_J$ is not a constant. Hence, one would also need to consider $\Delta S$ and $\Delta L$.
+\end{document}

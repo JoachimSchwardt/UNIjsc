@@ -1,0 +1,166 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{03 Properties of Wannier functions}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Topological Insulators and Superconductors}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Problem 3.1: Orthonormality of Wannier functions}
+We are given the relation
+\begin{align}
+\brak\langle \psi_\mathbf{k} | \chi_{\mathbf{k}'} \rangle &= \frac{V_\tecxt\text{cell}}{(2\pi)^3} \brak\langle u_\mathbf{k} | v_{\mathbf{k}'} \rangle \delta\kla\left( \mathbf{k} - \mathbf{k}' \right).
+\end{align}
+The Wannier functions are defined as
+\begin{align}
+\Ket | \omega_{n \mathbf{R}} \rangle &:= \frac{V_\tecxt\text{cell}}{(2\pi)^3} \intx\int_{\tecxt\text{BZ}}^{ } \e^{-\i\mathbf{k}\cdot\mathbf{R}} | \psi_{n\mathbf{k}} \rangle\, \mathrm{d}^3\mathbf{k}.
+\end{align}
+Note that $\psi_{n\mathbf{k}}(\mathbf{R}) = \e^{\i\mathbf{k}\cdot \mathbf{R}} u_{n\mathbf{k}} (\mathbf{R})$ and $\chi_{n\mathbf{k}}(\mathbf{R}) = \e^{\i\mathbf{k}\cdot \mathbf{R}} v_{n\mathbf{k}} (\mathbf{R})$.
+Thus we find
+\begin{align}
+\brak\langle \omega_{n\mathbf{R}} | \omega_{n'\mathbf{R}'} \rangle &= \frac{V_\tecxt\text{cell}^2}{(2\pi)^6} \intx\int_{\tecxt\text{BZ}^2}^{ } \e^{\i\mathbf{k}\cdot\mathbf{R}} \e^{-\i\mathbf{k}'\cdot\mathbf{R}'} \brak\langle \psi_{n\mathbf{k}}  | \psi_{n'\mathbf{k}'} \rangle  \, \mathrm{d}^3\mathbf{k}\, \tecxt\text{d}^3 \mathbf{k}' = \\
+%&= \delta_{nn'}  \frac{V_\tecxt\text{cell}^2}{(2\pi)^6} \intx\int_{\tecxt\text{BZ}^2}^{ } \e^{\i\mathbf{k}\cdot\mathbf{R}} \e^{-\i\mathbf{k}'\cdot\mathbf{R}'} \intr\int_{V_\tecxt\text{cell}} \brak\langle \psi_{\mathbf{k}}  |   \mathbf{r} \rangle\langle \mathbf{r}   | \psi_{\mathbf{k}'} \rangle \, \mathrm{d}^{3}\mathbf{r} \, \mathrm{d}^3\mathbf{k}\, \tecxt\text{d}^3 \mathbf{k}' = \\
+%&= \delta_{nn'}  \frac{V_\tecxt\text{cell}^2}{(2\pi)^6} \intr\int_{V_\tecxt\text{cell}} \intx\int_{\tecxt\text{BZ}^2}^{ } \e^{ \i\mathbf{k}\cdot\mathbf{R}} \e^{-\i\mathbf{k}'\cdot\mathbf{R}'}  u_\mathbf{k} (\mathbf{r}) u_{\mathbf{k}'}^\ast (\mathbf{r}) \e^{\i (\mathbf{k}' - \mathbf{k})\cdot\mathbf{r}}  \, \mathrm{d}^3\mathbf{k}\, \tecxt\text{d}^3 \mathbf{k}'\, \mathrm{d}^{3}\mathbf{r} = \\
+%&= \delta_{nn'} \intx\int_{V_\tecxt\text{cell}}^{ } \delta (\mathbf{r} - \mathbf{R}) \delta (\mathbf{r} - \mathbf{R}') u_\mathbf{k} (\mathbf{r}) u_{\mathbf{k}'}^\ast (\mathbf{r}) \, \mathrm{d}^3\mathbf{r} = \\
+%&= \frac{V_\tecxt\text{cell}^2}{(2\pi)^6} \intx\int_{\tecxt\text{BZ}^2}^{ } \e^{\i\mathbf{k}\cdot\mathbf{R}} \e^{-\i\mathbf{k}'\cdot\mathbf{R}'} \brak\langle \psi_{n\mathbf{k}}  | \psi_{n'\mathbf{k}'} \rangle  \, \mathrm{d}^3\mathbf{k}\, \tecxt\text{d}^3 \mathbf{k}' = \\
+&=  \delta_{nn'} \frac{V_\tecxt\text{cell}}{(2\pi)^3} \intx\int_{\tecxt\text{BZ}^2}^{ } \e^{\i\mathbf{k}\cdot\mathbf{R}} \e^{-\i\mathbf{k}'\cdot\mathbf{R}'} \delta \kla\left( \mathbf{k} - \mathbf{k}' \right)  \, \mathrm{d}^3\mathbf{k}\, \tecxt\text{d}^3 \mathbf{k}' = \\
+&=  \delta_{nn'} \frac{V_\tecxt\text{cell}}{(2\pi)^3} \intx\int_{\tecxt\text{BZ}}^{ } \e^{\i\mathbf{k} \cdot \kla\left( \mathbf{R} - \mathbf{R}' \right)} \, \mathrm{d}^3\mathbf{k} = \\
+&= \delta_{nn'}\delta \kla\left( \mathbf{R} - \mathbf{R}' \right).
+\end{align}
+Here we only made use of the identity
+\begin{align}
+\brak\langle \psi_{n\mathbf{k}}  | \psi_{n'\mathbf{k}'} \rangle &= \delta_{nn'} \intx\int_{V_\tecxt\text{cell}}^{ } \e^{-\i\kla\left( \mathbf{k} - \mathbf{k}' \right) \cdot\mathbf{r}}  u_\mathbf{k} (\mathbf{r}) u_{\mathbf{k}'}^\ast (\mathbf{r}) \, \mathrm{d}^3\mathbf{r} = \delta_{nn'} \frac{(2\pi)^3}{V_\tecxt\text{cell}} \delta\kla\left( \mathbf{k} - \mathbf{k}' \right).
+\end{align}
+
+\newpage
+\section*{Problem 3.2: }
+Consider the quantity
+\begin{align}
+\Omega &:= \sum_n^\tecxt\text{occ} \brak\langle \partial_\lambda u_{n\mathbf{k}} | \partial_\mathbf{k} u_{n\mathbf{k}} \rangle .
+\end{align}
+Note that $\brak\langle u_{n\mathbf{k}} | u_{n\mathbf{k}} \rangle = 1$ and therefore
+\begin{align}
+\partial \brak\langle u_{n\mathbf{k}} | u_{n\mathbf{k}} \rangle &= \brak\langle u_{n\mathbf{k}} | \partial u_{n\mathbf{k}} \rangle + \brak\langle \partial u_{n\mathbf{k}} | u_{n\mathbf{k}} \rangle = 0
+\end{align}
+for any differential $\partial$.
+Furthermore, we find
+\begin{align}
+\partial_\lambda \brak\langle u_{n\mathbf{k}} | \partial_\mathbf{k} u_{n\mathbf{k}} \rangle &= \brak\langle \partial_\lambda u_{n\mathbf{k}} | \partial_\mathbf{k} u_{n\mathbf{k}} \rangle + \brak\langle  u_{n\mathbf{k}} | \partial_\lambda \partial_\mathbf{k} u_{n\mathbf{k}} \rangle ,\\
+\partial_\lambda \brak\langle \partial_\mathbf{k} u_{n\mathbf{k}} |  u_{n\mathbf{k}} \rangle &= \brak\langle \partial_\lambda \partial_\mathbf{k} u_{n\mathbf{k}} |  u_{n\mathbf{k}} \rangle + \brak\langle \partial_\mathbf{k} u_{n\mathbf{k}} | \partial_\lambda  u_{n\mathbf{k}} \rangle.
+\end{align}
+The sum of these expression is zero according to the above identity, which leaves us with the sum of the real parts vanishing, i.e.
+\begin{align}
+0 &= \tecxt\text{Re\,} \brak\langle \partial_\lambda \partial_\mathbf{k} u_{n\mathbf{k}} |  u_{n\mathbf{k}} \rangle + \tecxt\text{Re\,} \brak\langle \partial_\mathbf{k} u_{n\mathbf{k}} | \partial_\lambda  u_{n\mathbf{k}} \rangle.
+\end{align}
+We can make use of this by considering the real part of $\Omega$, since 
+\begin{align}
+\tecxt\text{Re\,} \Omega &= -\sum_{n}^{\tecxt\text{occ}} \tecxt\text{Re\,} \brak\langle u_{n\mathbf{k}} |  \partial_\lambda \partial_\mathbf{k} u_{n\mathbf{k}} \rangle
+\end{align}
+This is not really going anywhere. 
+I do not have an idea to make any real progress here unfortunately.
+All I know is that this expression showed up in the final equation of the lecture, but there we asked for the imaginary part of the solution. 
+If this expression were fully real, the lecture result would thus be zero. 
+Therefore something is wrong ...
+
+\newpage
+\section*{Problem 3.3: Integral transformation for the Berry curvature}
+Let $\mathbf{k} = (k_x,k_y)^\top$, $\Omega_{\mu\nu} = -2\tecxt\text{Im\,} \brak\langle \partial_\mu u_{n\mathbf{k}} | \partial_\nu u_{n\mathbf{k}} \rangle = \epsilon_{\mu\nu}\Omega$ and $\kappa = (\kappa_1, \kappa_2)^\top$, $\bar{\Omega}_{jm}= -2\tecxt\text{Im\,} \brak\langle \partial_j u_{n\kappa} | \partial_m u_{n\kappa} \rangle = \epsilon_{jm} \bar{\Omega}$.
+Assume that the two frames are related by $k_\mu = B_{\mu j}\kappa_j$.
+Then the multi-dimensional substitution rule for integrals gives
+\begin{align}
+\tecxt\text{d}^2\mathbf{k} &= |J| \tecxt\text{d}^2\vec{\kappa},
+\end{align}
+where the Jacobian is
+\begin{align}
+J &= \det J_{\mu\nu} = \det \kla\left( \frac{\partial k_\mu }{\partial \kappa_j} \right) = \det \kla\left( B_{\mu j} \right) = \det B.
+\end{align}
+Note that in more explicit notation, we have
+\begin{align}
+\epsilon_{jm} B_{\mu j}B_{\nu m} &= B_{\mu 1}B_{\nu 2} - B_{\mu 2}B_{\nu 1}.
+\end{align}
+For $\mu=\nu$, this obviously gives
+\begin{align}
+\epsilon_{jm} B_{\mu j}B_{\nu m} &= B_{\mu 1}B_{\mu 2} - B_{\mu 2}B_{\mu 1} = 0.
+\end{align}
+For $\mu = 1$ and $\nu = 2$ we instead have
+\begin{align}
+\epsilon_{jm} B_{\mu j}B_{\nu m} &=  B_{1 1}B_{2 2} - B_{1 2}B_{2 1} = \det B.
+\end{align}
+For $\mu = 2$ and $\nu = 1$ we find 
+\begin{align}
+\epsilon_{jm} B_{\mu j}B_{\nu m} &=  B_{2 1}B_{1 2} - B_{2 2}B_{1 1} = -\det B,
+\end{align}
+which allows us to summarize the results as
+\begin{align}
+\epsilon_{jm} B_{\mu j}B_{\nu m} &=  \epsilon_{\mu\nu}\det B.
+\end{align}
+Then using $\partial_j = B_{\mu j}\partial_\mu$ we find
+\begin{align}
+\bar{\Omega}_{jm} &= -2\tecxt\text{Im\,}\brak\langle \partial_j u_{n\kappa} | \partial_m u_{n\kappa} \rangle = -2\tecxt\text{Im\,}\brak\langle B_{\mu j}\partial_\mu u_{n\mathbf{k}} | B_{\nu m}\partial_\nu u_{n\mathbf{k}} \rangle = \\
+%&= -2\tecxt\text{Im\,} B_{\mu j}B_{\nu m} \brak\langle \partial_\mu u_{n\mathbf{k}} | \partial_\nu u_{n\mathbf{k}} \rangle  = \\
+&= B_{\mu j}B_{\nu m} \Omega_{\mu\nu} = B_{\mu j}B_{\nu m} \epsilon_{\mu\nu} \Omega = \kla\left( B_{1j}B_{2m} - B_{2j}B_{1m} \right) \Omega = \\
+&=  \det (B) \epsilon_{jm} \Omega.
+\end{align}
+Now we can show that the following integral is invariant under the described transformation, since
+\begin{align}
+\intx\int_{\tecxt\text{BZ}}^{ } \Omega \, \mathrm{d}^2\mathbf{k} &= \intx\int_{\tecxt\text{BZ}}^{ } \Omega_{12} \, \det
+ (B) \mathrm{d}^2\kappa = \intx\int_{\tecxt\text{BZ}}^{ } \bar{\Omega}_{12} \, \mathrm{d}^2\kappa = \intx\int_{\tecxt\text{BZ}}^{ } \bar{\Omega} \, \mathrm{d}^2\kappa.
+\end{align}
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

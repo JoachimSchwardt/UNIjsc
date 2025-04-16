@@ -1,0 +1,187 @@
+\section{Matsubara \texorpdfstring{\acrlongpl{gf}}{GF}}\label{chap:gf}
+In this section, we briefly motivate the idea behind \acrlongpl{gf} in the context of quantum many-body systems and introduce the machinery required for computing them at finite temperature via perturbation theory.
+%\subsection{TODO Response function and self-energy}
+%As alluded to in the introduction of this thesis, in condensed matter physics one already has a rather complete microscopic description in terms of the full Schrödinger equation for the many-body wavefunction \cite[p.5]{QMB_Coleman_2015}.
+%One way to obtain information about a system is to measure how a perturbation evolves over time  .
+\subsection{\texorpdfstring{\acrlongpl{gf}}{GF} in many-body physics}\label{sec:gf:motivation}
+There are various extensive introductions to and discussions of the concept of \glspl{gf} for many-body physics in the literature, e.g. \cite{QFT_Abrikosov_1975,QMB_Mahan_2000,QMB_Bruus_2004,QMB_Fabrizio_2022}. %\cites[\schap 7]{QFT_Abrikosov_1975}[\schap 2 and 3]{QMB_Mahan_2000}[\schap 8]{QMB_Bruus_2004}[\schap 4]{QMB_Fabrizio_2022}
+As an illustrative example, consider the function $\sgf_{a,b}(t)=-\i \bra{\psi_a(t) \psi_b^\dagger(0)}$ where $t>0$ and $a,b$ characterize the state created by the field operator $\psi^\dagger$, e.g. band indices, momenta or spin.
+To be more explicit, at zero temperature the expectation value should be taken with respect to the ground state.
+If $\psi_b^\dagger \Ket{0}$ is an eigenstate of the system, the time evolution merely contributes a phase factor and we only get a finite result for $a=b$.
+Generally, however, this will not be an eigenstate and then the case $a=b$ contains information about how much of an excitation $b$ survives after evolving for time $t$.
+The full object then also tells us how much of $b$ is scattered into different states \cite[\ssec 2.3]{QMB_Mahan_2000}.\\
+\glspl{gf}, or correlation functions, enable us to calculate microscopic properties such as particle or current densities, and they contain information about a system's excitation spectrum \cite[\ssec 7.1]{QFT_Abrikosov_1975}.
+From a pragmatic standpoint, being able to calculate \glspl{gf} can be viewed as a necessary step in evaluating expressions such as the Kubo formula, which measures the linear response of a system to an external perturbation \cite{QMB_Mahan_2000,QMB_Bruus_2004}.
+Note that beyond the two-point functions involving only two operators, there exists an entire hierarchy of $N$-point functions \cite{AltlandSimons} and the concept of correlation functions also extends well beyond the notion of particle propagation.
+For example, applying Kubo's formula to the evaluation of conductivity requires a correlation function involving current-density operators \cite{QMB_Coleman_2015}.\\
+Suffice it to say that \glspl{gf} are ubiquitous and we need to be able to calculate them.
+The situation is slightly more complicated than suggested by the example above once we include temperature, as is discussed in the upcoming section.
+Since we always work in equilibrium here, we choose the Matsubara formalism to compute \glspl{gf}.
+Bowen claims that it is the ``simplest finite temperature formalism'' \cite[\spage 5]{Bosonization_FiniteT_Bowen_2001}, and \cite{Giamarchi_2004,Gogolin_1999,Fradkin_2013,QMB_Fabrizio_2022,Bosonization_TLL_Schonhammer_1997,Bosonization_GF_LL_Meden_1999,Bosonization_Rao_2001,Bosonization_LowE_1d_fluids_Haldane_1981} all making use of imaginary time suggests that the corresponding authors came to a similar conclusion.
+It should at least be noted that, in principle, one could instead also use the Keldysh approach \cite[\schap 11]{AltlandSimons}.
+The latter is designed to also work outside equilibrium, so unsurprisingly, it is quite a bit more involved \cite{GF_intro_InOutEquil_Ge_2023}.
+However, one advantage over the Matsubara method is that Keldysh works directly in real time, and thus avoids an analytic continuation from imaginary to real frequencies further down the line.
+Technicalities aside, this continuation can in the end boil down to little more than a simple replacement of symbols, but of course this requires obtaining an intermediate result that is analytic in the relevant quantities.
+Numerically the continuation appears to be rather difficult \cite{NumericAnalyticCont_QMC_MaxEntropy_Gubernatis_1991,NumericAnalyticCont_ImagTimeData_Burnier_2011}, so within the confines of this thesis we try to avoid this by working out analytic expressions for our \glspl{gf}.
+\subsection{Interaction picture and imaginary time}\label{sec:gf:interaction_imaginary_time}
+Here we mostly follow \cite{QMB_Bruus_2004}, although the presentation in \cites[\schap 4]{QMB_Fabrizio_2022}[\schap 5]{QMB_Nayak_2004} is very similar.
+We always work in the interaction picture defined by the equations \cite[\ssec 5.3]{QMB_Bruus_2004}
+\begin{align}
+\Ket{\psi_\tint(t)} &= U_0(t)^\dagger \Ket{\psi(t)} \quad \text{and} \quad A_\tint(t) = U_0(t)^\dagger A  U_0(t)
+\end{align}
+where the full Hamiltonian $H=H_0+V$ is split into a free part $H_0$ and a perturbation $V$.
+The operator $U_0(t) = \powe{-\i H_0 t}$ corresponds to the time evolution with respect to the free Hamiltonian and is assumed to be sufficiently simple to allow the computation of eigenvalues and eigenstates.
+Generally speaking, this implies that $H_0$ is quadratic in the relevant degrees of freedom, e.g. a kinetic energy term.
+Note that $H$ must be time-independent since we assume to be in equilibrium, and thus the full time evolution operator takes the simple form $U(t,t') = \powe{-\i H(t-t')}$.
+Also, since we work in the grand canonical ensemble, the Hamiltonian here is really $H - \mu N$ \cite{QFT_FiniteT_Kapusta_2023,QMB_Coleman_2015,GF_SelfEnergyFunctionals_Eder_2021}, but as seems to be customary, we still only write $H$ for convenience \cite[\spage 27]{QMB_Bruus_2004}. % QFT FiniteT Kapusta p.2, Eder GF p.3, Coleman [search "grand"], Bruus\\
+Inserting the definition of the state in the interaction picture into the Schrödinger equation yields
+\begin{align*}
+\i\partial_t \Ket{\psi(t)} &= \i \partial_t U_0(t) \Ket{\psi_\tint(t)} = H_0 U_0(t) \Ket{\psi_\tint(t)} + U_0(t) \i\partial_t \Ket{\psi_\tint(t)} \overset{!}{=} H \Ket{\psi(t)},
+\end{align*}
+and cancelling the free part on both sides of the equation then leads to
+\begin{align}
+\i\partial_t \Ket{\psi_\tint(t)} &= U_0(t)^\dagger V(t) \Ket{\psi(t)} = V_\tint(t) \Ket{\psi_\tint(t)}. \label{eqn:gf:interaction_picture_schrodinger_vint}
+\end{align}
+Writing $\Ket{\psi_\tint(t)} = U_\tint(t,t_0) \Ket{\psi_\tint(t_0)}$ where $\Ket{\psi_\tint(t_0)}$ is some arbitrary initial state in the interaction picture, we find that the same equation must also be satisfied by $U_\tint(t,t_0)$ itself.
+Thus the full time evolution, given by $U(t,t') = U_0(t) U_\tint(t,t') U_0(t')^\dagger$, only requires us to solve \autoref{eqn:gf:interaction_picture_schrodinger_vint}.
+At least formally, this is possible by iteratively integrating the equation, ultimately leading to \cite[\spage 90]{QMB_Bruus_2004}
+\begin{align*}
+U_\tint(t,t') &= \mathcal{T}_t \exp \kla*{-\i \intx{t'}{t}{V_\tint(t_1)}{t_1}} \equiv \sum_{n\ge 0} \frac{(-\i)^n}{n!} U_\tint^{(n)}(t,t')
+\end{align*}
+where the time-ordering operator $\mathcal{T}_t$ is defined by
+\begin{align}
+\mathcal{T}_t A(t_1) B(t_2) &= \begin{cases} A(t_1) B(t_2) & \text{for } t_1\ge t_2,\\ sB(t_2) A(t_1) & \text{for } t_1<t_2. \end{cases} \label{eqn:gf:time_order_def}
+\end{align}
+Here, $s=-1$ if both $A$ and $B$ are fermionic operators and $s=+1$ otherwise \cites[\spage 122]{QMB_Fabrizio_2022}. %[\spage 98]{QMB_Coleman_2015} \cites[\spage 160]{QMB_Bruus_2004}. %https://physics.stackexchange.com/questions/194073/minus-sign-in-the-time-ordering-operator
+It is rather straight-forward to check that this is indeed a solution of \autoref{eqn:gf:interaction_picture_schrodinger_vint} by explicitly differentiating
+\begin{align*}
+U_\tint^{(n)}(t,t') &= \intx{t'}{t}{\dots \intx{t'}{t}{ \mathcal{T}_t V_\tint(t_1) \dots V_\tint(t_n)}{t_n} \dots }{t_1}
+\end{align*}
+with respect to $t$.
+The product rule generates $n$ terms, and in each of them the Leibniz rule reduces one of the integrals to its integrand evaluated at $t$, i.e. $V_\tint(t)$.
+Since all of the integration variables are smaller than $t$, the time-ordering then allows us to pull out this term to the left.
+Up to relabelling the terms are all identical, and thus $\partial_t U_\tint^{(n)}(t,t') = n V_\tint(t) U_\tint^{(n-1)}(t,t')$, which directly leads to $\partial_{t} U_\tint(t,t') = -\i V_\tint(t) U_\tint(t,t')$.\\
+The key difference between zero and finite temperature with respect to the computation of \glspl{gf} lies in the way we evaluate expectation values \cite{QMB_Mahan_2000}.
+For some operators $A$ and $B$, we might consider the time-ordered or causal correlation function $C^\c_{AB} = \bra*{\mathcal{T}_t A(t) B(t')}$, where the expectation value at finite temperate is given by an ensemble average over all possible states, i.e.
+$
+\bra*{A} = \frac{1}{Z} \tr \klc*{ \powe{-\beta H} A}
+$
+with the partition function $Z=\tr \powe{-\beta H}$.
+Using the full time evolution operator $U$, we can rewrite this correlation function as \cite[\schap 10]{QMB_Bruus_2004}
+\begin{align*}
+C^\c_{AB}(t,t') &= \frac{1}{Z} \tr \klc*{ \powe{-\beta H} \mathcal{T}_t U(t,0)^\dagger A U(t,0) U(t',0)^\dagger B U(t',0)} \\
+&= \frac{1}{Z} \tr \klc*{ \powe{-\beta H} \mathcal{T}_t U_\tint(t,0)^\dagger A_\tint(t) U_\tint(t,0) U_\tint(t',0)^\dagger B_\tint(t') U_\tint(t',0)}.
+\end{align*}
+At this point, the commonly cited reason for the need of a new formalism is that we would now have to expand both the density matrix and the time evolution operator in powers of $V$, leading to a significantly more complicated perturbation series \cites[\schap 3]{QMB_Mahan_2000}. % [Mahan ch.3, BF ch.10]
+By going to imaginary time we can circumvent this problem, because both of these terms may then be treated in one go.\\
+The Matsubara correlation function is defined as
+\begin{align}
+C^\M_{AB}(\tau,\tau') &= -\bra*{\mathcal{T}_\tau A(\tau) B(\tau')}
+\end{align}
+where $\tau=\i t$ is referred to as the \emph{imaginary time} and $\mathcal{T}_\tau$ is the corresponding time-ordering operator.
+This should merely be seen as a mathematical trick that allows us to write down a perturbation series analogous to the zero temperature case; from a physical point of view, both time and frequency must be real-valued quantities \cite[\spage 158]{QMB_Bruus_2004}.
+In \autoref{sec:gf:Kallen_Lehmann}, we discuss how the -- physically relevant -- retarded correlation function can be obtained from the Matsubara one, but first let us summarize the formalism.\\
+Time evolution is no longer unitary, thus $U_0(\tau)^{-1} = \powe{+\tau H_0}$ is the inverse to $U_0(\tau)=\powe{-\tau H_0}$.
+The rules for transforming to the interaction picture remain identical, e.g. $A_\tint(\tau) = U_0(\tau)^{-1} A U_0(\tau)$.
+The full time evolution operator becomes $U(\tau,\tau') = U_0(\tau) U_\tint(\tau,\tau') U_0(\tau')^{-1}$, where the interacting part is given by
+\begin{align*}
+U_\tint(\tau,\tau') &= \mathcal{T}_\tau \exp \kla*{- \intx{\tau'}{\tau}{V_\tint(\tau_1)}{\tau_1}}.
+\end{align*}
+Note that the density operator can be represented using the time evolution operator via
+\begin{align*}
+\powe{-\beta H} &= U(\beta,0) = \powe{-\beta H_0} U_\tint(\beta,0)
+\end{align*}
+as desired.
+The Matsubara correlation function can then be rewritten as
+\begin{align*}
+C^\M_{AB}(\tau,\tau') &= -\frac{1}{Z} \tr \klc*{ \powe{-\beta H} \mathcal{T}_\tau U(0,\tau) A U(\tau,0) U(0,\tau') B U(\tau',0) }\\
+%&= -\frac{1}{Z} \tr \klc*{ \powe{-\beta H_0} U_\tint(\beta,0) \mathcal{T}_\tau U^\dagger(\tau,0) A U(\tau,0) U^\dagger(\tau',0) B U(\tau',0) }\\
+&= -\frac{1}{Z} \tr \klc*{ \powe{-\beta H_0} U_\tint(\beta,0) \mathcal{T}_\tau U_\tint(0,\tau) A_\tint(\tau) U_\tint(\tau,\tau') B_\tint(\tau') U_\tint(\tau',0)} \\
+&= -\frac{1}{Z} \tr \klc*{\powe{-\beta H_0} \mathcal{T}_\tau U_\tint(\beta,0) A_\tint(\tau) B_\tint(\tau')}.
+\end{align*}
+The last equality results from exploiting the time-ordering to rearrange terms such that $U_\tint(\beta,\tau) U_\tint(\tau,\tau') U_\tint(\tau',0) = U_\tint(\beta,0)$ \cite[\spage 135]{QMB_Fabrizio_2022}.
+Since the partition function can also be expressed as an expectation value with respect to the free Hamiltonian via
+\begin{align*}
+Z &= \tr \powe{-\beta H} = \tr \klc*{\powe{-\beta H_0} U_\tint(\beta,0)} = Z_0 \bra*{U_\tint(\beta,0)}_0,
+\end{align*}
+we can finally rewrite the full correlation function as
+\begin{align}
+C^\M_{AB}(\tau,\tau') &= -\frac{\bra*{\mathcal{T}_\tau U_\tint(\beta,0) A_\tint(\tau) B_\tint(\tau')}_0}{\bra*{U_\tint(\beta,0)}_0}. \label{eqn:gf:correlator_Matsubara_AB_bra0_int}
+\end{align}
+The structure here is remarkably similar to the one for zero temperature, and this result readily generalizes to correlators with an arbitrary number of operators \cite[\seqn 4.40]{QMB_Fabrizio_2022}.\\
+Using the cyclic property of the trace, one can show that the correlation function only depends on the difference between the time arguments, and that it is (anti-) periodic for bosons (fermions) with frequency $\beta$ \cite[\ssec 10.1]{QMB_Bruus_2004}, i.e.
+\begin{align*}
+C^\M_{AB}(\tau,\tau') &= C^\M_{AB}(\tau-\tau') \quad \text{and} \quad C^\M_{AB}(\tau+\beta) = \pm C^\M_{AB}(\tau).
+\end{align*}
+For any periodic function satisfying $f(\tau+\beta) = \pm f(\tau)$ we can write down a \gls{ft} with discrete frequencies via \cite[\ssec 5.1]{QMB_Nayak_2004}
+\begin{align*}
+f(\tau) &= \frac{1}{\beta} \sum_{n\in\mathbb{Z}} f_n \powe{-\i \omega_n \tau}.
+\end{align*}
+Assuming $\powe{\i (\omega_n - \omega_m)\beta} = 1$, we can compute the coefficients by inserting a resolution of unity
+\begin{align*}
+f_n &= \sum_{m\in\mathbb{Z}} f_m \delta_{n,m} = \sum_{m\in\mathbb{Z}} f_m \frac{1}{\beta} \intx{0}{\beta}{\powe{\i (\omega_n - \omega_m)\tau}}{\tau} = \intx{0}{\beta}{f(\tau) \powe{\i\omega_n \tau}}{\tau}
+\end{align*}
+which also defines the inverse of the transform.
+The (anti-)periodicity then requires $\powe{\i \omega_n \beta} = \pm 1$ and leads to the definition of the bosonic and fermionic Matsubara frequencies,
+\begin{align}
+\omega_n^\B &= \frac{2\pi n}{\beta} \quad\text{and}\quad \omega_n^\F = \frac{(2n+1) \pi}{\beta}, \label{eqn:gf:Matsubara_freq_def}
+\end{align}
+that both satisfy the assumption $\powe{\i (\omega_n - \omega_m)\beta} = 1$.
+Note that by convention one usually writes $f_n \equiv f(\i\omega_n)$ for the Fourier coefficients in order to simplify the notation for the generalization, or analytic continuation, of such functions to arbitrary complex frequencies \cite{QMB_Bruus_2004}.
+\subsection{Perturbation series}\label{sec:gf:perturbation_series}
+To actually evaluate \autoref{eqn:gf:correlator_Matsubara_AB_bra0_int}, one can write down a perturbation series in the interaction.
+The expansion of the time-evolution operator is
+\begin{align*}
+U_\tint(\beta, 0) &= 1 - g\intx{0}{\beta}{V_\tint(\tau)}{\tau} + \frac{g^2}{2} \intx{0}{\beta}{\intx{0}{\beta}{\mathcal{T}_\tau V_\tint(\tau) V_\tint(\tau')}{\tau'} }{\tau} + \dots \numberthis\label{eqn:gf:U_int_expansion}
+\end{align*}
+and, in the following, for convenience of notation the time-ordering is implicit.
+With the action $\sact_\tint = \intx{0}{\beta}{V_\tint}{\tau}$ and $\mathcal{O} = A_\tint(\tau) B_\tint(\tau')$ we then have
+\begin{align*}
+C^\M_{AB}(\tau,\tau') &= - \frac{\bra*{\powe{-\sact_\tint} \mathcal{O} }}{\bra*{\powe{-\sact_\tint}}} = - \frac{\bra*{\mathcal{O} \kla*{1 - \sact_\tint + \frac{1}{2} \sact_\tint^2 + \dots}}}{1 - \bra*{\sact_\tint} + \frac{1}{2} \bra*{\sact_\tint^2} + \dots}\\
+&= -\bra[\Big]{\mathcal{O} \kla[\Big]{1 - \sact_\tint + \frac{1}{2} \sact_\tint^2 + \dots}} \klb[\Big]{1 + \bra*{\sact_\tint} - \frac{1}{2} \bra*{\sact_\tint^2} + \bra*{\sact_\tint}^2 + \dots}\\
+&= -\bra*{\mathcal{O}} + \bra*{\mathcal{O} \sact_\tint}^\c - \frac{1}{2} \bra*{\mathcal{O};\sact_\tint^2}^\c - \bra*{\mathcal{O}; \sact_\tint}^\c \bra*{\sact_\tint} + \dots \numberthis\label{eqn:gf:perturbation_series}
+\end{align*}
+where $\bra*{A;B}^\c = \bra*{AB} - \bra*{A}\bra*{B}$ denotes the connected average\footnote{We include the semicolon when there are more than two terms to avoid ambiguity.} \cites[\ssec 11.3]{QFT_RG_Fradkin_2021}[\ssec 3.7.2]{QMB_Refresher_Tremblay_2008}.
+Usually one would now think about how the combinatoric explosion of this expansion can be handled via diagrammatic techniques and Feynman rules \cite{QMB_Bruus_2004,QMB_Coleman_2015}.  %maybe Coleman or Bruus
+In our case the calculation becomes practically infeasible well before combinatorics hinder progress, so we have no need for such advanced representations.
+Therefore, the first order of \autoref{eqn:gf:perturbation_series} is already sufficient for our calculation in \autoref{sec:ell:gf}.
+\subsection{\nameKallen--Lehmann representation}\label{sec:gf:Kallen_Lehmann}
+Let us start by assuming to have a complete set of eigenstates and eigenvalues for the full Hamiltonian, i.e. $H\Ket{n} = E_n \Ket{n}$.
+Of course if this was possible, we would not have any need for approximation schemes, and, in all likelihood, be dealing with a rather simple system.
+Formally, however, we may then write down a rather simple representation of the correlation function by explicitly evaluating the trace.
+This is possible by inserting two resolutions of unity to get \cite[\ssec 10.2]{QMB_Bruus_2004}
+\begin{align*}
+C^\M_{AB}(\tau) &= -\bra*{\mathcal{T}_\tau A(\tau) B(0)} = -\frac{1}{Z} \tr \klc*{\powe{-\beta H} \powe{\tau H} A \powe{-\tau H} B}\\
+&= -\frac{1}{Z} \sum_{n,n'} \brc[\big]{n}{ \powe{-\beta H} \powe{\tau H} A }{n'} \brc[\big]{n'}{ \powe{-\tau H} B}{n}\\
+&= -\frac{1}{Z} \sum_{n,n'} \powe{-\beta E_n} \powe{\tau (E_n - E_{n'})} \brc{n}{A}{n'} \brc{n'}{B}{n}.
+\end{align*}
+In frequency space this gives rise to the \emph{\nameKallen--Lehmann}\footnote{Although except for \cite{QMB_Coleman_2015} the other references given in this section only seem to credit Lehmann.} representation \cite[\spage 162]{QMB_Bruus_2004}
+\begin{align*}
+C^\M_{AB}(\i\omega_n) &= \intx{0}{\beta}{\powe{\i\omega_n\tau} C^\M_{AB}(\tau) }{\tau} = -\frac{1}{Z} \sum_{n,n'} \powe{-\beta E_n} \brc{n}{A}{n'} \brc{n'}{B}{n} \intx{0}{\beta}{\powe{\i\omega_n\tau} \powe{\tau (E_n - E_{n'})} }{\tau}\\
+%&= -\frac{1}{Z} \sum_{n,n'} \powe{-\beta E_n} \frac{\brc{n}{A}{n'} \brc{n'}{B}{n}}{\i\omega_n + E_n - E_{n'}} \kla*{\powe{(\i\omega_n + E_n-E_{n'}) \beta} - 1 }.\\
+&= \frac{1}{Z} \sum_{n,n'} \frac{\brc{n}{A}{n'} \brc{n'}{B}{n}}{\i\omega_n + E_n - E_{n'}} \kla*{\powe{-\beta E_n} \mp  \powe{-\beta E_{n'}}},
+\end{align*}
+where as usual the upper sign is for bosons and the lower sign for fermions.
+The crucial observation is that now, having thrown away any concerns about how to obtain these eigenstates in practise, we can also directly compute the correlation function in real time.
+Similar to the above one finds  \cite[\spage 134]{QMB_Bruus_2004}
+\begin{align*}
+C^\ret_{AB}(t) &= \i\Theta(t) \bra*{\klb*{A(t), B(0)}_\mp} = \i\Theta(t) \frac{1}{Z} \sum_{n} \powe{-\beta E_n} \brc[\big]{n}{\klb*{\powe{\i Ht} A \powe{-\i Ht}, B}_\mp }{n}\\
+&= \i\Theta(t) \frac{1}{Z} \sum_{n,n'} \powe{-\beta E_n} \kla*{\brc{n}{\powe{\i Ht} A \powe{-\i Ht} }{n'} \brc{n'}{B}{n} \mp \brc{n}{B}{n'}\brc{n'}{\powe{\i Ht} A \powe{-\i Ht}}{n}}\\
+&= \i\Theta(t) \frac{1}{Z} \sum_{n,n'} \brc{n}{A}{n'} \brc{n'}{B}{n} \powe{\i (E_n - E_{n'}) t} \kla*{\powe{-\beta E_n} \mp \powe{-\beta E_{n'}}},
+\end{align*}
+where the summation indices are swapped in the second line.
+In order to make the \gls{ft} converge we have to include an infinitesimal positive imaginary part in the frequency.
+Then, using $\intx{0}{\infty}{\i \powe{\i (E + \i\eta) t} }{t} = \frac{1}{E + \i \eta}$ gives
+\begin{align*}
+C^\ret_{AB}(\omega + \i \eta) &= \intr{\powe{\i(\omega + \i \eta) t} C^\ret_{AB}(t)}{t} = \frac{1}{Z} \sum_{n,n'} \frac{\brc{n}{A}{n'} \brc{n'}{B}{n} }{\omega + \i\eta + E_n - E_{n'}} \kla*{\powe{-\beta E_n} \mp \powe{-\beta E_{n'}}}.
+\end{align*}
+Note that this is structurally identical to the result found for the Matsubara correlator, which suggests that ``the'' correlation function can be defined as \cite[\seqn 10.29]{QMB_Bruus_2004}
+\begin{align*}
+C_{AB}(\omega) &= \frac{1}{Z} \sum_{n,n'} \frac{\brc{n}{A}{n'} \brc{n'}{B}{n} }{\omega + E_n - E_{n'}} \kla*{\powe{-\beta E_n} \mp \powe{-\beta E_{n'}}}
+\end{align*}
+for any $\omega\in\mathbb{C}$.
+Thus we can obtain the retarded \gls{gf} by means of an analytic continuation $\i\omega_n \rightarrow \omega + \i\eta$ in the Matsubara correlator. %derivation Bruus ~eq.10.25
+Similarly, the advanced \gls{gf} is found by $\i\omega_n \rightarrow \omega - \i\eta$.\\
+Importantly, an integral can generally not be considered an analytic expression.
+For example, substituting $\i\omega_n = \omega + \i\eta$ in the phase factor $\powe{\i\omega_n \tau}$ in the derivation of the \nameKallen--Lehmann representation would give a different -- and incorrect -- result \cite[\spage 163]{QMB_Bruus_2004}.
+%This only seems to be a problem for the integration over $\tau$ though

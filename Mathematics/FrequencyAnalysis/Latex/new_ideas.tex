@@ -1,0 +1,114 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning,angles}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\usepackage[compat=1.1.0]{tikz-feynman}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{List of ideas}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Frequency Analysis}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+
+\section{Functional Equation}
+We have
+\begin{align}
+F_j^M(\epsilon) &= \sum_{n=0}^{N-1} c_1w_n \e^{2\pi\i\epsilon_j n}
+\end{align}
+with $\epsilon_j = \nu - \frac{j}{N}$.
+Given $R = \frac{F_{j+1}}{F_{j}}$ and $R^M \approx R$ solve
+\begin{align}
+0 &= F_{j+1}^M - RF_j^M
+\end{align}
+for $\epsilon$ and define $\nu^M := \epsilon + \frac{j}{N}$.
+For a given signal $z_n$ both $j$ and $\nu $ are constants independent of the window function $w(x)$.
+In integral approximation we have
+\begin{align}
+f(\epsilon) &:= \int_{0}^{1} w(x) \e^{2\pi\i \kla\left( N\epsilon - 1 \right) x} \, \mathrm{d}x - R\intx\int_{0}^{1} w(x) \e^{2\pi\i N\epsilon x}\, \mathrm{d}x
+\end{align}
+with $f(\epsilon) = 0$.
+We want to minimize $D[w(x)] := |\nu^M[w(x)] - \nu|$, i.e. $\delta D[w(x)] = 0$.
+Here we defined
+\begin{align}
+\nu^M[w(x)] &:= \frac{j}{N} + \epsilon^M[w(x)]
+\end{align}
+where $\epsilon^M$ is given by $f^{-1}(0)$.
+Functional derivative of $D$ gives
+\begin{align}
+\frac{\delta D[w(x)]}{\delta w(x)} &= \frac{\nu^M[w(x)]}{D} \frac{\delta \nu^M [w(x)]}{\delta w(x)} = \frac{\nu^M[w(x)]}{D} \frac{\delta f^{-1}(0) [w(x)]}{\delta w(x)} = \\
+&= \frac{\nu^M[w(x)]}{D} \klam\left[ \frac{\delta f(\epsilon) [w(x)]}{\delta w(x)} \right]^{-1}_{\epsilon = f^{-1}(0)} = 0
+\end{align}
+Here
+\begin{align}
+\frac{\delta f(\epsilon) [w(x)]}{\delta w(x)} &= \e^{2\pi\i (N\epsilon - 1) x} - R\e^{2\pi\i N\epsilon x},\\
+0 &= 
+\end{align}
+Note that
+\begin{align}
+\frac{\delta f(\epsilon)}{\delta w} &= \e^{2\pi\i (N\epsilon - 1) x} - R\e^{2\pi\i N\epsilon x} + w(x) \klam\left[ \e^{2\pi\i (N\epsilon - 1) x} - R\e^{2\pi\i N\epsilon x} \right] 2\pi\i N x \frac{\delta \epsilon}{\delta w},\\
+\frac{\delta f(\epsilon)}{\delta w} &= f'(\epsilon) \frac{\delta \epsilon}{\delta w} = \int_0^1 w(x) \klam\left[ \e^{2\pi\i (N\epsilon - 1) x} - R\e^{2\pi\i N\epsilon x} \right] 2\pi\i N x\,\mathrm{d}x  \frac{\delta \epsilon}{\delta w}.
+\end{align}
+This gives
+\begin{align}
+\frac{\delta \epsilon}{\delta w(x)} &= \frac{\e^{2\pi\i (N\epsilon - 1) x} - R\e^{2\pi\i N\epsilon x}}{f'(\epsilon) - w(x) \klam\left[ \e^{2\pi\i (N\epsilon - 1) x} - R\e^{2\pi\i N\epsilon x} \right] 2\pi\i N x }.
+\end{align}
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,166 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{07 Gibbs und Boltzmann Entropie}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 7.1: Negative Temperaturen und Entropie}
+Gegeben ist ein System bestehend aus zwei Teilchen $x_1,x_2$ mit jeweils einer Ortskoordinate, die den Zustand vollständig beschreibt. Die Energie sei $H(x)=x$, wobei wir $x\in\klam\left[ {0,1} \right]$ voraussetzen. Allgemein gilt im mikrokanonischen Ensemble für das Zustandsraum-Volumen:
+\begin{align*}
+\Omega(E)&=\int\rho(H(q,p))\,\mathrm{d}\Gamma=\int_{H(q,p)\le E}\,\mathrm{d}\Gamma
+\end{align*} 
+In unserem Fall ist $H(x_1,x_2)=x_1+x_2$ und $\mathrm{d}\Gamma=\mathrm{d}x_1\mathrm{d}x_2$. Interessant ist die Funktion $0\le x_2(x_1,E)\le 1$:
+\begin{align*}
+x_2(x_1,E\le 1)&=\left\{\begin{matrix}
+E-x_1 & \tecxt\text{für}\ x_1\le E \\ 0 &\tecxt\text{sonst}
+\end{matrix}\right.\\
+x_2(x_1,E>1)&=\left\{\begin{matrix}
+1&\tecxt\text{für}\ x_1\le E-1 \\ 
+E-x_1&\tecxt\text{für}\ x_1>E-1
+\end{matrix}\right.
+\end{align*}
+Damit kann man dann das Zustandsraum-Volumen berechnen:
+\begin{align*}
+\Omega(E\le 1)&=\intx\int_{0}^{1}\intx\int_{0}^{x_2(x_1,E)}\,\mathrm{d}x_2\mathrm{d}x_1=\intx\int_{0}^{E}E-x_1\,\mathrm{d}x_1=\frac{E^2}{2}\\
+\Omega(E>1)&=\intx\int_{0}^{1}x_2(x_1,E)\,\mathrm{d}x_1=\intx\int_{0}^{E-1}1\,\mathrm{d}x_1+\intx\int_{E-1}^{1}E-x_1\,\mathrm{d}x_1=\\
+&=E-1+E-E(E-1)-\frac{1}{2}+\frac{(E-1)^2}{2}=-\frac{E^2}{2}+2E-1
+\end{align*}
+Die Zustandsraum-Oberfläche lautet allgemein:
+\begin{align*}
+\omega(E)&=\int_{H(q,p)= E}\,\mathrm{d}\Gamma=\int_{H(q,p)\le E}\delta(E-H(q,p))\,\mathrm{d}\Gamma
+\end{align*} 
+Für $E>1$ sei $\epsilon>0$ beliebig. Dann gilt in unserem Fall:
+\begin{align*}
+\omega(E\le 1)&=\intx\int_{0}^{1}\intx\int_{0}^{x_2(x_1,E)}\delta(E-x_1-x_2)\,\mathrm{d}x_2\mathrm{d}x_1=\\
+&=\intx\int_{0}^{E}\intx\int_{0}^{E-x_1}\delta\,\mathrm{d}x_2\mathrm{d}x_1+\intx\int_{E}^{1}\intx\int_{0}^{0}\delta\,\mathrm{d}x_2\mathrm{d}x_1=\intx\int_{0}^{E}\,\mathrm{d}x_1=E=\partial_E\Omega(E)\\
+\omega(E>1)&=\intx\int_{0}^{E-1-\epsilon}\intx\int_{0}^{1}\delta\,\mathrm{d}x_2\mathrm{d}x_1+\intx\int_{E-1}^{1}\intx\int_{0}^{E-x_1}\delta\,\mathrm{d}x_2\mathrm{d}x_1=\\
+&=\intx\int_{0}^{1}\delta(1+\epsilon -x_2)\,\mathrm{d}x_2+\intx\int_{E-1}^{1}\,\mathrm{d}x_1=2-E=\partial_E\Omega(E)
+\end{align*}
+Allgemein gilt $\omega(E)=\partial_E\Omega(E)\Delta E$:
+\begin{align*}
+\omega(E)&=\intx\int_{E\le H(q,p)\le E+\Delta E}^{ }\,\mathrm{d}\Gamma=\Omega(E+\Delta E)-\Omega(E)=\partial_E\Omega(E)\Delta E
+\end{align*}
+Es gilt $\nu(E):=\partial_E^2\Omega(E)=\tecxt\text{sign}\,(1-E)$. Die Gibbs-Entropie ist $S_G=k_B\log\Omega(E)=2k_B\log E-k_B\log 2$, die Boltzmann-Entropie ist $S_B=k_B\log\omega(E)\Delta E=k_B\log E\Delta E$. Die Gibbs-Temperatur ist definiert als:
+\begin{align*}
+\frac{1}{T_G}&:=\partial_ES_G=k_B\frac{\omega(E)}{\Omega(E)}=k_B\left\{\begin{matrix}
+\frac{2}{E}&\tecxt\text{für}\ E\le 1 \\
+\frac{4-2E}{4E-2-E^2}&\tecxt\text{für}\ E>1
+\end{matrix}\right.
+\end{align*}
+Die Boltzmann-Temperatur ist definiert als:
+\begin{align*}
+\frac{1}{T_B}&=\partial_ES_B=k_B\frac{\nu(E)}{\omega(E)}=\left\{\begin{matrix}
+\frac{1}{E}&\tecxt\text{für}\ E\le 1\\
+\frac{1}{E-2}&\tecxt\text{für}\ E>1
+\end{matrix}\right.
+\end{align*}
+Im kanonischen Ensemble ist $\rho(x_1,x_2)=\frac{1}{Z} e^{-\beta(x_1+x_2)}$, wobei aufgrund der Unabhängigkeit $Z=Z_1Z_2$ gilt:
+\begin{align*}
+Z_{1,2}&=\intx\int_{0}^{1}e^{-\beta x}\,\mathrm{d}x=\frac{1-e^{-\beta}}{\beta}
+\end{align*}
+Die Zustandssumme ist also gerade $Z=\frac{1}{\beta^2}\kla\left( {1-e^{-\beta}} \right)^2$. Damit lautet die freie Energie:
+\begin{align*}
+F&=-\frac{1}{\beta}\log Z=\frac{2}{\beta}\kla\left( {\log\beta-\log(1-e^{-\beta})} \right)
+\end{align*}
+Die mittlere Energie ist gegeben durch:
+\begin{align*}
+\bra\langle {E}\rangle&=-2\partial_\beta\log Z=\partial_\beta\kla\left( {\log\beta-\log(1-e^{-\beta})} \right)=\frac{2}{\beta}-\frac{2}{e^{\beta}-1}
+\end{align*}
+Für $N$ Teilchen ist es einfacher, das Zustandsraum-Volumen grafisch zu bestimmen. Da hier $x_i\in [0,\infty)$ gegeben war, treten diesmal keine Randeffekte auf, die bei der endlichen Ausdehnung des Zustandsraums $(x_1,x_2)$ zu Fallunterscheidungen geführt hatten. Gesucht ist also einfach das $N$-dimensionale Volumen der Menge
+\begin{align*}
+\Omega(E)&=\klammer\left\{{\vec{x}\in [0,\infty)^N\,\vert\,\|\vec{x}\|_1\le E} \right\}
+\end{align*}
+Dabei ist $\|\vec{x}\|_1=\sum_nx_n$. Das Volumen kann man in diesem Fall rekursiv aus $V_N=\frac{E}{N}V_{N-1}$ bestimmen, was auf $\Omega(E)=V_N=\frac{E^N}{N!}$ führt. Damit lautet dann die Oberfläche $\omega(E)=\frac{E^{N-1}}{(N-1)!}$ und $\nu(E)=\frac{E^{N-2}}{(N-2)!}$. Für die beiden Temperaturen folgt dann:
+\begin{align*}
+T_G&=\frac{1}{k_B}\frac{\Omega(E)}{\omega(E)}=\frac{E}{Nk_B}\\
+T_B&=\frac{1}{k_B}\frac{\omega(E)}{\nu(E)}=\frac{E}{(N-1)k_B}
+\end{align*}
+Die mittlere Energie bestimmt man im kanonischen Ensemble wieder aus der Zustandssumme, wobei aufgrund der geforderten Unabhängigkeit $Z=Z_1^N$ gilt:
+\begin{align*}
+Z_1&=\intx\int_{0}^{\infty}e^{-\beta x}\,\mathrm{d}x=\frac{1}{\beta}&\Rightarrow &&Z&=\frac{1}{\beta^N}
+\end{align*}
+Damit kann die mittlere Energie bestimmt werden:
+\begin{align*}
+\bra\langle {E}\rangle&=-\partial_\beta\log Z=N\partial_\beta\log\beta=Nk_BT
+\end{align*}
+Sei $T_1<0$ und $T_2>0$. Für die Entropie muss dann gelten:
+\begin{align*}
+\Delta S&=\sum_i\frac{\Delta Q_i}{T_i}\overset{!}{\ge} 0\\
+\Delta Q_1&\le \Delta Q_2\frac{-T_1}{T_2}
+\end{align*}
+Es muss $\Delta Q_1\Delta Q_2\le 0$, da nicht beide Wärmeänderungen das gleiche Vorzeichen haben können. Da $\frac{-T_1}{T_2}$ per Konstruktion positiv ist, können wir die Ungleichung auch als
+\begin{align*}
+\frac{\Delta Q_1}{|\Delta Q_1|}\le\frac{\Delta Q_2}{|\Delta Q_2|}
+\end{align*}
+interpretieren, woraus dann direkt $\Delta Q_1\le 0$ und $\Delta Q_2\ge 0$ folgt. Das System mit der negativen Temperatur gibt also Wärme ab, unabhängig davon, wie groß $T_2>0$ ist.
+\section*{Aufgabe 7.2: Kugel in höheren Dimensionen}
+Bestimme zunächst die Oberfläche $A_3(R)$ einer Kugel in 3D. Wir wissen, dass $A_2(R)=2\pi R$ ist. Daher gilt für $A_3$ folgende Formel, wobei wir über horizontale Ringe mit Radius $R(z)=\sqrt{x^2+y^2}=\sqrt{R^2-z^2}$ integrieren:
+\begin{align*}
+A_3(R)&=\intx\int_{-R}^{R}2\pi \sqrt{R^2-z^2}\,\mathrm{d}z=2\pi R^2\intx\int_{0}^{\pi}\sin\theta\,\mathrm{d}\theta
+\end{align*}
+Damit lässt sich auch gleich eine Rekursion aufschreiben. Es gilt $A_n(\alpha x)=\alpha^{n-1}A_n(x)$:
+\begin{align*}
+A_n&=\intx\int_{0}^{\pi}A_{n-1}(R\sin\theta)\,R\mathrm{d}\theta=RA_{n-1}(R)\intx\int_{0}^{\pi}\sin^{n-2}\theta\,\mathrm{d}\theta=RA_{n-1}\sqrt{\pi}\frac{\Gamma\kla\left( {\frac{n-1}{2}} \right)}{\Gamma\kla\left( {\frac{n}{2}} \right)}\\
+\Rightarrow\ \ \ A_n&=A_2\prod_{k=3}^nR\sqrt{\pi}\frac{\Gamma\kla\left( {\frac{k-1}{2}} \right)}{\Gamma\kla\left( {\frac{k}{2}} \right)}=2\pi^{n/2}R^{n-1}\frac{\Gamma(1)}{\Gamma\kla\left( {\frac{n}{2}} \right)}=\frac{n\pi^{n/2}R^{n-1}}{\Gamma\kla\left( {\frac{n}{2}+1} \right)}
+\end{align*}
+Das Volumen $V_n(R)$ kann dann durch Integration über den Radius der $A_n(r)$ erhalten werden:
+\begin{align*}
+V_n(R)&=\intx\int_{0}^{R}A_n(r)\,\mathrm{d}r=\frac{\pi^{n/2}R^n}{\Gamma\kla\left( {\frac{n}{2}+1} \right)}
+\end{align*}
+Betrachte nun das Verhältnis des Volumens einer Kugelschale zur gesamten Kugel:
+\begin{align*}
+\alpha&:=\frac{V_n(R)-V_n(R(1-\epsilon))}{V_n(R)}=1-\kla\left( {1-\epsilon} \right)^n=1-e^{n\log(1-\epsilon)}=1-e^{-n\epsilon +\mathcal{O}(\epsilon^2)}\kom\overset{\substack{{n\rightarrow\infty} \\ |}}{\longrightarrow}1
+\end{align*}
+\section*{Aufgabe 7.3: Grosskanonisches Potential}
+Es soll die Zustandssumme $Z$ und das grosskanonische Potential $\Phi(V,T,\mu)$ hergeleitet werden. Dazu muss folgender Ausdruck für die Entropie minimiert werden:
+\begin{align*}
+L&=\sum_\mu p_\mu\log p_\mu -\alpha\kla\left( {1-\sum_\mu p_\mu } \right)-\beta\kla\left( {E-\sum_\mu E_\mu p_\mu } \right)-\gamma\kla\left( {N-\sum_\mu N_\mu p_\mu } \right)
+\end{align*}
+Die Entropie wäre eigentlich $S=-k_BL$, die Konstante ist beim Ableiten allerdings irrelevant:
+\begin{align*}
+0\overset{!}{=}\frac{\partial L}{p_\nu}&=\log p_\nu +1+\alpha +\beta E_\nu + \gamma N_\nu\\
+\Rightarrow\ \ \ p_\nu &=\frac{1}{Z}\exp\kla\left( {-\beta E_\nu -\gamma N_\nu} \right)
+\end{align*}
+Aus der Normierung $1\overset{!}{=}\sum_\nu p_\nu$ erhält man die Zustandssumme:
+\begin{align*}
+Z&=\sum_\nu\exp\kla\left( {-\beta E_\nu-\gamma N_\nu} \right)
+\end{align*}
+Die Entropie lautet daher:
+\begin{align*}
+S=-k_B\sum_\nu p_\nu\log p_\nu = k_B\sum_\nu p_\nu(\log Z+\beta E_\nu +\gamma N_\nu)=k_B\log Z+k_B\beta U+k_B\gamma N
+\end{align*}
+Aus den bekannten partiellen Ableitungen kann man die Lagrange-Multiplikatoren bestimmen:
+\begin{align*}
+\frac{\partial S}{\partial U}&=k_B\beta\overset{!}{=}\frac{1}{T}&\Rightarrow &&\beta &=\frac{1}{k_BT}\\
+\frac{\partial U}{\partial N}&=-\frac{\gamma}{\beta}\overset{!}{=}\mu&\Rightarrow &&\gamma &=-\frac{\mu}{k_BT}
+\end{align*}
+Das Potential und die Entropie lauten letztlich:
+\begin{align*}
+\Phi(V,T,\mu)&=U-TS-\mu N=-k_BT\log Z\\
+S&=k_B\log Z+\frac{U}{T}-\frac{\mu N}{T}
+\end{align*}
+
+\end{document}

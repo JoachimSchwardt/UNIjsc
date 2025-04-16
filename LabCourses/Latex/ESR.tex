@@ -1,0 +1,199 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{Electron Spin Resonance}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Tasks}
+\begin{enumerate}
+\item Investigation of the resonance absorption by a classical passive high-frequency resonance circuit
+\item Measurement of the resonance magnetic field $B_0$ as a function of frequency for a sample of DPPH (1,1-diphenyl-2-picryl-hydrazyl) and calculation of the $g$-factor
+\item Determination of the line width of the resonance signal and the life time of the spin excitation
+\end{enumerate}
+\section{Theoretical remarks}
+ESR is an effect based on the absorption of high-frequency electromagnetic radiation by paramgentic substances in an external magnetic field. The external field is required, such that the spin states split. In paramgnetic substances the total angular is nonzero due to the coupling of the orbital angular momenta and spins of the electrons. This could be transition metals whose inner shells are not complete or molecules with free radicals. \\
+DPPH contains a relatively stable nitrogen atom with an unpaired valence electron as a free radical. Due to the fields produces by the atomic lattice, the electron behaves almost like an electron with no orbital angular momentum, which means that here the interaction with the magnetic field is almost entirely related to the spin.
+\subsection{Resonance absorption}
+To build an understanding of the effect of resonance absorption, a passive HF resonance circuit is used as a classical analogue (although ESR is a purely quantum mechanical effect!) and is excited by an active circuit in a frequency range of $15\dots 130\,$MHz. In case of resonance the energy transferred from emitter to receiver peaks, which translates to a voltage drop at the sending coil due to energy transfer to the passive coil.
+\subsection{Electron Spin Resonance}
+As mentioned above, the orbital angular momentum can be neglected for the used sample. Let $\mu_B=\frac{e\hbar}{2m_e}$ be the Bohr magneton, $g_S$ the Landé-$g$-factor ($g_S\approx 2,0023$ for a free electron) and $\vec{S}$ the spin angular momentum of the electron. Then the spin-induced magnetic moment is given by:
+\begin{align*}
+\vec{\mu_S}&=-g_S\mu_B\frac{\vec{S}}{\hbar}\numberthis\label{mu S von S}
+\end{align*}
+The \textsc{Zeeman}-effect the leads to an energy splitting due to the presence of an external magnetic field $\vec{B}_0$:
+\begin{align*}
+\Delta E=-\vec{\mu}_S\cdot\vec{B}_0\overset{(\ref{mu S von S})}{=}g_S\mu_Bm_SB_0 \numberthis\label{delta E von ms und B0}
+\end{align*}
+Here, $S_z=\hbar m_S$ with $m_S=\pm\frac{1}{2}$ and $\vec{B}_0\parallel \vec{e}_z$. Therefor, the potential energy splits into two discrete levels for the respective values of $m_S$. If the energy $\hbar\omega$ of an alternating field $\vec{B_1}=\vec{B}\sin\omega t$ is equal to the total energy difference between the two levels $\Delta E=g_S\mu_BB_0$, the magnetic moments can 'flip' from parallel to anti-parallel orientation. Put differently, transitions between neighbouring energy levels are induced, which leads to energy being radiated into the sample. From this, we can derive an equation for $g_S$:
+\begin{align*}
+g_S&=\frac{hf}{\mu_BB_0}\numberthis\label{gS von f und B0}
+\end{align*}
+Let $\omega$ be fixed and vary $B_0$. Then, an absorption line with a full-widht half maximum (FWHM) of $\delta B_0$ is obtained. With $\delta E=g_S\mu_B\delta B_0$, the uncertainty principle gives an expression for the lifetime $\delta T$ of the energy level as a function of $\delta B_0$:
+\begin{align*}
+\delta E\cdot\delta T&\ge\frac{\hbar}{2}\ \ \Rightarrow\ \ \delta T\simeq\frac{\hbar}{2g_S\mu_B\delta B_0}\numberthis\label{delta T von delta B0}
+\end{align*}
+Finally, we need an expression for the field strength at the center of a a Helmholtz coil pair. The \textsc{Biot-Savart}-law for a circular conduit of radius $R$ and $N$ turns gives:
+\begin{align*}
+\vec{B}(z)&=-\frac{\mu_0NI}{4\pi}\intx\int_{0}^{2\pi}\frac{\kla\left( {ze_z-Re_r} \right)\times Re_\varphi}{\kla\left( {R^2+z^2} \right)^{3/2}}\,\mathrm{d}\varphi=\frac{\mu_0NIR^2}{2\kla\left( {R^2+z^2} \right)^{3/2}}e_z\numberthis\label{B field coil}
+\end{align*}
+The superposition of two such coils at $z=\pm\frac{R}{2}$ then leads to a formula for the field strength at $z=0$:
+\begin{align*}
+B(z)&=B\kla\left( {z+\frac{R}{2}} \right)+B\kla\left( {z-\frac{R}{2}} \right)\overset{(\ref{B field coil})}{=}\\
+&=\frac{\mu_0NIR^2}{2R^3}\klam\left[ {\kla\left( {1+\kla\left( {\frac{z}{R}+\frac{1}{2}} \right)^2} \right)^{-3/2}+\kla\left( {1+\kla\left( {\frac{z}{R}-\frac{1}{2}} \right)^2} \right)^{-3/2}} \right]\\
+&\Rightarrow\ \ B(z=0)=\kla\left( {\frac{4}{5}} \right)^{3/2}\frac{\mu_0NI}{R}\numberthis\label{B helmholtz coil pair}
+\end{align*}
+\section{Experiment}
+Fig. \ref{Virtual setup of the experiment} shows the graphical user interface generated by ESR{\_}Animation.pyc. For a given frequency $f$, the phase shift $\phi$ has to be modulated in such a way, that the two peaks align. The figure specifically shows a setup with incorrect phase compensation to illustrate the inner workings. Besides this 'main' experiment, there is a mode for the measurement with the passive HF resonance circuit and one for the refernce measurement without the inductive coupling to the passive coil. The capacity of the passive circuit can be selected as a ratio of some unknown maximal value.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.8]{Virtual_setup.png}
+\caption{Virtual setup of the experiment}
+\label{Virtual setup of the experiment}
+\end{figure} \newpage
+\subsection{Passive HF circuit with active coil}
+The measurements were made for capacities $C_{1,\tecxt\text{rel}}=1,0$ and $C_{2,\tecxt\text{rel}}=0,5$. In the following the indices $1,2$ correspond to the respective capacity and the indices a,\,p to 'active' and 'passive'. The systematic errors are given by $\Delta f\le \frac{0,1}{\sqrt{3}}\,$MHz and $\Delta U=\frac{1}{\sqrt{3}}\kla\left( {0,01+0,03\cdot \frac{U}{\tecxt\text{V}}} \right)\,$V. However, the plot is convoluted enough as it is, so the errorbars are not shown. To give a sense of scale, all errors were smaller than the respective marker for a data point. The measured values are listed in Table \ref{coil voltages for f}. Figure \ref{Resonance plot classical analog} shows the voltage of the active and the passive coil as a function of frequency, as well as the voltage of the active coil only for reference. The markers are connected by semi-transparent dotted lines for an improved readability.
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c||c|c|c||c|c}
+$f_1\,/\,$MHz&$U_{1,\tecxt\text{a}}\,/\,$V&$U_{1,\tecxt\text{p}}\,/\,$V&$f_2\,/\,$MHz&$U_{2,\tecxt\text{a}}\,/\,$V&$U_{2,\tecxt\text{p}}\,/\,$V&$f\,/\,$MHz&$U_{\tecxt\text{a},\tecxt\text{only}}\,/\,$V\\ \hline
+15	&    0,731&0,055&15&	0,775&	0,018&		    15&	0,797\\ \hline
+20	&    0,774&0,106&30&	0,999&	0,076&		    20&	0,92\\ \hline
+25	&    0,664&0,236&35&	0,929&	0,158&		    25&	1,029\\ \hline
+27,5&    0,527&0,341&40&	0,63&	0,344&		    30&	1,127\\ \hline
+30	&    0,451&0,4  &42,5&	0,538&	0,4	&	        35&	1,217\\ \hline
+32,5&    0,573&0,341&45&	0,681&	0,338&		    40&	1,301\\ \hline
+35	&    0,786&0,236&47,5&	0,922&	0,233&		    45&	1,38\\ \hline
+40	&    1,094&0,106&50&	1,118&	0,154&		    50&	1,455\\ \hline
+45	&    1,266&0,055&55&	1,356&	0,074&		    55&	1,526\\ \hline
+60	&    1,557&0,015&60&	1,494&	0,042&		    60&	1,593\\ \hline
+75	&    1,763&0,007&75&	1,746&	0,013&		    75&	1,782\\ \hline
+90	&    1,94 &0,004&90&	1,933&	0,006&		    90&	1,952\\ \hline
+105	&    2,1  &0,003&105&	2,096&	0,004&		    105&2,108\\ \hline
+120	&    2,248&0,002&120&	2,245&	0,002&		    120&2,254
+\end{tabular}
+\caption{Measurement of the active and passive coil voltage for certain frequencies}
+\label{coil voltages for f}
+\end{table}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=1]{Classical_analog_plot.png}
+\caption{Resonance behaviour of the classical analog HF circuit for different capacities}
+\label{Resonance plot classical analog}
+\end{figure}
+\subsection{Resonance magnetic field $B_0$ for various frequencies}
+Eigth different frequencies from the given domain are selected. For each, the phase is compensated to get a single minimum.  Then, the DC current is modulated in such a way, that the XY-plot is symmetric about the vertical axis (such that the minimum is at $U_\tecxt\text{mod}=0\,$V). An example XY-plot of the resonance curve with correct phase compensation and horizontal shift can be seen in Fig. \ref{Example plot of the resonance curve}.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{Example_plot.png}
+\caption{Example plot of the resonance curve}
+\label{Example plot of the resonance curve}
+\end{figure}\\
+The statistical uncertainty is estimated as $\Delta I^\tecxt\text{stat}\simeq 1\,$mA, the systematic as $\Delta I_\tecxt\text{DC}^\tecxt\text{sys}=\frac{1}{\sqrt{3}}\kla\left( {0,01\cdot\frac{I_\tecxt\text{DC}}{\tecxt\text{A}}+10^{-4}} \right)\,$A and $\Delta R^\tecxt\text{sys}=\frac{0,1}{\sqrt{3}}\,$cm. The coils have $n=320$ turns each and a radius of $R=6,8\,$cm. The magnetic field was calculated using Eq. (\ref{B helmholtz coil pair}) and the systematic uncertainty with the following forumla:
+\begin{align*}
+\Delta B&=B\sqrt{\kla\left( {\frac{\Delta R}{R}} \right)^2+\kla\left( {\frac{\Delta I}{I}} \right)^2}
+\end{align*}
+The statistical uncertainty of $g_S$ is just given by $\Delta g_S^\tecxt\text{stat}=g_S\cdot\frac{\Delta I^\tecxt\text{stat}}{I}$. The measurements and calulations for $I_\tecxt\text{DC}$, $B_0$ and $g_S$ are shown in Table \ref{DC current with uncertainties} (here $g_S$ is directly calculated from Eq. (\ref{gS von f und B0})):
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c||c|c||c|c}
+$f\,/\,$MHz&$I_\tecxt\text{DC}\,/\,$A&$\Delta I_\tecxt\text{DC}^\tecxt\text{sys}\,/\,$mA&$B_0\,/\,$mT&$\Delta B_0^\tecxt\text{sys}\,/\,$mT&$g_S$&$\Delta g_S^\tecxt\text{stat}$\\ \hline
+15	&0,1214&	1,4595&0,5137&	0,00756&	2,0863&	    0,01719\\ \hline
+30	&0,2522&	2,9699&1,0672&	0,01549&	2,0085&	    0,00796\\ \hline
+45	&0,3849&	4,5022&1,6287&	0,02354&	1,9741&	    0,00513\\ \hline
+60	&0,5151&	6,0056&2,1796&	0,03144&	1,9668&	    0,00382\\ \hline
+75	&0,6468&	7,5263&2,7369&	0,03942&	1,95799&	0,00303\\ \hline
+90	&0,7774&	9,0344&3,2895&	0,04734&	1,95479&	0,00251\\ \hline
+105	&0,9094&	10,559&3,8481&	0,05535&	1,94956&	0,00214\\ \hline
+120	&1,0409&	12,077&4,4045&	0,06332&    1,94659&	0,00187
+\end{tabular}
+\caption{Measurement of the resonance DC-current for eigth frequencies and quantities with uncertainties derived from those}
+\label{DC current with uncertainties}
+\end{table}\\ \\ 
+Combining equation (\ref{gS von f und B0}) with $\mu_B=\frac{e\hbar}{2m_e}$ and the slope of $B_0(f)=\frac{hf}{\mu_Bg_S}=:\alpha f$ gives:
+\begin{align*}
+g_S&=\frac{h}{\mu_B\alpha}=\frac{4\pi m_e}{e\alpha}\numberthis\label{gS from slope}
+\end{align*}
+Literature values for the necessary constants are $m_e=9,10938\cdot 10^{-31}\,$kg, $\mu_0=1,25664\cdot 10^{-6}\,\frac{\tecxt\text{Vs}}{\tecxt\text{Am}}$ and $e=1,60218\cdot 10^{-19}\,$As. The systematc uncertainty and main result was determined from the slope $\alpha$ of the linear regression and the boundary curves seen in Fig. \ref{Plot resonant magnetic field of frequency}. For this $\Delta f^\tecxt\text{sys}=\frac{0,1}{\sqrt{3}}\,$MHz was needed:
+\begin{align*}
+\alpha = 37,047_{-0,531}^{+0,531}\,\frac{\mu\tecxt\text{T}}{\tecxt\text{MHz}}
+\end{align*}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=1]{B_field_of_frequency.png}
+\caption{Resonant magnetic field of frequency with boundary curves}
+\label{Plot resonant magnetic field of frequency}
+\end{figure}\\
+The errorbars are barely visible and not a good representation of the statistical uncertainty. Therefor the statistcal error was calculated using weigthed averages and the values for $g_S$ and $\Delta g_S^\tecxt\text{stat}$ from Table \ref{DC current with uncertainties} (note that these values differ by quite a bit, since the linear regresion has a very significant offset; see discussion). Define $p_i := \frac{1}{\sigma_i^2}$ and $p:=\sum_ip_i$:
+\begin{align*}
+\overline{g}_S&=\frac{1}{p}\sum_ip_ig_{Si}=\underline{1,9773}\\
+\Delta g_S^\tecxt\text{int}&=\frac{1}{\sqrt{p}}=0,0102\\
+\Delta g_S^\tecxt\text{ext}&=\sqrt{\frac{1}{p(N-1)}\sum_ip_i\kla\left( {g_{Si}-\overline{g}_S} \right)^2}=0,0156\\
+\Delta g_S^\tecxt\text{stat}&=\max\klammer\left\{{\Delta g_S^\tecxt\text{ext},\Delta g_S^\tecxt\text{int}} \right\}=\underline{0,0156}
+\end{align*}
+Using these values, equation (\ref{gS from slope}) for $g_S$ and $\Delta g_S^\tecxt\text{sys}=g_S\cdot \frac{\Delta\alpha^\tecxt\text{sys}}{\alpha}$ gives the following final result:
+\begin{align*}
+g_S&=\underline{1,929_{-0,028}^{+0,028}\pm 0,016}
+\end{align*}
+\subsection{Line width and half life of the resonance curve}
+The phase compensation and horizontal shift were performed as in the previous section. Additionally, the AC-current was adjusted such that $U_\tecxt\text{AC}$ has a peak-to-peak voltage of $4\,$V. The parameters are $f=50\,$MHz, $I_\tecxt\text{AC}^\tecxt\text{RMS}=0,283\,$A, $I_\tecxt\text{DC}^\tecxt\text{RMS}=0,428\,$A and $\phi=0,52$. Note that these values are given as the RMS, hence the measured $4,002\,$V peak-to-peak for $U_\tecxt\text{AC}$ ($U_\tecxt\text{AC}^\tecxt\text{max,\,min}=\pm 2,001\,$V) correspond to $U_\tecxt\text{AC}^\tecxt\text{RMS}=\frac{U_\tecxt\text{AC}}{2\sqrt{2}}=1,4149\,$V. Introducing a resistance-like quantity $R:=\frac{U_\tecxt\text{AC}^\tecxt\text{RMS}}{I_\tecxt\text{AC}^\tecxt\text{RMS}}=4,9997\,\Omega$ will be helpful.\\
+The maximum and minimum values of the resulting resonance curve are $U_\tecxt\text{DC}^\tecxt\text{max}=2,2824\,$V and $U_\tecxt\text{DC}^\tecxt\text{min}=0,4736\,$V. Therefor, the FWHM is found by the difference between the two values of $\delta U_\tecxt\text{AC}$, which yield $\delta U_\tecxt\text{DC}=\frac{U^\tecxt\text{max}-U^\tecxt\text{min}}{2}=1,378\,$V. These are $\delta U_\tecxt\text{AC}=\pm 0,3453\,$V (linear interpolation between neighbouring data points was used). This corresponds to $\delta U_\tecxt\text{AC}^\tecxt\text{RMS}=\frac{\delta U_\tecxt\text{AC}}{\sqrt{2}}=0,2442\,$V, or, using the resistance, $\delta I_\tecxt\text{AC}^\tecxt\text{RMS}=48,84\,$mA. Together with the equations (\ref{B helmholtz coil pair}) and (\ref{delta T von delta B0}), this value can be used to determine the line width. Let $r$ denote the radius; another necessary literature value is $\mu_0=1,25664\cdot 10^{-6}\,\frac{\tecxt\text{Vs}}{\tecxt\text{Am}}$:
+\begin{align*}
+\delta T&=\frac{2\pi m_e}{eg_S\delta B_0}=\kla\left( {\frac{5}{4}} \right)^{3/2}\frac{2\pi rm_eR}{eg_S\mu_0N\delta U_\tecxt\text{AC}^\tecxt\text{RMS}}=\underline{89,63\,\tecxt\text{ns}}
+\end{align*}
+The statistic and systematic errors are estimated by $\Delta U_\tecxt\text{AC}^\tecxt\text{stat}\simeq 1\,$mV, $\Delta I_\tecxt\text{AC}^\tecxt\text{stat}=1\,$mA, $\Delta U_\tecxt\text{AC}^\tecxt\text{sys}=\frac{1}{\sqrt{3}}\kla\left( {0,03\cdot\frac{U}{\tecxt\text{V}}+0,01} \right)\,$V and $\Delta I_\tecxt\text{AC}^\tecxt\text{sys}=\frac{1}{\sqrt{3}}\kla\left( {0,02\cdot\frac{I_\tecxt\text{AC}}{\tecxt\text{A}}+0,001} \right)\,$A. This leads to the following uncertainties:
+\begin{align*}
+\Delta R^\tecxt\text{sys}&=R\cdot\sqrt{\kla\left( {\frac{\Delta I_\tecxt\text{AC}^\tecxt\text{sys}}{I_\tecxt\text{AC}}} \right)^2+\left\vert \frac{\Delta U_\tecxt\text{AC}^\tecxt\text{max}-\Delta U_\tecxt\text{AC}^\tecxt\text{min}}{U_\tecxt\text{AC}^\tecxt\text{max}-U_\tecxt\text{AC}^\tecxt\text{min}} \right\vert^2}=\underline{0,1217\,\Omega}\\
+\Delta R^\tecxt\text{stat}&=R\cdot\sqrt{\kla\left( {\frac{\Delta I_\tecxt\text{AC}^\tecxt\text{stat}}{I_\tecxt\text{AC}}} \right)^2+2\cdot\kla\left( {\frac{\Delta U_\tecxt\text{AC}^\tecxt\text{stat}}{U_\tecxt\text{AC}}} \right)^2}=\underline{0,0178\,\Omega}\\
+\Delta\delta T^\tecxt\text{sys}&=\delta T\cdot\sqrt{\kla\left( {\frac{\Delta r^\tecxt\text{sys}}{r}} \right)^2+\kla\left( {\frac{\Delta R^\tecxt\text{sys}}{R}} \right)^2+\kla\left( {\frac{\Delta g_S^\tecxt\text{sys}}{g_S}} \right)^2+\kla\left( {\frac{\Delta\delta U_\tecxt\text{AC}^\tecxt\text{sys}}{\delta U_\tecxt\text{AC}}} \right)^2}=\underline{4,0374\,\tecxt\text{ns}}\\
+\Delta\delta T^\tecxt\text{stat}&=\delta T\cdot\sqrt{\kla\left( {\frac{\Delta R^\tecxt\text{stat}}{R}} \right)^2+\kla\left( {\frac{\Delta g_S^\tecxt\text{stat}}{g_S}} \right)^2+\kla\left( {\frac{\Delta\delta U_\tecxt\text{AC}^\tecxt\text{stat}}{\delta U_\tecxt\text{AC}}} \right)^2}=\underline{0,8313\,\tecxt\text{ns}}
+\end{align*}
+The linewidth is calculated directly from (\ref{B helmholtz coil pair}), just utilizing the resistance with the derived uncertainties. Note that the error calculation was done with $U_\tecxt\text{AC}$ and not $U_\tecxt\text{AC}^\tecxt\text{RMS}$, since the former was the actual measured value:
+\begin{align*}
+\delta B_0&=\kla\left( {\frac{4}{5}} \right)^{3/2}\frac{\mu_0NU_\tecxt\text{AC}^\tecxt\text{RMS}}{rR}=\underline{206,667\,\mu\tecxt\text{T}}\\
+\Delta\delta B_0^\tecxt\text{sys}&=\delta B_0\cdot\sqrt{\kla\left( {\frac{\Delta r^\tecxt\text{sys}}{r}} \right)^2+\kla\left( {\frac{\Delta R^\tecxt\text{sys}}{R}} \right)^2+\kla\left( {\frac{\Delta U_\tecxt\text{AC}^\tecxt\text{sys}}{U_\tecxt\text{AC}}} \right)^2}=\underline{8,8255\,\mu\tecxt\text{T}}\\
+\Delta\delta B_0^\tecxt\text{stat}&=\delta B_0\cdot\sqrt{\kla\left( {\frac{\Delta R^\tecxt\text{stat}}{R}} \right)^2+\kla\left( {\frac{\Delta U_\tecxt\text{AC}^\tecxt\text{stat}}{U_\tecxt\text{AC}}} \right)^2}=\underline{0,947\,\mu\tecxt\text{T}}
+\end{align*}
+Then the final results for both the half life and the linewidth are:
+\begin{align*}
+\delta T&=\underline{\kla\left( {89,6\pm 4,0\pm 0,8} \right)\,\tecxt\text{ns}}\\
+\delta B_0&=\underline{\kla\left( {206,7\pm 8,8\pm 0,9} \right)\,\mu\tecxt\text{T}}
+\end{align*}
+\section{Discussion}
+The resonance behaviour of the classical analog HF circuit could be observed for different capacities. \\
+The final result for the $g$-factor was
+$$g_S=\underline{1,929_{-0,028}^{+0,028}\pm 0,016}$$
+with a relative error of $\frac{\Delta g_S}{g_S}\approx 1,6\,$\%, dominated by the uncertainty of the DC current.\\
+The theoretical prediciton gives a linear relation between $g_S$ and $f$. However, due to an offset $\beta>0$ found in the linear regression of $B=\alpha f-\beta$, directly calculating the $g$-factor leads to $g_S\propto\frac{f}{\alpha f-\beta}$, which explains the significant increase for smaller frequencies. The statistical uncertainty mainly originates from this effect, since only accounting for the data with $f\ge 45\,$MHz gives a much smaller result. I could only find a literature value of $g_S^\tecxt\text{lit.}=2,0036$, which is far beyond the calculated deviations.\\
+The results for the linewidth is well within the - admittedly large - interval of $\delta B_0^\tecxt\text{lit.}= 150\dots 470\,\mu$T, located near the lower end with a relative error of $\frac{\Delta\delta B_0}{\delta B_0}\approx 4,3\,$\%:
+\begin{align*}
+\delta B_0&=\underline{\kla\left( {206,7\pm 8,8\pm 0,9} \right)\,\mu\tecxt\text{T}}
+\end{align*}
+Just as for the half life with $\frac{\Delta\delta T}{\delta T}\approx 4,6\,$\%, this error is dominated almost entirely by the systematic uncertainty of the AC-voltage and -current measurements. Here the result was:
+\begin{align*}
+\delta T&=\underline{\kla\left( {89,6\pm 4,0\pm 0,8} \right)\,\tecxt\text{ns}}
+\end{align*}
+First calculating the linewidth and then the half life from that result leads to a slightly smaller error (I presume that is due to less rounding errors) and saves a few steps. However, both ways give the same overall result.
+\end{document}

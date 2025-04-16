@@ -1,0 +1,361 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{02 Langevin equation}
+\newcommand*{\autor}{Joachim Schwardt and Julian Fleck}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Stochastic processes}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Problem 2.1: Oscillator bath for Brownian motion}
+The full Hamiltonian is
+\begin{align}
+H&:=\frac{p^2}{2m}+V(q)+\frac{1}{2} \sum_\lambda m_\lambda\omega_\lambda^2 \kla\left( q_\lambda - \frac{g_\lambda}{m_\lambda\omega_\lambda^2}q \right)^2 + \sum_\lambda \frac{p_\lambda^2}{2m_\lambda.}
+\end{align}
+\subsection*{a)}
+The equations of motion are simply
+\begin{align}
+\dot{q}&=\frac{\partial H}{\partial p}=\frac{p}{m},\\
+\dot{p}&=-\frac{\partial H}{\partial q}=-V'(q) + \sum_\lambda g_\lambda \kla\left( q_\lambda - \frac{g_\lambda}{m_\lambda \omega_\lambda^2}q \right)
+\end{align}
+for the particle, and
+\begin{align}
+\dot{q}_\lambda&=\frac{\partial H}{\partial p_\lambda} = \frac{p_\lambda}{m},\\
+\dot{p}_\lambda&=-\frac{\partial H}{\partial q_\lambda} = -\sum_\alpha m_\alpha \kla\left( q_\alpha - \frac{g_\alpha}{m_\alpha\omega_\alpha^2} q \right) \delta_{\lambda\alpha}=-m_\lambda\kla\left( q_\lambda - \frac{g_\lambda}{m_\lambda\omega_\lambda^2}q \right).
+\end{align}
+The second set of equations can be simplified to
+\begin{align}
+\ddot{q}_\lambda +\omega_\lambda^2q_\lambda&=\frac{g_\lambda}{m_\lambda}q=:c_\lambda q.
+\end{align}
+The homogenous solution for $t_0:=0$ is simply
+\begin{align}
+q_\lambda^h(t)&=q_\lambda(0)\cos\kla\left( \omega_\lambda t \right) + \frac{p_\lambda(0)}{m_\lambda\omega_\lambda} \sin\kla\left( \omega_\lambda t \right).
+\end{align}
+We want to find the inhomogeneous solution using a Green's function.
+Consider the more general case
+\begin{align}
+\ddot{G}+2\gamma\dot{G} +c^2G&=\delta(t)&&\overset{\mathcal{F}}{\longrightarrow}&\kla\left( c^2-2\i\gamma\omega - \omega^2 \right)\hat{G}&=1.
+\end{align}
+Then the Green's function is given by the inverse Fourier transformation
+\begin{align}
+G(t)&=\frac{1}{2\pi}\intr\int_{\mathbb{R}^{ }} \e^{-\i \omega t}\frac{1}{c^2-2\i\gamma\omega-\omega^2} \, \mathrm{d}^{ }\omega.
+\end{align}
+The two poles lie at
+\begin{align}
+\omega_\pm&=-\i\gamma\pm\sqrt{c^2-\gamma^2},
+\end{align}
+which have an imaginary component less than zero.
+For $t<0$ the exponent is greater than zero, so we have to close the complex contour in the upper half of the complex plane, in order to make use of the residue theorem.
+If one were to close the contour in the lower half, the integral over the arc would diverge for $R\Rightarrow\infty$.
+But, since no poles will be enclosed by the contour in this case, the integral is zero. 
+This is, why the Green's function is proportional to $\Theta(t)$.
+Now let $t>0$ and compute the integral as a sum over the residues according to
+\begin{align}
+&=\frac{1}{2\pi}\cdot 2\pi\i \sum_{\omega\in\{\omega_\pm\} }\frac{\e^{-\i\omega t}}{\omega_\mp-\omega}=\\
+&=\Theta(t)\frac{\i}{\omega_+-\omega_-} \kla\left( \e^{-\i t\omega_- }-\e^{-\i t \omega_+ } \right)=\\
+&=\Theta(t)\e^{-\gamma t}\frac{\sin (\sqrt{c^2-\gamma^2} t)}{\sqrt{c^2-\gamma^2}}.
+\end{align}
+For our case of $\gamma=0$ and $c=\omega_\lambda$ this simply becomes
+\begin{align}
+G(t)&=\Theta(t)\frac{\sin \omega_\lambda t}{\omega_\lambda},
+\end{align}
+thus the inhomogeneous solution for an arbitrary $q(t)$ is given by
+\begin{align}
+q_\lambda^i(t) &= \frac{c_\lambda}{\omega_\lambda}\intx\int_{\mathbb{R}} G(s-t)q(s)\, \mathrm{d}s = \frac{c_\lambda}{\omega_\lambda}\intx\int_{0}^{t}\sin (\omega_\lambda (t-s))q(s)\, \mathrm{d}s.
+\end{align}
+We can use this result to insert $q_\lambda(t)=q_\lambda^h(t)+q_\lambda^i(t)$ into the equations of motion 
+\begin{align}
+m\ddot{q}&=\dot{p}=-V'(q)-\sum_\lambda\frac{g_\lambda^2}{m_\lambda\omega_\lambda^2}q+\sum_\lambda g_\lambda q_\lambda(0)\cos\kla\left( \omega_\lambda t \right) + \frac{g_\lambda p_\lambda(0)}{m_\lambda\omega_\lambda} \sin\kla\left( \omega_\lambda t \right) + \\
+&\hspace{1.5cm} + \sum_\lambda\frac{g_\lambda^2}{m_\lambda\omega_\lambda} \intx\int_{0}^{t}\sin (\omega_\lambda (t-s))q(s)\, \mathrm{d}s.
+\end{align}
+We will absorb the terms involving initial conditions for $q_\lambda,p_\lambda$ into some force
+\begin{align}
+F(t)&:= \sum_\lambda g_\lambda q_\lambda(0)\cos\kla\left( \omega_\lambda t \right) + \frac{g_\lambda p_\lambda(0)}{m_\lambda\omega_\lambda} \sin\kla\left( \omega_\lambda t ) \right),
+\end{align}
+which leads to
+\begin{align}
+m\ddot{q}&=F(t)-V'(q) - \sum_\lambda\frac{g_\lambda^2}{m_\lambda\omega_\lambda^2}q(t) + \sum_\lambda\frac{g_\lambda^2}{m_\lambda\omega_\lambda^2}\cos(\omega_\lambda(t-s))q(s)\bigg\vert_0^t - \\
+&\hspace{0.5cm} - \sum_\lambda\frac{g_\lambda^2}{m_\lambda\omega_\lambda^2} \intx\int_{0}^{t}\cos (\omega_\lambda (t-s))\dot{q}(s)\, \mathrm{d}s.
+\end{align}
+The term from the upper bound $s=t$ cancels with other $q(t)$-term, and the lower bound term can be absorbed into the force $F(t)$ (or simply set to zero if $q(0)=0$).
+Defining the function
+\begin{align}
+\Gamma(t) &:= \sum_\lambda\frac{g_\lambda^2}{m_\lambda\omega_\lambda^2} \cos (\omega_\lambda t)
+\end{align}
+then allows us to rewrite the equations of motion as
+\begin{align}
+m\ddot{q}(t)+V'(q(t))+\intx\int_{0}^{t}\dot{q}(s)\Gamma(t-s)\, \mathrm{d}s=F(t).
+\end{align}
+\subsection*{b)}
+%Assuming $g_\lambda=0$ we find $F(t)\equiv 0$ and $\Gamma(t)\equiv 0$.
+%Thus, we are left with the simple equation
+%\begin{align}
+%m\ddot{q}(t)+V'(q(t))&=0.
+%\end{align}
+Define the probability density of the canonical ensemble as 
+\begin{align}
+\rho(q,p)&:=\frac{1}{Z}\e^{-\beta H(q,p)}
+\end{align}
+where the normalization factor is given by
+\begin{align}
+Z&:=\intr\int_{\mathbb{R}^{2N}} \e^{-\beta H(q,p)} \, \mathrm{d}^{ }(q,p)
+\end{align}
+and the Hamiltonian is that of the bath without coupling ($g_\lambda=0$), i.e.
+\begin{align}
+H(q,p)&:=\sum_\lambda H_\lambda (q_\lambda,p_\lambda)=\sum_\lambda\frac{p_\lambda^2}{2m_\lambda}+\frac{m_\lambda}{2}\omega_\lambda^2q_\lambda^2.
+\end{align}
+Then we find
+\begin{align}
+Z&=\prod_\lambda\int_{\mathbb{R}^{N }} \e^{-\frac{\beta }{2m_\lambda}p_\lambda^2} \, \mathrm{d}^{ }p_\lambda \int_{\mathbb{R}^{N }} \e^{-\frac{\beta m_\lambda\omega_\lambda^2}{2}q_\lambda^2} \, \mathrm{d}^{ }q_\lambda=\\
+&=\prod_\lambda\sqrt{\frac{2\pi m_\lambda}{\beta}}\sqrt{\frac{2\pi}{\beta m_\lambda\omega_\lambda^2}}=\prod_\lambda\frac{2\pi}{\beta\omega_\lambda}=:\prod_\lambda Z_\lambda.
+\end{align}
+The average of the force is given by
+\begin{align}
+\bra\langle F(t) \rangle_\rho&=\intr\int_{\mathbb{R}^{2N}} F(t,q,p)\rho(q,p) \, \mathrm{d}^{ }(q,p)=\\
+&=\sum_\lambda g_\lambda\frac{1}{Z_\lambda}\intr\int_{\mathbb{R}^{2 }} q_\lambda\cos(\omega_\lambda t)\e^{-\beta H_\lambda} \, \mathrm{d}^{ }(q_\lambda,p_\lambda) +\\
+&\ \ \ + \sum_\lambda \frac{g_\lambda}{m_\lambda\omega_\lambda^2}\frac{1}{Z_\lambda}\intr\int_{\mathbb{R}^{2 }} p_\lambda\e^{-\beta H_\lambda} \, \mathrm{d}^{ }(q_\lambda,p_\lambda)=0,
+\end{align}
+where both terms vanish due to the anti-symmetric integrands.
+For the correlation function we similarly consider $F(s)F(t)$, where integrating eliminates the mixed terms $\sim q_\lambda p_\kappa$.
+This allows us write
+\begin{align}
+\bra\langle F(t)F(s) \rangle&=\intr\int_{\mathbb{R}^{2}} F(t,q,p)F(s,q,p)\rho(q,p) \, \mathrm{d}^{ }(q,p)=\\
+&=\frac{1}{Z}\intr\int_{\mathbb{R}^{2N}} \sum_{\lambda,\kappa} g_\lambda g_\kappa \Big[q_\lambda q_\kappa\cos(\omega_\lambda t)\cos(\omega_\kappa s)+\\
+&\hspace{2cm} + \frac{p_\lambda p_\kappa}{m_\lambda m_\kappa\omega_\lambda\omega_\kappa}\sin(\omega_\lambda t)\sin(\omega_\kappa s)\Big]\e^{-\beta H(q,p)} \, \mathrm{d}^{ }(q,p)=\\
+&=\sum_\lambda\frac{g_\lambda^2}{Z_\lambda}\cos(\omega_\lambda t)\cos(\omega_\lambda s) \intr\int_{\mathbb{R}^{ }} q_\lambda^2\e^{-\beta H_\lambda} \, \mathrm{d}^{ }(q_\lambda,p_\lambda) + \\
+&\ \ \ + \sum_\lambda\frac{g_\lambda^2}{m_\lambda^2\omega_\lambda^2}\frac{1}{Z_\lambda} \sin(\omega_\lambda t) \sin(\omega_\lambda s)  \intr\int_{\mathbb{R}^{2}} p_\lambda^2\e^{-\beta H_\lambda} \, \mathrm{d}^{ }(q_\lambda,p_\lambda)=\\
+&=\sum_\lambda \sqrt{\frac{\beta m_\lambda\omega_\lambda^2}{2\pi }} g_\lambda^2 \cos(\omega_\lambda t)\cos(\omega_\lambda s) \intr\int_{\mathbb{R}^{ }} q_\lambda^2\e^{-\frac{\beta m_\lambda\omega_\lambda^2}{2}q_\lambda^2} \, \mathrm{d}^{ }q_\lambda + \\
+&\ \ \ +\sum_\lambda\sqrt{\frac{\beta}{2\pi m_\lambda}}\frac{g_\lambda^2}{m_\lambda^2\omega_\lambda^2}\sin(\omega_\lambda t) \sin(\omega_\lambda s) \intr\int_{\mathbb{R}^{ }} p_\lambda^2\e^{-\frac{\beta}{2m_\lambda}p_\lambda^2} \, \mathrm{d}^{ }p_\lambda.
+\end{align}
+It is helpful to consider the type of gaussian integral appearing here separately.
+Let $a>0$
+\begin{align}
+I(a)&:=\intr\int_{\mathbb{R}^{ }} x^2\e^{-ax^2} \, \mathrm{d}^{ }x\kom\overset{\substack{{x\,:=\,\sqrt{u / a}} \\ |}}{=}2\intr\int_{0}^\infty \frac{u}{a}\e^{-u} \, \frac{1}{2\sqrt{ua}}\mathrm{d}^{ }u=\frac{1}{a^{3/2}}\Gamma\kla\left( \frac{3}{2} \right)=\frac{1}{2a}\sqrt{\frac{\pi}{a}}.
+\end{align}
+Inserting into the above yields
+\begin{align}
+\bra\langle F(t)F(s) \rangle&=\sum_\lambda \frac{g_\lambda^2}{\beta m_\lambda\omega_\lambda^2}\cos(\omega_\lambda t) \cos(\omega_\lambda s) + \frac{m_\lambda}{\beta}\frac{g_\lambda^2}{m_\lambda^2\omega_\lambda^2} \sin(\omega_\lambda t) \sin(\omega_\lambda s)=\\
+&=\frac{1}{\beta}\sum_\lambda\frac{g_\lambda^2}{m_\lambda\omega_\lambda^2}\cos\kla\left( \omega_\lambda (t-s) \right)\equiv k_\tecxt\text{B}T\Gamma(t-s).
+\end{align}
+We see that the fluctuation-dissipation theorem is confirmed by this proportionality to the memory function $\Gamma$.
+\subsection*{c)}
+If we let $\Gamma(t)\rightarrow m\gamma\delta(t)$, we obtain Langevin's original equation, since
+\begin{align}
+m\ddot{q}+\intx\int_{0}^{t}\Gamma(t-s)\dot{q}(s)\, \mathrm{d}s+V'(q)&=m\ddot{q}+m\gamma\dot{q}+V'(q)=F(t).
+\end{align}
+Now we set $V\equiv\tecxt\text{const.}$ and identify $F(t)\equiv X(t)$ to get the equation
+\begin{align}
+m\ddot{q}+m\gamma\dot{q}&=X(t).
+\end{align}
+\subsection*{d)}
+We repeat the steps in a) for operator-valued quantities.
+The equations of motion are then given by
+\begin{align}
+\i\hbar\frac{\tecxt\text{d}\hat{q}}{\tecxt\text{d}t}&=\klam\left[ \hat{q},\hat{H} \right]+\partial_t\hat{q}=\frac{1}{2m}\klam\left[ \hat{q},\hat{p}^2 \right]=\frac{\i\hbar}{m}\hat{p},\\
+\i\hbar\frac{\tecxt\text{d}\hat{p}}{\tecxt\text{d}t}&=\klam\left[ \hat{p},\hat{H} \right]+\partial_t\hat{p}=\klam\left[ \hat{p},V(\hat{q}) \right]+\frac{1}{2}\sum_\lambda m_\lambda\omega_\lambda^2\klam\left[ \hat{p},\kla\left( \hat{q}_\lambda-\frac{g_\lambda}{m_\lambda\omega_\lambda^2}\hat{q} \right)^2 \right]=\\
+&=-\i\hbar V'(\hat{q})+\sum_\lambda m_\lambda\omega_\lambda^2\kla\left( \hat{q}_\lambda-\frac{g_\lambda}{m_\lambda\omega_\lambda^2}\hat{q} \right)\frac{\i\hbar g_\lambda}{m_\lambda\omega_\lambda^2}.
+\end{align}
+Inserting the first equation, which simply reduces to $\hat{p}=m\dot{\hat{q}}$, into the second one yields
+\begin{align}
+m\ddot{\hat{q}}+V'(\hat{q})&=\sum_\lambda g_\lambda\kla\left( \hat{q}_\lambda-\frac{g_\lambda}{m_\lambda\omega_\lambda^2}\hat{q} \right). \label{eqn:quantized general langevin equation}
+\end{align}
+Similarly, considering the equations of motion for the bath we find
+\begin{align}
+\i\hbar\frac{\tecxt\text{d}\hat{q}_\lambda}{\tecxt\text{d}t}&=\klam\left[ \hat{q}_\lambda,\hat{H} \right]+\partial_t\hat{q}_\lambda = \frac{1}{2m_\lambda}\klam\left[ \hat{q}_\lambda,\hat{p}_\lambda^2 \right]=\frac{\i\hbar}{m_\lambda}\hat{p}_\lambda,\\
+\i\hbar\frac{\tecxt\text{d}\hat{p}_\lambda}{\tecxt\text{d}t}&=\klam\left[ \hat{p}_\lambda,\hat{H} \right] + \partial_t\hat{p}_\lambda = \frac{1}{2}\sum_\kappa m_\kappa\omega_\kappa^2\klam\left[ \hat{p}_\lambda,\kla\left( \hat{q}_\kappa-\frac{g_\kappa}{m_\kappa\omega_\kappa^2}\hat{q} \right)^2 \right]=\\
+&=-m_\lambda\omega_\lambda^2\kla\left( \hat{q}_\lambda-\frac{g_\lambda}{m_\lambda\omega_\lambda^2}\hat{q} \right)\i\hbar.
+\end{align}
+Inserting the first equation into the second one gives
+\begin{align}
+\ddot{\hat{q}}+\omega_\lambda^2\hat{q}&=-\frac{g_\lambda}{m_\lambda}\hat{q}.
+\end{align}
+These results are thus far identical to the classical case.
+Since we need not worry about commutation relations when solving this inhomogeneous harmonic oscillator equation, its solution will be analogous to the one found in b).
+Therefore, 
+\begin{align}
+\hat{q}_\lambda(t)&=\hat{q}_\lambda(0)\cos (\omega_\lambda t)+\frac{\hat{p}_\lambda(0)}{m_\lambda\omega_\lambda}\sin(\omega_\lambda t) + \frac{g_\lambda}{m_\lambda\omega_\lambda}\intx\int_{0}^{t}\sin\kla\left( \omega_\lambda (t-s) \right)\hat{q}(s)\, \mathrm{d}s.
+\end{align}
+Inserting this into \eqref{eqn:quantized general langevin equation} and repeating the partial integration results in
+\begin{align}
+m\ddot{\hat{q}}+V'(\hat{q})+\intx\int_{0}^{t}\Gamma(t-s)\hat{\dot{q}}(s)\, \mathrm{d}s&=\hat{F}(t),
+\end{align}
+where now the function $\Gamma$ is
+\begin{align}
+\Gamma(t)&:=\sum_\lambda\frac{g_\lambda^2}{m_\lambda\omega_\lambda^2}\cos(\omega_\lambda t)
+\end{align}
+and the operator-valued force is
+\begin{align}
+\hat{F}(t)&:=\sum_\lambda g_\lambda\kla\left( \hat{q}_\lambda(0)\cos(\omega_\lambda t) + \frac{\hat{p}_\lambda(0)}{m_\lambda\omega_\lambda}\sin(\omega_\lambda t) \right).
+\end{align}
+Computing the commutator is simple, since only the mixed terms contribute.
+This immediately leads to
+\begin{align}
+\klam\left[ \hat{F}(t),\hat{F}(s) \right]&=\sum_{\lambda,\kappa}g_\lambda g_\kappa\kla\left( \cos(\omega_\lambda t)\frac{\sin(\omega_\kappa s)}{m_\kappa\omega_\kappa}\klam\left[ \hat{q}_\lambda,\hat{p}_\kappa \right] + \frac{\sin(\omega_\lambda t)}{m_\lambda\omega_\lambda}\cos(\omega_\kappa s)\klam\left[ \hat{p}_\lambda, \hat{q}_\kappa \right] \right)=\\
+&=\sum_\lambda\frac{\i\hbar g_\lambda^2}{m_\lambda\omega_\lambda}\sin\kla\left( \omega_\lambda (s-t) \right).
+\end{align}
+The anti-commutator is significantly more cumbersome.
+Let $c_\lambda\equiv\cos(\omega_\lambda t)$, $c_\kappa\equiv\cos(\omega_\kappa s)$ , $s_\lambda\equiv\frac{1}{m_\lambda\omega_\lambda}\sin(\omega_\lambda t)$ and $s_\kappa\equiv\frac{1}{m_\kappa\omega_\kappa}\sin(\omega_\kappa s)$.
+Then we find
+\begin{align*}
+\klammer\left\{ \hat{F}(t),\hat{F}(s) \right\}&=\sum_{\lambda,\kappa}g_\lambda g_\kappa\big(c_\lambda c_\kappa\{\hat{q}_\lambda,\hat{q}_\kappa\} + s_\lambda s_\kappa\{\hat{p}_\lambda,\hat{p}_\kappa\} + c_\lambda s_\kappa\{\hat{q}_\lambda,\hat{p}_\kappa\} + s_\lambda c_\kappa\{\hat{p}_\lambda,\hat{q}_\kappa\}\big)=\\
+&=2\sum_{\lambda,\kappa}g_\lambda g_\kappa\kla\left( c_\lambda c_\kappa\hat{q}_\lambda\hat{q}_\kappa + s_\lambda s_\kappa\hat{p}_\lambda\hat{p}_\kappa + c_\lambda s_\kappa\hat{q}_\lambda\hat{p}_\kappa  + s_\lambda c_\kappa\hat{p}_\lambda\hat{q}_\kappa \right)+\\
+&\ \ \ +\sum_\lambda  \frac{\i\hbar g_\lambda^2}{m_\lambda\omega_\lambda}\sin\kla\left( \omega_\lambda (t-s) \right), \numberthis
+\end{align*}
+where we used $\{A,B\}=[A,B]+2BA$ to simplify $\{\hat{p}_\lambda,\hat{q}_\kappa\} = -\i\hbar\delta_{\lambda\kappa}+2\hat{q}_\kappa\hat{p}_\lambda$.
+The commutator expression is just a constant, therefore its expectation value is simply 
+\begin{align}
+\bra\left\langle \klam\left[ \hat{F}(t),\hat{F}(s) \right] \right\rangle &= \sum_\lambda\frac{\i\hbar g_\lambda^2}{m_\lambda\omega_\lambda}\sin\kla\left( \omega_\lambda (s-t) \right).
+\end{align}
+The same is true for the ``second'' part of the anti-commutator.
+Only the ``first'' part needs more careful consideration.
+Since it is an operator-valued expression, we can not simply integrate it the way we did in b).
+However, we may assume that we are averaging with respect to energy eigenstates of the system, i.e. $\hat{H}\Ket | \psi \rangle=E\Ket | \psi \rangle$.
+Then we can write (or can we?)
+\begin{align*}
+\bra\left\langle \klammer\left\{ \hat{F}(t),\hat{F}(s) \right\}  \right\rangle &= 2\sum_{\lambda,\kappa}g_\lambda g_\kappa\frac{1}{Z}\intr\int_{\mathbb{R}^{2N}}  c_\lambda c_\kappa q_\lambda q_\kappa \e^{-\beta H} + s_\lambda s_\kappa p_\lambda p_\kappa\e^{-\beta H} \\
+&\hspace{3cm}+ c_\lambda s_\kappa p_\kappa q_\lambda\e^{-\beta H}  + s_\lambda c_\kappa p_\lambda q_\kappa\e^{-\beta H} \, \mathrm{d}^{2N}(q,p) + \dots=\\
+&=2\sum_\lambda \frac{g_\lambda^2}{Z_\lambda}\cos(\omega_\lambda t)\cos(\omega_\lambda s)\intr\int_{\mathbb{R}^{2}} q_\lambda^2\e^{-\beta H_\lambda} \, \mathrm{d}^{2}(q_\lambda,p_\lambda)+\dots=\numberthis\\
+&=\frac{2}{\beta}\sum_\lambda\frac{g_\lambda^2}{m_\lambda\omega_\lambda^2}\cos (\omega_\lambda (t-s))+\dots\numberthis
+\end{align*}
+Since the steps are analogous to b) at this stage, we omitted them.
+The full result is given by
+\begin{align}
+\bra\left\langle \klammer\left\{ \hat{F}(t),\hat{F}(s) \right\}  \right\rangle &= 2\sum_\lambda\frac{k_\tecxt\text{B}T g_\lambda^2}{m_\lambda\omega_\lambda^2}\cos (\omega_\lambda (t-s)) + \sum_\lambda\frac{\i\hbar g_\lambda^2}{m_\lambda\omega_\lambda}\sin\kla\left( \omega_\lambda (t-s) \right).
+\end{align}
+If we add both expressions, we observe that the term proportional to $\hbar$ cancels.
+Therefore the expectation value
+\begin{align}
+\left\langle \hat{F}(t)\hat{F}(s) \right\rangle&=\frac{1}{2}\left\langle \left[\hat{F}(t), \hat{F}(s)\right] \right\rangle + \left\langle \left\{\hat{F}(t), \hat{F}(s) \right\} \right\rangle =\\
+&=  k_\tecxt\text{B}T \sum_\lambda\frac{ g_\lambda^2}{m_\lambda\omega_\lambda^2}\cos (\omega_\lambda (t-s))\equiv k_\tecxt\text{B}T\Gamma(t-s)
+\end{align}
+again confirms to the fluctuation-dissipation theorem.\\
+(Note: we cheated a lot in this calculation, and are unsure how to justify it. 
+The term proportional to $\sin(...)$ from the anti-commutator only cancels with that from the commutator, due to the way we converted expressions of the type $\{q,p\}$ to $[q,p]+\dots$.
+To be more precise, one may write $\{\hat{q}_j,\hat{p}_k\}=[\hat{q}_j,\hat{p}_k]+2\hat{p}_k\hat{q}_j=\i\hbar\delta_{jk}+2\hat{p}_k\hat{q}_j$ or equivalently $\{\hat{q}_j,\hat{p}_k\}=[\hat{p}_k,\hat{q}_j]+ 2\hat{q}_j\hat{p}_k=-\i\hbar\delta_{jk} + 2\hat{q}_j\hat{p}_k$.
+%This in of itself is not really a problem, since $\{A,B\}=AB+BA=\{B,A\}$.
+However, the remaining terms $\sim\hat{q}\hat{p}$ are then found not to contribute to the expectation value due to the asymmetric integrand, which can not be entirely correct, since the result now depends on the ``choice'' of rewriting these expressions.
+All of this boils down to the very dubious argument of why we should only consider the eigenvalues $q,p$ instead of the operators $\hat{q},\hat{p}$ in the integrals, which is mostly a result of ``we have no idea how to do it otherwise'').
+
+\newpage
+\section*{Problem 2.2: Generation of L\'evy-stable random numbers}
+The random variable $Y$ is given to exponential with mean 1, i.e. $\rho_Y(y)=\e^{-y}$ (note that $\bra\langle Y \rangle=1$).
+We are given also a uniformly distributed random variable $\Phi$ with $\phi\in\klam\left[ -\frac{\pi}{2},\frac{\pi}{2} \right]$ and $\rho_\Phi(\phi)=\frac{1}{\pi}$, as well as the transformation
+\begin{align}
+X&:=f(Y,\Phi)=\frac{\sin\alpha\Phi}{\cos^\frac{1}{\alpha}\Phi}\kla\left( \frac{\cos((1-\alpha)\Phi)}{Y} \right)^\frac{1-\alpha}{\alpha}.
+\end{align}
+%FIRST ATTEMPT -- Brute force:\\
+%We know that 
+%\begin{align}
+%X&=f(\phi,y)=\frac{\sin\alpha\phi}{\cos\kla\left( \alpha \right)^{1/\alpha}}\kla\left( \frac{\cos\kla\left( \kla\left( 1-\alpha \right)\phi \right)}{Y} \right)^\frac{1-\alpha}{\alpha}=:\kla\left( \frac{g(\phi)}{Y} \right)^\frac{1-\alpha}{\alpha},
+%\end{align}
+%where
+It will be helpful to additionally define the function
+\begin{align}
+g(\phi)&:=yf(y,\phi)^\frac{\alpha}{1-\alpha}=\cos ((1-\alpha)\phi)\sin\kla\left( \alpha\phi \right)^\frac{\alpha}{1-\alpha}\cos (\phi)^\frac{1}{\alpha-1}.
+\end{align}
+%Then the probability distribution $\rho_X(x)$ can be expressed as
+%\begin{align}
+%\rho_X(x)&=\frac{\tecxt\text{d}}{\tecxt\text{d}x}P\kla\left( X\le x \right)=\frac{\tecxt\text{d}}{\tecxt\text{d}x}P\kla\left( \frac{g(\phi)}{Y}\le x^\frac{\alpha}{1-\alpha} \right)=\frac{\tecxt\text{d}}{\tecxt\text{d}x}P\kla\left( Y\ge g(\phi)x^\frac{1-\alpha}{\alpha} \right)=\\
+%&=\frac{\tecxt\text{d}}{\tecxt\text{d}x}\intx\int_{-\pi/2}^{\pi/2}\frac{1}{\pi}\exp\kla\left( {g(\phi)x^\frac{1-\alpha}{\alpha}} \right)\, \mathrm{d}\phi .
+%\end{align}
+Using the general formula for change of distribution we have
+\begin{align}
+\rho_X(x)&=\intx\int_{0}^{\infty}\intx\int_{-\pi/2}^{\pi/2}\delta(x-f(\phi,y))\e^{-y}\frac{1}{\pi}\, \mathrm{d}\phi\, \mathrm{d}y\kom\overset{\substack{{y\,:=\,g(\phi)u^\frac{\alpha}{\alpha-1}} \\ |}}{=}\\
+&=\frac{1}{\pi}\intx\int_{-\pi/2}^{\pi/2}\intx\int_{0}^{\infty}\delta(x-u)\exp\kla\left( -u^\frac{\alpha}{\alpha-1}g(\phi) \right)\, \frac{\alpha}{|\alpha -1|}u^\frac{1}{\alpha-1}g(\phi)\mathrm{d}u\, \mathrm{d}\phi=\\
+%&=\frac{1}{\pi}\intx\int_{-\pi/2}^{\pi/2}\exp\kla\left( -x^\frac{\alpha}{\alpha-1}g(\phi) \right)\, \frac{\alpha}{|\alpha -1|}x^\frac{1}{\alpha-1}g(\phi)\, \mathrm{d}\phi=\\
+&=\frac{\alpha}{|\alpha -1|}\frac{1}{\pi x}\intx\int_{-\pi/2}^{\pi/2}h(x,\phi)\e^{-h(x,\phi)}\, \mathrm{d}\phi, \label{eqn:rho x as integral}
+\end{align}
+where $h(x,\phi):=x^\frac{\alpha}{\alpha-1}g(\phi)$.
+%Then
+%\begin{align}
+%\intx\int_{ }^{ }\rho_X(x)\, \mathrm{d}x&=\frac{1}{\pi}\intx\int_{-\pi/2}^{\pi/2}\exp\kla\left( -x^\frac{\alpha}{\alpha-1}g(\phi) \right)\, \mathrm{d}\phi
+%\end{align}
+%The characteristic function is then found to be
+%\begin{align}
+%\bra\langle \e^{\i kX} \rangle&=\intx\int_{0}^{\infty}\e^{\i kx}\rho_X(x)\, \mathrm{d}x=\frac{1}{\pi}\intx\int_{0}^{\infty}\intx\int_{-\pi/2}^{\pi/2}\e^{\i kx}\frac{\tecxt\text{d}}{\tecxt\text{d}x}\exp\kla\left( g(\phi)x^\frac{1-\alpha}{\alpha} \right)\, \mathrm{d}\phi\, \mathrm{d}x=\\
+%&=\frac{1}{\pi}\intx\int_{-\pi/2}^{\pi/2}\e^{\i kx}\exp\kla\left( g(\phi)x^\frac{1-\alpha}{\alpha} \right)\bigg\vert_0^\infty - \i k\intx\int_{0}^{\infty}\e^{\i kx}\exp\kla\left( g(\phi)x^\frac{1-\alpha}{\alpha} \right)\, \mathrm{d}y\, \mathrm{d}\phi=\\
+%\end{align}
+
+The catch is, that the authors of \cite{numerical levy stable distributions} claim to have obtained an (almost) identical integral representation of the probability distribution by explicitly evaluating the inverse Fourier transform
+\begin{align}
+\rho_X(x)&=\frac{1}{2\pi}\intx\int_{\mathbb{R}} \e^{-\i kx}\e^{-|k|^\alpha}\, \mathrm{d}k=\overset{??}{\dots}=\frac{\alpha}{|\alpha -1|}\frac{1}{\pi x}\intx\int_{0}^{\pi/2}h(x,\phi)\e^{-h(x,\phi)}\, \mathrm{d}\phi. \label{eqn:rho x as ifft}
+\end{align}
+The result given in \cite{numerical levy stable distributions} is much more general (non-zero skewness $\beta$ etc.), but for our special case, this is their result.
+We now face two, rather obvious problems.
+First of all, note the different bounds of integration in \eqref{eqn:rho x as ifft} compared to \eqref{eqn:rho x as integral}.
+Since the symmetry of $h(x,-\phi)=(-1)^\frac{\alpha}{1-\alpha}h(x,\phi)$ is certainly not trivial, it is difficult to see, how one should possibly reduce the realm of integration. 
+The second, much more severe difficulty is, that the authors do not give ``too'' specific details on how they obtained their magical formula. 
+Only that they supposedly ``deformed along the contour with zero phase''.
+It is at this point, that we give up and turn to the numerical simulation using the formula, to at least demonstrate its functionality using the famous ``numerical proof'' :).
+\\
+%Figure \ref{figure:distributions for alpha} shows the distribution $\rho_X(|x|)$ for different values of $\alpha$ on a logarithmic scale.
+%\begin{figure}[ht!]
+%\centering
+%\includegraphics[width=\linewidth]{levy_stable_distribution.png}
+%\caption{L\'evy-stable distributions for different $\alpha$ on a logarithmic scale.}
+%\label{figure:distributions for alpha}
+%\end{figure}\\
+%Figure \ref{figure:levy flights} shows L\'evy flights for different values of $\alpha$.
+%\begin{figure}[ht!]
+%\centering
+%\includegraphics[width=\linewidth]{levy_flights_large_alpha.png}
+%\caption{L\'evy-flight for different $\alpha$.}
+%\label{figure:levy flights}
+%\end{figure}
+
+\begin{thebibliography}{9}
+\bibitem{numerical levy stable distributions} S.Ament, M. O'Neil: Accurate and efficient numerical calculation of stable
+densities via optimized quadrature and asymptotics, \url{https://arxiv.org/pdf/1607.04247.pdf}, 31.\,August~2021.
+\end{thebibliography}
+
+\end{document}

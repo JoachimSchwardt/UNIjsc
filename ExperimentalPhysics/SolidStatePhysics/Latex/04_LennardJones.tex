@@ -1,0 +1,51 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{04 Lennard-Jones-Potential}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Task 4.1: Binding energies of a neon-crystal}
+\subsection*{a)}Let $U(r)=4\epsilon\klam\left[ {\kla\left( {\frac{\sigma}{r}} \right)^{12}-\kla\left( {\frac{\sigma}{r}} \right)^6} \right]$. 
+\begin{align*}
+0&\overset{!}{=}U'(r)\propto \frac{12}{r}\kla\left( {\frac{\sigma}{r}} \right)^{12}-\frac{6}{r}\kla\left( {\frac{\sigma}{r}} \right)^6&\Rightarrow &&\frac{\sigma}{r}&=\frac{1}{\sqrt[6]{2}}
+\end{align*}
+Therefor the equilibrium distance is $r_0=\sigma\sqrt[6]{2}$ and we get $U(r_0)=-\epsilon$.
+\subsection*{b)}The full potential is $u(r):=\frac{U(r)}{N/2}=4\epsilon\klam\left[ {A_{12}\kla\left( {\frac{\sigma}{r}} \right)^{12}-A_6\kla\left( {\frac{\sigma}{r}} \right)^6} \right]$. The new equilibrium distance then becomes $r_0=\sigma\sqrt[6]{\frac{2A_{12}}{A_6}}$. 
+\begin{align*}
+\frac{u^\tecxt\text{bcc}}{\epsilon}&=4\klam\left[ {A_{12}^\tecxt\text{bcc}\kla\left( {\frac{\sigma}{r_0}} \right)^{12}-A_6^\tecxt\text{bcc}\kla\left( {\frac{\sigma}{r_0}} \right)^6} \right]=-\frac{(A_6^\tecxt\text{bcc})^2}{A_{12}^\tecxt\text{bcc}}=-16.473\\
+\frac{u^\tecxt\text{hcp}}{\epsilon}&=4\klam\left[ {A_{12}^\tecxt\text{bcc}\kla\left( {\frac{\sigma}{r_0}} \right)^{12}-A_6^\tecxt\text{bcc}\kla\left( {\frac{\sigma}{r_0}} \right)^6} \right]=-\frac{(A_6^\tecxt\text{hcp})^2}{A_{12}^\tecxt\text{hcp}}=-17.222\\
+\frac{u^\tecxt\text{fcc}}{\epsilon}&=4\klam\left[ {A_{12}^\tecxt\text{bcc}\kla\left( {\frac{\sigma}{r_0}} \right)^{12}-A_6^\tecxt\text{bcc}\kla\left( {\frac{\sigma}{r_0}} \right)^6} \right]=-\frac{(A_6^\tecxt\text{fcc})^2}{A_{12}^\tecxt\text{fcc}}=-17.220
+\end{align*} 
+%\begin{align*}
+%A_k^\tecxt\text{fcc}&=\sum_{(x,y,z)\in\mathbb{Z}^3\setminus\{0\}}\frac{1}{\sqrt{x^2+y^2+z^2}^k}=\sum_{j\ge 1}\frac{1}{\sqrt{j}^k}\sum_{x^2+y^2+z^2=j}=\sum_{j\ge 1}\frac{4j^2+2}{j^{k/2}}
+%\end{align*}
+%\begin{align*}
+%I&=\intx\int_{-a}^{b}\tanh(x+a)\,\mathrm{d}x-\intx\int_{a}^{b}\tanh(x-a)\,\mathrm{d}x=\\
+%&=\log\frac{\cosh(a+b)}{\cosh(a-a)}-\log\frac{\cosh(a-b)}{\cosh(a-a)}=\log\frac{\cosh(a+b)}{\cosh(a-b)}=\\
+%&=\log\frac{e^{a}+e^{-a-2b}}{e^{a-2b}+e^{-a}}\rightarrow\log\frac{e^a}{e^{-a}}=2a
+%\end{align*}
+
+\end{document}

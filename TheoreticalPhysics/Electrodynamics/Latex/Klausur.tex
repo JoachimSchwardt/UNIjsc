@@ -1,0 +1,220 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\begin{document}
+
+\title{Klausur Elektrodynamik 2019/2020}
+\author{Joachim Schwardt}
+\date{21.02.2020}
+\maketitle
+
+\section{Maxwell-Gleichungen in Materie (14 Punkte)}
+Gegeben ist ein Medium mit isotroper und konstanter elektrischer und magnetischer Suszeptibilität $\chi_e$ bzw. $\chi_m$.\\
+a) Wie lauten die Maxwell-Gleichungen in Materie unter Anwesenheit externer Ladungs- und Stromdichten? \\
+b) Geben sie die Einheiten der unter a) auftretenden Felder in m, s, A und V an.\\
+c) Wie lauten hier die Materialgleichungen? \\
+d) Leiten sie für den ladungs- und stromdichtefreien Fall eine Wellengleichungen für das $D$-Feld her! Geben sie Phasengeschwindigkeit und Brechungsindex an.
+\subsection*{Lösungsvorschlag}
+a) \begin{align*}
+\nabla\cdot \vv{D}&=\varrho_{ext} \label{M1}\tag{M1}\\
+\nabla\cdot \vv{B}&=0 \label{M2}\tag{M2}\\
+\nabla\times\vv{E}+\partial_t \vv{B}&=0 \label{M3}\tag{M3}\\
+\nabla\times\vv{H}-\partial_t \vv{D}&=\vv{j}_{ext}\label{M4}\tag{M4}
+\end{align*}
+b) $$\left[\vv{D}\right]=\frac{As}{m^2}\ ,\ \ \left[\vv{B}\right]=\frac{Vs}{m^2}\ ,\ \ \left[\vv{E}\right]=\frac{V}{m}\ ,\ \ \left[\vv{H}\right]=\frac{A}{m}$$
+c) \begin{align*}
+\vv{D}&=\epsilon_0\vv{E}+\vv{P}=\epsilon_0\vv{E}+\epsilon_0\chi_e\vv{E}\overset{\substack{\epsilon_r=\chi_e +1\\|}}{=}\epsilon_0\epsilon_r\vv{E}=:\epsilon\vv{E} \\
+\vv{B}&=\mu_0(\vv{H}+\vv{M})=\mu_0(\vv{H}+\chi_m\vv{H})\overset{\substack{\mu_r=\chi_m +1\\|}}{=}\mu_0\mu_r\vv{H}=:\mu\vv{H}
+\end{align*}
+d) Betrachte $\nabla\times \epsilon(\ref{M3})$:
+\begin{align*}
+0&=\nabla\times(\nabla\times\vv{D})+\epsilon\mu\partial_t(\nabla\times\vv{H})\overset{(\ref{M4})}{=}\nabla(\underbrace{\nabla\cdot\vv{D}}_{=0\ (\ref{M1})})-\nabla^2\vv{D}+\epsilon\mu\partial_t^2\vv{D}\\
+&\Rightarrow\ \ \left(\nabla^2-\frac{\epsilon_r\mu_r}{c^2}\partial_t^2\right)\vv{D}=0\ \ \ \ \textrm{mit }\ \ \epsilon_0\mu_0=\frac{1}{c^2}
+\end{align*}
+Die Phasengeschwindigkeit lautet also $v_{p}=\frac{c}{\sqrt{\epsilon_r\mu_r}}$ und der Brechungsindex $n=\sqrt{\epsilon_r\mu_r}$.
+\section{Multipolmomente (10 Punkte)}
+Gegeben sei eine unendlich dünne Kreisscheibe mit Radius $R$ und Ladung $Q$ in der $xy$-Ebene mit Mittelpunkt im Ursprung, sowie ein unendlich dünner Stab der Länge $L$ und der Ladung $-Q$ der entlang der z-Achse von $-L/2$ bis $L/2$ liege. Die Ladungsverteilungen seien jeweils homogen.\\
+a) Geben sie die Ladungsdichte, das Monopolmoment und das Dipolmoment dieser Anordnung an!\\
+b) Berechnen sie das Quadrupolmoment bezüglich des Ursprungs!
+\subsection*{Lösungsvorschlag}
+a) Bezeichne $r_\bot$ den Abstand von der z-Achse, also $r_\bot^2=x^2+y^2$:
+ $$\varrho(\vv{r})=\frac{Q}{\pi R^2}\delta(z)\Theta(R-r_\bot)+\frac{-Q}{L}\delta(x)\delta(y)\Theta\left(\frac{L}{2}-z\right)\Theta\left(\frac{L}{2}+z\right)$$
+ Betrachte für die Berechnung der Multipolmomente zunächst einen homogen geladenen Zylinder mit Radius $R$ und Länge $L$:
+ $$\varrho(\vv{r})=\frac{Q}{\pi R^2L}\Theta(R-r_\bot)\Theta\left(\frac{L}{2}-z\right)\Theta\left(\frac{L}{2}+z\right)$$
+ Monopolmoment:
+$$ q=\int_{\mathbb{R}^3}\varrho(\vv{r})\,\textrm{d}V=\frac{Q}{\pi R^2L}\int_{-L/2}^{L/2}\int_0^{R}\int_0^{2\pi}r_\bot\textrm{d}\varphi\,\textrm{d}r_\bot\textrm{d}z=\frac{Q}{\pi R^2L}\cdot 2\pi\cdot\frac{R^2}{2}\cdot L=Q $$
+Dipolmoment:
+\begin{align*}\vv{p}&=\int_{\mathbb{R}^3}\vv{r}\varrho(\vv{r})\,\textrm{d}V=\frac{Q}{\pi R^2L}\int_{-L/2}^{L/2}\int_0^{R}\int_0^{2\pi}(\underbrace{r_\bot\vv{e}_{r_\bot}}_{\overset{(1)}{\longrightarrow}\ 0}+\underbrace{z\vv{e_z}}_{\overset{(2)}{\longrightarrow}\ 0})r_\bot\,\textrm{d}\varphi\,\textrm{d}r_\bot\textrm{d}z=0\\
+&(1):\int_0^{2\pi}\vv{e}_{r_\bot}\,\textrm{d}\varphi=\int_0^{2\pi}\begin{pmatrix}
+\cos\varphi\\ \sin\varphi\\ 0
+\end{pmatrix}\textrm{d}\varphi=0\\
+&(2):\int_{-a}^{a}z\,\textrm{d}z=0 \ \ \ (\textrm{Punktsymmetrie})
+\end{align*}
+Quadrupolmoment:
+$$D_{ij}=\int_{\mathbb{R}^3}\varrho(\vv{r})(3x_ix_j-\delta_{ij}\vv{r}^2)\,\textrm{d}V$$
+Aus der Definition des Quadrupoltensors folgt bereits, dass $\textrm{tr }D=0$ gilt:
+$$\textrm{tr }D=\sum_{i=1}^3D_{ii}=\int_{\mathbb{R}^3}\varrho(\vv{r})\left[(3x^2-\vv{r}^2)+(3y^2-\vv{r}^2)+(3z^2-\vv{r}^2)\right]\,\textrm{d}V\overset{\substack{\vv{r}^2=x^2+y^2+z^2\\|}}{=}0 $$
+Durch die Rotationssymmetrie um die z-Achse eines Zylinders wissen wir, dass $D_{11}=D_{22}$. Da zudem $D_{11}+D_{22}+D_{33}=0$, gilt auch:
+\begin{align*}
+D_{11}=-\frac{1}{2}D_{33} \label{d11 aus d33}\tag{1}
+\end{align*} 
+Betrachte zunächst $D_{ij}$ für $i\neq j$:
+\begin{align*}
+D_{12}&=\frac{Q}{\pi R^2L}\int_{-L/2}^{L/2}\int_0^{R}\int_0^{2\pi}(3r_\bot\cos\varphi\cdot r_\bot\sin\varphi)r_\bot\,\textrm{d}\varphi\,\textrm{d}r_\bot\textrm{d}z\overset{(2)}{=}0\\
+D_{13}&=\frac{Q}{\pi R^2L}\int_{-L/2}^{L/2}\int_0^{R}\int_0^{2\pi}(3r_\bot\underbrace{\cos\varphi}_{\longrightarrow\ 0}\cdot z)r_\bot\,\textrm{d}\varphi\,\textrm{d}r_\bot\textrm{d}z=0 \\
+D_{23}&= \frac{Q}{\pi R^2L}\int_{-L/2}^{L/2}\int_0^{R}\int_0^{2\pi}(3r_\bot\underbrace{\sin\varphi}_{\longrightarrow\ 0}\cdot z)r_\bot\,\textrm{d}\varphi\,\textrm{d}r_\bot\textrm{d}z=0\\
+&(2):\int_0^{2\pi}\cos\varphi\sin\varphi\,\textrm{d}\varphi=\frac{1}{2}\int_0^{2\pi}\sin 2\varphi\, \textrm{d}\varphi=0
+\end{align*}
+Aus der Symmetrie von $D$ folgt dann aus $D_{ij}=D_{ji}$ auch $$D_{21}=0\ ,\ \ \ D_{31}=0\ ,\ \ \ D_{32}=0$$
+Es bleibt noch die Berechnung von $D_{33}$:
+\begin{align*}
+D_{33}&=\frac{Q}{\pi R^2L}\int_{-L/2}^{L/2}\int_0^{R}\int_0^{2\pi}(2z^2-r_\bot^2)r_\bot\,\textrm{d}\varphi\,\textrm{d}r_\bot\textrm{d}z=\\
+&=\frac{Q}{\pi R^2L}\cdot 2\pi\left[2\cdot\frac{2}{3}\left(\frac{L}{2}\right)^3\cdot\frac{R^2}{2}-\frac{R^4}{4}\cdot L\right]=\frac{QL^2}{6}-\frac{QR^2}{2} \label{d33}\tag{3}
+\end{align*} 
+Mit (\ref{d11 aus d33}) folgt dann schließlich:
+$$D=\frac{Q}{12}\begin{pmatrix}3R^2-L^2&0&0\\ 0 & 3R^2-L^2 & 0 \\ 0 & 0 & 2L^2-6R^2\end{pmatrix}$$
+Für die Aufgabe betrachten wir nun einfach die Superposition dieser Ergebnisse für einen Zylinder mit Ladung $Q$, Länge $L=0$ und einen mit Ladung $-Q$, Radius $R=0$:
+\begin{align*}
+q&=Q+(-Q)=0\\
+\vv{p}&=0+0=0\\
+D&=\frac{Q}{12}\begin{pmatrix}3R^2&0&0\\ 0 & 3R^2 & 0 \\ 0 & 0 & -6R^2\end{pmatrix}+\frac{-Q}{12}\begin{pmatrix}-L^2&0&0\\ 0 & -L^2 & 0 \\ 0 & 0 & 2L^2\end{pmatrix}=\frac{Q(3R^2+L^2)}{12}\begin{pmatrix}1&0&0\\ 0 & 1 & 0 \\ 0 & 0 & -2\end{pmatrix}
+\end{align*} 
+\section{Eichtransformationen (12 Punkte)}
+Gegeben sei folgendes Viererpotential: 
+$$\phi=-t(\vv{a}\cdot\vv{r})\ \ \ \ \textrm{und }\ \ \ \ \vv{A}=-\frac{\vv{a}r^2}{4c}\ \ \ \ (c,\ \vv{a}\  \textrm{const.})$$
+a) Berechnen sie damit das $E$-und $B$-Feld!\\
+b) Eichen sie die Potentiale so um, dass das Vektorpotential der $\mathsf{Coulomb}$-Eichung entspricht! (\textsl{Hinweis: Sie dürfen den Ansatz $\chi_c=(\vv{a}\cdot\vv{r})f(r)$ verwenden}.)
+\subsection*{Lösungsvorschlag}
+a) Aus der Vorlesung ist folgender Zusammenhang bekannt: 
+\begin{align*}
+\vv{E}&=-\nabla\phi-\underbrace{\partial_t \vv{A}}_{=0}=t\vv{a}\\
+\vv{B}&=\nabla\times\vv{A}=-\frac{1}{4c}\nabla r^2\times \vv{a}=\frac{\vv{r}\times\vv{a}}{2c}
+\end{align*}
+b) Die allgemeine Eichtransformation lautet:
+$$\vv{A}'=\vv{A}+\nabla\chi\ ,\ \ \ \phi '=\phi -\partial_t \chi$$
+Für die $\mathsf{Coulomb}$-Eichung muss $\nabla\vv{A}'=0$ gelten:
+\begin{align*}
+0&=\nabla\vv{A}'=\nabla\vv{A}+\nabla^2\chi_c\ \ \Rightarrow\ \ \nabla^2\chi_c\overset{!}{=}\frac{(\vv{a}\cdot\vv{r})}{2c}
+\end{align*}
+Mit dem gegeben Ansatz erhält man dann:
+\begin{align*}
+\nabla^2\chi_c&=\nabla\left(\nabla (\vv{a}\cdot\vv{r})f(r)\right)=\nabla\left(\vv{a}f+(\vv{a}\cdot\vv{r})\vv{e_r}f'\right)\overset{\substack{\nabla\vv{e_r}=\frac{2}{r}\\|}}{=}\\
+&=2\vv{a}\cdot\vv{e_r}f'+(\vv{a}\cdot\vv{r})f'\cdot\frac{2}{r}+(\vv{a}\cdot\vv{r})f''=(\vv{a}\cdot\vv{r})\left(\frac{4}{r}f'+f''\right)\overset{!}{=}\frac{(\vv{a}\cdot\vv{r})}{2c}\\
+&\Rightarrow\ \ \frac{4}{r}f'(r)+f''(r)=\frac{1}{2c} \ \ \Rightarrow\ \ \textrm{Ansatz: }f(r)=br^k\ \ \ \ (b,\, k\in\mathbb{R})\\
+&\Rightarrow\ \ \frac{1}{2c}=4bkr^{k-2}+bk(k-1)r^{k-2}\ \ \Rightarrow\ \ \ k=2\\
+&\Rightarrow\ \ 8b+2b=\frac{1}{2c}\ \ \Rightarrow\ \ b=\frac{1}{20c}\\
+&\Rightarrow\ \ \chi_c=\frac{(\vv{a}\cdot\vv{r})r^2}{20c}
+\end{align*}
+Die neuen Potentiale lauten somit:
+$$\phi'=\phi-\underbrace{\partial_t\chi_c}_{=0}=-t(\vv{a}\cdot\vv{r})\ \ \ \textrm{und } \ \ \ \vv{A}'=\vv{A}+\nabla\chi_c=-\frac{\vv{a}r^2}{5c}+\frac{\vv{r}(\vv{a}\cdot\vv{r})}{10c}$$
+\section{Lorentz-Eichung (12 Punkte)}
+Zeigen Sie unter Verwendung der Ladungserhaltung, dass die retardierten Potentiale die $\mathsf{Lorentz}$-Eichung erfüllen!
+\subsection*{Lösungsvorschlag}
+Es gilt die Kontinuitätsgleichung, also $\nabla\vv{j}+\partial_t\varrho=0$. Zu zeigen ist: $\nabla\vv{A}+\frac{1}{c^2}\partial_t\phi=0$. Betrachte dazu die aus der Vorlesung bekannte Darstellung für die retardierten Potentiale und beachte $\frac{1}{\epsilon_0 c^2}=\mu_0$. Der $\nabla$-Operator wirke in dieser Notation immer auf die mit einem Pfeil markierte Größe:
+\begin{align*}
+\nabla\vv{A}+\frac{1}{c^2}\partial_t\phi&=\frac{\mu_0}{4\pi}\int_{\mathbb{R}^3}\nabla\cdot\frac{\vv{j}(\vv{r}',t-\frac{1}{c}|\overset{\downarrow}{\vv{r}}-\vv{r}'|)}{|\overset{\downarrow}{\vv{r}}-\vv{r}'|}+\partial_t\frac{\varrho(\vv{r}',t-\frac{1}{c}|\vv{r}-\vv{r}'|)}{|\vv{r}-\vv{r}'|}\,\textrm{d}V'\overset{(1)}{=}\\
+&=\frac{\mu_0}{4\pi}\int_{\mathbb{R}^3}\vv{j}\cdot\underbrace{\nabla\frac{1}{|\overset{\downarrow}{\vv{r}}-\vv{r'}|}}_{=-\nabla'\, 1/|\vv{r}-\overset{\downarrow}{\vv{r}'}|}+\frac{1}{|\vv{r}-\vv{r}'|}\underbrace{\nabla\cdot\vv{j}(\vv{r}',t-\frac{1}{c}|\overset{\downarrow}{\vv{r}}-\vv{r}'|)}_{=-\nabla'\cdot\vv{j}(\vv{r}', t-\frac{1}{c}|\vv{r}-\overset{\downarrow}{\vv{r}'}|)}-\\
+&\ \ \ \ \ \ \ \ \ \ \ \ \ \ -\frac{1}{|\vv{r}-\vv{r}'|}\nabla'\cdot\vv{j}(\overset{\downarrow}{\vv{r}'},t-\frac{1}{c}|\vv{r}-\vv{r}'|)\,\textrm{d}V'= \\
+&=-\frac{\mu_0}{4\pi}\int_{\mathbb{R}^3}\vv{j}\cdot\nabla'\frac{1}{|\vv{r}-\overset{\downarrow}{\vv{r}'}|}+\frac{1}{|\vv{r}-\vv{r}'|}\nabla'\cdot\vv{j}(\overset{\downarrow}{\vv{r}'},t-\frac{1}{c}|\vv{r}-\overset{\downarrow}{\vv{r}'}|)\,\textrm{d}V'= \\
+&=-\frac{\mu_0}{4\pi}\int_{\mathbb{R}^3}\nabla'\cdot\frac{\vv{j}(\overset{\downarrow}{\vv{r}'},t-\frac{1}{c}|\vv{r}-\overset{\downarrow}{\vv{r}'}|)}{|\vv{r}-\overset{\downarrow}{\vv{r}'}|}\,\textrm{d}V'\overset{\textrm{Gauss}}{=}\\
+&=-\frac{\mu_0}{4\pi}\oint_{\partial{\mathbb{R}^3}}\frac{\vv{j}(\vv{r}',t-\frac{1}{c}|\vv{r}-\vv{r}'|)}{|\vv{r}-\vv{r}'|}\cdot\textrm{d}\vv{F}\overset{\vv{j} \textrm{ lokalisiert}}{\longrightarrow}\ 0 \\
+&(1):\partial_t\varrho(\vv{r}', t-\frac{1}{c}|\vv{r}-\vv{r}'|)\overset{\textrm{Kont.-Gl.}}{=}-\nabla'\cdot\vv{j}(\overset{\downarrow}{\vv{r}'}, t-\frac{1}{c}|\vv{r}-\vv{r}'|)
+\end{align*}
+Alternative: Fouriertransformation.\\
+Aus der Vorlesung ist bekannt, dass sich die retardierten Potentiale aus einer inhomogenen Wellengleichung ergeben. Bezeichne zudem $\hat{f}=\mathcal{F}(f)$ die Fouriertransformierte von $f$:
+\begin{align*}
+\Box \phi(\vv{r},t)&=-\frac{1}{\epsilon_0}\varrho(\vv{r},t) &\Rightarrow &\ \ \ &(-k^2+\frac{\omega^2}{c^2})\hat{\phi}(\vv{k},\omega)&=-\frac{1}{\epsilon_0}\hat{\varrho}(\vv{k},\omega) \label{phi hat}\tag{1a}\\
+\Box \vv{A}(\vv{r},t)&=-\mu_0\vv{j}(\vv{r},t)&\Rightarrow &\ \ \ &(-k^2+\frac{\omega^2}{c^2})\hat{\vv{A}}(\vv{k},\omega)&=-\mu_0\hat{\vv{j}}(\vv{k},\omega) \label{A hat}\tag{1b}
+\end{align*}
+Setze nun $\hat{G}(\vv{k},\omega):=\frac{c^2}{\omega^2-c^2k^2}$ und betrachte die Fouriertransformation der $\mathsf{Lorentz}$-Eichung:
+\begin{align*}
+\nabla\vv{A}+\frac{1}{c^2}\partial_t\phi&=\mathcal{F}^{-1}\left(\mathcal{F}\left(\nabla\vv{A}(\vv{r},t)+\frac{1}{c^2}\partial_t\phi(\vv{r},t)\right)\right)=\mathcal{F}^{-1}\left(i\vv{k}\cdot\hat{\vv{A}}+\frac{i\omega}{c^2}\hat{\phi}\right)\overset{(\ref{phi hat}),\ (\ref{A hat})}{=} \\
+&=-\mathcal{F}^{-1}\left(i\vv{k}\cdot \hat{G}\,\mu_0\hat{\vv{j}}+i\omega\hat{G}\,\frac{1}{\epsilon_0 c^2}\hat{\varrho}\right)=-\mu_0\mathcal{F}^{-1}\left(\hat{G}\,(i\vv{k}\cdot\hat{\vv{j}+i\omega\hat\varrho})\right)=\\
+&=-\mu_0\mathcal{F}^{-1}\left(\hat{G}\, \mathcal{F}(\underbrace{\nabla\cdot\vv{j}+\partial_t\varrho}_{=0})\right)=0
+\end{align*}
+\section{Fernfeld einer punktförmigen Stromdichte (12 Punkte)}
+Gegeben sei eine punktförmige Stromdichte $\vv{j}(\vv{r})=\vv{a}\delta (\vv{r})\sin\omega t$ ($\vv{a},\,\omega\ \textrm{const.}$ und $\omega >0$). \\
+a) Bestimmen sie aus dem retardierten Vektorpotential das $B$-Feld, insbesondere in Fernfeldnäherung! \\
+b) Bestimmen Sie aus einer geeigneten Maxwell-Gleichung das $E$-Feld in Fernfeldnäherung und geben sie die Energiestromdichte in Abhängigkeit von $\vartheta=\sphericalangle (\vv{a},\,\vv{r}) $ an!
+\subsection*{Lösungsvorschlag}
+a) Für das Vektorpotential gilt folgender aus der Vorlesung bekannter Zusammenhang: 
+\begin{align*}
+\vv{A}&=\frac{\mu_0}{4\pi}\int_{\mathbb{R}^3}\frac{\vv{j}(\vv{r}', t-\frac{1}{c}|\vv{r}-\vv{r}'|)}{|\vv{r}-\vv{r}'|}\,\textrm{d}V'=\frac{\mu_0\vv{a}}{4\pi}\int_{\mathbb{R}^3}\frac{\delta (\vv{r}')\sin\omega (t-\frac{1}{c}|\vv{r}-\vv{r}'|)}{|\vv{r}-\vv{r}'|}\,\textrm{d}V'=\\
+&=\frac{\mu_0\vv{a}}{4\pi r}\sin\omega (t-\frac{r}{c})=:\frac{\mu_0\vv{a}}{4\pi r}\sin\omega (t_r) \label{A aus j}\tag{1}
+\end{align*} 
+Für das $B$-Feld folgt dann:
+\begin{align*}
+\vv{B}&=\nabla\times\vv{A}=-\frac{\mu_0\vv{a}}{4\pi}\times\nabla\frac{\sin\omega t_r}{r}\overset{(2)}{=}\frac{\mu_0\vv{a}\times\vv{r}}{4\pi r^3}\Big[\sin\omega t_r+\underbrace{(\frac{\omega r}{c})\cos\omega t_r}_{\equiv\ \textrm{Fernfeld }\sim \frac{1}{r}}\Big]\\
+&(2):\nabla\frac{\sin\omega t_r}{r}=-\frac{\sin\omega t_r}{r^3}\vv{r}-\frac{\omega\cos\omega t_r}{cr^2}\vv{r}
+\end{align*}
+b) Fernfeldnäherung:
+\begin{align*}
+\vv{B}&\simeq \frac{\mu_0\omega\vv{a}\times\vv{r}}{4\pi cr^2}\cos\omega t_r\ \ \ \overset{(\textrm{M}4)}{\Rightarrow}\ \ \vv{E}= c^2\int\nabla\times\vv{B}\,\textrm{d}t\simeq\frac{\mu_0c}{4\pi}\nabla\times\frac{\sin\omega t_r}{r^2}\vv{a}\times\vv{r}=\\
+&=\frac{\mu_0c}{4\pi}\left[\frac{\sin\omega t_r}{r^2}\nabla\times(\vv{a}\times\vv{r})+\nabla\frac{\sin\omega t_r}{r^2}\times(\vv{a}\times\vv{r})\right]\overset{(2)}{=}\\
+&=\frac{\mu_0c}{4\pi}\Big[2\vv{a}\frac{\sin\omega t_r}{r^2}-\left(2\frac{\sin\omega t_r}{r^4}+\frac{\omega\cos\omega t_r}{cr^3}\right)\underbrace{\vv{r}\times (\vv{a}\times\vv{r}}_{=\vv{a}r^2-\vv{r}(\vv{a}\cdot\vv{r})})\Big]=\\
+&=\frac{\mu_0c}{4\pi r^2}\Big[2\sin\omega t_r\ \vv{e_r}(\vv{a}\cdot\vv{e_r})+\underbrace{(\frac{\omega r}{c})\cos\omega t_r (\vv{e_r}(\vv{a}\cdot\vv{e_r})-\vv{a})}_{\equiv\ \textrm{Fernfeld }\sim\frac{1}{r}}\Big]\simeq\\
+&\simeq\frac{\mu_0\omega}{4\pi r}\cos\omega t_r\ \vv{e_r}\times(\vv{e_r}\times\vv{a})=c\vv{B}\times\vv{e_r}\\
+&\Rightarrow\ \ \vv{S}=\frac{1}{\mu_0}\vv{E}\times\vv{B}=\frac{c}{\mu_0}\vv{e_r}\vv{B}^2=\frac{c}{\mu_0}\left(\frac{\mu_0\omega\cos\omega t_r}{4\pi cr}\right)^2|\vv{a}\times\vv{e_r}|^2\vv{e_r}=\frac{\mu_0a^2\omega^2\cos^2\omega t_r}{16\pi^2cr^2}\sin^2\vartheta\ \vv{e_r}
+\end{align*}
+\section{Lorentz-Transformation (12 Punkte)}
+Für das folgende Viererpotential im Inertialsystem $\Sigma$ gelte $\omega =ck$:
+$$\phi=0\ ,\ \ \ \ \vv{A}=\vv{e_x}\frac{E_0}{ikc}e^{i(kz-\omega t)}\ \ \ \ \ (k,\,\omega,\, c,\, E_0\ \textrm{const.})$$
+a) Berechnen Sie das $E$-und $B$-Feld!\\
+b) Bestimmen Sie $\phi'$ und $\vv{A}'$ in einem mit der Geschwindigkeit $\vv{v}=v\vv{e_x}$ bewegten Inertialsystem $\Sigma'$! Das Viererpotential kann wieder als ebene Wellen betrachtet werden. Geben Sie $\omega$ und $\vv{k}'$ an! Welche Dispersionsrelation erfüllen $\omega$ und $\vv{k}'$?
+\subsection*{Lösungsvorschlag}
+a) Aus der Vorlesung sind folgende Zusammenhänge zwischen den Feldern bekannt:
+\begin{align*}
+\vv{E}&=-\nabla\phi-\partial_t\vv{A}=\vv{e_x}\frac{i\omega E_0}{ikc}e^{i(kz-\omega t)}=\vv{e_x}E_0e^{i(kz-\omega t)}\\
+\vv{B}&=\nabla\times\vv{A}=\frac{ikE_0}{ikc}\vv{e_z}e^{i(kz-\omega t)}\times\vv{e_x}=\frac{E_0}{c}e^{i(kz-\omega t)}\vv{e_y}=\frac{1}{c}\vv{e_z}\times\vv{E}
+\end{align*}
+b) Lorentz-Transformation des Vektorpotentials:
+\begin{align*}
+A'^\mu&=L^\mu_{\ \nu}(-\beta)A^\nu=\begin{pmatrix}
+\gamma & -\beta\gamma &0&0\\
+-\beta\gamma &\gamma &0&0\\
+0&0&1&0\\
+0&0&0&1
+\end{pmatrix}\begin{pmatrix}
+0\\ A_x\\0\\0
+\end{pmatrix}=\begin{pmatrix}
+-\beta\gamma A_x\\\gamma A_x\\0\\0
+\end{pmatrix}\overset{!}{=}\begin{pmatrix}
+\phi'/c\\A'_x\\A'_y\\A'_z
+\end{pmatrix}\\
+&\Rightarrow\ \ A'_{y,\, z}=0\ ,\ \ \ A'_x=\gamma A_x\ ,\ \ \ \phi'=-v\gamma A_x
+\end{align*}
+Nun soll $A'^\mu$ noch in den Koordinaten $x'^\mu$ von $\Sigma'$ ausgedrückt werden:
+\begin{align*}
+x^\mu&=L^\mu_{\ \nu}(+\beta)x'^\nu=\begin{pmatrix}
+\gamma & \beta\gamma &0&0\\
+\beta\gamma &\gamma &0&0\\
+0&0&1&0\\
+0&0&0&1
+\end{pmatrix}\begin{pmatrix}
+ct'\\ x'\\y'\\z'
+\end{pmatrix}=\begin{pmatrix}
+\gamma (ct'+\beta x')\\\gamma (vt'+x')\\y'\\z'
+\end{pmatrix}\overset{!}{=}\begin{pmatrix}
+ct\\x\\y\\z
+\end{pmatrix}\\
+&\Rightarrow\ \ y=y'\ ,\ \ \ z=z'\ ,\ \ \ x=\gamma (x'+vt')\ ,\ \ \ t=\gamma (t'+\frac{vx'}{c^2})\\
+&\Rightarrow\ \ A'_x(x'^\mu)=\frac{\gamma E_0}{ikc}e^{i(kz'-\omega\gamma (t'+\frac{vx'}{c^2}))}=\frac{\gamma E_0}{ikc}e^{i(k(z'-\beta\gamma x')-\gamma\omega t')}\\
+&\Rightarrow\ \ \phi'(x'^\mu)=-vA'_x(x'^\mu)=-\frac{v\gamma E_0}{ikc}e^{i(k(z'-\beta\gamma x')-\gamma\omega t')}
+\end{align*}
+Betrachte für die Dispersionrelation in $\Sigma'$ die Phase der ebenen Wellen:
+\begin{align*}
+\textrm{arg}(A'_x)&=k(z'-\beta\gamma x')-\gamma\omega t'\overset{!}{=}\vv{k}'\cdot\vv{r}'-\omega' t'=k'_xx'+k'_yy'+k'_zz'-\omega' t'\\
+&\Rightarrow\ \ \omega'=\gamma\omega\ ,\ \ \ k'_x=-\beta\gamma k\ ,\ \ \ k'_y=0\ ,\ \ \ k'_z=k\ \ \Rightarrow\ \ \vv{k}'=k\begin{pmatrix}
+-\beta\gamma\\0\\1
+\end{pmatrix}\\
+&\Rightarrow\ \ c=\frac{\omega}{k}=\frac{\omega'}{\gamma}\cdot\frac{\sqrt{(-\beta\gamma)^2+1}}{k'}=\frac{\omega'}{k'}\sqrt{\frac{1}{\gamma^2}(1+\beta^2\gamma^2)}=\frac{\omega'}{k'}\sqrt{(1-\beta^2)+\beta^2}=\frac{\omega'}{k'}\\
+&\Rightarrow\ \ \omega'=ck'\ \ \Rightarrow\ \ \textrm{Dispersionsrelation bleibt erhalten!}
+\end{align*}
+
+\end{document}

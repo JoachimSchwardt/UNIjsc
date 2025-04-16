@@ -1,0 +1,98 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+
+\begin{document}
+
+\title{Magnetfelder und das Biot-Savart-Gesetz}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Aufgaben}
+\subsection{Koaxialkabel}
+Ein Koaxialkabel besteht aus einem drahtförmigen Innenleiter (Radius: $R_1$) und 
+ einem diesen konzentrisch umgebenden Außenleiter (Radien: $R_2$  und $R_3$), durch 
+ den  der  Strom  in  entgegen  gesetzter  Richtung  im  Vergleich  zum  Innenleiter 
+ zurück fließt. 
+Man berechne das von einem Gleichstrom I erzeugte Magnetfeld  $\vv{B}$ im gesamten 
+ Raum, wenn die Stromdichte  $\vv{j}$ über den Leiterquerschnitten konstant ist ! 
+\subsection{Leiterschleifen}
+Gegeben ist eine quadratische Leiterschleife der Seitenlänge 2a.\\ \\
+\underline{Hinweis:}\ $\int \frac{dx}{(ax^2+bx+c)^{3/2}}=\frac{2(2ax+b)}{(4ac-b^2)(ax^2+bx+c)^{1/2}}$
+\subsubsection*{a)}
+Berechnen Sie das Magnetfeld $\vv{B}$ auf der Achse, die senkrecht auf der    
+ Ebene der Schleife steht und durch deren Mittelpunkt geht !
+\subsubsection*{b)}
+Berechnen  Sie  das  Magnetfeld $\vv{B}$ für  eine  kreisförmige  Leiterschleife 
+ vom Radius R für die unter a) gegebenen Bedingungen !
+\subsubsection*{c)}
+Wie  groß  muss  der  Radius  der  kreisförmigen  Schleife  sein,  damit  in 
+  seinem Mittelpunkt das gleiche Magnetfeld $\vv{B}$ herrscht wie in der Mitte 
+  der  quadratischen  Leiterschleife,  wenn  durch  beide  Schleifen  der 
+  gleiche Strom fließt ? 
+\subsection{Helmholtz-Spulenpaar}
+Zur  Erzeugung  sehr  homogener  Magnetfelder  benutzt  man  ein  Helmholtz- 
+Spulenpaar. Die Anordnung besteht aus zwei parallelen ringförmigen Spulen mit 
+dem Radius $R = 69 mm$, die vom gleichen Strom $I = 1 A$ durchflossen werden, 
+wobei  sich  die  Mittelpunkte  der  Spulen  auf  der  gemeinsamen  Symmetrieachse 
+befinden.  Der  Abstand  der  Mittelpunkte  beträgt  in  dieser  Anordnung  gerade  R. 
+Die Windungszahlen der beiden Spulen sind $N_1  = N_2  = N = 320$.
+\subsubsection*{a)}
+Welche  Richtung  müssen  die  Ströme  in  beiden  Spulen  haben,  damit 
+  das sehr homogene Magnetfeld $\vv{B}$ erreicht wird ?
+\subsubsection*{b)}
+Wie groß ist das Magnetfeld $\vv{B}_0$ auf der Symmetrieachse in der Mitte zwischen beiden Spulen? 
+\subsubsection*{c)}
+Um  wie  viel  Prozent  ändert  sich  die  Größe  des  Magnetfeldes  auf  der 
+  Symmetrieachse in der Entfernung $R/4$ von diesem Punkt ?
+\subsection{Stromdurchflossene Platte}
+Eine  in  der  y-z-Ebene  symmetrisch  zu  $x  =  0$  liegende,  unendlich  ausgedehnte 
+Platte  der  Dicke  $d  =  2x_0$   werde  in  z-Richtung  gleichmäßig  vom  Strom  der 
+Stromdichte j durchflossen.\\ 
+  Berechnen  Sie  das  Magnetfeld $\vv{B}(x)$!  (Überlegen  Sie  sich  dazu  qualitativ  den 
+Feldlinienverlauf und nutzen Sie die Symmetrie des Problems.) 
+
+\section{Lösungen}
+\subsection*{zu 1.} Maxwell: $$\oint\vv{H}\cdot d\vv{s}=\iint_A \vv{j}\cdot d\vv{A}\ \ \Rightarrow\ \ H\cdot 2\pi r = 2\pi\cdot j\int r'dr' \ \ \Rightarrow\ \ \vv{H}=\frac {1}{r}\cdot j\int r'dr'\ \vv{e_{\varphi}}$$
+Für $0\le r< R_1$: $$\vv{H}=\frac{j}{r}\int_0^r r'dr'\ \vv{e_{\varphi}} = \frac{jr}{2}\ \vv{e_{\varphi}}$$
+Für $R_1\le r <R_2$: $$\vv{H}=\frac{j}{r}\int_0^{R_1} r'dr'\ \vv{e_{\varphi}}=\frac{jR_1^2}{2r}\ \vv{e_{\varphi}}$$
+Für $R_2\le r<R_3$: $$\vv{H}=\frac{j}{r}\left(\int_0^{R_1}r'dr'-\int_{R_2}^{r} r'dr'\right)\ \vv{e_{\varphi}}=\frac{j(R_1^2+R_2^2-r^2)}{2r}\ \vv{e_{\varphi}}$$
+Für $R_3\le r$: $$\vv{H}=\frac{j(R_1^2+R_2^2-R_3^2)}{2r}\ \vv{e_{\varphi}}$$
+\subsection*{zu 2a)}
+Biot-Savart: $$\vv{H}=\frac{I}{4\pi}\int\frac{(\vv{r}-\vv{r}')\times d\vv{s}}{|\vv{r}-\vv{r}'|^3}$$
+Betrachte aus Symmetriegründen nur eines der vier Leiterstücke. Da sich auf der z-Achse in der Mitte der Schleife alle Feldkomponenten aufheben müssen, die nicht in $\vv{e}_z$ zeigen, können diese bei der Rechnung vernachlässigt werden.\\ \begin{align*}
+\vv{r}&=a\vv{e_x}+y\vv{e_y}\ \mathrm{mit\ } -a<y<a\\
+\vv{r}'&=z\vv{e_z}\\
+d\vv{s}&=dy\vv{e_y}
+\end{align*}
+Dann folgt für das Magnetfeld eines der Leiterstücke: \begin{align*}
+\vv{H}&=\frac{I}{4\pi}\int_{-a}^{a}\frac{(a\vv{e_x}+y\vv{e_y}-z\vv{e_z})\times \vv{e_y}dy}{\left(a^2+y^2+z^2\right)^{3/2}}\overset{\substack{\vv{H}\overset{!}{=}H\vv{e_z}\\|}}{=}\frac{I}{2\pi}\int_0^{a}\frac{a\ dy}{\left(a^2+y^2+z^2\right)^{3/2}}\ \vv{e_z}\\
+&=\frac{Ia\cdot y}{2\pi(a^2+z^2)\sqrt{a^2+y^2+z^2}}\bigg\rvert_0^{a}\ \vv{e_z}\ \ \Rightarrow\ \ \vv{H_g}_{es}=\frac{2I}{\pi(1+\frac{z^2}{a^2})\sqrt{2a^2+z^2}}\ \vv{e_z}
+\end{align*}
+\subsection*{zu 2b)}
+Verwende aus Symmetriegründen Zylinderkoordinaten:
+\begin{align*}
+\vv{r}&=R\vv{e_r}\\
+\vv{r}'&=z\vv{e_z}\\
+d\vv{s}&=Rd\varphi\vv{e_\varphi}
+\end{align*}
+Mit $\int_0^{2\pi}\vv{e_r}d\varphi=0$ berechnet sich das Magnetfeld der Leiterschleife auf der z-Achse wie folgt:
+\begin{align*}
+\vv{H}&=\frac{I}{4\pi}\int_{0}^{2\pi}\frac{(R\vv{e_r}-z\vv{e_z})\times\vv{e_{\varphi}}R\ d\varphi}{(R^2+z^2)^{3/2}}=\frac{I}{4\pi}\int_{0}^{2\pi}\frac{(R^2\vv{e_z}+\cancelto{0}{Rz\vv{e_r}})\ d\varphi}{(R^2+z^2)^{3/2}}\\
+&=\frac{IR^2}{4\pi}\int_{0}^{2\pi}\frac{d\varphi}{(R^2+z^2)^{3/2}}\ \vv{e_z}=\frac{IR^2}{2(R^2+z^2)^{3/2}}\ \vv{e_z}
+\end{align*}
+\subsection*{zu 2c)}
+Setze $z=0$ und $H_{Quadrat}=H_{Kreis}$: $$\frac{2I}{\pi\sqrt{2a^2}}=\frac{IR^2}{2(R^2)^{3/2}}\ \ \Leftrightarrow\ \ \frac{2\sqrt{2}}{\pi a}=\frac{1}{R}\ \ \Leftrightarrow\ \ R=\frac{\pi}{4}a\sqrt{2}$$
+\subsection*{zu 3a)}
+\subsection*{zu 3b)}
+\subsection*{zu 3c)}
+\subsection*{zu 4)}
+Betrachte eine rechteckige Fläche der Länge $l$ der Platte und der Höhe $2x_0$, sodass für den Flächennormalenvektor $\vv{A}$ gilt: $\vv{A}\|\vv{j}$ . Maxwell liefert dann: $$\oint\vv{H}\cdot d\vv{s}=\iint_A \vv{j}\cdot d\vv{A}\ \ \Rightarrow\ \ 2l\cdot H = l\cdot j\int_x dx'\ \ \Rightarrow\ \ \vv{H} = \frac j2\int_x dx'\ \vv{e_y}$$
+Für $0\le x<x_0$: $$\vv{H}=\frac j2\int_{-x}^{x}dx'\ \vv{e_y}=jx\ \vv{e_y}$$
+Für $x_0\le x$: $$\vv{H}=jx_0\ \vv{e_y}$$
+\end{document}

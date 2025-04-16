@@ -1,0 +1,102 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{04 Zerfallsketten}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 4.1: Energiegewinn aus $\alpha$-Zerfall}
+Sei $N(t)$ die Anzahl an Plutonium-Kernen, $\tau$ deren Halbwertszeit, $P(t)$ die freigesetzte Leistung und $\eta$ der Wirkungsgrad. Dann gilt 
+\begin{align*}
+N(t)&=N_0e^{-t/\tau}\numberthis\label{eqn:N von t}
+\end{align*}
+Beim Zerfall eines Kerns werden $E_Z=5.49\,$MeV frei. Damit folgt für die Leistung
+\begin{align*}
+P(t)&=\eta\cdot E_Z\cdot\frac{\tecxt\text{d}}{\tecxt\text{d}t}\klam\left[ {N_0-N(t)} \right]=\frac{\eta E_Z}{\tau}N_0e^{-t/\tau}\numberthis\label{eqn:P von t}
+\end{align*}
+Es ist $P(t_S)=395\,$W gegeben, wobei $t_S=1467\,$d die Zeit bis zum Vorbeiflug beim Saturn ist. Daraus kann man $N_0$ bestimmen:
+\begin{align*}
+N_0&=\frac{\tau P(t_S)}{\eta E_Z}e^{t_S/\tau}=\underline{3.91\cdot 10^{20}}\numberthis\label{eqn:N0}
+\end{align*}
+Das entspricht einer Masse von $m_\tecxt\text{Pu}=N_0\cdot 238.05\,\tecxt\text{u}=0.154\,$mg. \\
+Beim Vorbeiflug am Neptun ($t_N=4387\,$d) standen noch $P(t_N)=370.9\,$W zur Verfügung.\\
+Für die Solarzellen ist die Leistung vom Abstand zur Sonne abhängig. Gegeben ist die Leistung $\frac{P_0}{A_0}=14.38\,\frac{\tecxt\text{W}}{\tecxt\text{m}^2}$ bei einem Abstand von $r_E=1\,$AE. Sei $A$ die mit Solarzellen belegte Fläche. Dann gilt
+\begin{align*}
+P(r)&=\frac{P_0}{A_0}\cdot\frac{A}{(r\,/\,\tecxt\text{AE})^2}\numberthis\label{eqn:P von r}
+\end{align*} 
+Aus $P(t_S)=395\,$W oder $P(t_N)=370.9\,$W folgt dann 
+\begin{align*}
+A_S&=A_0\cdot \frac{P(t_S)\cdot (9.5)^2}{P_0}=\underline{2478.4\,\tecxt\text{m}^2}&\tecxt\text{oder}&& A_N&=A_0\cdot \frac{P(t_N)\cdot (30.1)^2}{P_0}=\underline{23363\,\tecxt\text{m}^2}
+\end{align*}
+\section*{Aufgabe 4.2: Altersbestimmung der Erde}
+Sie $N_0$ die gesamte Anzahl an Uran-Kernen bei der Entstehung der Erde und $\tau_{235}=704\,$Ma bzw. $\tau_{238}=4468\,$Ma die jeweiligen Halbwertszeiten. Dann gilt
+\begin{align*}
+N(t)&=N_{235}(t)+N_{238}(t)=\frac{N_0}{2}e^{-t/\tau_{235}}+\frac{N_0}{2}e^{-t/\tau_{238}}
+\end{align*}
+Das Alter der Erde sei $t_E$. Gegeben sind $\alpha_1:=N_{235}(t_E)/N(t_E)=0.0072$ und $\alpha_2:=N_{238}(t_E)/N(t_E)=0.9928$. Daraus kann man $t_E$ bestimmen:
+\begin{align*}
+\alpha_1&=\frac{\frac{N_0}{2}e^{-t_E/\tau_{235}}}{\frac{N_0}{2}e^{-t_E/\tau_{235}}+\frac{N_0}{2}e^{-t_E/\tau_{238}}}\\ 
+&\Rightarrow\ \ \frac{1}{\alpha_1}-1=e^{\frac{t_E}{\tau_{235}}-\frac{t_E}{\tau_{238}}}\\
+&\Rightarrow\ \ t_E=\frac{\log(1-\alpha_1)-\log(\alpha_1)}{\frac{1}{\tau_{235}}-\frac{1}{\tau_{238}}}=\underline{4.117\cdot 10^{9}\,\tecxt\text{a}}
+\end{align*}
+Der Anteil an zerfallenen U-238 Kernen ergibt sich einfach aus
+\begin{align*}
+\frac{N_{238}(t_E)}{N_{238}(0)}&=e^{-t_E/\tau_{238}}=\kla\left( {\frac{1}{\alpha_1}-1} \right)^{\frac{\tau_{235}}{\tau_{235}-\tau_{238}}}=\underline{39.8\,\%}
+\end{align*}
+\section*{Aufgabe 4.3: Überlegungen zu Zerfallsketten}
+Es gilt auch hier noch $N_A(t)=N_{A,0}e^{-\lambda_At}$, was aus $\dot{N}_A=-\lambda_AN_A$ folgt. Für die $B$-Kerne gilt aber 
+\begin{align*}
+\dot{N}_B&=-\lambda_BN_B+\frac{\tecxt\text{d}}{\tecxt\text{d}t}\klam\left[ {N_{A,0}-N_A(t)} \right]=-\lambda_BN_B+N_{A,0}\lambda_Ae^{-\lambda_At}
+\end{align*}
+Sei $N_B=Be^{-\lambda_B t}+Ae^{-\lambda t}$. Einsetzen liefert
+\begin{align*}
+-\lambda Ae^{-\lambda t} &=-\lambda_BAe^{-\lambda t} + N_{A,0}\lambda_Ae^{-\lambda_At}&\Rightarrow &&\lambda&=\lambda_A\\
+-\lambda_AA&=-\lambda_BA+N_{A,0}\lambda_A&\Rightarrow &&A&=\frac{N_{A,0}\lambda_A}{\lambda_B-\lambda_A}
+\end{align*}
+Damit folgt aus $N_B(0)=N_{B,0}=B+A$, dass $B=N_{B,0}-\frac{N_{A,0}\lambda_A}{\lambda_B-\lambda_A}$ ist. Also gilt
+\begin{align*}
+N_B(t)&=N_{B,0}e^{-\lambda_Bt}+\frac{N_{A,0}\lambda_A}{\lambda_B-\lambda_A}\kla\left( {e^{-\lambda_At}-e^{-\lambda_Bt}} \right)\\
+\Rightarrow\ \ N_C(t)&=N_{C,0}+ N_{B,0}-N_B(t)
+\end{align*}
+\section*{Aufgabe 4.4: Radon-Aktivität}
+\section*{Aufgabe 4.5: $Q$-Wert und Halbwertszeit für $\alpha$-Zerfälle}
+Aus der ersten gegebenen Halbwertszeit kann man die Konstante $C$ bestimmen:
+\begin{align*}
+C&=\log_{10}(T_{1/2}\,/\,\tecxt\text{s})-\frac{2\gamma}{\log(10)}=-25.41
+\end{align*}
+Damit ergeben sich die anderen Halbwertszeiten zu %https://www-nds.iaea.org/relnsd/vcharthtml/VChartHTML.html
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c}
+Prozess&$T_{1/2}\,/\,$s&$T_{1/2,\tecxt\text{lit}}\,/\,s$\\ \hline
+${}^{236}\tecxt\text{U} \longrightarrow {}^{232}\tecxt\text{Th} + \alpha$ &$3.53\cdot 10^{14}$&$7.39\cdot 10^{14}$\\ \hline
+${}^{234}\tecxt\text{U} \longrightarrow {}^{230}\tecxt\text{Th} + \alpha$ &$2.06\cdot 10^{12}$&$7.75\cdot 10^{12}$\\ \hline
+${}^{232}\tecxt\text{U} \longrightarrow {}^{228}\tecxt\text{Th} + \alpha$ &$3.09\cdot 10^8$&$2.17\cdot 10^{9}$\\ \hline
+${}^{230}\tecxt\text{U} \longrightarrow {}^{226}\tecxt\text{Th} + \alpha$ &$1.22\cdot 10^5$&$1.75\cdot 10^{6}$\\ \hline
+${}^{228}\tecxt\text{U} \longrightarrow {}^{224}\tecxt\text{Th} + \alpha$ &$11.86$&$5.46\cdot 10^{2}$\\
+\end{tabular}
+\caption{Halbwertszeiten der Uran-Zerfälle}
+\end{table}
+\end{document}

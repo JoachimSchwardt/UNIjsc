@@ -1,0 +1,203 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{ll_scrarticle}
+
+\newcommand*{\titel}{Mean-field approach}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Model Hamiltonian}
+We consider the lattice model described by $H=H_0+H_\Text{int}$ with
+\begin{align}
+H_0 &= \sum_{s=\A,\B} \sum_k \vf k c_{k,s}^\dagger c_{k,-s},\\
+H_\Text{int} &= \sum_{s=\A,B} \sum_{\bra*{j,j'}} U_s n_{j,s} n_{j',s}.
+\end{align}
+We set the lattice spacing $a=1$ and diagonalize $H_0$ by introducing the operators $c_\ell = \frac{1}{\sqrt{2}} \kla*{c_\A + \ell c_\B}$ where $\ell\in\klc*{\R,\L}$.
+This yields
+\begin{align}
+H_0 &= \sum_{\ell=\R,\L} \sum_k \vf k\ell c_{k,\ell}^\dagger c_{k,\ell} \equiv \sum_{\ell=\R,\L} \sum_k \vf k\ell n_{k,\ell},\\
+H_\Text{int} &= H_+ + H_-
+\end{align}
+where we defined the terms
+\begin{align}
+H_+ &= \frac{U_+}{2} \sum_{\ell,\ell'} \sum_{\bra*{j,j'}} \klb*{n_{j,\ell} n_{j',\ell'} + c_{j,\ell}^\dagger c_{j,-\ell} c_{j',\ell'}^\dagger c_{j',-\ell'}},\\
+H_- &= \frac{U_-}{2} \sum_{\ell,\ell'} \sum_{\bra*{j,j'}} \klb*{ n_{j,\ell} c_{j',\ell'}^\dagger c_{j',-\ell'} + n_{j',\ell'} c_{j,\ell}^\dagger c_{j,-\ell}}
+\end{align}
+with the parameters $U_\pm = \frac{U_\A \pm U_\B}{2}$.
+Going to a momentum space representation via
+\begin{align}
+c_{j,\ell} &= \frac{1}{\sqrt{L}} \sum_k \powe{\i kj} c_{k,\ell}
+\end{align}
+allows us to rewrite the $U_+$-interaction as
+\begin{align}
+H_+ &= \frac{U_+}{2L^2} \sum_{\ell,\ell'} \sum_{k_1,\dots,k_4} \sum_{\bra*{j,j'}} \powe{\i (k_2-k_1) j} \powe{\i (k_4-k_3) j'} \klb*{c_{k_1,\ell}^\dagger c_{k_2,\ell} c_{k_3,\ell'}^\dagger c_{k_4,\ell'} + c_{k_1,\ell}^\dagger c_{k_2,-\ell} c_{k_3,\ell'}^\dagger c_{k_4,-\ell'}}\\
+&= \frac{U_+}{2L} \sum_{\ell,\ell'} \sum_{k_1,\dots,k_4} \sum_{s_a=\pm 1} \delta_{k_2-k_1,k_3-k_4} \powe{\i (k_4-k_3) s_a} \klb*{c_{k_1,\ell}^\dagger c_{k_2,\ell} c_{k_3,\ell'}^\dagger c_{k_4,\ell'} + c_{k_1,\ell}^\dagger c_{k_2,-\ell} c_{k_3,\ell'}^\dagger c_{k_4,-\ell'}}\\
+&= \frac{U_+}{2L} \sum_{\ell,\ell'} \sum_{k_2,k_4,q} \sum_{s_a=\pm 1} \powe{-\i q s_a} \klb*{c_{k_2-q,\ell}^\dagger c_{k_2,\ell} c_{k_4+q,\ell'}^\dagger c_{k_4,\ell'} + c_{k_2-q,\ell}^\dagger c_{k_2,-\ell} c_{k_4+q,\ell'}^\dagger c_{k_4,-\ell'} }\\
+&= \frac{U_+}{L} \sum_{\ell,\ell'} \sum_{k,k',q} \cos(q) \klb*{c_{k-q,\ell}^\dagger c_{k'+q,\ell'}^\dagger c_{k',\ell'} c_{k,\ell} + c_{k-q,\ell}^\dagger c_{k'+q,\ell'}^\dagger c_{k',-\ell'}c_{k,-\ell} }.
+\end{align}
+Similarly the $U_-$-interaction becomes
+%\begin{align}
+%H_- &= 2\frac{U_-}{2L^2} \sum_{\ell,\ell'} \sum_{k_1,\dots,k_4} \sum_{\bra*{j,j'}} \powe{\i (k_2-k_1) j} \powe{\i (k_4-k_3) j'} c_{k_1,\ell}^\dagger c_{k_2,\ell} c_{k_3,\ell'}^\dagger c_{k_4,-\ell'}\\
+%&= 2\frac{U_-}{2L} \sum_{\ell,\ell'} \sum_{k_1,\dots,k_4} \sum_{s_a=\pm 1} \delta_{k_2-k_1,k_3-k_4} \powe{\i (k_4-k_3) s_a} c_{k_1,\ell}^\dagger c_{k_2,\ell} c_{k_3,\ell'}^\dagger c_{k_4,-\ell'}\\
+%&= 2\frac{U_-}{2L} \sum_{\ell,\ell'} \sum_{k_2,k_4,q} \sum_{s_a=\pm 1} \powe{-\i q s_a} c_{k_2-q,\ell}^\dagger c_{k_2,\ell} c_{k_4+q,\ell'}^\dagger c_{k_4,-\ell'}\\
+%&= 2\frac{U_-}{L} \sum_{\ell,\ell'} \sum_{k,k',q} \cos(q) c_{k-q,\ell}^\dagger c_{k'+q,\ell'}^\dagger c_{k',-\ell'} c_{k,\ell}.
+%\end{align}
+\begin{align}
+H_- &= \frac{2U_-}{L} \sum_{\ell,\ell'} \sum_{k,k',q} \cos(q) c_{k-q,\ell}^\dagger c_{k'+q,\ell'}^\dagger c_{k',-\ell'} c_{k,\ell}.
+\end{align}
+Combining the terms then yields
+\begin{align}
+H_\Text{int} &= \frac{1}{L} \sum_{\ell,\ell'} \sum_{k,k',q} \cos (q) c_{k-q,\ell}^\dagger c_{k'+q,\ell'}^\dagger \klb*{U_+ c_{k',\ell'} c_{k,\ell} + U_+ c_{k',-\ell'} c_{k,-\ell} + 2U_- c_{k',-\ell'} c_{k,\ell}}.
+\end{align}
+\section{Mean-field approximation}
+So far the calculation has been exact.
+In order to make progress we now want to employ a mean-field approximation.
+For generic operators $A$ and $B$ we defined $\Delta A \equiv A - \bra*{A}$ without explicitly specifying the expectation values.
+Then we may always write
+\begin{align}
+AB &= \kla*{\Delta A + \bra*{A}} \kla*{\Delta B + \bra*{B}} = \Delta A \bra*{B} + \Delta B \bra*{A} + \bra*{A} \bra*{B} + \Delta A \Delta B\\
+&= A\bra*{B} + B\bra*{A} - \bra*{A} \bra*{B} + \Delta A \Delta B.\label{eqn:mf approx}
+\end{align}
+The mean-field approximation then amounts to neglecting the last term.
+Our interaction contains three different terms that we will rewrite as
+\begin{align}
+c_{k-q,\ell}^\dagger c_{k'+q,\ell'}^\dagger c_{k',\ell'} c_{k,\ell} &\simeq c_{k-q,\ell}^\dagger c_{k,\ell} \bra*{c_{k'+q,\ell'}^\dagger c_{k',\ell'}} + \bra*{c_{k-q,\ell}^\dagger c_{k,\ell}} c_{k'+q,\ell'}^\dagger c_{k',\ell'} - \bra*{c_{k-q,\ell}^\dagger c_{k,\ell}} \bra*{c_{k'+q,\ell'}^\dagger c_{k',\ell'}},\\
+c_{k-q,\ell}^\dagger c_{k'+q,\ell'}^\dagger c_{k',-\ell'} c_{k,-\ell} &\simeq c_{k-q,\ell}^\dagger c_{k,-\ell} \bra*{c_{k'+q,\ell'}^\dagger c_{k',-\ell'}} + \bra*{c_{k-q,\ell}^\dagger c_{k,-\ell}} c_{k'+q,\ell'}^\dagger c_{k',-\ell'} - \bra*{c_{k-q,\ell}^\dagger c_{k,-\ell}} \bra*{c_{k'+q,\ell'}^\dagger c_{k',-\ell'}},\\
+c_{k-q,\ell}^\dagger c_{k'+q,\ell'}^\dagger c_{k',-\ell'} c_{k,\ell} &\simeq c_{k-q,\ell}^\dagger c_{k,\ell} \bra*{c_{k'+q,\ell'}^\dagger c_{k',-\ell'}} + \bra*{c_{k-q,\ell}^\dagger c_{k,\ell}} c_{k'+q,\ell'}^\dagger c_{k',-\ell'} - \bra*{c_{k-q,\ell}^\dagger c_{k,\ell}} \bra*{c_{k'+q,\ell'}^\dagger c_{k',-\ell'}}.
+\end{align}
+We will now assume that the expectation values are diagonal in momentum space, i.e. $\bra*{c_{k,\ell}^\dagger c_{k',\ell'}} = \delta_{k,k'} \bra*{c_{k,\ell}^\dagger c_{k,\ell'}} \equiv \delta_{k,k'} \bar{n}_{k,\ell,\ell'}$.
+The three terms then simplify to
+\begin{align}
+c_{k-q,\ell}^\dagger c_{k'+q,\ell'}^\dagger c_{k',\ell'} c_{k,\ell} &\simeq c_{k-q,\ell}^\dagger c_{k,\ell} \delta_{q,0} \bar{n}_{k',\ell',\ell'} + \delta_{q,0} \bar{n}_{k,\ell,\ell} c_{k'+q,\ell'}^\dagger c_{k',\ell'} - \delta_{q,0} \bar{n}_{k,\ell,\ell} \bar{n}_{k',\ell',\ell'},\\
+c_{k-q,\ell}^\dagger c_{k'+q,\ell'}^\dagger c_{k',-\ell'} c_{k,-\ell} &\simeq c_{k-q,\ell}^\dagger c_{k,-\ell} \delta_{q,0} \bar{n}_{k',\ell',-\ell'} + \delta_{q,0} \bar{n}_{k,\ell,-\ell} c_{k'+q,\ell'}^\dagger c_{k',-\ell'} - \delta_{q,0} \bar{n}_{k,\ell,-\ell} \bar{n}_{k',\ell',-\ell'},\\
+c_{k-q,\ell}^\dagger c_{k'+q,\ell'}^\dagger c_{k',-\ell'} c_{k,\ell} &\simeq c_{k-q,\ell}^\dagger c_{k,\ell} \delta_{q,0} \bar{n}_{k',\ell',-\ell'} + \delta_{q,0} \bar{n}_{k,\ell,\ell} c_{k'+q,\ell'}^\dagger c_{k',-\ell'} - \delta_{q,0} \bar{n}_{k,\ell,\ell} \bar{n}_{k',\ell',-\ell'}.
+\end{align}
+This gives rise to the mean-field interaction Hamiltonian
+\begin{align}
+H_\Text{int}^\Text{MF} &= \frac{1}{L} \sum_{\ell,\ell'} \sum_{k,k'} \bsplit{ \klb[\Big]{&U_+c_{k,\ell}^\dagger c_{k,\ell} \bar{n}_{k',\ell',\ell'} + U_+ \bar{n}_{k,\ell,\ell} c_{k',\ell'}^\dagger c_{k',\ell'} - U_+ \bar{n}_{k,\ell,\ell} \bar{n}_{k',\ell',\ell'} \\
+&+U_+ c_{k,\ell}^\dagger c_{k,-\ell} \bar{n}_{k',\ell',-\ell'} + U_+ \bar{n}_{k,\ell,-\ell} c_{k',\ell'}^\dagger c_{k',-\ell'} - U_+ \bar{n}_{k,\ell,-\ell} \bar{n}_{k',\ell',-\ell'}\\
+&+ 2U_- c_{k,\ell}^\dagger c_{k,\ell} \bar{n}_{k',\ell',-\ell'} + 2U_- \bar{n}_{k,\ell,\ell} c_{k',\ell'}^\dagger c_{k',-\ell'} - 2U_- \bar{n}_{k,\ell,\ell} \bar{n}_{k',\ell',-\ell'}}}\\
+&= \frac{1}{L} \sum_{\ell,\ell'} \sum_{k,k'} \bsplit{\klb[\Big]{ &n_{k,\ell} \klc*{2U_+ \bar{n}_{k',\ell',\ell'} + 2U_- \bar{n}_{k',\ell',-\ell'} } + c_{k,\ell}^\dagger c_{k,-\ell} \klc*{2U_+ \bar{n}_{k',\ell',-\ell'} + 2U_- \bar{n}_{k',\ell',\ell'}}\\
+&- \klc*{U_+ \bar{n}_{k,\ell,\ell} \bar{n}_{k',\ell',\ell'} + U_+ \bar{n}_{k,\ell,-\ell} \bar{n}_{k',\ell',-\ell'} + 2U_- \bar{n}_{k,\ell,\ell} \bar{n}_{k',\ell',-\ell'}} }.}
+\end{align}
+Let us define the quantities $\bar{n}_\ell \equiv \frac{1}{L} \sum_{\ell',k'} \bar{n}_{k',\ell',\ell \ell'}$.
+Then the Hamiltonian becomes
+\begin{align}
+H_\Text{int}^\Text{MF} &= \sum_{\ell,k} \bsplit{\klb[\Big]{&2n_{k,\ell} \klc*{U_+ \bar{n}_+ + U_- \bar{n}_-} + 2c_{k,\ell}^\dagger c_{k,-\ell} \klc*{U_+ \bar{n}_- + U_- \bar{n}_+} \\
+&- \klc*{\bar{n}_{k,\ell,\ell} \klc*{U_+ \bar{n}_+ + U_- \bar{n}_-} + \bar{n}_{k,\ell,-\ell} \klc*{U_+ \bar{n}_- + U_- \bar{n}_+}}}.}
+\end{align}
+Letting $\bar{m}_\ell = U_+ \bar{n}_\ell + U_- \bar{n}_{-\ell}$ then allows us to write the full mean-field Hamiltonian as
+\begin{align}
+H^\Text{MF} &= \sum_{\ell,k} \klb*{n_{k,\ell} \klc*{\vf k\ell + 2\bar{m}_+} + c_{k,\ell}^\dagger c_{k,-\ell} 2\bar{m}_- - \bar{n}_{k,\ell,\ell} \bar{m}_+ - \bar{n}_{k,\ell,-\ell} \bar{m}_-} \equiv \sum_{k} \Psi_k^\dagger \mathcal{H}_k \Psi_k - E_0.
+\end{align}
+Here we defined the energy $E_0 = \sum_{\ell,k} \klb*{\bar{n}_{k,\ell,\ell} \bar{m}_+ + \bar{n}_{k,\ell,-\ell} \bar{m}_-}$, the operators $\Psi_k = (c_{k,\R}, c_{k,\L})^T$ and the matrix
+\begin{align}
+\mathcal{H}_k &= \begin{pmatrix}
+\vf k + 2\bar{m}_+ & 2\bar{m}_- \\ 2\bar{m}_-  & -\vf k + 2\bar{m}_+
+\end{pmatrix} = \vf k \sigma_z + 2\bar{m}_+ \sigma_0 + 2\bar{m}_- \sigma_x .
+\end{align}
+We now need to find a self-consistency equation for the expectation values $\bar{m}_\ell$.
+Using their definition and our mean-field Hamiltonian gives
+\begin{align}
+\bar{m}_\ell &= U_\ell \bar{n}_+ + U_{-\ell} \bar{n}_- = \sum_{\ell',k} \klb*{U_{\ell} \bar{n}_{k,\ell',\ell'} + U_{-\ell} \bar{n}_{k,\ell',-\ell'}} = \frac{1}{L} \sum_{\ell',k} \klb*{U_{\ell} \bra*{c_{k,\ell'}^\dagger c_{k,\ell'}} + U_{-\ell} \bra*{c_{k,\ell'}^\dagger c_{k,-\ell'}}}.
+\end{align}
+At this point we note that
+\begin{align}
+H&=\begin{pmatrix}
+a&b \\ b&c
+\end{pmatrix} = UDU^\dagger = \frac{1}{\sqrt{b^2+\Delta^2}} \begin{pmatrix}
+b&-\Delta \\ \Delta & b
+\end{pmatrix} \begin{pmatrix}
+E_+ & 0 \\ 0 & E_-
+\end{pmatrix} U^\dagger
+\end{align}
+with $E_\pm = \frac{a+c}{2} \pm \sqrt{\kla*{\frac{a-c}{2}}^2 + b^2}$ and $\Delta = E_+-a=c-E_-$ leads to the operators $c_\ell = \frac{b\gamma_\ell - \ell\Delta \gamma_{-\ell}}{\sqrt{b^2+\Delta^2}}$ and the expectation values
+\begin{align}
+\bra*{c_\ell^\dagger c_{\ell'}} &= \frac{1}{b^2+\Delta^2} \klb*{\delta_{\ell,\ell'} \kla*{b^2 n_\F(\beta E_{\ell}) + \Delta^2 n_\F(\beta E_{-\ell})} - \ell b\Delta \delta_{\ell,-\ell'} \kla*{n_\F(\beta E_{\ell}) + n_\F(\beta E_{-\ell})}}.
+\end{align}
+Inserting into the self-consistency equation with $b=2\bar{m}_-$, $a=\vf k + 2\bar{m}_{k,+}$ and $c=-\vf k + 2\bar{m}_{k,+}$ gives $\Delta_k = -\vf k + \sqrt{\vf^2 k^2 + 4\bar{m}_{k,-}^2}$ and
+\begin{align}
+\bar{m}_{k,\ell} &= \frac{1}{4\bar{m}_{k,-}^2 + \Delta_k^2} \frac{1}{L} \sum_{\ell',k'} \bsplit{\klb[\Big]{ &U_\ell \kla*{4\bar{m}_{k',-}^2 n_\F(\beta E_{k',\ell'}) + \Delta_{k'}^2 n_\F(\beta E_{k',-\ell'})} \\
+&- U_{-\ell} \ell' 2\bar{m}_{k',-} \Delta_{k'} \kla*{n_\F(\beta E_{k',+}) + n_\F(\beta E_{k',-})} }.}
+\end{align}
+This is a system of $2L$ non-linear equations, and the problem is reduced to one of finding solutions for the number-valued functions $\bar{m}_{k,\ell}$.
+\section{Green's function}
+The time-evolution of the operators is given by
+\begin{align}
+c_{k,\ell}(t) &= \frac{1}{\sqrt{b^2+\Delta^2}} \kla*{b\gamma_\ell \powe{-\i E_\ell t} - \ell\Delta \gamma_{-\ell} \powe{-\i E_{-\ell} t}}.
+\end{align}
+The single-particle Green's function therefore takes the form
+\begin{align}
+G_{\ell,\ell'}^\R(k,k',t) &= -\i\Theta(t) \bra*{\klc*{c_{k,\ell}(t), c_{k',\ell'}^\dagger(0)}}\\
+&= -\i\Theta(t) \frac{\delta_{k,k'}}{b^2+\Delta^2} \bra*{ \klc*{b\gamma_{k,\ell} \powe{-\i E_\ell t} - \ell\Delta \gamma_{k,-\ell} \powe{-\i E_{-\ell} t}, b\gamma_{k,\ell'}^\dagger - \ell'\Delta \gamma_{k,-\ell'}^\dagger} }\\
+&= -\i\Theta(t) \frac{\delta_{k,k'}}{b^2+\Delta^2} \klb*{\delta_{\ell,\ell'} \kla*{b^2\powe{-\i E_\ell t} + \Delta^2 \powe{-\i E_{-\ell} t}} - \delta_{\ell,-\ell'} b\ell \Delta \kla*{\powe{-\i E_\ell t} - \powe{-\i E_{-\ell} t}}}.
+\end{align}
+In frequency space this leads to\footnote{$-\i\intx{0}{\infty}{\powe{\i zt - \delta t}}{t} = -\i \frac{-1}{\i z - \delta} = \frac{1}{z+\i\delta}$}
+\begin{align}
+G_{\ell,\ell'}^\R(k,\omega) &= \frac{-\i}{b^2+\Delta^2} \intx{0}{\infty}{\powe{\i\omega t} \powe{-\delta t} \klb*{\delta_{\ell,\ell'} \kla*{b^2\powe{-\i E_\ell t} + \Delta^2 \powe{-\i E_{-\ell} t}} - \delta_{\ell,-\ell'} b\ell \Delta \kla*{\powe{-\i E_\ell t} - \powe{-\i E_{-\ell} t}}} }{t}\\
+&= \frac{1}{b^2+\Delta^2} \bsplit{\klb[\bigg]{&\delta_{\ell,\ell'} \kla*{b^2\frac{1}{\omega - E_{\ell} + \i\delta} + \Delta^2 \frac{1}{\omega - E_{-\ell} + \i\delta}} \\
+&- \delta_{\ell,-\ell'} b\ell \Delta \kla*{\frac{1}{\omega - E_{\ell} + \i\delta} - \frac{1}{\omega - E_{-\ell} + \i\delta}}}}.
+\end{align}
+Using $E_\ell = 2\bar{m}_+ + \ell \sqrt{\vf^2k^2 + 4\bar{m}_-^2} = 2\bar{m}_+ + \ell \vf k + \ell \Delta$ we can rewrite this as
+\begin{align}
+G_{\ell,\ell}^\R &= \frac{1}{b^2+\Delta^2} \frac{b^2 \kla*{\omega - E_{-\ell} + \i\delta} + \Delta^2 \kla*{\omega - E_{\ell} + \i\delta}}{\kla*{\omega - E_{\ell} + \i\delta} \kla*{\omega - E_{-\ell} + \i\delta}} \\
+&= \frac{1}{b^2+\Delta^2} \frac{\kla*{b^2 + \Delta^2} \kla*{\omega + \i\delta} - b^2 E_{-\ell} - \Delta^2 E_\ell}{\omega^2 + E_+E_- - \omega (E_++E_-) + \i\delta \kla*{2\omega - E_+ - E_-}}\\
+&= \frac{1}{b^2+\Delta^2} \frac{\kla*{b^2 + \Delta^2} \kla*{\omega + \i\delta - 2\bar{m}_+} - \ell \kla*{\vf k + \Delta} \kla*{\Delta^2 - b^2}}{\kla*{\omega - 2\bar{m}_+}^2 - \kla*{\vf k + \Delta}^2 + 2\i\delta \kla*{\omega - 2\bar{m}_+}},\\
+G_{\ell,-\ell}^\R &= -\frac{b\Delta}{b^2+\Delta^2} \frac{\kla*{\omega - E_{-} + \i\delta} - \kla*{\omega - E_{+} + \i\delta}}{\kla*{\omega - E_{+} + \i\delta} \kla*{\omega - E_{-} + \i\delta}}\\
+&= -\frac{b\Delta}{b^2+\Delta^2} \frac{2\kla*{\vf k + \Delta}}{\kla*{\omega - 2\bar{m}_+}^2 - \kla*{\vf k + \Delta}^2 + 2\i\delta \kla*{\omega - 2\bar{m}_+}}.
+\end{align}
+The full Green's function then takes the form $G^\R = g_0\sigma_0 + g_x\sigma_x + g_z\sigma_z$.
+The Dyson equation leads us to an effective Hamiltonian of the similar form
+\begin{align}
+H_\Text{eff}^\R &= \omega - \kla*{G^\R}^{-1} = \omega - \frac{g_0\sigma_0 - g_x\sigma_x - g_z\sigma_z}{g_0^2 - g_x^2 - g_z^2}.
+\end{align}
+Dropping the regularization $\delta$ we have
+\begin{align}
+g_0 &= \frac{\omega - 2\bar{m}_+}{\kla*{\omega - 2\bar{m}_+}^2 - \kla*{\vf k + \Delta}^2},\\
+g_x &= -\frac{2b\Delta}{b^2+\Delta^2} \frac{\vf k + \Delta}{\kla*{\omega - 2\bar{m}_+}^2 - \kla*{\vf k + \Delta}^2},\\
+g_z &= \frac{b^2-\Delta^2}{b^2+\Delta^2} \frac{\vf k + \Delta}{\kla*{\omega - 2\bar{m}_+}^2 - \kla*{\vf k + \Delta}^2}.
+\end{align}
+In the static limit $\omega=0$ these functions further simplify to
+\begin{align}
+g_0 &= \frac{-2\bar{m}_+}{4\bar{m}_+^2 - \kla*{\vf k + \Delta}^2},\\
+g_x &= -\frac{2b\Delta}{b^2+\Delta^2} \frac{\vf k + \Delta}{4\bar{m}_+^2 - \kla*{\vf k + \Delta}^2},\\
+g_z &= \frac{b^2-\Delta^2}{b^2+\Delta^2} \frac{\vf k + \Delta}{4\bar{m}_+^2 - \kla*{\vf k + \Delta}^2}.
+\end{align}
+%\begin{align}
+%g_0^2-g_x^2-g_z^2 &= \kla*{\frac{1}{4\bar{m}_+^2 - \kla*{\vf k + \Delta}^2}}^2 \kla*{4\bar{m}_+^2 - \klb*{\kla*{\frac{2b\Delta}{b^2+\Delta^2}}^2 + \kla*{\frac{b^2-\Delta^2}{b^2+\Delta^2}}^2} \kla*{\vf k + \Delta}^2} = 
+%\end{align}
+Note that $g_0^2-g_x^2-g_z^2 = \frac{1}{4\bar{m}_+^2 - \kla*{\vf k + \Delta}^2}$ which simplifies the Hamiltonian to
+\begin{align}
+H_\Text{eff}^\R(k,\omega=0) &= -\kla*{4\bar{m}_+^2 - \kla*{\vf k + \Delta}^2} \kla*{g_0\sigma_0 - g_x\sigma_x - g_z\sigma_z}\\
+&= 2\bar{m}_+\sigma_0 + \klc*{-\frac{2b\Delta}{b^2 + \Delta^2} \kla*{\vf k + \Delta} \sigma_x + \frac{b^2-\Delta^2}{b^2 + \Delta^2} \kla*{\vf k + \Delta} \sigma_z}\\
+&= 2\bar{m}_+ \sigma_0 + \frac{\vf k + \Delta}{b^2 + \Delta^2} \klc*{ (b^2 - \Delta^2) \sigma_z - 2b\Delta \sigma_x}\\
+%&= 2\bar{m}_+ \sigma_0 + \frac{\sqrt{\vf^2k^2 + 4\bar{m}_-^2}}{4\bar{m}_-^2 + \kla*{\sqrt{\vf^2k^2 + 4\bar{m}_-^2} - \vf k}^2} \klc*{ (4\bar{m}_-^2 - \kla*{\sqrt{\vf^2k^2 + 4\bar{m}_-^2} - \vf k}^2) \sigma_z - 4\bar{m}_-\kla*{\sqrt{\vf^2k^2 + 4\bar{m}_-^2} - \vf k} \sigma_x}\\
+%&= 2\bar{m}_+ \sigma_0 + \frac{\sqrt{\vf^2k^2 + 4\bar{m}_-^2}}{4\bar{m}_-^2 + 2\vf^2k^2 + 4\bar{m}_-^2 - 2\vf k\sqrt{\vf^2k^2 + 4\bar{m}_-^2}} \klc*{ \kla*{2\vf k \sqrt{\vf^2k^2 + 4\bar{m}_-^2} - 2\vf^2k^2} \sigma_z - 4\bar{m}_-\kla*{\sqrt{\vf^2k^2 + 4\bar{m}_-^2} - \vf k} \sigma_x}\\
+%&= 2\bar{m}_+ \sigma_0 + \frac{1}{2\kla*{\sqrt{\vf^2k^2 + 4\bar{m}_-^2} - \vf k}} \klc*{ 2\vf k \kla*{\sqrt{\vf^2k^2 + 4\bar{m}_-^2} - \vf k} \sigma_z - 4\bar{m}_-\kla*{\sqrt{\vf^2k^2 + 4\bar{m}_-^2} - \vf k} \sigma_x}\\
+&= 2\bar{m}_+ \sigma_0 + \vf k \sigma_z - 2\bar{m}_- \sigma_x.
+\end{align}
+\TODO{(This is of course not particularly surprising, but it is nice to see that it works)}\\
+In order to get exceptional points we need a fully imaginary $\bar{m}_-$.
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

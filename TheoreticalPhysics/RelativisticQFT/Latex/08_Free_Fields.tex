@@ -1,0 +1,207 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage[most]{tcolorbox}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\usepackage{slashed}
+\usepackage{bbm}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{06 Quantization of Free Fields}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Relativistic Quantum Field Theory}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Short exercise on propagators}
+The time-ordered product of two fermionic fields is given by 
+\begin{align}
+\mathcal{T} \hat{\psi}(x) \bar{\hat{\psi}}(y) := \Theta\kla\left( x^0 - y^0 \right) \hat{\psi}(x) \bar{\hat{\psi}}(y) - \Theta \kla\left( y^0 - x^0 \right) \bar{\hat{\psi}}(y) \hat{\psi}(x).
+\end{align}
+%Note that for $\partial_\mu \equiv \frac{\partial}{\partial x^\mu}$ we find
+%\begin{align}
+%\slashed{\partial} \bar{\hat{\psi}}(y) &= \gamma^\mu \hat{\psi}^\dagger (y) \gamma^0 \partial_\mu = \hat{\psi}^\dagger (y) \kla\left( \klammer\left\{ \gamma^\mu, \gamma^0 \right\} - \gamma^0 \gamma^\mu  \right) \partial_\mu = 2\bar{\hat{\psi}}(y) \gamma^0 \partial_0 -\bar{\hat{\psi}} (y) \slashed{\partial} .
+%\end{align}
+%Then we find, using the equation of motion for the fields $\left( \i\slashed{\partial} - m \right) \hat{\psi}(x) = 0$
+%\begin{align*}
+%\kla\left( \i\slashed{\partial} - m \right) \braket\langle 0 | \mathcal{T} \hat{\psi}(x) \bar{\hat{\psi}}(y) | 0 \rangle &= \Theta\kla\left( x^0 - y^0 \right) \braket\langle 0 | \klam\left[ \left( \i\slashed{\partial} - m \right) \hat{\psi}(x) \right] \bar{\hat{\psi}}(y) | 0 \rangle - \\
+%&\quad - \Theta\kla\left( y^0 - x^0 \right) \braket\langle 0 | \bar{\hat{\psi}}(y) \kla\left( 2\i\gamma^0\partial_0 - \i \slashed{\partial} - m \right) \hat{\psi}(x) | 0 \rangle = \\
+%&= 0 - 2\Theta \kla\left( y^0 - x^0 \right) \braket\langle 0 | \bar{\hat{\psi}} (y) \left( \i\gamma^0\partial_0 - m \right) \hat{\psi}(x) | 0 \rangle = 0.
+%\end{align*}
+Note that
+\begin{align*}
+\partial_0 \langle 0 | \mathcal{T} \hat{\psi}(x) \bar{\hat{\psi}}(y) | 0 \rangle &= \delta\kla\left( x^0 - y^0 \right) \langle 0 | \hat{\psi}(x) \bar{\hat{\psi}}(y) | 0 \rangle + \Theta\kla\left( x^0 - y^0 \right) \langle 0 | \partial_0 \hat{\psi}(x) \bar{\hat{\psi}}(y) | 0 \rangle +\\
+&\quad + \delta \kla\left( x^0 - y^0 \right) \langle 0 | \bar{\hat{\psi}}(y) \hat{\psi}(x) | 0 \rangle - \Theta\kla\left( y^0 - x^0 \right) \langle 0 | \bar{\hat{\psi}}(y) \partial_0 \hat{\psi}(x) | 0 \rangle = \numberthis\\
+&= \delta\kla\left( x^0 - y^0 \right) \braket\langle 0 | \klammer\left\{ \hat{\psi}(x), \bar{\hat{\psi}}(y) \right\} | 0 \rangle + \langle 0 | \mathcal{T} \partial_0 \hat{\psi}(x) \bar{\hat{\psi}}(y) | 0 \rangle  = \numberthis \\
+&= \delta (x - y) + \langle 0 | \mathcal{T} \partial_0\hat{\psi}(x) \bar{\hat{\psi}}(y) | 0 \rangle. \numberthis
+\end{align*}
+Thus we find
+\begin{align}
+\slashed{\partial} \langle 0 | \mathcal{T} \hat{\psi}(x) \bar{\hat{\psi}}(y) | 0 \rangle &= \delta (x-y)\gamma^0 + \langle 0 | \mathcal{T} \slashed{\partial} \hat{\psi}(x) \bar{\hat{\psi}}(y) | 0 \rangle
+\end{align}
+and finally using the equation of motion
+\begin{align}
+\kla\left( \i\slashed{\partial} - m \right) \langle 0 | \mathcal{T} \hat{\psi}(x) \bar{\hat{\psi}}(y) | 0 \rangle &= \delta (x-y)\gamma^0 + \langle 0 | \mathcal{T} \left( \i\slashed{\partial} - m \right) \hat{\psi}(x) \bar{\hat{\psi}}(y) | 0 \rangle = \delta (x-y)\gamma^0.
+\end{align}
+\section{Free fermionic spin-$\frac{1}{2}$ field in the Kugo-Ojima formalism}
+We want to consider the free QED theory with the inclusion of Faddeev-Popov ghosts.
+We will quantize the free spin-$\frac{1}{2}$ electron field, the free photon field and the free ghost fields.
+Gauge invariance will be replaced by BRST invariance, which remains valid after gauge fixing.
+The Noether theorem will lead to a conserved BRST charge described by an operator $\hat{Q}_B$.
+The Gupta-Bleuler formalism will be replaced by the Kugo-Ojima formalism which is more general and applicable to non-abelian gauge theories.
+The entire setup appears in full QED as the description of asymptotically free particles long before or after interactions.\\
+The Lagrangian is given by
+\begin{align}
+\mathcal{L} &= \mathcal{L}_\tecxt\text{g.inv.} + \mathcal{L}_\tecxt\text{fix} + \mathcal{L}_\tecxt\text{ghost},\\
+\mathcal{L}_\tecxt\text{g.inv.} &= -\frac{1}{4} F^{\mu\nu} F_{\mu\nu} + \i \bar{\psi} \slashed{\partial} \psi,\\
+\mathcal{L}_\tecxt\text{fix+ghost} &= s\klam\left[ \bar{c} \kla\left( \partial_\mu A^\mu  \right) + \frac{\xi}{2}B \right] = B (\partial_\mu A^\mu ) + \frac{\xi}{2}B^2 - \bar{c} \square c.
+\end{align}
+Here $B(x)$ is a bosonic field and $c(x),\bar{c}(x)$ are fermionic ghost and anti-ghost fields respectively.
+All are treated as scalar fields under Poincar\'e transformations.
+On the classical level $c$ and $\bar{c}$ will be treated as anti-commutation number valued functions.
+On the quantum level we will instead require canonical anti-commutation relations similar to those for the electro field.
+The BRST transformations generalize gauge transformations and in the free theory may be expressed using the operator $s$ 
+\begin{align}
+sA^\mu (x) &= \partial^\mu c(x),\\
+s\psi_j(x) &= 0,\\
+s \bar{\psi}_j(x) &= 0,\\
+sc(x) &= 0,\\
+s\bar{c}(x) &= B(x),\\
+sB(x) &= 0
+\end{align}
+where $s$ should be interpreted as a fermionic differential operator satisfying product rules
+\begin{align}
+s \kla\left( B_1B_2 \right) &= \kla\left( sB_1 \right)B_2 + B_1 \kla\left( sB_2 \right),\\
+s \kla\left( F_1B_2 \right) &= \kla\left( sF_1 \right) B_2 - F_1 \kla\left( sB_2 \right),\\
+s \kla\left( F_1F_2 \right) &= \kla\left( sF_1 \right) F_2 - F_1 \kla\left( sF_2 \right).
+\end{align}
+We will quantize this theory for the special case of $\xi=1$, determine the conserved charge $\hat{Q}_B$, evaluate the Fock space of states on which all operators are defined, determine the 1-particle states of positive and negative or indefinite norm, and compute the commutation relations of $\hat{Q}_B$ with all creation and annihilation operators.
+\subsection{Constraints of the theory}
+There are canonical momenta for $A^\mu$, $B$ and $c$.
+Using $F^{\mu\nu} = \partial^\mu A^\nu - \partial^\nu A^\mu$ we find
+\begin{align}
+\pi_\rho &= \frac{\partial \mathcal{L}}{\partial \dot{A}^\rho} = \\
+&= -\frac{1}{4} \frac{\partial}{\partial \dot{A}^\rho} \klam\left[ 2  \kla\left( \partial^\mu A^\nu \right) \partial_\mu A_\nu - 2 \kla\left( \partial^\nu A^\mu  \right) \partial_\mu A_\nu \right] + B \frac{\partial \dot{A}^0}{\partial \dot{A}^\rho} = \\
+&= -\frac{1}{2} \klam\left[ 2\delta_{0}^{\ \mu} \delta_{\rho}^{\ \nu} \partial_\mu A_\nu - 2\delta_{0}^{\ \nu}\delta_{\rho}^{\ \mu} \partial_\mu A_\nu \right] + B\delta_{0\rho} = \\
+&= - \klam\left[ \partial_0 A_\rho - \partial_\rho A_0 \right] + B\delta_{0\rho} = \\
+&= \begin{cases} B &\tecxt\text{for } \rho = 0,\\
+F_{\rho 0} &\tecxt\text{for } \rho = 1,2,3 \end{cases},\\
+\pi_B &= \frac{\partial \mathcal{L}}{\partial \dot{B}} = 0,\\
+\pi_c &= \frac{\partial \mathcal{L}}{\partial \dot{c}} = \dot{\bar{c}},\\
+\pi_{\bar{c}} &= \frac{\partial \mathcal{L}}{\partial \dot{\bar{c}}} = \dot{c}.
+\end{align}
+%Since $\pi_0 = B$ has no dependence of the dynamic variable $\dot{A}^\mu$, this condition represents a constraint. 
+\subsection{Eliminating $B$}
+The equation of motion for $B$ gives
+\begin{align}
+0 &= \partial_\mu \frac{\partial \mathcal{L}}{\partial \partial_\mu B} - \frac{\partial \mathcal{L}}{\partial B} = 0 - \partial_\mu A^\mu - B
+\end{align}
+giving $B = -\partial_\mu A^\mu$.
+Since the Lagrangian does not contain any dynamic $B$-part, the constraint is of second type and $B$ may be treated merely as an abbreviation.
+Then the Lagrangian becomes
+\begin{align}
+\mathcal{L} &= -\frac{1}{4} F^{\mu\nu} F_{\mu\nu} + \i \bar{\psi} \slashed{\partial}  \psi - \frac{1}{2} \kla\left( \partial_\mu A^\mu  \right)^2 - \bar{c} \square c.
+\end{align}
+The non-trivial changes to the BRST transformations are
+\begin{align}
+s\bar{c}(x) &= - \partial_\mu A^\mu,\\
+s\partial_\mu A^\mu(x) &= \partial_\mu sA^\mu(x) = -\square c(x).
+\end{align}
+\subsection{Noether current for BRST invariance}
+We consider the infinitesimal field variation $\delta\phi = \theta s\phi$ for all fields $\phi$ where $\theta$ is an infinitesimal fermionic number.
+Since this variation is zero for $\phi \in \klammer\left\{ \psi, \bar{\psi}, c \right\}$, the only non-trivial transformations are $\phi \in \klammer\left\{ A_\mu, \bar{c} \right\}$.
+Let us first consider $\phi = \bar{c}$.
+Then the relevant part of the Lagrangian is
+\begin{align}
+\mathcal{L}' &= - \kla\left( \bar{c} + \theta s\bar{c} \right) \square c = \mathcal{L} + \theta \partial_\mu A^\mu \square c.
+\end{align}
+On its own this part of the Lagrangian is therefore not invariant, but it need not be.
+For $\phi = A_\mu$ we find
+\begin{align}
+\mathcal{L}' &= -\frac{1}{2} \klam\left[  \kla\left( \partial^\mu \kla\left( A^\nu + \theta sA^\nu \right) - (\mu\leftrightarrow\nu) \right) \partial_\mu \kla\left( A_\nu + \theta s A_\nu \right) \right] - \frac{1}{2} \kla\left( \partial_\mu A^\mu + \partial_\mu \theta sA^\mu  \right)^2 = \\
+&= \mathcal{L} - \frac{1}{2} \klam\left[ \kla\left( \partial^\mu \theta \partial^\nu c - \partial^\nu \theta \partial^\mu c  \right) \partial_\mu A_\nu + \kla\left( \partial^\mu A^\nu - \partial^\nu A^\mu  \right) \partial_\mu \theta \partial_\nu c \right] - \partial_\mu A^\mu \partial_\nu \theta \partial^\nu c = \\
+&= \mathcal{L} - \theta \klammer\left\{ \kla\left( \partial^\mu \partial^\nu c \right) \left(\partial_\mu A_\nu - \partial_\nu A_\mu \right) + \partial_\mu A^\mu \square c \right\} = \\
+&= \mathcal{L} - \theta \partial_\mu A^\mu \square c.
+\end{align}
+This is precisely the opposite change as compared to the $\phi = \bar{c}$-case.
+Thus the Lagrangian is indeed invariant under the full BRST transformation.
+The Noether current is given by
+\begin{align}
+j^\rho &= \sum_\phi \frac{\partial \mathcal{L}}{\partial \partial_\rho \phi} \delta \phi = \\
+&= \frac{\partial \mathcal{L}}{\partial \partial_\rho \bar{c}} \theta s\bar{c} + \frac{\partial \mathcal{L}}{\partial \partial_\rho A_\mu} \theta sA_\mu = \\
+&= \partial^\rho c \theta \kla\left( -\partial_\mu A^\mu  \right) - \klam\left[ \delta^{\rho \nu} \delta^{\mu \lambda} \partial_\nu A_\lambda - \delta^{\rho \lambda} \delta^{\mu \nu} \partial_\nu A_\lambda \right] \theta \partial_\mu c - \partial_\nu A^\nu \delta^{\rho}_{\ \lambda} \delta^{\mu \lambda} \theta \partial_\mu c = \\
+&= +\theta \partial_\mu A^\mu \partial^\rho c - \klam\left[ \partial^\rho A^\mu - \partial^\mu A^\rho  \right] \theta \partial_\mu c - \partial_\nu A^\nu \theta \partial^\rho c  = \\
+&= -\theta F^{\rho \mu} \partial_\mu c.
+\end{align}
+The conserved charge corresponding to the symmetry is
+\begin{align}
+Q_B &:= \intr\int_{\mathbb{R}^{3}} j^0 \, \mathrm{d}^{3}x = -\theta \intr\int_{\mathbb{R}^{3}} F^{0j} \partial_j c \, \mathrm{d}^{3}x = \theta \intr\int_{\mathbb{R}^{3}} \kla\left( \partial_\mu F^{0\mu} \right) c \, \mathrm{d}^{3}x.
+\end{align}
+Note that the equation of motion for the $A_\mu$ is given by
+\begin{align}
+0 &= \partial_\rho \frac{\partial \mathcal{L}}{\partial \partial_\rho A_\mu} - \frac{\partial \mathcal{L}}{\partial A_\mu} = \\
+&= \partial_\rho \klam\left[ \partial^\rho A^\mu - \partial^\mu A^\rho - \partial_\nu A^\nu \delta^{\mu\rho} \right] - 0 = \partial_\rho F^{\rho \mu} - \partial^\mu \partial_\nu A^\nu.
+\end{align}
+Thus we have $\partial_\mu F^{0\mu} = -\partial^0 \partial_\nu A^\nu$ and 
+\begin{align}
+Q_B &= \theta \intr\int_{\mathbb{R}^{3}} \kla\left( -\partial^0 \partial_\nu A^\nu \right) c \, \mathrm{d}^{3}x \equiv \theta \intr\int_{\mathbb{R}^{3}} \dot{B}c \, \mathrm{d}^{3}x.
+\end{align}
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

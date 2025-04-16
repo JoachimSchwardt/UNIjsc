@@ -1,0 +1,259 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{ll_scrarticle}
+
+\newcommand*{\titel}{Perturbation Theory at Finite Temperature for Fermions}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+%\subject{SUBJECT}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+
+\section{Perturbation Theory for the Matsubara Green's function}
+In this section we will derive the Feynman rules for perturbation theory at finite temperature.
+As a starting point assume that we are given some free Hamiltonian
+\begin{align}
+H_0 &= \sum_{ab} \epsilon_{ab} c_a^\dagger c_b
+\end{align}
+where $a,b$ denote tuples of indices, for example momentum $k$ and spin $\sigma$.
+We are interested in the full Hamiltonian $H=H_0+V$ where $V$ is some interaction term and will work in the interaction or Dirac picture where time evolution is done with respect to the free Hamiltonian $H_0$ only.
+For reference, we assume the interaction to take the form
+\begin{align}
+V = \frac{1}{2} \sum_{abcd} V_{abcd} c_a^\dagger c_b^\dagger c_d c_c.
+\end{align}
+The full time evolution is described by the operator $U_\Text{S}(t,t')$ where the subscript refers to Schrödinger and the operator satisfies
+\begin{align}
+\Ket{\psi_\Text{S}(t)} &= U_\Text{S}(t,t') \Ket{\psi_\Text{S}(t')}.
+\end{align}
+In the Dirac picture we then define a different time evolution via the modified state vector
+\begin{align}
+\Ket{\psi_\Text{D}(t)} &= U_{0}^\dagger(t,t') \Ket{\psi_\Text{S}(t')} = U_0^\dagger(t,t') U_\Text{S}(t',t'') \Ket{\psi_\Text{S}(t'')} \\
+&= U_0^\dagger(t,t') U_\Text{S}(t',t'') U_0(t'',t''') \Ket{\psi_\Text{D}(t''')} \equiv U_\Text{D}(t,t') \Ket{\psi_\Text{D}(t,t')}
+\end{align}
+where $U_0(t,t') = \powe{-\i H_{\Text{S},0} (t-t')}$.
+Similarly operators in the Dirac picture are defined via
+\begin{align}
+A_\Text{D}(t) &= U_0^\dagger(t,0) A_\Text{S}(t) U_0(t,0)
+\end{align}
+and in particular it follows that $H_{\Text{D},0} = H_{\Text{S},0}$, which is why we will drop the subscript on $H_0$ from now on.
+The time evolution of the state vector is given by
+\begin{align}
+\i\partial_t\Ket{\psi_\Text{D}(t)} &= \kla*{\i\partial_t U_0^\dagger(t,0)} \Ket{\psi_\Text{S}} + U_0^\dagger(t,0) H_\Text{S}\Ket{\psi_\Text{S}} = \\
+&= U_0^\dagger(t,0) \kla*{-H_0 + H_\Text{S}} \Ket{\psi_\Text{S}} = V_\Text{D}(t,0) \Ket{\psi_\Text{D}(t)}
+\end{align}
+where $V_\Text{D}(t) = U_0^\dagger(t) V_\Text{S} U_0(t)$ and a single argument to a time evolution operator is meant to imply that the second argument was set to zero.
+Similarly we then find
+\begin{align}
+\i\partial_t U_\Text{D}(t) &= V_\Text{D}(t) U_\Text{D}(t).
+\end{align}
+This equation may formally be solved via the series expansion
+\begin{align}
+U_\Text{D}(t,t') &= \mathcal{T} \powe{-\i\intx{t'}{t}{V_\Text{D}(s)}{s}}
+\end{align}
+where the time-ordering operator $\mathcal{T}$ ensures that time increases when read from right to left.
+Any fermionic operators that have to be permuted this way contribute an additional minus sign.
+The Gellmann-Low theorem now allows us to compute the time-ordered or causal Green's function by relating expectation values back to the ground state of $H_0$ via adiabatic switching.
+Without elaborating on the assumptions one finds that expectation values in the ground state $\Ket{E_0}$ of the full Hamiltonian are given by
+\begin{align}
+\brc*{E_0}{A_{\Text{D},1}(t_1) \dots A_{\Text{D},N}(t_N)}{E_0} &= \frac{\brc*{0}{U_\Text{D}(\infty,t_1) A_{\Text{D},1}(t_1) U_\Text{D}(t_1,t_2) \dots A_{\Text{D},N}(t_N) U_{\Text{D}}(t_N,-\infty) }{0}}{\brc*{0}{U_\Text{D}(\infty,-\infty)}{0}}\\
+&= \frac{\brc*{0}{\mathcal{T} U_\Text{D}(\infty,-\infty) A_{\Text{D},1}(t_1)\dots A_{\Text{D},N}(t_N)}{0}}{\brc*{0}{U_\Text{D}(\infty,-\infty)}{0}}.
+\end{align}
+At finite temperature it is useful to introduce imaginary time $\tau=\i t$ with $\tau\in\klb*{0,\beta}$ and let the time-ordering now act on $\tau$-arguments.
+Also expectation values are now given by ensemble averages
+\begin{align}
+\bra*{A} &= \frac{1}{Z} \tr \klc*{A\powe{-\beta H}}.
+\end{align}
+Once again skipping the details one eventually finds that the Matsubara Green's function takes the standard form
+\begin{align}
+G_{0,ab}^\M(x,\tau) &= -\mathcal{T} \bra*{\psi_a(x,\tau) \psi_b^\dagger(0,0)} = \frac{\brc[\big]{0}{\mathcal{T} U_\Text{M}(0,\beta) \psi_a(x,\tau) \psi_b^\dagger(0,0)}{0}}{\brc*{0}{U_\Text{M}(0,\beta)}{0}}
+\end{align}
+where $U_\M(\tau_1,\tau_2) = \mathcal{T} \exp\kla*{-\intx{\tau_1}{\tau_2}{V_\M(\tau')}{\tau'}}$ and $V_\M(\tau) = \powe{H_0\tau} V \powe{-H_0\tau}$.
+\TODO{TODO...}
+\section{Linear two-atomic chain}
+Consider the free Hamiltonian
+\begin{align}
+H_0 &= \sum_{\kappa=\A,\B} \sum_k \vf k \varnormord{c_{\kappa,k}^\dagger c_{-\kappa,k}}
+\end{align}
+expressed in terms of fermionic operators $c_{\kappa,k}$ in momentum space.
+Here $\kappa = \A,\B$ refers to the two sub-lattices and $\vf$ is the Fermi velocity.
+The normal-ordering avoids technical difficulties with the infinitely many occupied states below the Fermi energy $E_\F=0$.
+We can diagonalize $H_0$ via the rotation
+\begin{align}
+\begin{pmatrix}
+c_{\A,k} \\ c_{\B,k}
+\end{pmatrix} &= \frac{1}{\sqrt{2}} \begin{pmatrix}
+1 & 1 \\ 1 & -1
+\end{pmatrix} \begin{pmatrix}
+c_{\R,k} \\ c_{\L,k}
+\end{pmatrix} \equiv U \begin{pmatrix}
+c_{\R,k} \\ c_{\L,k}
+\end{pmatrix}.
+\end{align}
+Inserting into the Hamiltonian yields
+\begin{align}
+H_0 &= \sum_{\kappa=\A,\B} \sum_k \vf k \varnormord{\frac{c_{\R,k}^\dagger + \kappa c_{\L,k}^\dagger}{\sqrt{2}} \frac{c_{\R,k} - \kappa c_{\L,k}}{\sqrt{2}}} = \sum_{\ell=\R,\L} \sum_k \ell\vf k \varnormord{n_{\ell,k}}
+\end{align}
+where $n_{\ell,k} = c_{\ell,k}^\dagger c_{\ell,k}$ is the density operator.
+Note that $\ell=\R=+1$ leads to a positive velocity and $\ell=\L=-1$ leads to a negative velocity.
+Consequently the particles are referred to as ``right-movers'' and ``left-movers'' respectively.
+The imaginary time evolution with $\tau=\i t$ via the Heisenberg equation of motion gives\footnote{$\klb*{a,bc} = \klc*{a,b}c - b\klb*{a,c}$ and $\klc*{c_{\ell,k}, c_{\ell',k'}^\dagger} = \delta_{\ell,\ell'} \delta_{k,k'}$}
+\begin{align}
+-\partial_\tau c_{\ell,k} &= \klb*{c_{\ell,k}, H_0} = \ell \vf k c_{\ell,k},\\
+-\partial_\tau c_{\ell,k}^\dagger &= \klb*{c_{\ell,k}^\dagger, H_0} = -\ell \vf k c_{\ell,k}^\dagger
+\end{align}
+which can be solved to obtain $c_{\ell,k}(\tau) = c_{\ell,k} \powe{-\ell \vf k\tau}$ and $c_{\ell,k}^\dagger(\tau) = c_{\ell,k}^\dagger \powe{\ell \vf k\tau}$.
+Using the Fourier transform
+\begin{align}
+c_{\ell,k} &= \frac{1}{\sqrt{L}} \intx{-L/2}{L/2}{\powe{-\i kx} c_{\ell,x}}{x}
+\end{align}
+where $L$ is the system size we find the free Green's function to be given by
+\begin{align}
+G_{0,\ell,\ell'}^\M(x-x',\tau) &= -\mathcal{T} \bra*{c_{\ell,x}(\tau) c_{\ell',x'}^\dagger(0)}_0 = -\frac{1}{L}\sum_{k,k'} \powe{-\i kx} \powe{\i k'x'} \mathcal{T} \bra*{c_{\ell,k}(\tau) c_{\ell',k'}^\dagger(0)}_0\\
+&= -\frac{1}{L}\sum_{k,k'} \powe{-\i kx} \powe{\i k' x'} \powe{-\ell\vf k\tau} \bra*{c_{\ell,k} c_{\ell',k'}^\dagger}_0.
+\end{align}
+At this point it is useful to first compute the partition function
+\begin{align}
+Z_0 &= \tr\klc*{\powe{-\beta H_0}} = \sum_{\klc*{n_{\ell,k}}} \brc*{\klc*{n_{\ell,k}}}{\powe{-\beta H_0}}{\klc*{n_{\ell,k}}}\\
+&= \sum_{\klc*{n_{\ell,k}}} \brc[\Big]{\klc*{n_{\ell,k}}}{\prod_{\ell'=\pm 1} \prod_{k'} \powe{-\beta \ell'\vf k' n_{\ell',k'}}}{\klc*{n_{\ell,k}}}\\
+&= \prod_{\ell=\pm 1} \prod_{k} \sum_{n_{\ell,k}=0}^1 \powe{-\beta \ell \vf k n_{\ell,k}} = \prod_{\ell=\pm 1} \prod_{k} \kla*{1 + \powe{-\beta\ell\vf k}} \equiv \prod_{\ell=\pm 1} \prod_{k} Z_{0,\ell,k}.
+\end{align}
+This the immediately yields the expectation value
+\begin{align}
+\bra*{c_{\ell,k}^\dagger c_{\ell',k'}}_0 &= \frac{1}{Z_0} \tr\klc*{c_{\ell,k}^\dagger c_{\ell',k'} \powe{-\beta H_0}} = \delta_{\ell,\ell'} \delta_{k,k'} \frac{1}{Z_{0,\ell,k}} \sum_{n_{\ell,k}=0}^1 n_{\ell,k} \powe{-\beta \ell\vf k} \\
+&= \delta_{\ell,\ell'} \delta_{k,k'} \frac{1}{\powe{\beta \ell \vf k} + 1} \equiv \delta_{\ell,\ell'} \delta_{k,k'} n_\F(\ell\vf k).
+\end{align}
+The Green's function therefore simplifies to
+\begin{align}
+G_{0,\ell,\ell'}^\M(x-x',\tau) &= -\frac{1}{L}\sum_{k,k'} \powe{-\i kx} \powe{\i k' x'} \powe{-\ell \vf k\tau} \delta_{\ell,\ell'} \delta_{k,k'} \kla*{1 - n_\F(\ell\vf k)}\\
+&= -\delta_{\ell,\ell'}\frac{1}{L} \sum_k \powe{-\i k(x-x')} \powe{-\ell\vf k\tau} \kla*{1 - n_\F(\ell\vf k)}.
+\end{align}
+In momentum space this can be brought into the simple form
+\begin{align}
+G_{0,\ell,\ell'}^\M(k,\tau) &= \intx{-L/2}{L/2}{\powe{-\i kx} G_{0,\ell,\ell'}^\M(x,\tau)}{x} = -\delta_{\ell,\ell'} \powe{-\ell\vf k\tau} \kla*{1 - n_\F(\ell\vf k)}.
+\end{align}
+Performing the temporal Fourier transform with the fermionic Matsubara frequencies $\omega_n^\F = \frac{(2n+1)\pi}{\beta}$ leads to the typical result
+\begin{align}
+G_{0,\ell,\ell'}^\M(k,\i\omega_n^\F) &= \intx{0}{\beta}{\powe{\i\omega_n^\F\tau}G_{0,\ell,\ell'}^\M(k,\tau) }{\tau} = -\delta_{\ell,\ell'} \kla*{1 - n_\F(\ell\vf k)} \frac{-\powe{-\ell\vf k\beta} - 1}{\i\omega_n^\F - \ell\vf k} = \frac{\delta_{\ell,\ell'}}{\i\omega_n^\F - \ell\vf k}.
+\end{align}
+\section{Density-density interaction}
+We want to treat the interaction given by
+\begin{align}
+V &= \sum_{\kappa=\A,\B} \sum_{j=0}^{N-1} U_\kappa n_{\kappa,j} n_{\kappa,j+1}
+\end{align}
+perturbatively.
+Note that this term describes a density-density interaction between nearest neighbours with potentially distinct interaction strengths on either sublattice.
+While the full Hamiltonian remains hermitian by construction, we hope to find non-hermitian topology for some part of the parameter space.
+Since we are interested in the low energy theory we want to replace the lattice model by a continuum theory by setting the lattice spacing $a\rightarrow 0$.
+Before that we perform the change of basis to obtain $n_{\kappa,j} = \frac{1}{2} \kla*{c_{\R,j}^\dagger + \kappa c_{\L,j}^\dagger} \kla*{c_{\R,j} + \kappa c_{\L,j}} = \frac{1}{2} \sum_{\ell=\R,\L} \kla*{n_{\ell,j} + \kappa c_{\ell,j}^\dagger c_{-\ell,j}}$.
+Inserting into the interaction term gives
+\begin{align}
+V &= \sum_{\kappa=\A,\B} \sum_{j=0}^{N-1} U_\kappa \frac{1}{4} \sum_{\ell,\ell'=\R,\L} \kla*{n_{\ell,j} + \kappa c_{\ell,j}^\dagger c_{-\ell,j}} \kla*{n_{\ell',j+1} + \kappa c_{\ell',j+1}^\dagger c_{-\ell',j+1}} = V_+ + V_-.
+\end{align}
+Here we defined the parameters $U_\pm = \frac{U_\A \pm U_\B}{2}$ and the terms
+\begin{align}
+V_+ &= \frac{U_+}{2} \sum_{\ell,\ell'=\R,\L} \sum_{j=0}^{N-1} \kla*{n_{\ell,j} n_{\ell',j+1} + c_{\ell,j}^\dagger c_{-\ell,j} c_{\ell',j+1}^\dagger c_{-\ell',j+1}},\\
+V_- &= \frac{U_-}{2} \sum_{\ell,\ell'=\R,\L} \sum_{j=0}^{N-1} \kla*{n_{\ell,j} c_{\ell',j+1}^\dagger c_{-\ell',j+1} + c_{\ell,j}^\dagger c_{-\ell,j} n_{\ell',j+1}}.
+\end{align}
+Going to a continuum theory via $c_{\ell,j}=\sqrt{a} \psi_{\ell,j}(x)$ and $L\rightarrow\infty$ gives
+\begin{align}
+V_+ &= \frac{U_+ a}{2} \sum_{\ell,\ell'=\R,\L} \intr{\klb*{\psi_{\ell}^\dagger(x) \psi_{\ell'}^\dagger(x+a) \psi_{\ell'}(x+a) \psi_{\ell}(x) + \psi_{\ell}^\dagger(x) \psi_{\ell'}^\dagger(x+a) \psi_{-\ell'}(x+a) \psi_{-\ell}(x)}}{x}\\
+&= \sum_{\ell_1,\ell_2,\ell_3,\ell_4} \intr{\intr{\psi_{\ell_1}^\dagger(x_1) \psi_{\ell_2}^\dagger(x_2) U_{+,\ell_1,\ell_2,\ell_3,\ell_4}(x_1-x_2) \psi_{\ell_4}(x_2) \psi_{\ell_3}(x_1)}{x_2}}{x_1},\\
+V_- &= \frac{U_- a}{2} \sum_{\ell,\ell'=\R,\L} \intr{\klb*{\psi_{\ell}^\dagger(x) \psi_{\ell'}^\dagger(x+a) \psi_{-\ell'}(x+a) \psi_{\ell}(x) + \psi_{\ell}^\dagger(x) \psi_{\ell'}^\dagger(x+a) \psi_{\ell'}(x+a) \psi_{-\ell}(x)}}{x}\\
+&= \sum_{\ell_1,\ell_2,\ell_3,\ell_4} \intr{\intr{\psi_{\ell_1}^\dagger(x_1) \psi_{\ell_2}^\dagger(x_2) U_{-,\ell_1,\ell_2,\ell_3,\ell_4}(x_1-x_2) \psi_{\ell_4}(x_2) \psi_{\ell_3}(x_1)}{x_2}}{x_1}
+\end{align}
+where we defined the interaction potentials
+\begin{align}
+U_{+,\ell_1,\ell_2,\ell_3,\ell_4}(x) &= \frac{U_+}{2} a\delta(x+a) \klb*{\delta_{\ell_1,\ell_3} \delta_{\ell_2,\ell_4} + \delta_{\ell_1,-\ell_3} \delta_{\ell_2,-\ell_4}},\\
+U_{-,\ell_1,\ell_2,\ell_3,\ell_4}(x) &= \frac{U_-}{2} a\delta(x+a) \klb*{\delta_{\ell_1,-\ell_3} \delta_{\ell_2,\ell_4} + \delta_{\ell_1,\ell_3} \delta_{\ell_2,-\ell_4}}.
+\end{align}
+Due to the structural similarity we can recombine the interactions into 
+\begin{align}
+V &= \sum_{\ell_1,\ell_2,\ell_3,\ell_4} \intr{\intr{\psi_{\ell_1}^\dagger(x_1) \psi_{\ell_2}^\dagger(x_2) U_{\ell_1,\ell_2,\ell_3,\ell_4}(x_1-x_2) \psi_{\ell_4}(x_2) \psi_{\ell_3}(x_1)}{x_2}}{x_1},\\
+U_{\ell_1,\ell_2,\ell_3,\ell_4}(x) &= \frac{a}{2} \delta(x+a) \klb*{U_+\delta_{\ell_1,\ell_3} \delta_{\ell_2,\ell_4} + U_+\delta_{\ell_1,-\ell_3} \delta_{\ell_2,-\ell_4} + U_-\delta_{\ell_1,-\ell_3} \delta_{\ell_2,\ell_4} + U_-\delta_{\ell_1,\ell_3} \delta_{\ell_2,-\ell_4}}.
+\end{align}
+At this point we may use the standard Feynman rules to evaluate the Green's function.
+In momentum space one has
+\begin{align}
+U_{\ell_1,\ell_2,\ell_3,\ell_4}(q) &= \intr{\powe{-\i qx} U_{\ell_1,\ell_2,\ell_3,\ell_4}(x)}{x} \\
+&= \frac{a}{2} \powe{\i qa} \klb*{U_+\delta_{\ell_1,\ell_3} \delta_{\ell_2,\ell_4} + U_+\delta_{\ell_1,-\ell_3} \delta_{\ell_2,-\ell_4} + U_-\delta_{\ell_1,-\ell_3} \delta_{\ell_2,\ell_4} + U_-\delta_{\ell_1,\ell_3} \delta_{\ell_2,-\ell_4}}
+\end{align}
+and no time-dependence since the interaction is assumed to be instantaneous.
+%\section{Self-energy}
+%\subsection{Tree level}
+%\TODO{Feynman diagram}
+%\begin{align}
+%\dots &= \sum_{\ell_1,\ell_2} \intr{ G_{0,\ell,\ell_1}^\M(k-k',\i\omega_{n}^\F) U_{\ell,\ell_1,\ell_2,\ell'}(k') }{k'}\\
+%&= \intr{\frac{1}{\i\omega_n^\F - (k-k')} \frac{a}{2} \powe{\i k'a} \klb*{U_+ \delta_{\ell,\ell'} + U_+ \delta_{\ell,-\ell'} + U_- \delta_{\ell,\ell'} + U_- \delta_{\ell,-\ell'}} }{k'}\\
+%&= \frac{a}{2} \klb*{U_\A \delta_{\ell,\ell'} + U_\B \delta_{\ell,-\ell'}}...
+%\end{align}
+%\section{Green's function}
+%\subsection{Tree level}
+%\TODO{Feynman diagram}\footnote{$\intr{\frac{1}{x-z} \powe{\i a x}}{x} = 2\pi\i \powe{-\i a z} \Theta(\Im(z))$ for $a>0$ and $z\neq 0$.}
+%\begin{align}
+%-\dots_{\ell,\ell'} &= (-1)^4 \sum_{\ell_1,\ell_2} \intr{G_{0,\ell,\ell_1}^\M(k,\i\omega_n^\F) G_{0,\ell_1,\ell_2}^\M(k-k',\i\omega_n^\F) U_{\ell',\ell_1,\ell,\ell_2} G_{0,\ell_2,\ell'}^\M(k,\i\omega_n^\F)}{k'}\\
+%&= \delta_{\ell,\ell'} \intr{\frac{1}{\i\omega_n^\F - k} \frac{1}{\i\omega_n^\F - k + k'} \frac{U_+a}{2} \powe{\i k'a} \frac{1}{\i\omega_n^\F - k}}{k'}\\
+%&= \delta_{\ell,\ell'} \frac{U_+a}{2} \frac{1}{\kla*{\i\omega_n^\F - k}^2} 2\pi\i \powe{-\i a \kla*{k - \i\omega_n^\F}} \Theta\kla*{-\omega_n^\F}.
+%\end{align}
+%This is not a good idea. 
+%Instead start with $\i\omega_n^\F\rightarrow \omega + \i\delta$ and compute
+%\begin{align}
+%-\dots_{\ell,\ell'} &= \delta_{\ell,\ell'} \frac{U_+a}{2} \frac{1}{\kla*{\omega+\i\delta - k}^2}  \intr{\frac{1}{\omega - k + k' + \i\delta} \powe{\i k'a} }{k'} = 0.
+%\end{align}
+\section{Green's function}
+(See \texttt{QMBP\_thermal\_Feynman\_rules} p.22 and p.27)
+\\
+\QnA{Fock term has indices $\beta\nu\mu\rho\lambda\alpha$.
+Interaction written as $V=\frac{1}{2} \sum_{\lambda\mu\nu\rho} V_{\lambda\rho;\mu\nu} c_\lambda^\dagger c_\mu^\dagger c_\nu c_\rho$. 
+Assumes $V_{\lambda\rho;\mu\nu} = V_{\mu\nu;\lambda\rho}$.
+Notice $\nu\mu\rho\lambda$ is reverse of order in $V$ definition.
+Rewriting in a more memorable form $V_{14;23} c_1^\dagger c_2^\dagger c_3 c_4$ gives order $\beta 3241\alpha$.
+I.e. the inner two operators correspond to the start of an interaction line and the outer two operators correspond to its end.
+Rewriting again with $1=1', 4=2', 2=3', 3=4'$ gives $V_{1'2'3'4'}$ and order $\beta 4'3'2'1'\alpha$
+\begin{align}
+U_{\ell_1,\ell_2,\ell_3,\ell_4}(q) &= \intr{\powe{-\i qx} U_{\ell_1,\ell_2,\ell_3,\ell_4}(x)}{x} \\
+&= \frac{a}{2} \powe{\i qa} \klb*{U_+\delta_{\ell_1,\ell_4} \delta_{\ell_2,\ell_3} + U_+\delta_{\ell_1,-\ell_4} \delta_{\ell_2,-\ell_3} + U_-\delta_{\ell_1,-\ell_4} \delta_{\ell_2,\ell_3} + U_-\delta_{\ell_1,\ell_4} \delta_{\ell_2,-\ell_3}}
+\end{align}}
+\subsection{Tree level}
+\TODO{Feynman diagram}\footnote{$\intr{\frac{1}{x-z} \powe{\i a x}}{x} = 2\pi\i \powe{-\i a z} \Theta(\Im(z))$ for $a>0$ and $z\neq 0$.}
+\begin{align}
+-G_{1,\ell,\ell'}^{\M,1} &= (-1)^4 \sum_{\ell_1,\ell_2,\ell_3,\ell_4} \intr{G_{0,\ell,\ell_1}^\M(k,\i\omega_n^\F) G_{0,\ell_2,\ell_3}^\M(k',\i\omega_n^\F) U_{\ell_1,\ell_2,\ell_3,\ell_4}(k-k') G_{0,\ell_4,\ell'}^\M(k,\i\omega_n^\F)}{k'}\\
+&= \sum_{\ell_3} \intr{\frac{1}{\i\omega_n^\F - \ell k} \frac{1}{\i\omega_n^\F - \ell' k} \frac{1}{\i\omega_n^\F - \ell_3 k'} \frac{a}{2} \powe{\i (k-k')a} \klb*{U_+\delta_{\ell,\ell'} + U_-\delta_{\ell,-\ell'}}}{k'}\\
+&= \frac{a}{2}\powe{\i ka} \klb*{U_+\delta_{\ell,\ell'} + U_-\delta_{\ell,-\ell'}} \frac{1}{\i\omega_n^\F - \ell k} \frac{1}{\i\omega_n^\F - \ell' k} \sum_{\ell_3} \intr{\frac{1}{\i\omega_n^\F - \ell_3 k'} \powe{-\i k'a}}{k'}.
+\end{align}
+Using the analytic continuation $\i\omega_n^\F\rightarrow \omega + \i\delta$ this becomes
+\begin{align}
+-G_{1,\ell,\ell'}^{\M,1} &= \frac{a}{2}\powe{\i ka} \klb*{U_+\delta_{\ell,\ell'} + U_-\delta_{\ell,-\ell'}} \frac{1}{\omega + \i\delta - \ell k} \frac{1}{\omega + \i\delta - \ell' k} \sum_{\ell_3} \intr{\frac{1}{\omega + \i\delta + \ell_3 k'} \powe{\i k'a}}{k'}\\
+&= \frac{a}{2}\powe{\i ka} \klb*{U_+\delta_{\ell,\ell'} + U_-\delta_{\ell,-\ell'}} \frac{1}{\omega + \i\delta - \ell k} \frac{1}{\omega + \i\delta - \ell' k} \intr{\frac{1}{\omega + \i\delta - k'} \powe{\i k'a}}{k'}\\
+&= \frac{a}{2}\powe{\i ka} \klb*{U_+\delta_{\ell,\ell'} + U_-\delta_{\ell,-\ell'}} \frac{1}{\omega + \i\delta - \ell k} \frac{1}{\omega + \i\delta - \ell' k} (- 2\pi\i) \powe{-\i a\omega}\\
+&= -\pi\i a \powe{\i a(k-\omega)} \klb*{ \frac{U_+\delta_{\ell,\ell'}}{\kla*{\omega - \ell k + \i\delta}^2} + \frac{U_-\delta_{\ell,-\ell'}}{ \kla*{\omega + \i\delta}^2 - k^2 } }.
+\end{align}
+\TODO{Feynman diagram; tadpole}
+\begin{align}
+-G_{1,\ell,\ell'}^{\M,2} &= (-1)^3 \sum_{\ell_1,\ell_2,\ell_3,\ell_4} G_{0,\ell,\ell_1}^\M(k,\i\omega_n^\F) \sum_{m\in\mathbb{Z}} \intr{G_{0,\ell_3,\ell_4}^\M(k',\i\omega_m^\F)}{k'} U_{\ell_1,\ell_2,\ell_3,\ell_4}(0) G_{0,\ell_2,\ell'}^\M(k,\i\omega_n^\F)\\
+&= ??? 
+\end{align}
+To first order the Green's function is thus
+\begin{align}
+G_{0,\ell,\ell'}^\R(k,\omega) &\simeq \frac{\delta_{\ell,\ell'}}{\omega - \ell \vf k + \i\delta} + \pi\i a \powe{\i a(k-\omega)} \klb*{ \frac{U_+\delta_{\ell,\ell'}}{\kla*{\omega - \ell \vf k + \i\delta}^2} + \frac{U_-\delta_{\ell,-\ell'}}{ \kla*{\omega + \i\delta}^2 - \vf^2 k^2 } }.
+\end{align}
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

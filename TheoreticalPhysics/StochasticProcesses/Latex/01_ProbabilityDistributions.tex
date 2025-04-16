@@ -1,0 +1,279 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{01 Probability distributions}
+\newcommand*{\autor}{Joachim Schwardt and Julian Fleck}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Stochastic processes}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Problem 1.2: Buffon's needle}
+Due to the translational symmetry along the $x$-axis, the probability distribution in question will only depend on $y$ and the angle $\alpha$ between the needle and the $y$-axis. 
+Since the problem is periodic along the $y$-axis, we only have to consider the interval $y\in\left[ 0,1 \right]$.
+Due to the symmetry of the needle, we may also restrict the possible angles to $\alpha\in\left[ 0,\pi \right]$.
+Now the condition for crossing the line at $y=0$ is given by
+\begin{align}
+\frac{1}{2}\cos\alpha\overset{!}{\ge}y.
+\end{align}
+A similar condition holds for crossing the line at $y=1$.
+To simplify the problem even further, we can even restrict the angles to $\alpha\in\left[ 0,\frac{\pi}{2} \right]$ and the $y$-coordinate to $y\in\left[ 0,\frac{1}{2} \right]$, and only consider crossing the line at $y=0$.
+This finally results in an unnormalized probability distribution of
+\begin{align}
+\rho(y,\alpha)&=\begin{cases} 1 &\tecxt\text{for }\cos\alpha\ge 2y \\ 0 &\tecxt\text{else} \end{cases}\equiv\Theta\kla\left( \cos\alpha - 2y \right),
+\end{align}
+where $y\in\left[ 0,\frac{1}{2} \right]$ and $\alpha\in\left[ 0,\frac{\pi}{2} \right]$.
+The probability $P$ for a needle crossing any line is then given by
+\begin{align}
+P&=\frac{\int_{0}^{\pi/2}\int_{0}^{1/2}\rho(y,\alpha)\, \mathrm{d}y\, \mathrm{d}\alpha}{\int_{0}^{\pi/2}\int_{0}^{1/2}\, \mathrm{d}y\, \mathrm{d}\alpha}=\frac{1}{\pi/4}\int_{0}^{\pi/2}\int_{0}^{\cos(\alpha)/2}\, \mathrm{d}y\, \mathrm{d}\alpha=\\
+&=\frac{4}{\pi}\int_{0}^{\pi/2}\frac{1}{2}\cos\alpha\, \mathrm{d}\alpha=\frac{2}{\pi}.
+\end{align}
+%
+%TODO: Recheck this, I'm still confused...\\
+%Finding the probability of a needle crossing one of the lines is equivalent to finding the ratio of those angles $\left\{ \alpha\in[0,\pi)\,\vert\,\tecxt\text{needle crosses line} \right\}$ to the full $\pi$ (due to the symmetry, we only need to consider angles between 0 and $\pi$).
+%For any given (random) central position $x\in[ 0,1)$ of the needle,
+%the condition can be found by considering a triangle with hypotenuse $\frac{1}{2}$ (half the needle's length), a side parallel to the $x$-axis with length of $d$, and an angle $\alpha$ between them.
+%Since $d=\frac{1}{2}\cos\alpha$, the needle only crosses the line to its left if $d>x$, or equivalently
+%\begin{align}
+%\cos\alpha &>2x.
+%\end{align}
+%The total probability of crossing said line is therefore
+%\begin{align}
+%P&=\frac{1}{\pi}\intx\int_{0}^{1}\intx\int_{0}^{2\pi}\Theta(\cos\alpha - 2x)\, \mathrm{d}\alpha\, \mathrm{d}x=\frac{1}{2\pi}\intx\int_{0}^{\pi}\intx\int_{0}^{\frac{1}{2}\cos\alpha}\, \mathrm{d}x\, \mathrm{d}\alpha=\\
+%&=\frac{1}{\pi}\intx\int_{0}^{\pi}\frac{1}{2}\cos\alpha\, \mathrm{d}\alpha=\frac{1}{\pi}.
+%\end{align}
+%However, since this is also the probability of crossing the line to the right of $x$, the final probability of a needle crossing any line is given by
+%\begin{align}
+%P&=\frac{2}{\pi}.
+%\end{align}
+\section*{Problem 1.3: Change of distributions}
+The general formula for transforming between probability distributions $\rho_X\rightarrow\rho_Y$ is given by
+\begin{align}
+\rho_Y(y_1,\dots,y_n)&=\rho_X\kla\left( f^{-1}(y_1,\dots,y_n) \right)\left\vert\det J_{f^{-1}}\right\vert,
+\end{align}
+where $f(x_1,\dots,x_n)=(y_1,\dots,y_n)$ describes the transformation of the random variables, and $J_f$ denotes the Jacobi matrix.
+Let 
+\begin{align}
+\begin{pmatrix}
+x_1 \\ x_2
+\end{pmatrix}&=f(r_1, r_2):=\begin{pmatrix}
+\sqrt{-2\sigma\log r_1}\cos 2\pi r_2 \\ \sqrt{-2\sigma\log r_1}\sin 2\pi r_2
+\end{pmatrix}.
+\end{align}
+One finds
+\begin{align}
+\frac{x_2}{x_1}&=\tan 2\pi r_2&&\tecxt\text{and}&x_1^2+x_2^2&=-2\sigma\log r_1\\
+\Rightarrow\ \ \ r_2&=\frac{1}{2\pi}\arctan\frac{x_2}{x_1} && \tecxt\text{and}&r_1&=\exp\kla\left( -\frac{x_1^2+x_2^2}{2\sigma} \right).
+\end{align}
+Hence
+\begin{align}
+\begin{pmatrix}
+r_1 \\ r_2
+\end{pmatrix}&= f^{-1}(x_1,x_2)=\begin{pmatrix}
+\exp\kla\left( -\frac{x_1^2+x_2^2}{2\sigma} \right) \\ \frac{1}{2\pi}\arctan\frac{x_2}{x_1}
+\end{pmatrix},
+\end{align}
+which leads to a Jacobi matrix of
+\begin{align}
+J_{f^{-1}}&=\begin{pmatrix}
+\frac{\partial r_1}{\partial x_1} & \frac{\partial r_1}{\partial x_2} \\
+\frac{\partial r_2}{\partial x_1} & \frac{\partial r_2}{\partial x_2}
+\end{pmatrix}=\begin{pmatrix}
+-\frac{x_1}{\sigma}r_1 & -\frac{x_2}{\sigma}r_1 \\ 
+\frac{1}{2\pi}\frac{1}{1+\kla\left( \frac{x_2}{x_1} \right)^2}\frac{x_2}{-x_1^2} & \frac{1}{2\pi}\frac{1}{1+\kla\left( \frac{x_2}{x_1} \right)^2}\frac{1}{x_1}
+\end{pmatrix}=\\
+&=-\frac{1}{2\pi\sigma}\begin{pmatrix}
+2\pi x_1r_1 & 2\pi x_2r_1 \\ 
+\frac{\sigma x_2}{x_1^2+x_2^2} & \frac{-\sigma x_1}{x_1^2+x_2^2}
+\end{pmatrix}.
+\end{align}
+Since $R_{1,2}$ have a uniform distribution, we find $\rho_R(r_1, r_2)\equiv 1$.
+This immediately leads to the distribution $\rho_X$ for $X_{1,2}$ given by
+\begin{align}
+\rho_X(x_1,x_2)&=1\cdot\left\vert\det J_{f^{-1}}\right\vert=\frac{1}{(2\pi\sigma)^2}\cdot \frac{2\pi r_1}{x_1^2+x_2^2}\cdot\kla\left( -\sigma x_1^2-\sigma x_2^2 \right)=\\
+&=\frac{r_1}{2\pi\sigma}=\frac{1}{2\pi\sigma}\exp\kla\left( -\frac{x_1^2+x_2^2}{2\sigma} \right).
+\end{align}
+Since this distribution can be factorized as
+\begin{align}
+\rho_X(x_1,x_2)&=\frac{1}{\sqrt{2\pi\sigma}}\exp\kla\left( -\frac{x_1^2}{2\sigma} \right)\cdot\frac{1}{\sqrt{2\pi\sigma}}\exp\kla\left( -\frac{x_2^2}{2\sigma} \right)=:\rho_{X_1}(x_1)\rho_{X_2}(x_2),
+\end{align}
+we also find that $X_1$ and $X_2$ are not correlated.
+\section*{Problem 1.4: Particle source}
+The distribution corresponding to the random variable $\Phi$ is uniform, hence $\rho_\Phi(\phi)\equiv \frac{1}{\pi}$.
+We can describe the distribution of particles along the line using the random variable $X$, where
+\begin{align}
+X&=f(\Phi)=a\cdot\tan\phi. 
+\end{align}
+Inverting gives
+\begin{align}
+\phi&=f^{-1}(x)=\arctan\frac{x}{a},
+\end{align}
+hence the probability distribution is given by
+\begin{align}
+\rho_X(x)&=\rho_\Phi(\phi)\cdot \frac{\partial \phi}{\partial x}=\frac{1}{\pi}\frac{1}{1+\kla\left( \frac{x}{a} \right)^2}\frac{1}{a}=\frac{a}{\pi}\frac{1}{x^2+a^2}.
+\end{align}
+\section*{Problem 1.5: Random walker I}
+\subsection*{a)}
+Let the random variable $X_1$ describe single steps of size $a$, i.e.
+\begin{align}
+P(X_1=+a)&=p&&\tecxt\text{and}&P(X_2=-a)&=1-p=:q.
+\end{align}
+The expectation value of $X_1$ is
+\begin{align}
+\bra\langle X_1 \rangle&=P(X_1=+a)(+a)+P(X_1=-a)(-a)=pa-qa=a(2p-1),
+\end{align}
+and its variance is
+\begin{align}
+\tecxt\text{Var\,}X_1&=\bra\langle X_1^2 \rangle-\bra\langle X_1.\rangle^2,
+\end{align}
+Since
+\begin{align}
+\bra\langle X_1^2 \rangle&=P(X_1=+a)(+a)^2+P(X_1=-a)(-a)^2=a^2\kla\left( p+q \right)=a^2,
+\end{align}
+we find
+\begin{align}
+\tecxt\text{Var\,}X_1&=a^2-a^2(2p-1)^2=a^2\kla\left( 4p-4p^2 \right)=4pqa^2.
+\end{align}
+We can describe the random walker with a new variable $Y_N$, which is simply the sum of $N$ steps. 
+Defining
+\begin{align}
+Y_N&:=\sum_{t=0}^{N-1}X_1(t)
+\end{align} 
+leads to the expectation value
+\begin{align}
+\bra\langle Y_N \rangle&=\sum_{t=0}^{N-1}\bra\langle X_1(t) \rangle=Na(2p-1)
+\end{align}
+and the variance
+\begin{align}
+\tecxt\text{Var\,}Y_N&=\sum_{t=0}^{N-1}\tecxt\text{Var\,}X_1=4Na^2pq.
+\end{align}
+The last step is only allowed, because the instances of $X_1$ are all independent from one another.
+\subsection*{b)}
+An appropriate time-continuous description can be found by simply letting $N\rightarrow t\in\mathbb{R}$.
+Since we know that
+\begin{align}
+\tecxt\text{Var\,}Y_N&=:2Dt,
+\end{align}
+this leads to a diffusion constant of
+\begin{align}
+D&=\frac{\tecxt\text{Var\,}Y_N}{2t}=\frac{4ta^2pq}{2t}=2a^2pq.
+\end{align}
+The diffusion equation for some distribution $\rho(x,t)$ can then be written as
+\begin{align}
+\partial_t\rho(x,t)&=D\partial_x^2\rho(x,t).
+\end{align}
+This equation is most easily solved by utilizing the Fourier transformation $x\rightarrow k$, which leads to
+\begin{align}
+\partial_t\mathcal{F}[\rho](k,t)&=D(\i k)^2\mathcal{F}[\rho](k,t).
+\end{align}
+Solving this equation is now trivial and yields
+\begin{align}
+\mathcal{F}[\rho](k,t)&=\mathcal{F}[\rho](k,0)\exp\kla\left( -Dk^2t \right).
+\end{align}
+Transforming back to position space gives the final solution of
+\begin{align}
+\rho(x,t)&=\frac{1}{2\pi}\intr\int_{\mathbb{R}^{ }} \e^{\i kx}\exp\kla\left( -Dk^2t \right)\intr\int_{\mathbb{R}^{ }} \e^{-\i kx'}\rho(x',0) \, \mathrm{d}^{ }x' \, \mathrm{d}^{ }k.
+\end{align}
+For an initial condition of $\rho(x,0)=\delta(x)$, this leads to a gaussian distribution of the form
+\begin{align}
+\rho(x,t)&=\frac{1}{2\pi}\intr\int_{\mathbb{R}^{ }} \e^{\i kx-Dk^2t} \, \mathrm{d}^{ }k=\\
+&=\frac{1}{2\pi}\sqrt{\frac{\pi}{Dt}}\exp\kla\left( \frac{(\i x)^2}{4Dt} \right)=\frac{1}{\sqrt{4\pi Dt}}\exp\kla\left( -\frac{x^2}{4Dt} \right).
+\end{align}
+Starting from a different location with $\rho(x,0)=\delta(x-\mu)$ of course merely results in a shift of $x\rightarrow x-\mu$ in the final solution.
+\section*{Problem 1.6: Random walker II}
+\subsection*{a)}
+Let $X_1$ denote a continuous uniform random variable, that has values on the interval $x\in\klam\left[ L-b,L+b \right]$.
+Then we find the expectation value similar to the previous problem, only replacing summation with integration.
+This gives
+\begin{align}
+\bra\langle X_1 \rangle&=\intx\int_{L-b}^{L+b}x\rho(x)\, \mathrm{d}x=\frac{1}{2b}\klam\left[ \frac{1}{2}x^2 \right]^{L+b}_{L-b}=\frac{1}{4b} \klam\left[ (L+b)^2-(L-b)^2 \right]=L.
+\end{align}
+Similarly, 
+\begin{align}
+\bra\langle X_1^2 \rangle&=\intx\int_{L-b}^{L+b}x^2\rho(x)\, \mathrm{d}x=\frac{1}{2b}\klam\left[ \frac{1}{3}x^3 \right]^{L+b}_{L-b}=\\
+&=\frac{1}{6b}\klam\left[ L^3+3L^2b+3Lb^2+b^3-\kla\left( L^3-3L^2b+3Lb^2-b^3 \right) \right]=L^2+\frac{b^2}{3},
+\end{align}
+and the variance becomes
+\begin{align}
+\tecxt\text{Var\,}X_1&=\bra\langle X_1^2 \rangle-\bra\langle X_1 \rangle^2=\frac{b^2}{3}.
+\end{align}
+As above, the random walker can be described with
+\begin{align}
+Y_N&:=\sum_{t=0}^{N-1}X_1(t),
+\end{align}
+which leads to
+\begin{align}
+\bra\langle Y_N \rangle&=N\bra\langle X_1 \rangle=NL
+\end{align}
+and
+\begin{align}
+\tecxt\text{Var\,}Y_N&=N\tecxt\text{Var\,}X_1=N\frac{b^2}{3}.
+\end{align}
+\subsection*{b)}
+An appropriate time-continuous limit is again given by $N\rightarrow t\in\mathbb{R}$.\\
+For some arbitrary distribution $\rho(x)$, the mean distance covered by the walker is
+\begin{align}
+\langle Y_t \rangle&=t\langle X_1 \rangle=t \intr\int_{\mathbb{R}^{ }} x\rho(x) \, \mathrm{d}^{ }x
+\end{align}
+and its variance is
+\begin{align}
+\tecxt\text{Var\,}Y_t&=t^2\tecxt\text{Var\,}X_1=t^2\intr\int_{\mathbb{R}^{ }} x^2\rho(x) \, \mathrm{d}^{ }x-\kla\left( t\intr\int_{\mathbb{R}^{ }} x\rho(x) \, \mathrm{d}^{ }x \right)^2.
+\end{align}
+But we are unsure, how to interpret this result.
+To be more precise, we do not know how ``it'' -- presumably the time-continuous limit of the mean distance and the variance of the walker -- depends on the probability distribution $\rho(x)$, other than that both are directly given by the explicit formulas written above.
+Since these are not too ``impressive'' in any way, we suspect there may be an additional aspect missed by us.
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

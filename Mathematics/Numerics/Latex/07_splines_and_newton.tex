@@ -1,0 +1,528 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+%\pagestyle{scrheadings}  % Stil für die Seite setzen
+%\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+%\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{07 Spline-Interpolation und Newton-Verfahren}
+\newcommand*{\autor}{Joachim Schwardt und Julian Fleck}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Numerik I - Aufgaben}
+\title{\titel}
+%\author{\autor}
+\author{\begin{tabular}{l|l}
+Joachim Schwardt & 4768711 \\ 
+Julian Fleck & 4759587\\ 
+\end{tabular}}
+%\author{\begin{tabular}{|l|l|}
+%\hline
+%Joachim Schwardt & 4768711 \\ \hline
+%Julian Fleck & 4759587\\ \hline
+%\end{tabular}}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Aufgabe 1}
+\subsection*{a)}
+Gegeben sind zwei Polynome $p$ und $q$ vom Grad kleiner gleich 3. 
+Für ein $x_0\in\mathbb{R}$ gelte
+\begin{align}
+p(x_0) &= q(x_0), &&& p'(x_0) &= q'(x_0), &&& p''(x_0) &= q''(x_0), &&& p'''(x_0) &= q'''(x_0).
+\end{align}
+Wir können die Polynome allgemein als
+\begin{align}
+p(x) &= \sum_{k=0}^3 p_k x^k &&\tecxt\text{und} & q(x) &= \sum_{k=0}^3 q_k x^k 
+\end{align}
+schreiben. 
+%Für $n\in\{0,1,2,3\}$ lauten die Gleichungen dann 
+%\begin{align}
+%p^{(n)}(x_0) &= \sum_{k=0}^{3-n} \frac{(k+n)!}{k!} p_{k+n}x_0^{k} = \sum_{k=0}^{3-n} \frac{(k+n)!}{k!} q_{k+n}x_0^{k} = q^{(n)}(x_0).
+%\end{align}
+Aus der letzten Gleichung folgt dann direkt $p_3 = q_3$.
+Die vorletzte Gleichung ist
+\begin{align}
+3\cdot 2 p_3x_0 + 2\cdot 1 p_2 &= 3\cdot 2 q_3x_0 + 2\cdot 1 q_2,
+\end{align}
+wobei man durch Einsetzen der vorherigen Gleichung direkt $p_2 = q_2$ erhält.
+Analog findet man dann auch $p_1=q_1$ und $p_0=q_0$.
+Damit sind die Polynome $p$ und $q$ identisch, weshalb natürlich dann auch $p(x) = q(x)$ für alle $x\in\mathbb{R}$ gilt.
+
+\subsection*{b)}
+Für eine beliebige Funktion ist der kubische Spline typischerweise nur zweimal stetig differenzierbar, hat also Glattheit $\ell=2$. 
+Hier existiert dann kein entsprechender Spline aus $S^3_3(\Delta)$.
+Formal können wir die Menge natürlich trotzdem hinschreiben, also
+\begin{align}
+S^3_3 &= \klammer\left\{ s\in C^3(\Delta)\,\middle\vert\, \forall k=0,\dots,N-1\forall x\in [x_k,x_{k+1}): s(x) = \sum_{n=0}^3 a_{k,n} x^n \right\}.
+\end{align}
+Dabei sind die Anschlussbedingungen bereits durch $s\in C^3$ gefordert.
+%Jetzt müssen wir aber noch die Stetigkeit der Polynome und ihrer Ableitungen an den Stützstellen $x_k$ fordern.
+Es gibt $4\cdot N$ Parameter $a_{k,n}$, allerdings haben wir auch $4\cdot (N-1)$ Gleichungen für die Anschlussbedingungen.
+Das geht nur gut, solange wir höchstens $4$ Parameter ändern müssen, um ein Spline an eine Funktion $f$ anzupassen.
+Das werden typischerweise die 4 Koeffizienten auf dem ersten Intervall $[a,x_1)$ sein.
+Die Funktion muss also selbst bereits ein Polynom dritten Grades (oder kleiner) sein, womit Spline und Polynom übereinstimmen.
+Daher gilt also
+\begin{align}
+S_3^3 &\equiv \Pi_3.
+\end{align}
+%Überhaupt hängt doch $S^\ell_m(\Delta)$ auch von der Funktion ab, die interpoliert wird.. ?
+
+
+\newpage
+\section*{Aufgabe 2}
+Gegeben ist eine Zerlegung $\{x_k\}$ des Intervalls $I=[a,b]$ mit  $a=x_0<\dots<x_n=b$ und eine auf $I$ zweimal stetig differenzierbare Funktion $f$.
+Sei $s$ der zugehörige lineare $C^0$-Spline.
+Auf dem Intervall $I_k := [x_k,x_{k+1})$ gilt für alle $x\in I_k$ also
+\begin{align}
+s(x) &= f(x_k) + (x - x_k)\frac{ f(x_{k+1}) - f(x_k)}{x_{k+1} - x_k} = f(x_k) + (x-x_k) f'(\xi_k),
+\end{align}
+wobei es gemäß des Mittelwertsatzes ein $\xi_k\in I_k$ geben muss, das die zweite Gleichung erfüllt.
+Der Satz über Interpolationsfehler garantiert, dass es ein $\chi_{k,x}\in I_k$ gibt, sodass 
+\begin{align}
+f(x) - s(x) &= \frac{1}{2}f''(\chi_{k,x}) (x-x_k)(x-x_{k+1}).
+\end{align}
+Für den Fehler folgt damit natürlich direkt
+\begin{align}
+\max_{x\in I_k} |f(x) - s(x)| &\le \frac{h_k^2}{2}\max_{x\in I_k} f''(x),
+\end{align}
+wobei $h_k := x_{k+1} - x_k$.
+Insbesondere gilt $|x-x_k|\le h_k$ und $|x-x_{k+1}|\le h_k$, was wir hier ausgenutzt haben.
+Eventuell könnte man den numerischen Vorfaktor noch genauer bestimmen, da die Gleichheit nicht für beide Differenzen gleichzeitig auftreten kann.
+Für $I$ gilt dann entsprechend
+\begin{align}
+\max_{x\in I} |f(x) - s(x)| &\le \frac{h_\tecxt\text{max}^2}{2}\max_{x\in I} f''(x),
+\end{align}
+wobei $h_\tecxt\text{max} = \max_k h_k$.
+
+%Insbesondere gilt nach Taylor aber
+%\begin{align}
+%f(x) &= f(x_k) + (x-x_k)f'(x_k) + \frac{1}{2}f''(\chi_k)(x-x_k)^2
+%\end{align}
+%für ein $\chi_{k,x}\in I_k$.
+%Daraus folgt dann
+%\begin{align}
+%\max_{x\in I_k} |f(x) - s(x)| &\le |f'(\xi_k) - f'(x_k)| \max_{x\in I_k} | x-x_k| + \frac{1}{2}\max_{x\in I_k} |x-x_k|^2 f''(\chi_{k,x}) \le \\
+%&\le \frac{h_k^2}{2} \max_{x\in I_k} f''(x) + h_k |f'(\xi_k) - f'(x_k)|
+%\end{align}
+%Insbesondere gilt nach Taylor aber
+%\begin{align}
+%f(x) &= f(x_k) + (x-x_k) f'(\chi_{k,x})
+%\end{align}
+%für ein $\chi_{k,x}\in I_k$ (also für jedes $x$ ein anderes $\chi_{k,x}$).
+%Sei $h_k := x_{k+1} - x_k$, wobei $|\chi_{k,x} - \xi_k| \le h_k$ gilt (beide Punkt liegen in $I_k$, ihre Differenz muss also kleiner als die Länge des Intervalls sein).
+%Daraus folgt dann
+%\begin{align}
+%\max_{x\in I_k} |f(x) - s(x)| &= \max_{x\in I_k} |x-x_k| \left\vert f'(\chi_{k,x}) - f'(\xi_k) \right\vert = \\
+%&= h_k \max_{x\in I_k} \left\vert \intx\int_{\xi_k}^{\chi_{k,x}} f''(t)\, \mathrm{d}t \right\vert \le \\
+%&\le h_k \max_{x\in I_k} |\chi_{k,x} - \xi_k| \max_{x\in I_k} f''(x) \le \\
+%&\le h_k^2 \max_{x\in I_k} f''(x).
+%\end{align}
+
+
+\newpage
+\section*{Aufgabe 3}
+Für das Integral einer Funktion $f$ auf dem Intervall $[-1,1]$ 
+\begin{align}
+I(f) &= \intx\int_{-1}^{1} f(x)\, \mathrm{d}x
+\end{align}
+möchten wir eine Quadraturformel 
+\begin{align}
+Q(f) &= a_0f(x_0) + a_1 f(x_1)
+\end{align}
+mit $x_1 > x_0$ finden, die beliebige Polynome bis zu einem möglichst hohen Grades exakt berechnet.
+Wir nehmen zunächst an, dass wir kubische Polynome noch berechnen können.
+Sei also $f(x) = b+cx+dx^2+ex^3$, und somit
+\begin{align}
+I(f) &= bx + \frac{cx^2}{2} + \frac{dx^3}{3} + \frac{ex^4}{4} \Big\vert_{-1}^1 = 2b + \frac{2d}{3}.
+\end{align}
+Andererseits ist
+\begin{align}
+Q(f) &= a_0 \kla\left( b+cx_0+dx_0^2+ex_0^3 \right) + a_1 \kla\left( b+cx_1+dx_1^2+ex_1^3 \right) = \\
+&= b\kla\left( a_0 + a_1 \right) + c \kla\left( a_0x_0 + a_1x_1 \right) + d\kla\left( a_0x_0^2 + a_1x_1^2 \right) + e\kla\left( a_0x_0^3 + a_1x_1^3 \right).
+\end{align}
+Da die Koeffizienten $b,c,d$ beliebig sind, muss entsprechend dann
+\begin{align}
+2 &= a_0 + a_1,\\
+0 &= a_0x_0 + a_1x_1,\\
+\frac{2}{3} &= a_0x_0^2 + a_1x_1^2,\\
+0 &= a_0x_0^3 + a_1x_1^3
+\end{align}
+gelten. 
+Aus der ersten Gleichung folgt $a_1 = 2 - a_0$.
+Einsetzen in die zweite Gleichung ergibt
+\begin{align}
+0 &= a_0x_0 + (2-a_0)x_1 && \Rightarrow & a_0 &= \frac{2x_1}{x_1 - x_0},
+\end{align}
+womit $a_1 = -\frac{2x_0}{x_1 - x_0}$ ist.
+Einsetzen in die dritte Gleichung ergibt dann
+\begin{align}
+\frac{2}{3} &= \frac{2x_1}{x_1 - x_0}x_0^2 - \frac{2x_0}{x_1 - x_0}x_1^2,\\
+\Rightarrow\ \ \ 0 &= 2x_0^2x_1 - 2x_0x_1^2  - \frac{2}{3}(x_1-x_0),\\
+\Rightarrow\ \ \ 0 &= 2x_0x_1 (x_1 - x_0) + \frac{2}{3}(x_1-x_0),
+\end{align} 
+also wegen $x_1\neq x_0$ dann $x_0x_1 = -\frac{1}{3}$.
+Einsetzen in die letzte Gleichung liefert dann noch
+\begin{align}
+0 &= \frac{2x_1}{x_1 - x_0}x_0^3 - \frac{2x_0}{x_1 - x_0}x_1^3.
+\end{align}
+Die kompatible Lösung ist $x_1 = -x_0$, und damit $x_0 = -\frac{1}{\sqrt{3}}$ und $x_1 = \frac{1}{\sqrt{3}}$.
+Damit sind dann $a_1 = 1 = a_0$.
+Insgesamt lautet die Quadraturformel dann
+\begin{align}
+Q(f) &= f\kla\left( \frac{1}{\sqrt{3}} \right) + f\kla\left( -\frac{1}{\sqrt{3}} \right).
+\end{align}
+Die Formel funktioniert im Allgemeinen nicht mehr für Polynome höheren Grades.
+Betrachten wir dazu einen zusätzlichen Term $+5x^4$, der im Integral dann den Beitrag
+\begin{align}
+I(f) &= \dots + x^5\Big\vert_{-1}^1 = \dots + 2
+\end{align}
+liefert.
+Die Quadraturformel gibt allerdings
+\begin{align}
+Q(f) &= \dots + Q(5x^4) = \dots + \frac{10}{9},
+\end{align}
+was nicht mit dem Integralwert übereinstimmt.
+
+\newpage
+\section*{Aufgabe 4}
+Sei $G = \{\alpha\in\mathbb{R}\, |\, \alpha > 0\}$ und 
+\begin{align}
+a &: G\times G \rightarrow G,\ a(x,y) = x+y,\\
+m &: G\times G \rightarrow G,\ m(x,y) = xy.
+\end{align}
+\subsection*{a)}
+Zu zeigen ist zunächst, dass diese Funktionen wohldefiniert sind. 
+Insbesondere sollte geprüft werden, dass $a$ und $m$ jeweils tatsächlich nur auf Punkte in $G$ abbilden können.
+Seien also $x,y\in G$ und $\alpha := a(x,y) = x + y$.
+Dann gilt $x> 0$ und $y>0$, also auch $\alpha = x+y > 0$, und somit $\alpha\in G$.
+Analog ist natürlich auch $\beta := m(x,y) = xy > 0$, also $\beta\in G$ (Anmerkung: Wir müssen die Aufgabe falsch verstanden haben, dieser ``Nachweis'' wird wohl kaum gefordert gewesen sein...).
+
+\subsection*{b)}
+Da $a$ und $m$ stetig differenzierbar sind, ist die absolute Kondition gegeben durch
+\begin{align}
+\kappa_\tecxt\text{abs}(a) &= \|a'(x,y)\| = \left\| \begin{pmatrix}
+\frac{\partial a}{\partial x} & \frac{\partial a}{\partial y}
+\end{pmatrix} \right\| = \left\|\begin{pmatrix}
+ 1 & 1
+\end{pmatrix} \right\| = 1,
+\end{align}
+wobei wir die $\|\cdot\|_\infty$-Norm angenommen haben.
+Analog gilt
+\begin{align}
+\kappa_\tecxt\text{abs}(m) &= \|m'(x,y)\| = \left\| \begin{pmatrix}
+\frac{\partial m}{\partial x} & \frac{\partial m}{\partial y}
+\end{pmatrix} \right\| = \left\|\begin{pmatrix}
+ y & x
+\end{pmatrix} \right\| = \max\{x,y\}.
+\end{align}
+Sei $v=(x,y)^\top\in G^2$. 
+Für die relative Kondition gilt dann
+\begin{align}
+\kappa_\tecxt\text{rel}(a) &= \frac{\|v\|}{\|a(v)\|} \kappa_\tecxt\text{abs}(a) = \frac{\max\{x,y\}}{x+y},\\
+\kappa_\tecxt\text{rel}(m) &= \frac{\|v\|}{\|m(v)\|} \kappa_\tecxt\text{abs}(m) = \frac{\max\{x,y\}}{xy} \max\{x,y\} = \klammer\left\{ \frac{x}{y}, \frac{y}{x} \right\}.
+\end{align}
+
+
+
+\newpage
+\section*{Aufgabe 5}
+Gegeben ist die Funktion $f:(0,\infty)\rightarrow\mathbb{R}$ mit 
+\begin{align}
+f(x) &= x + \log x.
+\end{align}
+
+\subsection*{a)}
+Wir wollen zeigen, dass $f$ auf dem Intervall $I=(0,1)$ mindestens eine Nullstelle hat.
+Da $f$ stetig auf $I$ ist, ist es hinreichend zu zeigen, dass $f$ auf $I$ einen Vorzeichenwechsel aufweist.
+Für $x=\frac{1}{\e} \in I$ gilt offensichtlich 
+\begin{align}
+f(x) &= \frac{1}{\e} - 1 < 0,
+\end{align}
+da $\e > 1$. 
+Für $x=1$ ist hingegen
+\begin{align}
+f(x) &= 1 > 0,
+\end{align}
+insbesondere gibt es also auch ein $x\in I$ mit $f(x) > 0$, da $f$ bei $x=1$ ansonsten einen Sprung hätte, und somit nicht stetig wäre.
+Insbesondere ist
+\begin{align}
+f'(x) &= 1 + \frac{1}{x} > 0
+\end{align}
+für alle $x\in I$, die Funktion ist also streng monoton wachsend.
+Damit kann es auf $I$ nur den einen Vorzeichenwechsel geben, den wir nachgewiseen haben.
+Also hat $f$ auf $I$ genau eine Nullstelle $x^\ast$.
+
+\subsection*{b)}
+Um zu prüfen, ob $x^\ast$ ein Fixpunkt einer gegebenen Funktion $\phi(x)$ ist, können wir $x^\ast$ einfach einsetzen.
+Dabei nutzen wir $0 = x^\ast + \log x^\ast$ aus.
+Es gilt
+\begin{align}
+\phi_1(x^\ast) &:= -\log x^\ast = - (-x^\ast) = x^\ast,\\
+\phi_2(x^\ast) &:= \e^{-x^\ast} = \e^{\log x^\ast} = x^\ast,\\
+\phi_3(x^\ast) &:= x^\ast + \e^{-x^\ast} = 2x^\ast,\\
+\phi_4(x^\ast) &:= \frac{1}{2}\kla\left( x^\ast + \e^{-x^\ast} \right) = x^\ast.
+\end{align}
+Also ist $x^\ast$ für $\phi_{1,2,4}$ tatsächlich ein Fixpunkt.
+Um zu beweisen, dass es eine kleine Umgebung $I_r := [x^\ast - r, x^\ast + r]$ gibt, sodass die Fixpunktiteration $x_{k+1} := \phi (x_k)$ für beliebige Startwerte $x_0\in I_r$ gegen $x^\ast$ (bzw. überhaupt) konvergiert, können wir den Banach'schen Fixpunktsatz verwenden.
+Voraussetzungen ist dabei die Lipschitz-Stetigkeit von $\phi$ auf $I_r$ mit Konstanter $L<1$.
+Es gilt
+\begin{align}
+L_{\phi_2} &= \|\phi_2'(x)\| = \max_{x\in I_r} \e^{-x} < 1,\\
+L_{\phi_4} &= \|\phi_4'(x)\| = \max_{x\in I_r} \frac{1}{2}\kla\left( 1 - \e^{-x} \right) < \frac{1}{2}.
+\end{align}
+Insbesondere gilt damit für $j\in\{2,4\}$ und $x\in I_r$
+\begin{align}
+|\phi_j(x) - x^\ast| &= |\phi_j(x) - \phi_j(x^\ast)| \le L_{\phi_j} |x-x^\ast| < |x-x^\ast| \le r,
+\end{align}
+also ist $\phi_j(x)$ weniger als $r$ entfernt von $x^\ast$, und damit immer noch in $I_r$.
+Damit sind die Voraussetzungen des Fixpunktsatzes erfüllt.
+\\
+Für $\phi_3$ brauchen wir die Betrachtung gar nicht durchzuführen, da $x^\ast$ kein Fixpunkt ist. 
+Für $\phi_1$ nehmen wir zunächst an, dass es ein beliebig kleines $r>0$ gebe, sodass die Folge $x_k$ gegen $x^\ast$ konvergiert.
+Sei $x_0 = x^\ast + r$. 
+Dann gilt
+\begin{align}
+\phi(x_0) &= -\log \kla\left( x^\ast + r \right) = -\log x^\ast + r (-\log x)'\Big\vert_{x=x^\ast} + \mathcal{O}(r^2) = \\
+&= x^\ast - \frac{r}{x^\ast} + \mathcal{O}(r^2) =: x^\ast - r_1 + \mathcal{O}(r^2).
+\end{align}
+Insbesondere ist $r_1 = \frac{r}{x^\ast} > r$.
+Der Fehler wächst also, selbst wenn man beliebig nahe an $x^\ast$ startet. 
+Ein sauberer Beweis ist das nicht, aber mehr ist uns dazu nicht eingefallen.
+
+\subsection*{c)}
+Für die Iterationsvorschrift
+\begin{align}
+x_{k+1} &:= \frac{x_k^2 + \e^{-x_k}}{x_k + 1}
+\end{align}
+soll gezeigt werden, dass sie für alle $x\in I_r$ für ein hinreichend kleines $r>0$ quadratisch gegen $x^\ast$ konvergiert.
+Dazu beobachtet man, dass die Newton-Vorschrift für die Funktion $g(x) := x\e^{x} - 1$ gerade durch
+\begin{align}
+x_{k+1} &= x_k - \frac{g(x_k)}{g'(x_k)} = x_k - \frac{x_k\e^{x_k} - 1}{\e^{x_k} + x_k\e^{x_k}} = x_k - \frac{x_k - \e^{-x_k}}{x_k + 1} = \frac{x_k^2 + \e^{-x_k}}{x_k + 1}
+\end{align}
+gegeben ist, was mit obiger Vorgabe übereinstimmt.
+Da $g'(x) > 0$ für alle $x\in I$ ist, ist das Verfahren durchführbar und konvergiert damit quadratisch gegen die Nullstelle von $g$.
+Diese stimmt mit $x^\ast$ überein, da 
+\begin{align}
+g(x) &= x\e^x - 1 \overset{!}{=} 0 &&\Rightarrow& x &= \log\frac{1}{x} && \Rightarrow & 0 &= x + \log x.
+\end{align}
+
+\newpage
+\section*{Aufgabe 6}
+Gegeben sind die Werte in folgender Tabelle. 
+\begin{table}[!ht]
+\centering
+\begin{tabular}{l|c|c|c|c}
+Zeit $t$ (in Stunden) & 0 & $0,5$ & 1 & $1,5$\\ \hline
+Temperatur $T$ (in $^\circ$C) & 90 & 58 & 43 & 32\\
+\end{tabular}
+\end{table}
+\\
+Wir vermuten einen exponentiellen Zusammenhang der Form
+\begin{align}
+T(t) &= a\cdot 4^{-t} + b.
+\end{align}
+Das Modell ist linear in den zu bestimmenden Koeffizienten $x := (a,b)^\top$.
+Wir können die Fehlerquadrate daher als
+\begin{align}
+\Delta^2 &= \| b - Ax\|^2
+\end{align}
+schreiben, wobei 
+\begin{align}
+b &= \begin{pmatrix}
+T_1 \\ \vdots \\ T_4
+\end{pmatrix} &&\tecxt\text{und}& A &= \begin{pmatrix}
+4^{-t_1} & 1 \\ \vdots & \vdots \\ 4^{-t_4} & 1
+\end{pmatrix}.
+\end{align}
+Dieser Ausdruck wird minimal für den Vektor $x^\ast\in\mathbb{R}^2$, der die Normalengleichung
+\begin{align}
+A^\top Ax^\ast &= A^\top b
+\end{align}
+löst.
+%Die explizite Darstellung von $A$ und $A^\top A$ ist hier
+%\begin{align}
+%A &= \begin{pmatrix}
+%1 & 1 \\ \frac{1}{2} & 1 \\ \frac{1}{4} & 1 \\ \frac{1}{8} & 1
+%\end{pmatrix}\\
+%A^\top A &= \begin{pmatrix}
+%1 & 1 & 1 & 1 \\
+%1 & \frac{1}{2} & \frac{1}{4} & \frac{1}{8}
+%\end{pmatrix}\begin{pmatrix}
+%1 & 1 \\ \frac{1}{2} & 1 \\ \frac{1}{4} & 1 \\ \frac{1}{8} & 1
+%\end{pmatrix} = \begin{pmatrix}
+%\frac{8+4+2+1}{8} & 4 \\ \frac{256 + 64 + 8 + 1}{256} & \frac{8+4+2+1}{8}
+%\end{pmatrix} = \begin{pmatrix}
+%\frac{15}{8} & 4 \\ \frac{329}{256} & \frac{15}{8}
+%\end{pmatrix}.
+%\end{align}
+%Mithilfe der Pseudo-Inversen $A^+ := (A^\top A)^{-1}A^\top$, explizit
+%\begin{align}
+%A^+ &= \frac{1}{\kla\left( \frac{15}{8} \right)^2 - 4\cdot\frac{329}{256}} \begin{pmatrix}
+%\frac{15}{8} & -4 \\ -\frac{329}{256} & \frac{15}{8}
+%\end{pmatrix} A^\top = \\
+%&= \frac{1}{\frac{225 - 329}{64}} \begin{pmatrix}
+%\frac{15-32}{8} & \frac{15 - 16}{8} & \frac{15 - 8}{8} & \frac{15 - 4}{8} \\
+%\frac{-329 + 15\cdot 32}{256} & \frac{-329 + 15\cdot 16}{256} & \frac{-329 + 15\cdot 8}{256} & \frac{-329 + 15\cdot 4}{256}
+%\end{pmatrix} = \\
+%&= \frac{64}{-104} \begin{pmatrix}
+%\frac{-17}{8} & \frac{-1}{8} & \frac{7}{8} & \frac{11}{8} \\
+%\frac{171}{256} & \frac{-89}{256} & \frac{-209}{256} & \frac{-269}{256}
+%\end{pmatrix} = \frac{1}{416} \begin{pmatrix}
+%544 & 32 & -224 & -352\\
+%-171 & 89 & 209 & 269
+%\end{pmatrix}.
+%\end{align} 
+Die explizite Darstellung von $A$ und $A^\top A$ ist hier
+\begin{align}
+A &= \begin{pmatrix}
+1 & 1 \\ \frac{1}{2} & 1 \\ \frac{1}{4} & 1 \\ \frac{1}{8} & 1
+\end{pmatrix}\\
+A^\top A &= \begin{pmatrix}
+1 & \frac{1}{2} & \frac{1}{4} & \frac{1}{8} \\
+1 & 1 & 1 & 1 
+\end{pmatrix}\begin{pmatrix}
+1 & 1 \\ \frac{1}{2} & 1 \\ \frac{1}{4} & 1 \\ \frac{1}{8} & 1
+\end{pmatrix} = \begin{pmatrix}
+\frac{64+16+4+1}{64} & \frac{8+4+2+1}{8} \\ \frac{8+4+2+1}{8} & 4
+\end{pmatrix} = \begin{pmatrix}
+\frac{85}{64} & \frac{15}{8} \\ \frac{15}{8} & 4
+\end{pmatrix}
+\end{align}
+Mithilfe der Pseudo-Inversen $A^+ := (A^\top A)^{-1}A^\top$, explizit
+\begin{align}
+A^+ &= \frac{1}{\frac{85}{16} - \kla\left( \frac{15}{8} \right)^2} \begin{pmatrix}
+4 & -\frac{15}{8} \\ -\frac{15}{8} & \frac{85}{64}
+\end{pmatrix} A^\top = \\
+&= \frac{1}{\frac{340 - 225}{64}} \begin{pmatrix}
+\frac{32 - 15}{8} & \frac{16 - 15}{8} & \frac{8 - 15}{8} & \frac{4 - 15}{8} \\
+\frac{-15\cdot 8 + 85}{64} & \frac{-15\cdot 4 + 85}{64} & \frac{-15\cdot 2 + 85}{64} & \frac{-15\cdot 1 + 85}{64}
+\end{pmatrix} = \\
+&= \frac{64}{115} \begin{pmatrix}
+\frac{17}{8} & \frac{1}{8} & -\frac{7}{8} & -\frac{11}{8} \\
+\frac{-35}{64} & \frac{25}{64} & \frac{55}{64} & \frac{70}{64}
+\end{pmatrix} = \frac{1}{115} \begin{pmatrix}
+136 & 8 & - 56 & -88 \\
+-35 & 25 & 55 & 70
+\end{pmatrix}.
+\end{align} 
+lautet die Lösung dann
+\begin{align}
+x^\ast &= A^+ b = \frac{1}{115} \begin{pmatrix}
+136 & 8 & - 56 & -88 \\
+-35 & 25 & 55 & 70
+\end{pmatrix} \begin{pmatrix}
+90 \\ 58 \\ 43 \\ 32
+\end{pmatrix} = \frac{1}{115} \begin{pmatrix}
+7480 \\ 2905
+\end{pmatrix}.
+\end{align}
+Die Auslgeichskurve lautet also
+\begin{align}
+T(t) &= \frac{1496}{23} \cdot 4^{-t} + \frac{581}{23}.
+\end{align}
+Nach 45 Minuten ($t= \frac{3}{4}$) lautet die extrapolierte Temperatur (in $^\circ$C) damit
+\begin{align}
+T(t) &= \frac{1496}{23} \cdot 2^{-3/2} + \frac{581}{23} \approx 48.26.
+\end{align}
+Abbildung \ref{figure:extrapolation} veranschaulicht nochmal die Extrapolation.
+\begin{figure}[!ht]
+\centering
+\includegraphics{ExtrapolationWasser.png}
+\caption{Visualisierung der Extrapolation für die gegebenen Werte. 
+Der extrapolierte Wert der Wassertemperatur nach 45 Minuten ist hervorgehoben.}
+\label{figure:extrapolation}
+\end{figure}
+
+%import matplotlib.pyplot as plt
+%from matplotlib import special
+%special.setup(UseTex=True)
+%
+%T = np.array([90, 58, 43, 32])
+%t = np.arange(0, 2, 0.5)
+%
+%
+%def model(t, a, b):
+%    return a * 4.0**(-t) + b
+%
+%A = np.ones((4,2))
+%A[:,0] = 4.0**(-t)
+%Astar = np.linalg.inv(A.T @ A) @ A.T
+%x = Astar @ T
+%
+%N = 300
+%tval = np.linspace(0.0, 1.7, N)
+%Tval = model(tval, *x)
+%
+%tc = 3/4
+%Tc = model(tc, *x)
+%
+%fig, ax = plt.subplots()
+%
+%ax.set_xlabel(r"$t\ /\ $h")
+%ax.set_ylabel(r"$T\ /\ ^\circ$C")
+%ax.set_title(f"Extrapolation: $T(t) = {x[0]:.2f} \\cdot 4^{{-t}} + {x[1]:.2f}$")
+%
+%ax.set_xlim(tval[0], tval[-1])
+%ax.set_ylim(0, np.max(b) * 1.05)
+%
+%ax.plot(t, b, ls='', marker='x', c='k', label="Messdaten")
+%ax.plot(tval, Tval, c='b', label="Extrapolation")
+%
+%dt = 0.01 * (tval[-1] - tval[0])
+%dT = 0.01 * (np.max(Tval) - np.min(Tval))
+%ax.axvline(tc, c='k', ls='--', lw=0.7)
+%ax.axhline(Tc, c='k', ls='--', lw=0.7)
+%ax.text(tc + dt, Tc + 3.5*dT, f"$T\\left(t= \\frac{{3}}{{4}}\\right) \\approx {Tc:.2f}$")
+%
+%ax.legend(numpoints=1)
+%special.polish(fig, ax)
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

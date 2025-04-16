@@ -1,0 +1,100 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\begin{document}
+
+\title{Geodäten auf Zylindern und Kugeln}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 27: Harmonischer Oszillator}
+\subsection*{a)}
+\begin{align*}
+\cos(\varphi_0)\sin(\theta_0)&=\sqrt{1-(1+\sin^2(\varphi_0)\tan^2(\theta_0))\cos^2(\theta_0)}=\sqrt{\sin^2(\theta_0)-\sin^2(\varphi_0)\sin^2(\theta)}
+\end{align*}
+\subsection*{b)}
+\section*{Aufgabe 28: Geodäten auf einem Zylinder}
+\subsection*{a)}
+Es ist $\vv{r}=R\vv{e_r}+z\vv{e_z}$:
+$$d\vv{r}=Rd\varphi\vv{e_{\varphi}}+dz\vv{e_z}$$
+Für das Linienelement setzt man Pythagoras an:
+\begin{align*}
+dl^2=(Rd\varphi)^2+dz^2\ \ \Rightarrow\ \ dl = \sqrt{R^2+\frac{dz}{d\varphi}^2}d\varphi = \sqrt{R^2+z'(\varphi)^2}d\varphi
+\end{align*}
+\subsection*{b)}
+Die Länge einer Strecke berechnet sich folgendermaßen:
+$$ L=\int_{\varphi_1}^{\varphi_2}dl=\int_{\varphi_1}^{\varphi_2}\sqrt{R^2+z'(\varphi)^2}d\varphi $$
+Aus der Variationsrechnung folgt dann für $f(r, z(\varphi),  z'(\varphi))$:
+$$f=\sqrt{R^2+z'(\varphi)^2}$$
+Daraus kann man dann $z(\varphi)$ bestimmen:
+\begin{align*}
+\partial_zf&=\frac{d}{d\varphi}(\partial_{z'}f)\ \ \Rightarrow\ \ 0 = \frac{d}{d\varphi}\left(\frac{z'(\varphi)}{\sqrt{R^2+z'(\varphi)^2}}\right) = \frac{z''\sqrt{R^2+z'^2}-\frac{z'^2z''}{\sqrt{R^2+z'^2}}}{R^2+z'^2}\\
+&\Rightarrow\ \ z''(R^2+z'^2) = z'^2z''\ \ \Rightarrow\ \ z''R^2 = 0\ \ \Rightarrow\ \ z(\varphi) = a\varphi +b
+\end{align*}
+\subsection*{c)}
+Für die Funktion $z(\varphi)$ gilt:
+\begin{align*} \left. \begin{array}{ll}
+z(\varphi =0)\overset{!}{=}0 = a\cdot 0+b\ \ &\Rightarrow\ \ b=0\\
+z(\varphi =\varphi_0)\overset{!}{=}H = a\varphi_0\ \ &\Rightarrow\ \ a=\frac{H}{\varphi_0} \\ \end{array}\right\}\Rightarrow\ z(\varphi)=H\frac{\varphi}{\varphi_0}
+\end{align*}
+Für die Menge aller Punkt auf der Kurve gilt damit:
+\begin{align*}
+M&=\left\{(r,\varphi,z)\ \big\vert\ r=R, \varphi\in [0,\varphi_0], z=H\frac{\varphi}{\varphi_0} \right\}=\\
+&=\left\{(x,y,z)\ \big\vert\ z\in [0,H], x=R\cos(\varphi_0\frac{z}{H}), y=R\sin(\varphi_0\frac{z}{H}) \right\}\\
+&\Rightarrow\ \ \gamma(t) = \begin{pmatrix} R\cos(\varphi_0t) \\ R\sin(\varphi_0t) \\ tH \end{pmatrix}\textrm{   mit }\ t\in [0,1]
+\end{align*}
+Diese Geodäte hat also eine Schraubenform.
+\section*{Aufgabe 29: Geodäten auf einer Kugel}
+\subsection*{a)}
+Es ist $\vv{r}=r\vv{e_r}$:
+$$d\vv{r}=Rd\theta\vv{e_{\theta}} + Rd\varphi\sin(\theta)\vv{e_{\varphi}}$$
+Für das Linienelement setzt man wieder Pythagoras an. Für den Streckenabschnitt entlang $d\varphi$ muss der Radius abhängig von $\theta$ berücksichtigt werden:
+\begin{align*}
+dl^2=(R\sin(\theta)d\varphi)^2+(Rd\theta)^2\ \ \Rightarrow\ \ dl = R\sqrt{\sin^2(\theta)+\theta'(\varphi)^2}d\varphi
+\end{align*}
+\subsection*{b)}
+Die Länge einer Strecke berechnet sich folgendermaßen:
+$$ L=\int_{\varphi_1}^{\varphi_2}dl=\int_{\varphi_1}^{\varphi_2} R\sqrt{\sin^2(\theta)+\theta'(\varphi)^2} d\varphi $$
+Aus der Variationsrechnung folgt dann für $f(r, \theta(\varphi),  \theta'(\varphi))$:
+$$f=R\sqrt{\sin^2(\theta)+\theta'(\varphi)^2}$$
+Damit kann eine Differentialgleichung für $\theta(\varphi)$ aufgestellt werden:
+\begin{align*}
+\partial_{\theta}f&=\frac{d}{d\varphi}\left(\partial_{\theta'}f \right)\ \ \Rightarrow\ \ \frac{\sin(\theta)\cos(\theta)}{\sqrt{\sin^2(\theta)+\theta'^2}}=\frac{d}{d\varphi}\left( \frac{\theta'}{\sqrt{\sin^2(\theta)+\theta'^2}} \right)= \\
+&=\frac{\theta''\sqrt{\sin^2(\theta)+\theta'^2}-\frac{\theta'(\sin(\theta)\cos(\theta)\theta'+\theta'\theta'')}{\sqrt{\sin^2(\theta)+\theta'^2}}}{\sin^2(\theta)+\theta'^2}\\
+&\Rightarrow\ \ \sin(\theta)\cos(\theta)(\sin^2(\theta)+\theta'^2) = \theta''(\sin^2(\theta)+\theta'^2)-\theta'^2\sin(\theta)\cos(\theta)+\theta'^2\theta''\\
+&\Rightarrow\ \ \sin(\theta)\cos(\theta) + 2\frac{\cos(\theta)}{\sin(\theta)}\theta'^2=\theta'' \numberthis\label{DGL_theta}
+\end{align*}
+Um die Differentialgleichung zu lösen substituieren wir nun $u=\cot(\theta) = \frac{\cos(\theta)}{\sin(\theta)}$:
+\begin{align*}
+u'&=-\csc^2(\theta)\theta'=-(u^2+1)\theta'\\
+u''&=-\theta''(u^2+1)-\theta'2uu'=-\theta''(u^2+1)+\frac{2uu'^2}{u^2+1}\\
+&\Rightarrow\ \ \theta'' = \frac{2uu'^2}{(u^2+1)^2}-\frac{u''}{u^2+1}
+\end{align*}
+In (1) eingesetzt erhalten wir dann:
+\begin{align*}
+u \textrm{ in } (1)&: \frac{u}{u^2+1} + \frac{2uu'^2}{(u^2+1)^2} = \frac{2uu'^2}{(u^2+1)}-\frac{u''}{u^2+1}\\
+&\Rightarrow\ \ u+u''=0\ \ \Rightarrow\ \ u(\varphi)=A\sin(\varphi-\phi) = \cot(\theta) = -\tan(\theta-\frac{\pi}{2})\\
+&\Rightarrow\ \ \theta(\varphi)=\frac{\pi}{2}-\arctan(A\sin(\varphi-\phi))
+\end{align*}
+\subsection*{c)}
+Für die Funktionen $\theta(\varphi)$ und $\theta(z)$ gilt:
+\begin{align*} &\left. \begin{array}{ll}
+\theta(\varphi =0)\overset{!}{=}\frac{\pi}{2} = \frac{\pi}{2}-\arctan(A\sin(-\phi))\ \ &\Rightarrow\ \ \phi=0\\
+\theta(\varphi =\varphi_0)\overset{!}{=}\theta_0 = \frac{\pi}{2}-\arctan(A\sin(\varphi_0)) \ \ &\Rightarrow\ \ A=\frac{\cot(\theta_0)}{\sin(\varphi_0)} \\ \end{array}\right\}\\
+&\Rightarrow\ \theta(\varphi)=\frac{\pi}{2}-\arctan\left(\cot(\theta_0)\frac{\sin(\varphi)}{\sin(\varphi_0)}\right)\ \ \Rightarrow\ \ \varphi(\theta) = \arcsin\left( \sin(\varphi_0)\frac{\cot(\theta)}{\cot(\theta_0)} \right)\\
+&\Rightarrow\ \ \theta(z)=\arccos\left(\frac{z}{R}\right)\ \ \Rightarrow\ \ \varphi(z)=\arcsin\left(\sin(\varphi_0)\frac{z}{\cot(\theta_0)\sqrt{R^2-z^2}}\right)
+\end{align*}
+Für die Menge aller Punkte auf der Kurve gilt mit $x=R\cos(\varphi)\sin(\theta)$, $y=R\sin(\varphi)\sin(\theta)$ und $z=R\cos(\theta)$:
+\begin{align*}
+M&=\left\{ (r,\varphi, \theta)\ \bigg\vert\ r=R, \ \varphi\in [0, \varphi_0], \ \theta = \frac{\pi}{2}-\arctan\left( \cot(\theta_0)\frac{\sin(\varphi)}{\sin(\varphi_0)} \right) \right\}=\\
+&=\left\{ (x,y,z)\ \bigg\vert\ z\in [0, R\cos(\theta_0)], \ x=\sqrt{R^2-z^2-\sin^2(\varphi_0)\tan^2(\theta_0)z^2}, \ y = \frac{\sin(\varphi_0)}{\cot(\theta_0)}z \right\}\\
+&\Rightarrow\ \ \gamma(t)=\begin{pmatrix} R\sqrt{1-\cos^2(\theta_0)t^2-\sin^2(\varphi_0)\sin^2(\theta_0)t^2} \\ R\sin(\varphi_0)\sin(\theta_0)t \\ R\cos(\theta_0)t \end{pmatrix}\ \textrm{ mit }\ t\in [0,1]
+\end{align*}
+\end{document}

@@ -1,0 +1,118 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[left=2.5cm, right=2.5cm, top=3cm, bottom=2cm]{geometry}
+
+\usepackage{tikz,amsmath, amssymb,bm,color}
+\usetikzlibrary{shapes,arrows}
+
+% needed for BB
+\usetikzlibrary{calc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.16}
+\usepackage{circuitikz}
+\usetikzlibrary{patterns}
+
+\usepackage[ngerman]{babel}
+\usepackage{hyperref}
+\usepackage[ngerman]{cleveref}
+
+\renewcommand{\vec}{\boldsymbol}
+
+\title{Verdrehtes Elektrisches Feld}
+\author{ Joachim Schwardt und Tim Pokart}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+Wir betrachten den in \cref{fig:sketch} dargestellten Aufbau, bei dem zwei ineinandergestapelte Hohlzylinder mit Querschnittsfläche $A$ jeweils gegenläufig vom Strom $I$ durchflossen werden. 
+Der innere hat dabei den Außenradius $a$ und der äußere den Innenradius $b$.
+\begin{figure}[htb]
+    \centering
+    \input{verdrehtes_e_feld_sketch}
+    \caption{Skizze der Anordnung}
+    \label{fig:sketch}
+\end{figure}
+Gesucht ist das Elektrische Feld im Zwischenraum.
+% Dafür verwenden wir lediglich die Maxwell-Gleichungen
+% \begin{align*}
+%     \nabla\cdot \vec{D} &= \rho, &\nabla\cdot \vec{B} &= 0, & \nabla \times \vec{E} + \frac{\partial \vec{B}}{\partial t} &= 0, & \nabla \times \vec{H} - \frac{\partial \vec{D}}{\partial t} &= \vec{j},
+% \end{align*}
+% das Elektrische Potential $\nabla \varphi = -\vec{E}$ und die sich daraus ergebende Poisson-Gleichung $\Delta \varphi = -\frac{\rho}{\epsilon_0}$, das ohmsche Gesetz $\vec{j} = \kappa \vec{E}$ mit der Leitfähigkeit $\kappa$, sowie die Kontinuitätsbedingung des Elektrischen Feldes an Grenzübergängen zwischen Stoffen $\vec{n} \times (\vec{E}_2 - \vec{E}_1) = 0$.
+Dafür verwenden wir die Maxwell-Gleichungen in der Form
+\begin{align*}
+    \nabla\cdot \vec{E} &= \frac{\rho }{\epsilon_0}, & \nabla \times \vec{E} &= 0,
+\end{align*}
+wir nehmen also zeitunabhängige Felder an. 
+Da die Stromdichten zeitunabhängig sind, muss das auch für die Felder gelten -- auch wenn das Endergebnis einer ähnlichen Symmetrieüberlegung widerspricht.
+Das elektrische Feld lässt sich aufgrund der Rotationsfreiheit über das elektrostatische Potential als $\vec{E} = -\nabla \varphi$ ausdrücken.
+Zusammen mit der Tatsache, dass aufgrund fehlender freier Ladungen $\rho = 0$ ist, ergibt sich daraus die Poisson-Gleichung $\Delta \varphi = -\frac{\rho}{\epsilon_0} \equiv 0$.
+Wir nehmen zudem noch das ohmsche Gesetz in seiner einfachsten Form $\vec{j} = \kappa \vec{E}$ an, wobei $\kappa$ die Leitfähigkeit ist.
+Zuletzt verwenden wir noch die Stetigkeit der Parallelkomponente des elektrischen Feldes an Grenzübergängen, welche mit dem Normalenvektor $\vec{n}$ der Grenzfläche als $\vec{n} \times (\vec{E}_2 - \vec{E}_1) = 0$ formuliert werden kann.
+% Wir arbeiten in den Zylinderkoordinaten $(r, \phi, z)$ und beschränken uns der Einfachheit halber auf $z=0$. 
+% Für unsere Betrachtung reicht es sich auf die Koordinaten $r = a$ und $r = b$ zu beschränken, da diese die Anschlussbedingungen für die spätere Lösung der Poisson-Gleichung stellen.
+Wir arbeiten in den Zylinderkoordinaten $(r, \phi, z)$ und beschränken uns im Folgenden auf $z=0$. 
+Für die Lösung der Poisson-Gleichung benötigen wir Randbedingungen, die in diesem Fall den Parallelkomponenten des elektrischen Feldes bei $r = a$ und $r = b$ entsprechen.
+% Zunächst bestimmen wir die Stromdichte 
+% \begin{align*}
+%     \vec{j} = \pm\vec{e}_\phi \frac{I}{A} \Theta\left(\frac{h}{2} - |z|\right)
+% \end{align*}
+% in den beiden Leiter an eben diesen Stellen und daraus das Elektrische Feld 
+% \begin{align*}
+%     \vec{E}(r = a, \phi, z) &= \vec{e}_\phi \frac{I}{\kappa A} \Theta\left(|z| - \frac{h}{2}\right), &\vec{E}(r = b, \phi, z) &=-\vec{e}_\phi \frac{I}{\kappa A} \Theta\left(\frac{h}{2} - |z|\right).
+% \end{align*}
+Die Stromdichte ist gegeben durch
+\begin{align*}
+    \vec{j}(z=0) = \pm\vec{e}_\phi \frac{I}{A}
+\end{align*}
+und entsprechend folgt dann
+\begin{align*}
+    \vec{E}(r = a, \phi, z=0) &= \vec{e}_\phi \frac{I}{\kappa A}, &\vec{E}(r = b, \phi, z=0) &=-\vec{e}_\phi \frac{I}{\kappa A}.
+\end{align*}
+% Diese beiden Werte sind die Neumann-Randbedingung für die Poisson-Gleichung $\Delta \varphi = 0$, deren Lösung durch diese bis auf einen konstanten Term eindeutig bestimmt wird.
+Wir wählen den Ansatz $\varphi(r, \phi, z = 0) = \phi f(r)$\footnote{Ohne die $\phi$-Abhängigkeit können später die Randbedingungen nicht erfüllt werden.} für den Zwischenraum der beiden Leiter in der $x$-$y$-Ebene.
+Mit dem Laplace-Operator in Zylinderkoordinaten erhalten wir
+\begin{align*}
+    \Delta \varphi = \frac{1}{r} \partial_r \left(r \partial_r \varphi\right) + \frac{1}{r^2} \partial_\phi^2 \varphi + \partial_z^2 \varphi = 0.
+\end{align*}
+Daraus ergibt sich eine Differentialgleichung für $f(r)$ 
+\begin{align*}
+    \partial_r (r f'(r)) = 0.
+\end{align*}
+Diese wird durch $f(r) = B \ln r + C$ gelöst.
+Damit ergibt sich das elektrische Feld 
+\begin{align*}
+    \vec{E} &= -\nabla \varphi = -\vec{e}_r \phi \frac{B}{r} - \vec{e}_\phi \frac{B \ln r + C}{r}.
+\end{align*}
+Dieses kann nun an die beiden Randbedingungen angepasst werden, wobei der Normalenvektor an die Ebene $\vec{n} = \vec{e}_r$ ist.
+Zusammen mit $\vec{n} \times (\vec{E}_2 - \vec{E}_1) = 0$ ergeben sich die Gleichungen
+\begin{align*}
+    \vec{e}_z \left(\frac{I}{\kappa A} + \frac{B \ln a + C}{a}\right) &= 0, \\
+    \vec{e}_z \left(-\frac{I}{\kappa A} + \frac{B \ln b + C}{b}\right) &= 0.
+\end{align*}
+Diese Gleichungen sind äquivalent zu
+\begin{align*}
+    C &= -\frac{Ia}{\kappa A} - B\ln a,\\
+    0 &= -\frac{Ib}{\kappa A} + B\ln \frac{b}{a} - \frac{Ia}{\kappa A}
+\end{align*}
+und liefern letztlich
+\begin{align*}
+    B &= \frac{I}{\kappa A} \frac{a+b}{\ln \frac{b}{a}},\\
+    C &= -\frac{I}{\kappa A} \left( a + \frac{a+b}{\ln \frac{b}{a}} \ln a \right).
+\end{align*}
+% Dieses wird durch
+% \begin{align*}
+%     B &= \frac{I}{\kappa A} \frac{a + b}{\ln \frac{a}{b}}, & C&=\frac{I}{\kappa A} \left(a - \frac{a - b}{\ln \frac{a}{b}} \ln a\right)
+% \end{align*}
+% gelöst.
+Damit hat unser Elektrisches Feld schlussendlich eine winkelabhängige Komponente in radialer Richtung, obwohl das Problem rotationssymmetrisch ist.
+Insbesondere ist $\vec{E}(\phi=0) \neq \vec{E}(\phi=2\pi)$.\\
+SANITY CHECK: Rotation gleich Null?
+\begin{align*}
+    \nabla \times \vec{E} &= \left( \vec{e}_r\partial_r + \frac{1}{r}\vec{e}_\phi \partial_\phi + \vec{e}_z\partial_z \right) \times \left( -\vec{e}_r\phi \frac{B}{r} - \vec{e}_\phi \frac{B\ln r + C}{r} \right) = \\
+    &= \vec{e}_z \left( -\partial_r \left[ \frac{B\ln r + C}{r} \right] + \frac{B}{r^2} \right) - \vec{e}_z \frac{B\ln r + C}{r^2} = 0.
+\end{align*}
+
+\end{document}

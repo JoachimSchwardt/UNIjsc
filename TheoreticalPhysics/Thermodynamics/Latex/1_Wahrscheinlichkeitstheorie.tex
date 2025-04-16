@@ -1,0 +1,145 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{01 Wahrscheinlichkeitstheorie}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 1.1: Energie, extensive Größen}
+\subsection*{a)}
+Die Notation $\bra\langle {\cdot }\rangle$ bezeichnet den Mittelwert einer Größe über alle Teilchen. Gegeben ist $\bra\langle {|v|^2}\rangle=f(T)$:
+\begin{align*}
+E_\tecxt\text{kin}&=\frac{m}{2}\sum_{k=1}^N|v_k|^2=\frac{mN}{2}\bra\langle {|v|^2}\rangle = N\cdot\frac{mf(T)}{2}\propto N\numberthis\label{Kinetische Energie ist extensiv}
+\end{align*}
+\subsection*{b)}
+Sei $V_\tecxt\text{pot}\propto\exp(-\gamma x_{jk})$ mit $x_{jk}=|\vec{x}_j-\vec{x}_k|$. Dann ist die potentielle Energie eines Teilchens im Koordinatenursprung gegeben durch:
+\begin{align*}
+E_\tecxt\text{pot,j}&=\sum_{k=1}^NV_\tecxt\text{pot,j}\approx\intr\int_{V}{\frac{N}{V}V_\tecxt\text{pot,j}(r)}\,\mathrm{d}^{3}r\approx 4\pi\frac{N}{V}\intx\int_{0}^{R}V_\tecxt\text{pot}(r)r^2\,\mathrm{d}r=\\
+&=4\pi\rho\klam\left[ {(2+2r+r^2)e^{-r}} \right]_R^0\kom\overset{\substack{{N\propto R^3} \\ |}}{\propto}8\pi\rho-e^{-N^{1/3}}\kla\left( {2+2N^{1/3}+N^{2/3}} \right)=\mathcal{O}(1)\numberthis\label{Potentielle Energie fuer exp von r}
+\end{align*}
+Dabei wurden die "Ecken" der Box vernachlässigt. Deren Beitrag verschwindet aber für große $N$, da:
+\begin{align*}
+E_\tecxt\text{pot,j}^\tecxt\text{Ecken}&<\intr\int_{\tecxt\text{Ecken}}{e^{-R}r^2}\,\mathrm{d}^{3}r\propto\mathcal{O}(Ne^{-N^{1/3}})\numberthis\label{Potentielle Energie mit Ecken}
+\end{align*}
+\subsection*{c)}
+Für langreichweitige Potentiale wie $V_\tecxt\text{pot}\propto\frac{1}{r}$ gilt aber:
+\begin{align*}
+E_\tecxt\text{pot,j}&\propto\intx\int_{0}^{R}r\,\mathrm{d}r\propto\mathcal{O}(N^{2/3})\numberthis\label{Potentielle Energie Gravitation}
+\end{align*}
+Dann gilt aber $E_\tecxt\text{pot}\propto N^{5/3}$, und somit ist die Energie keine extensive Größe mehr, da diese ja linear in der Systemgröße $N$ (oder $V$) sein soll.
+\section*{Aufgabe 1.2: Stirling-Näherung}
+\subsection*{a)} Sei $N\in\mathbb{N}$:
+\begin{align*}
+\Gamma(N+1)&:=\intx\int_{0}^{\infty}x^Ne^{-x}\,\mathrm{d}x\overset{\tecxt\text{PI}}{=}-x^Ne^{-x}\Big\vert_0^\infty+\intx\int_{0}^{\infty}Nx^{N-1}e^{-x}\,\mathrm{d}x=N\Gamma(N)\numberthis\label{Gamma Rekursion}
+\end{align*}
+Mit $\Gamma(1)=1$ folgt daraus rekursiv:
+\begin{align*}
+\Gamma(N+1)&=N(N-1)\Gamma(N-1)=\dots=N!\numberthis\label{Gamma ist Fakultaet}
+\end{align*}
+\subsection*{b)}
+Mit der Substitution $y=\frac{x}{N}$ und den Funktionen $f(N):=N^{N+1}$ sowie $g(y)=\log y-y$ kann $N!$ wie folgt umgeschrieben werden:
+\begin{align*}
+N!&=\intx\int_{0}^{\infty}N^Ny^Ne^{-Ny}\,N\mathrm{d}y=f(N)\intx\int_{0}^{\infty}e^{N\log y}e^{-Ny}\,\mathrm{d}y=f(N)\intx\int_{0}^{\infty}e^{Ng(y)}\,\mathrm{d}y\numberthis\label{N Fakultaet umschreiben}
+\end{align*}
+\subsection*{c)}
+Das Maximum von $g(y)$ liegt bei $y=1$:
+\begin{align*}
+0&\overset{!}{=}g'(y)=\frac{1}{y}-1\ \ \Rightarrow\ \ y=1\numberthis\label{Maximum von g}
+\end{align*}
+Die Taylorreihe des Logarithmus erhält man aus:
+\begin{align*}
+\log(1+y)&=\int\frac{1}{1+y}\,\mathrm{d}y=\sum_{k\ge 0}\intx\int_{ }^{ }(-y)^k\,\mathrm{d}y=\sum_{k\ge 1}\frac{(-1)^{k-1}}{k}y^k\numberthis\label{Potenzreihe log}
+\end{align*}
+Daraus folgt nun die Entwicklung von $g$ um $y=1$:
+\begin{align*}
+g(1+y)&=\log(1+y)-1-y\approx -1-\frac{y^2}{2}\numberthis\label{Naeherung g um 1}
+\end{align*}
+Einsetzen in (\ref{N Fakultaet umschreiben}) liefert dann mit der Substitution $u=\sqrt{\frac{N}{2}}(y-1)$ die Näherung:
+\begin{align*}
+N!&\approx N^{N+1}\intx\int_{0}^{\infty}e^{-N-N(y-1)^2/2}\,\mathrm{d}y=N^{N+1}e^{-N}\intx\int_{-\sqrt{N/2}}^{\infty}e^{-u^2}\,\frac{\mathrm{d}u}{\sqrt{N/2}}\kom\overset{\substack{{N\gg 1} \\ |}}{\approx}\\
+&\approx\sqrt{\pi}\frac{N^{N+1}}{\sqrt{N/2}}e^{-N}=\sqrt{2\pi N}\kla\left( {\frac{N}{e}} \right)^N\numberthis\label{Stirling Formel}
+\end{align*}
+\section*{Aufgabe 1.3: Binomialverteilung, Poissonverteilung}
+\subsection*{a)}Sei $P(k;N,q)=\binom{N}{k}q^k(1-q)^{N-k}$. Dann gilt für den Erwartungswert:
+\begin{align*}
+E[X]&:=\sum_{k=0}^NkP(k;N,q)=Nq\sum_{k=1}^N\frac{(N-1)!}{(k-1)!(N-k)!}q^{k-1}(1-q)^{N-k}\kom\overset{\substack{{j=k-1} \\ |}}{=}\\
+&=Nq\sum_{j=0}^{N-1}\binom{N-1}{j}q^j(1-q)^{N-1-j}=Nq(q+1-q)^{N-1}=Nq\numberthis\label{Erwartungswert Binomialverteilung}
+\end{align*} 
+Für die Varianz berechnet man zunächst folgenden Ausdruck:
+\begin{align*}
+E[X(X-1)]&=\sum_{k=0}^Nk(k-1)P(k;N,q)=\\
+&=N(N-1)q^2\sum_{k=2}^N\frac{(N-2)!}{(k-2)!(N-k)!}q^{k-2}(1-q)^{N-k}\kom\overset{\substack{{j=k-2} \\ |}}{=}\\
+&=N(N-1)q^2\sum_{j=0}^{N-2}P(j;N-2,q)=N(N-1)q^2\numberthis\label{E von X mal X minus 1}
+\end{align*}
+Damit lässt sich die Varianz von $X$ ermitteln:
+\begin{align*}
+\tecxt\text{Var}[X]&:=E[(X-E[X])^2]=E[X^2-2NqX+N^2q^2]=\\
+&=E[X^2]-2NqE[X]+N^2q^2=E[X(X-1)]+E[X]-N^2q^2\overset{(\ref{E von X mal X minus 1})}{=}\\
+&=N(N-1)q^2+Nq-N^2q^2=Nq(1-q)\numberthis\label{Varianz Binomialverteilung}
+\end{align*}
+\subsection*{b)}Bestimme zunächst folgenden Grenzwert:
+\begin{align*}
+\log L&:=\log\lim_{N\rightarrow\infty}\kla\left( {1+\frac{a}{N}} \right)^{bN}=b\lim_{N\rightarrow\infty}\frac{\log\kla\left( {1+\frac{a}{N}} \right)}{\frac{1}{N}}\kom\overset{\substack{{\frac{0}{0}} \\ |}}{=}ab\lim_{N\rightarrow\infty}\frac{\frac{1}{1+a/N}\frac{-1}{N^2}}{\frac{-1}{N^2}}=ab\\
+&\Rightarrow\ \ L=\lim_{N\rightarrow\infty}\kla\left( {1+\frac{a}{N}} \right)^{bN}=e^{ab}\numberthis\label{e hoch ab limes Darstellung}
+\end{align*}
+Für $\lambda=Nq=\tecxt\text{const.}$ ergibt sich im Grenzwert $N\rightarrow\infty$ die Poissonverteilung:
+\begin{align*}
+P&:=\lim_{N\rightarrow\infty}P(k;N,\lambda/N)=\lim_{N\rightarrow\infty}\frac{N!}{k!(N-k)!}\frac{\lambda^k}{N^k}\kla\left( {1-\frac{\lambda}{N}} \right)^{N-k}\overset{(\ref{e hoch ab limes Darstellung})}{=}\\
+&=\frac{\lambda^k}{k!}e^{-\lambda}\lim_{N\rightarrow\infty}\frac{N!}{N^k(N-k)!}\overset{(\ref{Stirling Formel})}{=}\frac{\lambda^k}{k!}e^{-\lambda}\lim_{N\rightarrow\infty}\frac{N^{N+1/2}e^{-N}}{N^k(N-k)^{N-k+1/2}e^{-(N-k)}}=\\
+&=\frac{\lambda^k}{k!}e^{-\lambda}e^{-k}\lim_{N\rightarrow\infty}\frac{1}{\kla\left( {1-\frac{k}{N}} \right)^{N-k+1/2}}\overset{(\ref{e hoch ab limes Darstellung})}{=}\frac{\lambda^k}{k!}e^{-\lambda}\numberthis\label{Poisson Verteilung}
+\end{align*}
+\subsection*{c)}
+Der Mittelwert der Poissonverteilung berechnet sich aus (\ref{Poisson Verteilung}):
+\begin{align*}
+E[X]&=\sum_{k=0}^{\infty} kP(k;\lambda)=\lambda e^{-\lambda}\sum_{k=1}^{\infty}\frac{\lambda^{k-1}}{(k-1)!}=\lambda\numberthis\label{Erwartungswert Poissonverteilung}
+\end{align*}
+Da der Erwartungswert mit dem der Binomialverteilung übereinstimmt, für die Varianz nur noch $E[X(X-1)]$ berechnet werden:
+\begin{align*}
+E[X(X-1)]&=\sum_{k=0}^Nk(k-1)P(k;\lambda)=\lambda^2e^{-\lambda}\sum_{k=2}^\infty\frac{\lambda^{k-2}}{(k-2)!}=\lambda^2\numberthis\label{E von X mal X minus 1 Poisson}
+\end{align*}
+Damit folgt direkt:
+\begin{align*}
+\tecxt\text{Var}[X]&=E[X^2]-E[X]^2=E[X(X-1)]+E[X]-\lambda^2=\lambda\numberthis\label{Varianz Poissonverteilung}
+\end{align*}
+\subsection*{d)}
+Schreibe $E[g(X)]=\bra\langle {g(X)}\rangle=\int g(x)\rho(x)\,\mathrm{d}x$ für eine beliebige Verteilungsfunktion $\rho(x)$. Dann gelten für $X=X_1+X_2$ folgende Beziehungen:
+\begin{align*}
+\bra\langle {X}\rangle&=\intx\int_{ }^{ }x_1\int \rho(x)\,\mathrm{d}x_2\mathrm{d}x_1+\intx\int_{ }^{ }x_2\int\rho(x)\,\mathrm{d}x_1\mathrm{d}x_2=\\
+&=\intx\int_{ }^{ }x_1\rho_1(x_1)\,\mathrm{d}x_1+\intx\int_{ }^{ }x_2\rho_2(x_2)\,\mathrm{d}x_2=\bra\langle {X_1}\rangle+\bra\langle {X_2}\rangle\numberthis\label{Erwartungswert additiv}\\
+\bra\langle {\alpha X}\rangle&=\alpha\intx\int_{ }^{ }x\rho(x)\,\mathrm{d}x=\alpha\bra\langle {X}\rangle\numberthis\label{Erwartungswert linear in alpha}
+\end{align*}
+Die Varianz entspricht Var$[X]=\bra\langle {(X-\bra\langle {X}\rangle)^2}\rangle$. Für $X=X_1+X_2$ gilt:
+\begin{align*}
+\tecxt\text{Var}[X]&=\bra\langle {X^2}\rangle-\bra\langle {X}\rangle^2=\bra\langle {X_1^2+2X_1X_2+X_2^2}\rangle-\bra\langle {X_1}\rangle^2-2\bra\langle {X_1}\rangle\bra\langle {X_2}\rangle-\bra\langle {X_2}\rangle^2=\\
+&=\tecxt\text{Var}[X_1]+\tecxt\text{Var}[X_2]+2\bra\langle {X_1X_2}\rangle-2\bra\langle {X_1}\rangle\bra\langle {X_2}\rangle=\tecxt\text{Var}[X_1]+\tecxt\text{Var}[X_2]\numberthis\label{Varianz additiv}\\
+\tecxt\text{Var}[\alpha X]&=\bra\langle {(\alpha X)^2}\rangle-\bra\langle {\alpha X}\rangle^2=\alpha^2\tecxt\text{Var}[X]\numberthis\label{Varianz qudratisch in alpha}
+\end{align*}
+Für eine Summe von Bernoulli-Variablen gilt also:
+\begin{align*}
+E[X]=\sum_{k=1}^NE[X_k]=NE[X_1]=Nq
+\end{align*}
+Das ist konsistent mit dem Ergebnis aus (\ref{Erwartungswert Binomialverteilung}).
+
+\end{document}

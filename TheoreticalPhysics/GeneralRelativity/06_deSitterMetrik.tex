@@ -1,0 +1,92 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[landscape=true]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{06 Verschiedene Metriken}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+
+\section*{Aufgabe 13: Rindler-Metrik}
+Sei die Metrik gegeben durch $\tecxt\text{d}s^2=\tecxt\text{d}t^2-\tecxt\text{d}x^2$. Führe neue Koordinaten $t=:\rho\sinh (\kappa\tau)$ und $x=:\rho\cosh (\kappa\tau)$ ein. Dann lautet die Metrik:
+\begin{align*}
+\tecxt\text{d}s^2&=\kla\left( {\rho\kappa\cosh ( \kappa\tau)\tecxt\text{d}\tau + \sinh (\kappa\tau)\tecxt\text{d}\rho} \right)^2-\kla\left( {\rho\kappa\sinh (\kappa\tau)\tecxt\text{d}\tau + \cosh (\kappa\tau)\tecxt\text{d}\rho} \right)^2=\rho^2\kappa^2\tecxt\text{d}\tau^2-\tecxt\text{d}\rho^2
+\end{align*}
+Die kinetische Energie ist $T\propto g_{\mu\nu}\frac{\tecxt\text{d}x^\mu }{\tecxt\text{d}s}\frac{\tecxt\text{d}x^\nu }{\tecxt\text{d}s}=\rho^2\kappa^2\kla\left( {\frac{\tecxt\text{d}\tau}{\tecxt\text{d}s}} \right)^2 - \kla\left( {\frac{\tecxt\text{d}\rho}{\tecxt\text{d}s}} \right)^2$. Damit lauten die Christoffel-Symbole:
+\begin{align*}
+0&=\frac{\tecxt\text{d}}{\tecxt\text{d}s}\frac{\partial T}{\partial\frac{\tecxt\text{d}\tau }{\tecxt\text{d}s}} - \frac{\partial T}{\partial \tau}\propto \frac{\tecxt\text{d}}{\tecxt\text{d}s}\rho^2\frac{\tecxt\text{d}\tau}{\tecxt\text{d}s}=\rho^2\frac{\tecxt\text{d}^2\tau}{\tecxt\text{d}s^2} + 2\rho\frac{\tecxt\text{d}\tau}{\tecxt\text{d}s}\frac{\tecxt\text{d}\rho}{\tecxt\text{d}s}\\
+0&=\frac{\tecxt\text{d}}{\tecxt\text{d}s}\frac{\partial T}{\partial \frac{\tecxt\text{d}\rho}{\tecxt\text{d}s}}-\frac{\partial T}{\partial\rho}\propto -2\frac{\tecxt\text{d}^2\rho}{\tecxt\text{d}s^2}-2\rho\kappa^2\kla\left( {\frac{\tecxt\text{d}\tau}{\tecxt\text{d}s}} \right)^2
+\end{align*}
+Damit sind nur $\Gamma^\tau_{\tau\rho}=\Gamma^\tau_{\rho\tau}=\frac{1}{\rho}$ und $\Gamma^\rho_{\tau\tau}=\kappa^2\rho$ ungleich Null.\\
+In effektiv zwei Dimensionen gibt es nur eine unabhängige Komponente des Krümmungstensors:
+\begin{align*}
+R_{dabc}&=g_{de}R^e_{\ abc}=g_{de}\klam\left[ {\Gamma^e_{ac,b}-\Gamma^e_{ab,c}+\Gamma^e_{bf}\Gamma^f_{ac}-\Gamma^e_{cf}\Gamma^f_{ab}} \right]\\
+R_{2121}&=g_{22}\klam\left[ {\Gamma^2_{11,2}-\Gamma^2_{12,1}+\Gamma^2_{2f}\Gamma^f_{11}-\Gamma^2_{1f}\Gamma^f_{12}} \right]=-\kappa^2-0+0+\kappa^2= 0
+\end{align*}
+Mit $R^d_{\ abc}=g^{de}R_{eabc}$ folgt daraus mit $R_{1212}=-R_{1221}=-R_{2112}=R_{2121}=0$:
+%\begin{align*}
+%R^1_{\ 212}&=g^{11}R_{1212}=-\frac{1}{\rho^2}\\
+%R^1_{\ 221}&=g^{11}R_{1221}=\frac{1}{\rho^2}\\
+%R^2_{\ 121}&=g^{22}R_{2121}=\kappa^2\\
+%R^2_{\ 112}&=g^{22}R_{2112}=-\kappa^2
+%\end{align*}
+\section*{Aufgabe 14: Coriolis-Kraft}
+Sei $\vec{\omega}=\omega\vec{e}_z$ und $\tecxt\text{d}s^2=\klam\left[ {1-(\vec{\omega}\times\vec{r})^2} \right]\tecxt\text{d}t^2-2(\vec{\omega}\times\vec{r})\cdot\tecxt\text{d}\vec{r}\tecxt\text{d}t-\tecxt\text{d}\vec{r}^2$ die Metrik. In kartesischen Koordinaten gilt dann mit $\vec{\omega}\cdot (\vec{r}\times\tecxt\text{d}\vec{r})=\omega (x\tecxt\text{d}y-y\tecxt\text{d}x)$:
+\begin{align*}
+\tecxt\text{d}s^2&=\klam\left[ {1-\omega^2(x^2+y^2)} \right]\tecxt\text{d}t^2-2\omega x\tecxt\text{d}y \tecxt\text{d}t +2\omega y\tecxt\text{d}x\tecxt\text{d}t-\tecxt\text{d}x^2-\tecxt\text{d}y^2-\tecxt\text{d}z^2
+\end{align*}
+Die kinetische Energie ist $T\propto \klam\left[ {1-\omega^2(x^2+y^2)} \right]\kla\left( {\frac{\tecxt\text{d}t}{\tecxt\text{d}s}} \right)^2-2\omega x\frac{\tecxt\text{d}y}{\tecxt\text{d}s} \frac{\tecxt\text{d}t}{\tecxt\text{d}s} + 2\omega y\frac{\tecxt\text{d}x}{\tecxt\text{d}s}\frac{\tecxt\text{d}t}{\tecxt\text{d}s}-\kla\left( {\frac{\tecxt\text{d}x}{\tecxt\text{d}s}} \right)^2-\kla\left( {\frac{\tecxt\text{d}y}{\tecxt\text{d}s}} \right)^2-\kla\left( {\frac{\tecxt\text{d}z}{\tecxt\text{d}s}} \right)^2$.\\
+Um die Christoffel-Symbole $\Gamma^b_{0a}$ in linearer Ordnung in $\omega$ zu bestimmen, kann der Term mit $\omega^2$ weggelassen werden:
+\begin{align*}
+0&=\frac{\tecxt\text{d}}{\tecxt\text{d}s}\frac{\partial T}{\partial \frac{\tecxt\text{d}x}{\tecxt\text{d}s}}-\frac{\partial T}{\partial x}\propto \frac{\tecxt\text{d}}{\tecxt\text{d}s}\klam\left[ {2\omega y\frac{\tecxt\text{d}t}{\tecxt\text{d}s} - 2\frac{\tecxt\text{d}x}{\tecxt\text{d}s}} \right]+2\omega\frac{\tecxt\text{d}y}{\tecxt\text{d}s}\frac{\tecxt\text{d}t}{\tecxt\text{d}s}=-2\frac{\tecxt\text{d}^2x}{\tecxt\text{d}s^2} + 2\omega y\frac{\tecxt\text{d}^2t}{\tecxt\text{d}s^2}+4\omega\frac{\tecxt\text{d}y}{\tecxt\text{d}s}\frac{\tecxt\text{d}t}{\tecxt\text{d}s}  \\
+0&=\frac{\tecxt\text{d}}{\tecxt\text{d}s}\frac{\partial T}{\partial \frac{\tecxt\text{d}y}{\tecxt\text{d}s}}-\frac{\partial T}{\partial y}\propto \frac{\tecxt\text{d}}{\tecxt\text{d}s}\klam\left[ {-2\omega x\frac{\tecxt\text{d}t}{\tecxt\text{d}s} - 2\frac{\tecxt\text{d}y}{\tecxt\text{d}s}} \right] - 2\omega\frac{\tecxt\text{d}x}{\tecxt\text{d}s}\frac{\tecxt\text{d}t}{\tecxt\text{d}s} = -2\frac{\tecxt\text{d}^2y}{\tecxt\text{d}s^2} - 2\omega x\frac{\tecxt\text{d}^2t}{\tecxt\text{d}s^2}-4\omega\frac{\tecxt\text{d}x}{\tecxt\text{d}s}\frac{\tecxt\text{d}t}{\tecxt\text{d}s}  
+\end{align*}
+Aus $t=s$ folgt $\frac{\tecxt\text{d}^2t}{\tecxt\text{d}s^2}=0$. Die Christoffel-Symbole sind dann $\Gamma^x_{yt}=-\omega$, $\Gamma^y_{xt}=\omega$ und $\Gamma^z_{\dots}=0$. Damit lauten die Geodätengleichungen $\ddot{x}^b+\Gamma^b_{ca}\dot{x}^c\dot{x}^a=0$:
+\begin{align*}
+0&=\ddot{x} -2\omega\dot{y}\\
+0&=\ddot{y} +2\omega\dot{x}
+\end{align*}
+Die Coriolis-Kraft ist $F=2m\vec{v}\times\vec{\omega}$. Die Bewegungsgleichung lautet daher:
+\begin{align*}
+\ddot{\vec{r}}&=2\omega\dot{\vec{r}}\times\vec{e}_z=2\omega\kla\left( {\dot{y}\vec{e}_x-\dot{x}\vec{e}_y} \right)
+\end{align*}
+Das entspricht dem obigen Ergebnis.
+\section*{Aufgabe 15: Kosmischer Horizont}
+Gegeben ist die Metrik $\tecxt\text{d}s^2=\tecxt\text{d}t^2-a^2(t)\klam\left[ {\tecxt\text{d}r^2+r^2\tecxt\text{d}\theta^2+r^2\sin^2\theta\tecxt\text{d}\phi^2} \right]$ mit $a(t)=e^{Ht}$.\\ 
+Setze $R:=re^{Ht}$ mit $\tecxt\text{d}r=e^{-Ht}\tecxt\text{d}R-Re^{-Ht}H\tecxt\text{d}t$:
+\begin{align*}
+\tecxt\text{d}s^2&=\tecxt\text{d}t^2-e^{2Ht}\klam\left[ {\kla\left( {e^{-Ht}\tecxt\text{d}R - Re^{-Ht}H\tecxt\text{d}t} \right)^2+R^2e^{-2Ht}\tecxt\text{d}\Omega^2} \right]=\\
+&=\klam\left[ {1-R^2H^2} \right]\tecxt\text{d}t^2-\tecxt\text{d}R^2+2RH\tecxt\text{d}R\tecxt\text{d}t-R^2\tecxt\text{d}\Omega^2\equiv\\
+&\equiv A(R)\tecxt\text{d}t^2-B(R)\tecxt\text{d}t\tecxt\text{d}R-C(R)\tecxt\text{d}R^2-R^2 \tecxt\text{d}\Omega^2
+\end{align*}
+Dabei sind $A(R)=1-R^2H^2$, $B(R)=-2RH$ und $C(R)=1$.\\
+Schreibe die Metrik mit quadratischer Ergänzung so um, dass der gemischte Term durch Substitution eliminiert werden kann:
+\begin{align*}
+\tecxt\text{d}s^2&=A\kla\left( {\tecxt\text{d}t-\frac{B}{2A}\tecxt\text{d}R} \right)^2-\frac{B^2}{4A}\tecxt\text{d}R^2-C\tecxt\text{d}R^2-R^2\tecxt\text{d}\Omega^2
+\end{align*}
+Gefordert ist also $\tecxt\text{d}T:=\tecxt\text{d}t-\frac{B}{2A}\tecxt\text{d}R$, woraus $T=t+\int\frac{RH}{1-R^2H^2}\,\tecxt\text{d}R=t-\frac{1}{2H}\log (1-R^2H^2)$ folgt. Mit $\alpha (R):=1-R^2H^2$ und $\beta (R):=C+\frac{B^2}{4A}=\frac{1}{1-R^2H^2}=\frac{1}{\alpha (R)}$ lautet dann die Metrik:
+\begin{align*}
+\tecxt\text{d}s^2&=\alpha(R)\tecxt\text{d}T^2-\beta (R)\tecxt\text{d}R^2-R^2\tecxt\text{d}\Omega^2
+\end{align*}
+\end{document}

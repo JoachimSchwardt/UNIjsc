@@ -1,0 +1,294 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{Klausur Quantentheorie 1}
+\author{Joachim Schwardt}
+\date{23.07.2020}
+\maketitle
+
+\section*{Aufgabe 1: Vertauschungsrelationen}
+\begin{enumerate}
+\item[a)] Zeigen Sie, dass für jede \textsc{Taylor}-entwickelbare Funktion $F(\hat{p})$ gilt: $\klam\left[ {F(\hat{p}),\hat{x}} \right]=\frac{\hbar}{i}\frac{\tecxt\text{d}}{\tecxt\text{d}\hat{p}}F(\hat{p})$! (10 Punkte)
+\item[b)] Berechnen Sie $\klam\left[ {\hat{x},\exp ({\frac{ia}{\hbar}\hat{p}})} \right]$! (4 Punkte)
+\item[c)] Zeigen Sie, dass $\exp ({\frac{ia}{\hbar}\hat{p}})\Ket | {x} \rangle$ ein Eigenzustand von $\hat{x}$ ist, wenn $\Ket | {x} \rangle$ ein Eigenzustand von $\hat{x}$ zum Eigenwert $x$ ist und berechnen Sie explizit den zugehörigen Eigenwert! (6 Punkte)
+\end{enumerate}
+\subsection*{Lösungsvorschlag:}
+\begin{enumerate}
+\item[a)] Zeige zunächst $[A,B^n]=ncB^{n-1}$ für $[A,B]=c\in\mathbb{C}$. Der Induktionsanfang für $n=0$ ist klar. Mit der Induktionsvoraussetzung (IV) folgt dann für den "nächsten" Term mit $n+1$:
+\begin{align*}
+[A,B^{n+1}]&=B^n[A,B]+[A,B^n]B\overset{(\tecxt\text{IV})}{=} cB^n+ncB^n=(n+1)cB^n\numberthis\label{Kommutator A B hoch n}
+\end{align*}
+Mit dieser Formel kann nun der Kommutator berechnet werden. Sei $F(\hat{p})=\sum_na_n\hat{p}^n$:
+\begin{align*}
+[F(\hat{p}),\hat{x}]&=\sum_{n=0}^\infty a_n [\hat{p}^n,\hat{x}]\overset{(\ref{Kommutator A B hoch n})}{=}-i\hbar\sum_{n=0}^\infty a_nn\hat{p}^{n-1}=\frac{\hbar}{i}\sum_{n=0}^\infty a_n\frac{\tecxt\text{d}}{\tecxt\text{d}\hat{p}}\hat{p}^n=\frac{\hbar}{i}\frac{\tecxt\text{d}}{\tecxt\text{d}\hat{p}}F(\hat{p})
+\end{align*}
+\item[b)] Mit der eben gezeigten Formel findet man:
+\begin{align*}
+\klam\left[ {\hat{x},\exp\left({\frac{ia}{\hbar}\hat{p}}\right)} \right]=-\frac{\hbar}{i}\frac{\tecxt\text{d}}{\tecxt\text{d}\hat{p}}\exp\left({\frac{ia}{\hbar}\hat{p}}\right)=-a\exp\left({\frac{ia}{\hbar}\hat{p}}\right)\numberthis\label{Kommutator x exp p}
+\end{align*}
+\item[c)] Betrachte die Wirkung von $\hat{x}$ auf den gegebenen Zustand:
+\begin{align*}
+\hat{x}\kla\left( {\exp\kla\left( {\frac{ia}{\hbar}\hat{p}} \right)\Ket | {x} \rangle} \right)&=\exp\kla\left( {\frac{ia}{\hbar}\hat{p}} \right)\kla\left( {\hat{x}+\klam\left[ {\hat{x},\exp\kla\left( {\frac{ia}{\hbar}\hat{p}} \right)} \right]} \right)\Ket | {x} \rangle\overset{(\ref{Kommutator x exp p})}{=}\underbrace{(x-a)}_{\tecxt\text{Eigenwert}}\exp\kla\left( {\frac{ia}{\hbar}\hat{p}} \right)\Ket | {x} \rangle
+\end{align*}
+\end{enumerate}
+\section*{Aufgabe 2: Harmonischer Oszillator und Störungsrechnung}
+\begin{enumerate}
+\item[a)] Sei $\hbar=1$. Dann gilt $H_0=\omega\kla\left( {\hat{a}^\dagger\hat{a}+\frac{1}{2}} \right)$. Geben Sie (ohne Beweis!) das Energiespektrum $E_n^{(0)}$ an! (3 Punkte)
+\item[b)] Es sei $[\hat{a},\hat{a}^\dagger]=1$ gegeben. Zeigen Sie, dass folgende Relationen gelten (9 Punkte):
+\begin{align*}
+\hat{a}^\dagger\hat{a}\Ket | {n} \rangle&=n\Ket | {n} \rangle&\hat{a}\Ket | {n} \rangle&=\sqrt{n}\Ket | {n-1} \rangle&\hat{a}^\dagger\Ket | {n} \rangle&=\sqrt{n+1}\Ket | {n+1} \rangle
+\end{align*}
+\item[c)] Berechnen Sie in 1.\,Ordnung Störungsrechnung das Energiespektrum für $H=H_0+\lambda (\hat{a}^\dagger +\hat{a})^4$! (8 Punkte)
+\end{enumerate}
+\subsection*{Lösungsvorschlag:}
+\begin{enumerate}
+\item[a)] Es gilt $E_n^{(0)}=\omega\kla\left( {n+\frac{1}{2}} \right)$
+\item[b)] Die erste Relation folgt direkt aus a):
+\begin{align*}
+H_0\Ket | {n} \rangle&=E_n^{(0)}\Ket | {n} \rangle\ \ \Rightarrow\ \ \hat{a}^\dagger\hat{a}\Ket | {n} \rangle=\kla\left( {\frac{E_n^{(0)}}{\omega}-\frac{1}{2}} \right)\Ket | {n} \rangle=n\Ket | {n} \rangle\ \ \ \ \kla\left( {\Rightarrow\ \hat{a}^\dagger\hat{a}=:\hat{n}} \right)
+\end{align*}
+Aus der gegeben Relation folgen zwei weitere Kommutatoren:
+\begin{align*}
+[\hat{n},\hat{a}]&=[\hat{a}^\dagger\hat{a},\hat{a}]=\hat{a}^\dagger [\cancel{\hat{a},\hat{a}]}+[\hat{a}^\dagger,\hat{a}]\hat{a}=-\hat{a}\\
+[\hat{n},\hat{a}^\dagger]&=[\hat{a}^\dagger\hat{a},\hat{a}^\dagger]=\hat{a}^\dagger[\hat{a},\hat{a}^\dagger]+\cancel{[\hat{a}^\dagger,\hat{a}^\dagger]}\hat{a}=\hat{a}^\dagger
+\end{align*}
+Betrachte nun die Wirkung von $\hat{n}$ auf folgende Zustände:
+\begin{align*}
+\hat{n}\kla\left( {\hat{a}\Ket | {n} \rangle} \right)&=\kla\left( {\hat{a}\hat{n}+[\hat{n},\hat{a}]} \right)\Ket | {n} \rangle=(n-1)\hat{a}\Ket | {n} \rangle\ \ \Rightarrow\ \ \hat{a}\Ket | {n} \rangle=c_n\Ket | {n-1} \rangle\\
+\hat{n}\kla\left( {\hat{a}^\dagger\Ket | {n} \rangle} \right)&=\kla\left( {\hat{a}^\dagger\hat{n}+[\hat{n},\hat{a}^\dagger]} \right)\Ket | {n} \rangle=(n+1)\hat{a}^\dagger\Ket | {n} \rangle\ \ \Rightarrow\ \ \hat{a}^\dagger\Ket | {n} \rangle=d_n\Ket | {n+1} \rangle
+\end{align*}
+Die Koeffizienten lassen sich aus der Normierung bestimmen:
+\begin{align*}
+|c_n|^2&=\brak\langle {n-1}| {c_n^\ast c_n}|n-1\rangle=\braket\langle {n} | {\hat{a}^\dagger\hat{a}} | {n}\rangle=n\ \ \Rightarrow\ \ c_n=\sqrt{n}\\
+|d_n|^2&=\brak\langle {n+1}| {d_n^\ast d_n}|n+1\rangle=\braket\langle {n} | {\hat{a}\hat{a}^\dagger} | {n}\rangle=n+1\ \ \Rightarrow\ \ d_n=\sqrt{n+1}
+\end{align*}
+\item[c)] Die erste Energiekorrektur ist gegeben durch $E_n^{(1)}=\braket\langle {n} | {H_1} | {n}\rangle$, wobei $\Ket | {n} \rangle$ hier die Zustände des ungestörten Problems bezeichnet. Aus der Bedingung $\brak\langle {n}| {m}\rangle=\delta_{nm}$ folgt, dass nur Terme mit gleicher Anzahl an $\hat{a}^\dagger$ und $\hat{a}$ einen Beitrag liefern. Hiervon gibt es $\binom{4}{2}=\frac{4!}{2!(4-2)!}=6$ verschiedene:
+\begin{align*}
+E_n^{(1)}&=\lambda\klam\left[ \braket\langle {n} | {\hat{a}^\dagger\hat{a}^\dagger\hat{a}\hat{a}+\hat{a}^\dagger\hat{a}\hat{a}^\dagger\hat{a}+\hat{a}^\dagger\hat{a}\hat{a}\hat{a}^\dagger+\hat{a}\hat{a}\hat{a}^\dagger\hat{a}^\dagger+\hat{a}\hat{a}^\dagger\hat{a}\hat{a}^\dagger+\hat{a}\hat{a}^\dagger\hat{a}^\dagger\hat{a}} | {n}\rangle \right]=\\
+&=\lambda\klam\big[ \braket\langle {n-1} | {\sqrt{n}\hat{n}\sqrt{n}} | {n-1}\rangle+\braket\langle {n} | {\hat{n}^2} | {n}\rangle+\braket\langle {n} | {\hat{n}(\hat{n}+1)} | {n}\rangle+\\
+&\ \ \ +\braket\langle {n+1} | {\sqrt{n+1}(\hat{n}+1)\sqrt{n+1}} | {n+1}\rangle+\braket\langle {n} | {(\hat{n}+1)^2} | {n}\rangle+\braket\langle {n} | {(\hat{n}+1)\hat{n}} | {n}\rangle \big]=\\
+&=\lambda\klam\left[ {n(n-1)+n^2+n(n+1)+(n+1)(n+2)+(n+1)^2+(n+1)n} \right]=\\
+&=\lambda\klam\left[ {6n^2+6n+3} \right]\\
+E_n&\simeq E_n^{(0)}+E_n^{(1)}=\omega\kla\left( {n+\frac{1}{2}} \right)+6\lambda\kla\left( {n^2+n+\frac{1}{2}} \right)
+\end{align*}
+\end{enumerate}
+\section*{Aufgabe 3: Radialsymmetrische 3D-Potentiale}
+\begin{enumerate}
+\item[a)] Geben Sie die zeitunabhängige \textsc{Schrödinger}-Gleichung für ein Teilchen der Masse $m$ unter Verwendung von Kugelkoordinaten und des Drehimpulsoperators an (ohne explizite Rechnung)! Nennen Sie den Separationsansatz sowie eine geeignete Substitution aus denen die radiale Schrödingergleichung für radialsymmetrische Potentiale hervorgeht und geben Sie diese an! (8 Punkte)
+\item[b)] Sei $V(r)=-V_0\Theta(a-r)$ für $V_0,a>0$. Leiten Sie für $l=0$ eine Bedingung für $V_0$ her, damit es mindestens einen gebundenen Zustand gibt! (12 Punkte)
+\end{enumerate}
+\subsection*{Lösungsvorschlag:}
+\begin{enumerate}
+\item[a)] Die zeitunabhängige \textsc{Schrödinger}-Gleichung lautet:
+\begin{align*}
+E\phi=\kla\left( {-\frac{\hbar^2}{2mr}\partial_r^2(r\phi)+\frac{\hat{L}^2}{2mr^2}+V} \right)\phi\numberthis\label{Zeitunabhaenige Schroedinger Gleichung}
+\end{align*}
+Durch den Separationsansatz $\phi=R(r)Y(\vartheta,\varphi)$ und die Substitution $u(r)=rR(r)$ vereinfacht sich (\ref{Zeitunabhaenige Schroedinger Gleichung}) mit $\hat{L}^2Y=\hbar^2l(l+1)Y$ zu:
+\begin{align*}
+Eu&=-\frac{\hbar^2}{2m}u''+\kla\left( {V(r)+\frac{\hbar^2l(l+1)}{2mr^2}} \right)u\numberthis\label{Radialgleichung}
+\end{align*}
+\item[b)] Für einen gebundenen Zustand gilt $E<0$, also $E=-|E|$. Definiere die Größen $\kappa^2:=\frac{2m|E|}{\hbar^2}$ und $k^2:=\frac{2m(V_0-|E|)}{\hbar^2}$. Dann lautet (\ref{Radialgleichung}) für $l=0$ und $r>a$:
+\begin{align*}
+-|E|u_1&=-\frac{\hbar^2}{2m}u_1''\ \ \Rightarrow\ \ u_1''=\kappa^2u_1\ \ \Rightarrow\ \ u_1=Ae^{-\kappa r}+Be^{\kappa r}
+\end{align*}
+Aus der Forderung $u_1\rightarrow 0$ für $r\rightarrow\infty$ folgt $B=0$, also $u_1=Ae^{-\kappa r}$. Für $r\le a$ gilt:
+\begin{align*}
+-|E|u_2&=-\frac{\hbar^2}{2m}u_2''-V_0u_2\ \ \Rightarrow\ \ 0=u_2''+k^2u_2\ \ \Rightarrow\ \ u_2=Ce^{ikr}+De^{-ikr}
+\end{align*}
+Es soll $R(r)=\frac{u}{r}$ beschränkt bleiben, also muss $u_2\rightarrow 0$ für $r\rightarrow 0$ gelten. Daraus folgt $D=-C$ und somit $u_2=B\sin kr$.\\
+Der Potentialsprung ist endlich, also sind $\phi$ und $\phi'$ stetig. Daraus folgt:
+\begin{align*}
+u_1(a)\overset{!}{=}u_2(a)\ \ \Rightarrow\ \ Ae^{-\kappa a}=B\sin ka\\
+u_1'(a)\overset{!}{=}u_2'(a)\ \ \Rightarrow\ \ -\kappa Ae^{-\kappa a}=kB\cos ka
+\end{align*}
+Damit dieses Gleichungssystem eine nicht-triviale Lösung hat, muss die Determinante der Koeffizientenmatrix verschwinden:
+\begin{align*}
+0&\overset{!}{=}\det\begin{pmatrix}
+e^{-\kappa a} & -\sin ka \\ \kappa e^{-\kappa a} & k\cos ka
+\end{pmatrix}=ke^{-\kappa a}\cos ka +\kappa e^{-\kappa a} \sin ka
+\end{align*}
+Setze $x:=ka$ und $\alpha^2:=\frac{2ma^2}{\hbar^2}V_0$. Dann gilt $\kappa^2a^2=\alpha^2-x^2$. Die Bedingung lautet dann:
+\begin{align*}
+\tan x&=-\frac{k}{\kappa}=-\frac{x}{\sqrt{\alpha^2-x^2}}=:f(x)
+\end{align*}
+Eine Näherung von $f(x)$ um $x=0$ ergibt $f(x)\simeq -\frac{x}{\alpha}\kla\left( {1+\frac{x^2}{2\alpha^2}} \right)$. Aus einer Skizze wird erkenntlich, dass der erste Schnittpunkt bei $|x|>\frac{\pi}{2}$ liegen muss. Aus der Formel von $f(x)$ geht außerdem die Bedingung $|x|\le\alpha$ hervor. Insgesamt gilt also:
+\begin{align*}
+V_0&=\frac{\hbar^2\alpha^2}{2ma^2}\overset{!}{>}\frac{\hbar^2\pi^2}{8ma^2}
+\end{align*}
+\end{enumerate}
+\section*{Aufgabe 4: Spinalgebra und \textsc{Pauli}-Matrizen}
+\begin{enumerate}
+\item[a)] Die physikalischen Forderungen an die \textsc{Pauli}-Matrizen für ein Spin-$\frac{1}{2}$-Teilchen sind:
+\begin{align*}
+\hat{\sigma}_j^\dagger &= \hat{\sigma}_j&\hat{\sigma}_j^2&=\hat{I}&[\hat{\sigma}_j,\hat{\sigma}_k]&=2i\epsilon_{jkl}\hat{\sigma}_l
+\end{align*}
+Zeigen Sie nur unter Verwendung dieser Relationen, dass $[\hat{\sigma}_x,\hat{\sigma}_z]=\hat{\sigma}_x\hat{\sigma}_z+\hat{\sigma}_z\hat{\sigma}_x=0$ gilt und bestimmen Sie $\hat{\sigma}_x\Ket | {\pm_z} \rangle$ für Eigenzustände $|\pm_z\rangle$ von $\hat{\sigma}_z$. Leiten Sie außerdem in der Eigenbasis $|\pm_z\rangle$ folgende Matrixdarstellungen her (8 Punkte):
+\begin{align*}
+\hat{\sigma}_x&=\begin{pmatrix}
+0 & 1 \\ 1 & 0
+\end{pmatrix}&\hat{\sigma}_z&=\begin{pmatrix}
+1 & 0 \\ 0 & -1
+\end{pmatrix}
+\end{align*}
+\item[b)] Sei $\hat{\sigma}_\alpha:=\vec{e}\cdot\vec{\sigma}$ mit $\vec{e}=\sin\alpha\vec{e}_x+\cos\alpha\vec{e}_z$. Bestimmen Sie die Eigenwerte und Eigenvektoren von $\hat{\sigma}_\alpha$ und zeigen Sie explizit, dass für die Eigenvektoren folgende Darstellung möglich ist (8 Punkte):
+\begin{align*}
+\chi_+^\alpha&=\begin{pmatrix}
+\cos\frac{\alpha}{2} \\ \sin\frac{\alpha}{2}
+\end{pmatrix}&\chi_-^\alpha&=\begin{pmatrix}
+-\sin\frac{\alpha}{2} \\ \cos\frac{\alpha}{2}
+\end{pmatrix}
+\end{align*}
+\item[c)] Bestimmen Sie den Erwartungswert $\bra\langle {\hat{S}_z}\rangle$ in den Eigenzuständen von $\hat{\sigma}_\alpha$ (4 Punkte)!
+\end{enumerate}
+\subsection*{Lösungsvorschlag:}
+\begin{enumerate}
+\item[a)] Aus den gegebenen Relationen folgt:
+\begin{align*}
+[\hat{\sigma}_x,\hat{\sigma}_z]_+&=\hat{\sigma}_x\frac{[\hat{\sigma}_x,\hat{\sigma}_y]}{2i}+\frac{[\hat{\sigma}_x,\hat{\sigma}_y]}{2i}\hat{\sigma}_x=\frac{[\hat{\sigma}_x^2,\hat{\sigma}_y]}{2i}=\frac{[\hat{I},\hat{\sigma}_y]}{2i}=0
+\end{align*}
+Da $\Ket | {\pm_z} \rangle$ eine ONB ist, gilt $\hat{\sigma}_x\Ket | {\pm_z} \rangle=a_\pm\Ket | {\pm_z} \rangle+\sqrt{1-a_\pm^2}\Ket | {\mp_z} \rangle$ für komplexe Zahlen $a_\pm$ (der andere Koeffizient folgt bereits aus der Normierung). Betrachte außerdem die Diagonalen Matrixelemente von $\hat{\sigma}_x$:
+\begin{align*}
+\braket\langle {\pm_z} | {\hat{\sigma}_x} | {\pm_z}\rangle&=\frac{1}{2i}\braket\langle {\pm_z} | {[\hat{\sigma}_y,\hat{\sigma}_z]} | {\pm_z}\rangle=\frac{1}{2i}\braket\langle {\pm_z} | {\hat{\sigma}_y\hat{\sigma}_z-\hat{\sigma}_z\hat{\sigma}_y} | {\pm_z}\rangle\kom\overset{\substack{{\hat{\sigma}_z^\dagger = \hat{\sigma}_z} \\ |}}{=}\\
+&=\frac{1}{2i}\braket\langle {\pm_z} | {\hat{\sigma}_y\cdot (\pm 1)-(\pm 1)\cdot\hat{\sigma}_y} | {\pm_z}\rangle=0
+\end{align*}
+Andererseits gilt:
+\begin{align*}
+\braket\langle {\pm_z} | {\hat{\sigma}_x} | {\pm_z}\rangle&=\braket\langle {\pm_z} | {a_\pm} | {\pm_z}\rangle+\braket\langle {\pm_z} | {\sqrt{1-a_\pm^2}} | {\mp_z}\rangle=a_\pm\\
+&\Rightarrow\ \ a_\pm=0\ \ \Rightarrow\ \ \hat{\sigma}_x\Ket | {\pm_z} \rangle=\Ket | {\mp_z} \rangle
+\end{align*}
+Die Matrixdarstellungen folgen direkt aus diesem Ergebnis, sowie der Orthogonalität der $\Ket | {\pm_z} \rangle$ Zustände:
+\begin{align*}
+\hat{\sigma}_z&=\begin{pmatrix}
+\braket\langle {+_z} | {\hat{\sigma}_z} | {+_z}\rangle & \braket\langle {+_z} | {\hat{\sigma}_z} | {-_z}\rangle \\ \braket\langle {-_z} | {\hat{\sigma}_z} | {+_z}\rangle & \braket\langle {-_z} | {\hat{\sigma}_z} | {-_z}\rangle 
+\end{pmatrix}=\begin{pmatrix}
+1 & 0 \\ 0 & -1
+\end{pmatrix}\\
+\hat{\sigma}_x&=\begin{pmatrix}
+\braket\langle {+_z} | {\hat{\sigma}_x} | {+_z}\rangle & \braket\langle {+_z} | {\hat{\sigma}_x} | {-_z}\rangle \\ \braket\langle {-_z} | {\hat{\sigma}_x} | {+_z}\rangle & \braket\langle {-_z} | {\hat{\sigma}_x} | {-_z}\rangle 
+\end{pmatrix}=\begin{pmatrix}
+0 & 1 \\ 1 & 0
+\end{pmatrix}
+\end{align*}
+\item[b)] Es ist $\hat{\sigma}_\alpha=\hat{\sigma}_x\sin\alpha +\hat{\sigma}_z\cos\alpha$. Die Eigenwertgleichung lautet $\hat{\sigma}_\alpha\Ket | {\chi^\alpha} \rangle=\lambda_\alpha\Ket | {\chi^\alpha} \rangle$:
+\begin{align*}
+0&\overset{!}{=}\det(\hat{\sigma}_\alpha -\lambda_\alpha\hat{I})=-\cos^2\alpha+\lambda_\alpha^2-\sin^2\alpha\ \ \Rightarrow\ \ \lambda_\alpha=\pm 1\\
+0&=\begin{pmatrix}
+\cos\alpha -\lambda_\alpha & \sin\alpha \\ \sin\alpha & -\cos\alpha -\lambda_\alpha
+\end{pmatrix}\begin{pmatrix}
+\chi_1^\alpha \\ \chi_2^\alpha
+\end{pmatrix}\ \ \Rightarrow\ \ \sin\alpha\chi_2^\alpha = (\lambda_\alpha -\cos\alpha)\chi_1^\alpha\\
+(\lambda_\alpha=1):\ \ \chi_2^\alpha&=\frac{1-\cos\alpha}{\sin\alpha}\chi_1^\alpha=\frac{2\sin^2\frac{\alpha}{2}}{2\sin\frac{\alpha}{2}\cos\frac{\alpha}{2}}\chi_1^\alpha=\tan\frac{\alpha}{2}\chi_1^\alpha\\
+(\lambda_\alpha=-1):\ \ \chi_2^\alpha&=-\frac{1+\cos\alpha}{\sin\alpha}\chi_1^\alpha=-\frac{2\cos^2\frac{\alpha}{2}}{2\sin\frac{\alpha}{2}\cos\frac{\alpha}{2}}\chi_1^\alpha=-\cot\frac{\alpha}{2}\chi_1^\alpha
+\end{align*}
+Die Eigenvektoren lauten also:
+\begin{align*}
+\chi_+^\alpha&=\begin{pmatrix}
+1 \\ \tan\frac{\alpha}{2}
+\end{pmatrix}=\frac{1}{\cos\frac{\alpha}{2}}\begin{pmatrix}
+\cos\frac{\alpha}{2} \\ \sin\frac{\alpha}{2}
+\end{pmatrix} &\chi_2^\alpha&=\begin{pmatrix}
+1 \\ -\cot\frac{\alpha}{2}
+\end{pmatrix}=-\frac{1}{\sin\frac{\alpha}{2}}\begin{pmatrix}
+-\sin\frac{\alpha}{2} \\ \cos\frac{\alpha}{2}
+\end{pmatrix}
+\end{align*}
+Mit den Additionstheoremen $\sin(a\pm b)=\sin(a)\cos(b)\pm\cos(a)\sin(b)$ und $\cos(a\pm b)=\cos(a)\cos(b)\mp\sin(a)\sin(b)$ kann man auch explizit zeigen, dass die gegebenen $\chi^\alpha$ Eigenvektoren zu $\hat{\sigma}_\alpha$ sind:
+\begin{align*}
+\hat{\sigma}_\alpha\chi_+^\alpha&=\begin{pmatrix}
+\cos\alpha\cos\frac{\alpha}{2}+\sin\alpha\sin\frac{\alpha}{2} \\ \sin\alpha\cos\frac{\alpha}{2}-\cos\alpha\sin\frac{\alpha}{2}
+\end{pmatrix}=\begin{pmatrix}
+\cos(\alpha-\frac{\alpha}{2}) \\ \sin(\alpha-\frac{\alpha}{2})
+\end{pmatrix}=\chi_+^\alpha \\
+\hat{\sigma}_\alpha\chi_-^\alpha&=\begin{pmatrix}
+-\cos\alpha\sin\frac{\alpha}{2}+\sin\alpha\cos\frac{\alpha}{2} \\ -\sin\alpha\sin\frac{\alpha}{2}-\cos\alpha\cos\frac{\alpha}{2}
+\end{pmatrix}=\begin{pmatrix}
+\sin(\alpha-\frac{\alpha}{2}) \\ -\cos(\alpha-\frac{\alpha}{2})
+\end{pmatrix}=-\chi_-^\alpha
+\end{align*}
+\item[c)] Es gilt $\hat{\vec{S}}=\frac{\hbar}{2}\hat{\vec{\sigma}}$. Da die unter b) gegebenen Zustände bereits normiert sind, gilt für die Erwartungswerte:
+\begin{align*}
+\bra\langle {\hat{S}_z}\rangle_{\chi_+^\alpha}&=\frac{\hbar}{2}\braket\langle {\chi_+^\alpha} | {\hat{\sigma_z}} | {\chi_+^\alpha}\rangle=\frac{\hbar}{2}\begin{pmatrix}
+\cos\frac{\alpha}{2} & \sin\frac{\alpha}{2}
+\end{pmatrix}\begin{pmatrix}
+1 & 0 \\ 0 & -1
+\end{pmatrix}\begin{pmatrix}
+\cos\frac{\alpha}{2} \\ \sin\frac{\alpha}{2}
+\end{pmatrix}=\frac{\hbar}{2}\cos\alpha\\
+\bra\langle {\hat{S}_z}\rangle_{\chi_-^\alpha}&=\frac{\hbar}{2}\braket\langle {\chi_-^\alpha} | {\hat{\sigma_z}} | {\chi_-^\alpha}\rangle=\frac{\hbar}{2}\begin{pmatrix}
+-\sin\frac{\alpha}{2} & \cos\frac{\alpha}{2}
+\end{pmatrix}\begin{pmatrix}
+1 & 0 \\ 0 & -1
+\end{pmatrix}\begin{pmatrix}
+-\sin\frac{\alpha}{2} \\ \cos\frac{\alpha}{2}
+\end{pmatrix}=-\frac{\hbar}{2}\cos\alpha
+\end{align*}
+\end{enumerate}
+\section*{Aufgabe 5: Dichteoperator und \textsc{von-Neumann}-Entropie}
+\begin{enumerate}
+\item[a)] Gegeben Sei ein Spin-$\frac{1}{2}$-Gemisch und ein Dichteroperator $\hat{\varrho}=\frac{1}{2}\kla\left( {\mathbf{1}+\vec{n}\cdot\hat{\vec{\sigma}}} \right)$ mit $\vec{n}=n_x\vec{e}_x+n_y\vec{e}_y+n_z\vec{e}_z$. Zeigen Sie durch explizite Rechnung, dass die Eigenwerte durch $\lambda_{1,2}=\frac{1}{2}(1\pm |\vec{n}|)$ gegeben sind (4 Punkte)!
+\item[b)] Fassen Sie $\hat{\varrho}$ als reduzierte Dichtematrix auf und bestimmen Sie die \textsc{von-Neumann}-Entropie. Diskutieren Sie deren Abhängigkeit von $|\vec{n}|$ und identifizieren sowie diskutieren Sie die reinen und vollständig unpolarisierten Zustände (10 Punkte)!
+\item[c)] Zeigen Sie unter Verwendung der \textsc{von-Neumann}-Gleichung, dass die Eigenwerte in $\hat{\varrho}\Ket | {\phi_m} \rangle=\lambda_m\Ket | {\phi_m} \rangle$ zeitunabhängig sind, sowie dass die Entropie eine Erhaltungsgröße ist (6 Punkte)!
+\end{enumerate}
+\subsection*{Lösungsvorschlag:}
+\begin{enumerate}
+\item[a)] Für die Bestimmung der Eigenwerte muss die Gleichung $\det (\hat{\varrho}-\lambda\hat{I})=0$ gelöst werden:
+\begin{align*}
+0&=\det\frac{1}{2}\begin{pmatrix}
+1+n_z-2\lambda & n_x-in_y \\ n_x+in_y & 1-n_z-2\lambda
+\end{pmatrix}=\\
+&=\frac{1}{4}(1+n_z-2\lambda)(1-n_z-2\lambda)-\frac{1}{4}(n_x-in_y)(n_x+in_y)=\\
+&=\frac{1-n_z^2}{4}+\lambda^2-\lambda -\frac{n_x^2+n_y^2}{4}=\lambda^2-\lambda +\frac{1-|\vec{n}|^2}{4}\\ 
+&\Rightarrow\ \ \lambda_{1,2}=\frac{1}{2}\pm\sqrt{\frac{1}{4}-\frac{1-|\vec{n}|^2}{4}}=\frac{1}{2}\kla\left( {1\pm |\vec{n}|} \right)
+\end{align*}
+\item[b)] Setze $n:=|\vec{n}|$. Es gilt folgende Formel für die Entropie einer reduzierten Dichtematrix:
+\begin{align*}
+S_N&=-\tecxt\text{tr\,}\hat{\varrho}\log\hat{\varrho}=-\sum_m\lambda_m\log\lambda_m=-\frac{1+n}{2}\log\frac{1+n}{2}-\frac{1-n}{2}\log\frac{1-n}{2}=\\
+&=\frac{n}{2}\kla\left( {\log\frac{1-n}{2}-\log\frac{1+n}{2}} \right)-\frac{1}{2}\kla\left( {\log\frac{1+n}{2}+\log\frac{1-n}{2}} \right)=\\
+&=\frac{n}{2}\log\frac{1-n}{1+n}-\frac{1}{2}\log\frac{1-n^2}{4}\numberthis\label{Entropie}
+\end{align*}
+Der Grenzfall $n=0$ entspricht $\hat{\varrho}=\frac{1}{2}\hat{I}$ und somit einem vollständig unpolarisierten Zustand mit maximal möglicher Entropie:
+\begin{align*}
+S_N&=-\frac{1}{2}\log\frac{1}{4}=\log 2\equiv\max S_N\ \ \Leftrightarrow\ \ \hat{\varrho}=\frac{1}{\dim\mathcal{H}}\hat{I}
+\end{align*}
+Der Grenzfall $n=1$ entspricht einem reinen Zustand, also $\hat{\varrho}^2=\hat{\varrho}$:
+\begin{align*}
+\hat{\varrho}^2&=\frac{1}{4}\kla\left( {\hat{I}+2\vec{n}\cdot\hat{\vec{\sigma}}+(\vec{n}\cdot\hat{\vec{\sigma}})^2} \right)\overset{(\ref{n sigma qudrat gleichung})}{=}\frac{1}{2}\kla\left( {\frac{1+n^2}{2}\hat{I}+\vec{n}\cdot\hat{\vec{\sigma}}} \right)=\hat{\varrho}\ \ \Leftrightarrow\ \ n=1\\
+(\vec{n}\cdot\hat{\vec{\sigma}})^2&=\sum_{jk}n_jn_k\hat{\sigma_j}\hat{\sigma_k}=\sum_{jk}n_jn_k\kla\left( {\delta_{jk}+i\sum_l\epsilon_{jkl}\hat{\sigma}_l} \right)=\\
+&=n^2+i\sum_{jk}n_jn_k\sum_l\epsilon_{jkl}\hat\sigma_l=n^2\numberthis\label{n sigma qudrat gleichung}
+\end{align*}
+Zur Bestimmung der Entropie verwendet man den Ausgangspunkt der Umformungen von (\ref{Entropie}):
+\begin{align*}
+S_N&=-\lim_{n\rightarrow 1}\frac{1+n}{2}\cancel{\log\frac{1+n}{2}}+\frac{1-n}{2}\log\frac{1-n}{2}\kom\overset{\substack{{2x:=1-n} \\ |}}{=}\lim_{x\rightarrow 0}\frac{\log x}{\frac{1}{x}}\kom\overset{\substack{{\tecxt\text{L'Hospital, }\frac{\infty}{\infty}} \\ |}}{=}\\
+&=\lim_{x\rightarrow 0}\frac{\frac{1}{x}}{-\frac{1}{x^2}}=0\equiv\min S_N
+\end{align*}
+\item[c)] Die \textsc{von-Neumann}-Gleichung ist $i\hbar\frac{\tecxt\text{d}}{\tecxt\text{d}t}\hat{\varrho}=-[\hat{\varrho},\hat{H}]$. Betrachte also die zeitliche Ableitung von $\lambda_m=\braket\langle {\phi_m} | {\hat{\varrho}} | {\phi_m}\rangle$:
+\begin{align*}
+\frac{\tecxt\text{d}}{\tecxt\text{d}t}\lambda_m&=\klam\left[ {\frac{\tecxt\text{d}}{\tecxt\text{d}t}\Bra\langle {\phi_m} |} \right]\hat{\varrho}\Ket | {\phi_m} \rangle+\braket\langle {\phi_m} | {\frac{\tecxt\text{d}}{\tecxt\text{d}t}\hat{\varrho}} | {\phi_m}\rangle+\Bra\langle {\phi_m} |\hat{\varrho}\klam\left[ {\frac{\tecxt\text{d}}{\tecxt\text{d}t}\Ket | {\phi_m} \rangle} \right]=\\
+&=\braket\langle {\phi_m} | {-\frac{\hat{H}^\dagger}{i\hbar}\hat{\varrho}} | {\phi_m}\rangle+\braket\langle {\phi_m} | {\frac{1}{i\hbar}[\hat{H},\hat{\varrho}]} | {\phi_m}\rangle+\braket\langle {\phi_m} | {\hat{\varrho}\frac{\hat{H}}{i\hbar}} | {\phi_m}\rangle\kom\overset{\substack{{\hat{H}^\dagger=\hat{H}} \\ |}}{=}\\
+&=\frac{1}{i\hbar}\braket\langle {\phi_m} | {[\hat{H},\hat{\varrho}]-\hat{H}\hat{\varrho}+\hat{\varrho}\hat{H}} | {\phi_m}\rangle=0\ \ \Rightarrow\ \ \lambda_m=\tecxt\text{const.}
+\end{align*}
+Da $S_N$ allein durch die Eigenwerte $\lambda_m$ bestimmt wird, ist die Entropie hier also eine Erhaltungsgröße.
+\end{enumerate}
+
+\end{document}

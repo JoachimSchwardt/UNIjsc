@@ -1,0 +1,56 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+
+\begin{document}
+
+\title{02 Potentielle Energie}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 4: Erwartungswert der potentiellen Energie}
+Wir berechnen den Erwartungswert über folgende formale Definition:
+\begin{align*}\bra\langle {V}\rangle &:=\braket\langle {\psi} \vert {\hat{V}}\vert {\psi} \rangle = \intx\int_{\mathbb{R}^{3}} -{\frac{Z^3}{\pi a_0^3}e^{-2Zr/a_0}}\frac{Ze^2}{4\pi\epsilon_0 r}\,\mathrm{d}^{3}r= -\frac{Z^4e^2}{\pi\epsilon_0 a_0^3}\intx\int_{0}^\infty {re^{-2Zr/a_0}}\,\mathrm{d}^{ }r\kom\overset{\substack{ {xa_0=2Zr} \\|}}{=}\\
+&= -\frac{Z^2e^2}{4\pi\epsilon_0 a_0}\int_0^\infty xe^{-x}\,\mathrm{d}x=-\frac{Z^2e^2}{4\pi\epsilon_0 a_0}=\underline{-2Z^2E_0}\ \ \ \mathrm{mit }\ \ \ E_0=\frac{e^2}{8\pi\epsilon_0 a_0}
+\end{align*}
+\section*{Aufgabe 5: 3-dimensionaler Potentialtopf}
+Der Zeitanteil von $\psi (r,\, t)$ ergibt sich immer aus dem Separationsansatz $\psi = \psi (r)f(t)$ für die zeitabhängige Schrödingergleichung:
+\begin{align*}
+i\hbar\partial_t\psi&=\hat{H}\psi\ \ \Rightarrow\ \ i\hbar\frac{f'(t)}{f(t)}=-\frac{\hbar^2}{2m}\frac{\nabla^2\phi (r)}{\phi}+V(r)=\mathrm{const.}\equiv E\\
+&\Rightarrow\ \ f'(t)=-iEf(t)/\hbar\ \ \Rightarrow\ \ f(t)=e^{-iEt/\hbar} 
+\end{align*}
+Zu zeigen ist also noch, dass $\psi$ folgende Gleichung erfüllt:
+\begin{align*}
+E\phi &= -\frac{\hbar^2}{2m}\nabla^2\phi +V(r)\phi = -a\frac{\hbar^2}{2mr}\partial_r^2(r\,\mathrm{sinc}(kr))=\\
+&=-a\frac{\hbar^2}{2mkr}\partial_r^2\sin (kr)=a\frac{\hbar^2k^2}{2m}\mathrm{sinc} (kr)=\frac{\hbar^2k^2}{2m}\phi\ \ \Rightarrow\ \ E=\frac{\hbar^2k^2}{2m}
+\end{align*}
+Zudem haben wir die Randbedingung $\phi (r=R)=0$, wobei $n\in\mathbb{N}$, da $\phi (0)\neq 0$:
+$$kR\overset {!}{=}n\pi\ \ \Rightarrow\ \ E_n=\frac{\hbar^2\pi^2n^2}{2mR^2}$$
+Zuletzt bestimmen wir noch die Normierungskonstante:
+\begin{align*}
+1&\overset {!}{=}\brak\langle {\psi} \vert {\psi} \rangle =\intx\int_{\mathbb{R}^{3}} {\psi^\ast\psi}\,\mathrm{d}^{3}r=4\pi |a|^2\intx\int_{0}^R {\left(\frac{\sin (kr)}{kr}\right)^2}r^2\,\mathrm{d}^{ }r=\frac{2\pi |a|^2}{k^2}\int_0^R 1-\cos(2kr)\,\mathrm{d}r=\\
+&=\frac{2\pi |a|^2}{k^2}\left(R-\frac{\sin(2kR)}{2k}\right)\kom\overset{\substack{ {2kR=2n\pi} \\|}}{=}\frac{2\pi|a|^2R}{k^2}\ \ \Rightarrow\ \ a=\frac{k}{\sqrt{2\pi R}}
+\end{align*}
+\section*{Aufgabe 6: Myon-Atom}
+Es sei $\mu = \frac{m_\mu m_K}{m_\mu + m_K}$ die reduzierte Masse. Aus Aufgabe (1.3b) kennen wir bereits die Herleitung, hier also in gekürzter Form:
+\begin{align*}
+T&=-\frac{1}{2}V\ \ \ \mathrm{und }\ \ \ \ E=T+V=\frac{1}{2}V=-E_{ion} \\
+L&=mrv=m\frac{-e^2}{4\pi\epsilon_0V}\sqrt{\frac{2T}{m}}=\frac{e^2}{4\pi\epsilon_0}\sqrt{\frac{m}{2E_{ion}}}\overset{!}{=}n\hbar \\
+&\Rightarrow\ \ E_n=-\frac{Z^2e^4\mu}{32\pi^2\epsilon_0^2\hbar^2n^2}
+\end{align*}
+Aus $E=V/2$ folgt auch:
+$$r_n=-\frac{Ze^2}{8\pi\epsilon_0\cdot E_n}=\frac{4\pi\epsilon_0 \hbar^2n^2}{Ze^2\mu }$$
+
+
+\end{document}

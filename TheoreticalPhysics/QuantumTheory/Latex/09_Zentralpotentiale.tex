@@ -1,0 +1,168 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{09 Zentralpotentiale}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Zentralpotential}
+\subsection*{a) }
+Betrachte die zeitunabhängige Schrödingergleichung mit dem Separationsansatz $\phi = R(r)Y_{lm}(\varphi,\vartheta)$. Der Winkelanteil sei als bekannt vorausgesetzt. Für die radiale Gleichung folgt dann mit $u(r)=rR$ und $\epsilon = \frac{2m_eE}{\hbar^2}$:
+\begin{align*}
+\frac{E\phi}{\phi}&=\frac{H\phi}{\phi}=-\frac{\hbar^2}{2m_e}\klam\left[ {\frac{1}{rR}\partial_r^2(rR)-\frac{1}{\hbar^2r^2Y_{lm}}L^2Y_{lm}} \right]+\frac{V(r)\phi}{\phi}\\
+&\Rightarrow\ \ \frac{2m_e(E-V)}{\hbar^2}r^2+\frac{u''}{u}r^2=\frac{L^2Y_{lm}}{\hbar^2Y_{lm}}\equiv l(l+1)\\
+&\Rightarrow\ \ \epsilon r^2u-au-\frac{m_e^2\omega^2}{\hbar^2}r^4u+u''r^2-l(l+1)u=0 \numberthis\label{Radialgleichung mit u=rR}
+\end{align*}
+Verwende nun den Ansatz $u(r)=r^se^{-\gamma r^2}P(r)$:
+\begin{align*}
+u'&=sr^{s-1}e^{-\gamma r^2}P(r)-2\gamma r^{s+1}e^{-\gamma r^2}P(r)+r^se^{-\gamma r^2}P'(r)=\kla\left( {\frac{s}{r}-2\gamma r +\frac{P'}{P}} \right)u \\
+u''&=\kla\left( {-\frac{s}{r^2}-2\gamma +\frac{P''}{P}-\frac{P'^2}{P^2}} \right)u+ \kla\left( {\frac{s}{r}-2\gamma r +\frac{P'}{P}} \right)^2u = \\
+&=\kla\left( {\frac{s(s-1)}{r^2}+4\gamma^2r^2+\frac{P''}{P}-2\gamma(1+2s)-4\gamma r\frac{P'}{P}+\frac{2s}{r}\frac{P'}{P}} \right)u \\
+0&=\epsilon r^{s+2}P(r)-(l(l+1)+a)r^sP(r)-\frac{m_e^2\omega^2}{\hbar^2}r^{s+4}P(r)+r^2u''e^{\gamma r^2} = \\
+&=\kla\left( {\epsilon -2\gamma(1+2s)} \right)P + \frac{s(s-1)-l(l+1)-a}{r^2}P+\kla\left( {4\gamma^2-\frac{m_e^2\omega^2}{\hbar^2}} \right)r^2P+\\
+&\ \ \ \ \ \ \ \ \ \ +P''+2\kla\left( {\frac{s}{r}-2\gamma r} \right)P' = \\
+&=P''+2\kla\left( {\frac{s}{r}-2\gamma r} \right)P'+\klam\left[ {\epsilon-2\gamma (1+2s)} \right]P \numberthis\label{Radialgleichung mit P}
+\end{align*}
+Dabei ist $\gamma = \frac{m_e\omega}{2\hbar}$ und $s^2-s=a+l(l+1)$. Setze $\xi=\epsilon-2\gamma(1+2s)$. 
+\subsection*{b)}
+Potenzreihenansatz $P(r)=\sum_k c_kr^k$:
+\begin{align*}
+0&=\sum_kc_kk(k-1)r^{k-2}+2c_kskr^{k-2}-4c_k\gamma kr^k+\xi c_kr^k = \\
+&=\sum_k\klam\left[ {c_{k+2}\klammer\left\{(k+2)(k+1)+2s(k+2) \right\}+c_k\klammer\left\{\xi -4\gamma k \right\}} \right]r^k 
+\end{align*}    
+Es gibt also keine ungeraden Potenzen. Es folgt die Rekursionsformel:
+\begin{align*}
+c_{k+2}&=\frac{4\gamma k-\xi}{k^2+(3+2s)k+2(2s+1)}c_k
+\end{align*}
+\subsection*{c)}
+Diese Reihe muss endlich sein (sonst Verhalten $\propto\exp(2\gamma r^2)$), also gibt es ein gerades $K\in\mathbb{N}$ mit $4\gamma\cdot 2K-\xi=0$. Daraus folgt für die möglichen Energien:
+\begin{align*}
+\epsilon&=8\gamma K+2\gamma (1+2s)=\frac{m_e\omega}{\hbar}\kla\left( {4K+2s+1} \right)\\
+&\Rightarrow\ \ E=\hbar\omega\kla\left( {2K+s+\frac{1}{2}} \right)\numberthis\label{Energien}
+\end{align*}
+Lösen der quadratischen Gleichung für $s$ liefert $s=\frac{1}{2}+\sqrt{a+\kla\left( {l+\frac{1}{2}} \right)^2}$. Für $a=0$ folgt daraus für die Energien:
+\begin{align*}
+E_{nl}&=\hbar\omega\kla\left( {2n+1+\sqrt{a+\kla\left( {l+\frac{1}{2}} \right)^2}} \right)=\hbar\omega\kla\left( {2n+\frac{3}{2}+l} \right)
+\end{align*}
+\section{Ein-Elektron Systeme}
+\subsection*{a)}
+Es wird nun häufig folgender Rechentrick verwendet:
+\begin{align*}
+I&=\intx\int_{0}^{\infty}f(r)uu'\,\mathrm{d}r=-\intx\int_{0}^{\infty}f(r)u'u+f'(r)u^2\,\mathrm{d}r\\ 
+&\Rightarrow\ \ I=-\frac{1}{2}\intx\int_{0}^{\infty}f'(r)u^2\,\mathrm{d}r=-\frac{1}{2}\bra\langle {f'(r)}\rangle
+\end{align*}
+Betrachte den Separationsansatz $\psi_{nlm}=R(r)Y_{lm}(\varphi,\vartheta)$ mit $u=rR$:
+\begin{align*}
+E&=\frac{H\psi}{\psi}=-\frac{\hbar^2}{2\mu}\klam\left[ {\frac{u''}{u}-\frac{L^2Y_{lm}}{\hbar^2r^2Y_{lm}}} \right]-\frac{Z\epsilon^2}{r}\\
+&\Rightarrow\ \ Er^2+Z\epsilon^2r+\frac{\hbar^2r^2u''}{2\mu u}=\frac{L^2Y_{lm}}{2\mu Y_{lm}}\equiv\frac{\hbar^2l(l+1)}{2\mu}\\
+&\Rightarrow\ \ Eu+\frac{Z\epsilon^2}{r}u-\frac{\hbar^2l(l+1)}{2\mu r^2}u+\frac{\hbar^2}{2\mu}u''=0
+\end{align*}
+Es ist $E=-E_R\cdot\frac{Z^2}{n^2}=-\frac{\mu \epsilon^4Z^2}{2\hbar^2n^2}=-\frac{\mu Z^2\epsilon^2}{2m_ea_0n^2}$. Setze $a_0=\frac{\hbar^2}{m_e\epsilon^2}$, $\tilde{Z}=\frac{Z\mu }{m_e}$, $\rho=\frac{r\tilde{Z}}{a_0}$:
+\begin{align*}
+u''(r)&=\frac{2\mu }{\hbar^2}\kla\left( {\frac{\mu Z^2\epsilon^2}{2m_ea_0n^2}-\frac{Z\epsilon^2}{r}u+\frac{\hbar^2l(l+1)}{2\mu r^2}} \right)u(r)=\kla\left( {\frac{\tilde{Z}^2}{a_0^2n^2}-\frac{2\tilde{Z}}{a_0r}+\frac{l(l+1)}{r^2}} \right)u(r)\\
+u''(\rho)&=\kla\left( {\frac{1}{n^2}-\frac{2}{\rho}+\frac{l(l+1)}{\rho^2}} \right)u(\rho)
+\end{align*}
+Multipliziere nun mit $r^su$ und integriere von $0$ bis $\infty$:
+\begin{align*}
+I_s&:=\intx\int_{0}^{\infty}u\rho^su''\,\mathrm{d}\rho=\frac{1}{n^2}\bra\langle {\rho^s}\rangle-2\bra\langle {\rho^{s-1}}\rangle+l(l+1)\bra\langle {\rho^{s-2}}\rangle\\
+I_s&=-\intx\int_{0}^{\infty}\rho^su'^2+s\rho^{s-1}uu'\,\mathrm{d}\rho=\frac{s(s-1)}{2}\bra\langle {\rho^{s-2}}\rangle+\intx\int_{0}^{\infty}\frac{\rho^{s+1}}{s+1}2u'u''\,\mathrm{d}\rho=\\
+&=\frac{s(s-1)}{2}\bra\langle {\rho^{s-2}}\rangle+\frac{2}{s+1}\intx\int_{0}^{\infty}\kla\left( {\frac{\rho^{s+1}}{n^2}-2\rho^s+l(l+1)\rho^{s-1}} \right)uu'\,\mathrm{d}\rho=\\
+&=\frac{s(s-1)}{2}\bra\langle {\rho^{s-2}}\rangle-\frac{1}{n^2}\bra\langle {\rho^s}\rangle+\frac{2s}{s+1}\bra\langle {\rho^{s-1}}\rangle-\frac{s-1}{s+1}l(l+1)\bra\langle {\rho^{s-2}}\rangle
+\end{align*}
+Damit folgt die \textsc{Kramers}-Relation:
+\begin{align*}
+0&=\frac{2}{n^2}\bra\langle {\rho^s}\rangle-\kla\left( {\frac{2s}{s+1}+2} \right)\bra\langle {\rho^{s-1}}\rangle+\kla\left( {l(l+1)\frac{2s}{s+1}-\frac{s(s-1)}{2}} \right)\bra\langle {\rho^{s-2}}\rangle\\
+0&=\frac{s+1}{n^2}\bra\langle {r^s}\rangle-(2s+1)\frac{a_0}{\tilde{Z}}\bra\langle {r^{s-1}}\rangle+\frac{s}{4}\klam\left[ {4l(l+1)-s^2+1} \right]\kla\left( {\frac{a_0}{\tilde{Z}}} \right)^2\bra\langle {r^{s-2}}\rangle\\
+0&=\frac{s+1}{n^2}\bra\langle {r^s}\rangle-(2s+1)\frac{a_0}{\tilde{Z}}\bra\langle {r^{s-1}}\rangle+\frac{s}{4}\klam\left[ {(2l+1)^2-s^2} \right]\kla\left( {\frac{a_0}{\tilde{Z}}} \right)^2\bra\langle {r^{s-2}}\rangle
+\end{align*}
+\subsection*{b)}
+Für $s=0$ ist der Erwartungswert einfach, da $\bra\langle {r^0}\rangle=\bra\langle {1}\rangle=1$. Praktischerweise fällt für $s=0$ einer der Terme in der \textsc{Kramers}-Relation heraus, weshalb man somit $\bra\langle {\frac{1}{r}}\rangle$ bestimmen kann:
+\begin{align*}
+\bra\langle {\frac{1}{r}}\rangle&=\frac{\tilde{Z}(s+1)}{a_0n^2(2s+1)}\bra\langle {r^s}\rangle\Big\vert_{s=0}=\frac{\tilde{Z}}{a_0n^2}
+\end{align*}
+Damit folgt dann für $\bra\langle {r}\rangle$ und $\bra\langle {r^2}\rangle$:
+\begin{align*}
+\bra\langle {r}\rangle&=\frac{n^2}{2}\kla\left( {\frac{3a_0}{\tilde{Z}}-l(l+1)\frac{a_0^2}{\tilde{Z}^2}\bra\langle {\frac{1}{r}}\rangle} \right)=\frac{a_0}{2\tilde{Z}}\kla\left( {3n^2-l(l+1)} \right)\\
+\bra\langle {r^2}\rangle&=\frac{n^2}{3}\kla\left( {\frac{5a_0}{\tilde{Z}}\bra\langle {r}\rangle-\frac{a_0^2}{2\tilde{Z}^2}\klam\left[ {(2l+1)^2-4} \right]} \right)=\frac{a_0^2n^2}{3\tilde{Z}^2}\kla\left( {\frac{15n^2}{2}-\frac{5l(l+1)}{2}+2-\frac{4l^2+4l+1}{2}} \right)
+\end{align*}
+Schließlich ergibt sich für die relative Unsicherheit im Grenzwert $n\rightarrow\infty$:
+\begin{align*}
+\Delta r&=\sqrt{\bra\langle {r^2}\rangle-\bra\langle {r}\rangle^2}=\frac{a_0}{2\tilde{Z}}\sqrt{10n^4-6l^2n^2-6ln^2+2n^2-9n^4+6n^2l(l+1)-l^2(l+1)^2}=\\
+&=\frac{a_0}{2\tilde{Z}}\sqrt{n^2(n^2+2)-l^2(l+1)^2}\\
+\frac{\Delta r}{\bra\langle {r}\rangle}&=\frac{\sqrt{n^2(n^2+2)-l^2(l+1)^2}}{3n^2-l(l+1)}=\sqrt{\frac{1+\frac{2}{n^2}-\frac{l^2(l+1)^2}{n^4}}{9-\frac{6l(l+1)}{n^2}+\frac{l(l+1)}{n^4}}}\overset{l=n-1}{\longrightarrow}\sqrt{\frac{1+\frac{2}{n^2}-\kla\left( {1-\frac{1}{n}} \right)^2}{3+\frac{6}{n}+\frac{n-1}{n^3}}}\\
+&\overset{n\rightarrow\infty}{\longrightarrow}0
+\end{align*}
+\section{System von zwei Teilchen mit Spin $s=1/2$}
+\subsection*{a)}
+Es gilt $\klam\left[ {S_1,S_2} \right]=0$, da Operatoren zu verschiedenen Teilchen immer kommutieren. Daraus folgt natürlich auch sofort $\klam\left[ {S_1^2,S_2^2} \right]=0$. Noch zu zeigen sind also folgende Relationen:
+\begin{align*}
+\klam\left[ {S_1^2,S^2} \right]&=\klam\left[ {S_1^2,S_1^2+S_2^2+2S_1\cdot S_2} \right]=2\klam\left[ {S_1,S_{1k}S_{2k}} \right]=2S_{1k}\klam\left[ {S_1,S_{2k}} \right]+2\klam\left[ {S_1,S_{1k}} \right]S_{2k}=0\\
+\klam\left[ {S^2,S_i} \right]&=\klam\left[ {S_jS_j,S_i} \right]=S_j\klam\left[ {S_j,S_i} \right]+\klam\left[ {S_j,S_i} \right]S_j=i\hbar\kla\left( {S_j\epsilon_{jik}S_k+\epsilon_{jik}S_kS_j} \right)= \\
+&=i\hbar S_jS_k\kla\left( {\epsilon_{jik}+\epsilon_{kij}} \right)=0
+\end{align*}
+\subsection*{b)}
+Es gilt $\klam\left[ {S_i,S_j} \right]=i\hbar\epsilon_{ijk}S_k$. Betrachte folgende Kommutatoren:
+\begin{align*}
+\klam\left[ {S_z,S_\pm} \right]&=\klam\left[ {S_z,S_x\pm iS_y} \right]=i\hbar S_y\pm\hbar S_x=\pm\hbar S_\pm \\
+\klam\left[ {S^2,S_i} \right]&=\klam\left[ {S_jS_j,S_i} \right]=i\hbar\kla\left( {S_j\epsilon_{jik}S_k+\epsilon_{jik}S_kS_j} \right)=i\hbar\kla\left( {\epsilon_{jik}+\epsilon_{kij}} \right) S_jS_k=0\\
+&\Rightarrow\ \ \klam\left[ {S^2,S_\pm} \right]=0
+\end{align*}
+Betrachte nun die Wirkung von $S^2$ und $S_z$ auf die Zustände $S_pm\Ket | {sm} \rangle$:
+\begin{align*}
+S^2S_\pm\Ket | {sm} \rangle&=S_\pm S^2\Ket | {sm} \rangle=\hbar s(s+1)S_\pm\Ket | {sm} \rangle \\
+S_zS_\pm\Ket | {sm} \rangle&=\kla\left( {S_\pm S_z\pm\hbar S_\pm} \right)\Ket | {sm} \rangle=S_\pm\kla\left( {\hbar m\pm\hbar} \right)\Ket | {sm} \rangle=\hbar\kla\left( {m\pm 1} \right)S_\pm\Ket | {sm} \rangle \\
+&\Rightarrow\ \ S_\pm\Ket | {sm} \rangle\propto\Ket | {s,m\pm 1} \rangle
+\end{align*}
+Man kann die nötigen Koeffizienten mit $S_\mp S_\pm=S^2-S_z^2\mp\hbar S_z$ direkt bestimmen:
+\begin{align*}
+1&\overset{!}{=}\braket\langle {s,m\pm 1} | {s,m\pm 1}\rangle=|c_\pm|^2\braket\langle {sm} | {S_\pm^\dagger S_\pm} | {sm}\rangle=|c_\pm|^2\braket\langle {sm} | {S^2-S_z^2\mp\hbar S_z} | {sm}\rangle=\\
+&=|c_\pm|^2\hbar^2\kla\left[ {s(s+1)-m(m\pm 1)} \right] \\
+&\Rightarrow\ \ S_\pm\Ket | {sm} \rangle=\hbar\sqrt{s(s+1)-m(m\pm 1)}\Ket | {s,m\pm 1} \rangle\\
+&\Rightarrow\ \ \Ket | {sm} \rangle=\frac{S_\pm\Ket | {s,m\mp 1} \rangle}{\hbar\sqrt{s(s+1)-m(m\mp 1)}}
+\end{align*}
+\subsection*{c)}
+Wir wollen nun für $s_1=\frac{1}{2}=s_2$ einen Basiswechsel von $\Ket | {m_1m_2} \rangle$ zu $\Ket | {sm} \rangle$ durchführen. Setze $m_\nu = \pm\frac{1}{2}\equiv\pm$. Man kann folgende Regel zeigen:
+\begin{align*}
+S_z\Ket | {m_1m_2} \rangle&=\kla\left( {S_{1z}+S_{2z}} \right)\Ket | {m_1m_2} \rangle=\hbar\kla\left( {m_1+m_2} \right)\Ket | {m_1m_2} \rangle\ \ \Rightarrow\ \ m=m_1+m_2\\
+\Ket | {sm} \rangle&=\sum_{m_1,m_2}c\Ket | {m_1m_2} \rangle=\sum_{m_1}c\Ket | {m_1,m-m_1} \rangle
+\end{align*}
+Beachte im Folgenden, dass $m_\nu=\pm\frac{1}{2}$ gelten muss, Koeffizienten vor Termen in denen das nicht erfüllt ist verschwinden daher:
+\begin{align*}
+\Ket | {11} \rangle&=c_+\Ket | {\frac{1}{2},1-\frac{1}{2}} \rangle+c_-\Ket | {-\frac{1}{2},1+\frac{1}{2}} \rangle=\Ket | {++} \rangle\\
+\Ket | {10} \rangle&=\frac{S_-\Ket | {11} \rangle}{\hbar\sqrt{2}}=\frac{1}{\hbar\sqrt{2}}\kla\left( {S_{1-}+S_{2-}} \right)\Ket | {++} \rangle=\frac{1}{\sqrt{2}}\kla\left( {\Ket | {-+} \rangle+\Ket | {+-} \rangle} \right)\\
+\Ket | {1-1} \rangle&=c_+\Ket | {\frac{1}{2},-1-\frac{1}{2}} \rangle+c_-\Ket | {-\frac{1}{2},-1+\frac{1}{2}} \rangle=\Ket | {--} \rangle\\
+\Ket | {00} \rangle&=c_+\Ket | {+-} \rangle+c_-\Ket | {-+} \rangle=\frac{1}{\sqrt{2}}\kla\left( {\Ket | {+-} \rangle-\Ket | {-+} \rangle} \right)\\
+0&=\brak\langle {10}| {00}\rangle=\frac{1}{\sqrt{2}}\kla\left( {c_+\brak\langle {-+}| {+-}\rangle+c_-\brak\langle {-+}| {-+}\rangle+c_+\brak\langle {+-}| {+-}\rangle+c_-\brak\langle {+-}| {-+}\rangle} \right)=\\
+&=\frac{1}{\sqrt{2}}\kla\left( {c_++c_-} \right)\ \ \Rightarrow\ \ c_-=-c_+
+\end{align*}
+Es ist klar, dass die konstruierten Zustände wieder Eigenzustände zu $S_z$ sind (siehe oben). Um dies für $S^2$ zu zeigen, muss allerdings noch etwas Aufwand betrieben werden:
+\begin{align*}
+S^2&=S_1^2+S_2^2+2S_1\cdot S_2=S_1^2+S_2^2+2S_{1z}S_{2z}+S_{1+}S_{2-}+S_{1-}S_{2+}\\
+S^2\Ket | {1\pm 1} \rangle&=\hbar^2\kla\left( {s_1(s_1+1)+s_2(s_2+1)+2m_1m_2} \right)\Ket | {\pm\pm} \rangle=2\hbar^2\Ket | {\pm\pm} \rangle=\hbar^2s(s+1)\Ket | {1\pm 1} \rangle\\
+S^2\Ket | {10} \rangle&=\frac{\hbar^2}{\sqrt{2}}\kla\left( {s_1(s_1+1)+s_2(s_2+1)+2m_1m_2+S_{1+}S_{2-}+S_{1-}S_{2+}} \right)\kla\left( {\Ket | {+-} \rangle+\Ket | {-+} \rangle} \right)=\\
+&=\hbar^2\kla\left( {\frac{3}{2}-\frac{1}{2}} \right)\Ket | {10} \rangle+\frac{\hbar^2}{\sqrt{2}}\kla\left( {\Ket | {-+} \rangle+\Ket | {+-} \rangle} \right)=\hbar^2s(s+1)\Ket | {10} \rangle\\
+S^2\Ket | {00} \rangle&=\hbar^2\kla\left( {\frac{3}{4}+\frac{3}{4}-\frac{1}{2}} \right)\Ket | {00} \rangle+\frac{\hbar^2}{\sqrt{2}}\kla\left( {\Ket | {-+} \rangle-\Ket | {+-} \rangle} \right)=\hbar^2\Ket | {00} \rangle-\hbar^2\Ket | {00} \rangle=0
+\end{align*}
+\end{document}

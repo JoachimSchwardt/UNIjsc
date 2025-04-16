@@ -1,0 +1,217 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb, slashed}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{dsfont}
+
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\def\I{\text{i}}
+\def\e{\text{e}}
+
+\newcommand*{\titel}{09 Canonical quantization}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+\subject{Quantum theory 2}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Questions}
+The relation between $\Psi(x)$ and $a_p$ is
+\begin{align}
+\Psi(x)&=\mathcal{F}[a_p](x)=(2\pi)^{-3/2}\intr\int_{\mathbb{R}^{3}}{a_p\e^{\I px}}\,\mathrm{d}^{3}p.
+\end{align}
+The Lagrangian is $\mathcal{L}=\I|\psi|^2-\frac{1}{2m}|\nabla\psi|^2$.
+The Lagrangian and Hamiltonian for the hydrogen atom are
+\begin{align}
+L&=\frac{m}{2}\dot{q}^2+\frac{\alpha}{|q|},\\
+H&=\frac{p^2}{2m}-\frac{\alpha}{|q|},
+\end{align}
+where $p=\partial_{\dot{q}}L=m\dot{q}$.
+The Lagrangian and Hamiltonian for the one-dimensional harmonic oscillator are
+\begin{align}
+L&=\frac{m}{2}\dot{q}^2-\frac{m\omega^2}{2}q^2,\\
+H&=\frac{p^2}{2m}+\frac{m\omega^2}{2}q^2.
+\end{align}
+Key relationship?\newpage
+\section{From Lagrangian to Hamiltonian}
+Table of the given Lagrangian, the momentum $p:=\partial_{\dot{q}} L$, the inverse relationship $\dot{q}=\dot{q}(p)$ and the resulting Hamiltonian $H=p\dot{q}-L$.
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c}
+$L$&$p$&$\dot{q}(p)$&$H$\\ \hline
+$\frac{m}{2}\dot{q}^2-\frac{\kappa^2}{2}q^2$&$m\dot{q} $&$\frac{p}{m}$&$\frac{p^2}{2m}+\frac{\kappa^2}{2}q^2$\\ \hline
+$\frac{\alpha}{2}\dot{q}^2q^2$&$\alpha q^2\dot{q} $&$\frac{p}{\alpha q^2}$&$\frac{p^2}{2\alpha q^2}$\\ \hline
+$\left( \alpha\dot{q}+\beta q \right)^2$&$2\alpha\left( \alpha\dot{q}+\beta q \right)$&$\frac{1}{\alpha}\left( \frac{p}{2\alpha}-\beta q \right)$&$\frac{p^2}{4\alpha^2}-\frac{\beta}{\alpha}pq$\\ \hline
+$\frac{m}{2}\dot{q}^2+Q\dot{q}\cdot A-Q\phi$&$m\dot{q} +QA$&$\frac{p-QA}{m}$&$\frac{1}{2m}(p-QA)^2+Q\phi$\\ 
+\end{tabular}
+\end{table}\\
+Note that the usual notation for vectors was omitted in the last example.\newpage
+\section{Linear chain}
+Let the coordinates $q_n$ define a periodic lattice with lattice distance $a$, i.e. $q_{n+N}\equiv q_n$ for all $n=1,\dots,N$.
+The total length is $L:=Na$.
+The Lagrangian is
+\begin{align}
+L&=\sum_{n=1}^N\frac{\dot{q}_n^2}{2}-\frac{\kappa}{2}(q_{n+1}-q_n)^2,
+\end{align}
+where the mass is assumed to be $m=1$.
+The Euler-Lagrange equations are 
+\begin{align}
+0&=\frac{\tecxt\text{d}}{\tecxt\text{d}t}\partial_{\dot{q}_j}L-\partial_{q_j}L=\sum_{n=1}^N\ddot{q}_n\delta_{jn}+\kappa (q_{n+1}-q_n)(\delta_{j,n+1}-\delta_{jn})\\
+\Rightarrow\ \ \ \ddot{q}_j&=-\kappa (q_j-q_{j-1})+\kappa (q_{j+1}-q_j)=\kappa (q_{j+1}+q_{j-1}-2q_j).
+\end{align}
+Let $q_n(t)=\e^{\pm\I (\omega_kt-kna)}$.
+Then the periodic boundary condition yields
+\begin{align}
+q_{n+N}&=\e^{\mp\I kNa}q_n\overset{!}{=}q_n,\\
+\Rightarrow\ \ \ \e^{\mp\I kNa}&=1.
+\end{align}
+This is equivalent to $kNa=2\pi z$ for $z\in\mathbb{Z}$.
+The minimal non-zero value is $|k|=\frac{2\pi}{Na}=\frac{2\pi}{L}$.
+Due to the periodic condition it is sufficient to choose $-\frac{N}{2}<z\le\frac{N}{2}$, or equivalently
+\begin{align}
+-\pi &< ka\le \pi.
+\end{align}
+This range contains exactly $N$ values. 
+Since $N$ is assumed to be odd, we can write $N=2M+1$ with $M\in\mathbb{N}$.
+Hence the possible $z$ are $z=-M,-M+1,\dots M$.
+The largest wavenumber is 
+\begin{align}
+k_\tecxt\text{max}&=\frac{2\pi}{L}z_\tecxt\text{max}=\frac{2\pi M}{Na}=\frac{\pi}{a}\frac{2M}{2M+1}=\frac{\pi}{a}-\frac{\pi}{L}.
+\end{align}
+Inserting the Ansatz
+\begin{align}
+-\frac{\omega_k^2}{\kappa}q_n&=\kla\left( {\e^{\mp\I ka}+\e^{\pm\I ka}-2} \right)q_n=2\kla\left( {\cos (ka)-1} \right)q_n
+\end{align} 
+leads to the dispersion relation
+\begin{align}
+\omega_k&=2\sqrt{\kappa}\left\vert\sin\frac{ka}{2}\right\vert=2\sqrt{\kappa}\left\vert\sin\frac{\pi z}{N}\right\vert.
+\end{align}
+In the limit $k\rightarrow 0$ we can approximate this relation by
+\begin{align}
+\omega_k&\simeq \sqrt{\kappa}ka.
+\end{align}
+For fixed $L$ and $N\rightarrow\infty$ with $a\rightarrow 0$ we find a continuous variable $x:=\frac{z}{N}\in \klam\left[ {-\frac{1}{2},\frac{1}{2}} \right]$.
+The dispersion relation becomes
+\begin{align*}
+\omega (x) &:=2\sqrt{\kappa}\left\vert\sin (\pi x)\right\vert\le 2\sqrt{\kappa}.
+\end{align*}
+FIXME: this is just a guess, more or less unmotivated...\\
+The speed of sound is given by 
+\begin{align}
+v&=Lf_\tecxt\text{max}=L\frac{\omega_\tecxt\text{max}}{2\pi}=\frac{L\sqrt{\kappa}}{\pi}.
+\end{align}
+The canonical momenta are $p_n=\dot{q}_n$.
+The Hamiltonian then reads
+\begin{align}
+H&=\sum_{n=1}^N\frac{p^2}{2}+\frac{\kappa}{2}(q_{n+1}-q_n)^2.
+\end{align}
+\subsection{Canonical quantization}
+Let $k=k(z)=\frac{2\pi}{Na}z$ and write $b_z:=a_z \e^{-\I (\omega (z)t -k(z)an)}$.
+We set $b_z^\dagger := (b_z)^\dagger$ and define the Ansatz
+\begin{align}
+q_n&=\sum_{z=-M}^M\frac{1}{\sqrt{2N\omega}}\kla\left( {b_z+b_z^\dagger} \right).
+\end{align}
+We find the momentum operators
+\begin{align}
+p_n&=\dot{q}_n=\sum_{z=-M}^M\frac{-\I\omega}{\sqrt{2N\omega}}\kla\left( {b_z-b_z^\dagger} \right).
+\end{align}
+Consider the commutation relation
+\begin{align}
+\klam\left[ {q_n,q_m} \right]&=\frac{1}{2N}\sum_{z,x}\frac{1}{\sqrt{\omega_z\omega_x}}\klam\left[ {b_z^{(n)}+b_z^{(n)\dagger},b_x^{(m)}+b_x^{(m)\dagger}} \right]\\
+&=\frac{1}{2N}\sum_{z,x}\kla\left( {\delta_{zx}-\delta_{zx}} \right)=0.
+\end{align}
+Here we assume the usual relations $\klam\left[ {a_z,a_x^\dagger} \right]=\delta_{zx}$ and $\klam\left[ {a_z,a_x} \right]=0$, which automatically lead to
+\begin{align}
+\klam\left[ {b_z^{(n)},b_x^{(m)\dagger}} \right]&=\e^{-\I (\omega (z)t -k(z)an)}\e^{\I (\omega (x)t -k(x)am)}\klam\left[ {a_z,a_x^\dagger} \right]=\e^{\I k(z)a(n-m)}\delta_{zx},\\
+\klam\left[ {b_z^{(n)},b_x^{(m)}} \right]&=\e^{-\I (\omega (z)t -k(z)an)}\e^{-\I (\omega (x)t -k(x)am)}\klam\left[ {a_z,a_x} \right]=0.
+\end{align}
+This allows us to compute the commutator
+\begin{align}
+\klam\left[ {q_n,p_m} \right]&=\frac{-\I}{2N}\sum_{z,x}\sqrt{\frac{\omega (x)}{\omega (z)}}\klam\left[ {b_z^{(n)}+b_z^{(n)\dagger},b_x^{(m)}-b_x^{(m)\dagger}} \right]=\\
+&=\frac{\I}{2N}\sum_{z,x}\sqrt{\frac{\omega (x)}{\omega (z)}}\kla\left( {\e^{\I k(z)a(n-m)}+\e^{\I k(z)a(m-n)}} \right)\delta_{zx}=\\
+&=\frac{\I}{N}\sum_{z=-M}^M\e^{\I 2\pi\frac{z}{N}(n-m)}=\I\delta_{nm}.
+\end{align}
+In the last step we change $z\rightarrow -z$ for the summation over the second exponential phase, which eliminates the factor $\frac{1}{2}$, as both exponential factors become identical.
+We also use the relation
+\begin{align}
+S_{nm}&:=\sum_{z=-M}^M\e^{\I 2\pi\frac{z}{N}l}\kom\overset{\substack{{x\,:=\,z+M} \\ |}}{=}\\
+&=\sum_{x=0}^{N-1}\kla\left( {\e^{\I 2\pi \frac{l}{N}}} \right)^x=\\
+&=\frac{1-\e^{\I 2\pi l}}{1-\e^{\I 2\pi \frac{l}{N}}}=N\delta_{l,0}.
+\end{align}
+Here $l\in\mathbb{Z}$ is any integer, and we use $N=2M+1$.
+Above we had $l=n-m$.
+\\
+The Hamiltonian is
+\begin{align}
+H&=\sum_{n=1}^N\frac{p_n^2}{2}+\frac{\kappa}{2}(q_{n+1}-q_n)^2=:T+V.
+\end{align}
+The kinetic term is given by
+\begin{align}
+T&=\frac{1}{2}\sum_{n=1}^Np_n^2=\frac{(-\I)^2}{4N}\sum_{n,z,x}\sqrt{\omega (z)\omega (x)}\kla\left( {b_zb_x+b_z^\dagger b_x^\dagger -b_zb_x^\dagger -b_z^\dagger b_x} \right)=\\
+&=\frac{1}{4N}\sum_{n,z}\omega (z)+\frac{1}{4N}\sum_{n,z,x}\sqrt{\omega (z)\omega (x)}\kla\left( {b_z^\dagger b_x+b_x^\dagger b_z-b_z b_x-b_z^\dagger b_x^\dagger} \right)=\\
+&=\frac{\sqrt{\kappa}}{2}\sum_z\left\vert\sin\frac{\pi z}{N}\right\vert+\frac{1}{4N}\sum_{z,x}\sqrt{\omega (z)\omega (x)}a_z^\dagger a_x\sum_{n=1}^N\e^{\I 2\pi\frac{n}{N}(x-z)}+\dots=\\
+&=\tecxt\text{const}+\frac{1}{2}\sum_{z=-M}^M\omega_za_z^\dagger a_z-\frac{1}{4N}\sum_{z,x}\sqrt{\omega_z\omega_x}a_za_x\sum_{n=1}^N\e^{-\I \kla\left( {[\omega_z+\omega_x]t-[k_z+k_x]an} \right)}+\dots=\\
+&=\tecxt\text{const}+\frac{1}{2}\sum_k\omega_k\hat{n}_k-\frac{1}{4N}\sum_{z,x}\sqrt{\omega_z\omega_x}a_za_x\e^{-\I[\omega_z+\omega_x]t}\sum_{n=1}^N\e^{\I 2\pi \frac{n}{N}(z+x)}+\dots=\\
+&=\tecxt\text{const}+\frac{1}{2}\sum_k\omega_k\hat{n}_k-\frac{1}{4}\sum_z\omega_z\kla\left( {a_za_{-z}\e^{-2\I\omega_zt}+a_z^{\dagger}a_{-z}^\dagger\e^{2\I\omega_zt}} \right).
+\end{align}
+The potential term is more complicated, but leads to a very similar result.
+First consider the difference
+\begin{align}
+\sqrt{\kappa}(q_{n+1}-q_n)&=\sum_{z=-M}^M\frac{\sqrt{\kappa}}{\sqrt{2N\omega (z)}}\klam\left[ {b_z\kla\left( {\e^{\I k(z)a}-1} \right)+b_z^\dagger\kla\left( {\e^{-\I k(z)a}-1} \right)} \right]=\\
+&=\sum_{z=-M}^M\frac{\sqrt{\kappa}}{\sqrt{2N\omega (z)}}\klam\left[ {b_z\e^{\I k(z)a/2}2\I\sin\frac{k(z)a}{2}\pm b_z^\dagger \e^{-\I k(z)a/2}2\I\sin\frac{\mp k(z)a}{2}} \right]=\\
+&=\sum_{z=-M}^M\frac{\I\omega}{\sqrt{2N\omega}}\klam\left[ {b_z\e^{\I k(z)a/2}\pm b_z^\dagger\e^{-\I k(z)a/2}} \right].
+\end{align}
+Notice the ambiguity of the sign for the second term. 
+This is due to $\omega_k\sim |\sin(ka)|$.
+A more careful derivation shows, i.e. without inserting the dispersion relation before squaring the term, that the $+$-sign is correct here.
+\begin{align}
+V&=\frac{\I^2}{4N}\sum_{n,z,x}\sqrt{\omega_z\omega_x}\kla\left( {b_zb_x\e^{\I [k_z+k_x]a/2}+\dagger +b_zb_x^\dagger\e^{\I \Delta k_{zx} a/2} +b_z^\dagger b_x\e^{-\I \Delta k_{zx} a/2}} \right)=\\
+&=\frac{1}{4N}\sum_{n,z}\omega_z+\frac{1}{4N}\sum_{n,z,x}\sqrt{\omega_z\omega_x}\kla\left( {b_z^\dagger b_x\e^{-\I \Delta k_{zx} a/2}+\dagger+b_z b_x\e^{\I [k_z+k_x]a/2}+\dagger} \right)=\\
+&=\tecxt\text{const}+\frac{1}{4N}\sum_{z,x}\sqrt{\omega_z\omega_x}a_z^\dagger a_x\e^{-\I \Delta k_{zx} a/2}\e^{-\I\Delta\omega_{zx}t}\sum_{n=1}^N\e^{\I 2\pi\frac{n}{N}(x-z)}+\dots=\\
+&=\tecxt\text{const}+\frac{1}{2}\sum_{z=-M}^M\omega_za_z^\dagger a_z+\frac{1}{4N}\sum_{z,x}\sqrt{\omega_z\omega_x}a_za_x\e^{\I [k_z+k_x]a/2}\e^{-\I[\omega_z+\omega_x]t}\sum_{n=1}^N\e^{-\I[k_z+k_x]an}+\dagger=\\
+&=\tecxt\text{const}+\frac{1}{2}\sum_k\omega_k\hat{n}_k+\frac{1}{4}\sum_z\omega_z\kla\left( {a_za_{-z}\e^{-2\I\omega_zt}+a_z^{\dagger}a_{-z}^\dagger\e^{2\I\omega_zt}} \right).
+\end{align}
+Combining both expressions yields
+\begin{align*}
+H&=\sum_k\omega_k\hat{n}_k+\frac{1}{2}\sum_k\omega_k.
+\end{align*}
+%const=\sqrt{\kappa}\sum_{z=-M}^M\e^{\I\pi \frac{z}{N}}=\frac{2}{1-\e^{\I\pi/N}}
+\end{document}

@@ -1,0 +1,265 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[ngerman]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{myscrarticle}
+
+\newcommand*{\titel}{Aufgaben}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Geometrie}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+%\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Dreiecke und Analysis}
+Die erste Aufgabe befasst sich mit einem Konstrukt bestehend aus zwei Dreiecken, das in \autoref{figure:tikz skizze aufgabe dreieck alpha beta} skizziert ist.
+Für beliebige Winkel $\alpha,\beta$ ist nach dem unbekannten Winkel $\epsilon$ gesucht.\\
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}   
+    \pgfmathsetmacro{\a}{3.0}
+    \pgfmathsetmacro{\aa}{45}
+    \pgfmathsetmacro{\ba}{30} 
+    \pgfmathsetmacro{\r}{0.05}
+    
+    
+    \coordinate (o) at (0,0);
+    \coordinate (a) at (\a,0);
+    \coordinate (a2) at ($(a) + (180-\aa:\a)$);
+    \coordinate (b) at (2*\a,0);
+    \coordinate (b2) at ($(b) + (180-\ba:\a)$);
+    \coordinate (c) at (-\a,0);
+    \coordinate (e) at (intersection of a--a2 and b--b2);
+    
+    \foreach \v in {o,a,b,e} {
+        \draw[fill] (\v) circle (\r);    
+    }
+    \draw[thick] (o) -- (a) node[below,midway] {1} -- (b) node[below,midway] {1}  -- (e) -- (o);    \draw[thick] (e) -- (a);
+    \draw[thick] (e) -- (a);
+    \pic["$\alpha$",draw=black,angle eccentricity=0.6,angle radius=1cm] {angle=e--a--o};
+    \pic["$\beta$",draw=black,angle eccentricity=0.8,angle radius=1cm] {angle=e--b--a};
+    \pic["$\epsilon$",draw=black,angle eccentricity=0.6,angle radius=1cm] {angle=o--e--a};    
+\end{tikzpicture}
+\caption{Skizze der Aufgabenstellung, hier für den Spezialfall $\alpha=\frac{\pi}{4}$ und $\beta = \frac{\pi}{6}$.
+Man beachte, dass die unteren Kanten der Dreiecke dieselbe, und ohne EInschränkung als Eins definierte Länge haben.
+Gesucht ist der Winkel $\epsilon$.}
+\label{figure:tikz skizze aufgabe dreieck alpha beta}
+\end{figure}
+Für bestimmte Winkel ist eine konstruktive Lösung vermutlich eleganter, im Allgemeinen lassen sich Probleme dieser Art aber auch gut mit etwas Transfer aus Analysis bearbeiten.
+Zunächst führen wir noch den Winkel $\gamma$ ein und erweitern die Skizze um ein paar hilfreiche Bezeichnungen, wie in \autoref{figure:tikz skizze loesung dreieck alpha beta} dargestellt.
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}   
+    \pgfmathsetmacro{\a}{3.0}
+    \pgfmathsetmacro{\aa}{45}
+    \pgfmathsetmacro{\ba}{30} 
+    \pgfmathsetmacro{\r}{0.05}
+    
+    
+    \coordinate (o) at (0,0);
+    \coordinate (a) at (\a,0);
+    \coordinate (a2) at ($(a) + (180-\aa:\a)$);
+    \coordinate (b) at (2*\a,0);
+    \coordinate (b2) at ($(b) + (180-\ba:\a)$);
+    \coordinate (c) at (-0.4*\a,0);
+    \coordinate (e) at (intersection of a--a2 and b--b2);
+    
+    \foreach \v in {o,a,b,e} {
+        \draw[fill] (\v) circle (\r);    
+    }
+    \draw[thick] (o) -- (a) node[below,midway] {1} -- (b) node[below,midway] {1}  -- (e) -- (o);    \draw[thick] (e) -- (a);
+    \pic["$\alpha$",draw=black,angle eccentricity=0.6,angle radius=1cm] {angle=e--a--o};
+    \pic["$\beta$",draw=black,angle eccentricity=0.8,angle radius=1cm] {angle=e--b--a};
+    \pic["$\epsilon$",draw=black,angle eccentricity=0.6,angle radius=1cm] {angle=o--e--a};
+    
+    %solution
+    \draw[thick,blue] (o) -- (c);
+    \pic["$\gamma$",draw=blue,blue,angle eccentricity=0.6,angle radius=1cm] {angle=e--o--c};
+    \node at (e) [above right,blue] {$E=(x,y)$};
+    \node at (o) [below,blue] {$O$};
+    \node at (a) [below,blue] {$A$};
+    \node at (b) [below,blue] {$B$};
+    
+\end{tikzpicture}
+\caption{Skizze der Aufgabenstellung erweitert mit für die Lösung hilfreichen Konstruktionen, hier für den Spezialfall $\alpha=\frac{\pi}{4}$ und $\beta = \frac{\pi}{6}$.
+Gesucht ist der Winkel $\epsilon$.}
+\label{figure:tikz skizze loesung dreieck alpha beta}
+\end{figure}\\
+Stellt man sich die Skizze um 90 Grad im Uhrzeigersinn gedreht vor, dann lassen sich die drei Geraden $\overline{OE}$, $\overline{AE}$ und $\overline{BE}$ durch die Funktionen
+\begin{align}
+f_1(t) &= ct, \qquad f_2(t) = at - 1 \qquad \text{und} \qquad f_3(t) = bt - 2
+\end{align}
+beschreiben.
+Dabei gilt jeweils $f_j(x) = y$ für $j\in\klc*{1,2,3}$ und die Anstiege der Geraden entsprechen
+\begin{align}
+a &= \frac{1}{\tan(\alpha)}, \qquad b = \frac{1}{\tan(\beta)}\qquad \text{und}\qquad c = \frac{1}{\tan(\gamma)},
+\end{align}
+was sich beispielsweise an den Steigungsdreiecken ablesen lässt.
+Zunächst bestimmen wir die Koordianten das Punktes $E$ durch das Lösen des Gleichungssystems
+\begin{align}
+f_2(x) &= ax - 1 \overset{!}{=} y,\label{eqn:gls fuer Punkt E f2}\\
+f_3(x) &= bx - 2 \overset{!}{=} y\label{eqn:gls fuer Punkt E f3}.
+\end{align}
+Die Subtraktion von \autoref{eqn:gls fuer Punkt E f2} und \autoref{eqn:gls fuer Punkt E f3} ergibt zunächst
+\begin{align}
+(a-b)x +1 &= 0
+\end{align}
+und somit $x= \frac{1}{b - a}$.
+Damit finden wir dann
+\begin{align}
+y &= ax - 1 = \frac{a}{b-a} - 1 = \frac{2a - b}{b - a}.
+\end{align}
+Man beachte nun, dass der gesuchte Winkel über die Innenwinkelsumme von $\Delta OAE$ zu
+\begin{align}
+\epsilon &= \pi - \alpha - (\pi - \gamma) = \gamma - \alpha
+\end{align}
+bestimmt werden kann.
+Da $\alpha$ gegeben  ist benötigen wir jetzt also nur noch $\gamma = \arctan \kla*{\frac{1}{c}}$.
+De Parameter $c$ erhalten wir dabei aus der Bedingung $f_1(x) = y$.
+Einsetzen liefert
+\begin{align}
+c &= \frac{y}{x} = \frac{2a-b}{b-a} (b-a) = 2a-b.
+\end{align}
+Mit $\arctan(x) = \arccot\kla*{\frac{1}{x}}$ kann man das Endergebnis in kompakter -- aber, wie wir noch sehen werden, eher unhandlicher -- Form als
+\begin{align}
+\epsilon &= \arccot \kla*{2a-b} - \alpha = \arccot\kla*{2\cot(\alpha) - \cot(\beta)} - \alpha \label{eqn:ergebnis epsilon v1}
+\end{align}
+schreiben.
+Für den Spezialfall $\alpha = \frac{\pi}{4}$ und $\beta = \frac{\pi}{6}$ lautet diese Formel allerdings
+\begin{align}
+\epsilon &= \arccot\kla*{2 - \sqrt{3}} - \frac{\pi}{4}
+\end{align}
+und der erste Term scheint auf den ersten Blick keine Vereinfachung zuzulassen. 
+Tatsächlich kann man zeigen, dass $\arccot(2-\sqrt{3}) = \frac{5\pi}{12}$ gilt, einfacher ist allerdings eine Manipulation von \autoref{eqn:ergebnis epsilon v1}.
+Wir bedinen uns dafür der Additionstheoreme für Sinus und Kosinus, die sich in jeder Formelsammlung finden lassen sollten.
+Damit gilt zunächst allgemein
+\begin{align}
+\tan(x+y) &= \frac{\sin(x+y)}{\cos(x+y)} = \frac{\sin(x) \cos(y) + \cos(x) \sin(y)}{\cos(x) \cos(y) - \sin(x) \sin(y)} \color{blue} \frac{\frac{1}{\cos(x)\cos(y)}}{\frac{1}{\cos(x)\cos(y)}} \color{black} = \frac{\tan(x) + \tan(y)}{1 - \tan(x)\tan(y)}. \label{eqn:additionstheorem tan}
+\end{align}
+Damit und unter Verwendung von $\tan(x) = \frac{1}{\cot(x)}$ findet man dann
+%\begin{align}
+%\tan(\epsilon) &= \tan\kla*{\arctan\kla*{\frac{1}{2a - b}} - \alpha} = \frac{\frac{1}{2a - b} - \tan(\alpha)}{1 + \tan(\alpha) \frac{1}{2a - b}} = \frac{1 - \tan(\alpha) (2a - b)}{2a - b + \tan(\alpha)}.
+%\end{align}
+%Erweitern des Bruches mit $\frac{1}{ab} = \tan(\alpha) \tan(\beta)$ ergibt
+%\begin{align}
+%\tan(\epsilon) &= \frac{1 - \tan(\alpha) \kla*{\frac{2}{\tan(\alpha)} - \frac{1}{\tan(\beta)}}}{\frac{2}{\tan(\alpha)} - \frac{1}{\tan(\beta)} + \tan(\alpha)} \color{blue} \frac{\tan(\alpha)\tan(\beta)}{\tan(\alpha)\tan(\beta)} \color{black} = \frac{\tan(\alpha) \kla*{\tan(\alpha) - \tan(\beta)}}{2\tan(\beta) - \tan(\alpha) + \tan(\alpha)^2 \tan(\beta)}.
+%\end{align}
+\begin{align}
+\tan(\epsilon) &= \tan\kla*{\arctan\kla*{\frac{1}{2a - b}} - \alpha} = \frac{\frac{1}{2a - b} - \tan(\alpha)}{1 + \tan(\alpha) \frac{1}{2a - b}} = \frac{1 - \frac{1}{a} (2a - b)}{2a - b + \frac{1}{a}} = \frac{b - a}{2a^2 - ab + 1}.
+\end{align}
+%\begin{tikzpicture}   
+%    \pgfmathsetmacro{\a}{3.0}
+%    \pgfmathsetmacro{\aa}{29}
+%    \pgfmathsetmacro{\ba}{17}
+%    \pgfmathsetmacro{\r}{0.05}
+%    
+%    
+%    \coordinate (o) at (0,0);
+%    \coordinate (a) at (\a,0);
+%    \coordinate (a2) at ($(a) + (180-\aa:\a)$);
+%    \coordinate (b) at (2*\a,0);
+%    \coordinate (b2) at ($(b) + (180-\ba:\a)$);
+%    \coordinate (c) at (-0.4*\a,0);
+%    \coordinate (e) at (intersection of a--a2 and b--b2);
+%    
+%    \foreach \v in {o,a,b,e} {
+%        \draw[fill] (\v) circle (\r);    
+%    }
+%    \draw[thick] (o) -- (a) node[below,midway] {1} -- (b) node[below,midway] {1}  -- (e) -- (o);    \draw[thick] (e) -- (a);
+%    \pic["$\alpha$",draw=black,angle eccentricity=0.6,angle radius=1cm] {angle=e--a--o};
+%    \pic["$\beta$",draw=black,angle eccentricity=0.8,angle radius=1cm] {angle=e--b--a};
+%    \pic["$\epsilon$",draw=black,angle eccentricity=0.6,angle radius=1cm] {angle=o--e--a};
+%    
+%    %solution
+%    \draw[thick,blue] (o) -- (c);
+%    \pic["$\gamma$",draw=blue,blue,angle eccentricity=0.6,angle radius=1cm] {angle=e--o--c};
+%    \node at (e) [above right,blue] {$E=(x,y)$};
+%    \node at (o) [below,blue] {$O$};
+%    \node at (a) [below,blue] {$A$};
+%    \node at (b) [below,blue] {$B$};
+%    
+%    \coordinate (c2) at ($(c)!50!(o) + (\ba:\a)$);
+%    \draw[thick, red] (e)+(-\aa:2cm) arc (-\aa:-42.36-\aa:2 cm);
+%\end{tikzpicture}
+Damit erhalten wir letztlich
+\begin{align}
+\epsilon &= \arctan\kla*{\frac{\cot(\beta) - \cot(\alpha)}{2\cot(\alpha)^2 - \cot(\alpha) \cot(\beta) + 1}}.
+\end{align}
+Für den Spezialfall $\alpha=\frac{\pi}{4}$ und $\beta=\frac{\pi}{6}$ ergibt sich damit
+\begin{align}
+\epsilon &= \arctan\kla*{\frac{\sqrt{3} - 1}{2 - \sqrt{3} + 1}} = \arctan\kla*{\frac{1}{\sqrt{3}}} = \frac{\pi}{6}.
+\end{align}
+\newpage
+\section{Knifflige Winkelsumme}
+Gesucht ist die Summe der drei Winkel $\alpha$, $\beta$ und $\gamma$ aus der Skizze in \autoref{figure:tikz skizze aufgabe winkelsumme}.\\
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}   
+    \pgfmathsetmacro{\a}{3.0}
+    \pgfmathsetmacro{\aa}{45}
+    \pgfmathsetmacro{\ba}{30} 
+    \pgfmathsetmacro{\r}{0.05}
+    
+    
+    \coordinate (o) at (0,0);
+    \coordinate (a) at (\a,0);
+    \coordinate (b) at (2*\a,0);
+    \coordinate (c) at (3*\a,0);
+    \coordinate (e) at (0,\a);
+    
+    \foreach \v in {o,a,b,c,e} {
+        \draw[fill] (\v) circle (\r);    
+    }
+    \draw[thick] (o) -- (a) node[below,midway] {1} -- (b) node[below,midway] {1} -- (c) node[below,midway] {1} -- (e) -- (o) node[left,midway] {1} ;    
+    \draw[thick] (a) -- (e);
+    \draw[thick] (b) -- (e);
+    \pic["$\alpha$",draw=black,angle eccentricity=0.6,angle radius=1.1cm] {angle=e--a--o};
+    \pic["$\beta$",draw=black,angle eccentricity=0.7,angle radius=1.2cm] {angle=e--b--o};
+    \pic["$\gamma$",draw=black,angle eccentricity=0.8,angle radius=1.3cm] {angle=e--c--o};
+    \pic["$\cdot$",draw=black,angle eccentricity=0.6,angle radius=0.3cm] {angle=a--o--e};
+\end{tikzpicture}
+\caption{Skizze der Aufgabenstellung.}
+\label{figure:tikz skizze aufgabe winkelsumme}
+\end{figure}
+Es ist $\alpha = \frac{\pi}{4}$, da das innerste Dreieck sowohl gleichschenklig als auch rechtwinklig ist.
+Schwierigkeiten bereiten nur die anderen beiden Winkel, die zunächst rein formal durch
+\begin{align}
+\tan(\beta) &= \frac{1}{2}\qquad \text{und} \qquad \tan(\gamma) = \frac{1}{3}
+\end{align}
+gegeben sind.
+Tatsächlich kann man weder $\beta$ noch $\gamma$ als ein rationales Vielfaches von $\pi$ darstellen, und wir können daher nur hoffen, dass auf ``magische'' Weise deren Summe ein ``kompakteres'' Ergebnis liefert.
+Es gibt hierzu eine überaus elegante Lösung mittels komplexer Zahlen.
+Man beachte, dass die drei Punkte $z_1 = 1 + \i$, $z_2 = 2 + \i$ und $z_3 = 3 + \i$ gerade die Winkel $\alpha$, $\beta$ und $\gamma$ zur $x$-Achse haben.
+Aufgrund der Polardarstellung komplexer Zahlen $z=r\powe{\i \phi}$ ergibt das Produkt
+\begin{align}
+z_1z_2z_3 &= r_1r_2r_3 \powe{\i (\alpha+\beta+\gamma)}
+\end{align}
+gerade eine komplexe Zahl, deren WInkel gerade der gesuchten Summe entspricht.
+Im Allgemeinen hätten wir nun noch nichts gewonnen, in dem speziellen Fall ist das Produkt auf der linken Seite aber einfach
+\begin{align}
+z_1z_2z_3 &= (1+\i)(2+\i)(3+\i) = (1+\i) (6 + 3\i + 5\i + \i^2) = (1+\i) (5 + 5\i) = 5(1 + 2\i + \i^2) = 10\i.
+\end{align}
+Da dieser Wert auf der $y$-Achse liegt (oder einfach mit $\i=\powe{\i\frac{\pi}{2}}$) ist also $\alpha + \beta + \gamma = \frac{\pi}{2}$.\\
+Alternativ kann man mit ``brute force'' natürlich auch auf das Ergebnis kommen.
+Man beachte dass
+\begin{align}
+\tan(\beta + \gamma) &= \frac{\tan(\beta) + \tan(\gamma)}{1 - \tan(\beta) \tan(\gamma)} = \frac{\frac{1}{2} + \frac{1}{3}}{1 - \frac{1}{2} \frac{1}{3}} = 1
+\end{align}
+und somit $\beta + \gamma = \frac{\pi}{4}$.
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

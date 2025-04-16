@@ -1,0 +1,163 @@
+\documentclass[english, parskip=full]{scrreprt}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+%\usepackage[ngerman]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\newcommand*{\titel}{Mathematical methods for Differential Equations}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+\begin{titlepage}
+\maketitle  % Titel setzen
+\tableofcontents  % Inhaltsverzeichnis setzen
+\end{titlepage}
+
+\chapter{Introduction}
+This book is a culmination of mathematical methods for solving various types of differential equations. Most examples are particularly important in physics, while some generalized ones are discussed purely for understanding their mathematical structure.
+\chapter{Ordinary Differential Equations (ODE)}
+General structure...
+\section{Linear homogeneous ODE}
+Subclass definition...
+\subsection{Constant coefficients}
+Definition of constant coefficients...
+\subsubsection{First order}\label{sss:ODE linhom cc first order}
+our first ode...
+\subsubsection{Second order}
+harmonic oscillator...
+\subsubsection{Higher orders}
+general solution...
+\section{Linear inhomogeneous ODE}
+much more stuff...
+\chapter{Partial Differential Equations (PDE)}
+\section{Linear homogeneous PDE}
+Let $f:\mathbb{R}^N\rightarrow\mathbb{R}$
+\subsection{Constant coefficients}
+Linear PDEs with constant coefficients can be solved by Fourier transformations:
+\begin{align*}
+\mathcal{F}_N[f](k)&:=(2\pi)^{-N/2}\intr\int_{\mathbb{R}^{N}}{f(x)e^{-ik\cdot x}}\,\mathrm{d}^{N}x \\
+\mathcal{F}_N^{-1}[f](x)&:=(2\pi)^{-N/2}\intr\int_{\mathbb{R}^{N}}{f(k)e^{ik\cdot x}}\,\mathrm{d}^{N}k
+\end{align*}
+Note that we will use the notation $f(k):=\mathcal{F}[f](k)$ for any function $f(x)$. This is ambiguous, since $f(k)$ and $f(x)$ do \textsl{not} refer to the same function. We only differentiate between the function $f(x)$ in direct space and $f(k)$ in reciprocal space by their arguments.
+\subsubsection{First order}
+Let $x^\mu,a^\mu\in\mathbb{R}^{N+1}$:
+\begin{align*}
+0&=f(x^\mu) + a^\mu\partial_\mu f(x^\mu)
+\end{align*}
+Consider the $N$-dimensional Fourier transformation, leaving us with the arguments $t,k$
+\begin{align*}
+0&=\mathcal{F}_{N}[f+a\cdot\nabla f](t,k)=f(t,k)+a_0\partial_{t}f(t,k) + ia\cdot k  f(t,k)
+\end{align*}
+Now this is just an ODE! Consider the $k$ as parameters and apply our knowledge from (\ref{sss:ODE linhom cc first order}). Note that the arbitrary constant is now a function of $k$ and define the ``frequency'' $\Omega:=\frac{1+ia\cdot k}{a_0}$:
+\begin{align*}
+f(t,k)&=A(k)e^{\Omega t}
+\end{align*}
+Our initial condition is given by $\phi(t=0,x)=:\phi(x)$. Using this, we can derive an expression for $A(k)$:
+\begin{align*}
+A(k)&=f(0,k)=\mathcal{F}_{N}[\phi](k)=(2\pi)^{-N/2}\intr\int_{\mathbb{R}^{N}}{\phi(x)e^{-ik\cdot x}}\,\mathrm{d}^{N}x
+\end{align*}
+With this, we can solve the PDE:
+\begin{align*}
+f(x^\mu)&=\mathcal{F}_{N}^{-1}[f(t,k)](x)=\mathcal{F}_N^{-1}\klam\left[ {e^{\Omega t}\mathcal{F}_N[\phi]} \right](t,x)=\\
+&=(2\pi)^{-N}\intr\int_{\mathbb{R}^{N}}{e^{\frac{1+ia\cdot k}{a_0}t}\intr\int_{\mathbb{R}^{N}}{\phi(x)e^{-ik\cdot x}}\,\mathrm{d}^{N}x}\,e^{ik\cdot x}\,\mathrm{d}^{N}k
+\end{align*}
+We want to discuss this solution in a bit more detail by considering a few examples. Let $\phi\equiv\delta$:
+\begin{align*}
+f(x^\mu)&=(2\pi)^{-N}\intr\int_{\mathbb{R}^{N}}{e^{\frac{1+ia\cdot k}{a_0}t+ik\cdot x}}\,\mathrm{d}^{N}k=e^{t/a_0}\prod_{j=1}^N\frac{1}{2\pi}\intr\int_{\mathbb{R}^{ }}e^{ik_j(a_jt/a_0 + x_j)}\,\mathrm{d}^{}k_j=\\
+&=e^{t/a_0}\prod_{j=1}^N\delta\kla\left( {x_j+\frac{a_jt}{a_0}} \right)=\delta\kla\left( {x+\frac{at}{a_0}} \right)e^{t/a_0}
+\end{align*}
+\subsubsection{Second order}
+While technically of second order, the heat equation can be solved by directly applying the method from above, because it is still only of first order in one variable:
+\begin{align*}
+0&=\partial_tf(t,x)-D\nabla^2f(t,x)
+\end{align*}
+Apply the $N$-dimensional Fourier transformation:
+\begin{align*}
+0&=\mathcal{F}[\partial_tf-D\nabla^2f](t,k)=\partial_tf(t,k)+Dk^2f(t,k)
+\end{align*}
+Once again solve the resulting ODE using (\ref{sss:ODE linhom cc first order}):
+\begin{align*}
+f(t,k)&=A(k)e^{-Dk^2t}
+\end{align*}
+Find $A(k)$ from the initial condition $f(t=0,x)=:\phi(x)$:
+\begin{align*}
+A(k)&=f(0,k)=\mathcal{F}_N[\phi](k)=(2\pi)^{-N/2}\intr\int_{\mathbb{R}^{N}}{\phi(x)e^{-ik\cdot x}}\,\mathrm{d}^{N}x
+\end{align*}
+And solve for $f$ by inverse Fourier transformation:
+\begin{align*}
+f(t,x)&=\mathcal{F}_N^{-1}\klam\left[ {e^{-Dk^2t}\mathcal{F}_N[\phi]} \right]=\\
+&=(2\pi)^{-N}\intr\int_{\mathbb{R}^{N}}{e^{-Dk^2t}\intr\int_{\mathbb{R}^{N}}{\phi(x)e^{-ik\cdot x}}\,\mathrm{d}^{N}x}\,e^{ik\cdot x}\,\mathrm{d}^{N}k
+\end{align*}
+Now, just as above, we can not simplify this further without additional knowledge about $\phi$. However, for the special case of $\phi\equiv\delta$, we arrive at the characteristic solution of a bell curve with increasing width:
+\begin{align*}
+f(t,x)&=(2\pi)^{-N}\intr\int_{\mathbb{R}^{N}}{e^{-Dk^2t+ik\cdot x}}\,\mathrm{d}^{N}k=(4\pi Dt)^{-N/2}e^{-\frac{x^2}{4Dt}}
+\end{align*}
+Next, we will approach ``true'' second order PDE, namely the Laplace equation:
+\begin{align*}
+0&=\nabla^2f(x^\mu)
+\end{align*}
+Fourier transformation and solution of the resulting ODE yield
+\begin{align*}
+0&=\mathcal{F}_N[\nabla^2f](t,k)=\partial_t^2f(t,k)-k^2f(t,k)\\
+f(t,k)&=A(k)e^{kt}+B(k)e^{-kt}\\
+\partial_tf(t,k)&=kA(k)e^{kt}-kB(k)e^{-kt}
+\end{align*}
+Given the initial conditions $f(t=0,x)=:\phi(x)$ and $\partial_tf(t=0,x)=:\psi(x)$, we can determine $A(k)$ and $B(k)$:
+\begin{align*}
+2A(k)&=f(0,k)+\frac{1}{k}\partial_tf(0,k)=\mathcal{F}_N[\phi](k)+\frac{1}{k}\mathcal{F}_N[\psi](k)\\
+2B(k)&=f(0,k)-\frac{1}{k}\partial_tf(0,k)=\mathcal{F}_N[\phi](k)-\frac{1}{k}\mathcal{F}_N[\psi](k)
+\end{align*}
+From this, we can extract our solution:
+\begin{align*}
+f(t,x)&=\mathcal{F}_N^{-1}\klam\left[ {A(k)e^{kt}+B(k)e^{-kt}} \right]
+\end{align*}
+\subsubsection{Higher orders}
+We can generalize this approach for an arbitrary linear homogeneous PDE with constant coefficients. For this, define a general differential operator accordingly:
+\begin{align*}
+L&:=
+\end{align*}
+%\begin{minted}[frame=lines, bgcolor=bg, fontsize=\footnotesize, linenos]{python}
+
+\begin{thebibliography}{9}
+\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+\end{thebibliography}
+
+\appendix
+\chapter{Some more details}
+
+\end{document}

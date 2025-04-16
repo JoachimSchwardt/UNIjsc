@@ -1,0 +1,110 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % prnovides \FloatBarrier
+\usepackage{xurl}
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\newcommand{\I}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Elektrostatik Kugeln}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+%\subject{subject}
+\title{\titel}
+%\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Besonders unangenehme Aufgaben}
+\subsection{Oberflächenladung in einer leitenden Kugelschale}
+Es ist $\rho(r)=\sigma\delta(r-a)$, und damit die Gesamtladung
+\begin{align}
+Q(r) = \int_0^r\rho(x) \,4\pi x^2\mathrm{d}x =\begin{cases} 4\pi\sigma a^2 & r > a \\ 0 & \mathrm{sonst}\end{cases}
+\end{align}
+Die Kugelschale beginnt bei $r=b$ und hat Dicke $d$. 
+Das Potential sei $\phi(\infty) = 0$. \\
+Für $r > b+d$:
+\begin{align}
+E(r) &= \frac{Q}{4\pi\epsilon_0 r^2}\\
+\phi(r) &= \intx_r^\infty E(x) \mathrm{d}x = \frac{Q}{4\pi\epsilon_0 r}
+\end{align}
+Das Potential innerhalb der Kugelschale muss konstant sein, da das $E$-Feld verschwindet. Da das Potential stetig sein muss, gilt also für $b<r\le b+d$:
+\begin{align}
+E(r) &= 0\\
+\phi(r) &= \frac{Q}{4\pi\epsilon_0 (b+d)}
+\end{align}
+Vor dem spannenden Teil noch kurz der einfache.
+Für $r\le a$ gilt einfach $E=0$, da kiene Ladung mehr vorhanden ist. Das Potential ist somit konstant, und sei $\phi(r\le a):=\phi_\mathrm{inside}$.\\
+Für $a<r\le b$ enthält die Gauss'sche Oberfläche jetzt die Ladung $Q$.
+Dementsprechend ist 
+\begin{align}
+E(r) &= \frac{Q}{4\pi\epsilon_0 r^2}
+\end{align}
+Man könnte jetzt naiv erwarten, dass 
+\begin{align}
+\phi_\mathrm{naiv}(r) = -\frac{\mathrm{d}}{\mathrm{d}r}E(r)=\frac{Q}{4\pi\epsilon r}
+\end{align}
+ist. Das stimmt allerdings nicht ganz! Sonst wäre ja $\phi_\mathrm{naiv}(r=b)=\frac{Q}{4\pi\epsilon_0 b}$, wobei doch schon vorher $\phi(r=b)=\phi(r=b+d)=\frac{Q}{4\pi\epsilon_0 (b+d)}$ war.
+Hier muss man also etwas vorsichtiger sein. Letztlich liegt der Fehler gerade in einem konstanten Offset. Das lässt sich aber eher einsehen, wenn man $\phi$ formaler bestimmt. Also für $a<r\le b$
+\begin{align}
+\phi(r)&=\int_r^\infty E(x)\,\mathrm{d}x=\int_r^b \frac{Q}{4\pi\epsilon_0x^2}\,\mathrm{d}x+\int_b^{b+d}0\,\mathrm{d}x+\int_{b+d}^\infty \frac{Q}{4\pi\epsilon_0 x^2}\,\mathrm{d}x=\\
+&=\frac{Q}{4\pi\epsilon_0}\left( \frac{1}{r}-\frac{1}{b}+\frac{1}{b+d} \right)
+\end{align}
+Jetzt passt alles. Für $r=b$ ist dieses Potential wie erwartet gleich dem auf der Außenseite der Kugeloberfläche.
+Für $r=a$ finden wir jetzt 
+\begin{align}
+\phi_\mathrm{inside}&=\phi(r=a)=\frac{Q}{4\pi\epsilon_0}\left( \frac{1}{a}-\frac{1}{b}+\frac{1}{b+d} \right),
+\end{align}
+also ein deutlich umständlicheres Ergebnis als das naive $\phi_\mathrm{naiv}(r=a)=\frac{Q}{4\pi\epsilon_0a}$.
+\\
+Hier noch der Link, der hat mir zumindest geholfen, wieder den Faden zu finden...
+\url{https://physics.stackexchange.com/questions/326767/deriving-potential-inside-a-conductive-neutral-shell-containing-a-charge}
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

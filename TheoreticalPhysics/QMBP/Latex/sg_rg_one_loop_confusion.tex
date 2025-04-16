@@ -1,0 +1,373 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+\input{preamble_shared}
+
+\newcommand*{\titel}{Sine-Gordon Renormalization Group Equations}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Setup}
+We consider a two-dimensional model with imaginary time $\tau=\i t$, some velocity $v$ and the euclidean coordinate $\textbf{r}=(x,y)$ with $y=v\tau$.
+The fixed point action is
+\begin{align}
+S_0 &= \frac{1}{2\pi Kv}\intx{0}{\beta}{ \intx{-L/2}{L/2}{\klb*{\frac{1}{v}\kla*{\partial_\tau\phi}^2 + v\kla*{\partial_x\phi}^2}}{x} }{\tau} = \frac{1}{2\pi K} \int \kla*{\nabla\phi}^2 \,\d^2r.
+\end{align}
+We consider a general sine-Gordon perturbation
+\begin{align}
+S_b &= \frac{g}{\alpha^2} \sum_{s=\pm 1} \int \powe{\i bs\phi}\,\d^2r.
+\end{align}
+The cumulant expansion reads
+\begin{align}
+\log\bra*{\powe{-S_b}}_\f &= -\bra*{S_b}_\f + \frac{1}{2} \bra*{S_b^2}_\f^\c + \dots
+\end{align}
+and evidently requires computing ``fast'' averages.
+Following the prescription
+\begin{align}
+\int_\f &\rightarrow \int_\textbf{k} \klb*{f\kla*{\frac{k^2}{\Lambda^2}} - f\kla*{\frac{k^2}{\Lambda^2 \powe{-2\d l}}}} = -2\frac{\d l}{\Lambda^2} \int_\textbf{k} k^2 f'\kla*{\frac{k^2}{\Lambda^2}},
+\end{align}
+where $f(x)$ determines the form of the cut-off.
+For example, $f(x)=\Theta(1-x)$ gives a hard cut-off in momentum space, while $f(x)=\powe{-x}$ leads to gaussian integrals and strikes a balance between locality in both real and momentum space.
+
+To compute the averages, we make use of the remarkable identity
+\begin{align}
+\bra*{\prod \powe{C_j}} &= \powe{\frac{1}{2}\bra*{\kla*{\sum C_j}^2}} \powe{\frac{1}{2} \sum_{j<k} \klb*{C_j,C_k}} = \powe{\frac{1}{2} \sum \bra*{C_j^2}} \powe{\sum_{j<k} \bra*{C_jC_k}}.
+\end{align}
+The Fourier representation of the fields reads
+\begin{align}
+\phi(\textbf{r}) &= \frac{1}{\beta L} \sum_\textbf{q} \powe{\i\textbf{r}\cdot\textbf{q}} \phi(\textbf{q}),
+\end{align}
+where $\textbf{q}=(\omega_n^\B/v, k)$ and $\textbf{r}\cdot\textbf{q} = \omega_n^\B \tau - kx$ with $\omega_n^\B = \frac{2\pi n}{\beta}$ for $n\in\mathbb{Z}$.
+The action then takes the form
+\begin{align}
+S_0 &= \frac{1}{2\pi K \beta^2 L^2} \int \sum_{\textbf{q},\textbf{q}'} \powe{\i \textbf{r} \cdot \kla*{\textbf{q} + \textbf{q}'}} \i\textbf{q}\phi(\textbf{q}) \cdot \i\textbf{q}' \phi(\textbf{q}') = \frac{v}{2\pi K\beta L} \sum_\textbf{q} q^2 \abs*{\phi(\textbf{q})}^2.
+\end{align}
+Field integration then yields $\bra*{\phi(\textbf{q}_1) \phi(\textbf{q}_2)} = \delta_{\textbf{q}_1,-\textbf{q}_2} \frac{\pi K\beta L}{vq_1^2}$, and therefore
+\begin{align}
+\Phi_\f(\textbf{r}) &= \bra*{\phi_\f(\textbf{r})\phi_\f(0)}_\f = \frac{1}{\beta^2L^2} \sum_{\f,\f'} \powe{\i\textbf{r}\cdot \textbf{q}} \bra*{\phi_\f(\textbf{q})\phi_\f(\textbf{q}')}_\f = \frac{\pi K}{v\beta L} \sum_\f \powe{\i\textbf{r}\cdot \textbf{q}} \frac{1}{q^2}.
+\end{align}
+Taking the limit $L,\beta\rightarrow\infty$, we can rewrite this as
+\begin{align}
+\Phi_\f(\textbf{r}) &= \frac{\pi K}{v\beta L} \frac{L}{2\pi} \frac{\beta v}{2\pi} \int_\f \powe{\i\textbf{r}\cdot \textbf{q}} \frac{1}{q^2} = \frac{K\d l}{2} \tilde{\Phi}_\f(\textbf{r}),
+\end{align}
+where we defined
+\begin{align}
+\tilde{\Phi}_\f(\textbf{r}) &= -\frac{1}{\pi\Lambda^2} \intrnd{2}{\powe{\i\textbf{r}\cdot \textbf{q}} f'\kla*{\frac{q^2}{\Lambda^2}}}{q} = -\frac{1}{\pi \Lambda^2} \intx{0}{\infty}{ \intx{0}{2\pi}{ \powe{\i rq\cos\theta} f'\kla*{\frac{q^2}{\Lambda^2}}q }{\theta} }{q} \\
+&= -\frac{1}{\Lambda^2}  \intx{0}{\infty}{f'\kla*{\frac{q^2}{\Lambda^2}} J_0(rq)}{q^2} = -\intx{0}{\infty}{ f'(x) J_0\kla*{\Lambda r \sqrt{x}} }{x}.
+\end{align}
+Thus, independent from the choice of the cut-off function, the fast correlator only depends on the magnitude of $\textbf{r}$.
+
+There are now two important observations.
+First, the cumulant expansion will require a rapidly decaying $\tilde{\Phi}(\Lambda r) \equiv \tilde{\Phi}_\f(\textbf{r})$, and thus a sharp cut-off generally leads to technical problems.
+Second, the quantitative results will depend on the precise choice of the cut-off function.
+To better control the latter part, we know simply \emph{assume} that the first property is satisfied (even if it is not, we return to this later), and then try to compute the RG equations without explicitly choosing $f(x)$.
+
+To understand how this can be possible, note that typically the expansion leads to integrals of the form
+\begin{align}
+I(n,m) &= \int x^{2n}y^{2m} \tilde{\Phi}(r)\,\d^2r.
+\end{align}
+Due to the symmetry between $x$ and $y$, only even powers give non-zero results.
+
+There are two approaches to evaluating $I(n,m)$.
+First, using the representation with the Bessel function $J_0$, we have
+\begin{align}
+I(n,m) &= -\intx{0}{\infty}{ f'(t) \intrnd{2}{x^{2n} y^{2m} J_0(r \sqrt{t})}{r} }{t}\\
+&= -\intx{0}{\infty}{f'(t) \intx{0}{\infty}{r^{2n+2m+1} J_0(r\sqrt{t}) \intx{0}{2\pi}{\cos(\theta)^{2n} \sin(\theta)^{2m}}{\theta} }{r} }{t}\\
+&= -2 B\kla*{n+\frac{1}{2}, m+\frac{1}{2}} \intx{0}{\infty}{ f'(t) t^{-n-m-1} }{t} \intx{0}{\infty}{u^{2n+2m+1} J_0(u)}{u}.
+\end{align}
+The moments of the Bessel functions are given by \cite{NIST_Bessel}
+\begin{align}
+\intx{0}{\infty}{u^\mu J_\nu(u)}{u} &= 2^\mu \frac{\Gamma\kla*{\frac{\nu+\mu+1}{2}}}{\Gamma\kla*{\frac{\nu-\mu+1}{2}}} \label{eqn:J0_moments},\\
+\intx{0}{\infty}{u^{\nu+1} J_\nu(bu) \powe{-au^2}}{u} &= \frac{b^\nu }{(2a)^{\nu+1}}\powe{-\frac{b^2}{4a}}.
+\end{align}
+The Bessel functions themself admit the series representation
+\begin{align}
+J_\nu(z) &= \kla*{\frac{z}{2}}^\nu \sum_{k\ge 0} \frac{(-1)^k}{k!} \frac{1}{\Gamma(\nu+k+1)} \kla*{\frac{z}{2}}^{2k}.
+\end{align}
+\autoref{eqn:J0_moments} only holds for $\mu < \frac{1}{2}$, so we can not directly make use of this in our integral.
+Instead, inserting the series, we find
+\begin{align}
+I(n,m) &= -2B\kla*{n+\frac{1}{2}, m+\frac{1}{2}} \intx{0}{\infty}{f'(t) \intx{0}{\infty}{r^{2n+2m+1}  \sum_{k\ge 0} \frac{(-1)^k}{k!^2} \kla*{\frac{r\sqrt{t}}{2}}^{2k} }{r} }{t}\\
+&= -2B\kla*{n+\frac{1}{2}, m+\frac{1}{2}}\sum_{k\ge 0} 2^{-2k} \frac{(-1)^k}{k!^2} \intx{0}{\infty}{f'(t) t^k \intx{0}{R}{r^{2n+2m+2k+1} }{r} }{t} \\
+&= -2\frac{\Gamma\kla*{n+\frac{1}{2}} \Gamma\kla*{m+\frac{1}{2}}}{(n+m)!}\sum_{k\ge 0} 2^{-2k} \frac{(-1)^k}{k!^2} \frac{R^{2n+2m+2k+2}}{2n+2m+2k+2} \intx{0}{\infty}{f'(t) t^k }{t}.
+\end{align}
+This calculation is plagued by convergence problems.
+A quite different approach is to instead write
+\begin{align}
+I(n,m) &= -\frac{1}{\pi\Lambda^2} \intrnd{2}{ f'\kla*{\frac{q^2}{\Lambda^2}} \intrnd{2}{\powe{\i \textbf{r}\cdot \textbf{q}} x^{2n} y^{2m} }{r} }{q}\\
+&= -\frac{1}{\pi\Lambda^2} \intrnd{2}{ f'\kla*{\frac{q^2}{\Lambda^2}} \intrnd{2}{ (-\i \partial_{q_x})^{2n} (-\i \partial_{q_y})^{2m} \powe{\i xq_x+\i yq_y} }{r} }{q}\\
+&= -\frac{4\pi}{\Lambda^2} (-1)^{n+m} \intrnd{2}{ f'\kla*{\frac{q^2}{\Lambda^2}} \partial_{q_x}^{2n} \delta(q_x) \partial_{q_y}^{2m} \delta(q_y) }{q}\\
+&= -\frac{4\pi}{\Lambda^2} (-1)^{n+m} \partial_{q_x}^{2n}\partial_{q_y}^{2m} f'\kla[\bigg]{\frac{q_x^2+q_y^2}{\Lambda^2}} \bigg\vert_{\textbf{q}=0}.
+\end{align}
+
+%Let us take a closer look by focusing on the special case $f(x)=\Theta(1-x)$.
+%Then we find
+%\begin{align}
+%\tilde{\Phi}(r) &= \intx{0}{\infty}{\delta(1-x)J_0(r\sqrt{x})}{x} = J_0(r),
+%\end{align}
+%which then gives
+%\begin{align}
+%I(n,m) &= \intrnd{2}{x^{2n}y^{2m} J_0(r)}{r}.
+%\end{align}
+%Unfortunately, this fails to converge for $n,m>0$.
+
+%from thesis_toolkit import c_quad
+%import sympy as sy
+%from scipy import special
+%from scipy.integrate import quad
+%x,y,qx,qy,Lambda=sy.symbols("x y q_x q_y Lambda", positive=True)
+%Lambdav = 1/2; L=100; n=1; m=0
+%key="numeric"
+%if key == "exp":
+%    f=sy.exp(-x)
+%    f1_np = sy.lambdify([x], f.diff(x), "numpy")
+%    Phi=lambda r: np.exp(-(Lambdav*r/2)**2)
+%elif key == "numeric":
+%    #f=2/(1+sy.exp(x))
+%    #f=(1-sy.exp(-1/(x+1e-3)))*sy.exp(-x)
+%    f=1/(1+sy.exp((1-x) * 4))
+%    f1_np = sy.lambdify([x], f.diff(x), "numpy")
+%    Phi=lambda r: quad(lambda u: special.j0(Lambdav*r*np.sqrt(u)) * -f1_np(u), 0, L)[0]
+%xv=0.4431; yv=0.66413; rv=np.hypot(xv,yv)
+%print("NUMERIC vs. ANALYTIC (Phi_f)")
+%#print(c_quad(lambda qx: -1/np.pi/Lambdav**2 * np.exp(1j*xv*qx) * c_quad(lambda qy: np.exp(1j*yv*qy) * f1_np((qx**2+qy**2)/Lambdav**2), -L, L)[0], -L, L))
+%print(c_quad(lambda u: j0(Lambdav*rv*np.sqrt(u)) * -f1_np(u), 0, L))
+%print(Phi(rv))
+%print("NUMERIC vs. ANALYTIC (I_nm)")
+%#print(c_quad(lambda x: x**2 * c_quad(lambda y: Phi(np.hypot(x,y)), -L, L)[0], -L, L))
+%print(quad(lambda r: r**(2*n+2*m + 1) * Phi(r), 0, L)[0] * 2*special.beta(n+1/2, m+1/2))
+%print(-(4*np.pi/Lambda**2 * (-1)**(n+m) * f.diff(x).subs(x, (qx**2+qy**2)/Lambda**2).diff(qx,2*n).diff(qy,2*m)).subs({qx:0,qy:0,Lambda: Lambdav}).evalf())
+
+\section{Including normal-ordering}
+Giamarchi claims that it is crucial to normal-order the exponential of the slow fields before expanding.
+This means we effectively have to include the factor
+\begin{align}
+\powe{\i sb\klb*{\phi_\s(\textbf{r}_1) - \phi_\s(\textbf{r}_2)}} &= \normord{\powe{\i sb\klb*{\phi_\s(\textbf{r}_1) - \phi_\s(\textbf{r}_2)}}} \bra*{\powe{\i bs\phi_\s(\textbf{r}_1)} \powe{\i bs\phi_\s(\textbf{r}_2)}}_\s = \normord{(\dots)} \powe{b^2\Phi_\s(\textbf{r})},
+\end{align}
+where $\Phi_\s(\textbf{r}) = \bra*{\phi_\s(\textbf{r})\phi_\s(0) - \phi_\s(0)^2}_\s$.
+The slow correlator is given by
+\begin{align}
+\Phi_\s(\textbf{r}) &= \frac{K}{4\pi} \int_\s \kla*{\powe{\i\textbf{r}\cdot \textbf{q}} - 1}\frac{1}{q^2} = \frac{K}{4\pi} \intrnd{2}{ f\kla*{\frac{q^2}{\Lambda^2}} \frac{\powe{\i \textbf{r}\cdot \textbf{q}} - 1}{q^2} }{q}\\ &= \frac{K}{4\pi} \intx{0}{\infty}{ f\kla*{\frac{q^2}{\Lambda^2}} \frac{1}{q} \intx{0}{2\pi}{ \kla*{\powe{\i qr\cos\vartheta} - 1} }{\vartheta} }{q} = \frac{K}{4} \intx{0}{\infty}{ f(u) \frac{J_0\kla*{\Lambda r\sqrt{u}} - 1}{u} }{u}.
+\end{align}
+The moments that occur in the RG calculation are then generically
+\begin{align}
+I(n,m) &= \int x^{2n} y^{2m} \tilde{\Phi}(r) \powe{b^2\Phi_\s(\textbf{r})} = 2\frac{B\kla*{n+\frac{1}{2}, m+\frac{1}{2}}}{\Lambda^{2n+2m+2}} C_{2n+2m+1},
+\end{align}
+where the coefficients are defined by
+\begin{align}
+C_n &= -\intx{0}{\infty}{\intx{0}{\infty}{f'(t) J_0\kla{s\sqrt{t}} s^n \powe{b^2 \frac{K}{4} \intx{0}{\infty}{ f(u) \frac{1}{u} \klb*{J_0\kla*{s\sqrt{u}} - 1} }{u}}}{s}}{t}.
+\end{align}
+If the series converges, we can solve the integral in the exponent via
+\begin{align}
+\intx{0}{\infty}{ f(u) \frac{1}{u} \klb*{J_0\kla*{s\sqrt{u}} - 1} }{u} &= \intx{0}{\infty}{ f(u) \frac{1}{u} \sum_{k\ge 1} \frac{(-1)^k}{k!^2} \kla*{\frac{us^2}{4}}^k }{u} \\
+&= \sum_{k\ge 1} \frac{(-1)^k}{k!^2} \frac{s^{2k}}{2^{2k}} \intx{0}{\infty}{f(u)u^{k-1}}{u} = \sum_{k\ge 1} \frac{(-1)^k}{k!^2} \frac{s^{2k}}{2^{2k}} \mathcal{M}\klc*{f}(k),
+\end{align}
+where $\mathcal{M}\klc*{f}(s) = \intx{0}{\infty}{u^{s-1} f(u)}{u}$ is the Mellin transform.
+\subsection{Sharp cut-off}
+Let $f(x)=\Theta(1-x)$.
+Then the Mellin transform is $\mathcal{M}\klc*{f}(s) = \intx{0}{1}{u^{s-1}}{u} = \frac{1}{s}$.
+%Using $\sum_{n\ge 1} \frac{(-z)^n}{n!^2} = J_0(2\sqrt{z})$, the coefficients take the form
+The sum $\sum_{n\ge 1} \frac{(-z)^n}{nn!^2} = -z {}_2F_3\kla*{1,1;2,2,2;-z}$ does not reduce to a simple form; the coefficients are given by
+\begin{align}
+C_n &= \intx{0}{\infty}{J_0(s) s^n \powe{b^2 \frac{K}{4} \sum_{k\ge 1} \frac{(-1)^k}{kk!^2} \frac{s^{2k}}{2^{2k}} } }{s},
+\end{align}
+which can readily be computed numerically.
+\subsection{Smooth cut-off}
+Let $f(x) = \powe{-x}$.
+Then the Mellin transform is $\mathcal{M}\klc*{f}(s) = \intx{0}{\infty}{u^{s-1} \powe{-u}}{u} = \Gamma(s)$. 
+%x=3.555531; n=np.arange(1,500)
+%np.sum((-x)**n/n/special.gamma(n+1)), -np.log(x)-special.exp1(x)-np.euler_gamma
+Using $\sum_{n\ge 1} \frac{(-z)^n}{n n!} = -\gamma - \log(z) - E_1(z)$, the coefficients become
+\begin{align}
+C_n &= \intx{0}{\infty}{ \intx{0}{\infty}{\powe{-t} J_0(s\sqrt{t}) s^n \powe{-b^2 \frac{K}{4} \klb*{\gamma + \log\kla*{\frac{s^2}{4}} + E_1\kla*{\frac{s^2}{4}}} } }{s} }{t}\\
+&= \powe{-b^2 \frac{K}{4}\kla*{\gamma - \log(2)}} \intx{0}{\infty}{ s^{n - b^2 \frac{K}{2}} \powe{-b^2 \frac{K}{4} E_1\kla*{\frac{s^2}{4}}} \intx{0}{\infty}{\powe{-t} J_0(s\sqrt{t})}{t} }{s}\\
+&= \powe{-b^2 \frac{K}{4}\gamma} 2^{b^2 \frac{K}{4}} \intx{0}{\infty}{ s^{n - b^2 \frac{K}{2}} \powe{-b^2 \frac{K}{4} E_1\kla*{\frac{s^2}{4}}} \powe{-\frac{s^2}{4}} }{s}\\
+&= \powe{-b^2 \frac{K}{4}\gamma} 2^{n - b^2 \frac{K}{4}} \intx{0}{\infty}{ u^{\frac{n-1}{2} - b^2 \frac{K}{4}} \powe{-b^2 \frac{K}{4} E_1(u)} \powe{-u} }{u}.
+\end{align}
+%x=np.geomspace(1e-15,10,500); n=1; p=4
+%y=np.exp(-x-p*special.exp1(x))*x**(-p + (n-1)/2)
+%y2=np.exp(-x*(p+1)+p*(np.euler_gamma+x**2/4 - x**3/18))*x**((n-1)/2)
+%Using the power series for the exponential integral, we can approximate the coefficients as
+%\begin{align}
+%C_n &\approx 2^{n - p} \intx{0}{\infty}{ u^{\frac{n-1}{2}} \powe{-(p+1)u + \frac{p}{4} u^2 - \frac{p}{18}u^3} }{u},
+%\end{align}
+%where $p=b^2 \frac{K}{4}$.
+\subsection{Numeric solution}
+%K=0.8; b=2; n=3; p=b**2*K/4; L=1e2
+%def phi_s_tilde(x):
+%    k = np.arange(1,30)
+%    return np.sum((-x**2/4)**k /k/special.gamma(k+1)**2)
+%    
+%def c_n_sharp(n, K, b, L=1e2):
+%    return quad(lambda x: special.j0(x) * x**n * np.exp(b**2*K/4 * phi_s_tilde(x)), 0, L)[0]
+%def c_n_exp(n, K, b, L=1e2, exact=False):
+%    p=b**2*K/4
+%    if exact:
+%        res = quad(lambda x: x**((n-1)/2 - p) * np.exp(-x-p*special.exp1(x)), 0, L)[0]
+%        res *= np.exp(-p*np.euler_gamma) * 2**(n-p)
+%    else:
+%        res = special.gamma((n+1)/2) / (p+1)**((n+1)/2) * 2**(n-p)
+%    return res
+%Kv=np.linspace(0.3**.5, 1.8**.5, 100)**2
+%c_sharpv = [c_n_sharp(n,K,b) for K in Kv]
+%c_expv = [c_n_exp(n,K,b,exact=True) for K in Kv]
+%c_exp_appv = [c_n_exp(n,K,b) for K in Kv]
+%labels = [r"$f(x) = \Theta(1-x)$", r"$f(x) = \exp(-x)$", r"$f(x) = \exp(-x)$ (approx.)", ]
+%fig,ax=plt.subplots()
+%ax.set_title(fr"$c_{{n={n}}}(K, b={b})$")
+%for label, cv in zip(labels, [c_sharpv, c_expv, c_exp_appv]):
+%    ax.plot(Kv, cv, label=label)
+%ax.legend()
+%tlk.autoformat(ax, xlabel="$K$")
+%mpl_special.embed_labels(fig,ax)
+\section{RG Flow Equations}
+In this section, we compute the RG order by order via the cumulant expansion.
+We only consider a single sine-Gordon perturbation with coupling $g$, and thus the beta function is
+\begin{align}
+\frac{\d g}{\d l} &= \beta_g(g,K) = \beta_g^{(0)} + \beta_g^{(1)},\\
+\frac{\d K}{\d l} &= \beta_K(g,K) = \beta_K^{(0)} + \beta_K^{(1)} + \dots.
+\end{align}
+\subsection{Tree-level}
+The tree-level term is given by
+\begin{align}
+\bra*{S_b}_\f &= \frac{g}{\alpha^2} \sum_s \int \powe{\i bs\phi_\s} \bra*{\powe{\i bs\phi_\f}}_\f = \frac{g}{\alpha^2} \sum_s \int \powe{\i bs\phi_\s} \powe{-\frac{b^2}{2} \Phi_\f(0)} = \frac{g'}{g} S_{b,\s},
+\end{align}
+where $g' = g\powe{-b^2\frac{K}{4} \d l}$ since $\tilde{\Phi}(0)=1$ regardless of the cut-off function.
+In $d=2$ there is no field renormalization (the fields must be dimensionless for $\cos(\phi)$ to make sense), and rescaling the variables gives a factor of $s=\powe{\d l}$ for every spatial variable (and $\frac{1}{s}$ for every derivative).
+The effective action is $S_\text{eff}^{(0)} = S + \bra*{S_b}_\f$ and thus
+\begin{align}
+\beta_g^{(0)} &= \kla*{2 - b^2 \frac{K}{4}} g.
+\end{align}
+\subsection{One-loop corrections}
+The one-loop corrections are determined by
+\begin{align}
+\bra*{S_b^2}_\f^\c &= \frac{g^2}{\alpha^4} \sum_{s,s'} \int \powe{\i bs\phi_\s(\textbf{r}_1)} \powe{\i bs'\phi_\s(\textbf{r}_2)} \bra*{\powe{\i bs\phi_\f(\textbf{r}_1)} \powe{\i bs' \phi_\f(\textbf{r}_2)}}_\f^\c\\
+&= \frac{g^2}{\alpha^4} \sum_{s,s'} \int \powe{\i bs\phi_\s(\textbf{r}_1)} \powe{\i bs'\phi_\s(\textbf{r}_2)} \klc*{\powe{-b^2\Phi_\f(0)} \powe{-b^2ss' \Phi_\f(\textbf{r})} - \powe{-b^2 \Phi_\f(0)} }\\
+&=\frac{g^2 b^2}{\alpha^4} \frac{K}{2}\d l \sum_{s,s'} (-ss') \int \powe{\i bs\phi_\s(\textbf{r}_1)} \powe{\i bs'\phi_\s(\textbf{r}_2)} \tilde{\Phi}_\f(\textbf{r})\\
+&= \frac{g^2b^2}{\alpha^4} \frac{K}{2} \d l \sum_s \int \klc*{\powe{\i bs \klb*{\phi_\s(\textbf{r}_1) - \phi_\s(\textbf{r}_2)}} - \powe{\i bs \klb*{\phi_\s(\textbf{r}_1) + \phi_\s(\textbf{r}_2)}}} \tilde{\Phi}_\f(\textbf{r}) \equiv \textbf{I} + \textbf{II}.
+\end{align}
+This is where the assumption of a localized $\tilde{\Phi}$ comes into play.
+In order to make progress, we need to expand in terms of the relative coordinate $\textbf{r}$.
+The second term then becomes
+\begin{align}
+\textbf{II} &\simeq -\frac{g^2b^2}{\alpha^4} \frac{K}{2} \d l \sum_s \int \powe{\i 2bs \phi_\s(\textbf{R})} \tilde{\Phi}_\f(\textbf{r}) = \frac{2\pi K g^2 b^2}{(\Lambda\alpha)^2} f'(0) \d l \frac{1}{\alpha^2} \sum_s \int \powe{\i 2bs \phi_\s},
+\end{align}
+because $\int \tilde{\Phi}_\f(\textbf{r}) = -\frac{4\pi}{\Lambda^2} f'(0)$.
+This already demonstrates one of the key features of perturbative RG: Higher order terms typically spawn an entire hierarchy of new contribution.
+Although the original model only contains a single sine-Gordon term with $g\equiv g_b$, at one-loop order we generate a new term $\sim S_{2b}$.
+Let us now also talk about degrees of separation.
+At zero degrees of separation, we ignore any contributions to perturbations that, like $g_{2b}$, are not present in the original model.
+At one degree of separation, we take into account that such terms are generated, but we then disregard their feedback into the flow equations.
+This pattern continues, and after just two degrees of separation, we already have all the terms listed above.
+The reason this seldom considered, is the complexity of the result combined with its relatively insignificant contribution.
+
+The first term requires a bit more care, because we should normal-order before trying to expand the exponential.
+To do this, note that
+\begin{align}
+\prod \powe{\i A_j \phi_j} = \normord{\prod \powe{\i A_j \phi_j}} \cdot \const,
+\end{align}
+where the constant is yet to be determined.
+This structure immediately follows from repeatedly applying the Baker-Campbell-Hausdorff formula and realizing that the commutators of any $\phi_j$ are number valued (since $\phi\sim \sum b_q + b_q^\dagger$).
+Determining the constant is then straight-forward, because the expectation value of the normal-ordered product is 1.
+Consequently,
+\begin{align}
+\const &= \bra*{\prod \powe{\i A_j \phi_j}} = \powe{-\frac{1}{2} \sum A_j^2 \bra*{\phi(0)^2}} \powe{-\sum_{j<k} A_jA_k \bra*{\phi(\textbf{r}_j) \phi(\textbf{r}_k)}}.
+\end{align}
+In our case, the fields only contain slow modes and therefore both the expectation value and the normal-ordering are also with respect to the slow modes.
+For the explicit example,
+\begin{align}
+\textbf{I} &= \frac{g^2b^2}{\alpha^4} \frac{K}{2}\d l \sum_s \int \normord{\powe{\i bs \klb*{\phi_\s\kla*{\textbf{R} + \frac{\textbf{r}}{2}} - \phi_\s\kla*{\textbf{R} - \frac{\textbf{r}}{2}}}}} \powe{b^2 \bra*{\phi_\s(\textbf{r}) \phi_\s(0) - \phi_\s(0)^2} } \tilde{\Phi}_\f(\textbf{r})\\
+&\simeq \frac{g^2b^2}{\alpha^4} \frac{K}{2}\d l \sum_s\int  \normord{\powe{\i bs \textbf{r}\cdot \nabla_\textbf{R} \phi_\s(\textbf{R})}} \powe{b^2 \Phi_\s(\textbf{r}) } \tilde{\Phi}_\f(\textbf{r})\\
+&\simeq -\frac{g^2b^4}{\alpha^4} \frac{K}{2}\d l \sum_s \int \normord{\kla*{\textbf{r}\cdot \nabla_\textbf{R} \phi_\s(\textbf{R})}^2} \powe{b^2 \Phi_\s(\textbf{r}) } \tilde{\Phi}_\f(\textbf{r})\\
+&= -\frac{g^2b^4}{\alpha^4} \frac{K}{2}\d l \int \normord{\kla*{\nabla_\textbf{R} \phi_\s(\textbf{R})}^2} \int x^2 \powe{b^2 \Phi_\s(\textbf{r}) } \tilde{\Phi}_\f(\textbf{r})\\
+&= -\frac{g^2b^4}{\alpha^4} \pi K^2 \d l I(1,0) S_{0,\s}.
+\end{align}
+The contribution to the effective action is $-\frac{1}{2} \bra*{S_b^2}_\f$, i.e.
+\begin{align}
+\frac{1}{K'} &= \frac{1}{K}\kla*{1 + \frac{\pi K^2g^2b^4}{2\alpha^4} I(1,0) \d l},
+\end{align}
+which can be rewritten as ($\frac{1}{K+\d K} - \frac{1}{K} = -\frac{\d K}{K^2}$)
+\begin{align}
+\beta_K^{(1)} = -\frac{\pi K^3g^2b^4}{2\alpha^4} I(1,0).
+\end{align}
+The new sine-Gordon term gives
+\begin{align}
+\beta_{g_{2b}}^{(1)} &= -\frac{\pi K g^2b^2}{(\Lambda\alpha)^2}.
+\end{align}
+Let us now also consider the general mixed terms
+\begin{align}
+\bra*{S_{nb} S_{mb}}_\f^\c &= \frac{g_{nb} g_{mb}}{\alpha^4} \sum_{s,s'} \int \powe{\i nbs\phi_\s(\textbf{r}_1)} \powe{\i mbs'\phi_\s(\textbf{r}_2)} \bra*{\powe{\i nbs\phi_\f(\textbf{r}_1)} \powe{\i mbs' \phi_\f(\textbf{r}_2)}}_\f^\c\\
+&= \frac{g_{nb} g_{mb}}{\alpha^4} \sum_{s,s'} \int \powe{\i nbs\phi_\s(\textbf{r}_1)} \powe{\i mbs'\phi_\s(\textbf{r}_2)} \powe{-nmb^2\Phi_\f(0)} \klc*{\powe{-nmb^2ss' \Phi_\f(\textbf{r})} - 1 }\\
+&=\frac{g^2 b^2}{\alpha^4} \frac{K}{2}\d l \sum_{s,s'} (-ss') \int \powe{\i nbs\phi_\s(\textbf{r}_1)} \powe{\i mbs'\phi_\s(\textbf{r}_2)} \tilde{\Phi}_\f(\textbf{r})\\
+&= \frac{g_{nb} g_{mb} nm b^2}{\alpha^4} \frac{K}{2} \d l \sum_s \int \klc*{\powe{\i bs \klb*{n\phi_\s(\textbf{r}_1) - m\phi_\s(\textbf{r}_2)}} - \powe{\i bs \klb*{n\phi_\s(\textbf{r}_1) + m\phi_\s(\textbf{r}_2)}}} \tilde{\Phi}_\f(\textbf{r}).
+\end{align}
+Since $n\neq m$, both of these contributions are once again approximately sine-Gordon terms, i.e.
+\begin{align}
+\bra*{S_{nb} S_{mb}}_\f^\c &\simeq \frac{2\pi K g_{nb} g_{mb} nm b^2}{(\Lambda\alpha)^2} f'(0) \d l  \klc*{\frac{S_{(n+m)b,\s}}{g_{(n+m)b}} - \frac{S_{|n-m|b,\s}}{g_{|n-m|b}}}.
+\end{align}
+Note that all of these mixed terms also appear with swapped $n$ and $m$, and due to the symmetry in this example this gives an extra factor of 2.
+\subsection{Final result}
+The full flow equations are
+\begin{align}
+\frac{\d K}{\d l} &= -\frac{\pi^2 K^3g_b^2b^4}{2(\Lambda\alpha)^4} C_3 -\frac{\pi^2 K^3g_{2b}^2(2b)^4}{2(\Lambda\alpha)^4} C_3 -\frac{\pi^2 K^3g_{3b}^2(3b)^4}{2(\Lambda\alpha)^4} C_3 -\frac{\pi^2 K^3g_{4b}^2(4b)^4}{2(\Lambda\alpha)^4} C_3 + \dots,\\
+\frac{\d g_b}{\d l} &= \kla*{2 - b^2 \frac{K}{4}} g_b + 2\frac{\pi K g_{b} g_{2b} 2b^2}{(\Lambda\alpha)^2} f'(0) + 2\frac{\pi K g_{2b} g_{3b} 6b^2}{(\Lambda\alpha)^2} f'(0) + 2\frac{\pi K g_{3b} g_{4b} 12b^2}{(\Lambda\alpha)^2} f'(0) + \dots,\\
+\frac{\d g_{2b}}{\d l} &= \kla*{2 - (2b)^2 \frac{K}{4}} g_{2b} -\frac{\pi K g_b^2b^2}{(\Lambda\alpha)^2} f'(0) + 2\frac{\pi K g_b g_{3b} 3b^2}{(\Lambda\alpha)^2} f'(0) + 2\frac{\pi K g_{2b} g_{4b} 8b^2}{(\Lambda\alpha)^2} f'(0) + \dots,\\
+\frac{\d g_{3b}}{\d l} &= \kla*{2 - (3b)^2 \frac{K}{4}} g_{3b} - 2\frac{\pi K g_b g_{2b} 2b^2}{(\Lambda\alpha)^2} f'(0) + 2\frac{\pi K g_b g_{4b} 4b^2}{(\Lambda\alpha)^2} f'(0) + \dots,\\
+\frac{\d g_{4b}}{\d l} &= \kla*{2 - (4b)^2 \frac{K}{4}} g_{4b} -\frac{\pi K g_{2b}^2(2b)^2}{(\Lambda\alpha)^2} f'(0) - 2\frac{\pi Kg_b g_{3b} 3b^2}{(\Lambda\alpha)^2} f'(0) + \dots,\\
+&\vdots
+\end{align}
+with initial conditions $K=K_0$, $g_b=g$ and $g_{2b}= g_{4b} = \dots =0$.
+Clearly, despite starting with only a single coupling, we eventually have to consider infinitely many perturbations.
+However, unless the new terms are sufficiently interesting (e.g. generate new physics), it is important to note that they are less and less relevant.
+In this particular example, already $g_{2b}$ has a scaling dimension of $b^2K$, which for $b=4$ renders this irrelevant for any $K>\frac{1}{8}$ -- and Luttinger parameters typically do not take such extreme values.
+
+Nevertheless, it is insightful to analyse the patterns that emerge from these ``self-couplings''.
+Summing up all contributions, we have
+\begin{align}
+\frac{\d K}{\d l} &= -\frac{\pi^2K^3b^4}{2(\Lambda\alpha)^2} C_3 \sum_{n\ge 1} g_{nb}^2n^2,\\
+\frac{\d g_b}{\d l} &= \kla*{2 - b^2 \frac{K}{4}} g_{b} + \frac{2\pi Kb^2}{(\Lambda\alpha)^2} f'(0) \sum_{n\ge 1} g_{nb} g_{(n+1)b} n(n+1),\\
+\frac{\d g_{2b}}{\d l} &= \kla*{2 - (2b)^2 \frac{K}{4}} g_{2b} + \frac{\pi K b^2}{(\Lambda\alpha)^2} f'(0) \klc[\bigg]{-g_b^2 + 2 \sum_{n\ge 1} g_{nb} g_{(n+2)b} n(n+2)},\\
+&\vdots\\
+\frac{\d g_{mb}}{\d l} &= \kla*{2 - (mb)^2 \frac{K}{4}} g_{mb} + \frac{\pi Kb^2}{(\Lambda\alpha)^2} f'(0) \sum_{n,n'\ge 1} g_{nb} g_{n'b} nn' \klc*{ \delta_{|n-n'|,m} - \delta_{n+n',m} },
+\end{align} %\klc[\bigg]{-\sum_{n,n'\in I_m} (2 - \delta_{n,n'}) g_{nb} g_{n'b} nn' + 2\sum_{n\ge 1} g_{nb} g_{(n+m)b} n(n+m) }
+where $I_m = \klc*{(n,n')\in \mathbb{N}^2\,\vert\,n+n'=m}$.
+The expression in the final parentheses can be simplified to
+\begin{align}
+2\sum_{n> n'\ge 1} g_{nb} g_{n'b} nn' \klc*{\delta_{n-n',m} - \delta_{n+n',m}} - g_{mb/2}^2 (m/2)^2,
+\end{align}
+although the single term only exists for $m$ even.
+
+Due to the explicit $f'(0)$, this approach only works for sufficiently smooth cut-off functions.
+In particular, the sharp cut-off $f(x)=\Theta(1-x)$ once again turns out to be problematic.
+Therefore, we now limit ourselves to $f(x)=\powe{-x}$.
+Surprisingly, the influence of higher order terms is much more important than initially assumed.
+In particular, for $b=4$ the RG flow remains stable even for $K\le \frac{1}{2}$ -- despite one would TODO.
+
+%l_vals = get_l_vals()
+%couplings0 = np.array([0.1, 0, 0, 0, 1])
+%couplings = get_rg_flow(rg_beta_sg, couplings0, l_vals, args=(4,))
+%fig, ax = plt.subplots()
+%ax.plot(l_vals, couplings)
+%tlk.autoformat(ax, xlabel="$l$")
+%mpl_special.embed_labels(fig, ax)
+
+
+
+\begin{thebibliography}{9}
+\bibitem{NIST_Bessel} NIST Definite Integrals of Bessel Functions, \url{https://dlmf.nist.gov/10.22}, 30th,\,May~2024.
+\end{thebibliography}
+
+\end{document}

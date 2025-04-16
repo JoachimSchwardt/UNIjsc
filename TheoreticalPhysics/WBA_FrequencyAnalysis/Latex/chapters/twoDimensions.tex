@@ -1,0 +1,590 @@
+In section \ref{sec:ArtificialSignals} we test the WBA for artificial signals. 
+In section \ref{sec:TwoDimensionalStandardMap} we then apply both Naff and WBA to orbits from a two dimensional standard map.
+This includes the frequency analysis for different types of orbits and the application as a chaos indicator.
+\section{Artificial signals}
+\label{sec:ArtificialSignals}
+In this section we provide a proof of concept for the frequency analysis using the WBA method.
+For this we construct artificial signals with known frequencies.
+Both Naff and WBA have no difficulties with determining frequencies if the signals are pure, as in, they are constructed from a single frequency only. 
+However, the convergence behavior for two superimposed frequencies is more complicated.\\
+%As WBA are supposed to work best for irrational frequencies, we will choose the metallic ratios \cite{Mei1992}. 
+The metallic ratios \cite{Mei1992} can be defined via their continued fraction expansion
+\begin{align*}
+\varphi_n&:=[0;n,n,n,\dots], \numberthis\label{eqn:MetallicRatiosContinuedFraction}
+\end{align*}
+and are explicitly given by
+\begin{align*}
+\varphi_n&=\frac{\sqrt{n^2+4}-n}{2}. \numberthis\label{eqn:MetallicRatios}
+\end{align*} 
+The metallic ratios are the most irrational numbers and hence serve as the best case scenario for the frequency analysis with WBA according to \cite{DasYor2018}. The first two ratios $\varphi_1$ and $\varphi_2$ are also referred to as the golden and silver mean respectively. Whenever examples from the following sections require some specific values for frequencies, we will use the set
+\begin{align*}
+\left\{ {\varphi_1,\varphi_2,\frac{4}{5}} \right\}\equiv\klammer\left\{{\varphi_\tecxt\text{golden},\sqrt{2}-1,\frac{4}{5}} \right\}. \numberthis\label{eqn:GoldenSilverRational}
+\end{align*}
+Rational frequencies are expected to lead to slower convergence for WBA, such that these three values should cover the extreme cases.
+%Do this before introducing the ``physical'' context of the standard map. This could make it more readable, because we start with calculating frequencies that are intuitive.\\
+%Disadvantage: Colormaps and signals with relatively high secondary amplitudes are already quite complicated. Maybe it is enough to discuss weak amplitudes only, as they are the most similar to the 2d map. %\\
+%Alternative: Introduce the special case of $K=0$ here and only later mention that it \emph{is} a special case.
+\subsection{Pure rotations}
+\label{sec:SimplePeriodicMotion}
+We want to start with the most simple example for computing frequencies with WBA. 
+This is a pure rotation $f_\nu(q)=q+\nu\,\tecxt\text{mod}\, 1$ for $q\in [0,1)$ with a frequency $\nu\in [0,1)$, compare eqn. (\ref{eqn:PureRotation}). 
+%For this we investigate the map $f:S\rightarrow S$ with $S:=[0,1)$, that maps a $q\in S$ according to
+%\begin{align*}
+%f(q)&:=q+\nu\numberthis\label{eqn:SimpleMap}
+%\end{align*}
+%for some $\nu\in [0,1)$. 
+For any pair $(q_0,\nu)$, this rotation results in a curve defined by the set of points
+\begin{align*}
+Q_N&:=\klammer\left\{f_\nu^n(q_0)\,\middle\vert\,n=0,\dots,N-1 \right\}. \numberthis\label{eqn:SimplePeriodicOrbit}
+\end{align*}
+For irrational $\nu$, this curve is topologically equivalent to a line. 
+We can retrieve the frequency $\nu$ by applying the WBA from eqn. (\ref{eqn:WBAdefinition}) to the values $z_n:=(q_{n+1}-q_n)\, \tecxt\text{mod}\, 1$. 
+Note that for this most simple example, the weights from the WBA do not give any benefit over the normal average from eqn. (\ref{eqn:NormalAverage}). 
+This is because the information about the frequency is already fully contained in the very first pair of points, since analytically $z_n\equiv\nu$ for all $n$, and hence a standard mean of the $z_n$ would also trivially result in the correct frequency $\nu$.\\
+%If we wanted to represent this in a phase space, we could take $\nu$ as the generalized momentum $p$. 
+Panel (a) of fig. \ref{figure:SimplePeriodic} shows the orbits given by eqn. (\ref{eqn:SimplePeriodicOrbit}) for $\nu\in\left\{ {\varphi_1,\varphi_2,\frac{4}{5}} \right\}$, compare (\ref{eqn:GoldenSilverRational}) and eqn. (\ref{eqn:MetallicRatios}). 
+This plot demonstrates the qualitative difference between signals, that result from rational or irrational frequencies. 
+Here $\nu_N$ refers to the frequency calculated from the first $N$ points of a signal. 
+Shown in (b) is the convergence of Naff and WBA to the true value $\nu$. 
+For Naff, the transformation described by eqn. (\ref{eqn:MapToCircle}) is used. 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/SimplePeriodic2.png}
+\caption[Convergence of Naff and WBA for three pure rotations]{Shown in (a) are three orbits of the map from eqn. (\ref{eqn:SimplePeriodicOrbit}) for frequencies corresponding to the golden and silver mean, as well as the rational number $\frac{4}{5}$, compare to (\ref{eqn:GoldenSilverRational}). 
+The convergence of Naff (dashed lines) and WBA (solid lines) towards the true frequency $\nu$ is shown in (b). 
+Both reach machine precision after very few steps, while we observe an accumulating numerical error for WBA with larger $N$. 
+\\
+To avoid values of zero in logarithmic plots like this one, any errors are automatically limited to a minimal value of $10^{-16}$, which corresponds to the machine precision.}
+\label{figure:SimplePeriodic}
+\end{figure}
+\\
+As can be seen in panel (b) of fig. \ref{figure:SimplePeriodic}, both methods converge to machine precision within very few iterations, while we observe an accumulating numerical error for the WBA. 
+%Maybe mention that this is a special case of the standard map, or do so later on, when we get to dynamical systems.
+%\FloatBarrier
+\subsection{Mapping of oscillatory signals for WBA}
+%Idea of using the polar angle as our input to the WBA. Give a single example with pure frequency to demonstrate the method. \\
+As a second example we want to investigate oscillatory signals, which correspond to tori, as one is also interested in the frequencies of such objects. 
+We construct a signal with a frequency $\nu$ in the complex plane, that can be represented by the set of points
+\begin{align*}
+Z_N&:=\klammer\left\{z_n=R\E^{2\pi\I\nu n}\,\middle\vert\,n=0,\dots,N-1 \right\}. \numberthis\label{eqn:SimpleOscSignal}
+\end{align*}
+For irrational $\nu$, the resulting curve is then topologically equivalent to a circle. 
+Ideally the frequency analysis should be independent of the radius $R>0$. 
+Due to the complex nature of the signal, it is described by two coordinates $z_n=:q_n+\I p_n$.
+Therefore it is unclear from the previous description of WBA, what should be used for the input $h(z_n)$ to eqn. (\ref{eqn:WBAdefinition}) in this case. 
+For example, selecting either the real part $q_n$ or the imaginary part $p_n$ of $z_n$ would just give a result of zero, if the points are evenly distributed around the origin. 
+The solution is to transform the signal in a way, that yields a one dimensional coordinate describing the frequency, on which to apply the WBA. 
+One particular simple choice for such a quantity is the polar angle.
+\\
+We want the frequencies to again lie in the interval $[0,1)$, so we scale the polar angle
+\begin{align*}
+\phi_n&:=\frac{1}{2\pi}\tecxt\text{arctan2}(q_n,p_n)\numberthis\label{eqn:MapArctan2}
+\end{align*} 
+accordingly. Just as before, we are now able to extract the frequency by defining the angle differences as
+\begin{align*}
+\Delta\phi_n:=(\phi_{n+1}-\phi_n)\,\tecxt\text{mod}\,1\numberthis\label{eqn:pnFromPhiDiff}
+\end{align*} 
+and using them as the input $z_n:=\Delta\phi_n$ to the WBA. 
+As for the pure rotation from the previous section, the average of the $z_n$ again trivially gives the correct frequency, because $z_n\equiv\nu$ for all $n$. 
+Panel (a) of fig. \ref{figure:OscPeriodic} shows the signal from eqn. (\ref{eqn:SimpleOscSignal}) for the three frequencies from (\ref{eqn:GoldenSilverRational}).
+The transformation of the signals according to eqn. (\ref{eqn:MapArctan2}) is shown in (c), and the convergence behavior for Naff and WBA in (b).
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/OscPeriodic2.png}
+\caption[Convergence of Naff and WBA for three pure oscillatory signals]{Shown in (a) is the periodic signal in its native $q_n$ and $p_n$ coordinates for the three frequencies from (\ref{eqn:GoldenSilverRational}). 
+The transformed signal is shown in (c) and resembles the simple periodic motion from fig. \ref{figure:SimplePeriodic}. 
+The $r_n$ correspond to the distance from the origin, which is constant here. 
+The convergence of Naff (dashed lines) and WBA (solid lines) is shown in (b). 
+Just like before, both methods reach machine precision for very short orbits, with numerical errors accumulating for WBA.}
+\label{figure:OscPeriodic}
+\end{figure}
+\\
+Similar to the simple periodic motion from the previous section, both methods reach machine precision for very short orbits. 
+We observe the same accumulating error for the WBA as before. 
+This is a purely numerical issue originating from the sum of the weights $\sum_n w_{n,N}$, which generally strays further from the true value of one for larger $N$.
+While it will not be necessary for this thesis, the problem could be circumvented by using Kahan summation or comparable algorithms.
+%The problem could be circumvented by using Kahan summation or comparable algorithms, but would not relevant for the purpose of this thesis.
+% Try to explain why we need to apply $\Delta\phi\rightarrow (\Delta\phi + 0.5)\ \tecxt\text{mod}\ 1 - 0.5$ to get the correct results in special cases. Unfortunately, I believe this requires many examples to understand the problematic and is connected to the ``mysterious'' colormaps. Maybe attempt to keep this part short for a start and take it as a semi-postulate...
+%\FloatBarrier
+\subsection{Signals with two frequencies}
+\label{sec:SignalsWithTwoFrequencies}
+Both of the previous examples are of course merely a proof concept. We now construct more complex signals by introducing a second frequency $\nu_2$ with a relative amplitude $A<1$. We identify $\nu\equiv\nu_1$ and define the new signal as
+\begin{align*}
+Z_N&:=\klammer\left\{z_n=R\E^{2\pi\I\nu_1 n} + A\cdot R\E^{2\pi\I\nu_2 n}\,\middle\vert\,n=0,\dots,N-1 \right\}. \numberthis\label{eqn:TwoFrequencySignal}
+\end{align*}
+Since the amplitude is smaller than one, we still expect the frequency analysis to return the dominant frequency $\nu_1$. 
+Here the convergence behavior becomes interesting, because both methods need a certain number of points to reach machine precision. 
+Panel (a) of fig. \ref{figure:OscPeriodic2fA01} shows the signal from eqn. (\ref{eqn:TwoFrequencySignal}) for the three frequencies $\nu_1=\klammer\left\{{\varphi_1,\varphi_2,\frac{4}{5}} \right\}$ from (\ref{eqn:GoldenSilverRational}). 
+Here the second frequency is chosen as the bronze mean $\nu_2:=\varphi_3=\frac{\sqrt{13}-3}{2}$ from eqn. (\ref{eqn:MetallicRatios}) and the amplitude is $A=0.1$. The transformation according to eqn. (\ref{eqn:MapArctan2}) is shown in (c), and the convergence behavior of Naff and WBA in (b).
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/OscPeriodic2fA01.png}
+\caption[Convergence of Naff and WBA for three oscillatory signals with two frequencies and $A=0.1$]{Shown in (a) is the signal from eqn. (\ref{eqn:TwoFrequencySignal}) for the three frequencies  $\nu_1$ from (\ref{eqn:GoldenSilverRational}). 
+The amplitude is $A=0.1$ and the second frequency corresponds to the bronze ratio $\nu_2=\varphi_3$ from eqn. (\ref{eqn:MetallicRatios}). 
+Shown in (c) is the transformation of the signals according to eqn. (\ref{eqn:MapArctan2}), where the $r_n$ are again the distance from the origin for the $n$-th point. 
+The convergence of Naff (dashed) and WBA (solid) is shown in (b). 
+WBA shows super convergent behavior for all examples, while Naff follows the $N^{-4}$-behavior expected by \cite{BarBazGioScaTod1996}. 
+As expected in section 4.2 of \cite{DasSaiSanYor2017}, the convergence of WBA is much slower for the rational frequency.}
+\label{figure:OscPeriodic2fA01}
+\end{figure}
+\\
+Note that the accuracy of WBA is much better than that of Naff for $N\ge 10^3$, but only for the two irrational frequencies. 
+As expected in section 4.2 of \cite{DasSaiSanYor2017}, WBA takes longer to converge for rational frequencies, while Naff is even slightly faster for this particular example.
+\\ 
+The frequency analysis also works for a higher relative amplitude of $A=0.5$, which is demonstrated in fig. \ref{figure:OscPeriodic2fA05}. 
+Here the signal from eqn. (\ref{eqn:TwoFrequencySignal}) is again shown in (a), its transformation according to eqn. (\ref{eqn:MapArctan2}) in (c), and the convergence of Naff and WBA in (b). 
+%Except for the amplitude, all parameters are identical to those used for fig. \ref{figure:OscPeriodic2fA01}.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/OscPeriodic2fA05.png}
+\caption[Convergence of Naff and WBA for three oscillatory signals with two frequencies and $A=0.5$]{Shown in (a) is the signal from eqn. (\ref{eqn:TwoFrequencySignal}) for the three frequencies  $\nu_1$ from (\ref{eqn:GoldenSilverRational}). 
+The amplitude is $A=0.5$ and the second frequency corresponds to the bronze ratio $\nu_2=\varphi_3$ from eqn. (\ref{eqn:MetallicRatios}). 
+Shown in (c) is the transformation of the signals according to eqn. (\ref{eqn:MapArctan2}), where the $r_n$ are again the distance from the origin for the $n$-th point. 
+The increase in $A$ results in a slightly slower convergence for all methods, compared to fig. \ref{figure:OscPeriodic2fA01}. 
+The differences resulting from Naff appear merely shifted, while the qualitative behavior of WBA for the orange example changes significantly. 
+Both methods still reach machine precision for all three examples within $2^{14}$ iterations.}
+\label{figure:OscPeriodic2fA05}
+\end{figure}
+Notice that the differences $|\nu-\nu_N|$ from Naff in (b) appear to be solely shifted by a constant factor in the logarithmic plot, while the qualitative behavior of WBA for the orange line changes significantly. 
+Regardless of the higher amplitude, both methods still reach machine precision within $2^{14}$ iterations.
+\\
+% Colormaps for visualizing a more thorough analysis of the convergence behavior of WBA and Naff (diagonal lines are still hard to explain, maybe we highlight that the convergence is good for the majority of cases. were the ``bad'' signals resonant anyways?).\\
+%There are also deformed (stretched/squished) signals..
+%On the other hand, this makes a connection to the 4d map difficult, where we do indeed encounter the ``fuzzy'' looking orbits that originate from the two-frequency signals
+Only looking at specific frequencies gives a good impression of the overall behavior of both methods.
+But to get a more complete picture, we can systematically check the convergence for a grid of frequency pairs $(\nu_1,\nu_2)$.
+This results in regions, where the WBA method is apparently unable to detect the correct frequencies. 
+The explanation of this phenomenon is given in section \ref{sec:WBAforDualFrequencySignals} of the appendix in much more detail. 
+Regardless, we still want to look at an example to outline the problem. 
+The input $\Delta\phi_n$ to the WBA, computed from eqn. (\ref{eqn:pnFromPhiDiff}), is shown in fig. \ref{figure:OscPeriodic2fA05PhiDiff} as a function of the angles $\phi_n$. 
+The blue curve corresponds to the frequencies $\nu_1=\sqrt{2}-1$ and $\nu_2=\frac{1}{8}$ with an amplitude of $A=0.5$. 
+For the orange curve, the frequencies were swapped, whilst leaving the amplitude unchanged.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/OscPeriodic2fA05PhiDiff.png}
+\caption[Angle differences for two dual frequency signals after modulo operation]{Angle differences from eqn. (\ref{eqn:pnFromPhiDiff}) as a function of $\phi_n$. Once for $\nu_1=\sqrt{2}-1$ and $\nu_2=\frac{1}{8}$ in blue, and with swapped frequencies in orange, both for an amplitude of $A=0.5$. Notice how the orange curve is visually split into a part near the bottom and one near the top. For this curve, the frequency analysis with WBA fails.}
+\label{figure:OscPeriodic2fA05PhiDiff}
+\end{figure}
+\\ 
+%Using one rational frequency leads to a periodic pattern, that makes the difference between the signals more evident.
+The important observation is, that the correct frequency $\nu_1$ is only found in the first case. In general, WBA works if and only if the signal $\Delta\phi_n$ as a function of $\phi_n$ is in ``one piece'', like the blue one. 
+We use one rational frequency for fig. \ref{figure:OscPeriodic2fA05PhiDiff}, because it leads to a periodic pattern, which makes it easier to see, how the orange signal is split into two parts.
+\\
+It is still possible to use WBA in these problematic cases. 
+The idea behind our solution is to shift the $\Delta\phi_n$ by 1, if their difference to a reference point $\Delta\phi_m$ for a fixed index $m$ is larger than $\frac{1}{2}$.
+%The idea behind our solution is to shift the portion where $\Delta\phi_n<\frac{1}{2}$ by 1, i.e. 
+%\begin{align*}
+%\Delta\phi_n&\longrightarrow\Delta\phi_n + 1&\forall n:\ \Delta\phi_n<\frac{1}{2}.\numberthis\label{eqn:ShiftDeltaPhin}
+%\end{align*}
+Visually it should be clear from fig. \ref{figure:OscPeriodic2fA05PhiDiff} how this would move the two parts of the orange curve back together. 
+%Since eqn. (\ref{eqn:ShiftDeltaPhin}) would also result in splitting the blue signal, it can only applied, if an additional condition is met. 
+%It turns out to be sufficient, to only apply the transformation, if 
+%\begin{align*}
+%\exists n,m:\ \kla\left( {\Delta\phi_n<\frac{1}{4}} \right)\ \land\ \kla\left( {\Delta\phi_m>\frac{3}{4}} \right)\numberthis\label{eqn:ShiftDeltaPhinCondition}
+%\end{align*}
+The motivation and some more technical details are also discussed in section \ref{sec:WBAforDualFrequencySignals} of the appendix.
+\\
+With this solution at hand, we will now take a look at the convergence of Naff and WBA for a grid of frequency pairs. 
+Consider the accuracy $|\nu_1-\nu_N|$ of the frequency calculation for a signal of length $N$, where the second frequency $\nu_2$ has a relative amplitude of $A$. This accuracy is shown in fig. \ref{figure:OscPeriodic2fA05Grid} for Naff and WBA, each for $N=1024$ and $N=4096$. 
+%Note that Naff does not require any further transformations here, whereas eqn. (\ref{eqn:ShiftDeltaPhin}) was applied to each signal, with the condition from eqn. (\ref{eqn:ShiftDeltaPhinCondition}), to get correct results for WBA.
+Note that Naff does not require any further transformations here.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/OscPeriodic2fA05Grid.png}
+%\begin{tabular}{ll}
+%\includegraphics[width=.5\linewidth]{pictures/OscPeriodic2fA05GridN10WBA.png}&
+%\includegraphics[width=.5\linewidth]{pictures/OscPeriodic2fA05GridN10Naff.png}\\
+%\includegraphics[width=.5\linewidth]{pictures/OscPeriodic2fA05GridN12WBA.png}&
+%\includegraphics[width=.5\linewidth]{pictures/OscPeriodic2fA05GridN12Naff.png}\\
+%\end{tabular}
+\caption[Colormap of the convergence of Naff and WBA for dual frequency signals]{The color value corresponds to the precision of the frequency analysis with Naff and WBA for signals from eqn. (\ref{eqn:TwoFrequencySignal}) with two frequencies $\nu_{1,2}$, length $N$ and a relative amplitude of $A=0.5$. 
+The step sizes for $\nu_{1,2}$ are both equal to $\delta:=\frac{\varphi_\tecxt\text{golden}}{180}$, which results in about 300 values. 
+The smallest frequency is $\frac{\delta}{2}$, and thus all $\nu_{1,2}$ are irrational and should give the best results for WBA.}
+\label{figure:OscPeriodic2fA05Grid}
+\end{figure}
+\\
+The frequency pairs are all chosen to be irrational, to give the best result for WBA. 
+This is done by using an irrational step size $\delta:=\frac{\varphi_\tecxt\text{golden}}{180}$ and an initial frequency pair with $\nu_{1,2}=\frac{\delta}{2}$. 
+The resulting grid size is about $300\times 300$.
+Since the pattern of diagonal lines, which correspond to slow convergence, shows up for both methods, it is most likely due to the nature of the signals themselves. 
+They seem to occur when $|\nu_1-\nu_2|$ is near a rational number. 
+%This is most prominent when the frequencies get very close to one another, i.e.
+The formation of sharp lines is due to the equal step sizes.
+They can be avoided by choosing slightly different step sizes, but this results in a blurred picture, which does not provide further insights.
+\\ %: citation needed / more elaborate / or just leave out? This is just meant as a side note, although there is most likely half a bachelor thesis lurking in here... : the following part?\\
+WBA is at least as good as Naff for the artificial signals from eqn. (\ref{eqn:TwoFrequencySignal}), which is demonstrated in fig. \ref{figure:OscPeriodic2fA05Grid}. 
+We can make a quantitative statement about the average rate of convergence in the following way.
+Let $\nu$ be the true frequency and $\nu_N$ the result of a frequency analysis for the first $N$ points of the signal. Then we can define the number of correct digits as
+\begin{align*}
+\tecxt\text{dig}_N&:=-\log_{10}|\nu-\nu_N|\numberthis\label{eqn:digitN}.
+\end{align*}
+The average of these numbers of digits of precision can be used to measure the overall convergence for the four cases from fig. \ref{figure:OscPeriodic2fA05Grid}. 
+The numerical results are listed in table \ref{table:digitNforOscPeriodicGrid}. 
+They show that the average convergence of WBA is significantly faster than that of Naff. 
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c}
+$N$&1024&4096\\ \hline
+WBA&11.9&14.8\\ \hline
+Naff&10.0&12.4\\
+\end{tabular}
+\caption{Averages of the numbers of digits of precision from eqn. (\ref{eqn:digitN}) for the four different cases from fig. \ref{figure:OscPeriodic2fA05Grid}.}
+\label{table:digitNforOscPeriodicGrid}
+\end{table} \\
+Phrased differently, the precision reached by WBA for $N=1024$ is comparable to that of Naff for $N=4096$.
+%Average digits of precision are  
+%WBA: 11.857134155735935 & 14.786757679228488
+%Naff: 10.01266044465857 & 12.430541912913451
+This concludes our analysis of artificial signals, such that we can now apply WBA in a more physical model.
+\FloatBarrier
+\section{Two dimensional standard map} 
+\label{sec:TwoDimensionalStandardMap}
+%The standard map is a limiting case of many dynamical system (CITATION), and as such a good starting point for providing a proof of concept. 
+In this section we will use the WBA method to compute frequencies of signals from a two dimensional standard map, and compare the results to the Naff.
+\subsection{Definition of the map}
+\label{sec:DefinitionOfThe2DMap}
+We use Chirikov's standard map with $q\in [0,1)$, $p\in \mathbb{R}$ and kicking strength $K$ from section 5 of \cite{Chi1979}. 
+It can be defined via a mapping $f:M\rightarrow M$, which iterates an initial condition $z_0=(q_0,p_0)$ according to the set of equations
+\begin{align*} 
+q_{n+1}&=q_{n}+p_{n},\\
+p_{n+1}&=p_{n}+\frac{K}{2\pi}\sin (2\pi q_{n+1}). \numberthis\label{eqn:Definition2DMap}
+\end{align*}
+An orbit of length $N$ is then given by the set of points $Z_N :=\{f^n(z_0)\,\vert\,n=0,\dots,N-1\}\subset M$.
+\\ 
+In this definition we already set $M:=[0,1)\times\mathbb{R}$. 
+%Some annotations about numerical intricacies that arose using different variants of the map:\\
+However, there are a few variants to consider, which are mathematically equivalent, but show some numerical distinctions.\\
+We obtain the torus map by using periodic boundary conditions in both $q$ and $p$. 
+A possible representation is $(q,p)\in [0,1)\times \left[-\frac{1}{2},\frac{1}{2}\right)$. 
+This is the variant we will use for visualizing the orbits, but it is inconvenient for the frequency analysis with WBA. 
+Extracting the frequency from the $p$-values leads to problems with orbits, that wrap around the periodic boundary. 
+We can also calculate the frequency from the differences of the $q$ coordinates, since $p_n=q_{n+1}-q_n$. 
+However, due to the periodic boundary in $q$, this would require taking the modulus of each $p_n$, as was the case for the pure rotations.
+But this approach would lead to non-zero frequencies for oscillatory orbits.
+\\
+Using the lift in $q$, i.e. defining $q\in\mathbb{R}$ instead of $q\in [0,1)$, removes the need for modulo operations when trying to extract the frequency from the $q$ coordinates with WBA. 
+The caveat is, that this leads to large $q$-values for rotational circles.
+For short orbits this would not be an issue, but for every digit that is needed to keep track of the integer part of $q_n$, we lose precision on the fractional part. 
+This leads to a total error, that depends on the maximal size of $q$.
+It is therefore also coupled to the frequency of an orbit, because higher frequencies generally lead to larger $q$ values. 
+Since the loss of precision is scaling with the length of the orbit, this is not a good option.
+\\
+%Contrary to the $q$-lift, the $p$-values do not become arbitrarily large. 
+Our convention of using the lift in $p$ instead of $q$ leads to the cylinder map.
+Contrary to the torus map, we can easily extract the frequency from the $p$ coordinates, since the periodic boundary is removed. 
+The disadvantage is in principal similar to that of the $q$-lift, as we also lose precision for larger $p$ values. 
+But due to the nature of our map, this is not an issue, because regular orbits do not reach arbitrarily large $p$.
+In many cases, they do not even reach absolute values significantly larger than one, which avoids the loss of precision in the last digits. 
+%Note that it is mandatory to apply the modulus to the $q$ values in every step of iteration instead of doing so only at the very end, as this would lead to the same numerical problem as the $q$ lift itself.\\
+%Define the 2d standard map and put the used convention into context of WBA by listing advantages and disadvantages (torus, cylinder in $q$ or $p$, plane). We use after kick map, is that for convenience as well, does it simplify something numerical later? If not -- whatever...%\\
+%Explain what exactly is meant by ``frequency'' in this context. Maybe do that in the following subsection with the rational example at hand. Might be more elegant, as that gives a visual explanation. 
+%\subsection{Orbits for $K=0$}
+%Ideal case for WBA and therefore a good starting point. Show a rational and irrational orbit. The former provides an intuition about the frequency of an orbit, the latter gives a first rotational invariant curve (circle?).\\
+%These are more or less also artificial signals. Either be brief here, or move it to the previous section altogether, which would require a bit of restructuring.
+\subsection{Orbits for small kicking strength}
+The case of $K=0$ leads to dynamics identical to the pure rotations from eqn. (\ref{eqn:PureRotation}) and fig. \ref{figure:SimplePeriodic}. 
+As we already know that WBA and Naff work in that case, we will now increase the kicking strength and look at different types of orbits in our standard map. 
+For this we use the same convergence $|\nu-\nu_N|$ as in the previous section, only this time the true frequency $\nu$ is unknown. 
+Each method will be compared to its own limit, defined as $\nu:=\nu_{N_\tecxt\text{max}}$ with $N_\tecxt\text{max}=2^{14}$.
+Another variant would be to define a limit for both methods from either Naff or WBA. 
+However, this introduces an inaccurate representation of the convergence of one of the methods, whenever the limit given by the other one deviates significantly.%\\
+%: Naff as limit, WBA as limit, or each method as their own limit? I would prefer a single variant here, at the moment it is the last one.
+\subsubsection{Rotational invariant circles and island chains}
+%These orbits make up the majority of phase space for small $K$. 
+For small $K$, the dynamics of Chirikov's standard map can be categorized into periodic orbits with rational frequencies, referred to as island chains, and quasi-periodic orbits with irrational frequencies. 
+The latter are rotational invariant circles and fill out curves in $q$ direction, i.e. $(q_n)_{n\in\mathbb{N}}$ is dense in $[0,1)$. 
+These objects are invariant under further iteration with the map $f$ and separate the phase space, i.e. trajectories can not cross them.
+%At $K=0$ these make up the majority of phase space, as every irrational initial condition $p_0$ gives rise to such an object. 
+%The KAM theorem ensures, that some of these tori survive for sufficiently small perturbations. 
+%In practice the theorem often holds for stronger perturbations as well CITATION.
+%The Poincaré-Birkhoff theorem states, that the tori with near rational frequency break up into chains of alternating elliptic and hyperbolic fixed points CITATION.
+The higher the perturbation, the more invariant circles break up and give rise to island chains and chaotic dynamics. 
+The last rotational invariant circle is broken around $K\approx 0.971$ and has a frequency corresponding to the golden mean \cite{Gre1979}.
+\\
+%According to KAM, the most stable tori are those with the most irrational frequencies. This means that the approximation with a sequence of rational numbers is slow, i.e. the denominator of such an approximation must be relatively large (). The golden mean is the most irrational number, which is why the corresponding torus is the last to be destroyed at a critical value of $K_\tecxt\text{crit}\approx 0.971$ (). %Rotational because not oscillatory (pendulum doing full turns with a certain frequency, instead of oscillating back and forth), invariant because invariant under further iteration of the standard map, circle because convention?
+Shown in panel (a) of fig. \ref{figure:Rot2DK07} are two rotational invariant circles and an island chain for $K=0.7$ and $N=1024$. 
+The initial conditions are chosen, such that the frequencies are close to the golden and silver mean, as well as the rational frequency $\frac{4}{5}$ from (\ref{eqn:GoldenSilverRational}). 
+The convergence of Naff and WBA is shown in (b). 
+The signals for the Naff are transformed according to eqn. (\ref{eqn:MapToCircle}), while the standard input of $p_n$ to eqn. (\ref{eqn:WBAdefinition}) is used for the WBA method.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/Rot2D_K07.png}
+\caption[Convergence of Naff and WBA for three rotational circles of the two dimensional standard map]{Shown in (a) are three orbits with frequencies close to the golden and silver mean, as well as a rational frequency. 
+The convergence of Naff and WBA to their respective limit $\nu:=\nu_{N_\tecxt\text{max}}$ with $N_\tecxt\text{max}=2^{14}$ is shown in (b). 
+The convergence of WBA is at least as good as that of Naff.}
+\label{figure:Rot2DK07}
+\end{figure}\\
+In accordance with \cite{DasSaiSanYor2017}, the convergence of WBA for the rational frequencies of island chains is slower than for the irrational frequencies. 
+Interestingly, this is also the case for Naff.
+%Here the examples for the latter were equal to the golden and silver mean respectively, up to a small error. 
+%\subsubsection{Island chains}
+%Same idea for island chains (2,3,4 period islands maybe). : This might not be necessary, if the island from fig. \ref{figure:Rot2DK07} is enough. I'm not sure what I would write about the island chains 
+\subsubsection{Oscillatory circles}
+Oscillatory circles may originate from initial conditions close to the elliptic fixed point $(q,p)_\tecxt\text{E}:=(\frac{1}{2},0)$. 
+They correspond to oscillatory dynamics in position space. 
+Applying the WBA to $p_n$ would yield $\nu=0$. 
+Numerically, this is because the orbits are symmetric with respect to the fixed point, and therefore have an average $p$ of zero.
+The physical explanation is based on the representation as a pendulum. 
+In the rotational case, we compute the frequency based on the rate, at which such a pendulum makes a full revolution. 
+For the oscillatory circles, this pendulum is confined to a subset of the possible angles, and therefore never completes a full turn, which corresponds to a frequency of zero.
+\\
+These orbits are topologically equivalent to circles, rather than lines like the rotational invariant circles. 
+So instead of computing the WBA of the $p_n$, we again make use of the polar angles from our transformation in eqn. (\ref{eqn:MapArctan2}), and apply the WBA to the angle differences.
+Meanwhile we can use the original signal $z_n=q_n+\I p_n$ for Naff.
+Panel (a) of fig. \ref{figure:Osc2DK07} shows three oscillatory circles, and panel (b) shows the convergence of Naff and WBA. 
+%In order to compute the frequencies with WBA, we use the transformation described by eqn.  (\ref{eqn:MapArctan2}). 
+%Meanwhile Naff is applied to the original signal $z_n:=q_n+\I p_n$. 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/Osc2D_K07.png}
+\caption[Convergence of Naff and WBA for three oscillatory circles of the two dimensional standard map]{Shown in (a) are three oscillatory circles, one with rational frequency. 
+The convergence of both Naff and WBA to their own limit $\nu:=\nu_{N_\tecxt\text{max}}$ with $N_\tecxt\text{max}:=2^{14}$ as a function of the orbit length $N$ is shown in (b). 
+The convergence for the rational frequency is again significantly slower for both methods. 
+WBA is at least as good as Naff for all examples.}
+\label{figure:Osc2DK07}
+\end{figure}
+\\
+Just like for the rotational circles, the convergence for the rational frequency is worse than that for the irrational ones. \\
+So far the results from WBA prove to be at least as good as Naff -- and mostly better around $N\ge 10^3$ --, while being much easier to compute. 
+After getting a first impression of the different types of orbits, we will now look into some applications.
+\subsubsection{Frequency along a vector}
+%Frequency along a vector. One example going through a 3 island and one through a chaotic layer, showing how the frequencies are mostly contained in the small interval between the rotational curves.\\
+We now want to understand how the frequency computed with Naff and WBA changes, when the initial conditions are continuously varied along a curve in phase space.
+For a simple example, it is sufficient to choose a straight line for this curve, by specifying the start and end point. 
+Panels (a) and (b) of fig. \ref{figure:FreqAlongVectorK09N12Nt1000} show how the frequency from Naff and WBA varies from $p=0.25$ to $p=0.3$ for $q=0.71$ and $q=0.76$, respectively.
+Both lines are parameterized by 1000 equidistant values $t\in [0,1]$, and we use the parameters $N=4096$ and $K=0.9$ for the map.
+A magnification of the respective region in phase space is shown in an inset of (a).
+Shown in (c) and (d) is the difference between the frequencies calculated from Naff and WBA for (a) and (b), respectively.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/FreqAlongVectorK09N12Nt1000_025to030v2.png}
+\caption[Frequency of Naff and WBA along a line in phase space]{The frequency calculated from Naff and WBA for initial conditions along a straight line from $p=0.25$ to $p=0.3$ is shown for $q=0.71$ in (a) and $q=0.76$ in (b), with $K=0.9$. 
+Both lines are parameterized by 1000 equidistant values $t\in [0,1]$.
+The inset in (a) is a magnification of the respective region of phase space.
+Shown in (c) and (d) are the differences between the frequencies calculated from Naff and WBA for (a) and (b), respectively. 
+The logarithmic scale is chosen to highlight the strong agreement in certain regions.}
+\label{figure:FreqAlongVectorK09N12Nt1000}
+\end{figure}
+\\
+In this region of phase space there are no oscillatory circles, thus the signals for Naff are again transformed using (\ref{eqn:MapToCircle}).
+\\
+Notice how especially in fig. \ref{figure:FreqAlongVectorK09N12Nt1000} (b) there appear gaps in the partially continuous curve $\nu(t)$ near horizontal sections, e.g. around $t\approx 0.4\dots 0.7$, which correspond to island chains, where a multitude of orbits have the same frequency. 
+%For comparison, in two dimensions eqn. (\ref{eqn:ResonanceCondition}) becomes equivalent to the condition for a rational number.
+%Therefore the island chains of our two dimensional map correspond to the resonant tori, and fig. \ref{figure:FreqAlongVectorK09N12Nt1000} showed, that there were indeed no regular tori with frequencies sufficiently close to that of a nearby island chain. KAM theorem?!
+There is a direct correspondence of large differences in the frequencies from Naff and WBA to $t$ values, where $\nu(t)$ is discontinuous. 
+Here the dynamics are chaotic, and hence the orbits do not have a well defined frequency, which leads to the discrepancy between the methods. 
+This demonstrates, how the rotational invariant circles are broken to give rise to both island chains and chaotic dynamics.
+While this is of course also apparent from the structure in phase space, the frequencies provide a more succinct representation, as they can be expressed with a single quantity.
+The advantage is less evident in a two dimensional setting, because we still use some additional coordinate to visualize the frequency, in this case the parameter $t$.
+\\
+For this example Naff and WBA again yield very similar results. 
+The only qualitative difference becomes apparent in the chaotic layers, where the frequencies from Naff appear to form thin bands, whereas the WBA results stray more uniformly. 
+But more importantly, for both methods the frequencies are mostly contained in between those of nearby regular tori.
+As such, tori that are close in phase space, are also relatively close in frequency space.
+%\FloatBarrier
+\subsection{WBA as a chaos indicator}
+Another application of frequency analysis is to quantify chaotic motion.
+Large differences between the frequencies of Naff and WBA seem to coincide with chaotic regions in phase space, see fig. \ref{figure:FreqAlongVectorK09N12Nt1000}, which can be used as a motivation for the following definition.
+The idea is to divide an orbit into two halves, and to use the difference of the frequencies from each part as an indication for chaotic dynamics. 
+%This can be done by defining a critical value, e.g. $\Delta\nu_\tecxt\text{c}:=10^{-5.5}$ in \cite{SanMei2020}.\\
+To formalize this, consider an orbit of length $2N$ and let $\nu_{[k,l]}$ be the frequency calculated from the points with indexes $n\in [k,l]\subset\mathbb{N}$. 
+Then for the limit of $N\rightarrow\infty$, the difference of frequencies
+\begin{align*}
+\Delta\nu (N) &:=|\nu_{[0,N-1]}-\nu_{[N,2N-1]}| . \numberthis\label{eqn:DeltaNu2N2}
+\end{align*} 
+should vanish for regular periodic trajectories.
+The WBA is expected to be particularly sensitive to chaotic dynamics, due to its slow convergence for irregular orbits \cite{DasSaiSanYor2017}.
+In general, the convergence is not faster than that of an unweighted average of a random signal, which is of order $\mathcal{O}(N^{-1/2})$ \cite{SanMei2020}. 
+\\
+Since $\Delta\nu (N)$ only yields some numerical value, this method would still require an external criterion in the form of a threshold to differentiate between chaotic and regular dynamics. %For WBA a possible choice is $\Delta\nu (N)>10^{-5.5}$, as presented in \cite{SanMei2020}.
+However, in this section such a criterion is not explicitly required.
+\\
+We want to compare three different chaos indicators.
+The first is the application of eqn. (\ref{eqn:DeltaNu2N2}) for frequencies obtained from the WBA of $p_n$. 
+The second method also calculates the WBA from eqn. (\ref{eqn:WBAdefinition}), but for the input $\cos (2\pi q_n)$. 
+While this is not related to a difference of frequencies, it can still be used in place of $\nu$ in eqn. (\ref{eqn:DeltaNu2N2}) to yield a chaos indicator, and was suggested in \cite{SanMei2020}. 
+This will be referred to as the $\cos$-method for WBA. 
+Lastly, the third method is the application of eqn. (\ref{eqn:DeltaNu2N2}) for frequencies from Naff.
+\\
+The figures \ref{figure:ChaosGrid2DK09WBA}, \ref{figure:ChaosGrid2DK09cos} and \ref{figure:ChaosGrid2DK09Naff} show the result of these three methods applied to our standard map. 
+Here (a) and (c) visualize $\Delta\nu (N)$ for $N=1024$ and $N=4096$ using color. 
+The initial conditions are taken from an evenly space grid of $500\times 500$ points. 
+Shown in (b) and (d) are histograms of the color values from (a) and (c) respectively.
+The resulting shapes allow for a more detailed comparison of the methods.
+%The values from eqn. (\ref{eqn:DeltaNu2N2}) are automatically bounded from below by $10^{-16}$.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/ChaosGrid2D_K09WBA.png}
+%\begin{tabular}{ll}
+%\includegraphics[width=.5\linewidth]{pictures/ChaosGrid2D_K09_N10WBA.png}&
+%\includegraphics[width=.5\linewidth]{pictures/ChaosGrid2D_K09_N10WBA_hist.png}\\
+%\includegraphics[width=.5\linewidth]{pictures/ChaosGrid2D_K09_N12WBA.png}&
+%\includegraphics[width=.5\linewidth]{pictures/ChaosGrid2D_K09_N12WBA_hist.png}\\
+%\end{tabular}
+\caption[Colormap of the chaos indicator based on frequency differences with WBA]{The color value in (a) and (c) corresponds to the chaos indicator from eqn. (\ref{eqn:DeltaNu2N2}) for frequencies calculated with the WBA of $p_n$. 
+The initial conditions are taken from an evenly spaced grid of $500\times 500$ points. 
+The histograms in (b) and (d) show the number of initial conditions, whose chaos indicator lies in the respective bin.
+For this method with $N=4096$, the machine precision of $10^{-16}$ is not sufficient to fully represent the histogram.
+This can be seen by the sharp spike, that originates from automatically limiting the results from eqn. (\ref{eqn:DeltaNu2N2}) to machine precision.}
+\label{figure:ChaosGrid2DK09WBA}
+\end{figure}
+\\ %\FloatBarrier
+Using the frequencies from WBA for $p_n$ in eqn. (\ref{eqn:DeltaNu2N2}) gives very sharp results, especially in the case of orbit lengths $N=4096$. 
+The large peak close to $10^{-16}$ does not appear for the other two methods, and is an artifact of the limited machine precision.
+%At a higher resolution, this peak would most likely again be stretched out over several orders of magnitude. 
+%It originates from automatically limiting the result of eqn. (\ref{eqn:DeltaNu2N2}) to machine precision.
+With increased precision one should again get a more natural distribution in the histogram, i.e. broader peaks.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/ChaosGrid2D_K09cos.png}
+%\begin{tabular}{ll}
+%\includegraphics[width=.5\linewidth]{pictures/ChaosGrid2D_K09_N10cos.png}&
+%\includegraphics[width=.5\linewidth]{pictures/ChaosGrid2D_K09_N10cos_hist.png}\\
+%\includegraphics[width=.5\linewidth]{pictures/ChaosGrid2D_K09_N12cos.png}&
+%\includegraphics[width=.5\linewidth]{pictures/ChaosGrid2D_K09_N12cos_hist.png}\\
+%\end{tabular}
+\caption[Colormap of the chaos indicator from the cos-method with WBA]{The color value in (a) and (c) corresponds to the chaos indicator from eqn. (\ref{eqn:DeltaNu2N2}) for values of $\nu$ calculated with the WBA of $\cos(2\pi q)$. 
+The initial conditions are taken from an evenly spaced grid of $500\times 500$ points. 
+The histograms in (b) and (d) show the number of initial conditions, whose chaos indicator lies in the respective bin.}
+\label{figure:ChaosGrid2DK09cos}
+\end{figure}\\ %\FloatBarrier
+The $\cos$-method from \cite{SanMei2020} leads to slightly faster convergence of $\Delta\nu (N)$ for some of the island chains than the first method, but only for $N=1024$.
+This is apparent from the comparison of the histograms fig. \ref{figure:ChaosGrid2DK09WBA} (b) and fig. \ref{figure:ChaosGrid2DK09cos} (b), as the small peak around $\Delta\nu\approx 10^{-14}$ is only visible for the cos-method.
+%This can be seen in the comparison of the color plots %in fig. \ref{figure:ChaosGrid2DK09WBA} (a) and fig. \ref{figure:ChaosGrid2DK09cos} (a), which can be seen in the smaller peaks of the histogram in fig. \ref{figure:ChaosGrid2DK09cos}. 
+However, for the case of $N=4096$ the distinction between chaotic and regular dynamics is much more decisive for the first method, as can be seen in the histograms (d) of both figures. 
+Hence, using the frequencies from WBA in eqn. (\ref{eqn:DeltaNu2N2}) seems to provide a slightly better method.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/ChaosGrid2D_K09NaffMTC.png}
+%\begin{tabular}{ll}
+%\includegraphics[width=.5\linewidth]{pictures/ChaosGrid2D_K09_N10Naff.png}&
+%\includegraphics[width=.5\linewidth]{pictures/ChaosGrid2D_K09_N10Naff_hist.png}\\
+%\includegraphics[width=.5\linewidth]{pictures/ChaosGrid2D_K09_N12Naff.png}&
+%\includegraphics[width=.5\linewidth]{pictures/ChaosGrid2D_K09_N12Naff_hist.png}\\
+%\end{tabular}
+\caption[Colormap of the chaos indicator based on frequency differences with Naff]{The color value in (a) and (c) corresponds to the chaos indicator from eqn. (\ref{eqn:DeltaNu2N2}) for frequencies calculated with Naff. 
+The transformation on to a circle via eqn. (\ref{eqn:MapToCircle}) is used for all initial conditions on an evenly spaced grid of $500\times 500$ points. 
+The histograms in (b) and (d) show the number of initial conditions, whose chaos indicators lie in the respective bin.}
+\label{figure:ChaosGrid2DK09Naff}
+\end{figure}\\ %\FloatBarrier
+In comparison to either WBA method, the histogram from Naff in fig. \ref{figure:ChaosGrid2DK09Naff} (d) demonstrates, that WBA is a more efficient chaos indicator.
+This can be seen by the broad peak at a much larger $\Delta\nu\approx 10^{-11}$, as opposed to $\Delta\nu\approx 10^{-14}$ for the cos-method, or the respective peak for WBA with $p_n$, that hypothetically has a mean of $\Delta\nu \ll 10^{-16}$. 
+Hence, the results from Naff are less decisive, relative to the used orbit lengths. 
+\FloatBarrier
+\subsection{Frequency of trapped orbits}
+In this section we want to apply frequency analysis for chaotic orbits, that show quasi-regular dynamics on certain time scales.
+This corresponds to orbits, that are trapped near regular regions of phase space for an extended period of time.
+In the previous sections we found, that we generally need at least $10^3$ points to achieve reasonable precision for both Naff and WBA.
+In order to compute a time-dependent frequency, the orbits therefore need to be significantly longer than this.
+%Therefore, we need to find orbits that get trapped for significantly more iterations than these 1024 to assign a time
+%In this section we will analyze sticky chaotic orbits. 
+%These orbits mimic regular dynamics, thus it is possible to assign numerical values for their frequency. 
+%Although these do not have a well defined frequencies in the limit of large lengths $N$, trapped chaotic orbits mimic regular dynamics, which enables us to assign numerical frequencies. \\
+%In the previous sections we found, that we need at least of the order of 1024 points to achieve reasonable precision with Naff and WBA. 
+%To compute a time-dependent frequency of such an orbit, it has to be significantly longer.
+\\
+The underlying idea to find such trapped orbits are Poincaré recurrence statistics for a large number of orbits started from a chaotic region of phase space. 
+Every initial condition is iterated until it returns to this starting region. 
+The relative number of orbits, that have not returned after $t$ steps of iteration, is defined as $P(t)$. 
+By definition we have $P(0)=1$ and $P$ monotonically decreasing. 
+For mixed phase spaces with regular and chaotic dynamics, we expect $P$ to follow a power-law \cite{ChaLeb1980,HanCarMei1985,BauBer1990,WeiHufKet2002,FirLanKetBae2018}.
+\\
+%In purely chaotic phase spaces, $P$ decays exponentially.
+A consequence of the power-law decay is the existence of ``trapped'' orbits with a long recurrence time. 
+Here ``long'' is relative to the maximal recurrence time of the same total number of initial conditions in a highly chaotic phase space. 
+This is because such phase spaces show an exponential decay of $P(t)$, and therefore generally have shorter orbits \cite{BauBer1990,HirSauVai1999}. 
+\\
+As we have thus far only calculated a single frequency for an orbit, we need to define, what we mean by time-dependence in this context.
+%So far we have always calculated one frequency for a full orbit. 
+%Since the length of these trapped orbits can become significantly longer than is necessary for an accurate frequency analysis with Naff or WBA, it is possible to calculate a time-dependent frequency $\nu(n)$. 
+Here time is equivalent to the index $n$, which we use to stick to the notation of the previous sections.
+Define a window length $L$ and an offset $\sigma$. Compute a frequency $\nu_{[0,L-1]}$ from the first $L$ points of the orbit, and shift the indexes by $\sigma$ to get a second frequency $\nu_{[\sigma,\sigma+L-1]}$ from the shifted window. This process can be repeated to get an approximation of $\nu(n)$. \\
+To formalize the idea, define a set of frequencies
+\begin{align*}
+(\nu_n)&:=\klammer\left\{\nu_{[n\sigma,n\sigma + L-1]}\,\middle\vert\,n=0,1,2,\dots,\left\lfloor\frac{N-L}{\sigma}\right\rfloor \right\}\numberthis\label{eqn:TrappingFrequencies}
+\end{align*}
+%with the index set 
+%\begin{align*}
+%I(\sigma,L,N)&:=\klammer\left\{ j\sigma\,\middle\vert\,j=0,1,\dots,\left\lfloor\frac{N-L}{\sigma}\right\rfloor\right\}.\numberthis\label{eqn:TrappingIndexSet}
+%\end{align*}
+as a representation of $\nu(n)$.
+\\
+All of the above is shown in fig. \ref{figure:Trapping2DK232L10Offset50} for our standard map with $K=2.32$. 
+The algorithms for the recurrence statistics and locating trapped orbits were provided by the authors of \cite{FirLanKetBae2018}.
+The power-law distribution of $P(t)$ is demonstrated in (a), and (b) shows the longest found orbit, where the index $n$ is represented by color. 
+The time-dependent frequency $\nu(n)$ of this orbit from eqn. (\ref{eqn:TrappingFrequencies}) is shown in (c) for $L=1024$ and $\sigma=50$ for both Naff and WBA.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/Trapping2D_K2_32L10Offset50.png}
+\caption[Poincaré recurrence statistics and time-dependent frequency of a trapped orbit]{The Poincaré recurrence statistics for $K=2.32$ with $2\cdot 10^5$ initial conditions are shown in (a) and demonstrate the power-law decay of $P(t)$. 
+The longest of these orbits is shown in (b), where the color value corresponds to the index $n$. 
+Shown in (c) is the time-dependent frequency $\nu(n)$ as defined in eqn. (\ref{eqn:TrappingFrequencies}) for Naff and WBA with $L=1024$ and $\sigma=50$.
+For parts where the frequency is stable, both methods give the same result, e.g. $\nu=\frac{1}{4}$ around $n\approx 35000$ and other sections.}
+\label{figure:Trapping2DK232L10Offset50}
+\end{figure}\\
+% Before diving into the details of fig. \ref{figure:Trapping2DK232L10Offset50}, where all of the above is show for a specific example of our standard map, notice that the frequency only varies in a small interval. %The origin of this specific frequency is readily explained by the period four island chain, which is the most prominent part of the trajectory. The green, middle part of the orbit is the closest to this island chain, hence the frequency there is given by $\nu=\frac{1}{4}$.
+The most prominent visual feature of this orbit is certainly the period four island chain. 
+The orbit gets particularly close to this around the indexes $n\approx 35000$ and $n\approx 55000$. 
+This becomes more apparent in the frequency plot fig. \ref{figure:Trapping2DK232L10Offset50} (c), where both methods give a constant frequency of $\nu =\frac{1}{4}$ for these sections.
+%In the frequency plot this is evident from the horizontal sections, where the frequency gets very close to $\nu\simeq\frac{1}{4}$. 
+For the most part Naff and WBA yield similar results, especially when the frequency changes slowly. 
+However, around rapid changes there are some subtle differences. 
+A prime example for this is shown in fig. \ref{figure:Trapping2DK232L10Offset50at57000}.
+Here (a) is a magnification of fig. \ref{figure:Trapping2DK232L10Offset50} (c) around $n\approx 57000$ and highlights the different behavior of Naff and WBA.
+The orbit from fig. \ref{figure:Trapping2DK232L10Offset50} (b) is magnified in (b).
+Here only the part of the orbit corresponding to the indexes used in (a) is colored, the rest of the orbit is shown in gray. 
+Notice how the trajectory moves further away from the period four island chain for the indexes around $n=57000\dots 58000$. 
+This roughly corresponds to the drop in the frequency analysis in (a).
+The qualitative difference of the orbit before and after the sudden change, that occurs around $n\approx 57000$, is highlighted in (c). 
+Before this index, the trajectory appears to be bounded to the island chain. 
+After that, many points appear further away, in particular in between the islands.
+The short section of the orbit from (b), that correspond to the falling edge of $\nu(n)$, is shown in (d).
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/Trapping2D_K2_32L10Offset50_57000.png}
+\caption[Magnification of the time-dependent frequency of the traped orbit 1/2]{Shown in (a) is a magnification of the time-dependent frequency from fig. \ref{figure:Trapping2DK232L10Offset50} (c). 
+The respective section of the orbit is colored in (b), where the color value against corresponds to the index. 
+The rest of the orbit is shown in gray.
+The rapid change in the qualitative behavior of the trajectory is highlighted in (c).
+Lastly, the section of the orbit corresponding to the falling edge of (a), i.e. $n\ge 57000$, is colored in (d). 
+Here only the colored portion from (b) is shown in gray.
+It demonstrates the good agreement between the continuous change of $\nu(n)$ from WBA, and the orbit, that steadily moves away from the period four island chain.}
+%The upper left plot shows a section of the time-dependent frequency from fig. \ref{figure:Trapping2DK232L10Offset50}. The corresponding part of the orbit is highlighted right next to it. The lower right plot illustrates the changes to the orbit in the subsection, where the frequency from WBA decreases. Lastly the plot in the lower left shows how the behavior changes around $n=57000$, where the frequency analysis from Naff and WBA begins to deviate.
+\label{figure:Trapping2DK232L10Offset50at57000}
+\end{figure}\\ %\FloatBarrier
+This example demonstrates, that WBA reacts more quickly to the changes of the trajectory.
+This can be seen particularly well in the case of $n\ge 57000$ from fig. \ref{figure:Trapping2DK232L10Offset50at57000} (d).
+Here it becomes apparent, that the orbit steadily moves away from the island chain. 
+This is in very good agreement with the continuous decrease of the frequency from WBA, whereas Naff gives a constant frequency until $n\approx 57400$, despite the change in the trajectory beforehand, and then jumps to a different value.
+\\
+%, where the orbit steadily moves away from the period four island chain, while Naff gives the same frequency until it suddenly jumps. Here the smooth result from WBA gives a better representation of the qualitative behavior of the orbit.\\
+Panel (a) of fig. \ref{figure:Trapping2DK232L10Offset50at16000} shows a magnification of a different section of the time-dependent frequency from fig. \ref{figure:Trapping2DK232L10Offset50} (c).
+As before, (b) shows the respective section of the orbit, where the color value corresponds to the index $n$.
+The constant frequency for $n\ge 18500$ in (a) is consistent with $\nu=\frac{4}{17}$, which corresponds to a period 17 island chain.
+Two of these islands are highlighted in (b), best seen in the orange part for $n\ge 19500$.
+%both methods detect the period 17 island similarly, although Naff again shows discontinuous jumps, despite a smoothly changing orbit. The result from WBA around $n\simeq 17000$ would suggest, that the orbit comes close to the period four island chain. In comparison with fig. \ref{figure:Trapping2DK232L10Offset50at57000}, this is not evident from the respective section of the orbit in phase space. Since Naff gives a frequency of $\nu\approx\frac{1}{4}$ for a significantly longer time, WBA should again be preferable. This is because the trajectory only seems to quickly move towards and away from the period four chain, but does not stay close to it for an extended period of time.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/Trapping2D_K2_32L10Offset50_16000v1.png}
+\caption[Magnification of the time-dependent frequency of the traped orbit 2/2]{Shown in (a) is a magnification of the time-dependent frequency from fig. \ref{figure:Trapping2DK232L10Offset50} (c). 
+The respective section of the orbit is colored in (b), with the color value corresponding to the index $n$. 
+The rest of the orbit is indicated in gray.
+We find a constant frequency for $n\ge 18500$ in (a), that is consistent with $\nu=\frac{4}{17}$, which corresponds to a period 17 island chain.
+Two of these islands are highlighted in (b), best seen in the orange part for $n\ge 19500$.}
+%This figure shows a different section of the trajectory and is otherwise identical to fig. \ref{figure:Trapping2DK232L10Offset50at57000}. The right hand side plot shows how the trajectory moves towards the period 17 island chain with $\nu=\frac{4}{17}\approx 0.235$. Two of those islands are visible in the picture for $n>19000$.}
+\label{figure:Trapping2DK232L10Offset50at16000}
+\end{figure}
+\\ %\FloatBarrier
+While Naff is as fast as WBA at detecting the change in the orbit in this example, the smooth result of WBA still better reflects the rapid, but steady change.
+Furthermore, the result of Naff around $n\approx 17000$ would suggest, that the trajectory was close to the period four island chain for an extended period of time.
+This is not evident from the colored orbit in fig. \ref{figure:Trapping2DK232L10Offset50at16000} (b).
+The WBA also gives a frequency of $\nu\simeq\frac{1}{4}$ around these indexes, but for a much shorter time-span.
+\\
+Although this presentation of the frequency analysis for trapped orbits in two dimensions is rather brief, it should still suffice to claim that WBA is at least as good as Naff in this regard. 
+The major difference between the methods is that Naff only extracts the most prominent frequency from a signal, which leads to the discontinuities, whenever the amplitude of this frequency becomes any smaller than that of a different one.
+Meanwhile the WBA appears to result in an average of the present frequencies, which gives rise to smooth transitions.
+%This explains the partially discontinuous result for Naff, which gives less insight to the continuous changes of these trapped orbits. 
+Admittedly, this is a fairly generalized statement for only analyzing a single example.
+A more systematic test would be required to support these claims, possibly by constructing artificial signals with time-dependent frequency.
+% this is a bit too general of a conclusion for only looking into one single example. maybe the argumentation still holds up? 
+% As far as ``time-dependent'' frequencies go, is it really that simple to say a ``more continuous'' result is ``better''?

@@ -1,0 +1,110 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{5 Freie Energie}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 5.1: Freie Energie und Barometrische Höhenformel}
+Es gilt $F=U-TS$. Man kann diese über
+\begin{align*}
+F[\rho]&=\intx\int_{0}^{\infty}-\rho(z)mgz-k_BT(z)\rho(z)\log\rho(z)\,\mathrm{d}z
+\end{align*}
+berechnen. Die minimierende Verteilung erhält man durch ableiten:
+\begin{align*}
+0&=-mgz-k_BT\log\rho -k_BT&\Rightarrow &&\rho(z)&=\rho_0\exp\kla\left( {-\frac{mgz}{k_BT(z)}} \right)
+\end{align*}
+Dabei wurde $\rho$ als die Anzahl an Teilchen pro Höhe interpretiert. Allerdings ist die potentielle Energie genauer durch $V=-\frac{GMm}{(z+R_E)^2}$ gegeben.
+\section*{Aufgabe 5.2: Polymer-Kette und entropische Kräfte}
+Sei $N$ die Anzahl an Gliedern und $N_\pm$ die Anzahl in positive bzw. negative $x$-Richtung. Dann endet das letzte Glied der Kette auf $k=N_+-N_-$, wobei die Koordinate durch $x=k\cdot a$ gegeben ist. Bekannt ist aber auch $N=N_++N_-$, woraus direkt $N_+=\frac{N+k}{2}$ folgt. Die Wahrscheinlichkeit, dass das $N$-te Glied des Polymers auf der Koordinate $x=k\cdot a$ ($k\in\mathbb{Z}$) endet, beträgt somit
+\begin{align*}
+P(k;N)=\frac{1}{2^N}\binom{N}{N_+}=\frac{1}{2^N}\frac{N!}{(\frac{N+k}{2})!(\frac{N-k}{2})!}
+\end{align*}
+Dieser Term kann mit $N!\sim\sqrt{2\pi N}(N/e)^N$ folgendermaßen genähert werden:
+\begin{align*}
+P(k;N)&\sim\frac{1}{2^N}\frac{\sqrt{2\pi N}N^N}{\sqrt{2\pi(\frac{N+k}{2})}(\frac{N+k}{2})^{\frac{N+k}{2}}\sqrt{2\pi (\frac{N-k}{2})}(\frac{N-k}{2})^{\frac{N-k}{2}}}=\\
+&=\frac{(1+k/N)^{-N/2}(1-k/N)^{-N/2}}{\sqrt{\frac{\pi}{2}(1+k/N)(1-k/N)}(\frac{1+k/N}{1-k/N})^{k/2}}
+\end{align*}
+Für den Grenzübergang $N\rightarrow\infty$ betrachtet man $\log P$ mit $\log(1+x)\sim x$ für $x\ll 1$:
+\begin{align*}
+\log P&\sim -\frac{N}{2}\log\kla\left( {1-\frac{k^2}{N^2}} \right)-\frac{k}{2}\log \kla\left( {1+\frac{k}{N}} \right)+\frac{k}{2}\log \kla\left( {1-\frac{k}{N}} \right)\kom\overset{\substack{{k\ll N} \\ |}}{\sim}\\
+&\sim\frac{k^2}{2N}-\frac{k^2}{2N}-\frac{k^2}{2N}=-\frac{k^2}{2N}
+\end{align*}
+Daraus folgt eine kontinuierliche Näherung für große $N$ und $k\ll N$:
+\begin{align*}
+P(k;N)&\sim Ce^{-\frac{k^2}{2N}}=\frac{1}{\sqrt{2\pi N}}e^{-\frac{k^2}{2N}}
+\end{align*}
+Die Konstante erhält man dabei aus der Normierung.\\
+Oder: $r=\sum_ja_j$ mit $a_j=a\cdot(2X_j-1)$ und $X_j\in\{0,1\}$ Bernoulli-verteilt mit $p=\frac{1}{2}$. Dann ist
+\begin{align*}
+r&=2a\sum_jX_j-Na
+\end{align*}
+Binomial-verteilt. Daraus folgt direkt
+\begin{align*}
+\bra\langle {r}\rangle&=2a\bra\langle {\sum_jX_j}\rangle-Na=2a\cdot\frac{N}{2}-Na=0\\
+\bra\langle {r^2}\rangle&=4a^2\bra\langle {\kla\left( {\sum_jX_j} \right)^2}\rangle=4a^2\cdot N\cdot\frac{1}{2}\cdot\frac{1}{2}=Na^2=:r_0^2
+\end{align*}
+Für $r_0=$const geht die Verteilung bei $N\rightarrow\infty$ in eine Gauss-Verteilung über:
+\begin{align*}
+\rho(r)&\sim\frac{1}{\sqrt{2\pi r_0^2}}e^{-\frac{r^2}{2r_0^2}}
+\end{align*}
+Unter Vernachlässigung aller Wechselwirkungen ist $U=0$, und damit folgt aus $\Omega(r)=\rho(r)\Omega$ mit $\Omega=2^N$ die freie Energie zu
+\begin{align*}
+F&=U-TS=k_BT\sum_\Omega\frac{1}{\Omega(r)}\log\frac{1}{\Omega(r)}=-k_BT\log\rho(r)\Omega=k_BT\frac{r^2}{2r_0^2}+\tecxt\text{const}
+\end{align*}
+Mit einer zusätzlichen Kraft $f=-U'(r)$ und $U=-rf$ lautet die freie Energie
+\begin{align*}
+F&=-rf+k_BT\frac{r^2}{2r_0^2}
+\end{align*} 
+Das Minimum der freien Energie liegt dann bei $r_\tecxt\text{min}=\frac{r_0^2f}{k_BT}$ mit $F(r_\tecxt\text{min})=-\frac{r_0^2f^2}{2k_BT}$. Die Kraft nimmt dann die lineare Form $f=-\frac{k_BT}{r_0^2}\cdot r$.
+\section*{Aufgabe 5.3: Maxwell-Relationen und Suszeptibilitäten}
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c}
+$-S$&$U$&$V$\\ \hline $H$&&$F$\\ \hline $-p$&$G$&$T$\\
+\end{tabular}
+\caption{Guggenheim-Quadrat}
+\end{table}
+Führe die abkürzende Notation $\frac{\partial A}{\partial B}=:\partial_BA=:A_{,B}$ ein. Soll eine Größe $C$ beim Ableiten von $A$ nach $B$ konstant gehalten werden, so schreiben wir $\kla\left( {A_{,B}} \right)_{C}=:A_{,B;C}$. Dann gilt:
+\begin{align*}
+T_{,V;S}&=U_{,S;V,V;S}=U_{,V;S,S;V}=p_{,S;V}\\
+p_{,T;V}&=-F_{,V;T,T;V}=-F_{,T;V,V;T}=S_{,V;T}\\
+S_{,p;T}&=-G_{,T;p,p;T}=-G_{,p;T,T;p}=-V_{,T;p}
+\end{align*}
+Das Kompressionsmodul lautet
+\begin{align*}
+K_T&:=-Vp_{,V;T}=VF_{,V;T,V;T}=V\kla\left( {\frac{\partial^2 F}{\partial V^2}} \right)_{T}
+\end{align*}
+Die Kompressibilität ist
+\begin{align*}
+\beta_T&:=-\frac{1}{V}V_{,p;T}=-\frac{1}{V}G_{,p;T,p;T}=-\frac{1}{V}\kla\left( {\frac{\partial^2G}{\partial p^2}} \right)_{T}
+\end{align*}
+Die spezifische Wärmekapazität kann man schreiben als
+\begin{align*}
+C_V&:=TS_{,T;V}=-TF_{,T;V,T;V}=-T\kla\left( {\frac{\partial^2F}{\partial T^2}} \right)_{V}
+\end{align*}
+
+
+\end{document}

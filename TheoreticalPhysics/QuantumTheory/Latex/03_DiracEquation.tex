@@ -1,0 +1,177 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\def\I{\text{i}}
+
+\newcommand*{\titel}{03 Dirac equation}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+\subject{Quantum theory 2}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Questions}
+There are four linearly independent solutions to the Dirac equation. They have positive or negative energy and a helicity of $h=\pm\frac{1}{2}$.\\
+Let $\vec{p}=p_ze_z$. Then $(p^\mu)=(E,0,0,p_z)^\dagger$ and therefor
+\begin{align*}
+\cancel{p}&=E\gamma^0-p_z\gamma^3=\begin{pmatrix}
+E&-p_z\sigma^3 \\ p_z\sigma^3 & -E
+\end{pmatrix}
+\end{align*}
+The Dirac equation can be written as $(\cancel{p}-m)\psi=0$ with $\psi=\begin{pmatrix}
+\psi_+\\ \psi_-
+\end{pmatrix} $:
+\begin{align*}
+0&\overset{!}{=}(\cancel{p}-m)\psi =\begin{pmatrix}
+(E-m)\psi_+-p_z\sigma^3\psi_- \\
+p_z\sigma^3\psi_+-(E+m)\psi_-
+\end{pmatrix}
+\end{align*}
+\section{Plane wave solutions of the Dirac equation}
+Let $\vec{p}=p_xe_x$. Then $(p^\mu)=(E,p_x,0,0)^\dagger$ and therefor
+\begin{align*}
+\cancel{p}&=E\gamma^0-p_x\gamma^1=\begin{pmatrix}
+E&-p_x\sigma^1 \\ p_x\sigma^1 & -E
+\end{pmatrix}
+\end{align*}
+The Dirac equation can be written as $(\cancel{p}-m)u(p)=0$ with $\psi=u(p)e^{-\I px}$ and $u(p)=N(u_1,u_2,u_3,u_4)^\dagger$:
+\begin{align*}
+0&\overset{!}{=}(\cancel{p}-m)u =N\begin{pmatrix}
+(E-m)u_1-p_xu_4 \\
+(E-m)u_2-p_xu_3 \\
+p_xu_2-(E+m)u_3 \\
+p_xu_1-(E+m)u_4
+\end{pmatrix}
+\end{align*}
+Combining the first and third, as well as the second and fourth equations, we arrive at the following conditions:
+\begin{align*}
+(E^2-m^2)u_1&=p_x^2u_1&\tecxt\text{and}&&(E^2-m^2)u_2&=p_x^2u_2
+\end{align*}
+Both of these are automatically satisfied, since $E^2=m^2+p_x^2$. Hence, we can pick two solutions given by $(u_1,u_2)=(E+m,0)$ and $(u_1,u_2)=(0,E+m)$. The first leads to $(u_3,u_4)=(0,p_x)$ and the second to $(u_3,u_4)=(p_x,0)$. These solutions are obviously orthogonal, so we need only worry about determining the normalization constant $N$. Due to the symmetry of the solutions, we only need to do so for one of them:
+\begin{align*}
+\overline{u}u&=N^2(E+m,0,0,p_x)\gamma^0(E+m,0,0,p_x)^\dagger =\\
+&= N^2\klam\left[ {\kla\left( {E+m} \right)^2-p_x^2} \right]=N^2(2m^2+2mE)\overset{!}{=}2m
+\end{align*}
+This results in $N^2=\frac{1}{E+m}$. Now that we have our solutions, we can take a look at the following sum:
+\begin{align*}
+\sum_ru_r\overline{u}_r&=\kla\left( {u_ru_r^\dagger} \right)\gamma^0=N^2\begin{pmatrix}
+(E+m)^2&0&0&(E+m)p_x \\
+0&(E+m)^2&(E+m)p_x&0 \\ 0&p_x(E+m)&p_x^2&0 \\ p_x(E+m)&0&0&p_x^2
+\end{pmatrix}\gamma^0=\\
+&=\begin{pmatrix}
+E+m&0&0&p_x \\ 0&E+m&p_x&0 \\ 0&p_x&E-m&0 \\p_x&0&0&E-m
+\end{pmatrix}\gamma^0=\cancel{p}+m 
+\end{align*}
+Consider the commutators of $\cancel{p}$ with $S_{ij}=\frac{\I}{2}\gamma_i\gamma_j$ for two special cases:
+\begin{align*}
+\klam\left[ {\cancel{p},S_{12}} \right]&=\frac{\I}{2}\klam\left[ {E\gamma^0-p_x\gamma^1,\gamma^1\gamma^2} \right]=\\
+&=\frac{1}{2}\klam\left[ {\begin{pmatrix}
+E&-p_x\sigma^1 \\ p_x\sigma^1&-E
+\end{pmatrix},\begin{pmatrix}
+\sigma^3 & 0 \\ 0&\sigma^3
+\end{pmatrix}} \right]=\\
+&=\frac{p_x}{2}\begin{pmatrix}
+0&-\klam\left[ {\sigma^1,\sigma^3} \right]\\
+\klam\left[ {\sigma^1,\sigma^3} \right] & 0
+\end{pmatrix}\neq 0\\
+\klam\left[ {\cancel{p},S_{23}} \right]&=\frac{\I}{2}\klam\left[ {E\gamma^0-p_x\gamma^1,\gamma^2\gamma^3} \right]=\\
+&=\frac{1}{2}\klam\left[ {\begin{pmatrix}
+E&-p_x\sigma^1 \\ p_x\sigma^1&-E
+\end{pmatrix},\begin{pmatrix}
+\sigma^1 & 0 \\ 0&\sigma^1
+\end{pmatrix}} \right]=0
+\end{align*}
+\section{Rotation around $y$-axis by $\frac{\pi}{2}$}
+What is $S(R_y(\alpha))$?!?
+\section{Dirac equation of a massless particle}
+Setting the mass in the Dirac equation to $m=0$ yields $\cancel{\partial}\psi=0$. We want to solve this explicitly using the Weyl-representation of the $\gamma$-matrices and two-component spinors $\psi=:(\chi_+,\chi_-)^\dagger$:
+\begin{align*}
+0&=\gamma^\mu\I\partial_\mu\psi=\begin{pmatrix}
+0&E+\sigma^jp_j \\ E-\sigma^jp_j & 0
+\end{pmatrix}\begin{pmatrix}
+\chi_+ \\ \chi_-
+\end{pmatrix}&&\Rightarrow &\begin{pmatrix}
+\sigma^jp_j\chi_- \\ \sigma^jp_j\chi_+
+\end{pmatrix}&=\begin{pmatrix}
+-E\chi_- \\ E\chi_+
+\end{pmatrix}
+\end{align*}
+We can rewrite these equations as $\sigma^jp_j\chi_\pm=\pm E\chi_\pm$. Using the Ansatz $\chi_\pm=\chi_\pm(p)e^{-\I px}$ we arrive at 
+\begin{align*}
+0&= E\chi_\pm(p) \pm\sigma^jp_j\chi_\pm(p) =E\begin{pmatrix}
+A_\pm \\ B_\pm
+\end{pmatrix}\pm\begin{pmatrix}
+p_3&p_1-\I p_2 \\ p_1+\I p_2&-p_3
+\end{pmatrix}\begin{pmatrix}
+A_\pm \\ B_\pm
+\end{pmatrix}
+\end{align*}
+The first equation can be rewritten as $B_\pm=-\frac{E\pm p_3}{p_1-\I p_2}A_\pm$. Inserting this into the second equation and multiplying by $p_1 -\I p_2$ yields
+\begin{align*}
+0&=\pm(p_1^2+p_2^2)A_\pm +(E\mp p_3)(p_1 -\I p_2) B_\pm =\\
+&=\klam\left[ {\pm (p_1^2+p_2^2)+E^2-p_3^2} \right]A_\pm
+\end{align*}
+This is only possible if $A_+=0$ and  $B_+=0$ or $A_-=p_1-\I p_2$ and $B_-=E-p_3$.
+\section{Modified Dirac equation}
+Here we can simplify $S^{\mu\nu}F_{\mu\nu}=-2S_zB_z$. This results in 
+\begin{align*}
+0&=\kla\left( {\I\gamma^\mu D_\mu-m+\frac{ea}{m}S_zB_z} \right)\psi=\begin{pmatrix}
+\I D_0-m+\frac{ea}{2m}\sigma_zB_z& \I\sigma^jD_j\\
+-\I\sigma^jD_j & -\I D_0-m+\frac{ea}{2m}\sigma_zB_z
+\end{pmatrix}\psi
+\end{align*}
+Now let $\psi=\begin{pmatrix}
+\psi_A \\ \psi_B
+\end{pmatrix} $ and use $\I D_0\rightarrow E+e\Phi$ and $\I D_j\sigma^j\rightarrow -\vec{\sigma}\cdot (\vec{p}+e\vec{A})$ to arrive at a set of two equations where we introduce the small quantity $\epsilon:=E-m+e\Phi$ as an abbreviation:
+\begin{align*}
+0&=\kla\left( {\epsilon+\frac{ea}{2m}\sigma_z B_z} \right)\psi_A-\vec{\sigma}\cdot\kla\left( {\vec{p}+e\vec{A}} \right)\psi_B\\
+0&=\kla\left( {-\epsilon-2m+\frac{ea}{2m}\sigma_zB_z} \right)\psi_B+\vec{\sigma}\cdot\kla\left( {\vec{p}+e\vec{A}} \right)\psi_A
+\end{align*}
+Since $m\gg \epsilon$ and $m\gg \frac{ea}{m}B_z$ for weak fields, we can simplify the second equation to $\psi_B=\frac{1}{2m}\vec{\sigma}\cdot\kla\left( {\vec{p}+e\vec{A}} \right)\psi_A$. Inserting this into the first equation yields
+\begin{align*}
+\epsilon\psi_A&=\kla\left( {-\frac{ea}{2m}\sigma_z B_z+\frac{1}{2m}\klam\left[ {\vec{\sigma}\cdot\kla\left( {\vec{p}+e\vec{A}} \right)} \right]^2} \right)\psi_A=\\
+&=\kla\left( {-\frac{ea}{2m}\sigma_z B_z+\frac{1}{2m}\kla\left( {\vec{p}+e\vec{A}} \right)^2+\frac{\I}{2m}\vec{\sigma}\cdot\klam\left[ {\kla\left( {\vec{p}+e\vec{A}} \right)\times\kla\left( {\vec{p}+e\vec{A}} \right)} \right]} \right)\psi_A=\\
+&=\kla\left( {\frac{1}{2m}\kla\left( {\vec{p}+e\vec{A}} \right)^2-\frac{ea}{2m}\sigma_z B_z+\frac{e}{2m}\vec{\sigma}\cdot\kla\left( {\nabla\times\vec{A}} \right)} \right)\psi_A=\\
+&=
+\end{align*}
+\end{document}

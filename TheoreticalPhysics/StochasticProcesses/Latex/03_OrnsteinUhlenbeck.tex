@@ -1,0 +1,292 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{03 Ornstein-Uhlenbeck process}
+\newcommand*{\autor}{Joachim Schwardt and Julian Fleck}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Stochastic processes}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Problem 3.1: Gaussian Markov process}
+We are given a gaussian stochastic process $Y(t)$ with autocorrelation function $\kappa(t_1,t_2)$ and variance $\sigma^2(t)$.
+Define the quantity
+\begin{align}
+\rho(t_1,t_2) & := \frac{\kappa(t_1,t_2)}{\sigma(t_1)\sigma(t_2)}.
+\end{align}
+Then the condition
+\begin{align}
+\rho(t_3,t_1) &= \rho(t_3,t_2)\rho(t_2,t_1)
+\end{align}
+is equivalent to
+\begin{align}
+\sigma^2(t_2)\kappa(t_3,t_1) &= \kappa(t_3,t_2)\kappa(t_2,t_1).
+\end{align}
+Recall the definition of the autocorrelation function (assuming $\bra\langle Y(t) \rangle\equiv 0$ for simplicity)
+\begin{align}
+\kappa (t_1,t_2) &:=\bra\langle Y(t)Y(s) \rangle = \intr\int_{\mathbb{R}^{2}} y_1y_2p_2(y_2,t_2,y_1,t_1) \, \mathrm{d}^{2}y = \\
+&=\intr\int_{\mathbb{R}^{2}} y_1y_2p_{1|1}(y_2,t_2|y_1,t_1)p_1(y_1,t_1) \, \mathrm{d}^{2}y.
+\end{align}
+Since $Y(t)$ is gaussian, the probability distributions are given by
+\begin{align}
+p_1(y,t) &= \frac{1}{\sqrt{2\pi\sigma^2(t)}}\exp\kla\left( -\frac{y^2}{2\sigma^2(t)} \right),\\
+p_2(y_2,t_2,y_1,t_1) &= \frac{1}{2\pi\sqrt{\alpha_{21}}}\exp \kla\left( -\frac{\sigma_1^2\sigma_2^2}{2\alpha_{21}}\klam\left[ \frac{y_2^2}{\sigma_2^2} + \frac{y_1^2}{\sigma_1^2} - 2\frac{\kappa_{21}}{\sigma_1^2\sigma_2^2}y_1y_2 \right] \right),
+\end{align}
+where $\sigma_j := \sigma(t_j)$, $\kappa_{jk} :=\kappa(t_j,t_k)$ and $\alpha_{jk} := \sigma_j^2\sigma_k^2 - \kappa_{jk}^2$.
+Note that the relation $1 - \frac{\alpha_{21}}{\sigma_1^2\sigma_2^2} = \frac{\kappa_{21}^2}{\sigma_1^2\sigma_2^2}$ by construction.
+Then the transition probability distribution is
+\begin{align}
+p_{1|1}(y_2,t_2|y_1,t_1) &= \frac{p_2(y_2,t_2,y_1,t_1)}{p_1(y_1,t_1)} = \\
+&= \frac{\sigma_1}{\sqrt{2\pi\alpha_{21}}} \exp\kla\left( -\frac{1}{2\alpha_{21}}\klam\left[ \sigma_1^2y_2^2 + \sigma_2^2y_1^2 - 2\kappa_{21}y_2y_1 - \frac{\alpha_{21}}{\sigma_1^2}y_1^2 \right] \right) = \\
+&= \frac{\sigma_1}{\sqrt{2\pi\alpha_{21}}} \exp\kla\left( -\frac{1}{2\alpha_{21}}\klam\left[ \sigma_1^2y_2^2 - 2\kappa_{21}y_2y_1 + \sigma_2^2y_1^2\frac{\kappa_{21}^2}{\sigma_1^2\sigma_2^2} \right] \right) =  \\
+&= \frac{\sigma_1}{\sqrt{2\pi\alpha_{21}}} \exp\kla\left( -\frac{1}{2\alpha_{21}}\klam\left[ \sigma_1y_2 - \frac{\kappa_{21}}{\sigma_1}y_1 \right]^2 \right).
+\end{align}
+We can now check the Chapman-Kolmogorov equation, i.e.
+\begin{align*}
+&\intr\int_{\mathbb{R}^{ }} p_{1|1}(y_3,t_3|y_2,t_2)p_{1|1}(y_2,t_2|y_1,t_1) \, \mathrm{d}^{ }y_2 =  \\
+&= \frac{\sigma_1\sigma_2}{2\pi\sqrt{\alpha_{32}\alpha_{21}}} \intr\int_{\mathbb{R}^{ }} \exp\kla\left( -\frac{1}{2\alpha_{32}}\klam\left[ \sigma_2y_3 - \frac{\kappa_{32}}{\sigma_2}y_2 \right]^2 -\frac{1}{2\alpha_{21}}\klam\left[ \sigma_1y_2 - \frac{\kappa_{21}}{\sigma_1}y_1 \right]^2 \right) \, \mathrm{d}^{ }y_2 =  \numberthis \\
+&= \frac{\sigma_1\sigma_2}{2\pi\sqrt{\alpha_{32}\alpha_{21}}} \exp\kla\left( -\frac{\sigma_2^2y_3^2}{2\alpha_{32}}-\frac{\kappa_{21}^2y_1^2}{2\alpha_{21}\sigma_1^2} \right) \cdot\\
+&\hspace{1cm} \cdot \intr\int_{\mathbb{R}^{ }} \exp\kla\left( -\frac{y_2^2}{2}\klam\left[ \frac{\kappa_{32}^2}{\sigma_2^2\alpha_{32}} + \frac{\sigma_1^2}{\alpha_{21}} \right] + y_2\klam\left[ \frac{\kappa_{32}}{\alpha_{32}}y_3 + \frac{\kappa_{21}}{\alpha_{21}}y_1 \right] \right) \, \mathrm{d}^{ }y_2 =  \numberthis \\
+&= \frac{\sigma_1\sigma_2}{2\pi\sqrt{\alpha_{32}\alpha_{21}}}\sqrt{\frac{2\pi}{\frac{\kappa_{32}^2}{\sigma_2^2\alpha_{32}} + \frac{\sigma_1^2}{\alpha_{21}} }}\exp\kla\left( -\frac{\sigma_2^2y_3^2}{2\alpha_{32}}-\frac{\kappa_{21}^2y_1^2}{2\alpha_{21}\sigma_1^2} \right) \exp\kla\left( \frac{\left[ \frac{\kappa_{32}}{\alpha_{32}}y_3 + \frac{\kappa_{21}}{\alpha_{21}}y_1  \right]^2}{2\left[ \frac{\kappa_{32}^2}{\sigma_2^2\alpha_{32}} + \frac{\sigma_1^2}{\alpha_{21}} \right]} \right) = \numberthis\\
+&= \frac{\sigma_1\sigma_2^2}{\sqrt{2\pi\klam\left[ \alpha_{21}\kappa_{32}^2 + \sigma_1^2\sigma_2^2\alpha_{32} \right]} } \exp\kla\left( -\frac{1}{2}\klam\left[ \frac{\sigma_2^2y_3^2}{\alpha_{32}}+ \dots \right] \right)  \overset{!}{=} \numberthis  \\
+&\overset{!}{=} p_{1|1}(y_3,t_3|y_1,t_1) = \frac{\sigma_1}{\sqrt{2\pi\alpha_{31}}} \exp\kla\left( -\frac{1}{2\alpha_{31}}\klam\left[ \sigma_1y_3 - \frac{\kappa_{31}}{\sigma_1}y_1 \right]^2 \right). \numberthis
+\end{align*}
+Expanding the exponent is a task better suited for algebra programs.
+However, we may as well trust that the equation is fulfilled if and only if the prefactor matches, since it is essentially independent of the exponential factor in this case.
+Thus we arrive at the condition
+\begin{align}
+\sigma_2^4\alpha_{31} &\overset{!}{=} \alpha_{21}\kappa_{32}^2 + \sigma_1^2\sigma_2^2\alpha_{32}\\
+\Rightarrow\ \ \ \sigma_2^4\kla\left( \sigma_1^2\sigma_3^2 - \kappa_{31}^2 \right) &= \kla\left( \sigma_1^2\sigma_2^2 - \kappa_{21}^2 \right)\kappa_{32}^2 + \sigma_1^2\sigma_2^2\kla\left( \sigma_2^2\sigma_3^2 - \kappa_{32}^2 \right) \\
+\Rightarrow\ \ \ -\kappa_{31}^2\sigma_2^4 &= -\kappa_{21}^2\kappa_{32}^2.
+\end{align}
+This is of course equivalent to
+\begin{align}
+\sigma_2^2 \kappa_{31} &= \kappa_{32}\kappa_{21} \label{eqn:condition gauss markov} ,
+\end{align}
+thus this condition is indeed necessary for $Y(t)$ to be a Markov process, since it is necessary to fulfil the Chapman-Kolmogorov equation.
+However, for it to also be sufficient, we now have to compare the exponents neglected above.
+Since we can already assume the identity, this is now a little bit less cumbersome.
+Comparing the exponents multiplied by $-2$ for simplicity gives
+\begin{align}
+\tecxt\text{-2e} &:= \frac{\sigma_2^2y_3^2}{\alpha_{32}} + \frac{\kappa_{21}^2y_1^2}{\alpha_{21}\sigma_1^2} - \frac{\kla\left( \alpha_{21}\kappa_{32}y_3 + \alpha_{32}\kappa_{21}y_1 \right)^2}{\kla\left( \frac{\alpha_{21}\kappa_{32}^2}{\sigma_2^2} + \sigma_1^2\alpha_{32} \right)\alpha_{32}\alpha_{21}} = \\
+&= y_3^2\kla\left( \frac{\sigma_2^2}{\alpha_{32}} - \frac{\alpha_{21}\kappa_{32}^2}{\sigma_2^2\alpha_{31}\alpha_{32}} \right) + y_1^2\kla\left( \frac{\kappa_{21}^2}{\alpha_{21}\sigma_1^2} - \frac{\alpha_{32}\kappa_{21}^2}{\sigma_2^2\alpha_{31}\alpha_{21}} \right) - 2y_1y_3\frac{ \kappa_{32}\kappa_{21} }{\sigma_2^2\alpha_{31}} = \\
+&= \frac{1}{\alpha_{31}}\kla\left( \frac{y_3^2}{\alpha_{32}\sigma_2^2}\klam\left[ \sigma_2^4\alpha_{31} - \alpha_{21}\kappa_{32}^2 \right] + \frac{y_1^2\kappa_{21}^2}{\alpha_{21}\sigma_1^2}\klam\left[ \alpha_{31} - \frac{\sigma_1^2\alpha_{32}}{\sigma_2^2} \right] - 2y_1y_3\kappa_{31} \right) = \\
+&= \frac{1}{\alpha_{31}}\kla\left( \sigma_1^2y_3^2 + \frac{y_1^2\kappa_{21}^2\kappa_{32}^2}{\sigma_1^2\sigma_2^4} - 2y_1y_3\kappa_{31} \right) = \\
+&= \frac{1}{\alpha_{31}}\kla\left( \sigma_1^2y_3^2 + \frac{y_1^2\kappa_{31}^2}{\sigma_1^2} - 2y_1y_3\kappa_{31} \right) = \\
+&= \frac{1}{\alpha_{31}}\kla\left( \sigma_1y_3-\frac{\kappa_{31}}{\sigma_1}y_1 \right)^2,
+\end{align}
+which is exactly the expected result for the exponent of $p_{1|1}(3|1)$.
+Therefore \eqref{eqn:condition gauss markov} is indeed also sufficient for $Y(t)$ to be a Markov process.\\
+For the Wiener process we have $\sigma^2(t) = t$ and $\kappa (t,s) = \min\{t,s\}$.
+Since \eqref{eqn:condition gauss markov} only contains autocorrelation functions with time-ordered arguments, we simply find
+\begin{align}
+\kappa(t_3,t_2)\kappa(t_2,t_1) &= t_2t_1 = \sigma^2(t_2)\kappa(t_3,t_1).
+\end{align}  
+Thus the Wiener process obeys this relation, which was to be expected.
+\newpage
+
+
+\section*{Problem 3.2: Ornstein-Uhlenbeck process I}
+Let $Y(t)$ be the standard Ornstein-Uhlenbeck process, i.e.
+the (unique) stationary, gaussian Markov process with autocorrelation function
+\begin{align}
+\kappa(\tau) &= \e^{-\tau}
+\end{align}
+for $\tau = t_2 - t_1 > 0$ and variance $\sigma^2(t)\equiv 1$. 
+Define the integral of this process as
+\begin{align}
+Z(t) &:= \intx\int_{0}^{t}Y(s)\, \mathrm{d}s.
+\end{align}
+We find the autocorrelation of $Z(t)$ by first considering $s\ge t$
+\begin{align}
+\kappa_Z(t,s) &:= \bra\langle Z(t)Z(s) \rangle = \intx\int_{0}^{t}\intx\int_{0}^{s}\bra\langle Y(t')Y(s') \rangle\, \mathrm{d}s'\, \mathrm{d}t' = \\
+&= \intx\int_{0}^{t}\intx\int_{0}^{s}\e^{-|t'-s'|}\, \mathrm{d}s'\, \mathrm{d}t' = \\
+&=\intx\int_{0}^{t}\kla\left( \intx\int_{0}^{t'}\e^{-(t'-s')}\, \mathrm{d}s' + \intx\int_{t'}^{s}\e^{-(s'-t')}\, \mathrm{d}s' \right)\, \mathrm{d}t' = \\
+&= \intx\int_{0}^{t} 1 - \e^{-t'} - \e^{t'-s} + 1\, \mathrm{d}t' = \\
+&= 2t + \e^{-t} - 1 - \e^{t-s} + \e^{-s}.
+\end{align}
+Now assuming $s\ge t$ is equivalent to substituting $s\rightarrow \max\{s,t\}$ and $t\rightarrow\min\{s,t\}$ in the final result, giving
+\begin{align}
+\kappa_Z(t,s) &= \e^{-t} + \e^{-s} - 1 - \e^{-|t-s|} + 2\min\{t,s\}.
+\end{align}
+This formula is now symmetric in $t$ and $s$, as expected.
+Note that the process is not stationary, since $\kappa_Z(t,s)$ can not be written as a function of the difference $\tau := t-s$.
+However, $Z(t)$ is gaussian, since it is an integral of a gaussian process.
+%(Finite case is clear, does this really hold for ``continuous sums'' in general, and how to prove?)
+The variance can be calculated in a similar manner, since
+\begin{align}
+\sigma_Z^2(t) &= \bra\langle Z(t)^2 \rangle = \intx\int_{0}^{t}\intx\int_{0}^{t}\bra\langle Y(t_1)Y(t_2) \rangle\, \mathrm{d}t_1\, \mathrm{d}t_2 = \\
+&= \intx\int_{0}^{t}\intx\int_{0}^{t}\e^{-|t_2-t_1|}\, \mathrm{d}t_1\, \mathrm{d}t_2 = \\
+&= 2\intx\int_{0}^{t}\intx\int_{0}^{t_2}\e^{-(t_2-t_1)} \, \mathrm{d}t_1\, \mathrm{d}t_2 = \\
+&= 2\intx\int_{0}^{t} 1 - \e^{-t_2}\, \mathrm{d}t_2 = 2t + 2\e^{-t} - 2.
+\end{align}
+Here we made use of the symmetry along the line $t_1=t_2$, allowing us to only compute the integral over a triangle ($t_2\in [0,1]$ and $0\le t_1 \le t_2$).
+(NOTE: Of course this could just as well be obtained from $\kappa_Z(t,t)$, but now I have already written down the calculation...)
+\\
+We can use the condition from problem 3.1 to check, if the process is markovian.
+Expanding the terms, it quickly becomes clear, that the equality required by \eqref{eqn:condition gauss markov} is not obeyed.
+\begin{align*}
+\kappa_Z(t_3,t_2)\kappa_Z(t_2,t_1) &= \kla\left( \e^{-t_3} + \e^{-t_2} - 1 - \e^{t_2 - t_3} + 2t_2 \right) \cdot \\
+&\hspace{0.7cm} \cdot \kla\left( \e^{-t_2} + \e^{-t_1} - 1 - \e^{t_1 - t_2} + 2t_1 \right) = \numberthis \\
+&= \e^{-t_3-t_2} + \e^{-t_3-t_1} - \e^{-t_3} - \e^{-t_3+t_1-t_2} + 2t_1\e^{-t_3} + \\
+&\hspace{0.7cm} + \e^{-2t_2} + \e^{-t_2-t_1} - \e^{-t_2} - \e^{-2t_2+t_1} + 2t_1\e^{-t_2} - \\
+&\hspace{0.7cm} - \e^{-t_2} - \e^{-t_1} {\color{blue}{+ 1}} + \e^{t_1 - t_2} - 2t_1 - \\
+&\hspace{0.7cm} - \e^{-t_3} + \e^{t_2-t_3-t_1} - \e^{t_2-t_3} - \e^{t_1 - t_3} + 2t_1\e^{t_2-t_3} + \\
+&\hspace{0.7cm} + 2t_2\e^{-t_2} + 2t_2\e^{-t_1} - 2t_2 - 2t_2\e^{t_1 - t_2} + 4t_2t_1 = ,\numberthis\\
+\sigma_Z^2(t_2)\kappa_Z(t_3,t_1) &= 2\kla\left( t_2 - 1 + \e^{-t_2} \right)\kla\left( \e^{-t_3} + \e^{-t_1} - 1 - \e^{t_1 - t_3} + 2t_1 \right) = \numberthis \\
+&= 2\e^{-t_3-t_2} + 2\e^{-t_1-t_2} - 2\e^{-t_2} - 2\e^{t_1-t_3-t_2} + 4t_1\e^{-t_2} + \\
+&\hspace{0.7cm} - 2\e^{-t_3} - 2\e^{-t_1} {\color{blue}{+ 2}} + 2\e^{t_1 - t_3} - 4t_1 + \\
+&\hspace{0.7cm} + 2t_2\e^{-t_3} + 2t_2\e^{-t_1} - 2t_2 - 2t_2\e^{t_1 - t_3} + 4t_2t_1 \numberthis.
+\end{align*}
+Some terms are equal, but the very simple comparison of the highlighted terms ${\color{blue}{+2}}$ against ${\color{blue}{+ 1}}$ shows that not everything cancels out.
+Therefore $Z(t)$ is not a Markov process.
+
+\newpage
+\section*{Problem 3.3: Ornstein-Uhlenbeck process II}
+Since $Z(t)$ is gaussian, only the first two cumulants contribute to the characteristic functional.  
+Thus it is given by 
+\begin{align}
+\log G[k(t)] &= \i\intr\int_{\mathbb{R}^{ }} k(t)\underbrace{\bra\langle Z(t) \rangle}_{\equiv\, 0} \, \mathrm{d}^{ }t - \frac{1}{2}\intr\int_{\mathbb{R}^{2}} k(t)k(s)\kappa_Z(t,s) \, \mathrm{d}^{}(t,s) = \\
+&= -\intr\int_{\mathbb{R}^2} k(t)k(s)\kla\left( \e^{-t} + \e^{-s} - 1 - \e^{-|t-s|} + 2\min\{t,s\} \right) \, \mathrm{d}^{}(t,s).
+\end{align}
+The general formulation is
+\begin{align}
+G_Z[k] &= \left\bra\langle \exp\kla\left( \i\intr\int_{\mathbb{R}^{ }} k(t)Z(t) \, \mathrm{d}^{ }t \right) \right\rangle.
+\end{align}
+Note that $k(t) := \delta(t-t_1) - \delta(t-t_2)$ gives
+\begin{align}
+\intr\int_{\mathbb{R}^{ }} \klam\left[ \delta(t-t_1) - \delta(t-t_2) \right]Z(t) \, \mathrm{d}^{ }t = Z(t_1) - Z(t_2), 
+\end{align}
+which leads to
+%\begin{align*}
+%\left\langle \cos\kla\left( Z(t_1) - Z(t_2) \right) \right\rangle &= G_Z[\delta(t-t_1) - \delta(t-t_2)] =  \numberthis \\
+%&= \exp\kla\bigg( -\intr\int_{\mathbb{R}^2} [\delta(t-t_1) - \delta(t-t_2)] [\delta(s-t_1) - \delta(s-t_2)]\cdot\\
+%&\hspace{1.2cm} \cdot \kla\left( \e^{-t} + \e^{-s} - 1 - \e^{-|t-s|} + 2\min\{t,s\} \right) \, \mathrm{d}(t,s) \bigg) = \numberthis \\
+%&= \exp\kla\Big( \e^{-t_1} + \e^{-t_2} - 1 - \e^{t-s} + 2t \Big)• \numberthis 
+%\end{align*}
+\begin{align}
+\left\langle \cos\kla\left( Z(t_1) - Z(t_2) \right) \right\rangle &= G_Z[\delta(t-t_1) - \delta(t-t_2)] =   \\
+&= \exp\kla\bigg( -\frac{1}{2}\intr\int_{\mathbb{R}^2} k(t)k(s) \kappa_Z(t,s) \, \mathrm{d}(t,s) \bigg) =  \\
+&= \exp\kla\Big( -\frac{1}{2}\kappa_Z(t_1,t_1) - \frac{1}{2}\kappa_Z(t_2,t_2) + \kappa_Z(t_1,t_2) \Big) = \\
+&= \exp\kla\left( 1 - t_1 - t_2 - \e^{-|t_1-t_2|} + 2\min\{t_1,t_2\}  \right)  = \\
+&= \exp\kla\left( 1 - |t_1 - t_2| - \e^{-|t_1-t_2|} \right),
+\end{align}
+where we used $\min\{2x,2y\}-x-y = \min\{x-y,y-x\} = -|x-y|$.
+
+
+\newpage
+
+
+\section*{Problem 3.4: Ornstein-Uhlenbeck process III}
+Let $Y(t)$ be the standardized Ornstein-Uhlenbeck process and $t > t_n > \dots > t_1$.
+Let $E(t,t_n,\dots,t_1) := \bra\langle Y(t)Y(t_n)\dots Y(t_1) \rangle$, which gives
+\begin{align}
+\frac{\tecxt\text{d}}{\tecxt\text{d}t}E &= \intr\int_{\mathbb{R}^{n+1}} yy_n\dots y_1 \frac{\tecxt\text{d}}{\tecxt\text{d}t} p_{n+1}(y,t,y_n,t_n,\dots ,y_1,t_1 \, \mathrm{d}^{}(y,y_n, \dots, y_1) = \\
+&= \intr\int_{\mathbb{R}^{n }} y_n\dots y_1p_n(y_n,\dots,y_1)\intr\int_{\mathbb{R}^{ }} y\partial_t p_{1|1} (y,t|y_n,t_n) \, \mathrm{d}^{ }y \, \mathrm{d}^{}(y_n,\dots, y_1) \label{eqn:time derivative of expectation value}.
+\end{align}
+Recall the diffusion equation for the transition probability
+\begin{align}
+\partial_t p_{1|1} &= \partial_y\kla\left( yp_{1|1} \right) + \partial_y^2 p_{1|1}.
+\end{align}
+We can insert this into the integral expression above and use integration by parts.
+Note that the boundary terms both vanish, assuming that $p_{1|1}$ decays faster than $y^2$, and $\partial_yp_{1|1}$ decays faster than $y$ respectively.
+Since $p_{1|1}$ is a gaussian, this is justified.
+\begin{align}
+I &:= \intr\int_{\mathbb{R}^{ }} y\partial_t p_{1|1} \, \mathrm{d}^{ }y = \intr\int_{\mathbb{R}^{ }} y\partial_y\kla\left( yp_{1|1} \right) + y\partial_y^2 p_{1|1} \, \mathrm{d}^{ }y = \\
+&= y^2p_{1|1}\Big\vert_\mathbb{R} - \intr\int_{\mathbb{R}^{ }} yp_{1|1} \, \mathrm{d}^{ }y + y\partial_yp_{1|1} \Big\vert_\mathbb{R} - \intr\int_{\mathbb{R}^{ }} \partial_yp_{1|1} \, \mathrm{d}^{ }y = \\
+&= -\intr\int_{\mathbb{R}^{ }} yp_{1|1} \, \mathrm{d}^{ }y.
+\end{align}
+Inserting this back into \eqref{eqn:time derivative of expectation value} gives
+\begin{align}
+\frac{\tecxt\text{d}}{\tecxt\text{d}t} E &= \intr\int_{\mathbb{R}^{n}} y_n\dots y_1 p_n(y_n\dots y_1) \kla\left( -\intr\int_{\mathbb{R}^{ }} yp_{1|1}(y,t|y_n,t_n) \, \mathrm{d}^{ }y \right)   \, \mathrm{d}^{ }(y_n\dots y_1) = \\
+&= -\intr\int_{\mathbb{R}^{n+1}} yy_n\dots y_1p_{n+1}(\dots) \, \mathrm{d}^{ }(y,y_n,\dots,y_1) = -E.
+\end{align}
+Now let $\Phi(t,[Y])$ be a functional depending on $t$ and all values of $Y$ at smaller times.
+Using the product rule we obtain
+\begin{align}
+\frac{\tecxt\text{d}}{\tecxt\text{d}t}\left\langle Y(t)\Phi(t,[Y]) \right\rangle &= \frac{\tecxt\text{d}}{\tecxt\text{d}t}\langle \overset{\downarrow}{Y}(t) \Phi(t,[Y]) \rangle + \frac{\tecxt\text{d}}{\tecxt\text{d}t}\langle Y(t)\overset{\downarrow}{\Phi}(t,[Y]) \rangle = \\
+&= -\left\langle Y(t)\Phi(t,[Y]) \right\rangle + \left\langle Y(t)\partial_t\Phi(t,[Y]) \right\rangle.
+\end{align}
+
+\newpage
+\section*{Problem 3.5: Ornstein-Uhlenbeck process IV}
+Consider the transition probability density with new coordinates $y\rightarrow \alpha y$ and $t\rightarrow \beta t$
+\begin{align}
+p_{1|1}(y_2,t_2,y_1,t_1) &= \frac{\alpha}{\sqrt{2\pi\klam\left[ 1 - \e^{-2\beta (t_2-t_1)} \right]}} \exp\kla\left( -\frac{\alpha^2\klam\left[ y_2 - \e^{-\beta(t_2 - t_1)} y_1 \right]^2}{2\klam\left[ 1 - \e^{-2\beta (t_2-t_1)} \right]} \right).
+\end{align}
+Note that the additional factor of $\alpha$ in the normalization is a result of considering $p_{1|1}\,\mathrm{d}y$, where $\mathrm{d}y\rightarrow\alpha \mathrm{d}y$, and then absorbing this factor into $p_{1|1}$.
+Now consider the limit $\beta\rightarrow 0$, which gives
+\begin{align}
+1 - \e^{-2\beta (t_2-t_1)} &= 2\beta (t_2 - t_1) + \mathcal{O}(\beta^2).
+\end{align}
+Inserting this into the transition probability yields
+\begin{align}
+p_{1|1}(y_2,t_2,y_1,t_1) &\sim \frac{\alpha}{\sqrt{4\pi\beta (t_2 - t_1)}} \exp\kla\left( -\frac{\alpha^2\klam\left[ y_2 - (1 - \beta (t_2 - t_1)) y_1 \right]^2}{4\beta (t_2 - t_1)} \right)
+\end{align}
+as $\beta\rightarrow 0$.
+Now letting $\alpha = \sqrt{2\beta}$ we obtain the Wiener process
+\begin{align}
+p_{1|1}(y_2,t_2,y_1,t_1) &\sim \frac{1}{\sqrt{2\pi (t_2 - t_1)}} \exp\kla\left( -\frac{\klam\left[ y_2 - (1 - \beta (t_2 - t_1)) y_1 \right]^2}{2 (t_2 - t_1)} \right)\\
+&\overset{\,\beta\rightarrow \, 0}{\longrightarrow} \ p^\tecxt\text{(W)}_{1|1}(y_2,t_2,y_1,t_1) = \frac{1}{\sqrt{2\pi (t_2 - t_1)}} \exp\kla\left( -\frac{\left( y_2 - y_1 \right)^2}{2 (t_2 - t_1)} \right).
+\end{align}
+For the general Ornstein-Uhlenbeck process, the variance of the transition probability approaches 1 for large $\Delta t$, where the deviation from 1 is decaying exponentially.
+By taking $\beta\rightarrow 0$, we consider sufficiently short time scales, such that the variance grows linearly with $\Delta t$.
+(Note: we have a hunch that we are missing something here...)
+%Interpretation (?): $\alpha\sim\sqrt{\beta}$ is again reminiscent of $y\sim\sqrt{t}$, which relates to the typical ``Brownian behaviour'' of $\Delta y^2 \sim \Delta t$.
+%But this is not really an interpretation, since we expected this result from the construction. 
+
+%\begin{thebibliography}{9}
+%\bibitem{numerical levy stable distributions} S.Ament, M. O'Neil: Accurate and efficient numerical calculation of stable
+%densities via optimized quadrature and asymptotics, \url{https://arxiv.org/pdf/1607.04247.pdf}, 31.\,August~2021.
+%\end{thebibliography}
+
+\end{document}

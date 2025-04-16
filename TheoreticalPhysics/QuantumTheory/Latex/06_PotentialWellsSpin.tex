@@ -1,0 +1,161 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb, slashed}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{dsfont}
+
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\def\I{\text{i}}
+\def\E{\text{e}}
+
+\newcommand*{\titel}{06 Potential wells and spin}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+\subject{Quantum theory 2}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Questions}
+Possible operators: $x_1+x_2$, $(x_1-x_2)^2$, $p_1\cdot p_2$. 
+Not possible is $x_1-x_2$ (but why?)
+\\
+We have $E\phi=-\frac{1}{2m}\partial_x^2\phi$, which leads to $\phi=A\E^{\I kx}+B\E^{-\I kx}$ with $k^2=2mE$.
+Boundary conditions are $\phi(0)=0=\phi(L)$.
+The first leads to $B=-A$, or $\phi\sim \sin kx$, and the second leads to $kL=n\pi$ for $n\in\mathbb{Z}\setminus\{0\}$.
+With normalization, the solutions can be written as
+\begin{align*}
+\phi_n&=\sqrt{\frac{2}{L}}\sin\frac{n\pi x}{L}
+\end{align*}
+and have energies 
+\begin{align*}
+E&=\frac{k^2}{2m}=\frac{n^2\pi^2}{2mL^2}
+\end{align*}
+The hydrogen molecule hamiltonian without spins is
+\begin{align*}
+H&=H_{1a}+H_{2b}+\alpha\kla\left( {\frac{1}{r_{ab}}+\frac{1}{r_{12}}-\frac{1}{r_{1b}}-\frac{1}{r_{2a}}} \right)•,
+\end{align*}
+where $A=a,b$ label the proton coordinates and $j=1,2$ label the electron coordinates.
+Here $H_{1a,2b}$ are the hydrogen atom hamiltonians, given by
+\begin{align*}
+H_{j,A}&=-\frac{1}{2m}\nabla_j^2-\frac{\alpha}{r_{j,A}}.
+\end{align*}
+In the Heitler-London approximation, the used are eigenstates are those of the hydrogen atom, i.e. $\psi_{nlm,A}$.
+\section{Two identical particles in a potential well}
+This problem can more easily be solved in the coordinate system used above.
+The resulting energy levels are of course identical, and the only necessary transformation is given by $x\rightarrow x-r_0$ with $L:=2r_0$.
+The Hamiltonian is simply given by a sum over the two one-particle Hamiltonians:
+\begin{align*}
+H&=\sum_j -\frac{1}{2m}\nabla_j^2+V(x_j)
+\end{align*}
+The solutions trivially factor into spin and spacial parts via $\Ket | {\psi} \rangle=\Ket | {\phi} \rangle\Ket | {\chi} \rangle$, where we are given that $\Ket | {\chi} \rangle\equiv\Ket | {Sm_S} \rangle^+$ is symmetric.
+We can split the basis $\phi_n$ into symmetric and antisymmetric eigenstates by defining 
+\begin{align*}
+\phi_n^+&:=\sqrt{\frac{2}{L}}\sin\frac{(2n-1)\pi x}{L}&\tecxt\text{and}&&\phi_n^-&:=\sqrt{\frac{2}{L}}\sin\frac{2n\pi x}{L},
+\end{align*}
+which have energies 
+\begin{align*}
+E_n^+&=\frac{(2n-1)^2\pi^2}{2mL^2}&\tecxt\text{and}&&E_n^-&=\frac{(2n)^2\pi^2}{2mL^2}.
+\end{align*}
+We can construct the special two-particle wave functions by symmetrisation.
+Let $n,n'$ be the energy quantum numbers and $p,p'$ be the parity quantum numbers. 
+Then we can define
+\begin{align*}
+\Ket | {\phi} \rangle^\pm &:=\frac{1}{\sqrt{2}}\kla\left( {\phi_n^p(x_1)\phi_{n'}^{p'}(x_2)\pm \phi_n^p(x_2)\phi_{n'}^{p'}(x_1)} \right)
+\end{align*}
+For bosons, only the symmetric solution is allowed. 
+As such, we find the groundstate for $n=n'=1$ and $p=p'=+1$, since these give the lowest one-particle energy solutions.
+The energy is
+\begin{align*}
+E_\tecxt\text{GS,B}&=2E_1^+=\frac{\pi^2}{mL^2}.
+\end{align*}
+The allowed spacial wave function for fermions must be antisymmetric, considering the spin assumption.
+Let us list the first few lowest one-particle energies by defining $\epsilon_n^\pm:=\frac{2mL^2E_n^\pm}{\pi^2}$, i.e. $\epsilon_n^+=(2n-1)^2$ and $\epsilon_n^-=(2n)^2$:
+\begin{align*}
+\epsilon_n^+&=\{1,9,25,49,\dots\}&\tecxt\text{and}&&\epsilon_n^-&=\{4,16,36,64,\dots\}.
+\end{align*}
+We find the groundstate for $n=1,n'=1$ and $p=+,p'=-$, which corresponds to an energy of
+\begin{align*}
+E_\tecxt\text{GS,F}&=E_1^+ + E_1^- =\frac{5\pi^2}{2mL^2}.
+\end{align*}
+\section{Hydrogen molecule without spin}
+This calculation is very elaborate. 
+Note that operators really only act on the space, that is indicated by their superscript.
+Everything else should be straight forward.
+The result is identical to the lecture, we find $c_2=\pm c_1$.
+\section{Hydrogen molecule with spin}
+Here it is crucial to note that $S_1S_2=\frac{1}{2}(S^2-s_1^2-S_2^2)$, and that $S^2\Ket | {Sm_S} \rangle=S(S+1)\Ket | {Sm_S} \rangle$
+Thus the eigenvalues of this spin product operator are
+\begin{align*}
+S_1S_2\Ket | {Sm_S} \rangle^+&=S_1S_2\Ket | {1 m} \rangle=\frac{1}{2}\kla\left( {1(1+1)-\frac{1}{2}\kla\left( {\frac{1}{2}+1} \right)-\frac{1}{2}\kla\left( {\frac{1}{2}+1} \right)} \right)\Ket | {1 m} \rangle=\frac{1}{4}\Ket | {1 m} \rangle\\
+S_1S_2\Ket | {Sm_S} \rangle^-&=S_1S_2\Ket | {0 0} \rangle=\frac{1}{2}\kla\left( {0-\frac{3}{4}-\frac{3}{4}} \right)\Ket | {00} \rangle=-\frac{3}{4}\Ket | {00} \rangle.
+\end{align*}
+Define $H_\tecxt\text{spin}:=\alpha +\beta S_1S_2$. 
+Then we can determine $\alpha,\beta$ from the given constraint of 
+\begin{align*}
+H_\tecxt\text{spin}\Ket | {Sm_S} \rangle^\mp &\overset{!}{=}E_\pm\Ket | {Sm_S} \rangle^\mp
+\end{align*}
+by realizing that these spin states are eigenstates of our constructed Hamiltonian, i.e.
+\begin{align*}
+{}^+\braket\langle {Sm_S} | {H_\tecxt\text{spin}} | {Sm_S}\rangle^+&=\alpha + \frac{\beta}{4}=E_-\\
+{}^-\braket\langle {Sm_S} | {H_\tecxt\text{spin}} | {Sm_S}\rangle^-&=\alpha - \frac{3\beta}{4}=E_+.
+\end{align*}
+This set of equations can be solved by inverting the corresponding coefficient matrix
+\begin{align*}
+\begin{pmatrix}
+E_+ \\ E_-
+\end{pmatrix}&=\begin{pmatrix}
+1 & -3/4 \\ 1 & 1/4
+\end{pmatrix}\begin{pmatrix}
+\alpha \\ \beta
+\end{pmatrix}&\Rightarrow &&\begin{pmatrix}
+\alpha \\ \beta
+\end{pmatrix}&=\begin{pmatrix}
+ 1/4 & 3/4 \\ -1 & 1
+\end{pmatrix}\begin{pmatrix}
+E_+ \\ E_-
+\end{pmatrix}.
+\end{align*}
+This gives us
+\begin{align*}
+H_\tecxt\text{spin} &=\frac{E_+ +3E_-}{4}+(E_- - E_+)S_1S_2.
+\end{align*}
+
+\end{document}

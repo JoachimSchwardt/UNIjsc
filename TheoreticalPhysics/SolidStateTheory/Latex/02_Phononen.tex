@@ -1,0 +1,223 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[ngerman]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Gitterschwingungen}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Theoretische Festkörperphysik}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Lineare Kette zweiatomiger Moleküle}
+\subsection*{(a) Bewegungsgleichung}
+Die Massen der beiden Atome eines Moleküls seien $M_1 = M_2 =: M$.
+Wir betrachten ein eindimensionales Gitter mit Gitterkonstante $a$, dessen Einheitszelle zwei Atome im Abstand $a/2$ enthält.
+Wir indizieren die Einheitszellen mit $n\in\mathbb{N}$ und die Basis mit $\alpha\in\{1,2\}$.
+Damit ist der Gleichgewichtsabstand nächster Nachbarn immer gleich $a/2$.
+Die Kraftkonstante zwischen Atomen benachbarter Moleküle sei $\kappa$, die Kraftkonstante innerhalb eines Moleküls sei $K=10\kappa$.
+Unter Vernachlässigung der Wechselwirkung  übernächster Nachbarns lautet die Lagrangefunktion dann
+\begin{align}
+L &= \sum_{n\alpha} \frac{M_\alpha}{2}\dot{u}_{n\alpha}^2 - \sum_n \klam\left[ \frac{K}{2}\kla\left( u_{n,1} - u_{n,2} \right)^2 + \frac{\kappa}{2}\kla\left( u_{n,1} - u_{n-1,2} \right)^2 \right].
+\end{align}
+Die Euler-Lagrange-Gleichungen führen uns dann zu
+\begin{align}
+0 &= \frac{\tecxt\text{d}}{\tecxt\text{d}t} \frac{\partial L}{\partial \dot{u}_{n,1}} - \frac{\partial L}{\partial u_{n,1}} = M\ddot{u}_{n,1} + K (u_{n,1} - u_{n,2}) + \kappa (u_{n,1} - u_{n-1,2}),\\
+0 &= \frac{\tecxt\text{d}}{\tecxt\text{d}t} \frac{\partial L}{\partial \dot{u}_{n,2}} - \frac{\partial L}{\partial u_{n,2}} = M\ddot{u}_{n,2} + K (u_{n,2} - u_{n,1}) + \kappa (u_{n,2} - u_{n+1,1}).
+\end{align}
+Wir machen den Ansatz $u_{n\alpha} = u_\alpha \e^{\i(qna - \omega t)}$ und erhalten dann
+\begin{align}
+0 &= -M\omega^2u_1 \e^{\i(qna - \omega t)} + [K+\kappa] u_1 \e^{\i(qna - \omega t)} - Ku_2\e^{\i(qna - \omega t)} - \kappa u_2\e^{\i(q[n-1]a - \omega t)},\\
+0 &= -M\omega^2u_2 \e^{\i(qna - \omega t)} + [K+\kappa] u_2 \e^{\i(qna - \omega t)} - Ku_1\e^{\i(qna - \omega t)} - \kappa u_1\e^{\i(q[n+1]a - \omega t)}.
+\end{align}
+Diese Gleichungen lassen sich dann zu
+\begin{align}
+\omega^2 &= \frac{K+\kappa}{M} - \frac{Ku_2}{Mu_1} - \frac{\kappa u_2}{Mu_1}\e^{-\i qa},\label{eqn:omega2 from first basis atom} \\
+\omega^2 &= \frac{K+\kappa}{M} - \frac{Ku_1}{Mu_2} - \frac{\kappa u_1}{Mu_2}\e^{\i qa} \label{eqn:omega2 from second basis atom}
+\end{align}
+vereinfachen.
+Auflösen der ersten nach dem Verhältnis der Ausgangsamplituden liefert
+\begin{align}
+\frac{u_2}{u_1} &= \frac{\frac{K+\kappa}{M} - \omega^2}{\frac{K}{M} + \frac{\kappa}{M}\e^{-\i qa}} = \frac{K+\kappa - M\omega^2}{K + \kappa \e^{-\i qa}}.
+\end{align}
+Einsetzen in \autoref{eqn:omega2 from second basis atom} führt dann auf
+\begin{align}
+M\omega^2 &= K+\kappa - \kla\left( K+\kappa\e^{\i qa} \right) \frac{K + \kappa \e^{-\i qa}}{K+\kappa - M\omega^2}.
+\end{align}
+Es ist hilfreich die Größe $x := K+\kappa -M\omega^2$ zu definieren.
+Dann erhalten wir
+\begin{align}
+x &= \frac{K^2 + \kappa^2 + \kappa K (\e^{\i qa} + \e^{-\i qa})}{x}
+\end{align}
+und somit einfach $x = \pm \sqrt{K^2 + \kappa^2 + 2\kappa K \cos(qa)}$.
+Die Disperionsrelation ergibt sich dann zu
+\begin{align}
+\omega^2(q) &= \frac{K+\kappa}{M} \pm \frac{1}{M} \sqrt{K^2 + \kappa^2 + 2\kappa K \cos(qa)}. \label{eqn:dispersion kette}
+\end{align}
+
+\subsection*{(b) Grenzfälle der Dispersionsrelation}
+Für $q=\frac{\pi}{a}$ vereinfacht sich dieser Ausdruck zu
+\begin{align}
+\omega^2 &= \frac{K+\kappa}{M} \pm \frac{1}{M} \sqrt{K^2 + \kappa^2 - 2\kappa K} = \frac{K+\kappa}{M} \pm \frac{|K-\kappa|}{M} \kom\overset{\substack{{K\,>\,\kappa} \\ |}}{=} \frac{2}{M} \begin{cases} K &\tecxt\text{für } + \\ \kappa &\tecxt\text{für } - \end{cases}.
+\end{align}
+Wir erhalten also die Frequenzen der beiden Phononenzweige am Rand der ersten Brillouin-Zone $\omega_+ = \sqrt{\frac{2K}{m}}$ und $\omega_- = \sqrt{\frac{2\kappa}{M}}$.
+\\
+Im langwelligen Grenzfall $q\rightarrow 0$ vereinfacht sich \autoref{eqn:dispersion kette} stattdessen zu
+\begin{align}
+\omega^2 &= \frac{K+\kappa}{M} \pm \frac{1}{M} \sqrt{K^2 + \kappa^2 + 2\kappa K} = \frac{K+\kappa}{M} \pm \frac{K+\kappa}{M} = \frac{2}{M} \begin{cases} K &\tecxt\text{für } + \\ 0 &\tecxt\text{für } - \end{cases}.
+\end{align}
+Der optische Ast erreicht also den Wert $\omega_+ = \sqrt{\frac{2K}{M}}$ und der akustische fällt auf Null, was bereits aus der allgemeinen Betrachtung für akustische Phonoen zu erwarten war.
+
+\subsection*{(c) Zustandsdichten der Phonenzweige}
+Um die Zustandsdichte zu berechnen verwenden wir die (in einer Dimension besonders einfache) Charakterisierung
+\begin{align}
+n_\lambda(\omega) &= \frac{a}{2\pi}\intx\int_{\omega_\lambda(q) = \omega}^{ }\frac{1}{|\omega_\lambda'(q)|}\, \mathrm{d}q = \frac{a}{2\pi} \sum_{q,\, \omega_\lambda(q)=\omega} \frac{1}{|\omega_\lambda'(q)|} . \label{eqn:zustandsdichte 1d allgemein}
+\end{align}
+Dafür benötigen wir zunächst die Ableitung der Dispersionsrelation, wobei $\omega'(q) = \frac{(\omega^2(q))'}{2\omega}$ ist.
+Wir bestimmen daher zunächst
+\begin{align}
+\frac{\tecxt\text{d}\omega^2(q)}{\tecxt\text{d}q} &= \mp\frac{a}{M} \frac{\kappa K\sin(qa)}{\sqrt{K^2+\kappa^2+2\kappa K \cos (qa)}} = \\
+&= \frac{a}{M}\frac{\kappa K\sin(qa)}{K+\kappa - M\omega^2} = \\
+&= \frac{a}{M} \frac{\kappa K \sqrt{1 - \kla\left( \frac{x^2-K^2-\kappa^2}{2\kappa K} \right)^2}}{x} = \\
+&= \frac{a}{2Mx} \sqrt{4\kappa^2K^2 - (x^2-K^2-\kappa^2)^2}.
+\end{align}
+Im vorletzten Schritt haben wir dabei $\cos(qa) = \frac{x^2-K^2-\kappa^2}{2\kappa K}$ verwendet, um $\sin(qa)$ über $x=K+\kappa -M\omega^2(q)$ auszudrücken.
+Damit ergibt sich
+\begin{align}
+|\omega'(q)| &= \frac{1}{2\omega} \frac{\tecxt\text{d}\omega^2(q)}{\tecxt\text{d}q} = \frac{a}{4Mx\omega} \sqrt{4\kappa^2K^2 - (x^2-K^2-\kappa^2)^2} = \\
+&= \frac{a}{4M\omega} \frac{\sqrt{4\kappa^2K^2 - (M^2\omega^4 + 2\kappa K - 2\kappa M\omega^2 - 2KM\omega^2)^2}}{K+\kappa -M\omega^2}.
+\end{align}
+Die Zustandsdichte ergibt sich damit zu
+\begin{align}
+n(\omega) &= \frac{2M\omega}{\pi} \frac{K+\kappa -M\omega^2}{\sqrt{4\kappa^2K^2 - (M^2\omega^4 + 2\kappa K - 2\kappa M\omega^2 - 2KM\omega^2)^2}}.
+\end{align}
+Dispersionsrelation und Zustandsdichte sind in \autoref{fig:dispersion linear chain} und \autoref{fig:dos linear chain} graphisch dargestellt.
+\clearpage
+\begin{figure}[!ht]
+\centering
+\vspace*{-0.3cm}\includegraphics{Dispersion_linear_chain.png}
+\caption{Visualisierung des akustischen (blau) und optischen (orange) Phononenzweiges für die im Titel angegebenen Parameter.}
+\label{fig:dispersion linear chain}
+\end{figure}
+\begin{figure}[!ht]
+\centering
+\vspace*{-0.3cm}\includegraphics{DOS_linear_chain.png}
+\caption{Visualisierung der Zustandsdichte für den akustischen (blau) und optischen (orange) Phononenzweig für die im Titel angegebenen Parameter.}
+\label{fig:dos linear chain}
+\end{figure}
+
+\newpage
+\subsection*{(d) Dispersionsrelation im Spezialfall $K=\kappa$}
+Für $K=\kappa$ haben wir effektiv nur noch eine einatomige lineare Kette.
+Die Dispersionsrelation vereinfacht sich dann stark, und wir erhalten
+\begin{align}
+\omega^2(q) &= \frac{2K}{M} \pm \frac{1}{M}\sqrt{K^2 + K^2 + 2K^2\cos(qa)} = \frac{2K}{M}\klam\left[ 1 \pm \left\vert \cos\kla\left( \frac{qa}{2} \right)\right\vert \right] = \\
+&= \frac{2K}{M}\klam\left[ 1 - \cos \kla\left( \frac{qa}{2} \right) \right].
+\end{align}
+Das positive Vorzeichen gehört zum optischen Ast, der allerdings in einer einatomigen Basis nicht existiert.
+In einer sauberen Herleitung würde auch nur die ``akustische'' Lösung herauskommen.
+Wir können die Dispersionsrelation allerdings noch weiter zu
+\begin{align}
+\omega(q) &= 2\sqrt{\frac{K}{M}}\sin\kla\left( \frac{qa}{4} \right)
+\end{align}
+vereinfachen, was gerade der bekannten Lösung mit halbierter Gitterkonstanten $a\rightarrow a/2$ entspricht.
+
+\section{Quadratgitter}
+Wir betrachten ein Quadratgitter ($\vec{a}_1 = (a,0)^\top$ und $\vec{a}_2 = (0,a)^\top$) aus Atomen der Masse $M$ mit periodischen Randbedingungen.
+Die potentielle Energie des Gitters habe näherungsweise die Form
+\begin{align}
+V &= \frac{\alpha}{2}\sum_{\vec{R}}\klam\left[ \kla\left( \vec{u}_{\vec{R} + \vec{a}_1} - \vec{u}_{\vec{R}} \right)^2 + \kla\left( \vec{u}_{\vec{R} + \vec{a}_2} - \vec{u}_{\vec{R}} \right)^2 \right] \quad \tecxt\text{mit } \alpha > 0,
+\end{align}
+wobei nur die Nächste-Nachbar-Wechselwirkung berücksichtigt wurde.
+Dabei bezeichnet $\vec{u}_{\vec{R}} \equiv (u_{\vec{R}, 1}, u_{\vec{R} , 2})^\top$ die Auslenkung des Gitteratoms bei $\vec{R}$ aus seiner Ruhelage.
+
+\subsection{Kraftkonstantenmatrix $\Phi$}
+Es ist hilfreich, die potentielle Energie etwas umzuformen.
+Mit $n=(n_x,n_y)$ und $\vec{R}_n+\vec{a}_{1} \equiv n + (1,0)$ findet man
+\begin{align}
+V &= \frac{\alpha}{2}\sum_{nj} \klam\left[ \kla\left( u_{n+(1,0),j} - u_{n,j} \right)^2 + \kla\left( u_{n+(0,1),j} - u_{n,j} \right)^2 \right].
+\end{align}
+Die Komponenten der Kraftkonstantenmatrix sind dann gegeben durch
+\begin{align*}
+\Phi_{nj}^{n'j'} &= \frac{\partial^2V}{\partial u_{n,j}\partial u_{n', j'}} = \numberthis \\
+&= \alpha\frac{\partial}{\partial u_{n',j'}} \sum_{\tilde{n}} \klam\Big[ \kla\left( u_{\tilde{n} + (1,0), j} - u_{\tilde{n},j} \right) \kla\left( \delta_{n,\tilde{n} + (1,0)} - \delta_{n,\tilde{n}} \right)\ + \\
+&\hspace{2.8cm} + \kla\left( u_{\tilde{n} + (0,1),j} - u_{\tilde{n},j} \right) \kla\left( \delta_{n,\tilde{n} + (0,1)} - \delta_{n,\tilde{n}} \right) \Big] = \numberthis \\
+&= \alpha\frac{\partial}{\partial u_{n',j'}}  \klam\Big[ \kla\left( u_{n, j} - u_{n - (1,0),j} \right) - \kla\left( u_{n + (1,0),j} - u_{n,j} \right)\ + \\
+&\hspace{2cm} + \kla\left( u_{n,j} - u_{n-(0,1),j} \right) - \kla\left( u_{n+(0,1),j} - u_{n,j} \right) \Big] = \numberthis \\
+&= \alpha\delta_{jj'} \klam\left[ 4\delta_{n,n'} - \delta_{n,n'+(1,0)} - \delta_{n,n'-(1,0)} - \delta_{n,n'+(0,1)} - \delta_{n,n'-(0,1)} \right]. \numberthis
+\end{align*}
+
+\subsection{Dispersionsrelation}
+Um die Dispersonsrelation zu bestimmen, transformieren wir zunächst in den Impulsraum.
+Da in unserem Fall einfach $D_{nj}^{n'j'} = \frac{1}{M}\Phi_{nj}^{n'j'}$ ist, gilt
+\begin{align}
+D_j^{j'}(\vec{q}) &= \sum_n \frac{1}{M}\Phi_{0j}^{nj'} \e^{\i\vec{q}\cdot\vec{R}_n} = \\
+&= \frac{\alpha}{M}\delta_{jj'} \klam\left[ 4 - \e^{-\i\vec{q}\cdot\vec{a}_1} - \e^{\i\vec{q}\cdot\vec{a}_1} - \e^{-\i\vec{q}\cdot\vec{a}_2} - \e^{\i\vec{q}\cdot\vec{a}_2} \right] = \\
+&= \frac{2\alpha}{M}\delta_{jj'} \klam\left[ 2 - \cos(q_xa) - \cos(q_ya) \right] = \\
+&= \frac{4\alpha}{M}\delta_{jj'} \klam\left[ \sin^2\kla\left( \frac{q_xa}{2} \right) + \sin^2\kla\left( \frac{q_ya}{2} \right) \right].
+\end{align}
+Da die dynamische Matrix hier also bereits diagonal ist, können wir bereits die Dispersionsrelation ablesen.
+Man findet 
+\begin{align}
+\omega_{1,2}^2 &= \frac{4\alpha}{M} \klam\left[ \sin^2\kla\left( \frac{q_xa}{2} \right) + \sin^2\kla\left( \frac{q_ya}{2} \right) \right],
+\end{align}
+beziehungsweise einfach nur
+\begin{align}
+\omega(\vec{q}) &= 2\sqrt{\frac{\alpha}{M}} \sqrt{ \sin^2\kla\left( \frac{q_xa}{2} \right) + \sin^2\kla\left( \frac{q_ya}{2} \right) }.
+\end{align}
+
+
+\end{document}

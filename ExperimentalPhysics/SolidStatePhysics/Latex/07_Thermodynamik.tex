@@ -1,0 +1,69 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{07 Thermische Eigenschaften von Festkörpern}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 7.1: Innere Energie und Wärmekapazität}
+Der erste Hauptsatz lautet $\tecxt\text{d}U=\tecxt\text{d}Q-p\tecxt\text{d}V$:
+\begin{align*}
+\tecxt\text{d}Q&=\tecxt\text{d}U+p\tecxt\text{d}V=\klam\left[ {\kla\left( {\frac{\partial U}{\partial p}} \right)_T+p\kla\left( {\frac{\partial V}{\partial p}} \right)_T} \right]\tecxt\text{d}p+\klam\left[ {\kla\left( {\frac{\partial U}{\partial T}} \right)_p+p\kla\left( {\frac{\partial V}{\partial T}} \right)_p} \right]\tecxt\text{d}T\\
+\tecxt\text{d}Q&=\tecxt\text{d}U+p\tecxt\text{d}V=\klam\left[ {\kla\left( {\frac{\partial U}{\partial V}} \right)_T+p} \right]\tecxt\text{d}V+\kla\left( {\frac{\partial U}{\partial T}} \right)_V\tecxt\text{d}T
+\end{align*}
+Für die Wärmekapazitäten bei konstantem Volumen oder Druck folgt daraus:
+\begin{align*}
+\tecxt\text{d}p&=0&\Rightarrow &&\tecxt\text{d}Q&=\kla\left( {\frac{\partial (U+pV)}{\partial T}} \right)_p\tecxt\text{d}T&\Rightarrow && C_p&=\kla\left( {\frac{\partial H}{\partial T}} \right)_p\\
+\tecxt\text{d}V&=0&\Rightarrow &&\tecxt\text{d}Q&=\kla\left( {\frac{\partial U}{\partial T}} \right)_V\tecxt\text{d}T&\Rightarrow && C_V&=\kla\left( {\frac{\partial U}{\partial T}} \right)_V
+\end{align*}
+Also gilt $C_p-C_V=p\kla\left( {\frac{\partial V}{\partial T}} \right)_p\ge 0$.\\
+Nach dem Gleichverteilungssatz trägt jeder Freiheitsgrad eine innere Energie von $U_j=k_BT$ bei. Für $f=3N$ ist also $U=3Nk_BT=:C_VT$ mit $C_V=3Nk_B$. Die molare Wärmekapazität ist $C_m=\frac{3Nk_B}{n}=3N_Ak_B=3R$. Die spezifische Wärmekapazität ist bei einer molare Masse von $M_\tecxt\text{Ge}=72.61\,\frac{\tecxt\text{g}}{\tecxt\text{mol}}$ durch $c=\frac{C_m}{M}=\frac{3R}{M}=0.344\,\frac{\tecxt\text{J}}{\tecxt\text{g}\cdot\tecxt\text{K}}$ gegeben. Alternativ kann man $c=\frac{C_V}{Nm_\tecxt\text{Ge}}$ verwenden, wobei $m_\tecxt\text{Ge}=72.61\,$u und $1\,\tecxt\text{u}=\frac{1\,\tecxt\text{mol}^{-1}}{N_A}\,\tecxt\text{g}$ ist.\\
+Das Dulong-Petit-Gesetz ist nur eine Näherung für große Temperaturen.\newpage
+\section*{Aufgabe 7.2: Quantenmechanische Betrachtung der inneren Energie}
+Betrachte die Zustandssumme für Energien $E_n=\hbar\omega\kla\left( {n+\frac{1}{2}} \right)$ mit $\beta=\frac{1}{k_BT}$:
+\begin{align*}
+Z&=\sum_{n\ge 0}e^{-\beta E_n}=e^{-\beta\hbar\omega/2}\sum_{n\ge 0}\kla\left( {e^{-\beta\hbar\omega}} \right)^n=e^{-\beta\hbar\omega/2}\frac{1}{1-e^{-\beta\hbar\omega}}=\frac{2}{\sinh\kla\left( {\frac{\hbar\omega}{2k_BT}} \right)}
+\end{align*}
+Man kann den Erwartungswert der Energie als Ableitung der Zustandssumme ausdrücken:
+\begin{align*}
+\bra\langle {U}\rangle&=3N\frac{1}{Z}(-\partial_\beta)Z=\frac{3N}{2}\sinh\kla\left( {\frac{\beta\hbar\omega}{2}} \right)\cdot\frac{2\cdot\cosh\kla\left( {\frac{\beta\hbar\omega}{2}} \right)\cdot\frac{\hbar\omega}{2}}{\sinh^2\kla\left( {\frac{\beta\hbar\omega}{2}} \right)}=\frac{3N\hbar\omega}{2}\coth\kla\left( {\frac{\hbar\omega}{2k_BT}} \right)
+\end{align*} 
+Es gilt $\coth x\approx\frac{1}{x}$ für $|x|\ll 1$. Für große Temperaturen $k_BT\gg\hbar\omega$ gilt daher:
+\begin{align*}
+\bra\langle {U}\rangle&\approx\frac{3N\hbar\omega}{2}\frac{2k_BT}{\hbar\omega}=3Nk_BT
+\end{align*}
+Die Wärmekapazität ist hier mit $\coth'x=1-\coth^2x=-\tecxt\text{csch}^2\,x$:
+\begin{align*}
+C_V&=\frac{\partial\bra\langle {U}\rangle}{\partial T}=\frac{3N\hbar\omega}{2}\tecxt\text{csch}^2\,\kla\left( {\frac{\hbar\omega}{2k_BT}} \right)\cdot\frac{\hbar\omega}{2k_BT^2}
+\end{align*}
+Definiere $x:=\frac{\hbar\omega}{2k_BT_0}$ mit $T_0=300\,$K. Dann lautet die spezifische Wärmekapazität:
+\begin{align*}
+c&=\frac{C_V}{Nm}=\frac{3k_BT_0^2x^2}{mT^2}\tecxt\text{csch}^2\,\kla\left( {\frac{xT_0}{T}} \right)
+\end{align*}
+\begin{figure}[h!]
+\centering
+\hspace*{-2cm}\vspace*{-2cm}\includegraphics[scale=0.75]{07_C_spez_plot.png}
+\end{figure}
+\end{document}

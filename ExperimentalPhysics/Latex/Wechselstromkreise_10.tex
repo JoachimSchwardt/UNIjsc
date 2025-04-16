@@ -1,0 +1,53 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\begin{document}
+
+\title{Wechselstromkreise}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Hochpassfilter}
+\begin{align*}
+I_1&=I_2\ \ \Rightarrow\ \ U_1Z_2=U_2Z_1\ \ \Rightarrow\ \ U_1R=U_2(R+\frac{1}{iwC})\\ 
+&\Rightarrow\ \ \frac{U_2}{U_1}=\frac{U_{20}}{U_{10}}e^{-i\varphi}=\frac{R}{R+\frac{1}{iwC}}\ \ \Rightarrow\ \ U_{20}=U_{10}\Big\vert\frac{iwCR}{1+iwCR}\Big\vert=U_{10}\Big\vert\frac{iwCR(1-iwCR)}{1+(wCR)^2}\Big\vert=\\
+&=U_{10}\Big\vert\frac{wCR\sqrt{1+(wCR)^2}}{1+(wCR)^2}\Big\vert=U_{10}\frac{wCR}{\sqrt{1+(wCR)^2}}=U_{10}\frac{1}{\sqrt{1+\frac{1}{(wCR)^2}}} \\
+\varphi&=\arctan(\frac{wCR}{(wCR)^2})=\arctan(\frac{1}{wCR})
+\end{align*}
+
+\section{Widerstände und Belastbarkeit}
+\begin{align*}
+U_N&=U_{C_1}+U_R=I_{C_1}X_{C_1}+U_R=\frac{1}{iwC_1}(I_{C_2}+I_R)+U_R=\frac{1}{iw{C_1}}(\frac{U_{C_2}}{X_{C_2}}+\frac{U_R}{R})+U_R= \\
+&=U_R(1+\frac{1}{iw{C_1}}(iw{C_2}+\frac1R))\ \ \Rightarrow\ \ \frac{U_R}{U_N}=\frac{1}{1+\frac{C_2}{C_1}-\frac{i}{w{C_1}R}}\\
+&\Rightarrow\ \ U_{R,eff}=\frac{U_{N,eff}}{\sqrt{(1+\frac{C_1}{C_2})^2+\frac{1}{(w{C_1}R)^2}}}\ \ \Rightarrow\ \ P=\frac{U_{R,eff}^2}{R}
+\end{align*}
+
+\section{Schwingkreis}
+\begin{align*}
+\Big\vert\frac{U_a}{U_0}\Big\vert&=\Big\vert\frac{\frac{1}{iwC}}{\frac{1}{iwC}+R+iwL}\Big\vert=\Big\vert\frac{1}{1-w^2LC+iwCR}\Big\vert=\frac{1}{\sqrt{(1-w^2LC)^2+(wCR)^2}}\\
+0&=\ddot{I}+\frac{R}{L}\dot{I}+\frac{1}{LC}I\ \ \Rightarrow\ \ w_0=\frac{1}{\sqrt{LC}} \textrm{ und }\ \delta = \frac{R}{2L}\\
+&\Rightarrow\ \ w_R=\sqrt{w_0^2-2\delta^2}=\sqrt{\frac{1}{LC}-\frac12 (\frac{R}{L})^2}
+\end{align*}
+
+\section{Glühlampe}
+Zur Bestimmung der benötigten Kapazität vergleichen wir den Strom $I$ im gesamten Stromkreis und an der Glühlampe. Für die Leistung der Lampe gilt $P_G=\frac{U_{G,eff}^2}{R}$:
+\begin{align*}
+I_N=I_G\ \ &\Rightarrow\ \ U_NR=U_GZ\ \ \Rightarrow\ \ \frac{U_N}{U_G}=1-\frac{i}{wCR}\ \ \Rightarrow\ \ \frac{U_{N,eff}}{U_{G,eff}}=\sqrt{1+\frac{1}{(wCR)^2}}\\ 
+&\Rightarrow\ \ (wCR)^2=\frac{1}{\left(\frac{U_{N,eff}}{U_{G,eff}}\right)^2-1}\ \ \Rightarrow\ \ C=\frac{1}{wR\sqrt{\left(\frac{U_{N,eff}}{U_{G,eff}}\right)^2-1}}=\\
+&=\frac{P_G}{wU_{G,eff}^2\sqrt{\left(\frac{U_{N,eff}}{U_{G,eff}}\right)^2-1}}
+\end{align*}
+Zur Bestimmung der Blindleistung betrachten wir den Imaginärteil der Gesamtleistung:
+\begin{align*}
+P_B&=\textrm{Im }P= U_{N,eff}I_{N,eff}\sin(\varphi)=U_{N,eff}\frac{U_{G,eff}}{R}\frac{\sqrt{U_{N,eff}^2-U_{G,eff}^2}}{U_{N,eff}}=\\
+&=P_G\sqrt{\left(\frac{U_{N,eff}}{U_{G,eff}}\right)^2-1}\\
+P_W&=\textrm{Re }P=U_{N,eff}I_{N,eff}\cos(\varphi)=U_{N,eff}\frac{U_{G,eff}}{R}\frac{U_{G,eff}}{U_{N,eff}}=P_G
+\end{align*}
+
+\end{document}

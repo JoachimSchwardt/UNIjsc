@@ -1,0 +1,264 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{01 Variation principle}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Theoretical Physics (Master)}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section*{Problem 1: \normalfont\textit{\large{Fermat's principle}}}
+\subsection*{a)}
+Let $L:=\frac{n(x,y)}{c_0}\sqrt{1+(y')^2}$ and 
+\begin{align}
+T&=\intx\int_{ }^{ }L\, \mathrm{d}x.
+\end{align}
+Then the Euler-Lagrange equation yields
+\begin{align}
+0&=\frac{\partial L}{\partial y}-\frac{\tecxt\text{d}}{\tecxt\text{d}x}\frac{\partial L}{\partial y'}\propto\frac{\partial n}{\partial y}\sqrt{1+(y')^2}-\frac{\tecxt\text{d}}{\tecxt\text{d}x}n\frac{y'}{\sqrt{1+(y')^2}}=\\
+&=\frac{\partial n}{\partial y}\sqrt{1+(y')^2}-\frac{y'}{\sqrt{1+(y')^2}}\kla\left( \frac{\partial n}{\partial x}+\frac{\partial n}{\partial y}y' \right)-\frac{ny''}{\sqrt{1+(y')^2}}+\frac{n(y')^2}{\sqrt{1+(y')^2}^3}.
+\end{align}
+Multiplying by $\sqrt{1+(y')^2}$ and simplifying gives
+\begin{align}
+0&=\frac{\partial n}{\partial y}\kla\left( 1+(y')^2 \right)-y'\kla\left( \frac{\partial n}{\partial x}+\frac{\partial n}{\partial y}y' \right)-ny''+n\frac{(y')^2}{1+(y')^2}=\\
+&=\frac{\partial n}{\partial y}-y'\frac{\partial n}{\partial x}-ny''+1-\frac{n}{1+(y')^2}.
+\end{align}
+\subsection*{b)}
+Solving the equation from a) for either special case is a difficult task.
+A more elegant approach is to restart from the Euler-Lagrange equation.
+Consider first $n=n(x)$.
+This gives rise to
+\begin{align}
+0&=\frac{\partial L}{\partial y}-\frac{\tecxt\text{d}}{\tecxt\text{d}x}\frac{\partial L}{\partial y'}\propto\frac{\tecxt\text{d}}{\tecxt\text{d}x}n\frac{y'}{\sqrt{1+(y')^2}}.
+\end{align}
+Integrating over $x$ yields an undetermined constant $C$ and the equation
+\begin{align}
+C&=n(x)\frac{y'}{\sqrt{1+(y')^2}}&&\Rightarrow&\kla\left( \frac{n(x)}{C} \right)^2&=1+\frac{1}{(y')^2}.
+\end{align}
+Rearranging and integrating then gives
+\begin{align}
+y(x)&=\intx\int_{x_0}^{x}\, \frac{1}{\sqrt{\kla\left( \frac{n(s)}{C} \right)^2-1}}\mathrm{d}s.
+\end{align}
+The approach for the second case of $n=n(y)$ is a little bit more challenging.
+A key step is to first consider a general function $L=L(y,y')$, since our $L$ is no longer explicitly depending on $x$.
+Then the Euler-Lagrange equation can be multiplied by $y'$, which leads to the form
+\begin{align}
+0&=y'\frac{\partial L}{\partial y} - y'\frac{\tecxt\text{d}}{\tecxt\text{d}x}\frac{\partial L}{\partial y'} = \frac{\tecxt\text{d}L}{\tecxt\text{d}x} - \cancel{y''\frac{\partial L}{\partial y''}} - \frac{\tecxt\text{d}}{\tecxt\text{d}x}\kla\left( y'\frac{\partial L}{\partial y'} \right) +  \cancel{y''\frac{\partial L}{\partial y'}}.
+\end{align}
+Integrating over $x$ again yields a constant $C$, and the general equation
+\begin{align}
+C&=L-y'\frac{\partial L}{\partial y'},
+\end{align}
+for any $L=L(y,y')$.
+In our case we find
+\begin{align}
+C&=n\sqrt{1+(y')^2}-y'n\frac{y'}{\sqrt{1+(y')^2}}.
+\end{align}
+Multiplying by $\sqrt{1+(y')^2}$ leads to
+\begin{align}
+C\sqrt{1+(y')^2}&=n\kla\left( 1+(y')^2 \right)-n(y')^2=n&&\Rightarrow&\kla\left( \frac{n(y)}{C} \right)^2&=1+(y')^2.
+\end{align}
+Rearranging and integrating gives
+\begin{align}
+y(x)&=\intx\int_{ }^{ }\sqrt{\kla\left( \frac{n(y)}{C} \right)^2-1}\, \mathrm{d}x.
+\end{align}
+\subsection*{c)}
+Consider $n=n_1+(n_2-n_1)\Theta(x)$.
+The integral can be evaluated as
+\begin{align}
+y(x)&=\intx\int_{0}^{x}\frac{1}{\sqrt{\kla\left( \frac{n(s)}{C} \right)^2-1}}\, \mathrm{d}s=
+\begin{cases}x\kla\left( m_1^2-1 \right)^{-1/2},&x<0\\
+x\kla\left( m_2^2-1 \right)^{-1/2}&x\ge 0
+\end{cases},
+\end{align}
+where $m_{1,2}:=\frac{n_{1,2}}{C}$.
+Consider two triangles, which share the point $(0,0)$, and both have a side parallel to the $x$-axis with length $L$.
+The first triangle is located below the $x$-axis and has the points $(-L,0)$ and $(-L, y(-L))$. 
+The second triangle is located above the $x$-axis and has points $(0,y(L))$ and $(L,y(L))$.
+Define the angles at the respective $(0,0)$-vertex as $\alpha_{1,2}$.
+Then we find
+\begin{align}
+\tan\alpha_{1,2}&=\left\vert\frac{y(\mp L)}{L}\right\vert = \kla\left( m_{1,2}^2-1 \right)^{-1/2}.
+\end{align}
+this can be rearranged to yield
+\begin{align}
+m_{1,2}&=\sqrt{1+\frac{1}{\tan^2\alpha_{1,2}}}=\csc\alpha_{1,2}.
+\end{align}
+Dividing both equations gives Snell's refraction law
+\begin{align}
+\frac{n_1}{n_2}&=\frac{m_1}{m_2}=\frac{\sin\alpha_2}{\sin\alpha_1}.
+\end{align}
+Consider next the case $n=n_1+(n_2-n_1)\Theta(y)$.
+The relevant equation is
+\begin{align}
+y'(x)&=\sqrt{\kla\left( \frac{n(y)}{C} \right)^2-1}
+\end{align}
+Since $n=\tecxt\text{const.}$, we simply get
+\begin{align}
+y(x)&= \begin{cases} x\kla\left( m_1^2-1 \right)^{1/2},&x<0\\
+x\kla\left( m_2^2-1 \right)^{1/2}&x\ge 0
+\end{cases},
+\end{align}
+where $m_{1,2}:=\frac{n_{1,2}}{C}$.
+The rest of the derivation is completely analogous.
+However, note that the angles $\alpha_{1,2}$ from the previous case will now be $\frac{\pi}{2}-\alpha_{1,2}$, due to the rotated geometry.
+\newpage
+\section*{Problem 2: \normalfont\textit{\large{Madelung representation of Schrödinger's equation}}}
+\subsection*{a)}
+Let $\psi=\sqrt{\rho}\e^{\i S}$. 
+Inserting this into the Schrödinger equation $\i\partial_t\psi=-\frac{\nabla^2}{2m}\psi +V\psi$ gives
+\begin{align}
+\i\kla\left( \i\partial_tS +\frac{\partial_t\rho}{2\rho}\right)\psi&=V\psi -\frac{1}{2m}\nabla\kla\left( \i\nabla S+\frac{\nabla\rho}{2\rho} \right)\psi=\\
+&=V\psi-\frac{1}{2m}\kla\left( \i\nabla^2S+\frac{\nabla^2\rho}{2\rho}-\klam\left[ \frac{\nabla\rho}{2\rho} \right]^2 \right)\psi-\frac{1}{2m}\kla\left( \i\nabla S+\frac{\nabla\rho}{2\rho} \right)^2\psi.
+\end{align}
+Separating into real and imaginary parts yields the two equations
+\begin{align}
+\partial_t\rho&=-\frac{1}{m}\kla\left( \rho\nabla^2S+\nabla S\nabla\rho \right)=-\nabla\frac{1}{m}\kla\left( \rho\nabla S \right)\\
+-\partial_t S&=V-\frac{1}{2m}\kla\left( \frac{\nabla^2\rho}{2\rho}- (\nabla S)^2 \right).
+\end{align}
+Given the probability current $\vec{j}:=\frac{1}{m}\rho\nabla S$, the first equation can be interpreted as a continuity equation
+\begin{align}
+0&=\partial_t\rho+\nabla\vec{j}.
+\end{align}
+Since this current is usually expressed via $\vec{j}=\rho\vec{u}$, where $\vec{u}$ is a flow velocity, said velocity will be defined by $\vec{u} := \frac{1}{m}\nabla S$.
+With this information, it can be helpful to insert the newly defined quantities into the second equation. 
+This leads to
+\begin{align}
+\partial_t\nabla S+\frac{1}{2m}\nabla\kla\left( \nabla S \right)^2&=-\nabla V+\frac{1}{2m}\nabla\frac{\nabla^2\rho}{2\rho}\\
+\Rightarrow\ \ \ \partial_t\vec{u}+\frac{1}{2}\nabla\vec{u}^2&=-\frac{1}{m}\nabla\kla\left( V-\frac{1}{2m}\frac{\nabla^2\rho}{2\rho} \right).
+\end{align}
+Define an additional potential $V_\rho:=-\frac{1}{2m}\frac{\nabla^2\rho}{2\rho}$, and use 
+\begin{align}
+\frac{\tecxt\text{d}\vec{u}}{\tecxt\text{d}t}&=\partial_t\vec{u} + \frac{\tecxt\text{d}\vec{r}}{\tecxt\text{d}t}\nabla\vec{u}=\partial_t\vec{u} + \vec{u}\nabla\vec{u}
+\end{align}
+to rewrite the equations as
+\begin{align}
+0&=\partial_t\rho + \nabla\vec{j}\\
+\frac{\tecxt\text{d}\vec{u}}{\tecxt\text{d}t}&=-\frac{1}{m}(V+V_\rho).
+\end{align}
+\subsection*{b)}
+Since $\rho=|\psi|^2$, it can still be interpreted as the probability density of the particle.
+Since $\vec{j}\propto\nabla S$, this can be interpreted as the probability current, that ensure the ``conservation of probability'', i.e. the continuity equation.
+%(((Interpretation of $S$?!)))
+
+\newpage
+\section*{Problem 3: \normalfont\textit{\large{Charge in the electromagnetic field}}}
+\subsection*{a)}
+The given Lagrangian is 
+\begin{align}
+L&=\frac{m}{2}\dot{\vec{r}}\,^2-q\phi+q\dot{\vec{r}}\cdot\vec{A}.
+\end{align}
+Thus the canonical momentum is
+\begin{align}
+\vec{p}&:=\frac{\partial L}{\partial \dot{\vec{r}}}=m\dot{\vec{r}}+q\vec{A}.
+\end{align}
+Then the Hamiltonian is
+\begin{align}
+H&=\vec{p}\cdot\dot{\vec{r}}-L=\vec{p}\cdot\frac{\vec{p}-q\vec{A}}{m}-\frac{m}{2}\kla\left( \frac{\vec{p}-q\vec{A}}{m} \right)^2+q\phi -q\frac{\vec{p}-q\vec{A}}{m}\cdot\vec{A}=\\
+&=\frac{\kla\left( \vec{p}-q\vec{A} \right)^2}{2m}+q\phi.
+\end{align}
+The equations of motion are given by
+\begin{align}
+\dot{\vec{r}}&=\frac{\partial H}{\partial \vec{p}}=\frac{\vec{p}-q\vec{A}}{m},\\
+\dot{\vec{p}}&=-\frac{\partial H}{\partial \vec{r}}=-\nabla\kla\left( \frac{\vec{p}-q\vec{A}}{m}\cdot-q\overset{\downarrow}{\vec{A}} \right)-q\nabla\phi.
+\end{align}
+Inserting the first into the second yields
+\begin{align}
+m\ddot{\vec{r}}&=\dot{\vec{p}}-q\dot{\vec{A}}=q\nabla\kla\big( \dot{\vec{r}}\cdot\overset{\downarrow}{\vec{A}} \big)-q\nabla\phi-q\partial_t\vec{A}-\big(\dot{\vec{r}}\cdot \nabla\big)\vec{A}=\\
+&=q\klam\left[ -\nabla\phi-\partial_t\vec{A}+\dot{\vec{r}}\times\kla\left( \nabla\times\vec{A} \right) \right]=q\kla\left( \vec{E}+\dot{\vec{r}}\times\vec{B} \right).
+\end{align}
+\subsection*{b)}
+For the relativistic case, note that $\tecxt\text{d}s^2=\tecxt\text{d}x^\mu\tecxt\text{d}x_\mu=\tecxt\text{d}t^2-\tecxt\text{d}\vec{r}\,^2$, $x^\mu=(t,\vec{r}\,)^\top$ and $A_\mu=(\phi,-\vec{A}\,)^\top$. %\intercal for a different transpose symbol...
+Then we can rewrite the relativistic action as 
+\begin{align}
+\mathcal{A}&=-m\intx\int_{ }^{ }\, \mathrm{d}s-q\intx\int_{ }^{ }A_\mu \, \mathrm{d}x^\mu =\\
+&=-m\intx\int_{ }^{ }\sqrt{1-\kla\left( \frac{\tecxt\text{d}\vec{r}}{\tecxt\text{d}t} \right)^2}\, \mathrm{d}t-q\intx\int_{ }^{ }\phi -\frac{\tecxt\text{d}\vec{r}}{\tecxt\text{d}t}\cdot\vec{A}\, \mathrm{d}t=\\
+&=-\intx\int_{ }^{ }\frac{m}{\gamma}+q\phi -q\dot{\vec{r}}\cdot\vec{A}\, \mathrm{d}t,
+\end{align}
+where $\gamma := \kla\left( 1- \dot{\vec{r}}\,^2 \right)^{-1/2}$.
+Since the integrand is now exactly equivalent to the given relativistic Lagrangian
+\begin{align}
+L&=-\frac{m}{\gamma}-q\phi +q\dot{\vec{r}}\cdot\vec{A},
+\end{align}
+the above definition of the action is obviously compatible.
+The canonical momentum is now given by
+\begin{align}
+\vec{p}&=\frac{\partial L}{\partial \dot{\vec{r}}}=m\gamma\dot{\vec{r}}+q\vec{A}.
+\end{align}
+Inverting this equation to solve for $\dot\vec{r}$ is not quite as straight-forward as it was in the classical case, since $\gamma=\gamma(\dot{r})$.
+However, obviously $\dot{\vec{r}}\propto\vec{p}$, so we only need to find the absolute value.
+Note that
+\begin{align}
+\kla\left( \frac{\vec{p}-q\vec{A}}{m} \right)^2&=\dot{\vec{r}}\,^2\gamma^2=-1+\frac{1}{1-\dot{\vec{r}}\,^2}&&\Rightarrow&\dot{\vec{r}}&=\frac{\vec{p}-q\vec{A}}{\sqrt{m^2+\kla\left( \vec{p}-q\vec{A} \right)^2}}. \label{eqn:r dot vec as function of p}
+\end{align}
+Define $\vec{\pi}:=\vec{p}-q\vec{A}$ to save some writing for the following part.
+We also need to express $\gamma$ in terms of $\vec{p}$, which is of course simply
+\begin{align}
+\gamma&=\sqrt{1-\kla\left( \frac{\vec{\pi}}{m} \right)^2}. \label{eqn:gamma as function of p}
+\end{align}
+Using \eqref{eqn:r dot vec as function of p} and \eqref{eqn:gamma as function of p} the Hamiltonian becomes
+\begin{align}
+H&=\vec{p}\cdot\dot{\vec{r}}-L=\vec{p}\cdot \frac{\vec{\pi}}{\sqrt{m^2+\vec{\pi}\,^2}}+\frac{m}{\gamma}+q\phi-q\frac{\vec{\pi}}{\sqrt{m^2+\vec{\pi}\,^2}}\cdot\vec{A}=\\
+&=\frac{\vec{\pi}^2+m^2}{\sqrt{m^2+\vec{\pi}\,^2}}+q\phi=\sqrt{m^2+\vec{\pi}\,^2}+q\phi.
+\end{align}
+Note that using $\gamma$, this Hamiltonian has the even simpler alternative form of
+\begin{align}
+H&=m\gamma +q\phi.
+\end{align}
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

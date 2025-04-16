@@ -1,0 +1,167 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+
+\begin{document}
+
+\title{02 Unitäre Räume und Hilberträume}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Skalarprodukt}
+a)
+\begin{proof}
+Sei $\phi\in V$ mit $\|\phi\|=0$. Dann gilt $\brak\langle {\phi}| {\phi}\rangle=0$, also $\phi=0$.\\
+Sei $\lambda\in\mathbb{C}$ und $\phi\in V$. Dann gilt:
+$$\|\lambda\phi\|=\sqrt{\brak\langle {\lambda\phi}| {\lambda\phi}\rangle}=\sqrt{\bar{\lambda}\lambda\brak\langle {\phi}| {\phi}\rangle}=|\lambda|\cdot\|\phi\|$$
+Es gilt:
+\begin{align*}
+\|\phi+\psi\|^2&=\brak\langle {\phi}| {\phi}\rangle+\brak\langle {\phi}| {\psi}\rangle+\brak\langle {\psi}| {\phi}\rangle+\brak\langle {\psi}| {\psi}\rangle=\|\phi\|^2+2\mathrm{Re\,}\brak\langle {\phi}| {\psi}\rangle+\|\psi\|^2\le\\
+&\le\|\phi\|^2+2\|\phi\|\cdot\|\psi\|+\|\psi\|^2=\kla\left( {\|\phi\|+\|\psi\|} \right)^2
+\end{align*}
+\end{proof}
+b)
+\begin{proof}
+Sei $\phi\in V\setminus\klammer\left\{ {0} \right\}$. Dann gilt:
+\begin{align*}
+\|\phi\|&=\frac{\|\phi\|^2}{\|\phi\|}=\brak\langle {\phi}| {\frac{\phi}{\|\phi\|}}\rangle\le\sup_{\psi\le 1}|\brak\langle {\phi}| {\psi}\rangle|
+\end{align*}
+Aus der Cauchy-Schwarz Ungleichung folgt andererseits:
+\begin{align*}
+|\brak\langle {\phi}| {\psi}\rangle|&\le \|\phi\|\cdot\|\psi\|\\
+\sup_{\psi\le 1}:\ \ \ \Rightarrow\ \ \sup_{\psi\le 1}|\brak\langle {\phi}| {\psi}\rangle|&\le\|\phi\|\cdot\sup_{\psi\le 1}\|\psi\|=\|\phi\|
+\end{align*}
+\end{proof}
+\section{Unitärer Raum}
+a)
+\begin{proof}
+$(i)\Rightarrow(ii)$:\\
+Es gilt:
+\begin{align*}
+\|\phi+\psi\|^2&=\brak\langle {\phi}| {\phi}\rangle+\brak\langle {\phi}| {\psi}\rangle+\brak\langle {\psi}| {\phi}\rangle+\brak\langle {\psi}| {\psi}\rangle=\|\phi\|^2+\|\psi\|^2+2\mathrm{Re\,}\brak\langle {\phi}| {\psi}\rangle\overset{!}{=}\kla\left( {\|\phi\|+\|\psi\|} \right)^2\\
+&\Rightarrow\ \ \mathrm{Re\,}\brak\langle {\phi}| {\psi}\rangle=\|\phi\|\cdot\|\psi\|
+\end{align*}
+Zudem folgt wieder aus der CS-Ungleichung:
+\begin{align*}
+|\brak\langle {\phi}| {\psi}\rangle|^2=\kla\left( {\mathrm{Re\,}\brak\langle {\phi}| {\psi}\rangle} \right)^2+\kla\left( {\mathrm{Im\,}\brak\langle {\phi}| {\psi}\rangle} \right)^2\le\|\phi\|^2\cdot\|\psi\|^2=(\mathrm{Re\,}\brak\langle {\phi}| {\psi}\rangle)^2
+\end{align*}
+Also ist $\mathrm{Im\,}\brak\langle {\phi}| {\psi}\rangle=0$. Daraus folgt dann:
+$$\brak\langle {\phi}| {\psi}\rangle=\mathrm{Re\,}\brak\langle {\phi}| {\psi}\rangle=\|\phi\|\cdot\|\psi\|$$
+$(ii)\Rightarrow(iii)$:\\
+Betrachte folgenden Term:
+\begin{align*}
+\|\phi\|\psi\|-\psi\|\phi\|\|^2&=\brak\langle {\phi\|\psi\|}| {\phi\|\psi\|}\rangle-2\mathrm{Re\,}\bra\langle {\phi\|\psi\| | \psi\|\phi\|}\rangle+\brak\langle {\psi\|\phi\|}| {\psi\|\phi\|}\rangle=\\
+&=2\|\phi\|^2\cdot\|\psi\|^2-2\mathrm{Re\,}\|\psi\|^2\|\phi\|^2=0\\
+&\Rightarrow\ \ \phi\|\psi\|=\psi\|\phi\|
+\end{align*}
+$(iii)\Rightarrow(i)$:\\
+Sei $\psi=a\phi$ mit $a>0$. Dann gilt:
+\begin{align*}
+\|\phi+\psi\|&=|a+1|\cdot\|\phi\|=\|\phi\|+|a|\cdot\|\phi\|=\|\phi\|+\|\psi\|
+\end{align*}
+\end{proof}
+b) 
+\begin{proof}
+$(i)\Rightarrow(ii)$:\\
+Betrachte $\lambda=\frac{\brak\langle {\phi}| {\psi}\rangle^\ast}{|\brak\langle {\phi}| {\psi}\rangle|}$ mit $|\lambda|=1$:
+\begin{align*}
+\brak\langle {\phi}| {\lambda\psi}\rangle=\lambda\brak\langle {\phi}| {\psi}\rangle=|\brak\langle {\phi}| {\psi}\rangle|=\|\phi\|\cdot\|\psi\|=\|\phi\|\cdot|\lambda|\|\psi\|=\|\phi\|\cdot\|\lambda\psi\|
+\end{align*}
+Aus Teil (a) wissen wir also, dass $\phi$ und $\lambda\psi$ linear abhängig sind. Da $\lambda\neq 0$ sind also auch $\phi$ und $\psi$ linear abhängig.\\
+$(ii)\Rightarrow(i)$:\\
+Sei $\psi=a\phi$:
+$$|\brak\langle {\phi}| {\psi}\rangle|=|a|\cdot\brak\langle {\phi}| {\phi}\rangle=\|\phi\|\cdot |a|\|\phi\|=\|\phi\|\cdot\|\psi\|$$
+\end{proof}
+\section{Orthonormalsysteme}
+Sei $\phi_n$ ein ONS in $\mathcal{H}$. Nach der Bessel-Ungleichung gilt für $N\in\mathbb{N},\ \psi\in\mathcal{H}$:
+\begin{proof}
+\begin{align*}
+\sum_n^N|\brak\langle {\phi_n}| {\psi}\rangle|^2\le \|\psi\|^2
+\end{align*}
+Die Reihe konvergiert also. Dann muss $|\brak\langle {\phi_n}| {\psi}\rangle|^2$ eine Nullfolge sein, d.h. $\brak\langle {\phi_n}| {\psi}\rangle\rightarrow 0$.\\
+Betrachte $\mathcal{H}=l^2$, ONS$=e^n\subset l^2$. Dann gilt für ein $x\in l^2$:
+\begin{align*}
+\brak\langle {e^n}| {x}\rangle&=\sum_k^\infty e_k^nx_k=\sum_k^\infty \delta_{kn}x_k=x_n\overset{x\in l^2}{\rightarrow} 0
+\end{align*}
+\end{proof}
+b)
+\begin{proof}
+Sei $\phi_n$ eine ONB und $J:\mathcal{H}\rightarrow\mathbb{K}^\mathbb{N},\ \psi\mapsto\brak\langle {\phi_n}| {\psi}\rangle$. Dann gilt:
+\begin{align*}
+\|J\psi\|_2&=\sqrt{\sum_n^\infty|\brak\langle {\phi_n}| {\psi}\rangle|^2}\le\|\psi\|
+\end{align*}
+Also gilt $J\klam\left[ {\mathcal{H}} \right]=l^2$. Aus der Parsevalschen Gleichung folgt die Isometrie von $J$:
+\begin{align*}
+\sum_n^\infty|\brak\langle {\phi_n}| {\psi}\rangle|^2=\|\psi\|^2
+\end{align*}
+Es ist $J\klam\left[ {\mathcal{H}} \right]$ abgeschlossen.\\
+Sei $x^n$ Folge in $J\klam\left[ {\mathcal{H}} \right]$ und $x^n\rightarrow x\in l^2$. Nun $\exists\psi^n\subset\mathcal{H}\forall n\in\mathbb{N}\psi^n=x^n$. Da $x^n$ konvergiert ist $x^n$ CF in $l^2$ und aufgrund der Isometrie ist dann auch $\psi^n$ CF in $\mathcal{H}$. Da $\mathcal{H}$ vollständig ist, $\exists\psi\in\mathcal{H}:\psi^n\rightarrow \psi$ und somit $x^n=J\psi^n\rightarrow J\psi$. Also $x=J\psi\in J\klam\left[ {\mathcal{H}} \right]$.\\
+Sei nun $x_n\in c_c$. Es gilt:
+$$x_n=\sum_k^\infty x_k\brak\langle {\phi_n}| {\phi_k}\rangle=\brak\langle {\phi_n}| {\sum_k^\infty x_k\phi_k}\rangle=J\sum_k^\infty x_k\phi_k$$
+Also ist $c_c\subseteq J\klam\left[ {\mathcal{H}} \right]$. Da $c_c$ dicht in $l^2$ und $J\klam\left[ {\mathcal{H}} \right]$ abgeschlossen in $l^2$, folgt $l^2\subseteq J\klam\left[ {\mathcal{H}} \right]$.
+\end{proof}
+\section{Seperabilität}
+a)
+\begin{proof}
+Sei $D$ eine dichte Teilmenge von $E$. Dann $\forall x\in M\exists\iota_x\in D:\|\iota_x-x\|\le \frac{c}{4}$. Die erhaltene Abbildung $\iota :M\rightarrow D,\ x\mapsto\iota_x$. Sei $x,y\in M$ mit $\iota_x=\iota_y$. Dann folgt:
+\begin{align*}
+\|y-x\|&\le\|y-\iota_y\|+\|\iota_x-x\|\le\frac{c}{2}
+\end{align*}
+Gemäß der Definition von $M$ gilt dann $x=y$, also ist $\iota$ injektiv. Da $M$ überabzählbar ist, muss auch $D$ überabzählbar sein. Also gibt es keine abzählbare, dichte Teilmenge von $E$. Damit kann $E$ nicht separabel sein.
+\end{proof}
+b)
+\begin{proof}
+Setze $D_n:=\klammer\left\{ {x+iy\in l^p\vert\ x,y\in c_c(\mathbb{N},\mathbb{Q}),\ x_k,y_k=0\ (k\ge n)} \right\}\cong (\mathbb{Q}\times\mathbb{Q})^n$. Dann ist $D:=\bigcup_nD_n$ abzählbar. Da $\mathbb{Q}$ dicht in $\mathbb{R}$, ist $D$ dicht in $c_c\kla\left( {\mathbb{N},\mathbb{C}} \right)$ und somit dicht in $l^p$. Also ist $l^p$ separabel.
+\end{proof}
+\begin{proof}
+Definiere $M:=\klammer\left\{ {x\in l^\infty\vert\ \forall k\in\mathbb{N}:x_k\in\klammer\left\{ {0,1} \right\}} \right\}=\klammer\left\{ {0,1} \right\}^\mathbb{N}$. Also gilt $\forall x\neq y\in M:\|x-y\|_\infty=1$. \\
+Annahme: $M$ ist abzählbar. Dann gibt es eine Folge $x^n$ in $M$, die alle Elemente von $M$ enthält. Definiere gemäß dem Cantorschen Diagonalargument:
+$$y_k:=\left\{\begin{matrix}
+1 &, x_k^k=0 \\ 0 &, x_k^k=1 
+\end{matrix}\right.$$
+Da $y\in M$ ist, $\exists N\in\mathbb{N}:y=x^N$. Da aber $y_N=x_N^N$ im Widerspruch zur Definition von $y$ steht, ist $M$ überabzählbar.
+\end{proof}
+\section{Raum der stetigen Funktionen}
+a)
+\begin{proof}
+Sei $f\in C\klam\left[ {a,b} \right]\setminus\klammer\left\{ {0} \right\}$. Dann $\exists x_0\in\klam\left[ {a,b} \right]$ mit $f(x_0)\neq 0$. Also gilt $M:=|f(x_0)|^2>0$. Da $|f|^2:\klam\left[ {a,b} \right]\rightarrow[0,\infty)$ stetig ist, gibt es $c<d\in [a,b]$ mit $x_0\in[c,d]$, so dass:
+$$||f(x)|^2-|f(x_0)|^2|\le \frac{M}{2}$$
+Es gilt $|a-b|\ge a-b$, also auch $b\ge a-|b-a|$:
+$$|f(x)|^2\ge|f(x_0)|^2-||f(x)|^2-|f(x_0)|^2|\ge M-\frac{M}{2}=\frac{M}{2}$$
+Also gilt schließlich:
+$$\brak\langle {f}| {f}\rangle=\intx\int_{a}^{b}|f(x)|^2\,\mathrm{d}x\ge\intx\int_{c}^{d}|f(x)|^2\,\mathrm{d}x\ge\intx\int_{c}^{d}\frac{M}{2}\,\mathrm{d}x>0$$ 
+\end{proof}
+b)
+\begin{proof}
+Betrachte $(C[0,2],\brak\langle {\cdot}| {\cdot}\rangle)$ isomorph zu $(C[a,b],\brak\langle {\cdot }| {\cdot }\rangle)$. Definiere die stetigen Funktionen $f_n$ und die unstetige Funktion $f$ wie folgt:
+\begin{align*}
+f_n&:[0,2]\rightarrow\mathbb{K},\ x\mapsto\left\{\begin{matrix}
+x^n &, x\in[0,1)\\
+1 &, x\in [1,2]
+\end{matrix}\right.\\
+f&:[0,2]\rightarrow\mathbb{K},\ x\mapsto\left\{\begin{matrix}
+0 &, x\in[0,1)\\
+1 &, x\in [1,2]
+\end{matrix}\right.
+\end{align*}
+Dabei gilt:
+$$\intx\int_{0}^{2}|f_n(x)-f(x)|^2\,\mathrm{d}x=\intx\int_{0}^{1}x^{2n}\,\mathrm{d}x=\frac{1}{2n+1}\rightarrow 0$$
+Also konvergiert $f_n\rightarrow f$, aber nicht in $C[0,2]$.
+\end{proof}
+\end{document}

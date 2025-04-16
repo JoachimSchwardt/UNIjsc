@@ -1,0 +1,77 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{Helium}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Helium}
+\subsection*{a)}
+Betrachte in nullter Näherung $H=H_1+H_2$ mit $H_i=-\frac{\hbar^2}{2m}\nabla_i^2-\frac{Ze}{4\pi\epsilon_0r_1}$. Dann lautet die stationäre Schrödinger-Gleichung für Helium:
+\begin{align*}
+E\phi&=H\phi=H_1\phi +H_2\phi
+\end{align*}
+\subsection*{b)}
+Betrachte den Ansatz $\phi=\phi_1(r_1)\phi_2(r_2)$. Dann folgt für die Energie des Grundzustandes:
+\begin{align*}
+E\phi&=\phi_2H_1\phi_1+\phi_1H_2\phi_2=\kla\left( {E_1+E_2} \right)\phi\ \ \Rightarrow\ \ E=E_1+E_2\\
+&\Rightarrow\ \ E_\tecxt\text{GZ}=-2\cdot\frac{\alpha^2m_ec^2}{2}=-m_ec^2\cdot\frac{e^2}{4\pi\epsilon_0\hbar c}=\underline{-27,21\,\tecxt\text{eV}}
+\end{align*}
+\subsection*{c)}
+Die Korrektur hat einen positiven Wert, da der Wechselwirkungsterm $\frac{e^2}{4\pi\epsilon_0 r_{12}}$ positiv ist. Mit einem Zahlenwert von $E_\tecxt\text{korr.}=3,4\,$eV erhält man dann $E_\tecxt\text{GZ}\approx -23,8\,$eV.
+\subsection*{d)}
+Die Umrechnung von $\frac{\tecxt\text{J}}{\tecxt\text{mol}}$ in eV erfolgt mit $1\,\tecxt\text{eV}=e\cdot N_A\,\frac{\tecxt\text{J}}{\tecxt\text{mol}}$. Die Ionisierungsenergien sind also $E_1=24.58\,$eV und $E_2=54.41\,$eV, was etwa dem 2-fachen bzw. 4-fachen der Grundzustandsenergie entspricht.
+\section{Para- und Orthohelium}
+\subsection*{a)}
+\subsection*{b)}
+Bei Parahelium ist der Grundzustand $1^1\tecxt\text{S}_0$, also $n=1$. Bei Orthohelium $2^3\tecxt\text{S}_1$, also $n=2$. Die Größenordnung der Wellenlänge, die man beim Übergang in diese Grundzustände erwartet ist also:
+\begin{align*}
+\lambda_\tecxt\text{Para}&=\frac{hc}{E_\tecxt\text{Para}}=\frac{hc\cdot 1^2}{E_R}=\underline{91,1\,\tecxt\text{nm}}\\
+\lambda_\tecxt\text{Ortho}&=\frac{hc}{E_\tecxt\text{Ortho}}=\frac{hc\cdot 2^2}{E_R}=\underline{364,5\,\tecxt\text{nm}}
+\end{align*}
+\section{LS- und jj-Kopplung}
+Betrachte ein Zweielektronensystem mit einem $2p-$ und einem $3d-$Elektron. \\
+Bei der LS-Kopplung betrachten wir zunächst $L$ und $S$ getrennt. Dann gilt $L=l_1+l_2=1+2=3$ und $S=s_1+s_2=\pm\frac{1}{2}\pm\frac{1}{2}=-1, 0, 0, 1$. Damit folgt $J=2, 3, 3, 4$, es gibt also 4 Zustände.\\
+Bei der jj-Kopplung betrachten wir zunächst $j_i$ und bilden dann direkt $J$. Also gilt $j_1=l_1+s_1=1\pm\frac{1}{2}=\frac{1}{2},\frac{3}{2}$ und $j_2=l_2+s_2=2\pm\frac{1}{2}=\frac{3}{2},\frac{5}{2}$. Damit ergibt sich $J=j_1+j_2=2,3,4,3$, also wieder die gleichen 4 Zustände (die Reihenfolge ist hier willkürlich).\\
+Betrachte nun zwei Elektronen in der 3p-Schale:
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c|c}
+$l_1$&$l_2$&$s_1$&$s_2$&Zustand \\ \hline
+1&1&+&-&${}^{1}\tecxt\text{D}_{2}$ \\ \hline
+ &&+&+&${}^{3}\tecxt\text{P}_{2}$ \\ 
+1&0 &+&-&${}^{1}\tecxt\text{P}_{1}$ \\ 
+ & &-&-&${}^{-1}\tecxt\text{P}_{0}$ \\ \hline
+ & &+&+&${}^{3}\tecxt\text{S}_{1}$ \\ 
+1&-1&+&-&${}^{1}\tecxt\text{S}_{0}$ \\ 
+ & &-&-&${}^{-1}\tecxt\text{S}_{-1}$ \\ \hline
+0&0&+&-&${}^{1}\tecxt\text{S}_{0}$ \\ \hline
+ & &+&+&${}^{3}\tecxt\text{P}_{0}$ \\ 
+0&-1&+&-&${}^{1}\tecxt\text{P}_{-1}$ \\ 
+ & &-&-&${}^{-1}\tecxt\text{P}_{-2}$ \\ \hline
+-1&-1&+&-&${}^{1}\tecxt\text{D}_{-2}$
+\end{tabular}
+\end{table}
+\end{document}

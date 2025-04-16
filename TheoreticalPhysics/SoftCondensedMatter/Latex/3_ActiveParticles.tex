@@ -1,0 +1,162 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{3 Run and tumble particles in one dimension}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Soft Condensed Matter}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+Consider particles in a finite one-dimensional region, that may be categorized as left-moving $L$ and right-moving $R$.
+There is a fixed ``tumble-rate'' $\alpha$, with which each particle randomly changes its direction.
+Let there be a symmetric potential $V(x) = \frac{\kappa}{2}x^2$.
+This gives rise to a velocity $u := \frac{-V'(x)}{\gamma}$, where $\gamma>0$ is some constant.
+We will also assume that the velocities in both directions may be different due to some unspecified reason.
+Then the set of equations we need to solve is given by
+\begin{align}
+\partial_tR &= \alpha L - \alpha R - \partial_x\klam\left[ v_RR \right] - \partial_x\klam\left[ uR \right],\\
+\partial_tL &= \alpha R - \alpha L - \partial_x\klam\left[ -v_LL \right] - \partial_x\klam\left[ uL \right].
+\end{align}
+Define the density $\rho := R+L$ and the polarization $\sigma := R-L$.
+Also let $\bar{v} := \frac{v_R + v_L}{2}$ and $\Delta v := v_R - v_L$.
+Then adding and subtracting the equations yields
+\begin{align}
+\partial_t\rho &= -\partial_x \klam\left[ u\rho \right] - \partial_x \klam\left[ \bar{v}\sigma + \frac{\Delta v}{2} \rho \right] \equiv -\partial_xJ(x),\\
+\partial_t\sigma &= -2\alpha\sigma -\partial_x\klam\left[ u\sigma \right] - \partial_x\klam\left[ \bar{v}\rho + \frac{\Delta v}{2}\sigma \right].
+\end{align}
+The first equation has the form of a continuity equation, and thus the total density $\rho$ is a conserved quantity. 
+This is also evident from the fact, that our model does not include a mechanism for removing or adding particles.
+%The polarization is not conserved and decays on a timescale of $\tau \approx\frac{1}{2\alpha}$.
+%We can show this by substituting $\sigma = \tilde{\sigma}\e^{-2\alpha t}$
+%\begin{align}
+%\partial_t\tilde{\sigma} &= -\partial_x\klam\left[ u\tilde{\sigma} \right] - \partial_x\klam\left[ \bar{v}\rho\e^{2\alpha t} + \frac{\Delta v}{2}\tilde{\sigma} \right].
+%\end{align}
+The polarization is not conserved due to the term $-2\alpha\sigma$ and thus decays on a timescale of $\tau \approx\frac{1}{2\alpha}$.
+\\
+In the steady state we have $\partial_t\rho=0=\partial_t\sigma$.
+The continuity equation gives $\partial_xJ=0$ and thus 
+\begin{align}
+J&=u\rho + \frac{\Delta v}{2}\rho + \bar{v}\sigma = \tecxt\text{const} \equiv J_0.%,\\
+%\Rightarrow\ \ \ \sigma &= \frac{J_0}{\bar{v}} - \frac{u + \frac{\Delta v}{2}}{\bar{v}} \rho.
+\end{align}
+Without the asymmetry induced by the $\Delta v$-term, we would expect $J_0=0$.
+Therefore, we may assume that $J_0 \equiv \frac{\Delta v}{2}\rho$.
+Then we find $\sigma = -\frac{u}{\bar{v}}\rho$.
+Inserting this into the polarization equation yields
+\begin{align}
+0 &= 2\alpha \frac{u}{\bar{v}} \rho + \partial_x\klam\left[ \frac{\Delta v}{2} \frac{u}{\bar{v}}\rho \right] + \partial_x\klam\left[ \frac{u^2}{\bar{v}}\rho - \bar{v}\rho \right].
+\end{align}
+For our special case of $u = \frac{-\kappa x}{\gamma}$ this results in
+\begin{align}
+0 &= \frac{-2\alpha\kappa}{\gamma \bar{v}} x\rho - \partial_x\klam\left[ \frac{\kappa\Delta v }{2\gamma \bar{v}} x\rho \right] + \partial_x \klam\left[ \frac{\kappa^2 x^2}{\gamma^2\bar{v}} \rho - \bar{v}\rho \right] = \\
+&= \frac{\kappa^2x^2}{\gamma^2\bar{v}} \rho'(x) - \bar{v}\rho' - \frac{\kappa\Delta v}{2\gamma\bar{v}} x\rho' + \frac{2\kappa^2}{\gamma^2\bar{v}} x\rho - \frac{\kappa \Delta v}{2\gamma\bar{v}} \rho - \frac{2\alpha\kappa}{\gamma\bar{v}} x\rho.
+\end{align}
+Cleaning up some of the coefficients, this is equivalent to
+\begin{align}
+0 &= \kappa x^2\rho' - \frac{\gamma\Delta v}{2} x\rho' - \frac{\gamma^2\bar{v}^2}{\kappa} \rho' + 2\klam\left[ \kappa - \alpha\gamma \right] x\rho - \frac{\gamma\Delta v}{2} \rho.
+\end{align}
+We may now separate
+\begin{align}
+\frac{\rho'(x)}{\rho(x)} &= \frac{2[\kappa -\alpha\gamma]x - \frac{\gamma\Delta v}{2}}{\frac{\gamma^2\bar{v}^2}{\kappa} + \frac{\gamma\Delta v}{2}x - \kappa x^2}.
+\end{align}
+Integrating gives
+\begin{align}
+\log(\rho) + c &= -\frac{\kappa - \alpha\gamma}{\kappa} \intx\int_{ }^{ } \frac{2x - \frac{\gamma\Delta v}{2[\kappa - \alpha\gamma]}}{x^2 - \frac{\gamma\Delta v}{2\kappa}x - \frac{\gamma^2\bar{v}^2}{\kappa^2}} \, \mathrm{d}x.
+\end{align}
+Let $x_{1,2} := -\frac{p}{2} \pm \sqrt{\frac{p^2}{4} - q}$.
+Then $\frac{1}{(x-x_1)(x-x_2)} = \frac{A}{x-x_1} + \frac{B}{x-x_2}$ is a partial fraction decomposition.
+We can find the coefficients by considering
+\begin{align}
+1 &= A(x-x_2) + B(x-x_1) = x(A+B) - (Ax_2 + Bx_1).
+\end{align}
+Thus $B=-A$ and $A=\frac{1}{x_1-x_2}$.
+We now turn to solving the above integral in a general form
+\begin{align}
+I(x) &= \intx\int_{ }^{ } \frac{2x + a}{x^2 + px + q}\, \mathrm{d}x = \intx\int_{ }^{ } \frac{2x + p}{x^2+px+q} + \frac{a-p}{x^2+px+q} \, \mathrm{d}x = \\
+&= \log\left\vert x^2+px+q\right\vert + (a-p) \intx\int_{ }^{ } \frac{1}{(x-x_1)(x-x_2)}\, \mathrm{d}x = \\
+&= \log\left\vert x^2+px+q\right\vert + \frac{a-p}{x_1-x_2} \intx\int_{ }^{ } \frac{1}{x-x_1} - \frac{1}{x-x_2}\, \mathrm{d}x = \\
+&= \log\left\vert (x-x_1)(x-x_2) \right\vert + \frac{a-p}{x_1-x_2} \log\left\vert \frac{x-x_1}{x-x_2} \right\vert = \\
+&= \kla\left( 1 + \frac{a-p}{x_1-x_2} \right) \log |x-x_1| + \kla\left( 1 - \frac{a-p}{x_1-x_2} \right) \log |x-x_2|.
+\end{align}
+In our case we have $a = -\frac{\gamma\Delta v}{2[\kappa-\alpha \gamma]}$, $p=-\frac{\gamma\Delta v}{2\kappa}$ and $q=-\frac{\gamma^2\bar{v}^2}{\kappa^2}$.
+The zeros are given by
+\begin{align}
+x_{1,2} &= \frac{\gamma\Delta v}{4\kappa} \pm \sqrt{\frac{\gamma^2\Delta v^2}{16\kappa^2} + \frac{\gamma^2\bar{v}^2}{\kappa^2}} = \frac{\gamma \Delta v}{4\kappa} \klam\left[ 1 \pm \sqrt{1 + \frac{16\bar{v}^2}{\Delta v^2}} \right].
+\end{align}
+Then the solution to the differential equation is
+\begin{align}
+\log (\rho) + c &= -\frac{\kappa - \alpha\gamma}{\kappa} \klam\left[ \log |x-x_1|^{r_1} + \log |x-x_2|^{r_2} \right],
+\end{align}
+where we defined the exponents 
+\begin{align}
+r_{1,2} &:= 1 \pm \frac{a-p}{x_1-x_2} = 1 \pm \frac{\frac{\gamma\Delta v}{2\kappa} - \frac{\gamma\Delta v}{2[\kappa - \alpha\gamma]}}{\frac{\gamma\Delta v}{2\kappa}\sqrt{1 + \kla\left( \frac{4\bar{v}}{\Delta v} \right)^2}} = 1 \pm \frac{1 - \frac{\kappa}{\kappa - \alpha\gamma}}{\sqrt{1 + \kla\left( \frac{4\bar{v}}{\Delta v} \right)^2}}.
+\end{align}
+The full solution is then given by
+\begin{align}
+\rho(x) &= c|x-x_1|^{-\frac{\kappa - \alpha\gamma}{\kappa}r_1} |x-x_2|^{-\frac{\kappa - \alpha\gamma}{\kappa}r_2},\\
+\sigma(x) &= -\frac{u}{\bar{v}} \rho(x) = \frac{\kappa}{\gamma\bar{v}} x\rho(x).
+\end{align}
+Sanity check:
+For the special case of $\Delta v=0$ we find $r_1=1=r_2$ and $x_{1,2} = \pm \frac{\gamma\bar{v}}{\kappa}$.
+Then the solution takes the simple form
+\begin{align}
+\rho(x) &= \rho_0\left\vert \frac{x - x_1}{x - x_2} \right\vert^{\frac{\alpha\gamma}{\kappa} - 1} = \rho_0\left\vert \frac{x - \frac{\gamma\bar{v}}{\kappa}}{x + \frac{\gamma\bar{v}}{\kappa}} \right\vert^{\frac{\alpha\gamma}{\kappa} - 1},
+\end{align}
+which is (almost) identical to the result in the lecture.
+
+\end{document}

@@ -1,0 +1,64 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# C / C++ extensions
+*.o
+*.out
+*.s
+*.ii
+*.so
+*.exe
+
+# Distribution / packaging
+bin/
+build/
+!/Latex/build/*.bib
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# MPL
+*.mplstyle
+
+
+# Other
+*.cnf
+*.pdf
+*.djvu
+#!/Literature/*.pdf
+#!/Literature/*.djvu
+*.png
+*.npy
+/other
+/Code/data
+/Code/Cpp/.vscode
+/Code/Walksat/.vscode
+*.swp
+*.o
+*.p
+main.aux
+main.log
+main.out
+mainNotes.bib
+main.synctex.gz
+.DS_Store

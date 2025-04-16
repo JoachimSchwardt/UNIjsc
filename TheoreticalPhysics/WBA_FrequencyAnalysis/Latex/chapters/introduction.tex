@@ -1,0 +1,28 @@
+%Why do we care about this topic, what is there to learn. Short overview of the following chapters.\\
+%What questions do we want to answer. Maybe by citing previous works and briefly discuss what has been done before to give an overview of the topic and put this work into context.
+%Quantitative measure of chaotic dynamics, ...
+%The frequencies of trajectories can provide insights about the structure of the underlying phase space of a Hamiltonian system. 
+Nonlinear dynamical systems are of great importance, as they occur throughout many areas of science. %TodKomKonBerRic2005 %KomBer2005
+Relevant examples in chemistry \cite{Tod2005}, geophysics \cite{Sel2012} or orbital mechanics \cite{Las1990} are often higher-dimensional. 
+In the case of systems with three degrees of freedom, which exhibit a 6D phase space, energy conservation and the introduction of a Poincaré section can lead to a 4D symplectic map \cite{Lan2017}.
+However, the visualization of a 4D phase space is, in general, still a difficult task.
+Often parts of it are shown as projections onto 2D planes, or by using 3D phase space slices.
+The frequency space allows for a representation of the full phase space in only two dimensions, and can therefore be a useful tool for understanding phenomena observed in phase space \cite{Lan2012,RicLanBaeKet2014,FirLanKetBae2018}.
+\\
+%While the frequencies of trajectories in Hamiltonian systems do not have an immediate consequence for physical applications, they can give insights about the structure of phase spaces and serve as a measure of chaotic dynamics.
+There already exist several well established tools for frequency analysis.
+Usually these are based on a Fourier series, like the method by Laskar \cite{Las1993} and refined variants \cite{BarBazGioScaTod1996,Hun2002}, while another approach uses Richardson extrapolation to refine initial approximations of frequencies \cite{LuqVil2014}.
+We will investigate the advantages and disadvantages of a method based on a weighted Birkhoff average, that was recently developed and tested in \cite{DasSaiSanYor2016,DasSaiSanYor2017,DasYor2018,SanMei2020},
+and is claimed to provide accurate results with fast convergence at a relatively small computational cost.
+We will also consider the use of the WBA for the indication of chaotic dynamics.
+Besides the potential qualitative differences of this method, the speed is also a motivation, as the computation of frequency spaces usually requires vast sample sizes to allow for a quantitative analysis \cite{RicLanBaeKet2014,FirLanKetBae2018}.
+%We are particularly interested in potential qualitative differences regarding the frequency analysis of trapped orbits.
+%FIXME: I recall this being one of the main motivations for WBA. was there a specific issue with Naff, that could be cited here?
+\\
+We want to apply the WBA method in various circumstances, and compare the results. 
+%This work is organized as follows.
+In chapter 2, we formally introduce the weighted Birkhoff average, as well as the method we use for comparison.
+In chapter 3 we construct test signals in a two dimensional setting, and analyze frequencies for several parameters of a standard example of an area-preserving map.
+In chapter 4 we extend the analysis to a four dimensional map and compute the frequency space. %and demonstrate that the method may not always be as readily generalized to a higher dimensional setting, as was suggested in \cite{DasSaiSanYor2017}.
+In chapter 5 we summarize the results and give an outlook for possible improvements and future tasks.
+

@@ -1,0 +1,158 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[landscape=true]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{05 Friedman-Gleichung}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Aufgabe 12: Expansion des Universums}
+\subsection*{a)}Die Metrik ist gegeben als $\tecxt\text{d}s^2=\tecxt\text{d}t^2-a(t)^2\kla\left( {\tecxt\text{d}x^2+\tecxt\text{d}y^2+\tecxt\text{d}z^2} \right)$ mit $a(t)>0$. Die Christoffel-Symbole lauten:
+\begin{align*}
+\Gamma^\rho_{\mu\nu}&=\frac{1}{2}g^{\rho\sigma}\kla\left( {g_{\sigma\mu,\nu}+g_{\sigma\nu,\mu}-g_{\mu\nu,\sigma}} \right)
+\end{align*}
+Die Metrik ist diagonal und die einzigen nicht-verschwindenden Ableitungen sind $g_{jj,0}=-2a\dot{a}$. Damit folgt:
+\begin{align*}
+\Gamma^0_{\mu\nu}&=\frac{1}{2}g^{00}\kla\left( {g_{0\mu,\nu}+g_{0\nu,\mu}-g_{\mu\nu,0}} \right)=-\frac{1}{2}g_{\mu\nu,0}=a\dot{a}\delta^j_\mu\delta^j_\nu\\
+\Gamma^j_{\mu\nu}&=\frac{1}{2}g^{jj}\kla\left( {g_{j\mu,\nu}+g_{j\nu,\mu}-g_{\mu\nu,j}} \right)=-\frac{1}{2a^2}\kla\left( {g_{jj,0}\delta^j_\mu\delta^0_\nu+g_{jj,0}\delta^j_\nu\delta^0_\mu} \right)=\frac{\dot{a}}{a}\kla\left( {\delta^j_\mu\delta^0_\nu+\delta^j_\nu\delta^0_\mu} \right)
+\end{align*}
+Die relevanten Komponenten sind also $\Gamma^0_{jj}=a\dot{a}$ und $\Gamma^j_{j0}=\Gamma^j_{0j}=\frac{\dot{a}}{a}$ mit $j=1,2,3$. Alternativ kann man die Euler-Lagrange-Gleichungen mit $L\propto\kla\left( {\frac{\tecxt\text{d}t}{\tecxt\text{d}s}} \right)^2-a^2\klam\left[ {\kla\left( {\frac{\tecxt\text{d}x}{\tecxt\text{d}s}} \right)^2+\kla\left( {\frac{\tecxt\text{d}y}{\tecxt\text{d}s}} \right)^2+\kla\left( {\frac{\tecxt\text{d}z}{\tecxt\text{d}s}} \right)^2} \right]$ verwenden:
+\begin{align*}
+0&=\frac{\tecxt\text{d}}{\tecxt\text{d}s}\frac{\partial L}{\partial\frac{\tecxt\text{d}t}{\tecxt\text{d}s}}-\frac{\partial L}{\partial t}=2\frac{\tecxt\text{d}^2t}{\tecxt\text{d}s^2}+2a\dot{a}\klam\left[ {\kla\left( {\frac{\tecxt\text{d}x}{\tecxt\text{d}s}} \right)^2+\kla\left( {\frac{\tecxt\text{d}y}{\tecxt\text{d}s}} \right)^2+\kla\left( {\frac{\tecxt\text{d}z}{\tecxt\text{d}s}} \right)^2} \right]&\Rightarrow &&\Gamma^0_{jj}=a\dot{a}\\
+0&=\frac{\tecxt\text{d}}{\tecxt\text{d}s}\frac{\partial L}{\partial\frac{\tecxt\text{d}x^j}{\tecxt\text{d}s}}-\frac{\partial L}{\partial x^j}=-2\frac{\tecxt\text{d}}{\tecxt\text{d}s}a^2\frac{\tecxt\text{d}x^j}{\tecxt\text{d}s}=-2a^2\frac{\tecxt\text{d}^2x^j}{\tecxt\text{d}s^2}-4a\dot{a}\frac{\tecxt\text{d}t}{\tecxt\text{d}s}\frac{\tecxt\text{d}x^j}{\tecxt\text{d}s}&\Rightarrow &&\Gamma^j_{0j}=\frac{\dot{a}}{a}
+\end{align*}
+\subsection*{b)}Die Geodäten-Gleichungen lauten:
+\begin{align*}
+0&=\frac{\tecxt\text{d}^2x^\rho}{\tecxt\text{d}s^2}+\Gamma^\rho_{\mu\nu}\frac{\tecxt\text{d}x^\mu}{\tecxt\text{d}s}\frac{\tecxt\text{d}x^\nu}{\tecxt\text{d}s}
+\end{align*}
+Die Gleichungen können für unsere Christoffel-Symbole einfach mit $x^j(s)\equiv \tecxt\text{const}$ gelöst werden:
+\begin{align*}
+0&=\frac{\tecxt\text{d}^2t(s)}{\tecxt\text{d}s^2}+a\dot{a}\sum_j\frac{\tecxt\text{d}x^j(s)}{\tecxt\text{d}s}=\frac{\tecxt\text{d}^2t(s)}{\tecxt\text{d}s^2}&\Rightarrow &&t(s)=\alpha s+\beta\\
+0&=\frac{\tecxt\text{d}^2x^j(s)}{\tecxt\text{d}s^2}+\frac{\dot{a}}{a}\frac{\tecxt\text{d}t(s)}{\tecxt\text{d}s}\frac{\tecxt\text{d}x^j(s)}{\tecxt\text{d}s}\equiv 0
+\end{align*}
+\subsection*{c) und d)}Da keine Raumrichtung in der Metrik ausgezeichnet ist, muss $R_{11}=R_{22}=R_{33}$ gelten. Aber wie begründet man nur über die Symmetrien, dass der Ricci-Tensor diagonal sein muss?\\
+Für die Berechnung der Komponenten verwendet man allgemein:
+\begin{align*}
+R_{\mu\nu}&=R^\rho_{\ \mu\rho\nu}=\Gamma^\rho_{\mu\nu,\rho}-\Gamma^\rho_{\mu\rho,\nu}+\Gamma^\rho_{\rho\sigma}\Gamma^\sigma_{\mu\nu}-\Gamma^\rho_{\nu\sigma}\Gamma^\sigma_{\mu\rho}
+\end{align*}
+Seien $i,j,k=1,2,3$ und $i\neq j$. Die einzigen nicht-verschwindenden Ableitungen der Christoffel-Symbole sind $\Gamma^0_{jj,0}=\dot{a}^2+a\ddot{a}$ und $\Gamma^j_{j0,0}=\Gamma^j_{0j,0}=\frac{3\ddot{a}}{a}-\frac{3\dot{a}^2}{a^2}$. Dann gilt:
+\begin{align*}
+R_{00}&=\Gamma^\rho_{00,\rho}-\Gamma^j_{0j,0}+\Gamma^\rho_{\rho\sigma}\Gamma^\sigma_{00}-\Gamma^\rho_{0\sigma}\Gamma^\sigma_{0\rho}=0+\frac{3\dot{a}^2}{a^2}-\frac{3\ddot{a}}{a}+0-\Gamma^k_{0j}\Gamma^j_{0k}=-\frac{3\ddot{a}}{a}\\
+R_{jj}&=\Gamma^\rho_{jj,\rho}-\Gamma^\rho_{j\rho,j}+\Gamma^\rho_{\rho\sigma}\Gamma^\sigma_{jj}-\Gamma^\rho_{j\sigma}\Gamma^\sigma_{j\rho}=\dot{a}^2+a\ddot{a}-0+\Gamma^k_{k0}\Gamma^0_{jj}-\Gamma^0_{jj}\Gamma^j_{j0}-\Gamma^k_{j0}\Gamma^0_{jk}=\\
+&=\dot{a}^2+a\ddot{a}+\Gamma^j_{j0}\Gamma^0_{jj}=2\dot{a}^2+a\ddot{a}\\
+R_{0j}&=\Gamma^\rho_{0j,\rho}-\Gamma^\rho_{0\rho,j}+\Gamma^\rho_{\rho\sigma}\Gamma^\sigma_{0j}-\Gamma^\rho_{j\sigma}\Gamma^\sigma_{0\rho}=0-0+\Gamma^\rho_{\rho j}\Gamma^j_{0j}-\Gamma^j_{j\sigma}\Gamma^\sigma_{0j}=0\\
+R_{ij}&=\Gamma^\rho_{ij,\rho}-\Gamma^\rho_{i\rho,j}+\Gamma^\rho_{\rho\sigma}\Gamma^\sigma_{ij}-\Gamma^\rho_{j\sigma}\Gamma^\sigma_{i\rho}=0-0+0-\Gamma^0_{j\sigma}\Gamma^\sigma_{i0}-\Gamma^k_{j\sigma}\Gamma^\sigma_{ik}=0
+\end{align*}
+Der Einstein-Tensor ist definiert als $G_{\mu\nu}:=R_{\mu\nu}-\frac{1}{2}g_{\mu\nu}R$ mit dem Ricci-Skalar $R=g^{\mu\nu}R_{\mu\nu}=R_{00}-\frac{3}{a^2} R_{11}$. Die Komponenten lauten daher:
+\begin{align*}
+G_{00}&=R_{00}-\frac{1}{2}R=\frac{1}{2}R_{00}+\frac{3}{2a^2}R_{11}=-\frac{3\ddot{a}}{2a}+\frac{3\dot{a}^2}{a^2}+\frac{3\ddot{a}}{2a}=\frac{3\dot{a}^2}{a^2}\\
+G_{jj}&=R_{jj}+\frac{a^2}{2}R=\frac{a^2}{2}R_{00}-\frac{1}{2}R_{11}=-\frac{3a\ddot{a}}{2}-\dot{a}^2-\frac{a\ddot{a}}{2}=-2a\ddot{a}-\dot{a}^2
+\end{align*}
+\subsection*{e) und f)} Gegeben ist $T_{\mu\nu}=\kla\left( {\rho_R+p_R} \right)u_\mu u_\nu-p_Rg_{\mu\nu}$ mit $u_\mu=(1,0,0,0)^\top$ und den Einstein-Gleichungen $G_{\mu\nu}=8\pi GT_{\mu\nu}$:
+\begin{align*}
+G_{00}&=\frac{3\dot{a}^2}{a^2}=8\pi G\rho_R&\Rightarrow &&\kla\left( {\frac{\dot{a}}{a}} \right)^2&=\frac{8\pi G}{3}\rho_R\numberthis\label{eqn:adot of rho}\\
+G_{jj}&=-2a\ddot{a}-\dot{a}^2=8\pi G a^2p_R&\Rightarrow &&\frac{\ddot{a}}{a}&=-\frac{4\pi G}{3}\kla\left( {\rho_R+3p_R} \right)\numberthis\label{eqn:addot of p and rho}
+\end{align*}
+\subsection*{g)}Für $\ddot{a}>0$ folgt aus (\ref{eqn:addot of p and rho}) die Bedingung $\rho_R+3 p_R<0$. Sowohl Dichte als auch Druck sind aber üblicherweise positiv.
+\subsection*{h)}Sei $p_R=0$. Aus $(\ref{eqn:adot of rho})+2\cdot(\ref{eqn:addot of p and rho})$ folgt dann zunächst eine Relation zwischen $\dot{a}$ und $a$:
+\begin{align*}
+\frac{\dot{a}^2}{a^2}+\frac{2\ddot{a}}{a}&=0&\Rightarrow &&\frac{\ddot{a}}{\dot{a}}&=-\frac{\dot{a}}{2a}\\
+\Rightarrow\ \ \ \log\dot{a}&=-\frac{1}{2}\log a+\tecxt\text{const}&\Rightarrow &&a\dot{a}^2&=\tecxt\text{const}\numberthis\label{eqn:aadot is const}
+\end{align*}
+Aus (\ref{eqn:adot of rho}) kann man dann folgenden Zusammenhang ablesen:
+\begin{align*}
+\frac{\dot{a}^2}{a^2}&=\frac{8\pi G}{3}\rho_R(t)&\Rightarrow &&a(t)^3\rho_R(t)&=\tecxt\text{const}\numberthis\label{eqn:rho a3 is const}
+\end{align*}
+Die Dichte fällt also mit der dritten Potenz des Skalenfaktors ab (bzw. nimmt zu, wenn $a(t)$ kleiner wird). Andererseits folgt aus (\ref{eqn:aadot is const}) folgende Lösung:
+\begin{align*}
+\dot{a}\sqrt{a}&=\tecxt\text{const}&\Rightarrow &&\sqrt{a^3}&=\beta t+\tecxt\text{const}&\Rightarrow &&a(t)&=\kla\left( {\beta t+a_0^{3/2}} \right)^{2/3}\numberthis\label{eqn:a of t and beta}
+\end{align*}
+Einsetzen in (\ref{eqn:adot of rho}) liefert dann:
+\begin{align*}
+\frac{8\pi G}{3}\rho_R&=\frac{\dot{a}^2}{a^2}=\frac{4\beta^2}{9}\frac{1}{\kla\left( {\beta t+a_0^{3/2}} \right)^2}&\Rightarrow &&\rho_R(t)&=\frac{\beta^2}{6\pi G}\frac{1}{\kla\left( {\beta t+a_0^{3/2}} \right)^2}\numberthis\label{eqn:rho of t and beta}
+\end{align*}
+Es gilt $\rho_R(t)a(t)^3=\rho_{R0}a_0^3=\frac{\beta^2}{6\pi G}=\tecxt\text{const}$ ist, woraus dann $\beta=\pm\sqrt{6\pi G\rho_{R0}a_0^3}$ folgt:
+\begin{align*}
+a(t)^3&=a_0^3\kla\left( {1\pm t\sqrt{6\pi G\rho_{R0}}} \right)^2&\tecxt\text{und}&&\rho_R(t)&=\rho_{R0}\frac{a_0^3}{a^3}=\frac{\rho_{R0}}{\kla\left( {1\pm t\sqrt{6\pi G\rho_{R0}}} \right)^2}
+\end{align*}
+Im Grenzfall $a_0\rightarrow 0$ und $\rho_{R0}\rightarrow\infty$ gilt mit $\rho_{R0}a_0^3=:\sigma\equiv\tecxt\text{const}$:
+\begin{align*}
+a(t)^3&=6\pi G\sigma t^2&\tecxt\text{und}&&\rho_R(t)&=\rho_{R0}\frac{a_0^3}{a^3}=\frac{1}{6\pi Gt^2}
+\end{align*}
+\subsection*{i)}Aus der Bedingung $\tecxt\text{tr\,}T=0$ folgt hier mit $g^{\mu\nu}g_{\mu\nu}=4$:
+\begin{align*}
+0&=g^{\mu\nu}T_{\mu\nu}=\rho_R+p_R-4p_R&\Rightarrow &&p_R&=\frac{\rho_R}{3}
+\end{align*}
+Die Spurfreiheit des elektromagnetischen Energie-Impulstensors kann man mit $F_{\mu\nu}=-F_{\nu\mu}$ ebenfalls einfach zeigen:
+\begin{align*}
+T_\mu^\mu&=g^{\mu\nu}T_{\mu\nu}=F_{\mu\sigma}g^{\mu\nu}F_{\ \, \nu}^\sigma+\frac{1}{4}g^{\mu\nu}g_{\mu\nu}F_{\kappa\lambda}F^{\kappa\lambda}=-F_{\mu\sigma}F^{\mu\sigma}+F_{\kappa\lambda}F^{\kappa\lambda}=0
+\end{align*}
+Setzt man $p_R=\frac{1}{3}\rho_R$ in (\ref{eqn:addot of p and rho}) ein, so ergibt sich:
+\begin{align*}
+\frac{\ddot{a}}{a}&=-\frac{8\pi G}{3}\rho_R&\tecxt\text{und}&&\kla\left( {\frac{\dot{a}}{a}} \right)^2&=\frac{8\pi G}{3}\rho_R\numberthis\label{eqn:adot of rho 2}
+\end{align*}
+Man erhält wieder eine Relation zwischen $\dot{a}$ und $a$:
+\begin{align*}
+0&=\frac{\dot{a}^2}{a^2}+\frac{\ddot{a}}{a}&\Rightarrow &&\frac{\ddot{a}}{a}&=-\frac{\dot{a}}{a}\\
+\Rightarrow\ \ \ \log\dot{a}&=-\log a+\tecxt\text{const}&\Rightarrow &&a\dot{a}&=\tecxt\text{const}\numberthis\label{eqn:a adot is const}
+\end{align*}
+Die Lösung dieser Gleichung liefert diesmal:
+\begin{align*}
+a^2&=\beta t+\tecxt\text{const}&\Rightarrow &&a(t)&=\sqrt{\beta t+a_0^2}\numberthis\label{eqn:a of t and beta 2}
+\end{align*}
+Durch Einsetzen von (\ref{eqn:a of t and beta 2}) in (\ref{eqn:adot of rho 2}) erhält man:
+\begin{align*}
+\frac{8\pi G}{3}\rho_R&=\frac{\beta^2}{4}\frac{1}{\kla\left( {\beta t+a_0^2} \right)^2}&\Rightarrow &&\rho_R(t)&=\frac{3\beta^2}{32\pi G}\frac{1}{(\beta t+a_0^2)^2}\numberthis\label{eqn:rho of t and beta 2}
+\end{align*} 
+An (\ref{eqn:adot of rho 2}) kann man mit (\ref{eqn:a adot is const}) den Zusammenhang $\rho_R(t)a(t)^4=\tecxt\text{const}$ ablesen. Daraus folgt dann, dass $\rho_{R0}a_0^4=\frac{3\beta^2}{32\pi G}$ ist. Also gilt:
+\begin{align*}
+a(t)^2&=a_0^2\kla\left( {1\pm t\sqrt{\frac{32\pi G}{3}\rho_{R0}}} \right)&\tecxt\text{und}&&\rho_R(t)&=\rho_{R0}\frac{a_0^4}{a^4}=\frac{\rho_{R0}}{\kla\left( {1\pm t\sqrt{\frac{32\pi G}{3}\rho_{R0}}} \right)^2}
+\end{align*}
+Im Grenzwert $a_0\rightarrow 0$ und $\rho_{R0}\rightarrow\infty$ mit $\rho_{R0}a_0^4=:\sigma\equiv\tecxt\text{const}$ folgt dann:
+\begin{align*}
+a(t)^4&=\frac{32\pi G\sigma}{3}t^2&\tecxt\text{und}&&\rho_R(t)&=\frac{3}{32\pi Gt^2}
+\end{align*}
+\subsection*{j)}Sei $T_{\mu\nu}=\Lambda g_{\mu\nu}$. Dann lauten die Einstein-Gleichungen:
+\begin{align*}
+G_{00}&=\frac{3\dot{a}^2}{a^2}=8\pi G\Lambda &\Rightarrow &&\frac{\dot{a}^2}{a^2}&=\frac{8\pi G\Lambda}{3}\\
+G_{jj}&=-2a\ddot{a}-\dot{a}^2=-8\pi Ga^2\Lambda&\Rightarrow &&\frac{\ddot{a}}{a}&=\frac{8\pi G\Lambda}{3}
+\end{align*}
+Daraus erhält man diesmal den Zusammenhang:
+\begin{align*}
+\frac{\ddot{a}}{a}&=\frac{\dot{a}^2}{a^2}&\Rightarrow &&\frac{\ddot{a}}{\dot{a}}&=\frac{\dot{a}}{a}\\
+\Rightarrow\ \ \ \log\dot{a}&=\log a+\tecxt\text{const}&\Rightarrow &&\frac{\dot{a}}{a}&=\tecxt\text{const}\\
+\Rightarrow\ \ \ \log a&=\beta t+\tecxt\text{const}&\Rightarrow &&a(t)&=a_0e^{\beta t}
+\end{align*}
+Einsetzen liefert $\beta^2=\frac{8\pi G\Lambda}{3}$, woraus $a(t)=a_0\exp\kla\left( {\pm t\sqrt{\frac{8\pi G\Lambda}{3}}} \right)$ folgt.
+\subsection*{k)}
+Nähert man die allgemeinen Endergebnisse für kleine Zeiten $t$, so erhält man:
+\begin{align*}
+a&=a_0\kla\left( {1\pm t\sqrt{6\pi G\rho_{R0}}} \right)^{2/3}&\Rightarrow &&a&\simeq a_0\kla\left( {1\pm t\sqrt{\frac{8\pi G}{3}\rho_{R0}}} \right)\\
+a&=a_0\kla\left( {1\pm t\sqrt{\frac{32\pi G}{3}\rho_{R0}}} \right)^{1/2}&\Rightarrow &&a&\simeq a_0\kla\left( {1\pm t\sqrt{\frac{8\pi G}{3}\rho_{R0}}} \right)\\
+a&=a_0\exp\kla\left( {\pm t\sqrt{\frac{8\pi G\Lambda}{3}}} \right)&\Rightarrow &&a&\simeq a_0\kla\left( {1\pm t\sqrt{\frac{8\pi G\Lambda}{3}}} \right)
+\end{align*}
+Die Lösungen stimmen in dieser Näherung miteinander überein. Unabhängig von der Wahl des Vorzeichens sind alle Lösungen monoton. Im negativen Fall würde sich das Universum in den ersten beiden Fällen in endlicher Zeit zusammenziehen. Mit unseren Beobachtungen ist die exponentiell wachsende Lösung von diesen dreien am besten vereinbar.\\ 
+In den Herleitungen wurde allerdings immer $\frac{\dot{a}}{a}\neq 0$ angenommen. Dadurch ist die Monotonie der Lösungen bereits vorausgesetzt. Potentiell könnte es aber noch weitere Lösungen der Nicht-Linearen Gleichungen geben.
+
+\end{document}

@@ -1,0 +1,51 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\begin{document}
+
+\title{Brachistochrone}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section*{Das Brachistochrone Problem}
+Für zwei Punkte $A = (0, 0)^\top$ und $B = (x_0, y_0)^\top$ soll eine Kurve $y(x)$ gefunden werden, die die Zeit minimiert, die benötigt wird um nur unter dem Einfluss einer konstanten Gravitationsbeschleunigung von Punkt A zu Punkt B zu gelangen.\\
+Dafür berechnen wir ein Funktional $T[y(x)]$ und nutzen die Variationsrechnung:
+\begin{align*}
+T[y(x)]&=\int_{0}^{x_0}\frac{ds}{v}=\int_{0}^{x_0} \sqrt{\frac{1+y'(x)^2}{y}}dx\ \ \Rightarrow\ \ f(x, y, y')=\sqrt{\frac{1+y'(x)^2}{y}}\ \textrm{mit }\partial_xf=0\\
+(\ref{Beltrami_result})&\Rightarrow\ \ f-y'\partial_{y'}f=C\ \ \Rightarrow\ \ \sqrt{\frac{1+y'^2}{y}}-\frac{y'^2}{\sqrt{y+yy'^2}}=C\\
+&\Rightarrow\ \ 1+y'^2-y'^2=C\sqrt{y+yy'^2}\ \ \Rightarrow\ \ \frac{1}{yC^2}=1+y'^2\\ 
+&\Rightarrow\ \ \int_{0}^{x_0}dx=\int_{0}^{y_0}\sqrt{\frac{yC^2}{1-yC^2}}dy\ \ \underset{\substack{yC^2=\sin^2(\varphi)\\ C^2dy=2\sin(\varphi)\cos(\varphi)d\varphi}}{\Longrightarrow}\ \ x_0=\frac{1}{C^2}\int_{0}^{\arcsin(C\sqrt{y_0})}2\sin^2(\varphi)d\varphi\\
+&\Rightarrow\ \ x_0=\frac{1}{2C^2}(2\varphi - \sin(2\varphi))\bigg\vert_{\cancel 0}^{\arcsin(C\sqrt{y_0})}=\frac{1}{C^2}(\arcsin(C\sqrt{y_0})-C\sqrt{y_0}\sqrt{1-y_0C^2})\\
+&\Rightarrow\ \ 0=\arcsin(\frac{1}{R}\sqrt{\frac{y_0}{2}})-\sqrt{\frac{y_0}{2R^2}(1-\frac{y_0}{2R^2})}-\frac{x_0}{2R^2}\ \textrm{mit }R=\frac{1}{2C^2}
+\end{align*}
+Mit $R=\frac{1}{2C^2}$ erfüllen die folgenden parametrisierten Gleichungen eines Cycloiden die gefundenen Bedingungen:
+\begin{align*}
+x(\varphi)&=\frac{1}{2C^2}(2\varphi - \sin(2\varphi))\ \ &\Rightarrow\ \ x(\varphi) = R(\varphi-\sin(\varphi)) \\
+y(\varphi)&=\frac{1}{C^2}\sin^2(\varphi)=\frac{1}{2C^2}(1-\cos(2\varphi))\ \ &\Rightarrow\ \ y(\varphi)=R(1-\cos(\varphi))
+\end{align*}
+
+\section*{Beltrami-Identität}
+Betrachte die Euler-Lagrange Gleichungen mit $L=L(y, y', x)$:
+\begin{align*}
+\partial_{y}L&=\frac{d}{dx}\partial_{y'}L\ \ \Rightarrow\ \ y'\partial_{y}L=y'\frac{d}{dx}\partial_{y'}L \numberthis\label{Beltrami_1}
+\end{align*}
+Betrachte $\frac{d}{dx}L$:
+$$\frac{d}{dx}L=\partial_yLy'+\partial_{y'}Ly''+\partial_xL\ \ \Rightarrow\ \ y'\partial_yL=\frac{d}{dx}L-\partial_{y'}Ly''-\partial_xL$$
+Somit folgt für \ref{Beltrami_1}:
+\begin{align*}
+&\frac{d}{dx}L-\partial_{y'}Ly''-\partial_xL=y'\frac{d}{dx}\partial_{y'}L\ \ \Rightarrow\ \ \frac{d}{dx}L-\left(y''\partial_{y'}L+y'\frac{d}{dx}\partial_{y'}L\right)=\partial_xL\\
+&\ \ \ \Rightarrow\ \ \frac{d}{dx}\left(L-y'\partial_{y'}L\right)=\partial_xL\ \ \Rightarrow\ \ L-y'\partial_{y'}L=\int \partial_xL\ dx
+\end{align*}
+Mit $\partial_xL=0$ folgt daraus die Beltrami-Identität:
+\begin{align*}
+L-y'\partial_{y'}L=C \numberthis\label{Beltrami_result}
+\end{align*}
+
+\end{document}

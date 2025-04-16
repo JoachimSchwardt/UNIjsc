@@ -1,0 +1,184 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esint}
+\usepackage{booktabs, multirow}  % schönere Tabellen
+\usepackage{caption}  % Anpassung der Captions
+\usepackage{scrlayer-scrpage}    % Manipulation des Seitenstils
+\pagestyle{scrheadings}  % Stil für die Seite setzen
+\automark{section}  % Abschnittsnamen als Seitenbeschriftung 
+\setheadsepline{.5pt}    % Kopzeile durch Linie abtrennen
+\usepackage[hidelinks]{hyperref}  % Links und weitere PDF-Features
+\usepackage{typearea, tikz, pgffor, verbatim}
+\usetikzlibrary{calc, arrows.meta,arrows, graphs, quotes, positioning,angles}
+\usepackage[cache=false, outputdir=build]{minted}
+\usemintedstyle{vs}
+\usepackage{placeins} % provides \FloatBarrier
+
+\definecolor{bg}{rgb}{0.9,0.9,0.9}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\usepackage{svg}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{tensor}
+\usepackage[compat=1.1.0]{tikz-feynman}
+\renewcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\renewcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+\renewcommand{\i}{\text{i}}
+\newcommand{\e}{\text{e}}
+\newcommand*{\Fourier}{\textsc{Fourier}\ }
+\newcommand*{\F}{\mathcal{F}}
+\newcommand*{\sinc}{\text{sinc\,}}
+\newcommand{\conv}{\mathop{\scalebox{3.5}{\raisebox{-0.38ex}{\makebox[0.5\width][c]{$\ast$}}}}\limits}
+
+\newcommand*{\titel}{Factorial Derivative}
+\newcommand*{\autor}{Joachim Schwardt}
+
+\hypersetup{pdfauthor={\autor}, pdftitle={\titel}}
+
+%\titlehead{titlehead}
+\subject{Mathemagics}
+\title{\titel}
+\author{\autor}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+%%% petrie911 [1 day ago (edited)]
+%%%The way I would take the factorial of the derivative is to use the fact that the exponential of the derivative operator is the translation operator to write d_x! in integral form. In this case, the most useful integral form is z! = int exp(t - exp(t)) exp(t z)dt, where the integral is over the whole real line. This gives d_x! f(x) = int exp(t-exp(t)) f(x + t) dt.
+
+%%%Another way would be to switch to Fourier space and posit that since d_x transforms to -ik, then d_x! transforms to (-ik)!, and thus the Fourier transform of d_x! f(x) is (-ik)!F(k) (using the convention z! = Gamma(z + 1) for complex z). By the convolution theorem, that means d_x! f(x) = conv[f(x), exp(-x-exp(-x))], where the second term the inverse Fourier transform of (-ik)!. It turns out this convolution is equivalent to the integral above, so these methods get the same answer. Neat!
+%%%
+%%%This also reproduces all your results, which makes sense because the exp(d_x) being the translation operator comes from the same Taylor series analysis you used on the matrices. For further development, I wonder if there's a sensible way to write d_x! as a formal product d_x(d_x-1)(d_x-2)..., and whether this formal product results in the same results as above. I also wonder what kind of product rule d_x! obeys. Is there a nice closed form for d_x! [f(x) g(x)]?
+%%%
+%%%BTW, your calculation of d! x^2 is a little loose. The definition of f(A) needs a 1/2 on f''(0) in the Taylor expansion and you should have taken the last column of the matrix, not the first row.
+
+\section{Statement of the Problem}
+We want to make sense of both the idea and the notation
+\begin{align}
+\frac{\tecxt\text{d}}{\tecxt\text{d}x}! f(x)
+\end{align}
+implying it.
+In words, we may call this the \emph{factorial derivative} of a function $f$.
+In the following we will use the symbol $\partial := \frac{\tecxt\text{d}}{\tecxt\text{d}x}$.
+\section{Representations}
+\subsection{Gamma function}
+The Gamma function is defined as the analytical continuation of the factorial to the complex plane satisfying $\Gamma(n+1) = n!$ for $n\in\mathbb{N}_0$.
+%%%The usual definition of 
+%%%\begin{align}
+%%%\Gamma(x) &= \intx\int_{0}^{\infty} t^{x-1} \e^{-t} \, \mathrm{d}t
+%%%\end{align}
+%%%lends itself to a possible definition of the factorial derivative as
+%%%\begin{align}
+%%%\partial! &:= \Gamma\kla\left( \partial + 1 \right) := \sum_{n\ge 0} \frac{1}{n!} \Gamma^{(n)}(1) (\partial - 1)^n.
+%%%\end{align}
+%%%Note that the derivatives can be written as
+%%%\begin{align}
+%%%\Gamma^{(n)}(1) &= \intx\int_{0}^{\infty} \kla\left( \log t \right)^n t^{x-1} \e^{-t} \, \mathrm{d}t \bigg\vert_{x=1} = \intx\int_{0}^{\infty} \kla\left( \log t \right)^n \e^{-t} \, \mathrm{d}t.
+%%%\end{align}
+%%%Disregarding questions on convergence this leads to
+%%%\begin{align}
+%%%\partial ! &= \intx\int_{0}^{\infty} \e^{-t} \sum_{n\ge 0} \frac{1}{n!} \kla\left( \log t \right)^n (\partial - 1)^n \, \mathrm{d}t = \intx\int_{0}^{\infty} \e^{-t} \e^{(\log t) (\partial - 1)} \, \mathrm{d}t = \\
+%%%&= \intx\int_{0}^{\infty} \e^{-t} t^{\partial - 1} \, \mathrm{d}t
+%%%\end{align}
+The usual definition of 
+\begin{align}
+\Gamma(x) &= \intx\int_{0}^{\infty} t^{x-1} \e^{-t} \, \mathrm{d}t
+\end{align}
+lends itself to a possible definition of the factorial derivative as
+\begin{align}
+\partial! &:= \Gamma\kla\left( \partial + 1 \right) := \int_{0}^{\infty} \e^{-t} t^\partial \, \mathrm{d}t.
+\end{align}
+Note that writing $t^\partial = \e^{\partial \log t}$ gives the translation operator.
+The name stems from its action on a function $f$
+\begin{align}
+T_a f(x) &:= \e^{a \partial} f(x) = \sum_{n\ge 0} \frac{1}{n!} a^n \partial^n f(x) = \\
+&= \sum_{n\ge 0} \frac{1}{n!} f^{(n)}(x) (x+a - x)^n = f(x+a).
+\end{align}
+In our case $a= \log t$ and thus we have
+\begin{align}
+\partial ! &= \intx\int_{0}^{\infty} \e^{-t} T_{\log t} \, \mathrm{d}t.
+\end{align}
+The variable substitution $z := -\log t$ brings this into a more convenient form
+\begin{align}
+\partial ! &= \intr\int_{\mathbb{R}^{ }} \e^{-\e^{-z}} T_{-z} \, \e^{-z} \mathrm{d}z = \intr\int_{\mathbb{R}^{ }} \e^{-z - \e^{-z}} T_{-z} \, \mathrm{d}z.
+\end{align}
+Acting on an arbitrary test function $f$ then yields
+\begin{align}
+\partial ! f(x) &= \intr\int_{\mathbb{R}^{ }} \e^{-z - \e^{-z}} f(x - z) \, \mathrm{d}z = g_\Gamma \ast f
+\end{align}
+where we defined the characteristic function 
+\begin{align}
+g_\Gamma(x) := \e^{-x - \e^{-x}}.
+\end{align}
+Note that this is identical to the derivative of the Gumbel distribution $G(x) = \e^{-\e^{-x}}$.
+This may just be a coincidence though.
+\subsection{Fourier Transformation}
+The idea for this approach was given by \texttt{petrie911} in one of the comments.\\
+We will define the Fourier transformation of a function $f$ and its inverse via
+\begin{align}
+\tilde{f}(k) &:= \mathcal{F}[f](k) := \intr\int_{\mathbb{R}^{ }} f(x)\e^{-\i kx} \, \mathrm{d}x,\\
+f(x) &= \mathcal{F}^{-1}[\tilde{f}](x) := \intr\int_{\mathbb{R}^{ }} \tilde{f}(k)\e^{\i kx} \, \frac{\mathrm{d}k}{2\pi}.
+\end{align}
+Then we find
+\begin{align}
+\mathcal{F}[\partial f](k) &= \int_{\mathbb{R}^{ }} f'(x) \e^{-\i kx} \, \mathrm{d}x = -\int_{\mathbb{R}^{ }} f'(x) (-\i k)\e^{-\i kx} \, \mathrm{d}x = \i k\mathcal{F}[f](k).
+\end{align}
+Similarly, we may define the Fourier transformation of the factorial derivative via the relation $\partial \overset{\mathcal{F}}{\longrightarrow} \i k$ as
+\begin{align}
+\mathcal{F}\klam\left[ \partial ! f \right](k) &= (\i k)! \mathcal{F}[f](k) = \Gamma (\i k + 1) \mathcal{F}[f](k).
+\end{align}
+Using the inverse transformation this gives
+\begin{align}
+\partial ! f(x) &= \frac{1}{2\pi} \intr\int_{\mathbb{R}^{ }} \e^{\i kx} \Gamma(\i k + 1) \intr\int_{\mathbb{R}^{ }} \e^{-\i ky} f(y) \, \mathrm{d}y\, \mathrm{d}k =: \int_{\mathbb{R}^{ }} f(y) g_\mathcal{F}(x - y) \, \mathrm{d}y.
+\end{align}
+Here we defined the special function
+\begin{align}
+g_\mathcal{F}(x) &= \frac{1}{2\pi} \intr\int_{\mathbb{R}^{ }} \e^{\i kx} \Gamma( \i k + 1) \, \mathrm{d}k = \\
+&= \frac{1}{2\pi} \intx\int_{0}^{\infty} \e^{-t} \intx\int_{\mathbb{R}}^{} t^{\i k} \e^{\i kx} \, \mathrm{d}k \, \mathrm{d}t = \\
+&= \intx\int_{0}^{\infty} \e^{-t} \delta \kla\left( x + \log t \right) \, \mathrm{d}t = \\
+&= \frac{\e^{-t}}{\left\vert \frac{1}{t} \right\vert} \bigg\vert_{t = \e^{-x}} = \e^{-x - \e^{-x}}.
+\end{align}
+This is again the derivative of the Gumbel distribution, i.e. $g_\mathcal{F} \equiv g_\Gamma$.
+Thus the definition via Fourier transformations is completely equivalent.
+\section{Application to specific examples}
+Consider $f(x) = \e^{nx}$.
+Then our definition of the factorial derivative gives
+\begin{align}
+\partial ! f(x) &= \intr\int_{\mathbb{R}^{ }} \e^{-y-\e^{-y}} \e^{n(x-y)} \, \mathrm{d}y = \e^{nx} \intr\int_{\mathbb{R}^{ }} \e^{-y(n+1) - \e^{-y}} \, \mathrm{d}y = \\
+&= \e^{nx} \intx\int_{0}^{\infty} \e^{-t + (n+1)\log t} \, \frac{1}{t}\mathrm{d}t = \\
+&= \e^{nx} \intx\int_{0}^{\infty} \e^{-t} t^{n+1} \frac{1}{t} \, \mathrm{d}t = n! \e^{nx}.
+\end{align}
+For $f(x) = x^n$ we get
+\begin{align}
+\partial ! f(x) &= \intr\int_{\mathbb{R}^{ }} \e^{-y-\e^{-y}} (x-y)^n \, \mathrm{d}y = \\
+&= \intx\int_{0}^{\infty} \e^{-t} \kla\left( x + \log t \right)^n \, \mathrm{d}t = \\
+&= \sum_{k=0}^n \binom{n}{k} x^k \intx\int_{0}^{\infty} \e^{-t} (\log t)^{n-k} \, \mathrm{d}t = \\
+&= \sum_{k=0}^n \binom{n}{k} x^k \Gamma^{(n-k)}(1).
+\end{align}
+
+
+%\begin{thebibliography}{9}
+%\bibitem{example} description, \url{https://www.exmapleurl}, day.\,month~2021.
+%\end{thebibliography}
+
+\end{document}

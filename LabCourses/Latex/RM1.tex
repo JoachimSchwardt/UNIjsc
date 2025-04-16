@@ -1,0 +1,166 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\begin{document}
+
+\title{Radiometrische Messung 1 - Geiger Müller Zählrohr}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Aufgabenstellung}
+Nach der Bestimmung der Zählcharakteristik des GMZ und der zu verwendeten Betriebsspannung $U_A$ soll die Konzentration einer K$_2$CO$_3$ über ihre Aktivität bestimmt werden. 
+\section{Hintergrund und Versuchsaufbau}
+Die Anzahl der instabilen Kerne $N(t)$ bestimmen wir aus dem linearen Zusammenhang zwischen der Änderung dieser Größe und sich selbst:
+$$\frac{dN(t)}{dt}=-\lambda N(t)$$
+Die Lösung dieser Differentialgleichung ergibt mit $N_0$ als Anfangswert:
+$$N(t)=N_0\cdot e^{-\lambda t}$$
+Für eine bestimmte Aktivität $A$, Effektivität des Zählers $\eta$, Messzeit $t_\mathrm{m}$ und Anzahl an Ereignissen $N$ ergibt sich die Zählrate $Z$ über:
+$$Z = \eta\frac{N}{t_\mathrm{m}}A$$
+Für eine diskrete Wahrscheinlichkeitsfunktion $P(k)$ können wir Mittelwert $\mu$ und Varianz $\sigma^2$ definieren:
+\begin{align*}
+\mu&:=\sum_kk\cdot P(k)\\
+\sigma^2&:=\sum_k (k-\mu)^2\cdot P(k)
+\end{align*}
+Die Wahrscheinlichkeit für den Zerfall eines einzelnen Kernes ist mit $p=1-e^{-\lambda t}$ gegeben. Damit können wir die Zerfallsprozesse als Binomialverteilung ansehen:
+$$P(k) = \binom Nk p^k(1-p)^{N-k}$$
+Der Mittelwert ergibt sich dann wie folgt mit $m:=N-1$ und $l:=k-1$:
+\begin{align*}
+  \mu &= \sum_{k=0}^N k\binom Nk p^k (1-p)^{N-k}= Np\sum_{k=1}^N \frac{(N-1)!}{(N-k)!(k-1)!}p^{k-1} (1-p)^{(N-1)-(k-1)}=\\ 
+  &= Np\sum_{l=0}^m \binom ml p^l (1-p)^{m-l}= Np\cdot (p+1-p)^m=Np.
+\end{align*} 
+Für die Varianz kann man mit $q:=1-p$ auch schreiben:
+$$\sigma^2=Npq$$
+Für große $N$ wird die Berechnung der Binomialkoeffizienten aufgrund der Fakultät sehr aufwendig. Ist zusätzlich die Messzeit klein gegenüber der Halbwertszeit, so kann man die \textsc{Poisson}-Verteilung als Näherung verwenden:
+$$P(k)=\frac{\mu^k}{k!}e^{-\mu}$$
+Bei der \textsc{Poisson}-Verteilung ist die Varianz gleich dem Mittelwert, es gibt also nur noch einen Parameter $\mu$. Zusätzlich ergibt sich folgende Rekursionsformel:
+$$P(k)=\frac{\mu}{k}P(k-1)$$
+Um die Konzentration der Kalium-Lösung zu bestimmen, verwenden wir ein Relativverfahren. Nach Versuchsanleitung ist ein linearer Zusammenhang zwischen der Zählrate $Z$ und der Konzentration $c$ gewährleistet:
+$$Z=a\cdot c+b$$
+Die Parameter $a$ und $b$ ergeben sich hierbei aus den Zählrate und Kalium-Konzentrationen der anderen zwei Lösungen. Die Indices 0 und 1 stehen respektive bei Größen die zu destilliertem Wasser und 4-molarer Kalium-Lösung gehören. Es gilt $C_0=0$:
+$$Z=\frac{Z_1-Z_0}{c_1-c_0}\cdot c+Z_0$$
+Mit der gleichen Messzeit $t_\mathrm{m}$ für alle Messungen und der Impulszahl $N=Z\cdot t_\mathrm{m}$ vereinfacht sich der Zusammenhang zu:
+$$N=\frac{N_1-N_0}{c_1}\cdot c+N_0$$
+Für die gesuchte Konzentration folgt also:
+$$c=c_1\cdot\frac{N-N_0}{N_1-N_0}=:c_1\cdot f(N,\, N_0,\, N_1)$$
+\section{Bestimmung von $U_A$}
+Messung von $N$ Impulsen bei einer Spannung von $U$.
+Flüssigkeit: 4 molar\newline
+Messzeit und Zyklen: 10\,s und 1 Zyklus\\ \\
+\begin{tabular}{c|c|c|c|c|c|c}
+$U$\,/\,V & 100 & 200 & 300 & 400 & 500 & 600
+\\ \hline
+$N$ & 0 & 0 & 0 & 43 & 46 & 48
+\end{tabular}\\ \\
+Es ergibt sich eine Einsatzspannung von etwa $U_E = $ 310\,V. Bei einer Messzeit von $t_\mathrm{m}=50$\,s ergab sich im Plateau-Bereich etwa eine Abweichung von $\pm$10 Impulsen bei einem Mittelwert von etwa 250. Dies entspricht einer Abweichung von 5\%. (Anmerkung: Ich bin mir nicht sicher, ob ich das mit den 5\% so richtig gemacht habe...)
+Es sollen nun im Bereich $[U_E-10\,\mathrm{V},\ U_E+10\,\mathrm{V}]$ in Schritten von 2\,V Messwerte mit dieser Messzeit aufgenommen werden:\\ \\
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c}
+$U$\,/\,V & 300 & 302 & 304 & 306 & 308 & 310 & 312 & 314 & 316 & 318 & 320
+\\ \hline
+$N$ & 0 & 0 & 2 & 0 & 2 & 4 & 12 & 21 & 37 & 86 & 117
+\end{tabular}\\ \\
+Als Arbeitsspannung wird $U_A=U_E+100$\,V $=408$\,V verwendet. die zwei Impulse bei 304\,V werden als Ausreißer betrachtet. Darüber hinaus soll das gesamte Plateau in 20\,V Schritten ausgemessen werden:\\ \\
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}
+$U$\,/\,V & 340 & 360 & 380 & 400 & 420 & 440 & 460 & 480 & 500 & 520 & 540 & 560 & 580 & 600
+\\ \hline
+$N$ & 228 & 237 & 239 & 242 & 254 & 263 & 235 & 250 & 251 & 265 & 247 & 255 & 247 & 254
+\end{tabular}\\ \\
+\section{Messung}
+Es soll nun für alle drei Lösungen über 1000 Zyklen mit einer Messzeit von 1\,s bei einer Spannung von $U_A=408$\,V gemessen werden. Es werden die Gesamtzahl der Impulse $N$, der Mittelwert $\mu$ und die Standardabweichung $\sigma$ notiert:\\ \\
+\begin{tabular}{c|c|c|c}
+ & N & $\mu$ & $\sigma$ \\ \hline
+dest. Wasser & 837 & 0,837 & 0,944\\ \hline
+x molar & 3139 & 3,139 & 1,8\\ \hline
+4 molar & 5033 & 5,033 & 2,278
+\end{tabular}\\ \\
+Histogramm-Daten für destilliertes Wasser:\\ 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=1\textwidth]{destWasser.png}
+\caption{Histogramm für destilliertes Wasser}
+\end{figure}
+\begin{tabular}{c|c|c|c|c|c}
+Anzahl Impulse pro Zyklus & 0 & 1 & 2 & 3 & 4\\ \hline
+Absolute Häufigkeit & 90 & 92 & 27 & 8 & 2
+\end{tabular}\\ \\
+Histogramm-Daten für die x-molar Lösung:\\ 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=1\textwidth]{xmolar.png}
+\caption{Histogramm für destilliertes Wasser}
+\end{figure}
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c}
+I. pro Z. & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10\\ \hline
+Abs. H. & 44 & 134 & 225 & 226 & 145 & 126 & 59 & 26 & 8 & 3 & 4
+\end{tabular}\\ \\
+Histogramm-Daten für die 4-molar Lösung:\\ 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=1\textwidth]{4molar.png}
+\caption{Histogramm für destilliertes Wasser}
+\end{figure}
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}
+I. pro Z. & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16\\ \hline
+Abs. H. & 11 & 31 & 85 & 128 & 182 & 177 & 141 & 97 & 79 & 37 & 18 & 9 & 3 & 0 & 1 & 0 & 1
+\end{tabular}\\ \\
+\section{Auswertung}
+\subsection{Anstieg in der Plateau-Region}
+Die lineare Regression mit LibreCalc ergab einen Anstiegskoeffizienten von $\alpha = 0,07264$:
+\begin{figure}[h!]
+\centering
+\includegraphics[width=1\textwidth]{Plateau.png}
+\caption{Lineare Regression der Messwerte im Plateau-Bereich}
+\end{figure}
+\subsection{\textsc{Poisson}-Näherung $-$ notwendiges Kriterium}
+Ein notwendiges Kriterium für die Annäherung einer Binomialverteilung mit einer \textsc{Poisson}-Verteilung ist $\lambda\cdot t\ll 1$. Die Anzahl an instabilen Kernen ist hierbei viel größer als die gemessenen Mittelwerte, also $\frac{\mu}{N}\ll 1$:
+$$\lambda t = \mathrm{ln}(1-p)=\mathrm{ln}\left(1-\frac{\mu}{N}\right)\ll 1$$
+\subsection{Berechnung der Konzentration der Kalium-Lösung}
+Für die Konzentration der Kalium-Lösung ergibt sich mit $c_1=4$\,mol/l: $$c=2,1945\,\mathrm{mol/l}$$
+Für die Betrachtung der Messunsicherheiten verwenden wir die \textsc{Gauss}sche Fehlerfortpflanzung:
+$$\Delta c=c\sqrt{\left(\frac{\Delta c_1}{c_1}\right)^2+\left(\frac{\Delta N}{N-N_0}\right)^2+\left(\frac{\Delta N_1}{N_1-N_0}\right)^2+\left(\frac{\Delta N_0}{N-N_0}\frac{N-N_1}{N_1-N_0}\right)^2}$$
+Aus der Versuchsanleitung entnehmen wir die systematischen Unsicherheiten $\frac{\Delta N}{N}=\frac{\Delta N_0}{N_0}=\frac{\Delta N_1}{N_1}=0,02$ und $\frac{\Delta c_1}{c_1}=0,03$ (95\% Sicherheit $\Rightarrow$ $\frac{1}{\sqrt{3}}$ noch dazu multiplizieren; gemäß der Anleitung wird hier stattdessen der Faktor 0,5 verwendet):
+$$\Delta c_{sys}=0,05181\,\mathrm{mol/l}$$
+Für die statistische Unsicherheiten verwenden wir die gleiche Formel, allerdings können wir in diesem Fall keine Angabe über $\Delta c_1$ machen, weshalb wir diesen Term ignorieren. Die $\Delta {N_i}$ entsprechen hier gerade den Standardabweichungen $\sigma_i=\sqrt{N_i}$:
+$$\Delta c_{stat}=0,06621\,\mathrm{mol/l}$$
+Damit ergibt sich gerundet folgendes Endergebnis für die Konzentration:
+$$c=\underline{(2,19\pm 0,05\pm 0,06)\,\mathrm{mol/l}}$$
+\subsection{Vergleich mit theoretischer \textsc{Poisson}-Verteilung}
+Der Vergleich der Histogramme mit den jeweiligen theoretischen \textsc{Poisson}-Verteilungen und ihren 1\,$\sigma$-Umgebungen ergibt, dass das Kriterium (etwa 68\,\% aller Werte in den 1\,$\sigma$-Schläuchen) erfüllt ist. Beim Plotten ist aufgefallen, dass für destilliertes Wasser deutlich weniger als 1000 Messzyklen im Histogramm-Plot aufgenommen wurden. Der Grund dafür ist allerdings unklar. Dass die theoretische Verteilung hier nicht so gut passt, wird auf die zu geringe Stichprobe zurückgeführt. \\
+\begin{figure}[h!]
+\centering
+\includegraphics[width=1\textwidth]{Poisson_2.png}
+\caption{\textsc{Poisson}-Verteilungen mit 1\,$\sigma$-Umgebung}
+\end{figure}
+\subsection{$\chi^2$-Signifikanztest}
+Wir definieren eine Größe $v$ als Maß für die quadratische Abweichung der experimentellen Daten von dem theoretischen Verlauf. Hierbei ist die Unsicherheit der \textsc{Poisson}-Verteilung wieder über $\Delta N = \sqrt{N}$ gegeben.:
+$$v:=\sum_i\left(\frac{N_i^{exp}-N_i^{theo}}{\Delta N_i^{theo}}\right)^2=\sum_i\frac{(N_i^{exp}-N_i^{theo})^2}{N_i^{theo}}$$
+$N_i$ bezeichnet hierbei die Anzahl an Werten pro Intervall. Nach Platzanleitung sollte man mindestens 6 Intervalle verwenden, das ist bei destillietem Wasser nicht ganz erfüllt. Zudem sollte jedes Intervall zumindest 5 Werte enthalten; andernfalls werden Intervalle zusammengefügt. Zuletzt wird noch ein Signifikanzniveau $\alpha = 5\%$ und die Anzahl der Freiheitsgrade $k=N-r-1$ definiert ($N-$ Anzahl an  Intervallen, $r=1$ für die \textsc{Poisson}-Verteilung).\\
+Unterschreitet $v$ dann den Wert $v_{min}$, welcher sich aus der $\chi^2(v)$-Verteilung ergibt, so stehen die Daten zumindest nicht im Widerspruch zur \textsc{Poisson}-Verteilung. Ein Beweis ist dies allerdings nicht. Für $\alpha =5\%$ lautet die Tabelle der $\chi^2$:\\ \\
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c}
+k & 1&2&3&4&5&6&7&8&9&10 \\ \hline
+$v_{min}$ & 3,84 & 5,99 & 7,81 & 9,49 & 11,07 & 12,59 & 14,07 & 15,51 & 16,92 & 18,31
+\end{tabular}\\ \\
+Für die Verteilungen der verschiedenen Lösungen ergibt sich:\\ \\
+\begin{tabular}{c|c|c|c|c}
+ & $v$ & $k$ & $v_{min}$ & $v\overset{?}{<}v_{min}$\\ \hline
+dest. Wasser & 3,59 & 3 & 7,81 & \checkmark \\ \hline
+x molar & 8,71 & 8 & 15,51 & \checkmark \\ \hline
+4 molar & 7,77 & 10 & 18,31 & \checkmark
+\end{tabular}\\ \\
+\section{Diskussion}
+Anmerkung: Mir fällt jetzt erst auf, dass ich das Protokoll bis hierhin aus reiner Gewohnheit im "wir" geschrieben habe... \\ \\
+In einer Beispielrechnung der Versuchsanleitung wurde der Wert $c=2,31\,\mathrm{mol/l}$ angegeben, was fast noch im Unsicherheitsintervall meines Ergebnisses von $c=(2,19\pm 0,05\pm 0,06)\,\mathrm{mol/l}$ liegt. \\ \\
+Die grafischen Tests / heuristische Herangehensweise stimmt mit der $\chi^2$-Methode überein, dass es sich bei der Verteilung in guter Näherung um eine \textsc{Poisson}-Verteilungen handelt. Hier sei allerdings noch einmal auf die zu geringe zahl der Gesamtimpulse im Histogramm für destilliertes Wasser hingewiesen. Das Programm hat allerdings tatsächlich 1000 Messwerte aufgenommen und (natürlich) auch den richtigen Mittelwert sowie Standardabweichung berechnet. Ich bitte zu entschuldigen, dass ich die Messung jetzt nicht noch einmal wiederhole, allerdings bin ich jetzt aufgrund anfänglicher Schwierigkeiten mit der technischen Umsetzung des Versuchs schon mehrere Tage damit beschäftigt.\\ \\
+Kurze Rückmeldung zur Organisation: Das python-Programm läuft zwar, wenn man die Anleitung befolgt - allerdings eben nicht immer. Es gibt häufig RuntimeWarnings und auch einige Abstürze, womit ich mir auch das eine Histogramm erkläre. Nichtsdestotrotz konnte man den Versuch so durchführen und mir ist auch bewusst wie viel Arbeit dahinter steht, jetzt plötzlich das gesamte Praktikum zu "digitatlisieren". 
+
+	
+
+
+
+\end{document}

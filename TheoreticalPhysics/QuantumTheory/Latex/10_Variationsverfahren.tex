@@ -1,0 +1,79 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{graphicx, gensymb}
+\usepackage{amsfonts, cancel, amssymb}
+\usepackage{amsmath, amsthm, array, esvect, esint}
+\usepackage{typearea}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=3cm,bindingoffset=5mm]{geometry}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\bra}{}
+\newcommand{\kom}{}
+\newcommand{\brak}{}
+\newcommand{\braket}{}
+\newcommand{\intx}{}
+\newcommand{\intr}{}
+\newcommand{\kla}{}
+\newcommand{\klam}{}
+\newcommand{\klammer}{}
+\newcommand{\oper}{}
+\newcommand{\tecxt}{}
+\newcommand{\Bra}{}
+\newcommand{\Ket}{}
+
+\begin{document}
+
+\title{Variationsverfahren und Störungsrechnung}
+\author{Joachim Schwardt}
+\date{\today}
+\maketitle
+
+\section{Magnetische Wechselwirkung des Elektronenspins}
+Es ist $H=\alpha + \frac{\beta}{2}\kla\left( {S^2-S_e^2-S_p^2} \right)$ und $S^2\Ket | {ss_es_pm} \rangle=\hbar^2s(s+1)\Ket | {ss_es_pm} \rangle$, $S_z\Ket | {ss_es_pm} \rangle=\hbar m\Ket | {ss_es_pm} \rangle$, $S_e^2\Ket | {ss_es_pm} \rangle=\hbar^2s_e(s_e+1)\Ket | {ss_es_pm} \rangle$, $S_p^2\Ket | {ss_es_pm} \rangle=\hbar^2s_p(s_p+1)\Ket | {ss_es_pm} \rangle$. Mit $s=s_e+s_p$ folgt dann:
+\begin{align*}
+E&=\bra\langle {H}\rangle=\braket\langle {ss_es_pm} | {\alpha + \frac{\beta}{2}\kla\left( {S^2-S_e^2-S_p^2} \right)} | {ss_es_pm}\rangle= \\
+&=\alpha+\frac{\beta}{2}\braket\langle {ss_es_pm} | {\hbar^2s(s+1)-\hbar^2s_e(s_e+1)-\hbar^2s_p(s_p+1)} | {ss_es_pm}\rangle= \\
+&=\alpha+\frac{\hbar^2\beta}{2}\kla\left( {s(s+1)-\frac{3}{2}} \right)=\alpha + \frac{\hbar^2\beta}{4}\cdot\left\{\begin{matrix}
+1 & \tecxt\text{für }s=1 \\
+-3 & \tecxt\text{für }s=0 
+\end{matrix}\right.
+\end{align*}
+\section{\textsc{Ritz}sches Variationsverfahren}
+Man benötigt $\bra\langle {H}\rangle_{\psi(a)}$ um aus der Bedingung $0=\partial_a\bra\langle {H}\rangle_{\psi(a)}$ eine obere Schranke für die Grundzustandsenergie zu erhalten:
+\begin{align*}
+\brak\langle {\psi}| {\psi}\rangle&=\intx\int_{-a}^{a}|A|^2\kla\left( {1-\frac{|x|}{a}} \right)^2\,\mathrm{d}x=2|A|^2\intx\int_{0}^{a}1-\frac{2x}{a}+\frac{x^2}{a^2}\,\mathrm{d}x=\frac{2a|A|^2}{3} \\
+\braket\langle {\psi} | {H} | {\psi}\rangle&=2|A|^2\intx\int_{0}^{a}+\frac{\hbar^2}{2m}\kla\left( {\partial_x\kla\left[ {1-\frac{x}{a}} \right]} \right)^2+\frac{m}{2}\omega^2x^2\kla\left( {1-\frac{2x}{a}+\frac{x^2}{a^2}} \right)\,\mathrm{d}x= \\
+&=\frac{\hbar^2|A|^2}{ma}+ m\omega^2|A|^2a^3\intx\int_{0}^{1}y^2-2y^3+y^4\,\mathrm{d}y=\frac{\hbar^2|A|^2}{ma}+\frac{m\omega^2|A|^2a^3}{30} \\
+0&\overset{!}{=}\partial_a\frac{\braket\langle {\psi} | {H} | {\psi}\rangle}{\brak\langle {\psi}| {\psi}\rangle}=-\frac{3\hbar^2}{ma^3}+\frac{m\omega^2a}{10}\ \ \Rightarrow\ \ a^2=\sqrt{\frac{30\hbar^2}{m^2\omega^2}}=\frac{\hbar}{m\omega}\sqrt{30} \\
+&\Rightarrow\ \ \bra\langle {H}\rangle_{\psi(a)}=\frac{3\hbar^2}{2ma^2}+\frac{m\omega^2a^2}{20}=\hbar\omega\kla\left( {\frac{3}{2\sqrt{30}}+\frac{\sqrt{30}}{20}} \right)=\frac{\hbar\omega}{2}\sqrt{\frac{6}{5}}>\frac{\hbar\omega}{2}
+\end{align*}
+\section{Variationsverfahren für Wasserstoff}
+Betrachte folgende Rechnungen mit $t=2\alpha r^2$ und d$r = \frac{1}{\sqrt{8\alpha t}}\tecxt\text{d}t$, sowie atomaren Einheiten $m_e=\hbar=c=a_0=1$ ($a_0=\frac{\hbar}{\alpha mc}$, $\alpha=\frac{e^2}{4\pi\epsilon_0\hbar c}$):
+\begin{align*}
+\brak\langle {\psi}| {\psi}\rangle&=\intr\int_{\mathbb{R}^{3}}{\kla\left( {\frac{2\alpha}{\pi}} \right)^{3/2}e^{-2\alpha r^2}}\,\mathrm{d}^{3}r=4\pi\kla\left( {\frac{2\alpha}{\pi}} \right)^{3/2}\intx\int_{0}^{\infty}\frac{t}{2\alpha}e^{-t}\,\frac{\mathrm{d}t}{\sqrt{8\alpha t}}= \\
+&=\frac{2}{\sqrt{\pi}}\Gamma\kla\left( {\frac{3}{2}} \right)=1 \\
+\braket\langle {\psi} | {H} | {\psi}\rangle&=-\intr\int_{\mathbb{R}^{3}}{\kla\left( {\frac{2\alpha}{\pi}} \right)^{3/2}e^{-\alpha r^2}\klam\left[ {\frac{1}{r}\partial_r + \frac{1}{2}\partial_r^2 + \frac{1}{r}} \right]e^{-\alpha r^2}}\,\mathrm{d}^{3}r=\\
+&=4\pi\sqrt{\frac{8\alpha^3}{\pi^3}}\intx\int_{0}^{\infty}e^{-2\alpha r^2}\klam\left[ {2\alpha + \alpha-2\alpha^2r^2-\frac{1}{r}} \right]\,r^2\mathrm{d}r= \\
+&=4\sqrt{\frac{8\alpha^3}{\pi}}\intx\int_{0}^{\infty}e^{-t}\klam\left[ {\frac{3t}{2}-\frac{t^2}{2}-\sqrt{\frac{t}{2\alpha}}} \right]\,\frac{\mathrm{d}t}{\sqrt{8\alpha t}}= \\
+&=\frac{\alpha}{\sqrt{\pi}}\klam\left[ {6\Gamma\kla\left( {\frac{3}{2}} \right)-2\Gamma\kla\left( {\frac{5}{2}} \right)-\frac{4}{\sqrt{2\alpha}}\Gamma(1)} \right]=\frac{3\alpha}{2}-\sqrt{\frac{8\alpha}{\pi}} \\
+0&\overset{!}{=}\partial_\alpha\frac{\braket\langle {\psi} | {H} | {\psi}\rangle}{\brak\langle {\psi}| {\psi}\rangle}=\frac{3}{2}-\sqrt{\frac{2}{\pi\alpha}}\ \ \Rightarrow\ \ \alpha = \frac{8}{9\pi}\\
+&\Rightarrow\ \ \bra\langle {H}\rangle_{\psi(\alpha)}=\frac{4}{3\pi}-\frac{8}{3\pi}=-\frac{4}{3\pi}\equiv-\frac{4m_ec^2}{3\pi}\kla\left( {\frac{e^2}{4\pi\epsilon_0\hbar c}} \right)^2>-\frac{\alpha^2m_ec^2}{2}
+\end{align*}
+\section{Störungsrechnung}
+Es gilt folgender Zusammenhang für die Energien in 1.\,und 2.\,Störungsordnung, wobei $\Ket | {n} \rangle$ die störungsfreien Zustände und $E_n$ die zugehörigen Energien beschreibt:
+\begin{align*}
+E_n^{(1)}&=\braket\langle {n} | {V} | {n}\rangle=\lambda\braket\langle {n} | {a^\dagger + a} | {n}\rangle=0\\
+E_n^{(2)}&=\sum_{m\neq n}\frac{|\braket\langle {m} | {V} | {n}\rangle|^2}{E_n-E_m}=\frac{|\lambda|^2}{\hbar\omega}\sum_{m\neq n}\frac{|\sqrt{n+1}\delta_{m,n+1} + \sqrt{n}\delta_{m,n-1}|^2}{n-m}= \\
+&=\frac{|\lambda|^2}{\hbar\omega}\sum_{m\neq n}\frac{(n+1)\delta_{m,n+1}}{n-m} + \frac{n\delta_{m,n-1}}{n-m}=-\frac{|\lambda|^2}{\hbar\omega} \\
+&\Rightarrow\ \ E_n\simeq\hbar\omega\kla\left( {n+\frac{1}{2}} \right)-\frac{\lambda^2}{\hbar\omega}
+\end{align*}
+Wir wollen $H$ faktorisieren. Man erhält dann $b=a+\frac{\lambda}{\hbar\omega}$, wobei $b^\dagger$ und $b$ die gleichen Kommutatorrelationen erfüllen. Dass der Störterm nur einer konstanten Energieverschiebung entspricht, kann man sich auch mittels quadratischer Ergänzung und linearer Transformation erklären (beachte $a^\dagger +a\propto x$):
+\begin{align*}
+\hbar\omega &\kla\left( {a^\dagger+c} \right)\kla\left( {a+d} \right)+\frac{\hbar\omega}{2}=\hbar\omega\kla\left( { a^\dagger a+cd+ca+da^\dagger + \frac{1}{2}} \right) \overset{!}{=}H_0+\lambda\kla\left( {a^\dagger +a} \right)+b\\
+&\Rightarrow\ \ c=d=\frac{\lambda}{\hbar\omega}\ \ \Rightarrow\ \ b=\frac{\lambda^2}{\hbar\omega}\\ 
+&\Rightarrow\ \ H=\hbar\omega\klam\left[ {\kla\left( {a^\dagger +\frac{\lambda}{\hbar\omega}} \right)\kla\left( {a+\frac{\lambda}{\hbar\omega}} \right)+\frac{1}{2}} \right]-\frac{\lambda^2}{\hbar\omega}=:\hbar\omega\kla\left( {b^\dagger b+\frac{1}{2}} \right)-\frac{\lambda^2}{\hbar\omega}
+\end{align*}
+Für die exakten Eigenenergien gilt dann:
+\begin{align*}
+E_n\Ket | {n} \rangle&=H\Ket | {n} \rangle=\kla\left( {H_0-\frac{\lambda^2}{\hbar\omega}} \right)\ \ \Rightarrow\ \ E_n=\hbar\omega\kla\left( {n+\frac{1}{2}} \right)-\frac{\lambda^2}{\hbar\omega}
+\end{align*}
+\end{document}
