@@ -1,0 +1,185 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+
+\newcommand*{\Title}{Dominant Balance and perturbation Theory}
+\newcommand*{\Author}{Joachim Schwardt}
+
+\input{preamble_shared}
+\input{preamble}
+
+%\titlehead{titlehead}
+\subject{Advanced Guessing for Physicists}
+\title{\Title}
+\author{\Author}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Methods of Perturbations and Dominant Balance}
+Consider the algebraic equation $\epsilon^2 x^6 - \epsilon x^4 - x^3 + 8 = 0$ with a small parameter $\epsilon$.
+
+For $\epsilon=0$, the equation simplifies to $x^3=8$ and has the three (complex) solutions $x_n = 2 \powe{\i \frac{2\pi}{3} n}$ for $n=0,1,2$.
+The original equation is of sixth order and must therefore have six solutions.
+Presumably, these roots continuously merge into the three simple $x_n$ as $\epsilon\rightarrow 0$.
+
+\subsection{Dominant Balance}
+The Method of Dominant Balance in the context of equations such as the one above generally concerns the problem
+\begin{align}
+\sum_{q=1}^Q T_q\kla*{x} &= 0,
+\end{align}
+where $Q$ is the number of terms and $x\kla*{\epsilon}$ is a solution for $\epsilon\rightarrow 0$.
+Asymptotically solving the reduced equation for only two of these terms, e.g. $T_q(x) + T_p(x) = 0$, yields some solution $x_{q,p}\kla*{\epsilon}$.
+This solution is \emph{consistent} if it is \emph{dominant}, meaning that the sum over the remaining terms, $R_{q,p}(x)$, is ``much smaller'' than $T_q(x)$ and $T_p(x)$.
+\subsection{Application}
+In our case we have the four terms $T_1(x) = \epsilon^2 x^6$, $T_2(x) = -\epsilon x^4$, $T_3(x) = -x^3$ and $T_4(x)=8$.
+\begin{itemize}
+\item $q=1,2$: $\epsilon^2 x^6 = \epsilon x^4$ gives $\epsilon x^2 = 1$ and $\tilde{x}^2 = 1$ after the scale transformation $\tilde{x} = \sqrt{\epsilon} x$. The solution is $\tilde{x} = \pm 1$. We have $\epsilon^{-1} \tilde{x}^6 \ll 8-\epsilon^{-\frac{3}{2}} \tilde{x}^3$ as $\epsilon\rightarrow 0$, so this solution is not consistent.
+\item $q=1,3$: $\epsilon^2 x^6 = x^3$ gives $\epsilon^2 x^3 = 1$ and $\tilde{x}^3=1$ after the scale transformation $\tilde{x} = \epsilon^\frac{2}{3} x$. The solution is $\tilde{x} = \powe{\i \frac{2\pi}{3} n}$ for $n=0,1,2$. We have $\epsilon^{-2} \tilde{x}^6 \gg 8 - \epsilon^{-\frac{5}{3}} \tilde{x}^4$, so this solution is consistent (checking the other term is not required, they must scale identically by construction).
+\item $q=1,4$: $\epsilon^2 x^6 = -8$ gives $\tilde{x}^6 = -8$ after the scale transformation $\tilde{x} = \epsilon^\frac{1}{3} x$. The solution is $\tilde{x} = 8^\frac{1}{6} \powe{\i \pi \frac{2n+1}{6}}$ for $n=0,\dots,5$. We have $8 \ll \epsilon^{-1} \tilde{x}^3$, so this is not consistent.
+\item $q=2,3$: $\epsilon x^4 = -x^3$ gives $\epsilon x = -1$ and $\tilde{x} = -1$ after the scale transformation $\tilde{x} = \epsilon x$. We have $\epsilon^{-3} \tilde{x}^3 \ll \epsilon^{-4} \tilde{x}^6$, so this is not consistent.
+\item $q=2,4$: $\epsilon x^4 = 8$ gives $\tilde{x}^4 = 8$ after the scale transformation $\tilde{x} = \epsilon^\frac{1}{4} x$. The solution is $\tilde{x} = 8^\frac{1}{4} \powe{\i \frac{2\pi}{4} n}$ for $n=0,\dots,3$. We have $8 \ll \epsilon^{-\frac{3}{4}} \tilde{x}^3$, so this is not consistent.
+\item $q=3,4$: $x^3=8$ has been solved already; $8 \gg \epsilon^2 x^6 - \epsilon x^4$ as $\epsilon\rightarrow 0$, so this is consistent.
+\end{itemize}
+To summarize, aside from the solutions $x_n = 2\powe{\i \frac{2\pi}{3} n}$ for $n=0,1,2$ we have only found $x_n\kla*{\epsilon} = \epsilon^{-\frac{2}{3}} \powe{\i \frac{2\pi}{3}n}$ as consistent solutions.
+This sheds some light on the disappearance of the zeros: apparently each root splits into exactly two, since the asymptotic roots satisfy the same three-fold symmetry.
+
+Introducing $x = \epsilon^{-\frac{2}{3}} y$ gives $\epsilon^{-2} y^6 - \epsilon^{-\frac{5}{3}} y^4 - \epsilon^{-2} y^3 + 8 = 0$.
+Up to second order, we can write $x=x_0 + \epsilon x_1 + \epsilon^2 x_2$ (but throwing this into the original equation does yield nonsense at $\epsilon^2$, and I don't really understand how to do something similar for the scaled equation.. yet)
+
+\section{Perturbation Method vs. Iteration Method}
+
+\section{A toy rocket}
+Starting from $x(0)=0$, $\dot{x}(0)=v_0$ and assuming $x(t)\ll R$ (we do not get very far), what is recurrence time?
+The ODE reads $\ddot{x} = -\frac{GM}{\kla*{x+R}^2}$, and introducing $\gamma = \frac{GM}{R^3}$ and $y= \frac{x}{R}$ yields
+\begin{align}
+\ddot{y} &= -\frac{\gamma}{\kla*{1+y}^2}.
+\end{align}
+This can be solved exactly, but it is rather painful and we only care for asymptotics here anyway.
+To leading order, we can just ignore the small correction $y\ll 1$ in the denominator to get $\ddot{y} \sim -\gamma$ and $y(t) = \frac{v_0}{R}t - \frac{\gamma}{2}t^2$.
+The recurrence time $T$ is the solution to $y(T)=0$, so $T=0$ (the starting point survived the approximation, as it is exact for $y=0$) or $T=\frac{2v_0}{\gamma R} = \frac{2v_0R^2}{GM}$ (this is the leading order).
+
+At this point, I am a bit uncertain how to determine the next correction -- is this not a bit ambiguous?
+Intuitively, I would now write $y=y_0(t) + y_1(t)$ (where $y_0$ is the solution above) and insert to get
+\begin{align}
+\ddot{y}_0 + \ddot{y}_1 &= -\frac{\gamma}{\kla*{1 + y_0 + y_1}^2},
+\end{align}
+but expanding this makes a bit of a mess, and I do not like having no ``small expansion parameter'' to organize it.
+
+Instead, let us try to just Taylor expand the RHS of the original equation to one more order,
+\begin{align}
+\ddot{y} &= -\frac{\gamma}{\kla*{1+y}^2} \approx -\frac{\gamma}{1 + 2y} \approx -\gamma \kla*{1 - 2y}.
+\end{align}
+This is a linear equation, and the first term corresponds to the unperturbed solution we already found (but of course this linearity would vanish at second order, so I have a hunch that my little trick here would not hold up..).
+The correction is then determined by $\ddot{y}_1 = 2\gamma y_1$, which is solved by $y_1(t) = A\powe{\sqrt{2\gamma} t} + B\powe{-\sqrt{2\gamma}t}$.
+We know that $y_1(0)=0$, so $B=-A$.
+Furthermore, $\dot{y}_1(0) = 0$ gives $A=0$ (which is not particularly encouraging).
+
+\section{Methods of Perturbations and Dominant Balance}
+Consider the non-linear equation $x\powe{-x} = \epsilon$.
+Having demonstrated a clear misunderstand of this mechanism in the first problem, I'll instead approach this how I would normally do it.
+Clearly, as $\epsilon\rightarrow 0$ we must have that one solution satisfies $x(\epsilon) \rightarrow \infty$ while the other satisfies $x(\epsilon) \rightarrow 0$.
+Also, as $x\powe{-x}$ is bounded on the relevant interval $x\in\kla*{0,\infty}$, a solution can only exist for some finite range of $\epsilon$.
+
+Let us try to first find the one close to the origin.
+In this case, it is helpful to introduce $x=\epsilon y$ and expand the new equation, $y \powe{-\epsilon y} = 1$, by inserting $y=y_0 + \epsilon y_1 + \epsilon^2 y_2 + \epsilon^3 y_3$.
+This gives (we only need third order for $y$ to get fourth order for $x$)
+\begin{align}
+1 &= \kla*{y_0 + \epsilon y_1 + \epsilon^2 y_2 + \epsilon^3 y_3} \powe{-\epsilon \kla*{y_0 + \epsilon y_1 + \epsilon^2 y_2 + \epsilon^3 y_3}}\\
+&= \kla*{y_0 + \epsilon y_1 + \epsilon^2 y_2 + \epsilon^3 y_3} \klc*{1 - \epsilon y_0 + \epsilon^2 y_1 + \epsilon^3 y_2 + \frac{\epsilon^2}{2} \kla*{y_0^2 + 2\epsilon y_0 y_1} - \frac{\epsilon^3}{6}y_0^3}\\
+&= y_0 + \epsilon \kla*{y_1 - y_0} + \epsilon^2 \kla*{y_2 + y_0y_1 - y_0y_1 + \frac{1}{2} y_0^2} + \epsilon^3 \kla*{y_3 + y_2y_0+y_1^2-y_0y_2 + y_0y_1-\frac{1}{6} y_0^3}\\
+&= y_0 + \epsilon\kla*{y_1 - y_0} + \epsilon^2 \kla*{y_2 + \frac{1}{2} y_0^2} + \epsilon^3 \kla*{y_3 + y_0y_1 + y_1^2 - \frac{1}{6} y_0^3}.
+\end{align}
+From this, we can read off $y_0=1$, $y_1=1$ and $y_2=-\frac{1}{2}$.
+Inserting gives $y_3 = -\frac{11}{6}$ and
+\begin{align}
+x &= \epsilon + \epsilon^2 - \frac{1}{2} \epsilon^3 - \frac{11}{6} \epsilon^4 + \mathcal{O}\kla*{\epsilon^5}.
+\end{align}
+The other solution is far away, so let us start by rewriting the equation as $x - \log x = -\log \epsilon$.
+Since $x\gg \log x$, we have $x_0 = -\log \epsilon$ as a reasonable first guess.
+Rewriting as a fixpoint problem, we have $x = \log \frac{x}{\epsilon}$.
+Using $x_0$ as a starting point, we obtain the iteration
+\begin{align}
+x_0 &= \log\frac{1}{\epsilon}, \quad x_1 = \log \frac{-\log \epsilon}{\epsilon} = \log\log \frac{1}{\epsilon} + \log \frac{1}{\epsilon}, \quad x_2 = \log \frac{\log\log \frac{1}{\epsilon} + \log \frac{1}{\epsilon}}{\epsilon},\dots,
+\end{align}
+and as (at least after the first step) the error term is exponentially smaller than the initial guess, this is probably converging to the solution quite fast.
+More precisely, I'd guess that $\abs*{x_n - x^\ast} \sim c\powe{-\alpha n}$ with some unknown $\alpha,c$.
+\section{Logarithmic Decaying}
+Consider the ODE $y''y = -1$ with $y(0)=y(1)=0$; what is local behaviour of $y(x)$ as $x\rightarrow 0^+$?
+
+Let us start with the assumption of an algebraic decay, $y\sim Ax^b$.
+Inserting gives
+\begin{align}
+Ab(b-1)x^{b-2} Ax^b &= Ab(b-1) x^{2b-2} \sim -1,
+\end{align}
+which leads to $b=1$ -- unfortunately, this trivializes the LHS and is thus not allowed ($y=x$ is not a good approximation as $y''=0$).
+
+Next, let us try a logarithmic decay $y\sim Ax \kla*{-\log x}^b$.
+This gives
+\begin{align}
+y' &\sim \frac{y}{x} + Ax b \kla*{-\log x}^{b-1} \frac{-1}{x} = \frac{y}{x} + b\frac{y}{x\log x} = \frac{y}{x} \kla*{1 + \frac{b}{\log x}},\\
+y'' &\sim -\frac{y}{x^2} \kla*{1 + \frac{b}{\log x}} + \frac{y}{x^2} \kla*{1 + \frac{b}{\log x}}^2 - \frac{y}{x^2} \frac{b}{\kla*{\log x}^2}.
+\end{align}
+Plugging this into the equation, we find
+\begin{align}
+-1 &\sim y'' y \sim \frac{y^2}{x^2} \klc*{1 + \frac{2b}{\log x} + \frac{b^2}{\kla*{\log x}^2} - 1 - \frac{b}{\log x} - \frac{b}{\kla*{\log x}^2}}\\
+&\sim A^2 \klc*{b(b-1) \kla*{-\log x}^{b-2} - b\kla*{-\log x}^{b-1}}.
+\end{align}
+Setting $b=1$ and $A=1$ satisfies this, so the asymptotic behaviour is $y(x) \sim -x\log x$.
+\section{Time-independent Perturbation Theory in QM}
+Assume that our Hamiltonian can be written as $H=H_0+\epsilon V$, where $\epsilon\ll 1$ and the unperturbed problem can be solved exactly, i.e. $H_0\Ket{n^{(0)}} = E_n^{(0)} \Ket{n^{(0)}}$ for $n\ge 0$.
+Further, assume that the eigenvalues are non-degenerate (the degenerate version of this PT requires substantially more effort), and that the eigenstates form an ONB.
+Using PT to second order, solve $H\Ket{n} = E_n\Ket{n}$.
+
+Let $\Ket{n} = \sum_{l\ge 0} \epsilon^l \Ket{n^{(l)}}$ and $E_n = \sum_{l\ge 0} \epsilon^l E_n^{(l)}$.
+Inserting this into the Schrödinger equation gives
+\begin{align}
+H_0\sum_{l\ge 0} \epsilon^l \Ket{n^{(l)}} + V \sum_{l\ge 1} \epsilon^{l} \Ket{n^{(l-1)}} &=  \sum_{l\ge 0} \epsilon^l E_n^{(l)} \sum_{m\ge 0} \epsilon^m \Ket{n^{(m)}} = \sum_{l\ge 0} \epsilon^l \sum_{m=0}^l E_n^{(l-m)} \Ket{n^{(m)}}.
+\end{align}
+The PT equation at order $l$ then read
+\begin{align}
+H_0\Ket{n^{(l)}} + V\Ket{n^{(l-1)}} &= \sum_{m=0}^l E_n^{(l-m)} \Ket{n^{(m)}}.
+\end{align}
+For $l=1$, we obtain $H_0 \Ket{n^{(1)}} + V\Ket{n^{(0)}} = E_n^{(1)} \Ket{n^{(0)}} + E_n^{(0)} \Ket{n^{(1)}}$.
+The energy correction can be obtained by projecting onto $\Ket{n^{(0)}}$, giving
+\begin{align}
+E_n^{(1)} &= \brc{n^{(0)}}{H_0}{n^{(1)}} + \brc{n^{(0)}}{V}{n^{(0)}} - E_n^{(0)} \brb{n^{(0)}}{n^{(1)}} = \brc{n^{(0)}}{V}{n^{(0)}}.
+\end{align}
+The states can be found similarly by projecting onto $\Ket{m^{(0)}}$ ($m\neq n$), giving
+\begin{align}
+E_m^{(0)} \brb{m^{(0)}}{n^{(1)}} + \brc{m^{(0)}}{V}{n^{(0)}} &= E_n^{(1)} \brb{m^{(0)}}{n^{(0)}} + E_n^{(0)} \brb{m^{(0)}}{n^{(1)}}.
+\end{align}
+Note that we may expand the correction states as\footnote{We can exclude $m=n$, because $\brb{n^{(0)}}{n} = \brb{n^{(0)}}{n^{(0)}} + \epsilon \brb{n^{(0)}}{n^{(1)}} + \dots = 1 + \epsilon \brb{n^{(0)}}{n^{(1)}} + \dots \overset{!}{\le 1}$ requires $\brb{n^{(0)}}{n^{(1)}} = 0$ (I think).} $\Ket{n^{(1)}} = \sum_{m\neq n} \Ket{m^{(0)}} \brb{m^{(0)}}{n^{(1)}}$, and we already found the coefficients to be
+\begin{align}
+\brb{m^{(0)}}{n^{(1)}} &= \frac{\brc{m^{(0)}}{V}{n^{(0)}}}{E_n^{(0)} - E_m^{(0)}}.
+\end{align}
+To second order, we find
+\begin{align}
+H_0\Ket{n^{(2)}} + V\Ket{n^{(1)}} &= E_n^{(2)} \Ket{n^{(0)}} + E_n^{(1)} \Ket{n^{(1)}} + E_n^{(0)} \Ket{n^{(2)}},
+\end{align}
+and once again projecting gives
+\begin{align}
+E_n^{(0)} \brb{n^{(0)}}{n^{(2)}} + \brc{n^{(0)}}{V}{n^{(1)}} &= E_n^{(2)} + E_n^{(1)} \brb{n^{(0)}}{n^{(1)}} + E_n^{(0)} \brb{n^{(0)}}{n^{(2)}}.
+\end{align}
+Thus $E_n^{(2)} = \brc{n^{(0)}}{V}{n^{(1)}}$, which expands to
+\begin{align}
+E_n^{(2)} &= \sum_{m\neq n} \frac{\abs*{\brc{n^{(0)}}{V}{m^{(0)}}}^2}{E_n^{(0)} - E_m^{(0)}}.
+\end{align}
+For the anharmonic oscillator, we have $H_0 = \frac{1}{2m}p^2 + \frac{1}{2} m\omega^2x^2$ and $V=x^4$.
+Using $x = \sqrt{\frac{\hbar}{2m\omega}} \kla*{a + a^\dagger}$, we find ($\Ket{n} \equiv \Ket{n^{(0)}}$)
+\begin{align}
+E_n^{(1)} &= \brc{n}{V}{n} = \frac{\hbar^2}{4m^2\omega^2} \brc{n}{\kla{a+a^\dagger}^4}{n} \\
+&= \frac{\hbar^2}{4m^2\omega^2} \brc{n}{\klc{a^2 \kla{a^\dagger}^2 + a \kla{a^\dagger}^2 a + \kla{a^\dagger}^2 a^2 + aa^\dagger aa^\dagger + a^\dagger a^2 a^\dagger + a^\dagger aa^\dagger a}}{n}\\
+&= \frac{\hbar^2}{4m^2\omega^2} \brc{n}{\klc{\kla*{n+1}\kla*{n+2} + (n+1)n + n(n-1) + \kla*{n+1}^2 + n(n+1) + n^2}}{n}\\
+&= \frac{\hbar^2}{4m^2\omega^2} \kla*{3 + 6n + 6n^2}.
+\end{align}
+The second order looks rather gruesome.
+The energy differences are $\hbar\omega (n-m)$, but the transition amplitude $\brc*{m}{\kla{a+a^\dagger}^4}{n}$ is pretty convoluted.
+
+\end{document}
