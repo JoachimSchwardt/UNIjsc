@@ -297,6 +297,31 @@ I &= \intx{0}{1}{\frac{\sin(\pi x)}{x^x (1-x)^{1-x}}}{x} = \frac{\pi}{\e}. \labe
 %%\begin{align}
 %%x\log x + (1-x)\log (1-x) &= 
 %%\end{align}
+\subsubsection{Hardy-Ramanujan integral partition function}
+Show that %https://math.stackexchange.com/questions/5058534/show-that-int-0-infty-frac1ueu-1-frac1u2-frace-u2u-du
+\begin{align}
+I &= \intx{0}{\infty}{\kla*{\frac{1}{x\kla*{\powe{x}-1}} - \frac{1}{x^2} + \frac{\powe{x}}{2x}}}{x} = -\frac{1}{2} \log \kla*{2\pi}.
+\end{align}
+%Using the series expansion %https://en.wikipedia.org/wiki/Bernoulli_number#Generating_function
+%\begin{align}
+%\frac{x}{\powe{x}-1} &= \sum_{n\ge 0} \frac{B_n^-}{n!} x^n,
+%\end{align}
+%where $B_n^- = $
+Note the series expansion %https://proofwiki.org/wiki/Power_Series_Expansion_for_Hyperbolic_Cotangent_Function
+\begin{align}
+\coth(x) &= \sum_{n\ge 0} \frac{2^{2n}}{(2n)!} B_{2n} x^{2n-1}
+\end{align}
+where $B_{2n} = (-1)^{n+1} \frac{2(2n)!}{(2\pi)^{2n}} \zeta(2n)$ are the even Bernoulli numbers and $\zeta(s)$ is the Riemann Zeta function.
+We also have the related series ($|x|<2\pi$) %https://proofwiki.org/wiki/Definition:Bernoulli_Numbers/Archaic_Form
+\begin{align}
+\frac{x}{\powe{x}-1} &= 1 - \frac{x}{2} + \sum_{n\ge 1} \frac{B_{2n}}{(2n)!} x^{2n}
+\end{align}
+Using this, the finite part of the integral can be written as
+\begin{align}
+I_1 &= \intx{0}{2\pi}{\kla[\bigg]{\frac{\powe{x} - 1}{2x} + \sum_{n\ge 0} \frac{B_{2n+2}}{(2n+2)!} x^{2n}}}{x}\\
+&= \sum_{n\ge 0} \intx{0}{2\pi}{\kla*{\frac{1}{2} \frac{x^n}{(n+1)!} + \frac{B_{2n+2}}{(2n+2)!} x^{2n}}}{x}\\
+&= \sum_{n\ge 0} \kla*{\frac{1}{2n} \frac{(2\pi)^{n+1}}{(n+1)!} + \frac{B_{2n+2}}{2n+1} \frac{(2\pi)^{2n+1}}{(2n+2)!} }
+\end{align}
 \section{Two dimensional}
 \subsection{Trigonometric integrals}
 \subsubsection{Light-cone integration}
