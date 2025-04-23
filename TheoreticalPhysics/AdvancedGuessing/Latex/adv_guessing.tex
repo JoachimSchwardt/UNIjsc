@@ -1,0 +1,452 @@
+\documentclass[english, parskip=full]{scrbook}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+
+\newcommand*{\Title}{Lecture Notes and Exercises by Lee Seungjae}
+\newcommand*{\Author}{Joachim Schwardt}
+
+\input{preamble_shared}
+\input{preamble}
+\input{glossary.tex}
+
+%\titlehead{titlehead}
+\subject{Advanced Guessing for Physicists}
+\title{\Title}
+\author{\Author}
+\date{\today}
+
+\usepackage[most]{tcolorbox}
+
+%https://tex.stackexchange.com/questions/29769/colored-box-in-new-environment
+%\newsavebox{\selvestebox}
+%\newenvironment{colbox}[1]
+%  {\newcommand\colboxcolor{#1}%
+%   \begin{lrbox}{\selvestebox}%
+%   \begin{minipage}{\dimexpr\columnwidth-2\fboxsep\relax}}
+%  {\end{minipage}\end{lrbox}%
+%   \begin{center}
+%   \colorbox[HTML]{\colboxcolor}{\usebox{\selvestebox}}
+%   \end{center}}
+
+%\newcommand{\definition}[2]{\begin{colbox}{F8E0E0}\emph{Definition}: \textbf{#1}. \\ #2\end{colbox}}
+%\newcommand{\note}[1]{\begin{colbox}{E0F8E0}\emph{Note}: #1\end{colbox}}
+%\newcommand{\example}[3]{\begin{colbox}{E0E0F8}\emph{Example}: \textbf{#1}: #2. \\ #3\end{colbox}}
+
+\definecolor{colorbackgrounddefinition}{RGB}{220,220,248}
+\definecolor{colorbackgroundnote}{RGB}{220,248,220}
+\definecolor{colorbackgroundexample}{RGB}{248,220,220}
+\definecolor{colordefinition}{RGB}{0,0,200}
+\definecolor{colornote}{RGB}{0,200,0}
+\definecolor{colorexample}{RGB}{140,0,100}
+
+\newcommand{\definition}[2]{\begin{tcolorbox}[colback=colorbackgrounddefinition,colframe=colordefinition, breakable,enhanced,title=\textbf{#1}.]#2\end{tcolorbox}}
+\newcommand{\note}[1]{\begin{tcolorbox}[colback=colorbackgroundnote,colframe=colornote, breakable,enhanced]#1\end{tcolorbox}}
+\newcommand{\example}[3]{\begin{tcolorbox}[colback=colorbackgroundexample,colframe=colorexample, breakable,enhanced,title={\textbf{#1}: #2.}]#3\end{tcolorbox}}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\chapter{Introduction}
+\section{Definitions}
+\definition{Asymptotic}{$f(x)$ is asymptotic to $g(x)$ as $x\rightarrow x_0$ iff $\lim_{x\rightarrow x_0} \frac{f(x)}{g(x)} = 1$; we write $f(x) \sim g(x)$ as $x\rightarrow x_0$.}
+\definition{Big-$\mathcal{O}$}{We write $f(x) = \mathcal{O}\kla*{g(x)}$ as $x\rightarrow x_0$ iff $\frac{f(x)}{g(x)}$ is bounded.
+\example{Example}{}{$\sin(x) = \mathcal{O}(x)$ and $5\sin(x) = \mathcal{O}(x)$.}
+}
+\definition{Little-$o$}{We write $f(x) = o\kla*{g(x)}$ as $x\rightarrow x_0$ if $\frac{f(x)}{g(x)} \rightarrow 0$, i.e. $f(x) \ll g(x)$.
+}
+\definition{Asymptotic Sequence}{$\klc*{\phi_n(x)}$ is an asymptotic sequence as $x\rightarrow x_0$ if $\phi_{n+1}(x) \ll \phi_n(x)$ for all $n$.
+\example{Example}{}{$\klc*{\frac{1}{x^n}}_{n\in\mathbb{N}}$ is asymptotic as $x\rightarrow \infty$, because $\frac{1}{x} \gg \frac{1}{x^2} \gg \frac{1}{x^3} \gg \dots$ as $x\rightarrow \infty$}
+}
+\definition{Asymptotic Expansion (Poincare)}{$f(x)$ has the expansion $f(x) \sim \sum_{n\ge 0} a_n \phi_n(x)$ as $x\rightarrow x_0$ if 
+\begin{enumerate}
+\item $\klc*{\phi_n(x)}$ is asymptotic
+\item $R_N(x) = f(x) - \sum_{n=0}^N a_n\phi_n(x) \ll \phi_N(x)$ for all $N$ (equivalently $R_N \sim a_{N+1} \phi_{N+1}$)
+\end{enumerate}
+\note{$a_{N+1} = \lim_{x\rightarrow x_0} \frac{R_N}{\phi_{N+1}}$ is unique for a given sequence}
+\example{Laplace Transform}{$F(x) = \intx{0}{\infty}{\frac{1}{1+t} \powe{-xt}}{t}$ for $x>0$}{The geometric series yields $F(x) = \intx{0}{\infty}{\powe{-xt} \kla*{1 - t + t^2 + \dots}}{t} = \frac{1}{x} - \frac{1}{x^2} + \frac{2!}{x^3} + \dots$, but this is not rigorous because the integral goes beyond the \gls{roc} of $t<1$.
+However, $F(x) \sim \sum_{n\ge 0} \frac{(-1)^n n!}{x^{n+1}}$ is an asymptotic expansion as $x\rightarrow \infty$; one can show that $|R_n(x)| < \frac{N!}{x^{N+1}} \ll \frac{1}{x^N}$.}
+}
+\section{Properties of Asymptotic Expansions}
+\definition{Distinction between convergent and asymptotic series}{Let $S_n(x) = \sum_{j=1}^n a_j \phi_j(x)$ be an approximation to some function $f(x)$.
+Then we call $S_n$
+\begin{itemize}
+\item convergent, iff $S_n(x) \rightarrow f(x)$ as $n\rightarrow \infty$ for each fixed $x$
+\item asymptotic, iff $S_n(x) \sim f(x)$ as $x\rightarrow x_0$ for each fixed $n$
+\end{itemize}}
+\definition{Uniqueness of an asymptotic expansion}{If $f(x) \sim \sum_{n\ge 0} a_n \phi_n(x)$, those $a_n$ are uniquely determined by the recursive formula 
+\begin{align}
+a_n &= \lim_{x\rightarrow x_0} \frac{f(x) - \sum_{j=0}^{n-1} a_j\phi_j(x)}{\phi_n(x)}.
+\end{align}
+\example{Example}{$\sqrt{9 + \epsilon} = a_1\phi_1 + a_2 \phi_2 + a_3\phi_3$ with $\phi_1=\cos\epsilon$, $\phi_2 = \sin\epsilon$, $\phi_3=\sin^2\epsilon$}{\begin{align}
+a_1 &= \lim_{\epsilon\rightarrow 0} \frac{\sqrt{9+\epsilon}}{\cos \epsilon} = 3,\\
+a_2 &= \lim_{\epsilon\rightarrow 0} \frac{\sqrt{9+\epsilon} - 3\cos\epsilon}{\sin\epsilon} = \frac{1}{6},\\
+a_3 &= \lim_{\epsilon\rightarrow 0} \frac{\sqrt{9+\epsilon - 3\cos\epsilon - \frac{1}{6} \sin\epsilon}}{\sin^2\epsilon} = \dots = \frac{323}{216}.
+\end{align}
+This is consistent with the known expansion $\sqrt{9+\epsilon} = 3 + \frac{1}{6} \epsilon - \frac{1}{216}\epsilon^2 + \mathcal{O}\kla*{\epsilon^3}$ in the sense that $3\cos\epsilon + \frac{1}{6}\sin\epsilon + \frac{323}{216}\sin^2\epsilon$ gives the same result after Taylor expansion.
+}
+\note{Every convergent Taylor series is asymptotic to $f(x)$ as well, since $1\gg \kla*{x-x_0} \gg \kla*{x-x_0}^2 \gg \dots$ as $x\rightarrow x_0$.}
+\note{If we use a different asymptotic sequence, we get different coefficients}
+}
+\definition{\gls{tst}}{$f(x)$ is \gls{tst} if $f(x) \ll \frac{1}{x^n}$ as $x\rightarrow \infty$ for any $n\ge 0$.
+\note{We also say that $f(x)$ is \emph{subdominant} to $\frac{1}{x^n}$}
+\example{Example}{$\powe{-x}$ is a TST as $x\rightarrow \infty$}{We have $\powe{-x}\ll \frac{1}{x^n}$ due to $\frac{x^n}{\powe{x}} \rightarrow 0$, and thus $\powe{-x} \sim 0 + \frac{0}{x} + \frac{0}{x^2} + \dots$.
+This is a correct expansion based on the definition, but this raises series uniqueness concerns: $g(x) = f(x) + \powe{-x}$ have the same expansion.
+The problem can be traced back to $x=\infty$ being an essential singularity for $\powe{-x}$}
+}
+\definition{Working with Asymptotic Series}{Addition, Subtraction, Multiplication, Division and even Integration can be performed term by term; but Substitution and Differentiation are more subtle.
+\example{Substitution}{$f(x) = \powe{x^2}$ and $x(\epsilon) = \epsilon + \frac{1}{\epsilon}$ as $\epsilon\rightarrow 0$}{The exact result is $f\kla*{x(\epsilon)} = \powe{2 + \epsilon^2 + \frac{1}{\epsilon^2}} \sim \powe{2} \powe{\frac{1}{\epsilon^2}}$ with an essential singularity at $\epsilon=0$.
+
+Wrong substitution of $x\sim \frac{1}{\epsilon}$  as $\epsilon\rightarrow 0$ instead only gives $f(x) \sim \powe{\frac{1}{\epsilon^2}}$, so the prefactor is incorrect.
+}
+\example{Differentiation}{$f(x)=x+\sin(x)$ as $x\rightarrow\infty$}{We have $f\sim x$, but $f'=1+\cos(x) \slashed{\sim} 1$.}
+These troubles emerge from asymptotic relations in the complex plane: $f(z) \sim g(z)$ is defined by $\frac{f(z)}{g(z)} \rightarrow 1$ independent of the path taken from $z\rightarrow z_0$.
+\example{Example}{$2\sinh(1/z)$ as $z\rightarrow 0$}{\begin{enumerate}
+\item $2\sinh(1/z) = \sim \powe{1/z}$ for $|\arg z| < \frac{\pi}{2}$
+\item $2\sinh(1/z) = \sim \powe{-1/z}$ for $\frac{\pi}{2} < \arg z < \frac{3\pi}{2}$
+\end{enumerate}
+The result depends on the direction, i.e. the choice of path.
+}
+}
+\section{Stokes Phenomenon}
+TODO: Lecture 1, p 11f.
+\chapter{Local and Global Analysis}
+\section{Methods of Perturbations and Dominant Balance}
+\definition{Local Analysis}{Powerful, but cannot provide global information on the behavior of solutions at two distantly separated points.
+\begin{itemize}
+\item $\Rightarrow$ cannot predict how a change in \gls{ic} at $x=0$ will affect the asymptotic behavior as $x\rightarrow\infty$
+\item $\Rightarrow$ we require a global analysis
+\end{itemize}}
+\definition{\gls{pt}}{\begin{enumerate}
+\item identify a small parameter $\epsilon$ such that the \gls{hp} becomes soluble at $\epsilon=0$
+\item perturbative solution is constructed by local analysis about $\epsilon=0$ as $y(x) = \sum_{n\ge 0} y_n(x) \epsilon^n$
+\begin{itemize}
+\item $\Rightarrow$ series is \emph{local in $\epsilon$}, but \emph{global in $x$}!
+\item $\Rightarrow$ we may approximate the solution by a finite number of terms ($n\le N$)
+\end{itemize}
+\item restore the \gls{hp} by setting $\epsilon=1$; assuming this is within the \gls{roc}
+\end{enumerate}}
+\note{\gls{pt} is a large collection of iteration methods.}
+\example{Cubic Equation}{$x^3 - 4.001x + 0.002 = 0$}{\begin{enumerate}
+\item write $x^3 - \kla*{4+\epsilon}x + 2\epsilon=0$ and note that $\epsilon=0$ gives $x^3=4x$ with $x(\epsilon=0) = a_0 \in \klc*{0,\pm 2}$ (zeroth order)
+\item $x(\epsilon) = \sum_{n\ge 0} a_n \epsilon^n$, let us focus on $x_1 = -2 + \sum_{n\ge 1} a_n \epsilon^n$
+\begin{itemize}
+\item $\epsilon^1$: $0 = 4 + 8a_1$ gives $a_1 = -\frac{1}{2}$
+\item $\epsilon^2$: $0 = 8a_2 - a_1 - 6a_1^2 = 8a_2 + \frac{1}{2} - \frac{3}{2}$ gives $a_2 = \frac{1}{8}$
+\item $\Rightarrow$ $x_1 = -2 - \frac{1}{2}\epsilon + \frac{1}{8} \epsilon^2 + \dots$
+\end{itemize}
+\item set $\epsilon=0.001$; if the series converges, the sum is the answer. Otherwise, many divergent series are asymptotic (see later)
+\end{enumerate}
+}
+\example{ODE}{$y'' = f(x)y$ with $y(0)=1$ and $y'(0)=1$}{\begin{enumerate}
+\item $y''=\epsilon f(x)y$
+\item let $y(x) = \sum_{n\ge 0} \epsilon^n y_n(x)$ with $y_n(0)=0=y_n'(0)$ for $n\ge 1$
+\begin{itemize}
+\item $\epsilon^0$: $y_0''=0$ gives $y_0(x)=1+x$
+\item $\epsilon^n$: $y_n''=y_{n-1} f$ gives $y_n(x) = \intx{0}{x}{\intx{0}{t}{f(s)y_{n-1}(s)}{s}}{t}$
+\item $y(x) = 1 + x + \epsilon\intx{0}{x}{\intx{0}{t}{(1+s)f(s)}{s}}{t} + \epsilon^2 (\dots)$
+\item note that the $n$-th term is bounded by $\epsilon^n K(x)^n \frac{1+|x|}{(2n)!} x^{2n}$
+\end{itemize}
+\end{enumerate}}
+
+Consider the algebraic equation $\epsilon^2 x^6 - \epsilon x^4 - x^3 + 8 = 0$ with a small parameter $\epsilon$.
+
+For $\epsilon=0$, the equation simplifies to $x^3=8$ and has the three (complex) solutions $x_n = 2 \powe{\i \frac{2\pi}{3} n}$ for $n=0,1,2$.
+The original equation is of sixth order and must therefore have six solutions.
+Presumably, these roots continuously merge into the three simple $x_n$ as $\epsilon\rightarrow 0$.
+\definition{Dominant Balance}{The Method of Dominant Balance in the context of equations such as the one above generally concerns the problem
+\begin{align}
+\sum_{q=1}^Q T_q\kla*{x} &= 0,
+\end{align}
+where $Q$ is the number of terms and $x\kla*{\epsilon}$ is a solution for $\epsilon\rightarrow 0$.
+Asymptotically solving the reduced equation for only two of these terms, e.g. $T_q(x) + T_p(x) = 0$, yields some solution $x_{q,p}\kla*{\epsilon}$.
+This solution is \emph{consistent} if it is \emph{dominant}, meaning that the sum over the remaining terms, $R_{q,p}(x)$, is ``much smaller'' than $T_q(x)$ and $T_p(x)$.}
+In our case we have the four terms $T_1(x) = \epsilon^2 x^6$, $T_2(x) = -\epsilon x^4$, $T_3(x) = -x^3$ and $T_4(x)=8$.
+\begin{itemize}
+\item $q=1,2$: $\epsilon^2 x^6 = \epsilon x^4$ gives $\epsilon x^2 = 1$ and $\tilde{x}^2 = 1$ after the scale transformation $\tilde{x} = \sqrt{\epsilon} x$. The solution is $\tilde{x} = \pm 1$. We have $\epsilon^{-1} \tilde{x}^6 \ll 8-\epsilon^{-\frac{3}{2}} \tilde{x}^3$ as $\epsilon\rightarrow 0$, so this solution is not consistent.
+\item $q=1,3$: $\epsilon^2 x^6 = x^3$ gives $\epsilon^2 x^3 = 1$ and $\tilde{x}^3=1$ after the scale transformation $\tilde{x} = \epsilon^\frac{2}{3} x$. The solution is $\tilde{x} = \powe{\i \frac{2\pi}{3} n}$ for $n=0,1,2$. We have $\epsilon^{-2} \tilde{x}^6 \gg 8 - \epsilon^{-\frac{5}{3}} \tilde{x}^4$, so this solution is consistent (checking the other term is not required, they must scale identically by construction).
+\item $q=1,4$: $\epsilon^2 x^6 = -8$ gives $\tilde{x}^6 = -8$ after the scale transformation $\tilde{x} = \epsilon^\frac{1}{3} x$. The solution is $\tilde{x} = 8^\frac{1}{6} \powe{\i \pi \frac{2n+1}{6}}$ for $n=0,\dots,5$. We have $8 \ll \epsilon^{-1} \tilde{x}^3$, so this is not consistent.
+\item $q=2,3$: $\epsilon x^4 = -x^3$ gives $\epsilon x = -1$ and $\tilde{x} = -1$ after the scale transformation $\tilde{x} = \epsilon x$. We have $\epsilon^{-3} \tilde{x}^3 \ll \epsilon^{-4} \tilde{x}^6$, so this is not consistent.
+\item $q=2,4$: $\epsilon x^4 = 8$ gives $\tilde{x}^4 = 8$ after the scale transformation $\tilde{x} = \epsilon^\frac{1}{4} x$. The solution is $\tilde{x} = 8^\frac{1}{4} \powe{\i \frac{2\pi}{4} n}$ for $n=0,\dots,3$. We have $8 \ll \epsilon^{-\frac{3}{4}} \tilde{x}^3$, so this is not consistent.
+\item $q=3,4$: $x^3=8$ has been solved already; $8 \gg \epsilon^2 x^6 - \epsilon x^4$ as $\epsilon\rightarrow 0$, so this is consistent.
+\end{itemize}
+To summarize, aside from the solutions $x_n = 2\powe{\i \frac{2\pi}{3} n}$ for $n=0,1,2$ we have only found $x_n\kla*{\epsilon} = \epsilon^{-\frac{2}{3}} \powe{\i \frac{2\pi}{3}n}$ as consistent solutions.
+This sheds some light on the disappearance of the zeros: apparently each root splits into exactly two, since the asymptotic roots satisfy the same three-fold symmetry.
+
+Introducing $x = \epsilon^{-\frac{2}{3}} y$ gives $\epsilon^{-2} y^6 - \epsilon^{-\frac{5}{3}} y^4 - \epsilon^{-2} y^3 + 8 = 0$.
+The new equation is equivalent to $y^6-y^3+8\epsilon^2 - \epsilon^{\frac{1}{3}} y^4 = 0$, which can also be interpreted as a regular perturbation problem with $\epsilon' = \epsilon^\frac{1}{3}$ (in this notation, the small parameter only appears in integer powers).
+Equivalently, we may also write $y = \sum_{n\ge 0} y_n \kla[\big]{\epsilon^\frac{1}{3}}^n$ for all of the six unperturbed solutions $0$ (3 times) and $\powe{\i\frac{2\pi}{3}n}$ for $n=0,1,2$.
+
+\example{Singular Perturbation}{$\epsilon y'' = y'$ with $y(0)=0$ and $y(1)=1$}{\note{$\epsilon$ is put with the highest order, so $\epsilon=0$ is likely a singular point}
+The unperturbed problem is $y'=0$ and has no solution consistent with the \gls{ic}, so this is a singular perturbation.
+\begin{itemize}
+\item $\Rightarrow$ the solution cannot be $y(x) = \sum_{n\ge 0} y_n(x)\epsilon^n$, because $y_0(x)$ does not exist
+\end{itemize}
+\definition{Boundary Layer Theory}{The exact solution is $y(x) = \frac{\powe{x/\epsilon}-1}{\powe{1/\epsilon} - 1}$.
+For small $\epsilon>0$, there exists a boundary layer (later!); the solution varies rapidly near $x=1$ and develops a discontinuity for $\epsilon\rightarrow 0^+$.}
+}
+\example{\gls{ivp}}{$y''+(1-\epsilon x)y=0$ with $y(0)=1$ and $y'(0)=0$}{This is a regular perturbation in $\epsilon$ over a finite interval $x\in\klb*{0,L}$.
+\begin{itemize}
+\item $\Rightarrow$ $y(x) = \cos(x) + \epsilon \kla*{\frac{1}{4}x^2 \sin(x) + \frac{1}{4}x\cos (x) - \frac{1}{4}\sin(x)} + \dots$ converges for all $x$ and $\epsilon$
+\item however, for $L\rightarrow \infty$ the problem is singular: the exact solution approaches $y_0$ for fixed $x$, but not uniformly for all $x$ (multiple timescale method)
+\end{itemize}
+}
+\section{Perturbation Method vs. Iteration Method}
+\example{A regular perturbation}{$x^2+\epsilon x-1=0$}{Exact solution is $x=-\frac{1}{2}\epsilon \pm \sqrt{1 + \frac{1}{4}\epsilon^2} = \pm 1 - \frac{1}{2} \epsilon \pm \frac{1}{8} \epsilon^2$ (converges for $|\epsilon| < 2$).
+\note{Binomial series expansion $\kla*{1+x}^\alpha = 1 + \alpha x + \frac{\alpha (\alpha - 1)}{2!} x^2 + \dots$ for $|x|<1$}
+
+First Method: Perturbation Series.
+\begin{itemize}
+\item $\epsilon=0$: $x^2=1$ gives $x=\pm 1$
+\item let $x(\epsilon) = \sum_{n\ge 0} a_n \epsilon^n$ and expand $1 = \kla*{1+a_1\epsilon + \dots}^2 + \epsilon\kla*{1 + a_1\epsilon + \dots}$ (analogous for $a_0=-1$)
+\item $\epsilon^1$: $0=1+2a_1$ gives $a_1=-\frac{1}{2}$
+\item $\epsilon^2$: $a_1^2 + 2a_2 + a_1=0$ gives $a_2=\frac{1}{8}$ (we recover the binomial expansion)
+\end{itemize}
+Second Method: Iteration.
+\begin{itemize}
+\item $x^2=1-\epsilon x$, so try $x_{n+1} = \pm\sqrt{1 - \epsilon x_n}$ with $x_0=\pm 1$ as \gls{ic}
+\item $x_1 = \sqrt{1 - \epsilon} \sim 1 - \frac{1}{2} \epsilon - \frac{1}{8}\epsilon^2$ (note the different sign of the $\epsilon^2$-term!), truncate at linear order
+\item $x_2=\sqrt{1 - \epsilon x_1} \sim \sqrt{1 - \epsilon + \frac{1}{2}\epsilon^2} \sim 1 - \frac{\epsilon}{2} + \frac{1}{8} \epsilon^2$ (now it is correct)
+\end{itemize}
+}
+\example{A singular perturbation}{$\epsilon x^2 + x - 1 = 0$}{The unperturbed problem only has a single root, the other disappears to infinity as $\epsilon\rightarrow 0$ (as usual).
+Dominant Balance:
+\begin{itemize}
+\item $\epsilon x^2 \sim 1$ gives $x\sim \epsilon^{-\frac{1}{2}}$, but $1 \ll x$ is inconsistent
+\item $\epsilon x^2 \sim -x$ gives $x\sim -\epsilon^{-1}$ and $x \gg 1$ is consistent
+\end{itemize}
+The scale transformation $y = \epsilon x$ gives $y^2 + y = \epsilon$ (once again a regular perturbation), and we have $y(\epsilon) = \sum_{n\ge 0} a_n \epsilon^n$ with $a_0=-1$.
+\begin{align*}
+\Rightarrow x&\sim \frac{1}{\epsilon} \kla*{-1 - \epsilon + \epsilon^2 - 2\epsilon^3 + \dots} = -\frac{1}{\epsilon} - 1 + \epsilon - 2\epsilon^2 + \dots
+\end{align*}
+}
+\example{Another quadratic}{$(1-\epsilon)x^2 - 2x + 1 = 0$}{Exact solution is $x=\frac{1 \pm \sqrt{\epsilon}}{1 - \epsilon}$ and at $\epsilon=0$, $x=1$ is a double root.
+The naive expansion $x=1+\epsilon a_1+\dots$ fails at first order; instead, $x\sim 1 + \sqrt{\epsilon} + \epsilon + \epsilon^{3/2} + \dots$ works (using Dominant Balance; this recovers the geometric series).
+}
+\example{Non-linear equation}{$x\powe{-x} = \epsilon$}{As $\epsilon\rightarrow 0$ we must have that one solution satisfies $x(\epsilon) \rightarrow \infty$ while the other satisfies $x(\epsilon) \rightarrow 0$.
+Also, as $x\powe{-x}$ is bounded on the relevant interval $x\in\kla*{0,\infty}$, a solution can only exist for some finite range of $\epsilon$.
+
+Let us try to first find the one close to the origin.
+The iteration method $x_{n+1} = \epsilon \powe{x_n}$ with $x_0=0$ gives
+\begin{itemize}
+\item $x_1=\epsilon$
+\item $x_2 = \epsilon\powe{\epsilon} \sim \epsilon + \epsilon^2$
+\item $x_3 = \epsilon\powe{\epsilon + \epsilon^2} \sim \epsilon + \epsilon^2 + \frac{3}{2}\epsilon^3$
+\item $x_4 = \epsilon\powe{x_3} \sim \epsilon + \epsilon^2 + \frac{3}{2}\epsilon^3 + \frac{8}{3}\epsilon^4$
+\end{itemize}
+The other solution is far away, so let us start by rewriting the equation as $x - \log x = -\log \epsilon$.
+Since $x\gg \log x$, we have $x_0 = -\log \epsilon$ as a reasonable first guess.
+Rewriting as a fixpoint problem, we have $x = \log \frac{x}{\epsilon}$.
+Using $x_0$ as a starting point, we obtain the iteration
+\begin{align}
+x_0 &= \log\frac{1}{\epsilon}, \quad x_1 = \log \frac{-\log \epsilon}{\epsilon} = \log\log \frac{1}{\epsilon} + \log \frac{1}{\epsilon}, \quad x_2 = \log \frac{\log\log \frac{1}{\epsilon} + \log \frac{1}{\epsilon}}{\epsilon}.
+\end{align}
+}
+\example{A projectile motion}{$\ddot{x} = -\frac{GM}{\kla*{x+R}^2}$ with $x(0)=0$, $\dot{x}(0)=v_0$ and $x(t)\ll R$}{Introducing $g = \frac{GM}{R^2}$ yields
+\begin{align}
+\ddot{x} &= -\frac{g}{\kla*{1+x/R}^2}.
+\end{align}
+The naive solution is $\ddot{x} \sim -g$, giving $x=-\frac{1}{2}gt^2 + v_0t$ and the recurrence time $T=\frac{2v_0}{g}$.
+
+The peak of the trajectory may be used as a timescale for the expansion, so introduce $t_0=\frac{v_0}{g}$ and $x_0=x(t_0) = \frac{v_0^2}{g}$.
+Then, writing $\tau=\frac{t}{t_0}$ and $y = \frac{x}{x_0}$, we obtain
+\begin{align}
+\ddot{x} &= \frac{x_0}{t_0^2} \frac{\d^2 y}{\d \tau^2},\\
+y'' &= -g \frac{t_0^2}{x_0} \frac{1}{\kla*{1 + \epsilon y}^2}
+\end{align}
+with the small parameter $\epsilon = \frac{x_0}{R} = \frac{v_0^2}{gR}$, and $y(0)=0$ as well as $y'(0) = v_0 \frac{t_0}{x_0} = 1$.
+Expanding $y=y_0+\epsilon y_1$ (we only want the leading order correction here) gives
+\begin{align}
+y_0'' + \epsilon y_1'' &= -\frac{1}{\kla*{1 + \epsilon y_0}^2} = -\frac{1}{1 + 2\epsilon y_0} = -1 + 2\epsilon y_0.
+\end{align}
+The zeroth order is $y_0=-\frac{1}{2}\tau^2 + \tau$ and $\tau=2$ gives $T_0= 2t_0$.
+The first order gives $y_1'' = 2y_0 = 2\tau - \tau^2$, and integrating yields $y_1 = \frac{1}{3}\tau^3 - \frac{1}{12} \tau^4 + c_0 + c_1\tau$ with $c_0=0$ and $c_1=0$ form the \gls{ic}.
+Thus, $y = \tau - \frac{1}{2}\tau^2 + \frac{\epsilon}{12} \tau^3 \kla*{4 - \tau} + \mathcal{O}\kla*{\epsilon^2}$.
+Writing $\tau = 2 + \epsilon\tau_1$, we find $\tau_1 = \frac{4}{3}$.
+Therefore, $\tau = 2 + \frac{4}{3}\epsilon$ and $T = \frac{2v_0}{g} + \frac{4}{3} \frac{v_0^2}{g^2R}$.
+}
+
+\section{Logarithmic Decaying}
+Consider the ODE $y''y = -1$ with $y(0)=y(1)=0$; what is local behaviour of $y(x)$ as $x\rightarrow 0^+$?
+
+Let us start with the assumption of an algebraic decay, $y\sim Ax^b$.
+Inserting gives
+\begin{align}
+Ab(b-1)x^{b-2} Ax^b &= Ab(b-1) x^{2b-2} \sim -1,
+\end{align}
+which leads to $b=1$ -- unfortunately, this trivializes the LHS and is thus not allowed ($y=x$ is not a good approximation as $y''=0$).
+
+Next, let us try a logarithmic decay $y\sim Ax \kla*{-\log x}^b$.
+This gives
+\begin{align}
+y' &\sim \frac{y}{x} + Ax b \kla*{-\log x}^{b-1} \frac{-1}{x} = \frac{y}{x} + b\frac{y}{x\log x} = \frac{y}{x} \kla*{1 + \frac{b}{\log x}},\\
+y'' &\sim -\frac{y}{x^2} \kla*{1 + \frac{b}{\log x}} + \frac{y}{x^2} \kla*{1 + \frac{b}{\log x}}^2 - \frac{y}{x^2} \frac{b}{\kla*{\log x}^2}.
+\end{align}
+Plugging this into the equation, we find
+\begin{align}
+-1 &\sim y'' y \sim \frac{y^2}{x^2} \klc*{1 + \frac{2b}{\log x} + \frac{b^2}{\kla*{\log x}^2} - 1 - \frac{b}{\log x} - \frac{b}{\kla*{\log x}^2}}\\
+&\sim A^2 \klc*{b(b-1) \kla*{-\log x}^{b-2} - b\kla*{-\log x}^{b-1}}.
+\end{align}
+Setting $b=1$ and $A=1$ satisfies this, so the asymptotic behaviour is $y(x) \sim -x\log x$.
+\section{Perturbation Methods for Linear Eigenvalue Problems}
+\definition{Schrödinger Equation}{A Schrödinger problem is the ODE
+\begin{align}
+\kla*{V(x) + W(x) - E - \partial_x^2} y(x) &= 0
+\end{align}
+with \gls{bc} $y(x) \rightarrow 0$ for $|x|\rightarrow \infty$.
+Further, we assume that $V$ and $W$ are continuous and unbounded for large $x$, and that the problem is soluble for $W=0$.}
+\begin{enumerate}
+\item insert $\epsilon$, i.e. $W\rightarrow \epsilon W$; e.g. \gls{ho} $V(x)=\frac{1}{4}x^2$ with $E_n= n+\frac{1}{2}$ and $y_n(x) = \powe{-x^2/4} H_n(x)$ (Hermite polynomials)
+\item find unperturbed solutions $y_0(x)$ and $E_0$, then seek solution in the form $E=\sum_{n\ge 0} E_n\epsilon^n$ and $y(x) = \sum_{n\ge 0} y_n(x)\epsilon^n$.
+\begin{itemize}
+\item $\Rightarrow$ $\epsilon^n$: $\kla*{V(x) - E_0 - \partial_x^2}y_n(x) = -W(x)y_{n-1}(x) + \sum_{j=1}^n E_j y_{n-j}(x)$ with $y_n(x) \rightarrow 0$ as $|x|\rightarrow \infty$
+\end{itemize}
+\end{enumerate}
+\example{Method of Reduction}{$y_n(x) = y_0(x)F_n(x)$ with $F_0(x)=1$}{Inserting this into the $n$-th order equation gives
+\begin{align}
+\partial_x \kla*{y_0F_n} &= y_0'F_n + y_0F_n',
+\partial_x^2 \kla*{y_0F_n} &= y_0'' F_n + 2y_0'F_n' + y_0F_n'',\\
+\partial_x \kla*{y_0^2 F_n'} &= 2y_0y_0'F_n' + y_0^2 F_n'',\\
+\Rightarrow y_0 \partial_x^2 \kla*{y_0 F_n} &= y_0y_0'' F_n + 2y_0y_0'F_n' + y_0^2F_n'' = y_0y_0''F_n + \partial_x\kla*{y_0^2 F_n'},\\
+\Rightarrow \partial_x \kla*{y_0^2F_n'} &= y_0\partial_x^2 \kla*{y_0F_n} - y_0y_0''F_n = y_0\kla*{\partial_x^2 - V+E_0} y_0F_n\\
+&= y_0^2 \klb[\bigg]{WF_{n-1} - \sum_{j=1}^n E_jF_{n-j}}.
+\end{align}
+Due to the \gls{bc}, the integral over the LHS vanishes, which leaves us with
+\begin{align}
+\intr{E_n y_0^2}{x} &= \intr{y_0^2 \klb[\bigg]{WF_{n-1} - \sum_{j=1}^{n-1} E_j F_{n-j}}}{x},\\
+E_n &= \frac{1}{\intr{y_0^2}{x}} \intr{y_0 \klb[\bigg]{Wy_{n-1} - \sum_{j=1}^{n-1} E_j y_{n-j}}}{x}.
+\end{align}
+Knowing the energy, we can obtain the function $F_n$ by integrating the LHS,
+\begin{align}
+y_0^2 F_n'(x) &= \intx{-\infty}{x}{y_0(s) \klb[\bigg]{W(s)y_{n-1}(s) - \sum_{j=1}^{n} E_j y_{n-j}(s)}}{s},\\
+y_n(x) &= y_0(x) \intx{a}{x}{\frac{1}{y_0(t)^2} \intx{-\infty}{t}{y_0(s) \klb[\bigg]{W(s)y_{n-1}(s) - \sum_{j=1}^{n} E_j y_{n-j}(s)}}{s}}{t}.
+\end{align}
+Here, $a$ is chosen such that $y_n(a)=0$ (but $y_0(a)\neq 0$).
+
+For $W(x)=\frac{1}{4}x^4$, the ground state has $E(\epsilon) \sim \frac{1}{2} + \frac{3}{4}\epsilon - \frac{21}{8} \epsilon^2 + \frac{333}{16}\epsilon^3 + \dots$, which is divergent for all $\epsilon> 0$, so this is a singular perturbation problem.
+\note{Reason: $y_0 \sim \powe{-x^2/4}$, but $y(\epsilon > 0) \sim \powe{-x^3 \sqrt{\epsilon} / 6}$, which constitutes an abrupt qualitative change; $x^4\epsilon$ is not small compared to $V(x)$ for large $x$.}
+}
+\subsection{Time-independent Perturbation Theory in QM}
+Assume that our Hamiltonian can be written as $H=H_0+\epsilon V$, where $\epsilon\ll 1$ and the unperturbed problem can be solved exactly, i.e. $H_0\Ket{n^{(0)}} = E_n^{(0)} \Ket{n^{(0)}}$ for $n\ge 0$.
+Further, assume that the eigenvalues are non-degenerate (the degenerate version of this PT requires substantially more effort), and that the eigenstates form an ONB.
+Using PT to second order, solve $H\Ket{n} = E_n\Ket{n}$.
+
+Let $\Ket{n} = \sum_{l\ge 0} \epsilon^l \Ket{n^{(l)}}$ and $E_n = \sum_{l\ge 0} \epsilon^l E_n^{(l)}$.
+Inserting this into the Schrödinger equation gives
+\begin{align}
+H_0\sum_{l\ge 0} \epsilon^l \Ket{n^{(l)}} + V \sum_{l\ge 1} \epsilon^{l} \Ket{n^{(l-1)}} &=  \sum_{l\ge 0} \epsilon^l E_n^{(l)} \sum_{m\ge 0} \epsilon^m \Ket{n^{(m)}} = \sum_{l\ge 0} \epsilon^l \sum_{m=0}^l E_n^{(l-m)} \Ket{n^{(m)}}.
+\end{align}
+The PT equation at order $l$ then read
+\begin{align}
+H_0\Ket{n^{(l)}} + V\Ket{n^{(l-1)}} &= \sum_{m=0}^l E_n^{(l-m)} \Ket{n^{(m)}}.
+\end{align}
+For $l=1$, we obtain $H_0 \Ket{n^{(1)}} + V\Ket{n^{(0)}} = E_n^{(1)} \Ket{n^{(0)}} + E_n^{(0)} \Ket{n^{(1)}}$.
+The energy correction can be obtained by projecting onto $\Ket{n^{(0)}}$, giving
+\begin{align}
+E_n^{(1)} &= \brc{n^{(0)}}{H_0}{n^{(1)}} + \brc{n^{(0)}}{V}{n^{(0)}} - E_n^{(0)} \brb{n^{(0)}}{n^{(1)}} = \brc{n^{(0)}}{V}{n^{(0)}}.
+\end{align}
+The states can be found similarly by projecting onto $\Ket{m^{(0)}}$ ($m\neq n$), giving
+\begin{align}
+E_m^{(0)} \brb{m^{(0)}}{n^{(1)}} + \brc{m^{(0)}}{V}{n^{(0)}} &= E_n^{(1)} \brb{m^{(0)}}{n^{(0)}} + E_n^{(0)} \brb{m^{(0)}}{n^{(1)}}.
+\end{align}
+Note that we may expand the correction states as\footnote{We can exclude $m=n$, because $\brb{n^{(0)}}{n} = \brb{n^{(0)}}{n^{(0)}} + \epsilon \brb{n^{(0)}}{n^{(1)}} + \dots = 1 + \epsilon \brb{n^{(0)}}{n^{(1)}} + \dots \overset{!}{\le 1}$ requires $\brb{n^{(0)}}{n^{(1)}} = 0$ (there may only be some phase, see notes).} $\Ket{n^{(1)}} = \sum_{m\neq n} \Ket{m^{(0)}} \brb{m^{(0)}}{n^{(1)}}$, and we already found the coefficients to be
+\begin{align}
+\brb{m^{(0)}}{n^{(1)}} &= \frac{\brc{m^{(0)}}{V}{n^{(0)}}}{E_n^{(0)} - E_m^{(0)}}.
+\end{align}
+To second order, we find
+\begin{align}
+H_0\Ket{n^{(2)}} + V\Ket{n^{(1)}} &= E_n^{(2)} \Ket{n^{(0)}} + E_n^{(1)} \Ket{n^{(1)}} + E_n^{(0)} \Ket{n^{(2)}},
+\end{align}
+and once again projecting gives
+\begin{align}
+E_n^{(0)} \brb{n^{(0)}}{n^{(2)}} + \brc{n^{(0)}}{V}{n^{(1)}} &= E_n^{(2)} + E_n^{(1)} \brb{n^{(0)}}{n^{(1)}} + E_n^{(0)} \brb{n^{(0)}}{n^{(2)}}.
+\end{align}
+Thus $E_n^{(2)} = \brc{n^{(0)}}{V}{n^{(1)}}$, which expands to
+\begin{align}
+E_n^{(2)} &= \sum_{m\neq n} \frac{\abs*{\brc{n^{(0)}}{V}{m^{(0)}}}^2}{E_n^{(0)} - E_m^{(0)}}.
+\end{align}
+For the anharmonic oscillator, we have $H_0 = \frac{1}{2m}p^2 + \frac{1}{2} m\omega^2x^2$ and $V=x^4$.
+Using $x = \sqrt{\frac{\hbar}{2m\omega}} \kla*{a + a^\dagger}$, we find ($\Ket{n} \equiv \Ket{n^{(0)}}$)
+\begin{align}
+E_n^{(1)} &= \brc{n}{V}{n} = \frac{\hbar^2}{4m^2\omega^2} \brc{n}{\kla{a+a^\dagger}^4}{n} \\
+&= \frac{\hbar^2}{4m^2\omega^2} \brc{n}{\klc{a^2 \kla{a^\dagger}^2 + a \kla{a^\dagger}^2 a + \kla{a^\dagger}^2 a^2 + aa^\dagger aa^\dagger + a^\dagger a^2 a^\dagger + a^\dagger aa^\dagger a}}{n}\\
+&= \frac{\hbar^2}{4m^2\omega^2} \brc{n}{\klc{\kla*{n+1}\kla*{n+2} + (n+1)n + n(n-1) + \kla*{n+1}^2 + n(n+1) + n^2}}{n}\\
+&= \frac{\hbar^2}{4m^2\omega^2} \kla*{3 + 6n + 6n^2}.
+\end{align}
+\definition{General Method}{Consider $\kla*{H-E_n^{(0)}} \Ket{n} = \kla*{E_n - E_n^{(0)}}\Ket{n}$ and define $\Delta E_n = E_n - E_n^{(0)}$.
+Then the homogeneous solution of is $\Ket{n^{(0)}}$, since $\kla*{E_n^{(0)} - H_0}\Ket{n^{(0)}} = 0$.
+
+For the particular solution, note that projecting onto the unperturbed states yields
+\begin{align}
+\brc{n^{(0)}}{\kla*{E_n^{(0)} - H_0}}{n} &= 0 = \brc{n^{(0)}}{\kla*{\epsilon V - \Delta E_n}}{n}.
+\end{align}
+Thus, $\Ket{n^{(0)}}$ are orthogonal to $\kla*{\epsilon V - \Delta E_n}\Ket{n}$ and
+\begin{align}
+\kla*{\epsilon V - \Delta E_n}\Ket{n} &= \sum_{m\neq n} \oper{m^{(0)}}{m^{(0)}} \kla*{\epsilon V - \Delta E_n} \Ket{n} = Q_n \kla*{\epsilon V - \Delta E_n} \Ket{n}
+\end{align}
+with the projector $Q_n = I - \oper{n^{(0)}}{n^{(0)}}$.
+\begin{itemize}
+\item the particular solution is $\Ket{n} = \frac{1}{E_n^{(0)} - H_0} Q_n \kla*{\epsilon V - \Delta E_n} \Ket{n}$
+\item the general solution is $\Ket{n} = c_0 \Ket{n^{(0)}} + \frac{1}{E_n^{(0)} - H_0} Q_n \kla*{\epsilon V - \Delta E_n} \Ket{n}$
+\item we can generate a series by recursively self-inserting this, giving \begin{align}
+\Ket{n} &= \Ket{n^{(0)}} + \epsilon \frac{Q_n}{E_n^{(0)} - H_0} V\Ket{n^{(0)}} + \frac{Q_n}{E_n^{(0)} - H_0} \kla*{\epsilon V - \Delta E_n} \epsilon \frac{Q_n}{E_n^{(0)} - H_0} V \Ket{n^{(0)}} + \dots
+\end{align} with $\brb{n^{(0)}}{n} = 1$ and $\brb*{n}{n}=1$
+\end{itemize}
+\note{$\Ket{n} \rightarrow \Ket{n^{(0)}}$ as $\epsilon\rightarrow 0$, so this is a regular perturbation.
+Also, $c_0\rightarrow 1$, so we \emph{set} $c_0=1$ (renormalization problem)}
+Computing the energies can now be done by unraveling $$\Delta E_n = \epsilon \brc{n^{(0)}}{V}{n} = \epsilon \brc{n^{(0)}}{\kla*{V + V \epsilon \frac{Q_n}{E_n^{(0)} - H_0} V + \dots}}{n^{(0)}},$$ which yields
+\begin{itemize}
+\item $\epsilon^1$: $\Delta E_n = \epsilon \brc{n^{(0)}}{V}{n^{(0)}}$
+\item $\epsilon^2$: $\Delta E_n = \epsilon^2 \brc{n^{(0)}}{V \frac{Q_n}{E_n^{(0)} - H_0} V}{n^{(0)}}$
+\end{itemize}
+}
+TODO: Degenerate Case (ex1 sol info p. 136ff).
+\subsection{Time-dependent Perturbation Theory in QM}
+\definition{$H=H_0+\epsilon V(t)$}{Let $\Ket{\psi(t)} = \sum_n c_n(t) \Ket{n^{(0)}}$ and consider ($\hbar=1$)
+\begin{enumerate}
+\item $\epsilon=0$: $\Ket{\psi(t)} = \powe{-\i H_0t} \Ket{\psi(0)} = \sum_n c_n(0) \powe{-\i E_n^{(0)}t} \Ket{n^{(0)}}$, giving $c_n(t) = c_n(0) \powe{-\i E_n^{(0)}t}$
+\item $\epsilon > 0$: assume $\Ket{\psi(t)} = \sum_n a_n(t) \powe{-\i E_n^{(0)}t} \Ket{n^{(0)}}$ ($a_n$ is the transition amplitude for $\Ket{\psi} \rightarrow \Ket{n^{(0)}}$)
+\end{enumerate}
+Linearity allows us to decouple the \gls{ic}, so assume that $\Ket{\psi(t=0)} = \Ket{m^{(0)}}$, i.e. $a_n(0) = \delta_{n,m}$.
+\begin{itemize}
+\item $0 = \kla*{H - \i\partial_t}\Ket{\psi(t)} = \kla*{H_0+\epsilon V(t) - \i\partial_t} \sum_n a_n(t) \powe{-\i E_n^{(0)} t} \Ket{n^{(0)}}$ gives \begin{align}
+0 &= \sum_n \kla*{\epsilon V(t) a_n(t) - \i a_n'(t)} \powe{-\i E_n^{(0)} t} \Ket{n^{(0)}}
+\end{align}
+\item projecting onto $\Bra{k^{(0)}} \powe{\i E_k^{(0)} t}$ yields $\i a_k'(t) = \epsilon \sum_n a_n(t) \powe{\i \omega_{kn} t} \brc{k^{(0)}}{V(t)}{n^{(0)}}$ with $\omega_{kn} = E_k^{(0)} - E_n^{(0)}$
+\end{itemize}
+Perturbation Method:
+\begin{itemize}
+\item $\epsilon^0$: $\i a_k'^{(0)}=0$ with the \gls{ic} gives $a_k^{(0)}(t) = \delta_{km}$
+\item $\epsilon^1$: $\i a_k'^{(1)} = \sum_n a_n^{(0)} \brc{k^{(0)}}{V(t)}{n^{(0)}} \powe{\i \omega_{kn}t} = \brc{k^{(0)}}{V(t)}{m^{(0)}} \powe{\i\omega_{km} t}$ gives $a_k^{(1)}(t) = -\i \intx{0}{t}{\brc{k^{(0)}}{V(t')}{m^{(0)}} \powe{\i\omega_{km} t'}}{t'}$
+\item $\epsilon^{l+1}$: $\i a_k'^{(l+1)} = \sum_n a_n^{(l)} \brc{k^{(0)}}{V}{n^{(0)}} \powe{\i\omega_{kn} t}$
+\end{itemize}
+}
+\example{Fermi's Golden Rule}{$V(t) = V_\powe{\pm\i\omega t}$}{Write $\Ket{n} \equiv \Ket{n^{(0)}}$ for convenience; then,
+\begin{align}
+a_n(t) &= -\i \intx{0}{t}{\brc*{n}{V_0}{m} \powe{\i\kla*{\pm \omega + \omega_{nm}}t'}}{t'} = -\brc*{n}{V_0}{m} \frac{\powe{\i \kla*{\omega_{nm} \pm \omega}t} - 1}{\omega_{nm} \pm \omega}
+\end{align}
+and the transition probability becomes
+\begin{align}
+\abs*{a_n(t)}^2 &= \frac{\abs*{\brc*{n}{V_0}{m}}^2}{\kla*{\omega_{nm} \pm \omega}^2} 4\sin\kla*{\frac{\omega_{nm} \pm \omega}{2}t}^2.
+\end{align}
+Defining $A=\omega_{nm}\pm\omega$, on large timescales we obtain
+\begin{align}
+\abs*{a_n(t)}^2 &\rightarrow \frac{4}{A^2} \abs*{\brc*{n}{V_0}{m}}^2 \sin\kla*{\frac{At}{2}}^2 \sim 2\pi t \abs*{\brc*{n}{V_0}{m}}^2 \delta\kla*{A}.
+\end{align}
+The transition rate (probability per time) from $\Ket{m}$ to $\Ket{n}$ is thus $\Gamma_{m\rightarrow n} = 2\pi \abs*{\brc*{n}{V_0}{m}}^2 \delta\kla*{E_n^{(0)} - E_m^{(0)} \pm \omega}$
+}
+\example{Absorption and Emission of EM waves by atoms}{}{\begin{itemize}
+\item electric dipole approximation
+\item magnetic dipole and electric quadruple 
+\item spontaneous emission etc.
+\end{itemize}
+}
+\chapter{Integration}
+\section{•}
+
+
+\end{document}

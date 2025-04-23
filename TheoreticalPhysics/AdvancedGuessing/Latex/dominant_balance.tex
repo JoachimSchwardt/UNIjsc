@@ -8,12 +8,41 @@
 
 \input{preamble_shared}
 \input{preamble}
+\input{glossary.tex}
 
 %\titlehead{titlehead}
 \subject{Advanced Guessing for Physicists}
 \title{\Title}
 \author{\Author}
 \date{\today}
+
+\usepackage[most]{tcolorbox}
+
+%https://tex.stackexchange.com/questions/29769/colored-box-in-new-environment
+%\newsavebox{\selvestebox}
+%\newenvironment{colbox}[1]
+%  {\newcommand\colboxcolor{#1}%
+%   \begin{lrbox}{\selvestebox}%
+%   \begin{minipage}{\dimexpr\columnwidth-2\fboxsep\relax}}
+%  {\end{minipage}\end{lrbox}%
+%   \begin{center}
+%   \colorbox[HTML]{\colboxcolor}{\usebox{\selvestebox}}
+%   \end{center}}
+
+%\newcommand{\definition}[2]{\begin{colbox}{F8E0E0}\emph{Definition}: \textbf{#1}. \\ #2\end{colbox}}
+%\newcommand{\note}[1]{\begin{colbox}{E0F8E0}\emph{Note}: #1\end{colbox}}
+%\newcommand{\example}[3]{\begin{colbox}{E0E0F8}\emph{Example}: \textbf{#1}: #2. \\ #3\end{colbox}}
+
+\definecolor{colorbackgrounddefinition}{RGB}{220,220,248}
+\definecolor{colorbackgroundnote}{RGB}{220,248,220}
+\definecolor{colorbackgroundexample}{RGB}{248,220,220}
+\definecolor{colordefinition}{RGB}{0,0,200}
+\definecolor{colornote}{RGB}{0,200,0}
+\definecolor{colorexample}{RGB}{140,0,100}
+
+\newcommand{\definition}[2]{\begin{tcolorbox}[colback=colorbackgrounddefinition,colframe=colordefinition, breakable,enhanced,title=\textbf{#1}.]#2\end{tcolorbox}}
+\newcommand{\note}[1]{\begin{tcolorbox}[colback=colorbackgroundnote,colframe=colornote, breakable,enhanced]#1\end{tcolorbox}}
+\newcommand{\example}[3]{\begin{tcolorbox}[colback=colorbackgroundexample,colframe=colorexample, breakable,enhanced,title={\textbf{#1}: #2.}]#3\end{tcolorbox}}
 
 \begin{document}
 
@@ -23,6 +52,44 @@
 %\end{titlepage}
 
 \section{Methods of Perturbations and Dominant Balance}
+
+\definition{Local Analysis}{Powerful, but cannot provide global information on the behavior of solutions at two distantly separated points.
+\begin{itemize}
+\item[$\Rightarrow$] cannot predict how a change in \gls{ic} at $x=0$ will affect the asymptotic behavior as $x\rightarrow\infty$
+\item[$\Rightarrow$] we require a global analysis
+\end{itemize}}
+\definition{\gls{pt}}{\begin{enumerate}
+\item identify a small parameter $\epsilon$ such that the \gls{hp} becomes soluble at $\epsilon=0$
+\item perturbative solution is constructed by local analysis about $\epsilon=0$ as $y(x) = \sum_{n\ge 0} y_n(x) \epsilon^n$
+\begin{itemize}
+\item[$\Rightarrow$] series is \emph{local in $\epsilon$}, but \emph{global in $x$}!
+\item[$\Rightarrow$] we may approximate the solution by a finite number of terms ($n\le N$)
+\end{itemize}
+\item restore the \gls{hp} by setting $\epsilon=1$; assuming this is within the \gls{roc}
+\end{enumerate}}
+\note{\gls{pt} is a large collection of iteration methods.}
+\example{Cubic Equation}{$x^3 - 4.001x + 0.002 = 0$}{\begin{enumerate}
+\item write $x^3 - \kla*{4+\epsilon}x + 2\epsilon=0$ and note that $\epsilon=0$ gives $x^3=4x$ with $x(\epsilon=0) = a_0 \in \klc*{0,\pm 2}$ (zeroth order)
+\item $x(\epsilon) = \sum_{n\ge 0} a_n \epsilon^n$, let us focus on $x_1 = -2 + \sum_{n\ge 1} a_n \epsilon^n$
+\begin{itemize}
+\item $\epsilon^1$: $0 = 4 + 8a_1$ gives $a_1 = -\frac{1}{2}$
+\item $\epsilon^2$: $0 = 8a_2 - a_1 - 6a_1^2 = 8a_2 + \frac{1}{2} - \frac{3}{2}$ gives $a_2 = \frac{1}{8}$
+\item[$\Rightarrow$] $x_1 = -2 - \frac{1}{2}\epsilon + \frac{1}{8} \epsilon^2 + \dots$
+\end{itemize}
+\item set $\epsilon=0.001$; if the series converges, the sum is the answer. Otherwise, many divergent series are asymptotic (see later)
+\end{enumerate}
+}
+\example{ODE}{$y'' = f(x)y$ with $y(0)=1$ and $y'(0)=1$}{\begin{enumerate}
+\item $y''=\epsilon f(x)y$
+\item let $y(x) = \sum_{n\ge 0} \epsilon^n y_n(x)$ with $y_n(0)=0=y_n'(0)$ for $n\ge 1$
+\begin{itemize}
+\item $\epsilon^0$: $y_0''=0$ gives $y_0(x)=1+x$
+\item $\epsilon^n$: $y_n''=y_{n-1} f$ gives $y_n(x) = \intx{0}{x}{\intx{0}{t}{f(s)y_{n-1}(s)}{s}}{t}$
+\item $y(x) = 1 + x + \epsilon\intx{0}{x}{\intx{0}{t}{(1+s)f(s)}{s}}{t} + \epsilon^2 (\dots)$
+\item note that the $n$-th term is bounded by $\epsilon^n K(x)^n \frac{1+|x|}{(2n)!} x^{2n}$
+\end{itemize}
+\end{enumerate}}
+
 Consider the algebraic equation $\epsilon^2 x^6 - \epsilon x^4 - x^3 + 8 = 0$ with a small parameter $\epsilon$.
 
 For $\epsilon=0$, the equation simplifies to $x^3=8$ and has the three (complex) solutions $x_n = 2 \powe{\i \frac{2\pi}{3} n}$ for $n=0,1,2$.
@@ -53,7 +120,17 @@ This sheds some light on the disappearance of the zeros: apparently each root sp
 Introducing $x = \epsilon^{-\frac{2}{3}} y$ gives $\epsilon^{-2} y^6 - \epsilon^{-\frac{5}{3}} y^4 - \epsilon^{-2} y^3 + 8 = 0$.
 Up to second order, we can write $x=x_0 + \epsilon x_1 + \epsilon^2 x_2$ (but throwing this into the original equation does yield nonsense at $\epsilon^2$, and I don't really understand how to do something similar for the scaled equation.. yet)
 
+
+Solution: This was already pretty good, but I missed a rewrite.
+
+Note that the new equation is equivalent to $y^6-y^3+8\epsilon^2 - \epsilon^{\frac{1}{3}} y^4 = 0$, which can also be interpreted as a regular perturbation problem with $\epsilon' = \epsilon^\frac{1}{3}$ (in this notation, the small parameter only appears in integer powers).
+Equivalently, we may also write $y = \sum_{n\ge 0} y_n \kla*{\epsilon^\frac{1}{3}}^n$ for all of the six unperturbed solutions $0$ (3 times) and $\powe{\i\frac{2\pi}{3}n}$ for $n=0,1,2$.
+
+
+
 \section{Perturbation Method vs. Iteration Method}
+Singular perturbation: appearance of a boundary layer.
+Note that
 
 \section{A toy rocket}
 Starting from $x(0)=0$, $\dot{x}(0)=v_0$ and assuming $x(t)\ll R$ (we do not get very far), what is recurrence time?
