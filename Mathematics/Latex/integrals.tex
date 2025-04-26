@@ -400,6 +400,54 @@ The last step involves the observation
 \frac{\partial}{\partial A_{jk}} \log \det A &= \frac{\partial}{\partial A_{jk}} \Tr \log A = \Tr A^{-1} \frac{\partial}{\partial A_{jk}} A = \\
 &= \Tr \kla*{(A^{-1})_{mn} (\delta_{jn} \delta_{kl})_{nl} }_{ml} = \sum_{mn} (A^{-1})_{mn} \delta_{jn} \delta_{km} = (A^{-1})_{kj}.
 \end{align}
+\section{Convolutions}
+We define the convolution of two functions as
+\begin{align}
+\kla*{f\ast g}(x) &= \intx{ }{ }{f(y)g(x-y)}{y}.
+\end{align}
+This operation is symmetric, and under Fourier transform reduces to simple multiplication.
+Explicitly, if $f(k) = \intx{ }{ }{\powe{-\i kx} f(x)}{x}$, then
+\begin{align}
+\kla*{f\ast g}(k) &= \intx{ }{ }{\powe{-\i kx} \intx{ }{ }{f(y) g(x-y)}{y} }{x} = \intx{ }{ }{\intx{ }{ }{\powe{-\i k(x+y)} f(y) g(x)}{y}}{x} = f(k)g(k).
+\end{align}
+This works so long as the integration domain is either infinite, or the functions satisfy periodic translational invariance, such that the substitution does not make the boundaries depend on the other integration variable.
+\subsection{Stable functions}
+A function is stable under convolution if $f_a \ast f_b = f_c$ for some $c=c(a,b)$, i.e. if the convolution of a function from a certain parameter family with another results in itself.
+A special case is $f_a(k)=\klb*{f(k)}^a$, because (assuming convergence) we then find
+\begin{align}
+\kla*{f_a\ast f_b}(x) &= \intx{ }{ }{ \frac{1}{\mathcal{N}}\intx{ }{ }{\powe{\i ky} \klb*{f(k)}^a}{k} \frac{1}{\mathcal{N}}\intx{ }{ }{\powe{\i k'(x-y)} \klb*{f(k')}^b}{k'} }{y}\\
+&= \frac{1}{\mathcal{N}} \intx{ }{ }{\powe{\i kx} \klb*{f(k)}^{a+b}}{k} = f_{a+b}(x) ,
+\end{align}
+where $\mathcal{N}$ is the normalization factor in the Fourier Transform (e.g. $2\pi$ for $\mathbb{R}$) and $\frac{1}{\mathcal{N}} \intx{ }{ }{\powe{\i kx}}{k} = \delta(x)$ holds (assuming such an identity is possible for the integration domain, but otherwise FTs are ill-defined).
+Similarly, $f_a(k) = \intx{ }{ }{\powe{-\i kx} \klb*{f(x)}^a}{x}$ also leads to
+\begin{align}
+\kla*{f_a \ast f_b}(k) &= \intx{ }{ }{ \intx{ }{ }{\powe{-\i k'x} \klb*{f(x)}^a}{x} \intx{ }{ }{\powe{-\i (k-k')y} \klb*{f(y)}^b}{y} }{k'}\\
+&= \mathcal{N} \intx{ }{ }{\powe{-\i kx} \klb*{f(x)}^{a+b}}{x} = \mathcal{N} f_{a+b}(k).
+\end{align}
+To summarize this result, any function (with fineprint regarding convergence and normalizations) of the form $f(x) = \frac{1}{\mathcal{N}} \intx{ }{ }{\powe{\i kx} \klb*{f(k)}^a}{k}$ with some generator $f(k)$ is stable.
+\subsubsection{Cosecant generator}
+The generator $f(x) = \csc\kla*{\tau + \i x}$ on $x\in\mathbb{R}$ leads to\footnote{$\intx{0}{\infty}{\powe{\i 2kx} \csch(x)^a}{x} = 2^{a-1} B\kla*{1-a, \frac{a}{2} - \i k}$}
+%from scipy import special
+%from scipy.integrate import quad
+%g=special.gamma
+%beta=lambda x,y: g(x)*g(y)/g(x+y)
+%cquad = lambda *args: quad(*args, complex_func=True)
+%tau=0.735; a=0.351; k=1.555; L=200
+%f=lambda x: 1/np.sin(tau + 1j*x)
+%Fi=lambda k,a: cquad(lambda x: np.exp(-1j*k*x) * f(x)**a, -L, L)
+%F=lambda k,a: 2**(a-1) * beta((a+1j*k)/2, (a-1j*k)/2) * np.exp(k*(tau-np.pi/2))
+%Fi(k,a), F(k,a)
+\begin{align}%see integral_sandbox Master LL cosecant power 2D Fourier for details
+f_a(k) &= \intr{\powe{-\i kx} \csc\kla*{\tau + \i x}^a}{k} = (2\i)^a \powe{-\i\tau a} \intr{\powe{-\i kx} \powe{-ax} \kla*{\powe{-2x} - \powe{-2\i\tau}}^{-a}}{k}\\
+&= \frac{2^a}{\Gamma(a)} \powe{-\i\tau a} \powe{\i \frac{\pi}{2}a}\intx{0}{\infty}{v^{a-1} \powe{v\powe{-2\i\tau}} \intr{\powe{-x(a+\i x)} \powe{-v \powe{-2x}}}{x}}{v}\\
+&= \dots = 2^{a-1} B\kla*{\frac{a+\i k}{2}, \frac{a-\i k}{2}} \powe{k\kla*{\tau - \frac{\pi}{2}}},
+\end{align}
+%b=0.661
+%cquad(lambda kp: F(kp,a) * F(k-kp,b), -L,L), 2*np.pi* F(k,a+b)
+and therefore $f_a\ast f_b = 2\pi f_{a+b}$.
+%f_a = lambda x,a: 1/(2*np.pi) * 2**(a-1)/g(a) * g((a+1j*x)/2) * g((a-1j*x)/2) * np.exp(x*(tau-np.pi/2))
+%cquad(lambda xp: f_a(xp,a) * f_a(x-xp,b), -L,L), f_a(x,a+b)
+Written differently, we have that $f_a(x) = \frac{1}{2\pi} \frac{2^{a-1}}{\Gamma(a)} \Gamma\kla*{\frac{a+\i x}{2}} \Gamma\kla*{\frac{a-\i x}{2}} \powe{x\kla*{\tau - \frac{\pi}{2}}}$ satisfies $f_a\ast f_b = f_{a+b}$.
 
 
 %\begin{thebibliography}{9}
