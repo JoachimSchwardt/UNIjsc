@@ -48,7 +48,7 @@
 
 %\begin{titlepage}
 \maketitle  % Titel setzen
-%\tableofcontents  % Inhaltsverzeichnis setzen
+\tableofcontents  % Inhaltsverzeichnis setzen
 %\end{titlepage}
 
 \chapter{Introduction}
@@ -94,7 +94,7 @@ This is consistent with the known expansion $\sqrt{9+\epsilon} = 3 + \frac{1}{6}
 }
 \definition{\gls{tst}}{$f(x)$ is \gls{tst} if $f(x) \ll \frac{1}{x^n}$ as $x\rightarrow \infty$ for any $n\ge 0$.
 \note{We also say that $f(x)$ is \emph{subdominant} to $\frac{1}{x^n}$}
-\example{Example}{$\powe{-x}$ is a TST as $x\rightarrow \infty$}{We have $\powe{-x}\ll \frac{1}{x^n}$ due to $\frac{x^n}{\powe{x}} \rightarrow 0$, and thus $\powe{-x} \sim 0 + \frac{0}{x} + \frac{0}{x^2} + \dots$.
+\example{Example}{$\powe{-x}$ is \gls{tst} as $x\rightarrow \infty$}{We have $\powe{-x}\ll \frac{1}{x^n}$ due to $\frac{x^n}{\powe{x}} \rightarrow 0$, and thus $\powe{-x} \sim 0 + \frac{0}{x} + \frac{0}{x^2} + \dots$.
 This is a correct expansion based on the definition, but this raises series uniqueness concerns: $g(x) = f(x) + \powe{-x}$ have the same expansion.
 The problem can be traced back to $x=\infty$ being an essential singularity for $\powe{-x}$}
 }
@@ -445,8 +445,288 @@ The transition rate (probability per time) from $\Ket{m}$ to $\Ket{n}$ is thus $
 \item spontaneous emission etc.
 \end{itemize}
 }
-\chapter{Integration}
-\section{•}
+\chapter{Advanced Guessing I: TODO}
+\chapter{Advanced Guessing II: Integration}
+Why do we care about integrals?
+\begin{itemize}
+\item many important ``special'' functions have integration representations, e.g. Bessel, Error, Gamma etc.
+\item ODE and PDE solutions often from transforms, e.g. Fourier, Laplace, Mellin etc.; the required inverse transforms is often an integral
+\end{itemize}
+Goal: How to perform a local analysis of integral representations?
+\example{Example}{$y'=xy+1$ with $y(0)=0$}{\begin{enumerate}
+\item direct local analysis as $x\rightarrow\infty$:
+\begin{itemize}
+\item $y'\sim xy$, so $y\sim A\powe{x^2/2}$
+\item we cannot determine $A$ since the \gls{ic} is located at $x=0$ ($y(0)=A=0$ is invalid)
+\end{itemize}
+\item integral representation $y(x) = \powe{x^2/2} \intx{0}{x}{\powe{-t^2/2}}{t}$ gives $A=\sqrt{\frac{\pi}{2}}$
+\end{enumerate}}
+\example{Another example}{$xy''' + 2y = 0$ with $y(0)=1$ and $y(\infty)=0$}{\begin{enumerate}
+\item direct local analysis as $x\rightarrow\infty$:
+\begin{itemize}
+\item $y(x) = \powe{S(x)}$ gives $x\kla*{S''' + 3S'S'' + \kla*{S'}^3}\powe{S} + 2\powe{S} = 0$
+\item \gls{db} gives $\kla*{S'}^3 \sim -\frac{2}{x}$, and $S'\sim -\omega \kla*{\frac{2}{x}}^{1/3}$ with $\omega^3=1$ satisfies $\frac{2}{x} \gg S''',3S'S''$
+\item $y(x) \sim A \powe{-3\omega (x/2)^{2/3}}$ and \gls{bc} gives $\omega=1$
+\item next correction from $y=\powe{S+C}$ with $C\ll x^{2/3}$
+\item ... $C'\sim \frac{1}{3x}$ and $y\sim Ax^{1/3} \powe{-3(x/2)^{2/3}}$; again, we cannot determine $A$
+\end{itemize}
+\item integral representation is $y(x) = \intx{0}{\infty}{\powe{-t - \frac{x}{\sqrt{t}}}}{t}$; check:
+\begin{align}
+xy''' &= \intx{0}{\infty}{\powe{-t-\frac{x}{\sqrt{t}}} \frac{-x}{t^{3/2}} }{t} = -2\intx{0}{\infty}{\powe{-t} }{\powe{-\frac{x}{\sqrt{t}}}} = -2\intx{0}{\infty}{\powe{-\frac{x}{\sqrt{t}}}}{\powe{-t}} = -2y,
+\end{align} %t = 
+where the boundary terms vanished; Laplace's method gives $A=\sqrt{\frac{\pi}{3}} 2^{2/3}$
+\end{enumerate}
+}
+\example{Gamma Function}{representation of $n!$ (more accurately $\Gamma(n)$, i.e. $(n+1)!$)}{Recursive definition: $a_{n+1} = na_n$ with $a_1=1$
+\begin{enumerate}
+\item direct local analysis as $n\rightarrow \infty$
+\begin{itemize}
+\item $a_n=\powe{S_n}$ gives $\powe{S_{n+1}} = n\powe{S_n}$, i.e. $S_{n+1}-S_n=\log n$
+\item discrete ``integral'' (more accurate: inverse of first order difference method) gives $S_n\sim n\log n$
+\item $a_n=b_n\powe{S_n} = b_n n^n$ gives $b_{n+1} = b_n \kla*{1 + \frac{1}{n}}^{-(n+1)} \sim \frac{b_n}{e}$, so $b_n \sim \powe{-n}$
+\item $a_n = c_n n^n \powe{-n}$ gives $c_{n+1} = c_n \powe{} \kla*{1 + \frac{1}{n}}^{-(n+1)}$
+\item $\log Q \equiv \log \powe{} - (n+1) \log\kla*{1+\frac{1}{n}} = -\frac{1}{2n} + \frac{1}{6n^2} + \dots$, and eventually $c_{n+1}-c_n = -\frac{1}{2n} + \frac{7}{24n^2} + \dots$ gives $c_n \sim \frac{1}{\sqrt{n}}$ -- but we cannot determine the constant!
+\end{itemize}
+\item integral representation is $a_n = \intx{0}{\infty}{t^{n-1} \powe{-t}}{t}$ and Laplace's method yields $k=\sqrt{2\pi}$
+\end{enumerate}
+}
+\example{Another recursion}{$(n+1)a_{n+1} = 2na_n - na_{n-1}$ with $a_0=1$, $a_1=0$}{\begin{enumerate}
+\item direct local analysis as $n\rightarrow\infty$
+\begin{itemize}
+\item $D^2a_n = -\frac{2}{n+2} Da_n - \frac{1}{n+2} a_n$ where $Da_n = a_{n+1} - a_n$ and $D^2a_n = a_{n+2} - 2a_{n+1} + a_n$ are the first and second order Finite-Difference methods
+\item analogy to ODE: $y''=-\frac{2}{x+2}y' - \frac{1}{x+2}y$ and $y=\powe{S}$ give $S''+\kla*{S'}^2 + \frac{2}{x+2}S' + \frac{1}{x+2} = 0$
+\item \gls{db} gives $\kla*{S'}^2 \sim -\frac{1}{x}$, i.e. $S'\sim\pm 2\i \sqrt{x}$
+\item $a_n \sim A_\pm \powe{\pm 2\i\sqrt{n}}$ and next order gives additional factor of $n^{-1/4}$ (again, no prefactor!)
+\end{itemize}
+\item integral representation is $a_n = \frac{1}{n!} \intx{0}{\infty}{\powe{1-t} t^n J_0\kla*{2\sqrt{t}}}{t} \sim \sqrt{\frac{\e}{\pi}} n^{-1/4} \cos\kla*{2\sqrt{n} - \frac{\pi}{4}}$
+\end{enumerate}
+}
+\section{An Elementary Approach}
+Consider the integral $I(x) = \intx{a}{b}{f(x,t)}{t}$ as $x\rightarrow x_0$.
+\begin{enumerate}
+\item if $f(t,x) \sim f_0(t)$ uniformly on $t\in\klb*{a,b}$, then $I(x) \sim \intx{a}{b}{f_0(t)}{t}$ (assuming finite and non-zero)
+\item if $f(x,t) \sim \sum_{n\ge 0} f_n(t) \kla*{x-x_0}^{\alpha n}$ for some $\alpha > 0$ uniformly, then $I(x) \sim \sum_{n\ge 0} \kla*{x-x_0}^{\alpha n} \intx{a}{b}{f_n(t)}{t}$ (generalization of the first case)
+\end{enumerate}
+\example{Three examples}{}{\begin{enumerate}
+\item $I(x) = \intx{0}{2}{\cos\klb*{\kla*{xt + x^2t}^{1/3}}}{t} \sim 2$ as $x\rightarrow 0$ (uniformly converges to the constant function $f_0(t)=2$)
+\item $I(x) = \intx{0}{1}{\frac{\sin(tx)}{t}}{t} \sim \sum_{n\ge 0} \frac{(-1)^n}{(2n+1)!} x^{2n+1} \intx{0}{1}{t^{2n}}{t} \sim x - \frac{1}{18} x^3 + \frac{1}{600} x^5 + \dots$ as $x\rightarrow 0$ (uniformly converging series expansion of $f$)
+\item $I(x) = \intx{0}{x}{t^{-1/2} \powe{-t}}{t}$ as $x\rightarrow 0^+$: $f(t) \sim t^{-1/2} - t^{1/2} + \frac{1}{2!} t^{3/2} - \dots$ is asymptotic uniformly on $\klb*{0,x}$, so $I(x) \sim 2x^{1/2} - \frac{2}{3} x^{3/2} + \frac{1}{5} x^{5/2} + \dots$
+\end{enumerate}
+}
+\section{Integration by Parts}
+\subsection{Variable appears as an endpoint of the integral}
+\example{Some exponential integral}{$I(x) = \intx{x}{\infty}{\powe{-t^4}}{t}$ as $x\rightarrow \infty$}{\begin{enumerate}
+\item $I(x) = \intx{0}{\infty}{(...)}{t} - \intx{0}{x}{\kla*{1 - t^4 + \frac{1}{2!}t^8 + \dots}}{t} = \Gamma\kla*{\frac{5}{4}} - \sum_{n\ge 0} \frac{(-1)^n}{n!} \frac{x^{4n+1}}{4n+1}$ converges for all $x$ (but speed is terrible, cured by Series Acceleration methods, see Advanced Guessing I)
+\item integration by parts gives \begin{align}
+I(x) &= -\frac{1}{4} \intx{x}{\infty}{\frac{1}{t^3}}{\powe{-t^4}} = \frac{1}{4x^3} \powe{-x^4} - \frac{3}{4}\intx{x}{\infty}{\frac{1}{t^4} \powe{-t^4}}{t},
+\end{align}
+but the second term is suppressed relative to $I$ by a factor of at least $\frac{1}{x^4}$
+\item defining $I_n(x) = \intx{x}{\infty}{\frac{1}{t^{4n}} \powe{-t^4}}{t}$ eventually gives the iteration $I_{n}(x) = \frac{1}{4x^{4n+3}} \powe{-x^4} - \kla*{n+\frac{3}{4}} I_{n+1}(x)$, which results in \begin{align}
+I(x) &= \bsplit{&\frac{1}{4x^3} \powe{-x^4} \klc*{1 - \frac{3}{4x^4} + \frac{3\cdot 7}{4^2x^8} - \frac{3\cdot 7\cdot 11}{4^3 x^{12}} + \dots + (-1)^{n+1} \frac{3\cdot 7 \cdot \dots \cdot (4n-5)}{4^{n-1} x^{4(n-1)}}} \\
+&+ (-1)^n \frac{3\cdot 7 \cdot \dots (4n-1)}{4^n} I_n(x)}
+\end{align}
+\end{enumerate}
+}
+\example{Incomplete Gamma integral}{$I(x) = \intx{0}{x}{t^{-1/2} \powe{-t}}{t}$ as $x\rightarrow \infty$}{One can try $I(x) = -\intx{0}{x}{t^{-1/2}}{\powe{-t}}$, but integration by parts contributes a spurious infinity at $t=0$.
+Cure:
+\begin{itemize}
+\item $I(x) = \Gamma\kla*{\frac{1}{2}} - \intx{x}{\infty}{t^{-1/2} \powe{-t}}{t} = \sqrt{\pi} - x^{-1/2} \powe{-x} + \frac{1}{2} \intx{x}{\infty}{t^{-3/2} \powe{-t}}{t} \sim \dots \sim \sqrt{\pi} - x^{-1/2} \powe{-x} \klc*{1 + \sum_{n\ge 1} (-1)^n \frac{(2n-1)!!}{2^n x^n}}$
+\end{itemize}
+}
+\example{Imaginary Error Function}{$I(x) = \intx{0}{x}{\powe{t^2}}{t}$ as $x\rightarrow \infty$}{Trick of changing bounds gives $\infty - \infty$ this time...
 
+Integration by parts diverges as $\frac{1}{t}$ for $t=0$; cure:
+\begin{itemize}
+\item $I(x) = \intx{0}{a}{\powe{t^2}}{t} + \intx{a}{x}{\powe{t^2}}{t}$ with a fixed cutoff scale $a$
+\item $I_2 = \frac{1}{2t} \powe{t^2}\Big\vert_a^x + \frac{1}{2} \intx{a}{x}{\frac{1}{t^2} \powe{t^2}}{t}$ (last term negligible)
+\item $I_1$ contribution from $t=a$ is \gls{tst} compared to $I_2$'s $t=x$, so $I(x) \sim \frac{1}{2x} \powe{x^2}$ gives the leading order
+\item repeating integration by parts gives $I(x) \sim \frac{1}{2x}\powe{x^2} \klc*{1 + \sum_{n\ge 1}\frac{(2n-1)!!}{2^n x^{2n}}}$
+\end{itemize}
+}
+\subsection{Laplace Integral}
+\definition{Laplace Integral}{$I(x) = \intx{a}{b}{f(t) \powe{x\phi(t)}}{t}$, i.e. $x$ only enters via an exponential function in the integrand.
+Note that
+\begin{align}
+I(x) &= \frac{1}{x} \intx{a}{b}{\frac{f(t)}{\phi'(t)} }{\powe{x\phi(t)}} = \frac{1}{x} \frac{f(t)}{\phi'(t)} \powe{x\phi(t)} \bigg\vert_a^b - \frac{1}{x} \intx{a}{b}{\powe{x\phi(t)} \frac{\d}{\d t} \frac{f(t)}{\phi'(t)}}{t}.
+\end{align}
+If the second term is dominated by the first, then
+\begin{align}
+I(x) &\koml{x\rightarrow\infty}{\sim} \frac{1}{x} \frac{f(b)}{\phi'(b)} \powe{x\phi(b)} - \frac{1}{x} \frac{f(a)}{\phi'(a)} \powe{x\phi(a)}.
+\end{align}
+\begin{enumerate}
+\item $\phi'(t) \neq 0$ on $\klb*{a,b}$ and at least one of $f(a),f(b)$ is non-zero: $\frac{1}{x} \intx{a}{b}{\powe{x\phi(t)} \frac{\d}{\d t} \frac{f(t)}{\phi'(t)}}{t}$ exists and is dominated by the boundary terms
+\item $\Re\phi(t) < \Re \phi(b)$ on $[a,b)$, $\Re\phi'(b) \neq 0$ and $f(b) \neq 0$: $I(x) \sim \frac{1}{x} \frac{f(b)}{\phi'(b)} \powe{x\phi(b)}$
+\item $\Re\phi(t) < \Re \phi(a)$ on $(a,b]$, $\Re\phi'(a) \neq 0$ and $f(a) \neq 0$: $I(x) \sim -\frac{1}{x} \frac{f(a)}{\phi'(a)} \powe{x\phi(a)}$
+\end{enumerate}
+Continuing integration by parts also yields
+\begin{align}
+I(x) \koml{x\rightarrow\infty}{\sim} \powe{x\phi(b)} \sum_{n\ge 1} A_n \frac{1}{x^n}.
+\end{align}
+}
+\note{Failure of \gls{ibp}:
+\begin{enumerate}
+\item it can only contain integer powers of $\frac{1}{x}$, so fractional exponents might cause problems
+\item $\phi'(t)$ has a zero somewhere on $\klb*{a,b}$
+\item when \gls{ibp} produces an integral that does not exist
+\end{enumerate}
+}
+\example{Four examples}{}{\begin{enumerate}
+\item $I(x) = \intx{0}{\infty}{\powe{-xt^2}}{t} = \frac{1}{2} \sqrt{\frac{\pi}{x}}$, but \gls{ibp} gives $I(x) = \intx{0}{\infty}{\frac{-1}{2xt}}{\powe{-xt^2}}$ which diverges at boundary (and remaining integral does not exist either)
+\item $I(x)=\intx{0}{\infty}{\powe{-x\sinh(t)^2}}{t}$ has $\phi'(0)=0$; can be cured by Laplace's method
+\item $I(x) = \intx{0}{\infty}{\log(1+t) \powe{-x\sinh(t)^2}}{t} = -\frac{1}{x} \frac{\log(1+t)}{\sinh(2t)} \powe{-x\sinh(t)^2} \Big\vert_0^\infty + \frac{1}{x} \intx{0}{\infty}{\powe{-x\sinh(t)^2} \frac{\d}{\d t} \frac{\log(1+t)}{\sinh(2t)}}{t}$ gives $I(x) = \frac{1}{2x} + \mathcal{O}\kla*{x^{-3/2}}$ (last term requires Laplace again, since non-integer power)
+\item Stieltjes Integral: $I(x) = \intx{0}{\infty}{\frac{1}{1+xt} \powe{-t}}{t}$ as $x\rightarrow\infty$ (note: \gls{ibp} useful for small $x$) \begin{align}
+I(x) &= -\intx{0}{\infty}{\frac{1}{1+tx}}{\powe{-t}} = -\frac{\powe{-t}}{1+tx}\bigg\vert_0^\infty - x \intx{0}{\infty}{\frac{1}{(1+xt)^2} \powe{-t}}{t} \\
+&= \dots = 1 - x + 2!x^2 + \dots + (-1)^{n-1} (n-1)!x^{n-1} + (-1)^n n! x^n \intx{0}{\infty}{\frac{1}{(1+xt)^{n+1}} \powe{-t}}{t},
+\end{align}
+so $I(x) \sim \sum_{n\ge 0} (-1)^n n! x^n$ as $x\rightarrow 0^+$ (only asymptotic, does not converge anywhere); for $x\rightarrow\infty$, the local behavior of $x^2I'' + (1+3x)I'+I=0$ includes $\frac{\log x}{x}$ (not even a power, let alone an integral one)
+\end{enumerate}
+}
+\section{Laplace's Method and Watson's Lemma}
+Idea: if the $f,\phi$ are real continuous functions and $\phi$ has its maximum on the integration interval, say at $t=c\in\kla*{a,b}$, then only the neighborhood of $c$ contributes to the \emph{full asymptotic expansion} as $x\rightarrow\infty$.
+Examples:
+\begin{enumerate}
+\item $I(x,\epsilon) = \intx{c-\epsilon}{c+\epsilon}{f(t) \powe{x\phi(t)}}{t}$ if $c\in\kla*{a,b}$
+\item $I(x,\epsilon) = \intx{a}{a+\epsilon}{f(t)\powe{x\phi(t)}}{t}$ if $c=a$ (and similarly for $c=b$)
+\end{enumerate}
+\definition{Full Asymptotic Expansion of $I(x,\epsilon)$ as $x\rightarrow\infty$}{\begin{enumerate}
+\item does not depend on $\epsilon$
+\item is identical to the full expansion of $I(x)$, because $I$ over the remaining intervals is subdominant or \gls{tst} compared to $I(x)$
+\end{enumerate}
+}
+\example{Stieltjes again}{$\intx{0}{10}{\frac{1}{1+t} \powe{-tx}}{t}$ as $x\rightarrow\infty$}{\begin{enumerate}
+\item leading behavior: $\phi(t)=-t$ has maximum at $t=0$
+\begin{itemize}
+\item using $I(x,\epsilon) = \intx{0}{\epsilon}{(\dots)}{t} \sim \intx{0}{\epsilon}{\powe{-xt}}{t} \sim \frac{1}{x}$ only has exponentially small error 
+\end{itemize}
+\item full asym. expansion
+\begin{itemize}
+\item $I(x,\epsilon) = \sum_{n\ge 0} (-1)^n \intx{0}{\epsilon}{t^n \powe{-xt}}{t} \sim \sum_{n\ge 0} (-1)^n n! x^{-n-1}$
+\item error term $\intx{\epsilon}{\infty}{(\dots)}{t} \sim (-\epsilon)^n \frac{1}{x} \powe{-\epsilon x} \ll \frac{1}{x}$ is exponentially small
+\end{itemize}
+\end{enumerate}
+}
+\example{Error Function}{$\intx{-10}{10}{\powe{-xt^2}}{t}$ as $x\rightarrow\infty$}{\gls{ibp} fails because $\phi'(0)=0$.
+
+However, $I(x) \sim I(x,\epsilon) = \intx{-\epsilon}{\epsilon}{(\dots)}{t} \sim \intr{\powe{-xt^2}}{t} = \sqrt{\frac{\pi}{x}}$ with exponentially small error.
+}
+Summary:
+\begin{enumerate}
+\item approximate $I(x)$ by $I(x,\epsilon)$: restrict the original integration to a narrow region surrounding the maximum of $\phi(t)$
+\item expand $f(t)$ and $\phi(t)$ in series (Taylor or asymptotic) valid near the peak
+\note{$I(x,\epsilon)$ now becomes a series of integrals, so $\epsilon$ must be sufficiently ``small'' in order to have a valid expansion}
+\item extend the integration range in each integral to infinity (or whatever else is useful)
+\note{Changing integration limits only introduces exponentially small terms (\gls{tst})}
+\end{enumerate}
+\subsection{Watson's Lemma}
+\definition{Watson's Lemma}{Consider $I(x) = \intx{0}{b}{f(t) \powe{-xt}}{t}$ for $b>0$ and $x\rightarrow \infty$.
+If the function satisfies
+\begin{itemize}
+\item $f$ is continuous
+\item $f(t) \sim t^\alpha \sum_{n\ge 0} a_n t^{\beta n}$ as $t\rightarrow 0^+$ with $\alpha > -1$ and $\beta > 0$,
+\end{itemize}
+\note{If $b=\infty$ we also need that $f(t)\ll \powe{ct}$ for some $c>0$ to ensure convergence}
+then the \emph{full asymptotic expansion} of any integral of this type is given by
+\begin{align}
+I(x) &\koml{x\rightarrow\infty}{\sim} \sum_{n\ge 0} \frac{a_n \Gamma\kla*{\alpha + \beta n+ 1}}{x^{\alpha + \beta n + 1}}.
+\end{align}
+To show this, choose $\epsilon$ such that
+\begin{align}
+\abs*{f(t) - t^\alpha \sum_{n=0}^N a_n t^{\beta n}} &\le K t^{\alpha + \beta (N+1)} \quad \text{for} \quad 0\le t \le \epsilon.
+\end{align}
+Then the error introduced by replacing $f$ by this finite series is bounded by
+\begin{align}
+K\intx{0}{\epsilon}{t^{\alpha + \beta (N+1)} \powe{-xt}}{t} \le K \frac{\Gamma\kla*{\alpha + \beta(N+1)+1}}{x^{\alpha + \beta(N+1)+1}},
+\end{align}
+and $\abs*{I(x) - \sum_{n=0}^N a_n \frac{\Gamma\kla*{\alpha + \beta n + 1}}{x^{\alpha + \beta n + 1}}} \ll \frac{1}{x^{\alpha + \beta N + 1}}$ for all $N$.
+}
+\example{Yet another Stieltjes integral}{$I(x) = \intx{0}{5}{\frac{1}{1+t^2} \powe{-xt}}{t}$ as $x\rightarrow \infty$}{$c=0$, so $I(x,\epsilon) = \intx{0}{\epsilon}{\powe{-xt} \sum_{n\ge 0} (-1)^n t^{2n}}{t}$ for small $\epsilon$ and $I(x) \sim \sum_{n\ge 0} (-1)^n \frac{\Gamma(2n+1)}{x^{2n+1}}$ ($\alpha = 0$, $\beta = 2$)
+}
+\example{Modified Bessel function}{$K_0(x) = \intx{1}{\infty}{\kla*{s^2 - 1}^{-1/2} \powe{-xs}}{s}$}{With $t=s-1$ we find $I(x,\epsilon) = \intx{0}{\epsilon}{\powe{-x} \kla*{t^2+2t}^{-1/2} \powe{-xt} }{t}$.
+\note{$\binom{x}{y} = \frac{\Gamma(x+1)}{\Gamma(y+1) \Gamma(x-y+1)}$ and $(-1)^k \binom{z}{k} = \binom{-z+k-1}{k}$ give $\binom{-1/2}{n} = (-1)^n \binom{n-1/2}{n} = (-1)^n \frac{\Gamma\kla*{n+\frac{1}{2}}}{n! \Gamma\kla*{\frac{1}{2}}}$}
+For $|t|<2$, we have
+\begin{align}
+\kla*{t^2+2t}^{-1/2} = (2t)^{-1/2} \sum_{n\ge 0} \kla*{\frac{-t}{2}}^n \frac{\Gamma\kla*{n+\frac{1}{2}}}{n! \Gamma\kla*{\frac{1}{2}}},
+\end{align}
+so $\alpha = -\frac{1}{2}$, $\beta=1$ and thus
+\begin{align}
+K_0(x) &\koml{x\rightarrow\infty}{\sim} \powe{-x} \sum_{n\ge 0} (-1)^n \frac{\Gamma\kla*{n + \frac{1}{2}}^2}{2^{n+1/2} n! \Gamma\kla*{\frac{1}{2}}} \frac{1}{x^{n+1/2}}.
+\end{align}
+}
+\example{Parabolic Cylinder function}{$D_\nu(x) = \frac{1}{\Gamma(-\nu)} \powe{-x^2/4} \intx{0}{\infty}{ t^{-\nu-1} \powe{-t^2/2} \powe{-xt}}{t}$ for $\Re \nu < 0$}{Here, $\powe{-t^2/2} = \sum_{n\ge 0} (-1)^n \frac{t^{2n}}{2^n n!}$, so $\alpha = -\nu-1$, $\beta=2$ and Watson's Lemma immediately gives
+\begin{align}
+D_\nu(x) &\sim \frac{1}{\Gamma(-\nu)} \powe{-x^2/4} \sum_{n\ge 0} (-1)^n \frac{\Gamma\kla*{2n-\nu}}{2^n n!} \frac{1}{x^{2n-\nu}}
+\end{align}
+}
+\subsection{Beyond Watson's Lemma}
+Watson's Lemma only applies to the special case $\phi(t) = -t$.
+\definition{Indirect Watson's Lemma}{Let $s=-\phi(t)$ to get $I(x) = \intx{-\phi(a)}{-\phi(b)}{F(s) \powe{-xs}}{s}$ with $F(s) = \frac{-f(t)}{\phi'(t)}$ (and then apply Watson again, hoping that the conditions are met by the new function)
+}
+\example{Trigonometric Gauss integral}{$I(x) = \intx{0}{\pi/2}{\powe{-x\sin(t)^2}}{t}$ as $x\rightarrow\infty$}{$\phi(t) = \sin(t)^2$ gives $t=\arcsin\kla*{\sqrt{s}}$ and
+\begin{align}
+I(x) &= \intx{0}{1}{\powe{-xs} \frac{1}{2\sqrt{s}\sqrt{1-s}}}{s}
+\end{align}
+yields $\alpha = -\frac{1}{2}$, $\beta = 1$ and $a_n = \frac{\Gamma\kla*{n+\frac{1}{2}}}{n!\Gamma\kla*{\frac{1}{2}}}$, resulting in
+\begin{align}
+I(x) &\koml{x\rightarrow\infty}{\sim} \frac{1}{2} \sum_{n\ge 0} \frac{\Gamma\kla*{n+\frac{1}{2}}^2}{n! \Gamma\kla*{\frac{1}{2}}} \frac{1}{x^{n+1/2}}.
+\end{align}
+}
+\definition{Direct asymptotic behavior of $I(x)$}{Replace $I(x)$ by $I(x,\epsilon)$ as usual and replace $\phi(t)$ by the first few terms in its Taylor series.
+\begin{enumerate}
+\item if $c$ is an endpoint and $\phi'(c)\neq 0$, then $\phi(t) \sim \phi(c) + (t-c)\phi'(c)$
+\begin{itemize}
+\item if $c=a$, then $\phi'(a) < 0$ and $I(x,\epsilon) \sim \intx{a}{a+\epsilon}{f(a) \powe{x\phi(a)} \powe{x(t-a) \phi'(a)}}{t} \sim f(a) \powe{x\phi(a)} \intx{a}{\infty}{\powe{x(t-a)\phi'(a)}}{t}$ and $I(x) \sim -\frac{f(a)}{x\phi'(a)} \powe{x\phi(a)}$
+\item if $c=b$, then $\phi'(b)>0$ and $I(x) \sim \frac{f(b)}{x\phi'(b)} \powe{x\phi(b)}$
+\end{itemize}
+\item if $a<c<b$ and $\phi'(c)=0$ but $\phi''(c)\neq 0$, then $\phi(t) \sim \phi(c) + \frac{1}{2} (t-c)^2 \phi''(c)$
+\begin{itemize}
+\item we must have $\phi''(c) < 0$ for convergence
+\item it follows that \begin{align}
+I(x,\epsilon) &\sim \intx{c-\epsilon}{c+\epsilon}{f(c) \powe{x\phi(c)} \powe{\frac{1}{2}(t-c)^2 \phi''(c)}}{t} \sim f(c) \powe{x\phi(c)} \sqrt{\frac{2\pi}{x|\phi''(c)|}}
+\end{align}
+\note{If this happens at $t=a$ or $t=b$ (i.e. $c$ is at the boundary), then only half of the peak contributes and we need a factor of $\frac{1}{2}$ to correct this}
+\end{itemize}
+\item in general, if $\phi^{(p)}(c) \neq 0$ is the first non-vanishing term, then $\phi(t) \sim \phi(c) + \frac{1}{p!} (t-c)^p \phi^{(p)}(c)$
+\begin{itemize}
+\item if $a<c<b$, then $p$ must be even and $\phi^{(p)}(c) < 0$
+\item it follows that \begin{align}
+I(x,\epsilon) &\sim f(c) \powe{x\phi(c)} \intr{\powe{x (t-c)^p \frac{1}{p!} \phi^{(p)}(c)}}{t},
+\end{align}
+which gives $I(x) \sim f(c) \powe{x\phi(c)} \frac{2}{p} \Gamma\kla*{\frac{1}{p}} \kla*{\frac{p!}{x\abs*{\phi^{(p)}(c)}}}^{1/p}$ as $x\rightarrow\infty$
+\end{itemize}
+\end{enumerate}
+}
+\example{Several examples}{}{\begin{enumerate}
+\item $\intx{0}{\pi/2}{\powe{-x\tan(t)}}{t} \sim -\frac{f(0)}{x\phi'(0)} \powe{x\phi(0)} = \frac{1}{x}$ because $\phi(t) = -\tan(t)$ gives $c=0$ and $\phi'(0)=-1 \neq 0$
+\item $\intx{0}{\infty}{\powe{-x\sinh(t)^2}}{t}$: $c=0$ but $\phi'(0)=0$ and $\phi''(0) = 2$, so $I(x)\sim \frac{1}{2}\sqrt{\frac{\pi}{x}}$
+\item $\intx{-1}{1}{\powe{-x\sin(t)^4}}{t}$ has $c=0$, $p=4$, $\phi^{(p)}(c) = -4!$, so $I(x) \sim \frac{1}{2} \Gamma\kla*{\frac{1}{4}} \frac{1}{x^{1/4}}$
+\item $\intx{-\pi/2}{\pi/2}{(t+2) \powe{-x\cos(t)}}{t}$ has $c=\pm \frac{\pi}{2}$ and $\phi'(c) = \pm 1$, giving \begin{align}
+I(x)&\sim \frac{f(b) \powe{x\phi(b)}}{x\phi'(b)} - \frac{f(a)}{x\phi'(a)} \powe{x\phi(a)} = \frac{\frac{\pi}{2} + 2}{x} + \frac{-\frac{\pi}{2} + 2}{x} = \frac{4}{x}
+\end{align}
+\item $\intx{0}{1}{\sin(t) \powe{-x\sinh(t)^4}}{t}$ has $c=0$ with $f(c)=0$, but Laplace is fine because $f$ vanishes \emph{algebraically}!
+\note{Note that $\frac{\Gamma(a)}{x^a} = \intx{0}{\infty}{t^{a-1} \powe{-xt}}{t}$}
+\begin{align}
+I(x) &\sim \intx{0}{\epsilon}{t \powe{-xt^4}}{t} \sim \frac{\Gamma\kla*{\frac{1}{2}}}{4x^{1/2}}
+\end{align}
+\item $\intx{0}{\infty}{\sinh(t)^{-1/2} \powe{-x\cosh(t)}}{t}$ has $c=0$ with algebraically diverging $f(t)$, so \begin{align}
+I(x) &\sim \intx{0}{\epsilon}{t^{-1/2} \powe{-x\kla*{1 + \frac{1}{2}t^2}}}{t} = \powe{-x} \frac{\Gamma\kla*{\frac{1}{4}}}{\kla*{8x}^{1/4}}
+\end{align}
+\end{enumerate}
+}
+\example{Modified Bessel function of second kind}{$K_\nu(x) = \intx{0}{\infty}{\powe{-x\cosh(t)} \cosh(\nu t)}{t}$ for $x>0$}{$c=0$ with $\phi''(0)=-1$, so $K_\nu(x) \sim \frac{1}{2} f(0) \powe{x\phi(0)} \sqrt{\frac{2\pi}{-x\phi''(0)}} = \sqrt{\frac{\pi}{2x}}\powe{-x}$
+}
+\example{Modified Bessel function of first kind}{$I_\nu(x) = \frac{1}{\pi} \intx{0}{\pi}{\powe{x\cos(t)} \cos(\nu t)}{t}$ as $x\rightarrow\infty$}{\begin{enumerate}
+\item direct local analysis of $x^2 y''+xy'-\kla*{x^2+\nu^2}y=0$ with $y=\powe{S}$
+\begin{itemize}
+\item $S'' + \kla*{S'}^2 + \frac{1}{x} S' - \kla*{1 + \frac{\nu^2}{x^2}} = 0$
+\item \gls{db} gives $\kla*{S'}^2 \sim 1$, so $S(x) = x+C(x)$
+\item $C'' + \kla*{1 + C'}^2 + \frac{1+C}{x} - \kla*{1 + \frac{\nu^2}{x^2}} = 0$
+\item \gls{db} gives $C' \sim -\frac{1}{2x}$, so $C(x) \sim -\frac{1}{2} \log(x)$
+\item $y(x) \sim C_1 x^{-1/2} \powe{x}$ and we cannot determine $C_1$
+\end{itemize}
+\item integral representation has $c=0$ and $\phi''(0)=-1$, so $I_\nu(x) \sim \frac{1}{2} \frac{\powe{x}}{\pi} \sqrt{\frac{2\pi}{x}} = \frac{1}{\sqrt{2\pi x}} \powe{x}$
+\note{The leading order does not depend on $\nu$, but the higher orders do}
+\end{enumerate}
+}
+%TODO lecture 3, page 8, Laplace method higher order terms
 
 \end{document}
