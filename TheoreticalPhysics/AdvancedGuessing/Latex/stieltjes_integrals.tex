@@ -1,0 +1,277 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+
+\newcommand*{\Title}{Stieltjes Integrals and and Asymptotics}
+\newcommand*{\Author}{Joachim Schwardt}
+
+\input{preamble_shared}
+\input{preamble}
+\input{glossary.tex}
+
+%\titlehead{titlehead}
+\subject{Advanced Guessing for Physicists}
+\title{\Title}
+\author{\Author}
+\date{\today}
+
+\usepackage[most]{tcolorbox}
+
+\definecolor{colorbackgrounddefinition}{RGB}{220,220,248}
+\definecolor{colorbackgroundnote}{RGB}{220,248,220}
+\definecolor{colorbackgroundexample}{RGB}{248,220,220}
+\definecolor{colordefinition}{RGB}{0,0,200}
+\definecolor{colornote}{RGB}{0,200,0}
+\definecolor{colorexample}{RGB}{140,0,100}
+
+\newcommand{\definition}[2]{\begin{tcolorbox}[colback=colorbackgrounddefinition,colframe=colordefinition, breakable,enhanced,title=\textbf{#1}.]#2\end{tcolorbox}}
+\newcommand{\note}[1]{\begin{tcolorbox}[colback=colorbackgroundnote,colframe=colornote, breakable,enhanced]#1\end{tcolorbox}}
+\newcommand{\example}[3]{\begin{tcolorbox}[colback=colorbackgroundexample,colframe=colorexample, breakable,enhanced,title={\textbf{#1}: #2.}]#3\end{tcolorbox}}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Stieltjes Integral}
+Consider a Stieltjes integral $y(x) = \intx{0}{\infty}{\frac{\powe{-t}}{1+xt}}{t}$ for $x>0$.
+We have
+\begin{align}
+y' &= \intx{0}{\infty}{\frac{-t\powe{-t}}{\kla*{1+xt}^2}}{t} = -\frac{1}{x}\intx{0}{\infty}{\frac{1+xt-1}{\kla*{1+xt}^2}\powe{-t}}{t} = -\frac{y}{x} + \frac{1}{x}\intx{0}{\infty}{\frac{\powe{-t}}{\kla*{1+xt}^2}}{t},\\
+&= -\frac{y}{x} + \frac{-1}{x^2} \frac{\powe{-t}}{1+xt} \bigg\vert_0^\infty - \frac{1}{x^2} \intx{0}{\infty}{\frac{\powe{-t}}{1+xt}}{t} = -\frac{y}{x} - \frac{1+y}{x^2}\\
+y'' &= -\frac{y'}{x} + \frac{y}{x^2} - \frac{y'}{x^2} + 2\frac{1+y}{x^3} = \frac{y}{x^2} + 2\frac{1+y}{x^3} + \kla*{\frac{1}{x} + \frac{1}{x^2}} \kla*{\frac{y}{x} + \frac{1+y}{x^2}}\\
+&= \frac{2y}{x^2} + \frac{3}{x^3} + \frac{1}{x^4} + \frac{4y}{x^3} + \frac{y}{x^4}.
+\end{align}
+Thus, $x^2y'' + (1+3x)y' = 2y+\frac{3}{x} + \frac{1}{x^2} + \frac{4}{x}y + \frac{y}{x^2} - \frac{y}{x} - 3y - \frac{1}{x^2} - \frac{3}{x} - \frac{y}{x^2} - \frac{3y}{x} = -y$ is an ODE satisfied by $y$.
+
+Let $y(x) \sim \sum_{n\ge 0} n! (-x)^n$ as $x\rightarrow 0^+$.
+Assume that $y(x) = x^\alpha \sum_{n\ge 0} a_n x^n$ with $a_0=1$.
+To simplify the calculation, let us first define $y(x) = x^\alpha q(x)$.
+This yields
+\begin{align}
+y' &= \alpha x^{\alpha-1} q + x^\alpha q',\\
+y'' &= \alpha (\alpha-1) x^{\alpha-2} q + 2\alpha x^{\alpha-1} q' + x^\alpha q'',
+\end{align}
+and inserting into the ODE leads to
+\begin{align}
+0 &= y + (1+3x)y'+x^2y''\\
+&= x^\alpha q + (1+3x) \alpha x^{\alpha-1} q + (1+3x) x^\alpha q' + \alpha (\alpha-1)x^\alpha q + 2\alpha x^{\alpha+1} q' + x^{\alpha+2} q''\\
+&= \klb*{\kla*{1+\alpha}^2 x^\alpha + \alpha x^{\alpha-1}}q + \klb*{x^\alpha + (3+2\alpha) x^{\alpha+1}}q' + x^{\alpha+2} q'' \\
+&= \sum_{n\ge 0} a_n \klc*{\klb*{\kla*{1+\alpha}^2 x^\alpha + \alpha x^{\alpha-1}} x^n + \klb*{x^\alpha + (3+2\alpha) x^{\alpha+1}}nx^{n-1} + x^{\alpha+2} n(n-1)x^{n-2}}\\
+&= \sum_{n\ge 0} \klc*{ a_n\klb*{\kla*{1+\alpha}^2 + (3+2\alpha)n + n(n-1)} + a_{n+1} \klb*{\alpha + (n+1)} }x^{n+\alpha}.
+\end{align}
+Simplifying gives $\frac{a_{n+1}}{a_n} = -\frac{(1+\alpha)^2 + (2 + 2\alpha  + n)n}{\alpha + n + 1}$.
+Also note that the coefficient of $x^{\alpha-1}$ is $a_0\alpha$, so $\alpha=0$.
+This reduces the recursion to $\frac{a_{n+1}}{a_n} = - \frac{1 + 2n + n^2}{n+1} = -(n+1)$.
+Resolving it gives $a_{n+1} = -(n+1)a_n = (-1)^2 (n+1)na_{n-1} = \dots = (-1)^{n+1} (n+1)! a_0$.
+\definition{Radius of Convergence (RoC)}{
+The radius of convergence of a series can be computed as
+\begin{align}
+r &= \frac{1}{\limsup_{n\rightarrow \infty} \sqrt[n]{|a_n|}}
+\end{align}
+or
+\begin{align}
+r &= \limsup_{n\rightarrow \infty} \abs*{\frac{a_n}{a_{n+1}}}.
+\end{align}
+}
+The radius of convergence is zero, because $\abs*{\frac{a_n}{a_{n+1}}} = \frac{n!}{(n+1)!} = \frac{1}{n+1}\rightarrow 0$ as $n\rightarrow\infty$.
+The root formula also works, because $\sqrt[n]{n!} \sim \klb*{n^n \powe{-n}}^{1/n} = \frac{n}{\e} \rightarrow\infty$.
+
+Naive Mathematics: Using the geometric series, we can rewrite the integral as
+\begin{align}
+y(x) &= \intx{0}{\infty}{ \powe{-t} \sum_{n\ge 0} (-1)^n x^n t^n}{t} \koml{\text{RoC violated!}}{=} \sum_{n\ge 0} (-1)^n x^n \intx{0}{\infty}{\powe{-t} t^n}{t} = \sum_{n\ge 0} (-1)^n n! x^n.
+\end{align}
+The resulting series matches our asymptotic analysis as $x\rightarrow 0^+$ from above.
+This makes sense, insofar as replacing the upper limit by $\frac{\epsilon}{x}$ with $\epsilon < 1$ then allows us to interchange summation and integration without violating the RoC.
+As $x$ gets small, the limit tends to infinity, so intuitively our series expansion should get better and better for fixed $n$.
+
+\section{Asymptotic Expansion of Integrals}
+Find the asymptotic expansion of a given integral up to at least second order (or all orders, if possible).
+\definition{Watson's Lemma}{Consider $I(x) = \intx{0}{b}{f(t) \powe{-xt}}{t}$ for $b>0$ and $x\rightarrow \infty$.
+If the function satisfies
+\begin{itemize}
+\item $f$ is continuous
+\item $f(t) \sim t^\alpha \sum_{n\ge 0} a_n t^{\beta n}$ as $t\rightarrow 0^+$ with $\alpha > -1$ and $\beta > 0$,
+\end{itemize}
+\note{If $b=\infty$ we also need that $f(t)\ll \powe{ct}$ for some $c>0$ to ensure convergence}
+then the \emph{full asymptotic expansion} of any integral of this type is given by
+\begin{align}
+I(x) &\koml{x\rightarrow\infty}{\sim} \sum_{n\ge 0} \frac{a_n \Gamma\kla*{\alpha + \beta n+ 1}}{x^{\alpha + \beta n + 1}}.
+\end{align}
+To show this, choose $\epsilon$ such that
+\begin{align}
+\abs*{f(t) - t^\alpha \sum_{n=0}^N a_n t^{\beta n}} &\le K t^{\alpha + \beta (N+1)} \quad \text{for} \quad 0\le t \le \epsilon.
+\end{align}
+Then the error introduced by replacing $f$ by this finite series is bounded by
+\begin{align}
+K\intx{0}{\epsilon}{t^{\alpha + \beta (N+1)} \powe{-xt}}{t} \le K \frac{\Gamma\kla*{\alpha + \beta(N+1)+1}}{x^{\alpha + \beta(N+1)+1}},
+\end{align}
+and $\abs*{I(x) - \sum_{n=0}^N a_n \frac{\Gamma\kla*{\alpha + \beta n + 1}}{x^{\alpha + \beta n + 1}}} \ll \frac{1}{x^{\alpha + \beta N + 1}}$ for all $N$.
+}
+\definition{Direct asymptotic behavior of $I(x)$}{Replace $I(x)$ by $I(x,\epsilon)$ as usual and replace $\phi(t)$ by the first few terms in its Taylor series.
+\begin{enumerate}
+\item if $c$ is an endpoint and $\phi'(c)\neq 0$, then $\phi(t) \sim \phi(c) + (t-c)\phi'(c)$
+\begin{itemize}
+\item if $c=a$, then $\phi'(a) < 0$ and $I(x,\epsilon) \sim \intx{a}{a+\epsilon}{f(a) \powe{x\phi(a)} \powe{x(t-a) \phi'(a)}}{t} \sim f(a) \powe{x\phi(a)} \intx{a}{\infty}{\powe{x(t-a)\phi'(a)}}{t}$ and $I(x) \sim -\frac{f(a)}{x\phi'(a)} \powe{x\phi(a)}$
+\item if $c=b$, then $\phi'(b)>0$ and $I(x) \sim \frac{f(b)}{x\phi'(b)} \powe{x\phi(b)}$
+\end{itemize}
+\item if $a<c<b$ and $\phi'(c)=0$ but $\phi''(c)\neq 0$, then $\phi(t) \sim \phi(c) + \frac{1}{2} (t-c)^2 \phi''(c)$
+\begin{itemize}
+\item we must have $\phi''(c) < 0$ for convergence
+\item it follows that \begin{align}
+I(x,\epsilon) &\sim \intx{c-\epsilon}{c+\epsilon}{f(c) \powe{x\phi(c)} \powe{\frac{1}{2}(t-c)^2 \phi''(c)}}{t} \sim f(c) \powe{x\phi(c)} \sqrt{\frac{2\pi}{x|\phi''(c)|}}
+\end{align}
+\note{If this happens at $t=a$ or $t=b$ (i.e. $c$ is at the boundary), then only half of the peak contributes and we need a factor of $\frac{1}{2}$ to correct this}
+\end{itemize}
+\item in general, if $\phi^{(p)}(c) \neq 0$ is the first non-vanishing term, then $\phi(t) \sim \phi(c) + \frac{1}{p!} (t-c)^p \phi^{(p)}(c)$
+\begin{itemize}
+\item if $a<c<b$, then $p$ must be even and $\phi^{(p)}(c) < 0$
+\item it follows that \begin{align}
+I(x,\epsilon) &\sim f(c) \powe{x\phi(c)} \intr{\powe{x (t-c)^p \frac{1}{p!} \phi^{(p)}(c)}}{t},
+\end{align}
+which gives $I(x) \sim f(c) \powe{x\phi(c)} \frac{2}{p} \Gamma\kla*{\frac{1}{p}} \kla*{\frac{p!}{x\abs*{\phi^{(p)}(c)}}}^{1/p}$ as $x\rightarrow\infty$
+\end{itemize}
+\end{enumerate}
+}
+\subsection{Exponential Integral}
+The exponential integral is $E_1(x) = \intx{x}{\infty}{\frac{\powe{-t}}{t}}{t} = \intx{1}{\infty}{\frac{1}{t} \powe{-xt}}{t}$, and its derivative is
+%With $E_1(x) = x^\alpha \sum_{n\ge 0} a_n x^n$, we obtain
+%\begin{align}
+%0 &= \frac{1}{x} \powe{-x} + \alpha x^{\alpha-1} \sum_{n\ge 0} a_nx^n + x^\alpha \sum_{n\ge 0} a_n nx^{n-1}.
+%\end{align}
+%The coefficient for $\frac{1}{x}$ is $1$
+%\begin{align}
+%E_1'(x) &= -\intx{1}{\infty}{\powe{-xt}}{t} = -\frac{1}{x} \powe{-x} = \sum_{n\ge 0} \frac{(-1)^{n+1}}{n!} x^{n-1}.
+%\end{align}
+%Integrating yields the series expansion $E_1(x) = c_0 + \sum_{n\ge 0} \frac{(-1)^{n+1}}{n!} \frac{x^n}{n}$.
+%
+%Alternative:
+%\begin{align}
+%E_1(x) &= \intx{x}{\infty}{\frac{-1}{t}}{\powe{-t}} = \frac{-1}{t} \powe{-t} \bigg\vert_x^\infty - \intx{x}{\infty}{\powe{-t} \frac{1}{t^2}}{t}
+%\end{align}
+\begin{align}
+E_1(x) &= \intx{x}{\infty}{\powe{-t}}{(\log t)} = \powe{-t}\log (t) \bigg\vert_x^\infty + \intx{x}{\infty}{\powe{-t} \log(t)}{t} \\
+&= -\powe{-x}\log(x) + \intx{0}{\infty}{\powe{-t} \log(t)}{t} - \intx{0}{x}{\powe{-t}\log(t)}{t}.
+\end{align}
+The integral over the full range is rather famous; but it is a bit beyond the scope of this problem to show that it is given by $-\gamma = \lim_{n\rightarrow\infty} \kla*{\log(n) - \sum_{k=1}^n \frac{1}{k}}$. %by using $\powe{-t} = \lim_{n\rightarrow \infty} \kla*{1 - \frac{t}{n}}^n$ we find
+%\begin{align}
+%\intx{0}{\infty}{\powe{-t} \log(t)}{t} &= \lim_{n\rightarrow \infty} \intx{0}{n}{\kla*{1 - \frac{t}{n}}^n \log(t)}{t} = \lim_{n\rightarrow\infty} \intx{0}{1}{ nu^n \log(n-nu) }{u} = \lim_{n\rightarrow\infty} \log(n) - \intx{0}{1}{ nu^n \log(1-u) }{u}
+%\end{align} %https://math.stackexchange.com/questions/300531/integral-representation-of-eulers-constant
+Taking that as a given, we can now transform the remaining integral into
+\begin{align}
+x\intx{0}{1}{\powe{-xt}\log(xt)}{t} &= x\log(x) \intx{0}{1}{\powe{-xt}}{t} + x\intx{0}{1}{\powe{-xt} \log(t)}{t}\\
+&= x\log(x) \frac{\powe{-x}-1}{-x} + x \sum_{n\ge 0} \frac{(-x)^n}{n!} \intx{0}{1}{t^n \log(t)}{t}.
+\end{align}
+\note{$\intx{0}{\infty}{t^{\alpha-1} \powe{-xt}}{t} = \frac{\Gamma(\alpha)}{x^\alpha}$ for $x>0$}
+\note{$\intx{0}{1}{t^n \log(t)}{t} = \intx{0}{\infty}{\powe{-(n+1)u} u}{u} = \frac{n!}{(n+1)^2}$}
+Combining everything, we find
+\begin{align}
+E_1(x) &= -\gamma - \log(x) + \sum_{n\ge 0} (-1)^n \frac{1}{(n+1)^2} x^{n+1}.
+\end{align}
+(there was most likely a much cleaner way to get here.. assuming the final result is even correct. Since $E_1' = -\frac{1}{x}\powe{-x} \sim \frac{-1}{x}$, the $-\log(x)$ asymptotic part was kind of trivial. Then again, as far as I know the Euler-Mascheroni integral is not that simple; best I found is a reduction to digamma and/or residue theorem)
+\subsection{Another exponential integral}
+Consider $I(x) = \intx{1}{x}{\frac{\powe{t}}{t}}{t}$ as $x\rightarrow\infty$.
+Series expansion of $\powe{t}$ immediately yields
+\begin{align}
+I(x) &= \intx{1}{x}{\frac{1}{t} \sum_{n\ge 0} \frac{1}{n!} t^n}{t} = \sum_{n\ge 0} \frac{1}{n!} \intx{1}{x}{t^{n-1}}{t} = \log(x) + \sum_{n\ge 1} \frac{1}{n!} \frac{x^n-1}{n}\\
+&= \log(x) - \sum_{n\ge 1} \frac{1}{n!} \frac{1}{n} + \powe{x}-1.
+\end{align}
+(did not really use techniques from the lecture here, which makes me think I missed something..)
+\subsection{Logarithmic integral}
+Consider $I(x) = \intx{0}{\infty}{\powe{-t} \log(1+xt)}{t}$ as $x\rightarrow 0$.
+%This is just the integral from the first problem again, since $I(x) = \intx{ }{ }{\intx{0}{\infty}{\frac{1}{1+xt} \powe{-t} }{t}}{x}$.
+Integration by parts gives
+\begin{align}
+I(x) &= -\powe{-t}\log(1+xt)\bigg\vert_0^\infty + \intx{0}{\infty}{\frac{x}{1+xt} \powe{-t}}{t} = x \sum_{n\ge 0} (-1)^n n! x^n.
+\end{align}
+Notable, differentiating this does \emph{not} reproduce the asymptotic series from the first problem (which seems consistent with the general warning about derivatives of asymptotic series).
+\subsection{Watson, at last}
+Consider $I(x) = \intx{0}{\pi}{\powe{x\sin(t)}}{t}$ as $x\rightarrow\infty$.
+Laplace's method is easy to apply here; $\phi(t)=\sin(t)$ peaks at $c=\frac{\pi}{2}$ and is locally quadratic with $\phi''(c) = -1$.
+Thus, the leading order is given by 
+\begin{align}
+I(x) &\sim \sqrt{\frac{2\pi}{x}} \powe{x}.
+\end{align}
+Before applying Watson's Lemma, we need to transform $u=1-\sin(t)$, giving
+\begin{align}
+I(x) &= 2 \intx{0}{1}{\powe{x(1-u)} \frac{1}{\sqrt{1 - (1-u)^2}} }{u} = \sqrt{2} \powe{x} \intx{0}{1}{\powe{-xt} t^{-1/2} \kla*{1 - \frac{1}{2}t}^{-1/2}}{t}.
+\end{align}
+\note{$\kla*{1 + x}^\alpha = 1 + \alpha x + \frac{1}{2!} \alpha (\alpha-1) x^2 + \dots = \sum_{n\ge 0} \frac{\alpha (\alpha-1) \dots (\alpha - n + 1)}{n!} x^n = \sum_{n\ge 0} \binom{\alpha}{n} x^n $}
+\definition{Euler's Reflection Identity}{$\Gamma(z) \Gamma(1-z) = \frac{\pi}{\sin(\pi z)}$ (proof via product representation of Gamma is pretty straightforward)}
+We have $f(t) \sim \sqrt{t} \sum_{n\ge 0} a_n (-t/2)^n$ with $a_n = \binom{-1/2}{n}$, so
+\begin{align}
+I(x) &\sim \sqrt{2}\powe{x} \sum_{n\ge 0} \sqrt{2} \frac{(-1)^n}{2^n} \binom{-1/2}{n} \frac{\Gamma\kla*{\frac{1}{2} + n}}{x^{1/2 + n}} = \sqrt{2}\powe{x} \sum_{n\ge 0} \frac{(-1)^n}{2^n} \frac{\Gamma\kla*{\frac{1}{2}}}{n! \Gamma\kla*{\frac{1}{2}-n}} \frac{\Gamma\kla*{\frac{1}{2} + n}}{x^{1/2 + n}}\\
+&= \powe{x} \sqrt{\frac{2\pi}{x}} \sum_{n\ge 0} \frac{(-1)^n}{2^n n!} \frac{1}{x^n} \frac{\Gamma\kla*{\frac{1}{2} + n}}{\Gamma\kla*{\frac{1}{2} - n}} = \powe{x} \sqrt{\frac{2\pi}{x}} \sum_{n\ge 0} \frac{\Gamma\kla*{\frac{1}{2} + n}^2}{2^n \pi n!} \frac{1}{x^n}.
+\end{align}
+As expected, the RoC of this (asymtptotic) expansion is zero because $\abs*{\frac{\Gamma(\frac{1}{2}+n)^2}{\Gamma(\frac{3}{2}+n)^2} \frac{2^{n+1}(n+1)!}{2^n n!}} = \frac{2(n+1)}{(n+1/2)^2} \rightarrow 0$ as $n\rightarrow \infty$.
+\section{Integral Representation of Bessel Functions}
+One of the integral representation is $J_n(x) = \frac{1}{\pi} \intx{0}{\pi}{\cos\kla*{x\sin (t) - nt}}{t}$.
+TODO stationary phase lecture
+\section{Local Analysis vs. Integral Representation}
+(NOTE: I assume there is a typo on the exercise sheet, because the integral representation in the second task only works for $xy'''+2y=0$, not $xy''+2y=0$)
+
+Consider the ODE $xy'''+2y=0$ with $y(0)=1$ and $y(+\infty)=0$.
+We can use direct local analysis to find the leading order.
+Defining $y=\powe{S}$ gives $y'=S'\powe{S}$, $y''=\kla*{S'' + \kla*{S'}^2}\powe{S}$ and $y'''=\kla*{S''' + 3S''S' + \kla*{S'}^3}\powe{S}$.
+Inserting this into the ODE, we find $0 = \frac{2}{x} + S''' + 3S''S' + \kla*{S'}^3$.
+Dominant Balance yields $S' \sim \omega^k 2^{1/3} x^{-1/3}$ with $\omega=\powe{\i\frac{2\pi}{3}}$ and $k=0,1,2$, because $S''' \sim x^{-7/3} \ll \frac{1}{x}$ and $S''S' \sim x^{-5/3} \ll \frac{1}{x}$ as $x\rightarrow\infty$.
+Thus, $y(x) \sim \powe{3\omega
+^k (x/2)^{2/3}}$; we cannot determine the constant, because the initial condition is at $x=0$.
+
+Note that $y(x) = \intx{0}{\infty}{\powe{-t - x/\sqrt{t}}}{t}$ solves the ODE, because
+\begin{align}
+xy''' &= x\intx{0}{\infty}{\frac{-1}{t^{3/2}} \powe{-t - x/\sqrt{t}}}{t} = -2\intx{0}{\infty}{\powe{-t} }{\kla*{\powe{- x/\sqrt{t}}}} = -2\powe{-t} \powe{-x/\sqrt{t}} \bigg\vert_0^\infty - 2y = -2y.
+\end{align}
+We can use Laplace's method to determine the unknown constant (and leading order, too).
+However, it is a bit tricky: the naive peak is at the boundary, and the integrand is not defined there.
+In order to avoid the problems, we have to unify the exponent by a scaling transform, $t=x^\alpha u$.
+This gives $y(x) = x^\alpha \intx{0}{\infty}{\powe{-x^\alpha u - x^{1-\alpha/2} u^{-1/2}}}{u}$, where we now see that $\alpha = \frac{2}{3}$ simplifies the exponent.
+The remaining integral $\intx{0}{\infty}{\powe{x^{2/3} \phi(u)}}{u}$ with $\phi(u) = -\kla*{u + u^{-1/2}}$ has its peak at $0=-1+\frac{1}{2}u^{-3/2}$, i.e. $c=2^{-2/3}$.
+We have $\phi''(c) = -\frac{3}{4} c^{-5/2} = -\frac{3}{4} 2^{5/3}$, and thus
+\begin{align}
+y(x) &\sim x^{2/3} \powe{-x^{2/3} \kla*{c + c^{-1/2}}} \sqrt{\frac{2\pi}{x |\phi''(c)|}} = \sqrt{\frac{\pi}{3}} 2^{2/3} x^{1/3} \powe{-x^{2/3} \kla*{2^{-2/3} + 2^{1/3}}} = \sqrt{\frac{\pi}{3}} 2^{2/3} x^{1/3} \powe{-3(x/2)^{2/3}}.
+\end{align}
+\section{Asymptotics of Integrals}
+\subsection{Cosine cubic integral}
+Consider $I(x) = \intx{0}{1}{\cos\kla*{xt^3 + t}}{t}$ as $x\rightarrow\infty$.
+Substitution of $u=xt^3$ gives
+\begin{align}
+I(x) &= \intx{0}{x}{\cos\kla*{u + u^{1/3} x^{-1/3}} \frac{1}{3} u^{-2/3} x^{-1/3}}{.u}
+\end{align}
+Expanding around $u$ gives $\powe{\i(u+\epsilon)} = \powe{\i u} \sum_{n\ge 0} \frac{\i^n}{n!}\epsilon^n$, so
+\begin{align}
+I(x) &= \frac{1}{3} x^{-1/3} \Re \intx{0}{x}{u^{-2/3} \powe{\i u} \sum_{n\ge 0} \frac{\i^n}{n!} u^{n/3} x^{-n/3} }{u}\\
+&= \frac{1}{3} \Re \sum_{n\ge 0} \frac{\i^n}{n!} x^{-(n+1)/3} \intx{0}{x}{ \powe{\i u} u^{(n-2)/3}}{u} \sim \frac{1}{3} x^{-1/3} \intx{0}{\infty}{\cos(u) u^{-2/3}}{u}.
+\end{align}
+(Numerically, this is ``fine'', but deteriorates for large $x$. Not sure how to approach such a problem)
+\subsection{Cubic phase oscillation}
+Consider $I(x) = \intx{0}{1}{\powe{\i xt^3}}{t}$ as $x\rightarrow\infty$.
+We will use the residue theorem with a contour $\Gamma$ consisting of three components
+\begin{itemize}
+\item $z(s)=s$ with $s\in\kla*{0,1}$
+\item $z(s)=\powe{\i s}$ with $s\in\kla*{0,\frac{\pi}{6}}$
+\item $z(s)=\powe{\i \frac{\pi}{6}}s$ with $s\in\kla*{0,1}$.
+\end{itemize}
+Since the function does not have poles within $\Gamma$, we have $\oint_\Gamma f(z)\,\d z=0$.
+The first part is just the original integral while the third gives
+\begin{align}
+I_3 &= \intx{1}{0}{ \powe{\i x \kla*{\powe{\i\frac{\pi}{6}}s}^3} \powe{\i\frac{\pi}{6}} }{s} = -\powe{\i\frac{\pi}{6}}\intx{0}{1}{\powe{-xs^3}}{s} = -\powe{\i\frac{\pi}{6}} \intx{0}{x}{\powe{-t} \frac{1}{3} x^{-1/3} t^{-2/3} }{t}\\
+&= -\powe{\i\frac{\pi}{6}} \frac{1}{3} x^{-1/3} \sum_{n\ge 0} \frac{(-1)^n}{n!} \intx{0}{x}{ t^{n-2/3} }{t} = -\powe{\i\frac{\pi}{6}} \frac{1}{3} x^{-1/3} \sum_{n\ge 0} \frac{(-1)^n}{n!} \frac{x^{n+1/3}}{n+\frac{1}{3}}.
+\end{align}
+The integral over the arc gives $I_2 = \intx{0}{\frac{\pi}{6}}{\powe{\i x\kla*{\powe{\i s}}^3} \i\powe{\i s}}{s}$.
+Its magnitude can be bounded by
+\begin{align}
+|I_2| &\le \intx{0}{\frac{\pi}{6}}{ \powe{-x\sin(3s)} }{s} \le \intx{0}{\frac{\pi}{6}}{\powe{-x \frac{6s}{\pi}}}{s} = \frac{\pi}{6x} \kla*{\powe{-x} - 1}.
+\end{align}
+Unfortunately this only gives $I_1 = -I_3 + \mathcal{O}\kla*{\frac{1}{x}}$, which is not the full expansion...
+
+Alternative:
+$I(x) = \frac{1}{3} x^{-1/3} J(x)$ with $J(x) = \intx{0}{x}{\powe{\i u} u^{-2/3}}{u}$.
+
+TODO stationary phase approx
+
+
+\end{document}
