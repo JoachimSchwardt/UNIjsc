@@ -727,6 +727,112 @@ I(x) &\sim \intx{0}{\epsilon}{t^{-1/2} \powe{-x\kla*{1 + \frac{1}{2}t^2}}}{t} = 
 \note{The leading order does not depend on $\nu$, but the higher orders do}
 \end{enumerate}
 }
-%TODO lecture 3, page 8, Laplace method higher order terms
+\subsection{Laplace's Method: higher-order terms}
+Consider $c\in\kla*{a,b}$, $\phi'(c)=0$ and $\phi''(c)<0$ with $f(c)\neq 0$ (and finite of course).
+Then as $x\rightarrow\infty$,
+\begin{align}
+I(x) &\sim \intx{c-\epsilon}{c+\epsilon}{f(t) \powe{x\phi(t)}}{t}\\
+&\sim \intx{c-\epsilon}{c+\epsilon}{\klb*{f(c) + f'(c)(t-c) + \frac{1}{2} f''(c)(t-c)^2} \powe{x\klb*{\phi(c) + \frac{1}{2} \phi''(c) (t-c)^2 + \dots}}}{t}.
+\end{align}
+Expanding the terms from the exponent beyond second order, we have
+\begin{align}
+\powe{x\klb*{\dots}} &= 1 + x \klb*{\frac{1}{3!} (t-c)^3 \phi'''(c) + \frac{1}{4!} (t-c)^4 \phi^{(4)}(c) + \dots} + \frac{1}{2! 3!^2} x^2 (t-c)^6 \kla*{\phi'''(c)}^2 + \dots
+\end{align}
+and inserting this into the integral with $s=\sqrt{x}(t-c)$ yields (odd powers of $(t-c)$ vanish!)
+\begin{align}
+I(x) &\sim \frac{1}{\sqrt{x}} \powe{x\phi(c)} \intx{c-\epsilon}{c+\epsilon}{\powe{\frac{1}{2} s^2\phi''(c)} \klc*{f(c) + \frac{1}{x} \klb*{\frac{1}{2}s^2 f''(c) + \frac{1}{4!} s^4 f(c) \phi^{(4)}(c) + \frac{1}{3!} s^4 f'(c) \phi'''(c) + \frac{1}{2!3!^2} s^6 f(c) \kla*{\phi'''(c)}^2 + \dots}} }{s}\\
+&\sim \sqrt{\frac{2\pi}{-\phi''(c)x}} \powe{x\phi(c)} \klc*{f(c) + \frac{1}{x}\klb*{\frac{-f''(c)}{2\phi''(c)} + \frac{f(c)\phi^{(4)}(c)}{8\kla*{\phi''(c)}^2} + \frac{f'(c)\phi'''(c)}{2\kla*{\phi''(c)}^2} - \frac{5\kla*{\phi'''(c)}^2 f(c)}{4! \kla*{\phi''(c)}^3} + \dots}}.
+\end{align}
+\note{$\intr{\powe{-s^2/2} s^{2n}}{s} = \sqrt{2\pi} (2n-1)!!$}
+\note{\begin{itemize}
+\item expanding $\powe{\frac{1}{2}(t-c)^2\phi''(c)}$ would make the result depend on $\epsilon$ (need the ``re-summation'' from the full gaussian)
+\item analogously, \emph{not} expanding the higher order terms would give divergent contributions when sending the limits to infinity (if e.g. $\phi^{(4)}(c) > 0$)
+\end{itemize}}
+\example{Exponential trig integral}{$I(x) = \intx{0}{\pi/2}{\powe{-x\sin(t)^2}}{t}$ as $x\rightarrow\infty$}{\begin{align}
+I(x) &\sim \intx{0}{\epsilon}{\powe{-x\kla*{t^2-\frac{1}{3}t^4}}}{t} \sim \intx{0}{\epsilon}{\powe{-xt^2} \kla*{1 + \frac{xt^4}{3}}}{t}\\
+&\sim \intx{0}{\infty}{\powe{-xt^2} \kla*{1 + \frac{xt^4}{3}}}{t} = \frac{1}{2} \sqrt{\frac{\pi}{x}} \kla*{1 + \frac{1}{4x}}
+\end{align}
+}
+\example{Exponential hyperbolic integral}{$I(x) = \intr{\powe{-x\cosh(t)}}{t}$ as $x\rightarrow\infty$}{Peak is at $c=0$ and $u = \sqrt{\cosh(t)-1}$ gives $I(x) = \intr{\powe{-x(1+u^2)} \frac{2u}{u\sqrt{2+u^2}}}{u} = \sqrt{2} \powe{-x} \intr{\powe{-xu^2} \kla*{1 + \frac{1}{2}u^2}^{-1/2}}{u}$.
+Then, Laplace's method gives
+\begin{align}
+I(x) &\sim \sqrt{2}\powe{-x} \intx{-\epsilon}{\epsilon}{\powe{-xu^2} \kla*{1 - \frac{1}{4}u^2 + \frac{3}{32} u^4 + \dots}}{u} \sim \sqrt{2}\powe{-x} \intr{\powe{-xu^2} \kla*{\dots}}{u}\\
+&= \sqrt{2}\powe{-x} \sqrt{\frac{\pi}{x}} \kla*{1 - \frac{1}{8x} + \frac{1}{128x^2} + \dots}
+\end{align}
+}
+\subsection{Movable Maxima}
+We have to consider the indirect application of Laplace's method when
+\begin{enumerate}
+\item $f(t)$ vanishes exponentially fast at $t=c$
+\item the Laplace integral converges while $\phi(c)=\infty$
+\end{enumerate}
+\example{Watson falls short}{$I(x) = \intx{0}{\infty}{\powe{-xt - 1/t}}{t}$ as $x\rightarrow\infty$}{$\phi(t)=-t$ has its peak at $c=0$, but $f(t)=\powe{-1/t}$ vanishes exponentially fast, so Watson's Lemma fails (asymptotic series is just zeros + \gls{tst}).
 
+The maximum of the full function $f(t)\powe{x\phi(t)}$ is given by $0=-x+\frac{1}{t^2}$, i.e. $c=\frac{1}{\sqrt{x}}$ depends on $x$ -- this is movable!
+We can introduce a scale transformation via $s=\frac{t}{\sqrt{x}}$, giving $I(x) = \frac{1}{\sqrt{x}} \intx{0}{\infty}{\powe{-\sqrt{x} \kla*{s + 1/s}}}{s}$.
+Now $c=1$ is not problematic for $\tilde{f}\equiv 1$, so
+\begin{align}
+I(x) &\sim \frac{1}{\sqrt{x}} \intx{1-\epsilon}{1+\epsilon}{\powe{-\sqrt{x}\kla*{2 + (s-1)^2}}}{s} \sim \powe{-2\sqrt{x}} \frac{1}{\sqrt{x}} \intr{\powe{-\sqrt{x} (s-1)^2}}{s} = \sqrt{\pi} x^{-3/4} \powe{-2\sqrt{x}}.
+\end{align}
+}
+\example{Stirling Formula}{$x! = \intx{0}{\infty}{t^x \powe{-t}}{t}$ as $x\rightarrow\infty$}{Maximum of the integrand is at the maximum of $-t+x\log(t)$, i.e. $0=-1+\frac{x}{t}$, so $c=x$ is again movable.
+Transforming into the moving frame with $s=\frac{t}{x}$, we now have $c=1$ and
+\begin{align}
+x! &= x^{x+1} \intx{0}{\infty}{\powe{x \kla*{\log(s)-s}}}{s} \sim x^{x+1} \intx{1-\epsilon}{1+\epsilon}{\powe{-x\kla*{1 + \frac{1}{2}(1-s)^2 + \dots}}}{s}\\
+&\sim x^{x+1} \powe{-x} \intr{\powe{-\frac{x}{2}(1-s)^2}}{s} = x^{x+1} \powe{-x} \sqrt{\frac{2\pi}{x}}.
+\end{align}
+The higher-order terms follow from $s-\log(s) = 1+u^2$, with $u^2 = \sum_{n\ge 2} \frac{1}{n}(1-s)^n$ for $|s-1|<1$.
+Inverting the series yields
+\begin{align}
+s &= 1 + \sqrt{2}u + \frac{2}{3}u^2 + \frac{1}{9\sqrt{2}} u^3 + \dots,
+\end{align}
+and inserting into our integral gives
+\begin{align}
+x! &\sim x^{x+1} \powe{-x} \intr{\powe{-xu^2} \kla*{\sqrt{2} + \frac{4}{3}u + \frac{1}{3\sqrt{2}} u^2 + \dots} }{u}\\
+&\sim \sqrt{2} x^{x+1} \powe{-x} \intr{\powe{-xu^2} \kla*{1 + \frac{u^2}{6} + \frac{u^4}{270} + \dots}}{u} = \sqrt{2\pi x} x^x \powe{-x} \kla*{1 + \frac{1}{12x} + \frac{1}{288x^2} + \dots}
+\end{align}
+}
+\section{Method of Stationary Phase}
+One generalization of Laplace's method is $\phi(t) \rightarrow\i\psi(t)$ with $\psi(t)\in\mathbb{R}$.
+\definition{Generalized Fourier Integral}{$I(x) = \intx{a}{b}{f(t) \powe{\i x\psi(t)}}{t}$ where $f,\psi,a,b,x$ are real.}
+\example{Integration by Parts}{$I(x) = \intx{0}{1}{\frac{\powe{\i xt}}{1+t}}{t}$}{Sometimes \gls{ibp} works,
+\begin{align}
+I(x) &= \intx{0}{1}{\frac{1}{1+t} \frac{1}{\i x}}{\kla*{\powe{\i xt}}} = \frac{1}{\i x} \frac{\powe{\i xt}}{1+t}\bigg\vert_0^1 - \frac{1}{\i x} \intx{0}{1}{\frac{-1}{(1+t)^2} \powe{\i xt}}{t}\\
+&= \frac{1}{2\i x} \powe{\i x} - \frac{1}{\i x} - \frac{\i}{x} \intx{0}{1}{\frac{\powe{\i xt}}{1 + t^2}}{t}.
+\end{align}
+Repeating this process gives the complete asymptotic expansion of $I(x)$,
+\begin{align}
+I(x) &\sim \frac{\powe{\i x}}{2\i x} - \frac{1}{\i x} + \frac{1}{x^2} \frac{\powe{\i xt}}{(1+t)^2} \bigg\vert_0^1 - \frac{1}{x^2} \intx{0}{1}{\frac{-2}{(1+t)^3} \powe{\i xt}}{t} = \dots = \frac{1}{\i x} \kla*{\frac{1}{2} \powe{\i x} - 1} + \frac{1}{(\i x)^2} \kla*{\frac{1}{4} \powe{\i x} - 1} + \dots
+\end{align}
+}
+\example{\gls{ibp} fails}{$I(x) = \intx{0}{1}{\sqrt{t} \powe{\i xt}}{t}$}{This time we get $\frac{1}{\i x} \powe{\i x} - \frac{1}{2\i x} \intx{0}{1}{\frac{1}{\sqrt{t}} \powe{\i xt}}{t}$, where the remaining integral diverges at the next iteration.
+\note{$\intx{0}{\infty}{\powe{\i s} s^{\alpha - 1}}{s} = \powe{\i \frac{\pi}{2}\alpha} \Gamma(\alpha)$ for $\Re(\alpha) \in \kla*{0,1}$}
+Cure: $s=xt$ and $\frac{1}{2\i x} = \frac{1}{2\i x^{3/2}} \intx{0}{x}{\powe{\i s} s^{-1/2}}{s} \sim \frac{1}{2\i} x^{-3/2} \sqrt{\pi} \powe{\i \pi/4}$.
+The fractional power can not come from \gls{ibp}!
+
+The full asymptotic expansion be obtained from $\intx{0}{1}{t^{-1/2} \powe{\i xt}}{t} = \intx{0}{\infty}{(\dots)}{t} - \intx{1}{\infty}{(\dots)}{t}$, giving
+\begin{align}
+I(x) &\sim \frac{\i \sqrt{\pi}}{2x^{3/2}} \powe{\i\pi /4} + \frac{1}{\i x\sqrt{\pi}} \kla*{1 + \frac{1}{2} \sum_{n\ge 0} \frac{\Gamma\kla*{n + \frac{1}{2}}}{(\i x)^{n+1}}}
+\end{align}
+as $x\rightarrow\infty$.
+}
+\subsection{Motivation: Rapid oscillations}
+We have $I(\omega) = \intx{a}{b}{\cos(\omega t)}{t} = \mathcal{O}\kla*{\frac{1}{\omega}}$ as $\omega\rightarrow\infty$.
+Similarly,
+\begin{align}
+\intx{a}{b}{f(t)\cos(\omega t)}{t} &= \frac{1}{\omega} \sin(\omega t) f(t) \Big\vert_a^b - \frac{1}{\omega} \intx{a}{b}{f'(t)\sin(\omega t)}{t} = \mathcal{O}\kla*{\frac{1}{\omega}} + o\kla*{\frac{1}{\omega}}
+\end{align}
+if $f(a),f(b)$ are both finite and non-zero.
+This can be justified by the Riemann-Lebesgue Lemma.
+\definition{Riemann-Lebesgue Lemma}{If $\intx{a}{b}{\abs*{f(t)}}{t}$ exists, then $\intx{a}{b}{f(t)\powe{\i\omega t}}{t} \rightarrow 0$ as $\omega\rightarrow\infty$.
+Furthermore, if $f'$ is finite on $\klb*{a,b}$, then $\intx{a}{b}{f(t) \powe{\i\omega t}}{t} = \mathcal{O}\kla*{\frac{1}{\omega}}$.
+}
+\example{A generalized Fourier integral}{$I(x) = \intx{a}{b}{f(t) \powe{\i x\psi(t)}}{t}$ as $x\rightarrow\infty$}{Use \gls{ibp} to get $I(x) = \frac{f(t)}{\i x\phi'(t)} \powe{\i x\psi(t)} \Big\vert_a^b - \frac{1}{\i x} \intx{a}{b}{\frac{\d}{\d t} \kla*{\frac{f(t)}{\psi'(t)}} \powe{\i x\psi(t)}}{t}$.
+This gives the leading behavior for large $x$, provided that $\frac{f(t)}{\psi'(t)}$ is smooth for $t\in\klb*{a,b}$ and non-zero at one of the endpoints.
+
+The Riemann-Lebesgue lemma shows that the remaining integral vanishes more rapidly than $\frac{1}{x}$, therefore $I(x) \sim \frac{f(t)}{\i x\phi'(t)} \powe{\i x\psi(t)} \Big\vert_a^b $.
+\note{Potential issue: \gls{ibp} may fail if $\psi'(t)=0$ for some $t\in\klb*{a,b}$, corresponding to a stationary point.
+We will show that $I(x)$ still vanishes, but usually less rapidly than $\frac{1}{x}$.}
+}
+The major contribution to TODO page 4 lecture 4
 \end{document}
