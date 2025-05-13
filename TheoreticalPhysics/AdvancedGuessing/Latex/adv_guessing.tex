@@ -834,5 +834,80 @@ The Riemann-Lebesgue lemma shows that the remaining integral vanishes more rapid
 \note{Potential issue: \gls{ibp} may fail if $\psi'(t)=0$ for some $t\in\klb*{a,b}$, corresponding to a stationary point.
 We will show that $I(x)$ still vanishes, but usually less rapidly than $\frac{1}{x}$.}
 }
-The major contribution to TODO page 4 lecture 4
+The major contribution to $I(x)$ comes from a neighborhood of points with stationary phase (assuming $f\neq 0$ there), since the oscillatory cancellation effect disappears near stationary points.
+
+The stationary phase method gives the leading behavior of the generalized Fourier integrals having stationary points, i.e. analogous to the Laplace method, we may focus on $\klb*{c-\epsilon,c+\epsilon}$ where $c$ is a stationary point.
+\definition{Stationary Phase Method}{Consider $t=a$ is a stationary point.
+Then
+\begin{align}
+I(x) &= \intx{a}{a+\epsilon}{f(t)\powe{\i x\psi(t)}}{t} + \intx{a+\epsilon}{b}{f(t)\powe{\i x\psi(t)}}{t},
+\end{align}
+where the second integral vanishes $\sim \frac{1}{x}$ since there are no stationary points in the interval.
+Suppose that $\psi^{(p)}(a)\neq 0$ is the first non-zero derivative.
+Then
+\begin{align}
+I(x) &\sim \intx{a}{a+\epsilon}{f(a) \powe{\i x\psi(a) + \i x\frac{1}{p!} \psi^{(p)}(a) (t-a)^p}}{t}\\
+&\sim f(a) \powe{\i x\psi(a)} \intx{0}{\infty}{\powe{\frac{\i x}{p!} \psi^{(p)}(a) s^p}}{s}.
+\end{align}
+If $\psi^{(p)}(a)>0$, we may rotate the contour by the angle $\frac{\pi}{2p}$, and similarly $-\frac{\pi}{2p}$ if the derivative is negative (this will turn $\i s^p$ into $-s^p$ later, essentially this is a generalized Wick rotation).
+Define $s=\powe{\pm \i \frac{\pi}{2p}} \kla*{\frac{p! u}{\pm x\psi^{(p)}(a)}}^{1/p}$ with $u\in\mathbb{R}$.
+Then we find
+\begin{align}
+I(x) &\sim f(a) \powe{\i x\psi(a) \pm \i \frac{\pi}{2p}} \kla*{\frac{p!}{x\abs*{\psi^{(p)}(a)}}}^{1/p} \Gamma\kla*{\frac{1}{p}+1}.
+\end{align}
+If $f(a)=0$, it is necessary to investigate whether the contribution from the stationary point still dominates the leading behavior; it might be that $\frac{1}{x}$ is more relevant then.
+\note{The Stationary Phase Method gives \emph{only} the leading order.
+For higher-order terms, we need to be very careful about $\intx{a+\epsilon}{b}{(\dots)}{t}$, as it only decays algebraically.
+In Laplace's method, the same integral vanishes exponentially. }
+}
+\example{Quadratic Phase Shift}{$I(x) = \intx{0}{\infty}{\cos\kla*{xt^2-t}}{t}$ as $x\rightarrow\infty$}{It is helpful to rewrite this as the real part of a pure exponential.
+Then identifying $\psi(t)=t^2$, we have a stationary point at $c=0$ with $\psi'(c)=0$ and $\psi''(c)=2$.
+Thus, $I(x) \sim \Re \klc*{\Gamma\kla*{\frac{3}{2}} f(0) \powe{\i \frac{\pi}{4}} \kla*{\frac{2}{2x}}^{1/2} } = \frac{1}{2} \sqrt{\frac{\pi}{2x}}$.
+}
+\example{Bessel functions}{$J_n(x) = \frac{1}{\pi} \intx{0}{\pi}{\cos\kla*{x\sin(t) - nt}}{t}$ as $x\rightarrow\infty$}{We have $J_n(n) = \Re \frac{1}{\pi} \intx{0}{\pi}{\powe{\i n\psi(t)}}{t}$ with $\psi(t)=\sin(t)-t$.
+This is stationary at $t=0$ with $\psi'(0)=0$, $\psi''(0)=0$ and $\psi'''(0)=-1$.
+Thus,
+\begin{align}
+J_n(n) &\sim \frac{1}{\pi}\Re \klc*{\Gamma\kla*{\frac{4}{3}} \powe{-\i \frac{\pi}{6}} \kla*{\frac{3!}{n}}^{1/3}} = \frac{1}{\pi} \Gamma\kla*{\frac{4}{3}} 2^{-2/3} 3^{5/6} n^{-1/3}.
+\end{align}
+\note{This stroboscopic behavior may in principle deviate significantly from the intermediate ranges.}
+}
+\example{Bessel function}{$J_0(x) = \frac{1}{\pi} \intx{0}{\pi}{\cos\kla*{x\sin(t)}}{t}$ as $x\rightarrow\infty$}{Here, $\psi(t)=\sin(t)$, $f(t)=1$ and $\psi'(c)=0$ for $c=\frac{\pi}{2}$.
+Thus, the stationary phase method yields
+\begin{align}
+J_0(x) &\sim 2\cdot \frac{1}{\pi} \Re \klc*{\Gamma\kla*{\frac{3}{2}} \powe{-\i \frac{\pi}{4}} \powe{\i x} \sqrt{\frac{2}{x}}} = \sqrt{\frac{2}{\pi x}} \cos\kla*{x - \frac{\pi}{4}}.
+\end{align}
+\note{The extra factor of 2 originates from $c$ being an interior point.
+This is analogous (but inverse) to the factor of $\frac{1}{2}$ for endpoints in the Laplace method.
+For consistency, it would perhaps be better to include the factor in the formula.}
+}
+\subsection{How to derive an integral representation}
+Bessel's equation is $xy''+y'+xy = 0$ and has linearly independent solutions $J_0$ and $Y_0$.
+We know that $J_0(0)=1$ while $Y_0(0)=-\infty$.
+The key idea is to make an integral ansatz $y(x) = \int_C \powe{xz}p(z)\,\d z$ with some function $p$ and contour $C$.
+The ODE is then equivalent to $\int_C \kla*{xz^2+z+x}p(z) \powe{xz}\,\d z = 0$ for all $x$.
+
+If we could rewrite the integrand as $\frac{\d}{\d z} \kla*{\powe{x z} S(z)}$, we would have $0 = \powe{xz} S(z)\Big\vert_{\partial C}$.
+It would then be sufficient to find a contour for which this holds.
+Here,
+\begin{align}
+\frac{\d}{\d z} \kla*{\powe{xz} S(z)} &= x\powe{xz}S(z) + \powe{xz} S'(z) = \kla*{xz^2+z+x}p(z) \powe{xz}
+\end{align}
+leads to $x\kla*{z^2+1}p(z) + zp(z) = xS(z) + S'(z)$.
+This must hold for all $x$, and thus $S(z)=\kla*{z^2+1}p(z)$ and $S'(z) = zp(z)$.
+From $\frac{S'}{S} = \frac{z}{z^2+1}$ we obtain $S(z)=\sqrt{z^2+1}$ and $p(z) = \frac{S(z)}{z^2+1} = \frac{1}{\sqrt{z^2+1}}$.
+Consequently, $y(x) = \int_C \powe{xz} \frac{1}{\sqrt{z^2+1}} \,\d z$ satisfy the Bessel equation if $\powe{xz}\sqrt{z^2+1}\Big\vert_{\partial C}$ for all $x$.
+Here, we can accomplish this by choosing a contour from $z=-\i$ to $z=\i$, e.g.
+\begin{align}
+y(x) &= \intx{-\i}{\i}{\frac{\powe{xz}}{\sqrt{z^2+1}}}{z} = \intx{-1}{1}{\frac{\powe{\i ux}}{\sqrt{1-u^2}}\i}{u}.
+\end{align}
+Using $y(0)=\i\pi$, we find $J_0(x) = \frac{1}{A}y(x)$ with $A=\i\pi$, and thus $J_0(x) = \frac{1}{\pi} \intx{-1}{1}{\frac{\powe{\i ux}}{\sqrt{1-u^2}}}{u}$.
+The imaginary part vanishes due to symmetry, and substituting $u=\sin(t)$ yields $J_0(x) = \frac{1}{\pi} \intx{0}{\pi}{\cos\kla*{x\sin(t)}}{t}$ (we also shifted the region by $\frac{\pi}{2}$).
+\section{Steepest Descent Method}
+Goal: Generalization of Laplace and stationary phase methods.
+Note:
+\begin{enumerate}
+\item Laplace Method $\intx{a}{b}{f(t)\powe{x\phi(t)}}{t}$ can give the full asymptotic expansion as $x\rightarrow\infty$, i.e. errors are exponentially small (\gls{tst})
+\item stationary phase for $\intx{a}{b}{f(t) \powe{\i\psi(t)}}{t}$ only gives the leading term, errors are $\mathcal{O}\kla*{\frac{1}{x}}$
+\end{enumerate}
 \end{document}
