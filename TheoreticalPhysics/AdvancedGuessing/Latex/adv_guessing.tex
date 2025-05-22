@@ -910,4 +910,68 @@ Note:
 \item Laplace Method $\intx{a}{b}{f(t)\powe{x\phi(t)}}{t}$ can give the full asymptotic expansion as $x\rightarrow\infty$, i.e. errors are exponentially small (\gls{tst})
 \item stationary phase for $\intx{a}{b}{f(t) \powe{\i\psi(t)}}{t}$ only gives the leading term, errors are $\mathcal{O}\kla*{\frac{1}{x}}$
 \end{enumerate}
+Consider $I(x) = \intx{C}{ }{h(t)\powe{x\rho(t)}}{t}$ as $x\rightarrow\infty$ with some integration contour $C\subset \mathbb{C}$ and analytic functions $h,\rho$.
+The key idea is to deform $C$ into a new contour $C'$, on which $\rho$ has (piecewise) constant imaginary part.
+Then applying Laplace's method to $J(x) = \powe{\i x \Im \rho} \intx{C'}{ }{h(t)\powe{x\Re \rho(t)}}{t}$.
+To motivate this, notice that the rapid oscillations in the integrand vanish for constant imaginary part.
+\note{One could also deform $C$ such that the real part is constant and then apply the stationary phase method. But this only gives the leading term (it is a less powerful method).}
+\definition{Steepest Descent Path}{If $f(u,v)$ is a differentiable function of two variables, then the gradient $\nabla f = \kla*{\frac{\partial f}{\partial u} ,  \frac{\partial f}{\partial v}}^\transpose$ points in the direction of the most rapid change of $f$ in the neighborhood of the point $(u,v)$.
+\note{The directional derivative $\frac{\d f}{\d s} = \textbf{n} \cdot \nabla f$ gives the rate of change of $f$ in direction $\textbf{n}$ (unit vector).
+The largest directional derivative is $\frac{\d f}{\d s} = \abs*{\nabla f}$ for $\textbf{n} = \frac{\nabla f}{\abs*{\nabla f}}$}
+Note that 
+\begin{itemize}
+\item $\nabla f\perp$ level curves of $f$
+\item $\frac{\d f}{\d s}$ along tangents to level curves is zero
+\end{itemize}
+Let $\rho(t) = \phi(t) + \i\psi(t)$ be an analytic function of $t=u+\i v$ and $\rho'(t)\neq 0$ in some region.
+Then the steepest contour is defined as a contour whose tangent is parallel to $\nabla \abs*{\powe{x\rho(t)}} = \nabla \powe{x\phi(t)}$, which is parallel to $\nabla \phi$.
+Therefore, a steepest contour is one on which the magnitude of $\powe{x\phi(t)}$ is changing most rapidly with $t$.
+}
+Claim: If $\rho(t)$ is analytic, then contours of constant $\psi$ (i.e. constant imaginary part) are steepest contours.
+\definition{Cauchy-Riemann}{We know that $\partial_u \phi = \partial_v\psi$ and $\partial_v \phi = -\partial_u\psi$, which gives
+\begin{align}
+\nabla\phi \cdot \nabla\psi &= \kla*{\partial_u \phi} \kla*{\partial_u \psi} + \kla*{\partial_v \phi} \kla*{\partial_v \psi} = 0.
+\end{align}
+Thus, the directional derivative $\textbf{n}\propto \nabla\phi$ satisfies $\frac{\d \psi}{\d s} = 0$ and hence
+\begin{itemize}
+\item $\psi$ is constant on contours where tangents are parallel to $\nabla\phi$
+\item contours of constant $\psi$ are steepest contours
+\end{itemize}
+}
+\example{Full asymptotic expansion}{$I(x) = \intx{0}{1}{\powe{\i xt^2}}{t}$ as $x\rightarrow\infty$}{Let $\rho(t)=\i t^2$ with $\psi(t) = \Im \rho(t) = u^2-v^2$ and $\phi(t) = \Re \rho(t) = -2uv$.
+The steepest path requires $\psi=\const$, and at $t=0$ this corresponds to $\Im\rho(0)=0=u^2-v^2$.
+This has the two solutions $v(u) = \pm u$, which corresponds to $\phi(u) = \mp 2u^2$.
+We are interested in the steepest \emph{descent}, i.e. negative $\phi$, so we choose $v(u)=+u$.
+In particular, along the trajectory $t(u) = u + \i v(u) = (1+\i)u$, the maximum of $\powe{x\phi}$ now occurs at the point we started from, $t=0$.
+
+At $t=1$, we have $\Im\rho(1)=1=u^2-v^2$, so $v=\pm\sqrt{u^2-1}$.
+We want $\phi(u) = \mp 2u \sqrt{u^2-1} \le 0$, so we again choose the positive solution and note that $u\ge 1$.
+
+On the bridge connecting the two contours deep in the imaginary part of the complex plane we do not have $\psi=\const$, but here the integrand is simply suppressed by $\phi$.
+Explicitly, we have the bound
+\begin{align}
+\abs[\bigg]{\intx{C_\text{bridge}}{}{\powe{x \rho(t)}}{t}} \le \intx{u_1}{u_2}{\powe{x\phi(u)} f(u)}{u},
+\end{align}
+where $f(u)$ is some remnant from the derivative of the path.
+As $V$, the upper limit on the imaginary part of the bridge contour, goes to infinity, this integral vanishes assuming that $\phi(u,V) \rightarrow -\infty$ and $v(u) \rightarrow\infty$ somewhere on $\klb*{u_1,u_2}$.
+
+Putting all ingredients together, we find that because there are no poles contained in the contour, $I=I_1+I_2$, where
+\begin{align}
+I_1(x) &= (1+\i) \intx{0}{\infty}{\powe{-2xu^2}}{u} = \frac{1}{2} \sqrt{\frac{\pi}{x}} \powe{\i\frac{\pi}{4}},\\
+I_2(x) &= \powe{\i x} \intx{\infty}{1}{\powe{-2xu\sqrt{u^2-1}} \kla*{1 + \i \frac{u}{\sqrt{u^2-1}}} }{u}.
+\end{align}%s=2u\sqrt{u^2-1}, s^2/4 = u^4-u^2, u^2 = 1/2 +- \sqrt{1 + s^2}/2, u = +- 1/\sqrt{2} \sqrt{1 +- \sqrt{1 + s^2}} ... = \powe{\i x} \intx{0}{\infty}{\powe{-xs} \kla*{1 + \i \frac{1 \pm \sqrt{1+s^2}}{s}} \frac{1}{\sqrt{2}} \frac{\pm \frac{s}{\sqrt{1+s^2}}}{\sqrt{1 \pm \sqrt{1 + s^2}}} }{s}
+The second integral can be simplified tremendously by a reparameterization of the contour.
+Writing $\rho(t) = \i t^2 = \rho(1) - s$, we obtain $t = \sqrt{1 + \i s}$ where $s\in\kla*{0,\infty}$.
+Inserting this into the integral yields
+\begin{align}
+I_2(x) &= \powe{\i x} \intx{\infty}{0}{\powe{-xs} \frac{\i}{2\sqrt{1 + \i s}}}{s}.
+\end{align}
+Here, we can apply Watson's Lemma with $\kla*{1+x}^{-1/2} = \sum_{n\ge 0} (-x)^n \frac{\Gamma\kla*{n+\frac{1}{2}}}{n! \Gamma\kla*{\frac{1}{2}}}$, giving
+\begin{align}
+I_2(x) &\sim -\frac{1}{2} \i \powe{\i x} \sum_{n\ge 0} \frac{\Gamma\kla*{n+\frac{1}{2}}}{n! \Gamma\kla*{\frac{1}{2}}} (-\i)^n \frac{\Gamma\kla*{n+1}}{x^{n+1}} = \frac{1}{2} \powe{\i x} \sum_{n\ge 0} \frac{\Gamma\kla*{n+\frac{1}{2}}}{\Gamma\kla*{\frac{1}{2}} (\i x)^{n+1}}.
+\end{align}
+\note{Alternative: We know that the dominant contribution of the Laplace integral comes from the neighborhood near the maximum of $\phi(t)$ at $t=1$.
+Only considering the vertical path $t=1+\i s$ actually gives the same result!}
+}
+TODO: Lecture 5, page 11, example int 0 1 log t powe ixt
 \end{document}
