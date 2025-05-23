@@ -973,5 +973,49 @@ I_2(x) &\sim -\frac{1}{2} \i \powe{\i x} \sum_{n\ge 0} \frac{\Gamma\kla*{n+\frac
 \note{Alternative: We know that the dominant contribution of the Laplace integral comes from the neighborhood near the maximum of $\phi(t)$ at $t=1$.
 Only considering the vertical path $t=1+\i s$ actually gives the same result!}
 }
-TODO: Lecture 5, page 11, example int 0 1 log t powe ixt
+\example{Logarithmic Integral}{$I(x) = \intx{0}{1}{\log(t)\powe{\i xt}}{t}$ as $x\rightarrow\infty$}{Note that the stationary phase method fails because there is no stationary point, and \gls{ibp} fails because the logarithm diverges at the lower bound.
+
+We have $\rho(t)=\i t = -v+\i u$, and at $t=0$ constant phase is equivalent to $\psi(0)=0=u$.
+Steepest descent for $v>0$, so the first contour is the positive imaginary axis and we get
+\begin{align}
+I_1 &= \intx{0}{\infty}{\log(\i v)\powe{- xv} \i}{v} = \frac{\i}{x} \log(\i) - \i \frac{\log(x)}{x} + \frac{\i}{x} \intx{0}{\infty}{\log(s)\powe{-s}}{s} = -\i \frac{\log(x)}{x} - \frac{\i\gamma}{x} - \frac{\pi}{2x}.
+\end{align}
+At $t=1$ we have $\psi(1)=1=u$, so the second contour is parallel to the first.
+This part yields
+\begin{align}
+I_2 &= \intx{\infty}{0}{\log\kla*{1 + \i v} \powe{-xv + \i x} \i}{v} = -\i\powe{\i x} \sum_{n\ge 1} \frac{(-\i)^n (n-1)!}{x^{n+1}}.
+\end{align}
+Combining both, we find
+\begin{align}
+I(x) &\sim I_1+I_2 \sim -\i \frac{\log(x)}{x} - \frac{\i\gamma + \pi/2}{x} - \powe{\i x} \sum_{n\ge 0} \frac{n!}{(\i x)^{n+2}}.
+\end{align}
+}
+\section{Saddle Points}
+Consider $I(x) = \intx{a}{b}{h(t) \powe{x\rho(t)}}{t}$ as $x\rightarrow\infty$ where $\rho(t) = \phi(t) + \i\psi(t)$ is an analytic function of $t=u+\i v$.
+Along contours of constant $\psi$, points of maximal $\phi$ make dominant contributions to $I(x)$.
+In our previous discussion, these points were always endpoints -- what happens if $\phi$ has an interior maximum?
+\begin{enumerate}
+\item if $\phi(t)$ has an interior maximum along a constant phase contour, the directional derivative vanishes: $\frac{\d \phi}{\d s} = \abs*{\nabla\phi}=0$ (in addition to the usual $\nabla\psi=0$). Thus, $\rho'(t)=0$ at an interior maximum
+\item a point at which $\rho'(t)=0$ is called Saddle Point
+\item saddle points are special: it is only at such a point that two distinct steepest curves can intersect. When $\rho'(t_0)\neq 0$, the steepest curve passing through $t_0$ tangent to $\nabla\phi$ is unique
+\end{enumerate}
+\example{Gaussian}{$\rho(t)=t^2$}{$\rho'(t)=2t$, so $t=0$ is a saddle point.
+We have $\rho(t)=u^2-v^2+2\i uv$, so $\phi(t)=u^2-v^2$ and $\psi(t)=2uv$.
+At the saddle point, $\rho(0)=0$ and the steepest curves are determined by $0=2uv$, i.e. $u=0$ or $v=0$, but only $u=0$ leads to steepest descent.
+}
+\example{Hyperbolic}{$\rho(t)=\i\cosh(t)$}{Here, $\rho'(t)=\i \sinh(t)$ has a saddle point at $t=0$.
+We have $\rho(t) = \i \cosh(u)\cosh(\i v) + \i \sinh(u)\sinh(\i v) = \i \cosh(u) \cos(v) - \sinh(u)\sin(v)$.
+At $t=0$, $\psi(0)=1=\cosh(u)\cos(v)$.
+}
+\example{Combined Linear}{$\rho(t)=\sinh(t)-t$}{Here, $\rho(t)=\i \cosh(u)\sin(v) - \i v + \sinh(u)\cos(v) - u$ and $\rho'(t)=\cosh(t)-1$ has a saddle point at $t=0$.
+Note that $\rho''(0)=0$ (but $\rho'''(0)\neq 0$).
+At $t=0$, $\psi(0)=0=\cosh(u)\sin(v)-v$, so $u(v) = \arcosh\kla*{\frac{v}{\sin(v)}}$ or $v=0$, and there are 6 steepest paths separated by $60^\circ$ rotations.
+}
+\example{Combined Quadratic}{$\rho(t)=\cosh(t) - \frac{1}{2}t^2$}{$\phi(t)=\cosh(u)\cos(v) + \frac{1}{2}\kla*{u^2-v^2}$ and $\psi(t) = \sinh(u)\sin(v) - uv$ with a saddle point at $t=0$ and $\rho^{(4)}(0)\neq 0$ being the first non-zero derivative.
+At $t=0$, $\psi(0)=0=\sinh(u)\sin(v)-uv$, so $v=0$ or $u=0$ or $\frac{\sinh(u)}{u} = \frac{v}{\sin(v)}$.
+This gives 8 steepest paths separated by $45^\circ$ rotations.
+}
+\example{Bessel Function}{$J_0(x) = \Re \klc*{\frac{1}{\i \pi} \intx{-\i\pi/2}{\i\pi/2}{\powe{\i x\cosh(t)}}{t}}$ as $x\rightarrow\infty$}{Here, $\rho(t)=\i\cosh(t) = \i\cosh(u)\cos(v) - \sinh(u)\sin(v)$ and the saddle point is at $t=0$.
+TODO lec 5 page 14
+}
 \end{document}
