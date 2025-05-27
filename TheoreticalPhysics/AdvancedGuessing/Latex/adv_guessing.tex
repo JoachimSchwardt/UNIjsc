@@ -1016,6 +1016,111 @@ At $t=0$, $\psi(0)=0=\sinh(u)\sin(v)-uv$, so $v=0$ or $u=0$ or $\frac{\sinh(u)}{
 This gives 8 steepest paths separated by $45^\circ$ rotations.
 }
 \example{Bessel Function}{$J_0(x) = \Re \klc*{\frac{1}{\i \pi} \intx{-\i\pi/2}{\i\pi/2}{\powe{\i x\cosh(t)}}{t}}$ as $x\rightarrow\infty$}{Here, $\rho(t)=\i\cosh(t) = \i\cosh(u)\cos(v) - \sinh(u)\sin(v)$ and the saddle point is at $t=0$.
-TODO lec 5 page 14
+This lies in the center of the original contour, and we have $\cos(v) = \frac{1}{\cosh(u)}$ as a consequence of constant $\psi$ at $t=0$.
+The two horizontal pieces $\pm\i \frac{\pi}{2} \pm u$ ($u\in\kla*{0,\infty}$) leave us with a contour that connects the two points $\pm \kla*{\infty + \i \frac{\pi}{2}}$, called \emph{Sommerfeld contour}.
+Among all of the possible contours, there is exactly one curve that has constant $\psi$ and passes through our saddle point at $t=0$.
+By Laplace's method, the full asymptotic expansion is determined by a small neighborhood around the saddle point, so we can linearize the contour to $v=u$ ($\phi<0$ requires $uv>0$, so we need positive slope for steepest descent).
+Using $t=(1+\i)r$ with $r\in\kla*{-\epsilon,\epsilon}$ and $\cosh(t)\sim 1 + \i r^2$, we obtain
+\begin{align}
+J_0(x) &\sim \Re \klc*{\frac{1}{\i\pi} \intx{-\epsilon}{\epsilon}{\powe{\i x \kla*{1+\i r^2}}(1+\i)}{r}} \sim \frac{1}{\pi} \Re \klc*{\powe{\i x}(1-\i)} 2\intx{0}{\infty}{\powe{-xr^2}}{r} = \sqrt{\frac{2}{\pi x}} \cos\kla*{x-\frac{\pi}{4}}.
+\end{align}
+Watson's Lemma can give us the full expansion.
+Along the contour, we have $\rho(t)=\i - \eta(t)$ with $\eta(t)=\i-\i\cosh(t)$ and $\d\eta=-\i\sinh(t)\d t$.
+Thus,
+\begin{align}
+J_0(x) &= 2\cdot \Re\klc*{\frac{1}{\i\pi} \intx{0}{\infty}{\powe{x\kla*{\i - \eta}} \frac{\i}{\sqrt{-\eta^2+2\i\eta}}}{\eta}}.
+\end{align}
+The expansion yields $\alpha = -\frac{1}{2}$, $\beta=1$ and $c_n=\frac{\Gamma\kla*{n+\frac{1}{2}}}{(2\i)^n \Gamma\kla*{\frac{1}{2}} n!}$, so
+\begin{align}
+J_0(x) &\sim \frac{\sqrt{2}}{\pi} \Re 
+\klc*{\powe{\i \kla*{x-\pi/4}} \sum_{n\ge 0} \frac{\Gamma\kla*{n+\frac{1}{2}}^2}{(2\i x)^n n! \sqrt{x} \Gamma\kla*{\frac{1}{2}}}} = \sqrt{\frac{2}{\pi x}} \klc*{\alpha(x) \cos\kla*{x-\frac{\pi}{4}} + \beta(x) \sin\kla*{x-\frac{\pi}{4}}}
+\end{align}
+with $\alpha(x) = \sum_{k\ge 0} (-1)^k \frac{\Gamma\kla*{2k+\frac{1}{2}}^2}{\pi (2k)!(2x)^{2k}} $ and $\beta(x) = \sum_{k\ge 0} (-1)^k \frac{\Gamma\kla*{2k+\frac{3}{2}}^2}{\pi (2k+1)!(2x)^{2k+1}}$ as $x\rightarrow\infty$.
+}
+\example{Trigonometric Gauss integral}{$I(x)=\intx{0}{1}{\powe{-4xt^2} \cos\kla*{5xt-xt^3}}{t}$ as $x\rightarrow\infty$}{We can rewrite this as $I(x)=\frac{1}{2} \powe{-2x} \Re \klc*{\intx{-1}{1}{\powe{x\rho(t)}}{t}}$ with
+\begin{align}
+\rho(t) &= -\kla*{t-\i}^2-\i \kla*{t-\i}^3 = -\klb*{u^2-(v-1)^2 + 2\i u(v-1)} \kla*{2-v + \i u}\\
+&= (v-2)\kla*{u^2-v^2+2v-1} + 2u^2(v-1) + \i \klb*{u\kla*{u^2-v^2+2v-1} - 2u(v-1)(v-2)}
+\end{align}
+(note: there seem to be some typos in the script here. Main point is that there are two saddle points at $t=\i$ and $t=\i \frac{5}{3}$. Dominant term from $t=\i$, and leading order just has $\rho(t)\sim -u^2$ as $u\rightarrow 0$, giving a simple Gauss with $\sqrt{\frac{\pi}{x}}$)
+}
+\example{Hyperbolic linear shift}{$I(x)=\frac{1}{2\pi\i}\intx{C}{ }{\powe{x\kla*{\sinh(t)-t}}}{t}$ as $x\rightarrow\infty$}{Here, $C$ is a Sommerfeld contour from $\infty-\i\pi$ to $\infty+\i\pi$ that passes through the saddle point $t=0$.
+We once again only care about the local behavior, where $\psi(0)=0=\cosh(u)\sin(v)-v$ simplifies to $v=\pm \sqrt{3}u$.
+Thus, $t=r\powe{\pm\i \pi/3}$ and
+\begin{align}
+I(x) &\sim \frac{1}{2\pi\i} \intx{0}{\epsilon}{ \powe{-x\frac{1}{6}r^3} \powe{\i\pi/3}}{r} + \frac{1}{2\pi\i} \intx{\epsilon}{0}{\powe{-x\frac{1}{6}r^3} \powe{-\i\pi/3}}{r} \sim \frac{1}{2\pi} \intx{0}{\infty}{\powe{-\frac{x}{6}r^3}}{r} \propto x^{-1/3}.
+\end{align}
+}
+\chapter{Advanced Guessing III: Local Analysis of Linear ODEs}
+Goal: Predict the local behavior of ODE solutions near a point $x_0$ without knowing how to solve the differential equation exactly.
+\example{Hard anharmonic oscillator}{$y^{(4)}=\kla*{x^4+\sin(x)}y$}{The solutions to this equation are not expressible in terms of known functions.
+Nevertheless, the behavior of $y(x)$ as $x\rightarrow\infty$ is well approximated by a linear combination of $x^{-3/2} \powe{\i^k \frac{1}{2}x^2}$ for $k=0,\dots,3$.
+}
+\example{Anharmonic oscillator}{$y''=x^4y$}{Here, the solutions are modified Bessel functions of order $\frac{1}{6}$.
+But for non-experts, this barely conveys any information; an easy local analysis gives $\frac{1}{x} \powe{\pm \frac{1}{3}x^3}$.
+}
+\section{Homogeneous linear differential equations}
+The general form of such ODEs is
+\begin{align}
+0 &= y^{(n)}(x) + P_{n-1}(x)y^{(n-1)}(x) + \dots + P_1(x) y'(x) + P_0(x)y(x).
+\end{align}
+\note{Example:$y''+P(x)y'+Q(x)y=0$}
+\subsection{Classification of singular points}
+\definition{Ordinary Points}{The point $x_0\neq \infty$ is called ordinary, if the coefficient functions $P_0,\dots,P_{n-1}$ are all analytic in a neighborhood of $x_0$ in the complex plane.
+
+\textsc{Fuchs} (1866):
+\begin{enumerate}
+\item all $N$ linearly independent solutions of the ODE are analytic in a neighborhood of an ordinary point
+\item if any solution is expanded in a Taylor series around $x_0$, then the \gls{roc} is at least as large as the distance of $x_0$ to the nearest singularity of the coefficient functions in the complex plane
+\item the location of a singularity of a solution must coincide with the location of a singularity of a coefficient function. The solution of a linear equation cannot have singularities at any other point.
+\end{enumerate}
+}
+\example{Linear}{$\kla*{x^2+1}y'+2xy=0$}{This ODE has an ordinary point at $x=0$.
+The solution $y(x)=\frac{c}{1+x^2}$ can be expanded into a series with \gls{roc} 1, which equals the distance to the coefficient singularities at $x=\pm i$.
+}
+\definition{Regular Singular Points}{The point $x_0\neq\infty$ is called regular singular if not all of $P_0,\dots,P_{n-1}$ are analytic while $(x-x_0)^nP_0,\dots (x-x_0)P_{n-1}$ are analytic.
+\note{A solution may be analytic at a regular singular point. If it is not analytic, its singularity must either be a pole or an algebraic or logarithmic branch point.}
+\textsc{Fuchs}:
+\begin{enumerate}
+\item there is always at least one solution of the form $y(x)=(x-x_0)^\alpha A(x)$ ($\alpha$ is the \emph{indicial exponent}) where $A(x)$ is analytic at $x_0$
+\item the Taylor series of $A$ converges at least up to the nearest singularity of the coefficient functions
+\end{enumerate}
+\note{Example: $y'=\frac{y}{\sinh(x)}$ has solution $y(x)=c\tanh\kla*{\frac{x}{2}}$ and is analytic at $x=0$, so this is a regular singular point.
+The radius of convergence is $\pi$ (poles at $\pm \i\pi$).}
+}
+\definition{Irregular Singular Points}{The point $x_0\neq \infty$ is called irregular singular if it is neither ordinary nor regular singular.
+\note{Typically, at an irregular point, all solutions exhibit an essential singularity, often in combination with a pole or an algebraic or logarithmic branch point. But this is not always the case, some may even be analytic at $x_0$.}
+}
+\definition{Classification of $x_0=\infty$}{Use $x=\frac{1}{t}$ and $\frac{\d}{\d x} = -t^2\frac{\d}{\d t}$ etc. to then classify the point $t=0$.
+}
+\example{First order examples}{near $x=0$}{$y'=\frac{y}{2}$ has an ordinary point at $x=0$; $y(x)=c\powe{x/2}$ has a Taylor series at $x=0$.
+
+$y'=\frac{y}{2x}$ has a regular singular point at $x=0$; $y(x)=\sqrt{x}$ has a Frobenius series with $\alpha=\frac{1}{2}$ at $x=0$.
+
+$y'=\frac{y}{2x^2}$ has an irregular singular point at $x=0$; $y(x)=c\powe{-
+1/(2x)}$ has an essential singularity at $x=0$ (and therefore neither Taylor nor Frobenius series)
+}
+\subsection{Local behavior near ordinary points}
+If we do not have a simple closed-form solution, it is very useful to know how to obtain answers to hard problems in terms of infinite series.
+Furthermore, the first few terms are usually sufficient to give a very accurate approximation (REF adv guessing I).
+A perturbation series with a small parameter $\epsilon=(x-x_0)$ gives more accurate approximation as $\epsilon$ becomes smaller or $n$ increases (or both).
+\example{Gauss ODE}{$y'=2xy$ with $y(0)=1$}{This has an ordinary point at $x=0$.
+Let $y(x)=\sum a_n x^n$.
+Then
+\begin{align}
+0 &= \sum_{n\ge 0} a_n \klc*{nx^{n-1} - 2x^{n+1}} = \sum_{n\ge 0} x^n \klc*{a_{n+1}(n+1) - 2a_{n-1}}.
+\end{align}
+This yields $\frac{a_{n+2}}{a_n} = \frac{2}{n+2}$.
+Because $a_{-1}=0$, all odd terms vanish, and the even terms give $a_n=\frac{2}{n} \frac{2}{n-2} \dots 2a_0$.
+We have $a_0=0$ and thus $y(x)=\sum_{n\ge 0} \frac{1}{n!}x^{2n} = \powe{x^2}$.
+}
+\example{Airy equation}{$y''=xy$ near $x=0$}{This is an ordinary point.
+Series expansion gives
+\begin{align}
+0 &= \sum x^n \klc*{a_{n+2}(n+1)(n+2)-a_{n-1}},
+\end{align}
+i.e. $a_n = \frac{1}{n(n-1)}a_{n-3}$.
+Thus, $a_{3n} = \frac{a_{3n-3}}{3n(3n-1)} = \frac{1}{3n(3n-1) (3n-3)(3n-4) \dots 3\cdot 2} a_0 = \frac{\Gamma\kla*{\frac{2}{3}}a_0}{3^nn! 3^n \Gamma\kla*{n+\frac{2}{3}}}$.
+TODO Lec6 page 4 Airy
 }
 \end{document}
