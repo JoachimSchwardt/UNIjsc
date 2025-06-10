@@ -1,0 +1,73 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+
+\newcommand*{\Title}{Special Functions and Asymptotic Relations}
+\newcommand*{\Author}{Joachim Schwardt}
+
+\input{preamble_shared}
+\input{preamble}
+
+%\titlehead{titlehead}
+\subject{Asymptotic Analysis}
+\title{\Title}
+\author{\Author}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Trickkiste}
+\subsection{Combinatorics}
+\subsubsection{Double Factorial}
+\begin{align}
+(2n)!! &= 2^n n!,\\
+(2n-1)!! &= \frac{(2n)!}{2^n n!} = \frac{(2n-1)!}{2^{n-1} (n-1)!}
+\end{align} %https://en.wikipedia.org/wiki/Double_factorial
+\section{Trigonometric Functions}
+\subsection{Inverse Functions}
+\subsubsection{Arctangent}
+Integral representation for $x\in\mathbb{R}$ is
+\begin{align}
+\arctan(x) &= \intx{0}{x}{\frac{1}{1+t^2}}{t}.
+\end{align}
+We have 
+\begin{align}
+\arctan(x) &\sim \sum_{n\ge 0} (-1)^n \intx{0}{x}{t^{2n}}{t} = \sum_{n\ge 0} (-1)^n \frac{x^{2n+1}}{2n+1}
+\end{align}
+as $x\rightarrow 0$.
+Because $\arctan\kla*{\frac{1}{x}} = \frac{\pi}{2} - \arctan(x)$\footnote{$\tan\kla*{\frac{\pi}{2} - \arctan(x)} = \cot\arctan(x) = \frac{1}{\tan\arctan(x)} = \frac{1}{x}$}, we then have
+\begin{align}
+\arctan(x) &\sim \frac{\pi}{2} - \sum_{n\ge 0} (-1)^n \frac{1}{2n+1} \frac{1}{x^{2n+1}}
+\end{align}
+as $x\rightarrow\infty$.
+Both series have converge up to $x=1$.
+
+Note that a better single-term approximation is
+\begin{align}
+\frac{\pi}{2} - \arctan(x) &\sim \frac{x}{1+x^2}
+\end{align}
+as $x\rightarrow\infty$ with $\mathcal{O}\kla*{x^{-3}}$ error.
+In general,
+\begin{align}
+\frac{\pi}{2} - \arctan(x) &= \intx{x}{\infty}{\frac{1}{1+t^2}}{t} = \frac{1}{2}\intx{x^2}{\infty}{\frac{1}{1+u} \frac{1}{\sqrt{u}}}{u}.
+\end{align}
+Integration by parts gives
+\begin{align}
+\intx{ }{ }{\frac{u^{-1/2}}{1+u}}{u} &= \frac{2u^{1/2}}{1+u} + \intx{ }{ }{\frac{2u^{1/2}}{(1+u)^2}}{u}\\
+&= \frac{2u^{1/2}}{1+u} + \frac{2 \cdot \frac{2}{3} u^{3/2}}{(1+u)^2} + 2\frac{2\cdot \frac{2}{3} \cdot \frac{2}{5} u^{5/2}}{(1+u)^3} + \dots\\
+&= \sum_{n\ge 1} \frac{2^n (n-1)!}{(2n-1)!!} \frac{u^n}{\sqrt{u}} \frac{1}{(1+u)^n} = \sum_{n\ge 1} \frac{2^{2n-1} (n-1)!^2}{(2n-1)!} \frac{u^n}{\sqrt{u}} \frac{1}{(1+u)^n}
+\end{align}
+and therefore
+\begin{align}
+\frac{\pi}{2}-\arctan(x) &\sim \frac{1}{x} \sum_{n\ge 0} \frac{4^{n} n!^2}{(2n+1)!} \frac{1}{\kla*{1 + \frac{1}{x^2}}^{n+1}}.
+\end{align}
+However, the radius of convergence of this series is restricted by $\frac{(2n+3)(2n+2)}{(n+1)^2} \rightarrow 4$, i.e. $1+\frac{1}{x^2} < \frac{1}{4}$, which is clearly impossible.
+Thus, although the series representation is formally correct, it converges nowhere!
+
+\end{document}
