@@ -1114,12 +1114,25 @@ This yields $\frac{a_{n+2}}{a_n} = \frac{2}{n+2}$.
 Because $a_{-1}=0$, all odd terms vanish, and the even terms give $a_n=\frac{2}{n} \frac{2}{n-2} \dots 2a_0$.
 We have $a_0=0$ and thus $y(x)=\sum_{n\ge 0} \frac{1}{n!}x^{2n} = \powe{x^2}$.
 }
+\definition{Gamma Function}{The Gamma function admits the product representation
+\begin{align}
+\Gamma(z) &= \frac{1}{z} \prod_{n\ge 1} \kla*{1 + \frac{1}{n}}^z \frac{1}{1+\frac{z}{n}}.
+\end{align}
+Using the fundamental property $\Gamma(z+1)=z\Gamma(z)$, the Pochhammer function $(z)_n = \frac{\Gamma(z+n)}{\Gamma(z)}$ can be written as
+\begin{align}
+(z)_n &= (z+n-1)(z+n-2) \dots z = \prod_{l=0}^{n-1} (z+l).
+\end{align}
+This is very helpful for analyzing repeated products of the form
+\begin{align}
+(kn-k+j)(kn-2k+j)\dots &= \prod_{l=0}^{n-1} (j+kl) = k^n \kla*{\frac{j}{k}}_n
+\end{align}
+}
 \example{Airy equation}{$y''=xy$ near $x=0$}{This is an ordinary point.
 Series expansion gives
 \begin{align}
 0 &= \sum x^n \klc*{a_{n+2}(n+1)(n+2)-a_{n-1}},
 \end{align}
-i.e. $a_n = \frac{1}{n(n-1)}a_{n-3}$.
+i.e. $a_n = \frac{1}{n(n-1)}a_{n-3}$ with $a_{-1},a_{-2},\dots=0$ giving $a_{3n+2}=0$.
 Thus, $a_{3n} = \frac{a_{3n-3}}{3n(3n-1)} = \frac{1}{3n(3n-1) (3n-3)(3n-4) \dots 3\cdot 2} a_0 = \frac{\Gamma\kla*{\frac{2}{3}}a_0}{3^nn! 3^n \Gamma\kla*{n+\frac{2}{3}}}$.
 TODO Lec6 page 4 Airy
 }

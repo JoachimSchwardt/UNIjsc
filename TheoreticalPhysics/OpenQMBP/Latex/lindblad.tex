@@ -1,0 +1,48 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+
+\newcommand*{\Title}{Lindblad Master Equation}
+\newcommand*{\Author}{Joachim Schwardt}
+
+\input{preamble_shared}
+\input{preamble}
+
+%\titlehead{titlehead}
+\subject{Open Quantum Many-Body Physics}
+\title{\Title}
+\author{\Author}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Fundamental Properties of Lindblad Superoperators}
+Consider the dissipator for a single channel of the Lindblad master equation,
+\begin{align}
+\mathcal{L}\klb*{X} &= 2LXL^\dagger - \klc*{X,L^\dagger L} = \klb*{LX, L^\dagger} + \klb*{L, XL^\dagger}.
+\end{align}
+To show that this superoperator is completely dissipative, i.e. $\brb*{X}{\mathcal{L}_\text{H}\klb*{X}} \le 0$ where $\mathcal{L}_\text{H} = \frac{1}{2} \kla*{\mathcal{L} + \mathcal{L}^\dagger}$ is the Hermitian part and $\brb*{A}{B} = \tr \klc*{A^\dagger B}$, we can explicitly compute ($\tr\klc*{a\klb*{b,cd}} = \tr\klc*{\klb*{a,b}cd}$)%\footnote{$\tr\klc*{a\klb*{b,cd}} = \tr\klc*{abcd - bacd} = \tr\klc*{\klb*{a,b}cd}$}
+\begin{align}
+\brb*{X}{\mathcal{L}_\text{H}\klb*{X}} &= \frac{1}{2} \tr\klc*{X^\dagger \klb[\big]{LX, L^\dagger} + X^\dagger \klb[\big]{L, XL^\dagger} + X^\dagger \klb[\big]{L^\dagger X, L} + X^\dagger \klb[\big]{L^\dagger, XL}}\\
+&= \frac{1}{2} \tr\klc*{-\klb[\big]{L^\dagger, X^\dagger} LX + \klb[\big]{X^\dagger, L} XL^\dagger - \klb[\big]{X^\dagger, L}L^\dagger X + \klb[\big]{X^\dagger, L^\dagger} XL}\\
+&= -\frac{1}{2} \tr\klc*{\klb[\big]{X,L}^\dagger \klb[\big]{X,L} + \klb[\big]{X, L^\dagger}^\dagger \klb[\big]{X, L^\dagger}} = -\frac{1}{2} \bigl\| \klb[\big]{X,L} \bigr\|^2 - \frac{1}{2} \bigl\| \klb[\big]{X,L^\dagger} \bigr\|^2 \le 0.
+\end{align}
+Thus, vectorizing the matrices as $X\equiv \Ket{x}$, the variational optimum of the Rayleigh quotient $R\kla*{x} = \frac{\brc*{x}{\mathcal{L}}{x}}{\brb*{x}{x}}$ with respect to maximal real part is guaranteed to correspond to the steady state of the Lindbladian.
+This is because the numerical range $W(\mathcal{L}) = \klc*{R(x) : x\neq 0}$ is restricted to the left half of the complex plane when the hermitian part of the matrix\footnote{the equivalent of our superoperator in the vectorized language is a matrix} is negative semi-definite.
+Note that one may still encounter local minima, i.e. while the global minimum is well-defined by the optimization of the Rayleigh quotient, it may be hard to obtain in practice.
+
+How can we move beyond the steady state?
+Say that our optimization algorithm returns $\Ket{0}$ and penalizing this state with $\mathcal{L} \rightarrow \mathcal{L} + w\oper{0}{0}$ and $w>0$ returns $\Ket{1} = \Ket{1(w)}$.
+Writing $\Ket{x} = \alpha \Ket{0} + \Ket{1}$ then allows us to formulate the optimization problems
+\begin{align}
+\bigl\| E\Ket{x} - \mathcal{L}\Ket{x} \bigr\| \qquad\text{and} \qquad \bigl\| E^2\Ket{x} - \mathcal{L}^2\Ket{x} \bigr\|.
+\end{align}
+(it seems I do not understand Tim's idea after all..)
+
+\end{document}
