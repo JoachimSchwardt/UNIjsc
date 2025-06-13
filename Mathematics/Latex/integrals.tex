@@ -42,6 +42,21 @@ Thus we find that there exists some $C>0$ such that
 \begin{align}
 |I_\Gamma| &\le C \frac{R}{R^N} \intx{0}{\frac{\pi}{2}}{ \powe{-|a| R \frac{2t}{\pi} }}{t} = \frac{C\pi}{2|a|} \frac{1 - \powe{-|a|R}}{R^N} \koml{R\rightarrow\infty}{\longrightarrow} 0.
 \end{align}
+\subsubsection{Generalized Pythagorean Weight}
+Consider three points on a unit circle forming a triangle with angles $x,y,z$.
+Then, for $a>1$, one can show that %https://math.stackexchange.com/questions/5072901/is-px2-y2-z2-log-2-where-x-y-z-are-the-angles-of-a-triangle
+\begin{align}
+P\kla*{x^a+y^a > z^a} &= \frac{1}{2} + \intx{0}{1}{\frac{1}{\kla*{1+x+\sqrt[a]{1-x^a}}^2}}{x} \equiv \frac{1}{2} + f(a).
+\end{align}
+For $a=1$, this clearly gives $\frac{3}{4}$ and for $a=2$ one can show that the probability is $\log(2)$.
+Performing the substitution $y=x^a$ gives
+\begin{align}
+f(a) &= \intx{0}{1}{\frac{1}{\kla*{1+y^{1/a} + \kla*{1-y}^{1/a}}^2}\frac{1}{a} y^{\frac{1}{a}-1} }{y}%\\ &= \intx{0}{\infty}{\frac{1}{a} u \powe{-u} \intx{0}{1}{ \powe{-uy^{1/a} - u(1-y)^{1/a}} y^{\frac{1}{a}-1} }{y}}{u}
+\end{align}
+%Substituting $y^a=1-x^a$ gives $ay^{a-1} \d y = -ax^{a-1} \d x$ so $\d x = -y^{a-1} \frac{(1-y^a)^{1/a}}{1-y^a} \d y$ and
+%\begin{align}
+%f(a) &= \intx{0}{1}{\frac{ y^{a-1} \kla*{1-y^a}^{1/a-1}}{\kla*{1 + y + \sqrt[a]{1-y^a}}^2} }{y}
+%\end{align}
 \subsection{Rational integrals}
 \subsubsection{Lorentz integrals}
 Consider

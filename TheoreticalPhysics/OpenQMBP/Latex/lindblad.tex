@@ -38,11 +38,21 @@ This is because the numerical range $W(\mathcal{L}) = \klc*{R(x) : x\neq 0}$ is 
 Note that one may still encounter local minima, i.e. while the global minimum is well-defined by the optimization of the Rayleigh quotient, it may be hard to obtain in practice.
 
 How can we move beyond the steady state?
-Say that our optimization algorithm returns $\Ket{0}$ and penalizing this state with $\mathcal{L} \rightarrow \mathcal{L} + w\oper{0}{0}$ and $w>0$ returns $\Ket{1} = \Ket{1(w)}$.
-Writing $\Ket{x} = \alpha \Ket{0} + \Ket{1}$ then allows us to formulate the optimization problems
+Say that our optimization algorithm returns the correct steady state $\Ket{0}$ with $\|\mathcal{L}\Ket{0}\| < \epsilon$ for some $\epsilon\ll 1$.
+Penalizing this state with $\mathcal{L} \rightarrow \mathcal{L} + w\oper{0}{0}$ and $w>0$ then yields $\Ket{x(w)}$, which we can express as
 \begin{align}
-\bigl\| E\Ket{x} - \mathcal{L}\Ket{x} \bigr\| \qquad\text{and} \qquad \bigl\| E^2\Ket{x} - \mathcal{L}^2\Ket{x} \bigr\|.
+\Ket{x(w)} &= \sum_{n\ge 0} c_n(w) \Ket{n}
 \end{align}
-(it seems I do not understand Tim's idea after all..)
+with $c_n(w) = \brb*{n}{x(w)}$ and the unknown true eigenstates $\Ket{n}$.
+%Writing $\Ket{x} = \alpha \Ket{0} + \Ket{1}$ then allows us to formulate the optimization problems
+%\begin{align}
+%\bigl\| E\Ket{x} - \mathcal{L}\Ket{x} \bigr\| \qquad\text{and} \qquad \bigl\| E^2\Ket{x} - \mathcal{L}^2\Ket{x} \bigr\|
+%\end{align}
+Assuming that only $n=0,1$ contribute, i.e. $c_1\Ket{1} = \Ket{x} - c_0\Ket{0}$, the optimization of $\| E\Ket{x} - \mathcal{L}\Ket{x} \|$ leads to
+\begin{align}
+\min \left\| \kla*{E - E_1}c_1 \Ket{1} + Ec_0\Ket{0} \right\|^2 &= \min E^2\abs*{c_0}^2 + \kla*{E-E_1}^2\abs*{c_1}^2 + 2\Re\klc*{E(E-E_1)c_0c_1\brb*{0}{1}}.
+\end{align}
+Because the eigenstates are not orthogonal, the relation between $c_0,c_1$ is not that simple.
+Somehow this makes no sense
 
 \end{document}

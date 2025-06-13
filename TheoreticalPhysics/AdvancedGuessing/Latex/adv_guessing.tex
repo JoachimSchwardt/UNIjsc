@@ -1133,7 +1133,104 @@ Series expansion gives
 0 &= \sum x^n \klc*{a_{n+2}(n+1)(n+2)-a_{n-1}},
 \end{align}
 i.e. $a_n = \frac{1}{n(n-1)}a_{n-3}$ with $a_{-1},a_{-2},\dots=0$ giving $a_{3n+2}=0$.
-Thus, $a_{3n} = \frac{a_{3n-3}}{3n(3n-1)} = \frac{1}{3n(3n-1) (3n-3)(3n-4) \dots 3\cdot 2} a_0 = \frac{\Gamma\kla*{\frac{2}{3}}a_0}{3^nn! 3^n \Gamma\kla*{n+\frac{2}{3}}}$.
-TODO Lec6 page 4 Airy
+Thus,
+\begin{align}
+a_{3n} &= \frac{a_{3n-3}}{3n(3n-1)} = \frac{1}{3n(3n-1) (3n-3)(3n-4) \dots 3\cdot 2} a_0 = \frac{\Gamma\kla*{\frac{2}{3}}a_0}{3^n (1)_n 3^n \kla*{\frac{2}{3}}_n},\\
+a_{3n+1} &= \frac{a_{3n-2}}{(3n+1)3n} = \frac{a_1}{3^n \kla*{\frac{4}{3}}_n 3^n \kla*{1}_n}.
+\end{align}
+The general solution is then given by the series representation
+\begin{align}
+y(x) &= a_0 \sum_{n\ge 0} \frac{x^{3n}}{9^n n! \kla*{\frac{2}{3}}_n} + a_1 \sum_{n\ge 0} \frac{x^{3n+1}}{9^n n! \kla*{\frac{4}{3}}_n},
+\end{align}
+where the two components are the linearly independent fundamental solutions.
+\note{ \begin{enumerate}
+\item the Airy equation has no singular points, so we expect an infinite \gls{roc}; indeed, $\abs*{\frac{1}{9(n+1) \kla*{n+k}}} \longrightarrow 0$ ($k\in\klc*{2/3, 4/3}$)
+\item as $|x|$ gets smaller, the expansion converges faster, although the additional factorial means that the series globally converges much faster than e.g. the exponential series
+\item the constants $a_0,a_1$ are determined by \gls{ic} (or from numerics perspective may be extracted from data points)
+\item it is conventional to define the Airy functions as 
+\begin{align}
+\text{Ai}(x) &= 3^{-2/3} \sum_{n\ge 0} \frac{x^{3n}}{9^n n! \Gamma\kla*{n+\frac{2}{3}}} - 3^{-4/3} \sum_{n\ge 0} \frac{x^{3n}}{9^n n! \Gamma\kla*{n+\frac{4}{3}}},\\
+\text{Bi}(x) &= 3^{-1/6} \sum_{n\ge 0} \frac{x^{3n}}{9^n n! \Gamma\kla*{n+\frac{2}{3}}} - 3^{-5/6} \sum_{n\ge 0} \frac{x^{3n}}{9^n n! \Gamma\kla*{n+\frac{4}{3}}}
+\end{align}
+\end{enumerate}
 }
+}
+\subsection{Local behavior near regular singular points}
+\example{Taylor series breakdown}{$y'' + \frac{1}{4x^2}y=0$}{We have a regular singular point at $x=0$.
+The series ansatz leads to
+\begin{align}
+0 &= \sum_{n\ge 0} a_n \klc*{n(n-1)x^{n-2} + \frac{1}{4} x^{n-2}},
+\end{align}
+which gives either $a_n=0$ or $n(n-1)=-\frac{1}{4}$; since the latter is impossible, we only obtain the trivial solution $y=0$.
+
+Cure: Fuchs said that at least one solution must have $y(x)=(x-x_0)^\alpha A(x)$ where $A(x)$ is analytic at the regular singular point $x_0$ and $\alpha$ is the indicial exponent.
+Here, we have $x_0=0$ and find
+\begin{align}
+0 &= \sum_{n\ge 0} a_n \klc*{(n+\alpha)(n+\alpha-1)x^{n+\alpha-2} + \frac{1}{4} x^{n+\alpha-2}},
+\end{align}
+giving $\alpha(\alpha-1) = -\frac{1}{4}$ at $n=0$, i.e. $\alpha = \frac{1}{2}$.
+Thus, $a_n=0$ for $n\ge 1$ since $\kla*{n+\frac{1}{2}} \kla*{n-\frac{1}{2}} + \frac{1}{4} > 0$ and we have $y(x) = a_0\sqrt{x}$ with an arbitrary constant $a_0$.
+\note{We will later show that there is another linearly independent solution given by $y(x) = b\sqrt{x} \log(x)$}
+}
+\subsubsection{Frobenius Method for second order ODEs}
+Consider 
+\begin{align}
+y'' + \frac{p(x)}{x-x_0}y' + \frac{q(x)}{(x-x_0)^2}y &= 0
+\end{align}
+where $p,q$ are analytic at $x_0$.
+Then this ODE has a regular singular point at $x_0$ and the series $y(x) = (x-x_0)^\alpha A(x)$ has $A(x_0)=a_0\neq 0$.
+Inserting yields
+\begin{align}
+0 &= \sum_{n\ge 0} a_n \klc*{(n+\alpha)(n+\alpha-1) + p(x) (n+\alpha) + q(x)} (x-x_0)^{n+\alpha-2}.
+\end{align}
+The lowest order term, $(x-x_0)^{\alpha-2}$, has coefficient $P(\alpha) a_0 = 0$ with $P(\alpha) = \alpha^2 + (p_0-1)\alpha + q_0$.
+More generally, we find
+\begin{align}
+P(\alpha+n)a_n &= -\sum_{k=0}^{n-1} \kla*{p_{n-k} (\alpha+k) + q_{n-k}}a_k,
+\end{align}
+which can only be solved if the new term $P(\alpha+n) \neq 0$.
+\note{If we let $\alpha=\alpha_1$ with $\alpha_1,\alpha_2$ being the roots of $P(\alpha)=0$ and $\Re \alpha_1 \ge \Re \alpha_2$, then $P(\alpha+n)\neq 0$ and the resulting series is of Frobenius form (this is why always one solution of this form must exist).}
+\example{Modified Bessel equation}{$y'' + \frac{1}{x}y' - \kla*{1 + \frac{\nu^2}{x^2}}y = 0$}{We have a regular singular point at $x=0$.
+Series ansatz gives
+\begin{align}
+0 &= \sum_{n\ge 0} a_n \klc*{(n+\alpha)(n+\alpha-1) + (n+\alpha) - \nu^2 - x^2} x^{n+\alpha-2}\\
+&= \sum_{n\ge 0} x^{n+\alpha-2} \klc*{a_n \klb*{(n+\alpha)^2-\nu^2} - a_{n-2} \Theta(n-2)}.
+\end{align}
+Here, $n=0$ yields $P(\alpha)=\alpha^2-\nu^2$ (so $\alpha = \pm \nu$) and $n=1$ yields $P(\alpha+1)a_1 = 0$ (so $a_1=0$ if we use $\alpha=+\nu$).
+The recursion then reads
+\begin{align}
+a_{2n} &= \frac{a_{2n-2}}{(2n+\alpha)^2-\nu^2} = \frac{a_{2n-2}}{4n(n+\nu)} = \frac{a_0}{4^n (1)_n (1+\nu)_n},
+\end{align}
+which results in $y(x) = a_0 \Gamma(\nu+1) x^\nu \sum_{n\ge 0} \frac{1}{n!\Gamma(n+\nu+1)} \kla*{\frac{x}{2}}^{2n}$ and one defines
+\begin{align}
+I_\nu(x) &= \sum_{n\ge 0} \frac{1}{n!\Gamma(n+\nu+1)} \kla*{\frac{x}{2}}^{2n}.
+\end{align}
+By the ratio test, we once again have infinite \gls{roc}.
+
+For $\alpha_2=-\nu$, we find another linearly independent solution.
+However, this only works if $\alpha_1-\alpha_2=2\nu$ is not an integer; otherwise, we eventually have $P(\alpha_2+n)=0$.
+}
+In general, whenever $\alpha_1-\alpha_2$ is a positive integer $N$, we eventually have $P(\alpha_2+N)=P(\alpha_1)=0$, terminating the recursion and giving a linearly dependent answer.
+To summarize,
+\begin{enumerate}
+\item  if $\alpha_1\neq \alpha_2$ and $\alpha_1-\alpha_2$ is not an integer, there are two linearly independent solutions (e.g. $I_\nu$ and $I_{-\nu}$) in Frobenius form
+\item if $\alpha_1=\alpha_2$ we have one Frobenius solution
+\item if $\alpha_1-\alpha_2$ is an integer and the RHS is not zero, we have one Frobenius solution
+\item if $\alpha_1-\alpha_2$ is an integer and the RHS is zero, we have once again two linearly independent Frobenius solutions
+\end{enumerate}
+Let us consider the second case more closely, i.e. $\alpha_1=\alpha_2$ and $P(\alpha)=\kla*{\alpha-\alpha_1}^2$.
+Writing the differential operator as $L$, we have $Ly = a_0(x-x_0)^{\alpha-2}P(\alpha)$ for every $\alpha$ (and in particular, if $P(\alpha)=0$ this corresponds to $y$ being the standard Frobenius solution of the original ODE).
+Differentiating the RHS with respect to $\alpha$, we find $\klb*{(\alpha-2) \log(x-x_0) + \frac{2}{\alpha-\alpha_1}} P(\alpha)$ which vanishes at $\alpha_1$.
+Thus, $L\frac{\partial}{\partial \alpha}y(x,\alpha)$ also vanishes at $\alpha=\alpha_1$, giving us a new linearly independent solution (test by Wronskian determinant!)
+\begin{align}
+y(x,\alpha_1)\log\kla*{x-x_0} + \sum_{n\ge 0} a_n'(\alpha_1) \kla*{x-x_0}^{n+\alpha_1}.
+\end{align}
+Applying this to the modified Bessel function for $\nu=0$ gives $P(\alpha)=\alpha^2$, i.e. $\alpha=0$.
+The first solution is $I_0(x) = \sum_{n\ge 0} \frac{x^{2n}}{4^n n!^2}$ and we have $a_0(\alpha)=a_0$, $a_{2n}(\alpha) = \frac{a_0}{(2n+\alpha)^2 \dots (2+\alpha)^2}$ and $a_{2n+1}=0$.
+Writing $b_{2n} = \frac{\partial}{\partial \alpha} a_{2n}\Big\vert_{\alpha=0}$, we obtain $b_0=b_{2n+1}=0$.
+
+TODO: Comment on explicit formula and $K_\nu(x)$ definition.
+
+Case 3: $\alpha_1-\alpha_2=N$ and RHS is zero.
+Then, TODO Lecture 6 page 10 (this is very painful... is this really necessary? Are such cases really that common?)
 \end{document}
