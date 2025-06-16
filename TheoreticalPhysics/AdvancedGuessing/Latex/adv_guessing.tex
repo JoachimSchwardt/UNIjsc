@@ -44,6 +44,8 @@
 \newcommand{\note}[1]{\begin{tcolorbox}[colback=colorbackgroundnote,colframe=colornote, breakable,enhanced]#1\end{tcolorbox}}
 \newcommand{\example}[3]{\begin{tcolorbox}[colback=colorbackgroundexample,colframe=colorexample, breakable,enhanced,title={\textbf{#1}: #2.}]#3\end{tcolorbox}}
 
+\newcommand{\p}{\text{p}}
+
 \begin{document}
 
 %\begin{titlepage}
@@ -1210,13 +1212,17 @@ By the ratio test, we once again have infinite \gls{roc}.
 For $\alpha_2=-\nu$, we find another linearly independent solution.
 However, this only works if $\alpha_1-\alpha_2=2\nu$ is not an integer; otherwise, we eventually have $P(\alpha_2+n)=0$.
 }
-In general, whenever $\alpha_1-\alpha_2$ is a positive integer $N$, we eventually have $P(\alpha_2+N)=P(\alpha_1)=0$, terminating the recursion and giving a linearly dependent answer.
+In general, whenever $\alpha_1-\alpha_2$ is a positive integer $N$, we eventually have $P(\alpha_2+N)=P(\alpha_1)=0$, terminating the recursion in
+\begin{align}
+P\kla*{\alpha_2+N}a_N &= 0 \cdot a_N = -\sum_{k=0}^{N-1} \kla*{(\alpha+k)p_{N-k} + q_{N-k}}a_k \label{eqn:ODE:frobenius_recursion}
+\end{align}
+and giving a linearly dependent answer.
 To summarize,
 \begin{enumerate}
 \item  if $\alpha_1\neq \alpha_2$ and $\alpha_1-\alpha_2$ is not an integer, there are two linearly independent solutions (e.g. $I_\nu$ and $I_{-\nu}$) in Frobenius form
 \item if $\alpha_1=\alpha_2$ we have one Frobenius solution
-\item if $\alpha_1-\alpha_2$ is an integer and the RHS is not zero, we have one Frobenius solution
-\item if $\alpha_1-\alpha_2$ is an integer and the RHS is zero, we have once again two linearly independent Frobenius solutions
+\item if $\alpha_1-\alpha_2$ is an integer and the RHS in \autoref{eqn:ODE:frobenius_recursion} is not zero, we have one Frobenius solution
+\item if $\alpha_1-\alpha_2$ is an integer and the RHS in \autoref{eqn:ODE:frobenius_recursion} is zero, we have once again two linearly independent Frobenius solutions
 \end{enumerate}
 Let us consider the second case more closely, i.e. $\alpha_1=\alpha_2$ and $P(\alpha)=\kla*{\alpha-\alpha_1}^2$.
 Writing the differential operator as $L$, we have $Ly = a_0(x-x_0)^{\alpha-2}P(\alpha)$ for every $\alpha$ (and in particular, if $P(\alpha)=0$ this corresponds to $y$ being the standard Frobenius solution of the original ODE).
@@ -1227,10 +1233,103 @@ y(x,\alpha_1)\log\kla*{x-x_0} + \sum_{n\ge 0} a_n'(\alpha_1) \kla*{x-x_0}^{n+\al
 \end{align}
 Applying this to the modified Bessel function for $\nu=0$ gives $P(\alpha)=\alpha^2$, i.e. $\alpha=0$.
 The first solution is $I_0(x) = \sum_{n\ge 0} \frac{x^{2n}}{4^n n!^2}$ and we have $a_0(\alpha)=a_0$, $a_{2n}(\alpha) = \frac{a_0}{(2n+\alpha)^2 \dots (2+\alpha)^2}$ and $a_{2n+1}=0$.
-Writing $b_{2n} = \frac{\partial}{\partial \alpha} a_{2n}\Big\vert_{\alpha=0}$, we obtain $b_0=b_{2n+1}=0$.
-
-TODO: Comment on explicit formula and $K_\nu(x)$ definition.
-
-Case 3: $\alpha_1-\alpha_2=N$ and RHS is zero.
-Then, TODO Lecture 6 page 10 (this is very painful... is this really necessary? Are such cases really that common?)
+Writing $b_{2n} = \frac{\partial}{\partial \alpha} a_{2n}\Big\vert_{\alpha=0}$, we obtain $b_0=b_{2n+1}=0$ and
+\begin{align}
+b_{2n} &= \partial_\alpha \frac{a_0}{(\alpha+2n)^2 (\alpha+2n-2)^2 \dots} \Big\vert_{\alpha=0} \equiv a_0 \partial_\alpha \frac{1}{f(\alpha)^2} \Big\vert_{\alpha=0}\\
+&= -\frac{2a_0}{f(0)^2} \frac{f'(0)}{f(0)} = -\frac{2a_0}{f(0)^2} \sum_{k=1}^n \frac{1}{2k} = -\frac{H_na_0}{4^n n!^2},
+\end{align}
+where $H_n=\sum_{k=1}^n \frac{1}{k}$ is the $n$-th harmonic number.
+Therefore, we find
+\begin{align}
+\partial_\alpha y\Big\vert_{\alpha=0} &= \log(x)y(x,0) - a_0\sum_{n\ge 0} \frac{H_n}{n!^2} \kla*{\frac{x}{2}}^{2n},
+\end{align}
+and $a_0=-1$ gives (adding another factor from the first solution $y_1=I_0$)
+\begin{align}
+y_2(x) &= -\kla*{\gamma - \log 2}I_0 - \log(x)I_0 + \sum_{n\ge 0} \frac{H_n}{n!^2} \kla*{\frac{x}{2}}^{2n} = -\kla*{\gamma + \log \frac{x}{2}}I_0 + \sum_{n\ge 0} \frac{H_n}{n!^2} \kla*{\frac{x}{2}}^{2n} \equiv K_0(x).
+\end{align}
+\note{We can define $K_\nu(x) = \frac{\pi}{2\sin(\pi\nu)} \kla*{I_{-\nu}(x) - I_\nu(x)}$ as a linearly independent solution of the modified Bessel equation.}
+Case 3: $\alpha_1-\alpha_2=N$ and RHS in \autoref{eqn:ODE:frobenius_recursion} is not zero.
+Then, $P(\alpha)=\kla*{\alpha-\alpha_1}\kla*{\alpha-\alpha_2}$ gives $P'(\alpha_1)=N>0$. 
+Because we have $y_1=a_0P(\alpha)(x-x_0)^{\alpha-2}$,
+\begin{align}
+L\kla*{\partial_\alpha y(x,\alpha) \Big\vert_{\alpha=\alpha_1}} &= a_0 P'(\alpha_1) \kla*{x-x_0}^{\alpha-2} = a_0 P'(\alpha_1) \kla*{x-x_0}^{\alpha_2+N-2}.
+\end{align}
+This means that $\partial_\alpha y$ is a particular solution to $Ly=\text{RHS}$, but we are looking for a homogeneous one.
+Idea: Find a second particular solution and subtract them!
+Let this second function be $\sum_{n\ge 0} c_n(x-x_0)^{n+\alpha_2}$.
+Then we get
+\begin{itemize}
+\item $\kla*{x-x_0}^{\alpha_2-2}$: $P(\alpha_2)c_0 = 0\cdot c_0 = 0$, so $c_0$ is an arbitrary constant
+\item $\kla*{x-x_0}^{\alpha_2+n-2}$: $P(\alpha_2+n)c_n = -\sum_{k=0}^{n-1} \kla*{(\alpha_2+k) p_{n-k} + q_{n-k}}c_k$ for $n\neq 0,N$
+\item $\kla*{x-x_0}^{\alpha_2+N-2}$: $P(\alpha_2+N)c_N = 0\cdot c_N + \sum_{k=0}^{N-1} \kla*{(\alpha_2+k) p_{N-k} + q_{N-k}}c_k = a_0P'(\alpha_1)$ (this is the RHS term, i.e. the particular part!), so $c_N$ is also arbitrary and $a_0 = \frac{1}{P'(\alpha_1)} \sum_{k=0}^{N-1} \kla*{(\alpha_2+k)p_{N-k} + q_{N-k}}c_k$
+\end{itemize}
+We can now determine the $c_n$,
+\begin{align}
+y(x) &= \sum_{n\ge 0} c_n \kla*{x-x_0}^{\alpha_2+n} - \partial_\alpha y(x,\alpha)\Big\vert_{\alpha=\alpha_1}.
+\end{align}
+\example{Modified Bessel function}{order $\nu=1$}{$\partial_\alpha y(x,\alpha)\big\vert_{\alpha=\alpha_1} = \dots$ and $a_0(\alpha)a_0$, $a_{2n+1}(\alpha)=0$ and
+\begin{align}
+a_{2n}(\alpha) &= \frac{a_{2n-2}}{(\alpha+2n)^2-1} = a_0 \prod_{k=1}^n \frac{1}{(\alpha+2k)^2-1} = \frac{a_0}{2^n \kla*{\frac{\alpha+3}{2}}_n 2^n \kla*{\frac{\alpha+1}{2}}_n}.
+\end{align} 
+Using the Digamma function $\psi(x) = \frac{\Gamma'(x)}{\Gamma(x)}$ gives 
+\begin{align}
+(x)_n' &= \frac{\Gamma'(x+n)}{\Gamma(x)} - \frac{\Gamma(x+n)\Gamma'(x)}{\Gamma(x)^2} = \klb*{\psi(x+n) - \psi(x)} (x)_n
+\end{align}
+(which is incidentally very reminiscent of logarithms), and we can then write
+\begin{align}
+b_{2n} &= \partial_\alpha a_{2n}(\alpha)\Big\vert_{\alpha=1} = \frac{1}{2} \frac{a_0}{4^n (2)_n (1)_n} \klc*{\frac{-(2)_n'}{(2)_n} + \frac{-(1)_n'}{(1)_n}} = \frac{a_0}{2^{2n+1} (n+1)!n!} \klc*{\psi(2) - \psi(n+2) + \psi(1) - \psi(n+1)}.
+\end{align}
+\note{Digamma series: $\psi(x+1) = -\gamma + \sum_{k\ge 1} \kla*{\frac{1}{k} - \frac{1}{k+x}}$ gives $\psi(x+n+1)-\psi(x+1) = \sum_{k=1}^n\frac{1}{k+x}$}
+Simplifying this expression gives
+\begin{align}
+b_{2n} &= -\frac{a_0}{2^{2n+1} (n+1)!n!} \sum_{k=1}^n\kla*{\frac{1}{k+2} + \frac{1}{k+1}} = -\frac{a_0}{2^{2n+1} (n+1)!n!} \sum_{k=1}^n\kla*{\frac{1}{k+1} + \frac{1}{k}} = -\frac{a_0}{2^{2n} (n+1)!n!} \kla*{H_n + \frac{1}{2n+2} - \frac{1}{2}},
+\end{align}
+yielding $\sum_{n\ge 0} b_{2n}x^{2n+1} = -2a_0 \sum_{n\ge 1}  \frac{1}{n!(n+1)!} \kla*{\frac{x}{2}}^{2n+1} \kla*{H_n + \frac{1}{2n+2}-\frac{1}{2}}$.
+Our two particular solutions are thus
+\begin{align}
+y_1^\p &= a_0\log(x) I_1(x) + a_0 I_1(x) - 2a_0 \sum_{n\ge 1} \frac{1}{n!(n+1)!} \kla*{\frac{x}{2}}^{2n+1} \kla*{H_n + \frac{1}{2n+2}}\\
+y_2^\p &= \sum_{n\ge 0} c_n x^{n-1} = \frac{c_0}{x} + c_2x \quad \kla*{p_0=1,\ q_0=-1,\ q_2=-1,\ \text{all others are zero}}
+\end{align}
+with $y(x) = y_2^p-y_1^p = \dots$ leading to the canonical definition
+\begin{align}
+K_1(x) &= \kla*{\gamma + \log \frac{x}{2}} I_1(x) + \frac{-3}{x} - \sum_{n\ge 1} \frac{1}{n!(n+1)!} \kla*{\frac{x}{2}}^{2n+1} \kla*{H_n + \frac{1}{2n+2}}.
+\end{align}
+}
+Case 4: $\alpha_1-\alpha_2=N$ and RHS in \autoref{eqn:ODE:frobenius_recursion} is zero.
+\example{Modified Bessel function}{order $\nu=\frac{1}{2},\frac{3}{2},\dots$}{$\alpha_1-\alpha_2=1,3,\dots$, e.g. let $\alpha_1-\alpha_2=3\equiv N$ ($\alpha_{1,2} = \pm \frac{3}{2}$).
+Then, $P(\alpha_2+N)a_N = 0 = -\sum_{k=0}^2 \kla*{\kla*{-\frac{3}{2}+k}p_{3-k} + q_{3-k}}a_k = a_1 = 0$, so no problem occurs! (TODO: where does that $a_1$ come from and why is it zero?)
+Proceeding as usual yields two linearly independent solutions in Frobenius form, $I_\nu(x)$ and $I_{-\nu}(x)$.
+}
+\example{Quantum harmonic oscillator}{$\psi'' + \kla*{\epsilon - y^2}\psi = 0$ with \gls{bc} $\psi \rightarrow 0$ as $|y|\rightarrow\infty$}{The asymptotic behavior is $\psi'' \sim y^2\psi$ which is consistent with $\psi\sim \powe{\pm \frac{1}{2}y^2}$ (because $\psi' \sim \pm y\psi$ gives $\psi'' \sim y^2\psi \pm \psi \sim y^2\psi$).
+Only the negative exponent satisfies the \gls{bc}, and now we make a series ansatz $\psi(y) = \powe{-\frac{1}{2}y^2}H(y)$.
+This yields
+\begin{align}
+0 &= \powe{-\frac{1}{2}y^2} \kla*{H''(y) - 2yH'(y) + \kla*{\epsilon-1}H(y)}.
+\end{align}
+\note{If $\epsilon=2n+1$ with $n\in\mathbb{N}_0$, this $H$ satisfies the famous Hermite equations.}
+The ODE has an ordinary point at $y=0$ (also at $y$ anywhere else, but $0$ is more useful) and we have
+\begin{align}
+0 &= \sum_{n\ge 0} a_n \klc*{n(n-1)y^{n-2} - 2ny^n + \kla*{\epsilon-1}y^n} = \sum_{n\ge 0} y^n \klc*{a_{n+2} (n+2)(n+1) - \klb*{2n+1 - \epsilon} a_n} y^n
+\end{align}
+giving $a_{n+2} = \frac{2n+1-\epsilon}{(n+2)(n+1)}a_{n}$ and
+\begin{align}
+H(y) &= a_0 \klc*{1 + \frac{1-\epsilon}{2}y^2 + \frac{(5-\epsilon)(1-\epsilon)}{4!}y^4 + \dots} + a_1 \klc*{y + \frac{3-\epsilon}{3!}y^3 + \frac{(7-\epsilon)(3-\epsilon)}{5!}y^5 + \dots},
+\end{align}
+which is a series consisting of two linearly independent solutions.
+However, these infinite series are not physical solutions, because the dominant behavior of $H(y)$ is determined by $a_{2n} \sim \frac{1}{n} a_{2n-2}$ giving $H(y) \sim a_0 \powe{y^2}$ (we set $a_1=0$ for convenience).
+This results in $\psi(y)\sim a_0\powe{\frac{1}{2}y^2}$.
+To avoid this divergent solution, the series must terminate at finite $n$, giving the additional (quantized!) condition $\epsilon=2N+1$ for $N\in\mathbb{N}_0$.
+}
+\example{Hydrogen Atom}{with charge $Z$}{The Schrödinger equation in spherical coordinates reads
+\begin{align}
+E\psi &= -\frac{\hbar^2}{2M} \frac{1}{r} \partial_r^2 r\psi + \kla*{\frac{L^2}{2Mr^2} + V(r)}\psi
+\end{align}
+with $\nabla^2 = \frac{1}{r} \partial_r^2 r - \frac{1}{r^2}L^2$, and using the product ansatz $\psi = R(r)Y(\theta,\phi)$ this can be separated into
+\begin{align}
+L^2 Y &= \lambda \hbar^2 Y\\
+E &= -\frac{\hbar^2}{2M} \frac{1}{rR} \partial_r^2 rR + \frac{1}{2Mr^2}\lambda.
+\end{align}
+The $\phi$-dependence can be extracted by splitting off the factor $\powe{\i m\phi}$ with $m\in\mathbb{Z}$ from periodic boundary conditions
+}
+TODO Lecture 6 page 14
 \end{document}
