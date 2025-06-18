@@ -1324,12 +1324,75 @@ To avoid this divergent solution, the series must terminate at finite $n$, givin
 \begin{align}
 E\psi &= -\frac{\hbar^2}{2M} \frac{1}{r} \partial_r^2 r\psi + \kla*{\frac{L^2}{2Mr^2} + V(r)}\psi
 \end{align}
-with $\nabla^2 = \frac{1}{r} \partial_r^2 r - \frac{1}{r^2}L^2$, and using the product ansatz $\psi = R(r)Y(\theta,\phi)$ this can be separated into
+with $\nabla^2 = \frac{1}{r} \partial_r^2 r - \frac{1}{r^2}L^2$, and using the product ansatz $\psi = R(r)Y(\theta,\phi)$ this can be separated into ($\hbar=1$)
 \begin{align}
-L^2 Y &= \lambda \hbar^2 Y\\
+L^2 Y &= \lambda Y\\
 E &= -\frac{\hbar^2}{2M} \frac{1}{rR} \partial_r^2 rR + \frac{1}{2Mr^2}\lambda.
 \end{align}
-The $\phi$-dependence can be extracted by splitting off the factor $\powe{\i m\phi}$ with $m\in\mathbb{Z}$ from periodic boundary conditions
+With $u(r)=rR(r)$, the radial equation becomes
+\begin{align}
+0 &= u'' + \kla*{2M\klb*{E - V(r)} - \frac{\lambda}{r^2}} u.
+\end{align}
+The $\phi$-dependence can be extracted by splitting off the factor $\powe{\i m\phi}$ with $m\in\mathbb{Z}$ from periodic boundary conditions.
+This leaves the ODE
+\begin{align}
+0 &= \frac{1}{\sin(\theta)} \partial_\theta \sin(\theta)\partial_\theta Y + \kla*{\lambda - \frac{m^2}{\sin(\theta)^2}}Y,
+\end{align}
+which by substitution of $x=\cos(\theta)$ can be simplified to
+\begin{align}
+0 &= \partial_x \kla*{1-x^2}\partial_x Y + \kla*{\lambda - \frac{m^2}{1-x^2}}Y,
+\end{align}
+which has a regular singular point at $\pm 1$ and is solved by associated Legendre functions.
+Around $x=1$, we can make the usual ansatz and obtain
+\begin{align}
+0 &= \sum_{n\ge 0} a_n \klc*{(n+\alpha)(n+\alpha-1) + \frac{2x}{x+1} (n+\alpha) - \frac{\lambda}{x+1} (x-1) - \frac{m^2}{(x+1)^2} } (x-1)^{n+\alpha-2}.
+\end{align}
+At order $x^{\alpha-2}$, this gives $\alpha(\alpha-1) + \alpha - \frac{m^2}{4}$ (compare coefficients as $x\rightarrow 1$ to see this), which yields $P(\alpha)=\alpha^2-\frac{m^2}{4}$ with $\alpha=\pm\frac{m}{2}$.
+The singular behavior can be peeled off as $\kla*{x^2-1}^{m/2}$, and for a non-divergent solution we write $Y(x) = \kla*{1-x^2}^{|m|/2} y(x)$.
+This leads to $Y'= \kla*{1-x^2}^{|m|/2} \klb*{y' - \frac{|m|x}{1-x^2} y}$ and
+\begin{align}
+0 &= \kla*{1-x^2}y'' - 2x\kla*{1+|m|} y' + \kla*{\lambda - |m|\kla*{1+|m|}}y.
+\end{align}
+Since $x=0$ is not an ordinary point, we can expand to
+\begin{align}
+0 &= \sum_{n\ge 0} a_n \klc*{n(n-1) x^{n-2} - n(n-1) x^n - 2n\kla*{|m|+1}x^n + \lambda x^n- |m|\kla*{|m|+1}x^n},
+\end{align}
+giving $a_{n} = \frac{(n-2)(n-3) + \kla*{|m|+1}\kla*{|m| + 2n - 4} - \lambda}{n(n-1)} a_{n-2} = \frac{\kla*{n+|m|-2}\kla*{n+|m|-1} - \lambda}{n(n-1)} a_{n-2}$.
+By reverse engineering, this can be identified as the asymptotic series coefficients for $\kla*{1-x^2}^{-|m|}$, and thus $Y$ would diverge at $|x|=1$ unless the series terminates.
+For a physical solution, we therefore demand $\lambda = \ell(\ell + 1)$ for some integer $\ell\ge 0$.
+
+For the radial equation, it is helpful to introduce $a_0=\frac{\hbar}{mc\alpha}$, $x = \frac{mZe^2}{\hbar^2}r$ and $\epsilon = \frac{a_0}{Z^2e^2}E$ with $\alpha = \frac{e^2}{\hbar c}$, leading to the dimensionless equation
+\begin{align}
+0 &= u'' + \kla*{2\epsilon + \frac{2}{x} - \frac{\ell(\ell + 1)}{x^2}} u.
+\end{align}
+Asymptotic behavior from $u''\sim -2\epsilon u$ should be $\powe{-\kappa x}$ with $\kappa = \sqrt{-2\epsilon}$ positive when $\epsilon < 0$ (bound solution).
+Writing $u=\powe{-\kappa x} y$ then gives
+\begin{align}
+0 &= y'' - 2\kappa y' + \kla*{\frac{2}{x} - \frac{\ell (\ell + 1)}{x^2}} y
+\end{align}
+with a regular singular point at $r=0$.
+Thus,
+\begin{align}
+0 &= \sum_{n\ge 0} a_n \klc*{(n+\alpha)(n+\alpha-1) - 2\kappa (n+\alpha) x + 2x - \ell (\ell + 1) } x^{n+\alpha-2}
+\end{align}
+yields $P(\alpha) = \alpha(\alpha-1) - \ell (\ell+1)$ with solutions $\alpha = \ell + 1$ or $\alpha=\ell$ (only the former leads to finite $R=\frac{u(x)}{x}$ at $x=0$).
+The recursion reads $a_n = \frac{2\kappa (n+\ell) - 2}{n^2 + (2\ell + 1)n} a_{n-1}$.
+For large $n$, $a_n \sim \frac{2\kappa}{n} a_{n-1} \sim \frac{(2\kappa)^n}{n!}$ gives $\powe{2\kappa x}$, so convergence once again requires the iteration to stop at finite $n$.
+This yields $\kappa = \frac{1}{N}$ and thus $\epsilon = -\frac{1}{2N^2}$ with $N\ge 1$.
+\note{The function $f = r^{-\ell-1} y$ satisfies 
+\begin{align}
+0 &= x f'' + 2\kla*{\frac{\ell+1}{x}-\kappa}f' + 2\kla*{1 - \kappa \kla*{\ell + 1}}f,
+\end{align}
+which are referred to as the associated Laguerre equations.
 }
-TODO Lecture 6 page 14
+}
+\example{Bessel Functions}{$y'' + \frac{1}{x}y' + \kla*{1 - \frac{\nu^2}{x^2}}y = 0$}{
+\note{$J_\nu(\i x) = \i^{\nu} I_\nu(x)$}
+We have a regular singular point at $x=0$ and the Frobenius ansatz gives
+\begin{align}
+0 &= ...
+\end{align}
+}
+
+TODO Lecture 6 page 18
 \end{document}
