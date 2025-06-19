@@ -1,0 +1,209 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+
+\newcommand*{\Title}{Clebsch-Gordon Coefficients}
+\newcommand*{\Author}{Joachim Schwardt}
+
+\input{preamble_shared}
+\input{preamble}
+
+%\titlehead{titlehead}
+\subject{Quantum Theory}
+\title{\Title}
+\author{\Author}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Tensor Products and Setup}
+Consider two particles with spin operators $\textbf{S}=\kla*{S_x,S_y,S_z}$ on their respective subspace.
+Formally, these subspaces are $\mathcal{H}_1$ and $\mathcal{H}_2$ and the product space is denoted $\mathcal{H} = \mathcal{H}_1 \otimes \mathcal{H}_2$.
+Operators acting on this space take the form
+\begin{align}
+A &= \sum_{j,j'} a_{1,j} a_{2,j'} A_{1,j} \otimes A_{2,j'},
+\end{align}
+where $\klc*{A_{1,j} : j \ge 0}$ is a set of operators that forms a basis for $\mathcal{H}_1$ and similarly $A_{2,j}$ is a basis for $\mathcal{H}_2$.
+Working with such tensor products is done component-wise in each subspace.
+For example, addition and multiplication of operators become
+\begin{align}
+A + B &= \sum_{j,j'} a_{1,j} a_{2,j'} A_{1,j} \otimes A_{2,j'} + \sum_{j,j'} b_{1,j} b_{2,j'} A_{1,j} \otimes A_{2,j'}\\
+&= \sum_{j,j'} \kla*{a_{1,j} a_{2,j'} + b_{1,j} b_{2,j'}} A_{1,j} \otimes A_{2,j'},\\
+AB &= \sum_{j,j'} a_{1,j} a_{2,j'} A_{1,j} \otimes A_{2,j'} \sum_{k,k'} b_{1,k} b_{2,k'} A_{1,k} \otimes A_{2,k'}\\
+&= \sum_{j,j',k,k'} a_{1,j} a_{2,j'}b_{1,j} b_{2,j'} \kla*{A_{1,j} A_{1,k}} \otimes \kla*{A_{2,j'} A_{2,k'}}.
+\end{align}
+The total spin operator for the full system is just the sum of the total spin operators for the subsystems.
+Because addition of operators requires them to live in the same space, we have to extend them first; as an equation,
+\begin{align}
+\textbf{S}_\mathcal{H} &= \textbf{S}_{\mathcal{H}_1} \otimes \mathbbm{1}_{\mathcal{H}_2} + \mathbbm{1}_{\mathcal{H}_1} \otimes \textbf{S}_{\mathcal{H}_2}.
+\end{align}
+From now on, we will omit the subscript signifying the space that an operator lives in, as it is always implicitly defined by the position in the tensor product, i.e. the left operator acts on $\mathcal{H}_1$ and the right operator acts on $\mathcal{H}_2$.
+This also means that we can express the above as
+\begin{align}
+\textbf{S} &= \textbf{S} \otimes \mathbbm{1} + \mathbbm{1} \otimes \textbf{S}.
+\end{align}
+Any equivalent and also often used short-hand notation is $\textbf{S} = \textbf{S}_1 + \textbf{S}_2$, where the identity operators are omitted and the subscript is abbreviated by a number.
+\section{Spin Algebra}
+We are dealing with spin operators, i.e. we know that $\klb*{S_j,S_k}=2\i \epsilon_{jkl}S_l$ ($\hbar=1$) for each subsystem.
+Thus, the total spin operator has\footnote{Note that we can distinguish operators on the full and subsystem by the lack of an explicit tensor product; for example, $\klb*{A,B}$ and $\klb*{A,B} \otimes C$ imply that the first expression has $A,B$ acting on $\mathcal{H}$ while in the second they act on $\mathcal{H}_1$.}
+\begin{align}
+\klb*{S_j, S_k} &= \klb*{S_j\otimes \mathbbm{1} + \mathbbm{1}\otimes S_j, S_k\otimes \mathbbm{1} + \mathbbm{1}\otimes S_k}.
+\end{align}
+Commutators are merely combinations of addition and multiplication, so the tensor rules apply.
+We can also carry out the calculation explicitly to see that
+\begin{align}
+\klb*{A\otimes B, C\otimes D} &= \kla*{A\otimes B} \kla*{C\otimes D} - \kla*{C\otimes D} \kla*{A\otimes B} = \kla*{AC} \otimes \kla*{BD} - \kla*{CA} \otimes \kla*{DB}\\
+&= \klb*{A,C} \otimes BD + CA \otimes \klb*{B,D}.
+\end{align}
+Applying this to the above, we obtain
+\begin{align}
+\klb*{S_j,S_k} &= \klb*{S_j,S_k} \otimes \mathbbm{1}^2 + S_jS_k \otimes \klb*{\mathbbm{1},\mathbbm{1}} + \klb*{S_j,\mathbbm{1}} \otimes \mathbbm{1} S_k + S_j\mathbbm{1} \otimes \klb*{\mathbbm{1}, S_k} + \dots\\
+&= \klb*{S_j,S_k} \otimes \mathbbm{1} + \mathbbm{1}\otimes \klb*{S_j,S_k} = 2\i\epsilon_{jkl} \kla*{S_l\otimes \mathbbm{1} + \mathbbm{1} \otimes S_l} = 2\i\epsilon_{jkl} S_l.
+\end{align} %\kla*{S_j S_k} \otimes \kla*{\mathbbm{1} \mathbbm{1}} - \kla*{S_k S_j} \otimes \kla*{\mathbbm{1} \mathbbm{1}} + \kla*{S_j\mathbbm{1}} \otimes \kla*{\mathbbm{1} S_k} - \kla*{\mathbbm{1} S_j} \otimes \kla*{S_k \mathbbm{1}} + \dots,
+This is significantly less cumbersome in the simplified notation, i.e.
+\begin{align}
+\klb*{S_j,S_k} &= \klb*{S_{1,j} + S_{2,j}, S_{1,k} + S_{2,k}} = \klb*{S_{1,j}, S_{1,k}} + \klb*{S_{2,j}, S_{2,k}} = 2\i \epsilon_{jkl} \kla*{S_{1,l} + S_{2,l}} = 2\i \epsilon_{jkl} S_l.
+\end{align}
+Thus, because the total spin operator still satisfied the same spin algebra as those of the subsystems, we can immediately deduce
+\begin{align}
+\klb*{\textbf{S}^2, S_j} &= 0, \qquad \klb*{S_z, S_\pm} = \pm S_\pm,
+\end{align}
+where $S_\pm = S_x \pm \i S_y$.
+Products of the ladder operators also take their usual form,
+\begin{align}
+S_\mp S_\pm &= \kla*{S_x \mp \i S_y} \kla*{S_x \pm \i S_y} = S_x^2 + S_y^2 \mp \i S_y S_x \pm \i S_x S_y = \textbf{S}^2 - S_z^2 \mp S_z.
+\end{align}
+The action of the ladder operators on the states also follows from the spin algebra, but in preparation for the Clebsch-Gordon coefficients later it is useful to repeat the discussion.
+Our original spin states are $\Ket{s_1,m_1} \in \mathcal{H}_1$ and $\Ket{s_2,m_2} \in \mathcal{H}_2$, where $s_1,s_2$ are the respective total spin (this is a constant!) and $|m_1|\le s_1$ with $S_1^2 \Ket{s_1,m_1} = s_1\kla*{s_1+1}\Ket{s_1,m_1}$ and so on.
+In the full space, we write
+\begin{align}
+\Ket{s_1,m_1,s_2,m_2} &= \Ket{s_1,m_1} \otimes \Ket{s_2,m_2} \equiv \Ket{m_1,m_2} \in \mathcal{H}.
+\end{align}
+Because we intuitively expect the sum of two spins to once again behave (at least similar to) a spin, it is natural to assume that $\textbf{S}^2$ and $S_z$ are compatible with this original basis.
+Indeed, because
+\begin{align}
+\textbf{S}^2 &= \kla*{\textbf{S} \otimes \mathbbm{1} + \mathbbm{1} \otimes \textbf{S}}^2 = \textbf{S}^2 \otimes \mathbbm{1} + \mathbbm{1} \otimes \textbf{S}^2 + 2\textbf{S} \otimes \textbf{S},
+\end{align}
+we find that the squared operator commutes with the squared operator in both subsystems,
+\begin{align}
+\klb*{\textbf{S}^2, \textbf{S}^2 \otimes \mathbbm{1}} &= \klb*{\textbf{S}^2 \otimes \mathbbm{1} + \mathbbm{1} \otimes \textbf{S}^2 + 2\textbf{S} \otimes \textbf{S}, \textbf{S}^2 \otimes \mathbbm{1}} = 2\klb*{\textbf{S}, \textbf{S}^2} \otimes \textbf{S} = 0.
+\end{align}
+Once again in the simplified notation, 
+\begin{align}
+\klb*{\textbf{S}^2, \textbf{S}_1^2} &= \klb*{\textbf{S}_1^2 + \textbf{S}_2^2 + 2\textbf{S}_1 \cdot \textbf{S}_2, \textbf{S}_1^2} = 2\klb*{\textbf{S}_1, \textbf{S}_1^2} \cdot \textbf{S}_2 = 0.
+\end{align}
+We of course also have $\klb*{\textbf{S}^2,S_z} = 0$ from the spin algebra and $\klb*{S_z,\textbf{S}^2\otimes \mathbbm{1}} = 0$ by straightforward calculation.
+Thus, the four operators $\textbf{S}^2,S_z,\textbf{S}^2\otimes \mathbbm{1}, \mathbbm{1} \otimes \textbf{S}^2$ are compatible and we have
+\begin{align}
+\Ket{s,m,s_1,s_2} \equiv \Ket{s,M} \in \mathcal{H}.
+\end{align}
+These states satisfy $\textbf{S}^2 \Ket{s,m} = s(s+1) \Ket{s,m}$ and $S_z\Ket{s,m} = m\Ket{s,m}$, and the ladder operators work as usual.
+Explicitly,
+\begin{align}
+S_zS_\pm\Ket{s,m} &= \kla*{S_\pm S_z + \klb*{S_z,S_\pm}} \Ket{s,m} = \kla*{S_\pm m \pm S_\pm} \Ket{s,m} = \kla*{m\pm 1} S_\pm,
+\end{align}
+i.e. $S_\pm \Ket{s,m} \propto \Ket{s,m\pm 1}$.
+Using the expression for $S_\mp S_\pm$, we can find the constant from
+\begin{align}
+1 &= \brb*{s,m\pm 1}{s,m\pm 1} = \brc*{s,m}{S_\mp S_\pm}{s,m} = \brc*{s,m}{ \kla*{\textbf{S}^2 - S_z^2 \mp S_z}}{s,m} = s(s+1)-m^2\mp m.
+\end{align}
+Therefore,
+\begin{align}
+S_\pm\Ket{s,m} &= \sqrt{s(s+1) - m(m\pm 1)} \Ket{s,m\pm 1} \equiv f_\pm(s,m) \Ket{s,m\pm 1}.
+\end{align}
+The only remaining question is then how these basis states are related to our original basis of $\Ket{m_1,m_2}$.
+\section{Clebsch-Gordon coefficients}
+Because $\Ket{s,m}\in\mathcal{H}$, there must be a representation in terms of the old basis
+\begin{align}
+\Ket{s,m} &= \sum_{m_1} C_{m_1} \Ket{m_1,m_2},
+\end{align}
+where $m_2=m-m_1$ because the left side is in a sector with constant total $S_z$ spin $m$.
+Acting with $\textbf{S}_1^2 \equiv \textbf{S}^2 \otimes \mathbbm{1}$ and $\textbf{S}_2^2$ is not particularly interesting, because the $s_1$ and $s_2$ eigenvalues are common in both bases.
+However, we can extract some meaningful information from
+\begin{align}
+\textbf{S}^2 \Ket{s,m} &= \sum_{m_1} C_{m_1} \kla*{\textbf{S}_1^2 + \textbf{S}_2^2 + 2\textbf{S}_1\cdot \textbf{S}_2} \Ket{m_1,m-m_1} \\
+&= \sum_{m_1} C_{m_1} \klc*{s_1(s_1+1) + s_2(s_2+1) + 2S_{1,k}S_{2,k} }\Ket{m_1,m_2}.
+\end{align}
+For $k=z$, the inner term just gives $2m_1m_2 = 2m_1(m-m_1)$.
+For $k=x,y$, we express the operators via $S_{x} = \frac{1}{2} \kla*{S_{+} + S_{-}}$ and $S_y = \frac{1}{2\i} \kla*{S_+ - S_-}$, which leads to
+\begin{align}
+s(s+1) \Ket{s,m} &= \sum_{m_1} C_{m_1} \klc*{g_{m_1} + S_{1,+} S_{2,-} + S_{1,-} S_{2,+}} \Ket{m_1,m_2}\\
+&= \sum_{m_1} C_{m_1} \bsplit{\klc[\Big]{&g_{m_1}\Ket{m_1,m_2} + f_+(s_1,m_1) f_-(s_2,m_2) \Ket{m_1+1,m_2-1} \\
+&+ f_-(s_1,m_1) f_+(s_2,m_2) \Ket{m_1-1,m_2+1}}}
+\end{align}
+where $g_{m_1} = s_1(s_1+1) + s_2(s_2+1) + 2m_1m_2$.
+Once again expanding the left side and rearranging\footnote{Recall that $m_2=m-m_1$, so $m_1\rightarrow m_1+1$ leads to $m_2\rightarrow m_2-1$.},
+\begin{align}
+0 &= \sum_{m_1} C_{m_1} \bsplit{\klc[\Big]{&\klb*{g_{m_1} - s(s+1)} \Ket{m_1,m_2} + f_+(s_1,m_1) f_-(s_2,m_2) \Ket{m_1+1,m_2-1} \\
+&+ f_-(s_1,m_1) f_+(s_2,m_2) \Ket{m_1-1,m_2+1}}}\\
+&= \sum_{m_1} \bsplit{\klc[\Big]{&-C_{m_1} h_{m_1} + C_{m_1-1} f_+(s_1,m_1-1) f_-(s_2,m_2+1) \\
+&+ C_{m_1+1} f_-(s_1,m_1+1) f_+(s_1,m_2-1)}\Ket{m_1,m_2}.} 
+\end{align}
+where we used an index shift for the second and third term and defined $h_{m_1} = s(s+1) - g_{m_1}$.
+Because the $\Ket{m_1,m_2}$ are basis states, all coefficients in this expansion must vanish.
+This finally yields the recursive identity
+\begin{align}
+C_{m_1} h_{m_1} &= C_{m_1-1} f_+(s_1,m_1-1) f_-(s_2,m_2+1) + C_{m_1+1} f_-(s_1,m_1+1) f_+(s_2,m_2-1).
+\end{align}
+There are only finitely many possible states due to $|m_1|\le s_1$, and in order for the recursion to terminate one needs $h_{m_1}$ to vanish at $m_1=\pm s_1$.
+This leads to the equations
+\begin{align}
+0 &= s(s+1) - s_1(s_1+1) - s_2(s_2+1) - 2m_1m_2,
+\end{align}
+whose solution yields $s = -\frac{1}{2} \pm \sqrt{\frac{1}{4} + s_1(s_1+1) + s_2(s_2+1) + 2m_1m_2}$.
+This is bounded from above and below by the positive and negative root,
+\begin{align}
+s&\le -\frac{1}{2} + \sqrt{\frac{1}{4} + s_1(s_1+1) + s_2(s_2+1) + 2s_1s_2} = -\frac{1}{2} + \sqrt{\kla*{s_1+s_2+\frac{1}{2}}^2} = s_1+s_2,\\
+s&\ge -\frac{1}{2} - \sqrt{\frac{1}{4} + s_1(s_1+1) + s_2(s_2+1) - 2s_1s_2} = -\frac{1}{2} - \sqrt{\kla*{s_1-s_2+\frac{1}{2}}^2} = \abs*{s_1-s_2},
+\end{align}
+so the total spin is restricted to values between $\abs*{s_1-s_2}$ and $s_1+s_2$.
+To unravel the recursion, one can start from the maximal value $m_1=s_1$.
+Then, $C_{m_1+1} = 0$ and we have
+\begin{align}
+C_{s_1} h_{s_1} &= C_{s_1-1} f_+\kla*{s_1, s_1-1} f_-\kla*{s_2,m-s_1+1} = C_{s_1-1} \sqrt{2s_1} \sqrt{s_2^2+s_2 - (m-s_1)(m-s_1+1)}.
+\end{align}
+Choosing an initial value for $C_{s_1}$ (either zero or one, anything else can be done by normalization) then allows to compute all other coefficients one by one.
+And yes, this is best done on a computer.
+\subsection{Spin $\frac{1}{2}$}
+For $s_1=s_2=\frac{1}{2}$, the process is still very manageable.
+We denote $m_1=\pm 1$ as $\pm$, i.e. the four original basis states are $\Ket{++}, \Ket{+-}, \Ket{-+},\Ket{--}$.
+The new states are restricted to $|s_1-s_2|=0\le s \le s_1+s_2=1$, i.e. $s=0$ and $s=1$.
+The singlet state only allows $|m|\le 0$, i.e. one state $\Ket{00}$ and the triplet state has $\Ket{1,1}, \Ket{1,0}, \Ket{1,-1}$.
+Starting with $S=0$, we have $m=0$ and thus
+\begin{align}
+C_{m_1} h_{m_1} &= C_{m_1} \klb*{-\frac{3}{4} - \frac{3}{4} - 2m_1\kla*{0 - m_1}}\\
+&= C_{m_1-1} f_+\kla*{\frac{1}{2}, m_1-1} f_-\kla*{\frac{1}{2}, -m_1+1} + C_{m_1+1} f_-\kla*{\frac{1}{2}, m_1+1} f_+\kla*{\frac{1}{2}, -m_1-1}.
+\end{align}
+For $m_1=+\frac{1}{2}$, this gives $C_{1/2} \klb*{\frac{1}{2} - \frac{3}{2}} = C_{-1/2} f_+\kla*{\frac{1}{2},-\frac{1}{2}} f_-\kla*{\frac{1}{2},\frac{1}{2}}$ (note that $C_{3/2}$ is not allowed), which simplifies to $-C_{1/2} = C_{-1/2}$.
+The equation for $m_1=-\frac{1}{2}$ leads to the same result, so up to normalization we have $C_{1/2} = -C_{-1/2}$.
+Thus, the state is
+\begin{align}
+\Ket{00} &= \mathcal{N} \kla*{C_{1/2} \Ket{m_1=+\frac{1}{2}, m_2=0 - \frac{1}{2}} + C_{-1/2} \Ket{m_1=-\frac{1}{2}, m_2=0 + \frac{1}{2}}} =  \frac{\Ket{+-} - \Ket{-+}}{\sqrt{2}}.
+\end{align}
+For $s=1$, we can start with $m=1$ and $m_1=+\frac{1}{2}$.
+Then,
+\begin{align}
+C_{1/2} h_{1/2} &= C_{1/2} \klb*{2 - \frac{3}{2} - 2 \frac{1}{2} \kla*{1-\frac{1}{2}}} \overset{!}{=} C_{-1/2} f_+\kla*{\frac{1}{2},-\frac{1}{2}} f_-\kla*{\frac{1}{2},\frac{3}{2}} = 0.
+\end{align}
+This does not constrain the coefficients, so we may as well choose $C_{1/2}=1$.
+For $m_1=-\frac{1}{2}$, the equation instead reads
+\begin{align}
+C_{-1/2} h_{-1/2} &= C_{-1/2} \klb*{2 - \frac{3}{2} + \frac{3}{2}} = \text{RHS} = \dots = 0,
+\end{align}
+which eventually leads to $C_{-1/2} = 0$.
+Thus, $\Ket{1,1} = \Ket{++}$ and by symmetry we also have $\Ket{1,-1} = \Ket{--}$.
+For $m=0$ and $m_1=+\frac{1}{2}$, the equation is modified to
+\begin{align}
+C_{1/2} h_{1/2} &= C_{1/2} \klb*{2 - \frac{3}{2} + \frac{1}{2}} \overset{!}{=} C_{-1/2} f_+\kla*{\frac{1}{2},-\frac{1}{2}} f_-\kla*{\frac{1}{2},\frac{1}{2}} = C_{-1/2},
+\end{align}
+which immediately gives $\Ket{1,0} = \frac{\Ket{+-} + \Ket{-+}}{\sqrt{2}}$; checking $m_1=-\frac{1}{2}$ once again gives redundant information.
+This procedure is pretty easy to automate by creating lookup-tables for all possible values of $f_\pm$ for the fixed $s_1,s_2$ and to then start at on end of the ladder $m_1=s_1$ for fixed $s,m$ and to proceed until $m_1=-s_1$.
+
+
+\end{document}

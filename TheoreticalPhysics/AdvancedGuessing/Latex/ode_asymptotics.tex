@@ -1,0 +1,327 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+
+\newcommand*{\Title}{Local behavior and asymptotics of ODEs}
+\newcommand*{\Author}{Joachim Schwardt}
+
+\input{preamble_shared}
+\input{preamble}
+\input{glossary.tex}
+
+%\titlehead{titlehead}
+\subject{Advanced Guessing for Physicists}
+\title{\Title}
+\author{\Author}
+\date{\today}
+
+\usepackage[most]{tcolorbox}
+
+\definecolor{colorbackgrounddefinition}{RGB}{220,220,248}
+\definecolor{colorbackgroundnote}{RGB}{220,248,220}
+\definecolor{colorbackgroundexample}{RGB}{248,220,220}
+\definecolor{colordefinition}{RGB}{0,0,200}
+\definecolor{colornote}{RGB}{0,200,0}
+\definecolor{colorexample}{RGB}{140,0,100}
+
+\newcommand{\definition}[2]{\begin{tcolorbox}[colback=colorbackgrounddefinition,colframe=colordefinition, breakable,enhanced,title=\textbf{#1}.]#2\end{tcolorbox}}
+\newcommand{\note}[1]{\begin{tcolorbox}[colback=colorbackgroundnote,colframe=colornote, breakable,enhanced]#1\end{tcolorbox}}
+\newcommand{\example}[3]{\begin{tcolorbox}[colback=colorbackgroundexample,colframe=colorexample, breakable,enhanced,title={\textbf{#1}: #2.}]#3\end{tcolorbox}}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{The three-dimensional quantum harmonic oscillator}
+Consider the spherically symmetric potential $V=\frac{1}{2}m\omega^2r^2$.
+We know that $\nabla^2=\frac{1}{r}\partial_r^2 r - \frac{1}{r^2}L^2$, so the radial equation reads
+\begin{align}
+ER &= -\frac{1}{2mr} \partial_r^2 rR + \frac{\ell(\ell+1)}{2mr^2} R + VR,
+\end{align}
+where we already assumed to know the solutions to $L^2Y = \ell(\ell+1)Y$ ($\hbar=1$).
+The dimensionless equation follows from $y=\sqrt{m\omega} r$ and is given by
+\begin{align}
+\epsilon R &= -\frac{1}{2y} \partial_y^2 yR + \frac{\ell(\ell+1)}{2y^2}R + \frac{y^2}{2}R
+\end{align}
+with $\epsilon = \frac{E}{\omega}$.
+It is helpful to introduce $u(y)=yR(y)$ and $k(y)^2 = 2\epsilon - y^2 - \frac{\ell(\ell+1)}{y^2}$, giving
+\begin{align}
+0 &= u'' + k^2u.
+\end{align}
+We have a regular singular point at $y=1$, so we make the Frobenius series ansatz $u=\sum_{n\ge 0} a_n y^{n+\alpha}$.
+This gives
+\begin{align}
+0 &= \sum_{n\ge 0} a_n \klc*{(n+\alpha)(n+\alpha-1) + 2\epsilon y^2 - y^4 - \ell(\ell+1)} y^{n+\alpha-2}.
+\end{align}
+At $n=0$ we then find the polynomial $P(\alpha)=\alpha(\alpha-1) - \ell(\ell+1)$ whose zeros are at $\alpha=\ell+1$ and $\alpha=-\ell$.
+The recursion is
+\begin{align}
+\kla*{(n+\alpha)(n+\alpha-1) - \ell(\ell+1)} a_n &= -2\epsilon a_{n-2} + a_{n-4}.
+\end{align}
+Setting $\alpha=\ell+1$, this reduces to
+\begin{align}
+a_n &= \frac{-2\epsilon a_{n-2} + a_{n-4}}{n(n+2\ell+1)}.
+\end{align}
+Defining $b_n=a_{n-2}$ and $c_n=(a_n,b_n)^\transpose$, we also find
+\begin{align}
+c_n &= \kla*{\frac{-2\epsilon a_{n-2} + b_{n-2}}{n(n+2\ell+1)}, a_{n-2}}^\transpose = \frac{1}{n(n+2\ell+1)} M_n c_{n-2}
+\end{align}
+with $M_n = \begin{psmallmatrix} -2\epsilon & 1 \\ n(n+2\ell+1) & 0\end{psmallmatrix}$.
+%Starting at $n=2$ with $a_0\equiv 1$, we have
+%\begin{align}
+%a_2 &= \frac{2\epsilon}{2(2+2\ell + 1)},\\
+%a_4 &= \frac{2\epsilon a_2 - 1}{4(4+2\ell + 1)} = 
+%\end{align}
+%For large $n$, we (roughly) have $M_n\sim \begin{psmallmatrix} 2\epsilon/n^2 & -1/n^2 \\ 1 & 0\end{psmallmatrix}$, giving $M_nM_{n-1} \dots \sim \begin{psmallmatrix} (2\epsilon)^n/n!^2 & -1 \\ n(n+2\ell+1) & 0\end{psmallmatrix}$
+Note that
+\begin{align}
+\dots M_4M_2 &= \dots \begin{pmatrix}
+-2\epsilon & - \\ 4(5+2\ell) & 0
+\end{pmatrix} \begin{pmatrix}
+-2\epsilon & 1 \\ 2(3+2\ell) & 0
+\end{pmatrix} = \dots \begin{pmatrix}
+(2\epsilon)^2 + 2(3+2\ell) & -2\epsilon \\ -2\epsilon 4(5+2\ell) & 4(5+2\ell)
+\end{pmatrix}.
+\end{align}
+Because $c_0=(1,0)^\transpose$, only the top-left entry matters.
+To avoid divergence of the series, we need it to eventually reach zero, and it is at least intuitive that this requires $2\epsilon$ to be an integer.
+But this is also obviously not a remotely plausible strategy for a proper derivation.
+
+In the lecture, we discussed the more general case of $f'' + \frac{p(y)}{y-y_0} f' + \frac{q(y)}{(y-y_0)^2} f = 0$ with analytic $p,q$.
+Here, $y_0=0$, $p\equiv 0$ and $q=y^2k^2 = -\ell(\ell+1) + 2\epsilon y^2 - y^4$, i.e. $q_0=-\ell(\ell+1)$, $q_2 = 2\epsilon$ and $q_4=-1$ with all others being zero.
+The general recursion reads
+\begin{align}
+P(\alpha+n) a_n &= - \sum_{k=0}^{n-1} \kla*{p_{n-k} (\alpha+k) + q_{n-k}}a_k,
+\end{align}
+which in our special case simplifies tremendously to
+\begin{align}
+n(n+2\ell+1) a_n &= -q_2 a_{n-2} - q_4 a_{n-4} = -2\epsilon a_{n-2} + a_{n-4}.
+\end{align}
+Unfortunately, we already knew that...
+
+Using cartesian coordinates and $\psi=X(x)Y(y)Z(z)$, the Schrödinger equation becomes
+\begin{align}
+E &= -\frac{1}{2m} \kla*{\frac{X''}{X} + \frac{Y''}{Y} + \frac{Z''}{Z}} + \frac{m}{2}\omega^2 \kla*{x^2+y^2+z^2}.
+\end{align}
+Clearly, $\frac{X''}{X} - (m\omega x)^2$ must be constant (because nothing else depends on $x$, so the equation must hold at any $y,z$ for arbitrary $x$), and similarly for $Y,Z$.
+This gives the three equations ($x_1 \equiv x$, $x_2 \equiv y$ etc.)
+\begin{align}
+E_j &= -\frac{1}{2m} \frac{X_j''}{X_j} + \frac{m}{2}\omega^2 x_j^2.
+\end{align}
+All of these have the quantized solutions $E_j = \omega \kla*{n_j + \frac{1}{2}}$ with $n_j\in\mathbb{N}_0$ and wavefunctions given by a Gaussian and Hermite polynomials.
+Inserting this back into the original equation, we find
+\begin{align}
+E &= \sum_{j=1}^3 E_j = \omega \kla*{n_1+n_2+n_3 + \frac{3}{2}}.
+\end{align}
+Ignoring the degeneracies for now, we clearly have $\epsilon = N+\frac{3}{2}$ with $N\in\mathbb{N}_0$, and we did not even pick up a major headache along the way; that spherical equation is really rather horrible...
+
+Furthermore, we absolutely \emph{can} also figure out the degeneracy, because we just need to count how many $(n_1,n_2,n_3)$-triples lead to the same integer $N$.
+%This can be done formally, but the pattern is sufficiently simple to be guessed from a few example.
+%For $N=0$, we only have $n_j=0$.
+%For $N=1$, we have $n_j=1$ for one $j$, and $n=0$ for the others, i.e. 3 options.
+%For $N=2$, we have 3 options of the form $(2,0,0)$ and another 3 options of the form $(1,1,0)$.
+%For $N=3$, we have again 3 options $(3,0,0)$, 2 times 3 for $(2,1,0)$ and 1 for $(1,1,1)$.
+%For $N=4$, we have $4 + 2\cdot 3 + 3 + $
+The pattern can be guessed pretty easily, but one can also do this formally.
+At fixed $N$, we denote the number of possible triples by $g(N)$.
+Then,
+\begin{align}
+g(N) &= \sum_{n_1=0}^N g(N-n_1) = \sum_{n_1=0}^N \sum_{n_2=0}^{N-n_1} \underbrace{g(N-n_1-n_2)}_{=1}\\
+&= \sum_{n_1=0}^N (N-n_1+1) = (N+1)^2 - \frac{N(N+1)}{2} = \frac{(N+1)(N+2)}{2}.
+\end{align}
+%This gives $g(0)=1, g(1)=3, g(2)=6, g(3)=10, \dots$, and the total number of states is thus given by $1,4,10,20,35$, and we can interpret this as the sum of all possible spherical harmonics with $\ell \le N$ and $|m|\le \ell$.
+%Counting those, we have
+%\begin{align}
+%\tilde{g}(N) &= \sum_{\ell=0}^{N} (2\ell + 1) = N(N+1) + N = (N+1)^2,
+%\end{align}
+%which is of course the same as
+\section{Local analysis of a differential equation}
+\subsection{Bessel function with $\nu=3/2$}
+Consider $0=y'' + \frac{1}{x}y' + \kla*{1 - \frac{9}{4x^2}}y$ around $x=0$.
+This is a regular singular point, and the Frobenius ansatz leads to
+\begin{align}
+0 &= \sum_{n\ge 0} a_n \klc*{(n+\alpha)(n+\alpha) + x^2 - \frac{9}{4}} x^{n+\alpha-2}.
+\end{align}
+At $n=0$ we find our $P(\alpha)=\alpha^2 - \frac{9}{4}$ with $\alpha_{1,2} = \pm \frac{3}{2}$, which are separated by an integer.
+\note{The Gamma function admits the product representation
+\begin{align}
+\Gamma(z) &= \frac{1}{z} \prod_{n\ge 1} \kla*{1 + \frac{1}{n}}^z \frac{1}{1+\frac{z}{n}}.
+\end{align}
+Using the fundamental property $\Gamma(z+1)=z\Gamma(z)$, the Pochhammer function $(z)_n = \frac{\Gamma(z+n)}{\Gamma(z)}$ can be written as
+\begin{align}
+(z)_n &= (z+n-1)(z+n-2) \dots z = \prod_{l=0}^{n-1} (z+l).
+\end{align}
+This is very helpful for analyzing repeated products of the form
+\begin{align}
+(kn-k+j)(kn-2k+j)\dots &= \prod_{l=0}^{n-1} (j+kl) = k^n \kla*{\frac{j}{k}}_n.
+\end{align}
+}
+In general, $a_n = \frac{-1}{n(n + 2\alpha)} a_{n-2}$ gives
+\begin{align}
+a_{2n} &= \frac{(-1)^n}{2n(2n-2)\dots (2n+2\alpha)(2n+2\alpha-2)\dots} = \frac{(-1)^n}{2^n (1)_n 2^n \kla*{1 + \alpha}_n}.
+\end{align}
+The first solution is therefore
+\begin{align}
+y(x) &= \sum_{n\ge 0} \frac{(-1)^n}{n! \Gamma(n+\alpha+1)} \kla*{\frac{x}{2}}^{2n}
+\end{align}
+with $a_0 = \frac{1}{\Gamma(\alpha+1)}$ (this is a Bessel function with $\nu=\alpha=\frac{3}{2}$).
+\subsection{Bessel function with $\nu=0$}
+Consider $0=y'' + \frac{1}{x}y' + y$ around $x=0$.
+This is a regular singular point, and the Frobenius ansatz leads to
+\begin{align}
+0 &= \sum_{n\ge 0} a_n \klc*{(n+\alpha)(n+\alpha) + x^2} x^{n+\alpha-2}.
+\end{align}
+At $n=0$ we find our $P(\alpha)=\alpha^2$ with $\alpha_{1,2} = 0$.
+In general, $a_n = \frac{-1}{n^2} a_{n-2}$ gives
+\begin{align}
+a_{2n} &= \frac{(-1)^n}{4^n n!^2}.
+\end{align}
+The first solution is therefore
+\begin{align}
+y(x) &= \sum_{n\ge 0} \frac{(-1)^n}{n!^2} \kla*{\frac{x}{2}}^{2n}
+\end{align}
+with $a_0 = 1$ (this is a Bessel function with $\nu=\alpha=0$).
+\subsection{Regular or irregular?}
+Consider $0 = y'' + \frac{1}{x}y' + \frac{\log (x)}{x^3} y$ as $x\rightarrow\infty$.
+Introducing $z=\frac{1}{x}$ gives $\frac{\d}{\d x} = \frac{\d z}{\d x} \frac{\d }{\d z} = -z^2 \frac{\d}{\d z}$ and
+\begin{align}
+0 &= z^4 y'' + z^3 y' - z^3 \log(z) y,\\
+0 &= y'' + \frac{1}{z} y' - \frac{\log(z)}{z} y
+\end{align}
+where we now want to analyze $z=0$.
+This is an irregular singular point, because $z\log(z)$ is not analytic at $z=0$ (I think? Not sure whether the extra $z$ is enough to smooth everything out, although it does ensure that the function vanishes at zero. But I expect the branch-cut along the negative real axis does not go away).
+
+TODO: Lecture notes not out yet, so I do the rest first.
+\subsection{Irregular singular point}
+Consider $0 = y'' - \frac{1}{x^2} y' + \frac{3}{x^3}y$ as $x\rightarrow 0$.
+This is an irregular singular point\footnote{In this case, I think we might get away with dominant balance, i.e. $y'' \sim \frac{1}{x^2} y'$.
+This gives $\log y' \sim -\frac{1}{x}$ and $y' \sim \powe{-1/x}$.
+I can not rigorously show it, but I think that $y' \gg \frac{3}{x}y$ because $y\ll \int^x y' \lesssim xy'$, where the final bound is presumably way too high.}.
+Splitting off a factor via $y=\powe{-a/x^b}f$, we get
+\begin{align}
+y' &= \powe{-a/x^b} f' + \frac{ab}{x^{b+1}} y = \powe{-a/x^b} \klc*{f' + \frac{ab}{x^{b+1}}f},\\
+y'' &= \powe{-a/x^b} \klc*{f'' + \frac{ab}{x^{b+1}} f' - \frac{ab(b+1)}{x^{b+2}}f + \frac{ab}{x^{b+1}} \kla*{f' + \frac{ab}{x^{b+1}}f}}.
+\end{align}
+Inserting into the ODE gives
+\begin{align}
+0 &= f'' + \frac{2ab}{x^{b+1}} f' - \frac{ab(b+1)}{x^{b+2}}f + \frac{a^2b^2}{x^{2b+2}} f - \frac{1}{x^2}f' - \frac{ab}{x^{b+3}}f + \frac{3}{x^3}f\\
+&= f'' + \klc*{\frac{2ab}{x^{b+1}} - \frac{1}{x^2}}f' + \klc*{\frac{3}{x^3} - \frac{ab}{x^{b+3}} - \frac{ab(b+1)}{x^{b+2}}}f.
+\end{align}
+Unfortunately, we can not eliminate $f$ by choosing $a,b$ which would allow separation of variables.
+Probably the factor is not the right scaling behavior.
+
+Set $y=x^bf$ to get $y'=bx^{b-1}f+x^bf'$ and $y''=b(b-1)x^{b-2} f + 2bx^{b-1} f' + x^bf''$, which yields
+\begin{align}
+0 &= f'' + \frac{2b}{x}f' + \frac{b(b-1)}{x^2} f - \frac{1}{x^2} f' - \frac{b}{x^3} f + \frac{3}{x^3} f.
+\end{align}
+Here, setting $b=3$ at least removes the strongest divergence giving
+\begin{align}
+0 &= f'' + \frac{6}{x} f' - \frac{1}{x^2} f' + \frac{6}{x^2} f.
+\end{align}
+Now setting $f=\powe{-a/x^b}g$ gives
+\begin{align}
+0 &= g'' + \frac{2ab}{x^{b+1}} g' - \frac{ab(b+1)}{x^{b+2}}g + \frac{a^2b^2}{x^{2b+2}} g + \kla*{\frac{6}{x} - \frac{1}{x^2}} \kla*{g' + \frac{ab}{x^{b+1}}g} + \frac{6}{x^2} g.
+\end{align}
+(but that still does not work..)
+\section{Local analysis of a differential equation}
+\subsection{Harmonic oscillator}
+Consider the simple harmonic oscillator $0=y''+\omega^2y$.
+This ODE has an ordinary point at $x=0$, so we can find a normal Taylor series solution $y=\sum_{n\ge 0} a_n x^n$.
+Inserting yields
+\begin{align}
+0 &= \sum_{n\ge 0} a_n \klc*{n(n-1) + \omega^2 x^2}x^{n-2},
+\end{align}
+so $a_n = \frac{-\omega^2}{n(n-1)}a_{n-2}$.
+Starting from $a_0$ and $a_1$ respectively, this leads to
+\begin{align}
+a_{2n} &= (-1)^n \frac{\omega^{2n}}{n!}a_0,\\
+a_{2n+1} &= (-1)^n \frac{\omega^{2n}}{(2n+1)!} a_1.
+\end{align}
+Therefore, we find $y(x) = a_0 \cos(\omega x) + \frac{a_1}{\omega} \sin(\omega x)$, which are of course the known solutions.
+\subsection{Stark effect}
+Quantum mechanics leads to the differential equation
+\begin{align}
+0 &= \partial_y y u' + \klc*{\frac{E}{2}y + \alpha - \frac{m^2}{4y} - \frac{1}{4} Fy^2}u,
+\end{align}
+where $E$ is the total energy and $Fy$ is the potential energy added by an electric field.
+We can rewrite the equation as
+\begin{align}
+0 &= u'' + \frac{1}{y}u' + \klc*{\frac{E}{2} + \frac{\alpha}{y} - \frac{m^2}{4y^2} - \frac{1}{4} Fy}u,
+\end{align}
+This ODE has an ordinary singular point at $y=0$, so the Frobenius ansatz gives
+\begin{align}
+0 &= \sum_{n\ge 0} a_n \klc*{(n+\alpha)^2 + \frac{E}{2}y^2 + \alpha y - \frac{m^2}{4} - \frac{F}{4}y^3}y^{n+\alpha-2}.
+\end{align}
+The polynomial $P(\alpha) = \alpha^2 - \frac{m^2}{4}$ gives $\alpha=\pm \frac{m}{2}$ and we use the larger value.
+In general,
+\begin{align}
+a_n &= \frac{\frac{F}{4}a_{n-3} - \frac{E}{2} a_{n-2} - \alpha a_{n-1}}{n(n+2\alpha)} = \frac{1}{4} \frac{Fa_{n-3} - 2E a_{n-2} - 2m a_{n-1}}{n(n+m)}.
+\end{align}
+With $a_0=1$, the first few terms are
+\begin{align}
+a_1 &= -\frac{m}{2(m+1)},\\
+a_2 &= \frac{1}{4} \frac{-2E-2ma_1}{2(m+2)} = \frac{\frac{m}{m+1} - 2E }{4(m+2)} = \frac{m - 2E (m+1) }{4(m+2)(m+1)}, \dots
+\end{align}
+giving $u(y) \propto y^{m/2} \klc*{1 - \frac{m}{2m+2} y + \frac{m - 2E (m+1) }{4(m+2)(m+1)} y^2 + \dots}$.
+The perturbation due to the electric field only appears at order $y^3$, because then $a_3$ contains a contribution $\propto Fa_0$.
+\subsection{Confluent hypergeometric function}
+Consider the confluent hypergeometric equation
+\begin{align}
+0 &= y'' + \kla*{\frac{c}{x} - 1}y' - \frac{a}{x}y,
+\end{align}
+which has a regular singular point at $x=0$.
+Using a Frobenius ansatz yields
+\begin{align}
+0 &= \sum_{n\ge 0} a_n \klc*{(n+\alpha)(n+\alpha-1) + c(n+\alpha) - c(n+\alpha)x - ax}x^{n+\alpha-2}.
+\end{align}
+Thus, $P(\alpha) = \alpha^2-(1-c)\alpha$ has roots $\alpha=0$ and $\alpha=1-c$.
+The recursion is
+\begin{align}
+a_n &= \frac{c(n+\alpha-1) + a}{n^2 + n(2\alpha-1) + P(\alpha) + cn} a_{n-1} = \frac{c(n+\alpha-1) + a}{n\kla*{n + 2\alpha-1 + c}} a_{n-1}.
+\end{align}
+Starting with $\alpha=0$, this leads to
+\begin{align}
+a_1 &= \frac{a}{c} a_0,\\
+a_2 &= \frac{c + a}{2\kla*{1 + c}} a_1,\\
+a_3 &= \frac{2c + a}{3\kla*{2 + c}} a_2, \dots\\
+a_n &= \frac{a(a+c)(a+2c)\dots (a+(n-1)c)}{n! c(c+1)(c+2)\dots (c+n-1)} a_0 = \frac{c^n \kla*{\frac{a}{c}}_n}{n! (c)_n}
+\end{align}
+(under the generous assumption that I have not messed up somewhere) we then find $\sum_{n\ge 0} \frac{c^n}{n!} \frac{\kla*{a/c}_n}{(c)_n} x^n$ as the first solution.
+For $\alpha=1-c$, we instead get
+\begin{align}
+a_1 &= \frac{c(1-c) + a}{2 - c} a_0,\\
+a_2 &= \frac{c(2-c) + a}{2\kla*{3 - c}} a_1,\\
+a_3 &= \frac{c(3-c) + a}{3\kla*{4 - c}} a_2,\dots
+\end{align}
+etc., but a closed form seems more tricky here.
+\section{How to solve a Schrödinger equation [in a lot of not so simple steps]}
+Consider a Newtonian equation $0 = x'' + k(t)x$ with $k(t)=\powe{-\epsilon t}$ and $\epsilon\ll 1$.
+As a rough guess, we expect $x\sim \powe{\i \omega(t)t}$ with $\omega(t) = \powe{-\epsilon t/2}$.
+%Substitute $x=\powe{S}$ to get $x'=S'\powe{S}$ and $x''=\kla*{S'' + S'^2}\powe{S}$.
+%Then the equation becomes
+%\begin{align}
+%0 &= S''+S'^2 + k,
+%\end{align}
+%where we may then guess an exponential solution $S'=\powe{-at}$.
+%This gives $0=a^2 \powe{-at} + \powe{-\epsilon t} + a^2\powe{-at}$, which is more or less ``solved'' by $a=\epsilon$.
+%which asymptotically gives $S'' \sim -S'^2$, i.e. $S'\sim \frac{1}{t}$.
+%This is consistent, because $S'' \sim \frac{-1}{t^2} \gg k(t)$ as $t\rightarrow\infty$.
+%Our solution is therefore (probably) $x\sim \powe{ a\log(t) + bt}$
+\subsection{Preview of the WKB approximation}
+Set $T=\epsilon t$ and $x(t)=X(T)$.
+Then the ODE for $X$ is
+\begin{align}
+0 &= \epsilon^2 X'' + \powe{-T}X.
+\end{align}
+Assuming that $X\sim \powe{S_1(T) + \frac{1}{\epsilon} S_0(T)}$ as $\epsilon\rightarrow 0^+$, we find
+\begin{align}
+X' &\sim \kla*{S_1' + \frac{1}{\epsilon} S_0'} X,\\
+X'' &\sim \kla*{S_1'' + \frac{1}{\epsilon}S_0''} X + \kla*{S_1' + \frac{1}{\epsilon} S_0'}^2 X,
+\end{align}
+i.e. $\powe{-T} = \epsilon^2\frac{X''}{X} \sim \kla*{\epsilon^2 S_1'' + \epsilon S_0''} + \kla*{\epsilon S_1' + S_0'}^2$.
+
+\end{document}

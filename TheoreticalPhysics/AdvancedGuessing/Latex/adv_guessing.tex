@@ -1390,9 +1390,30 @@ which are referred to as the associated Laguerre equations.
 \note{$J_\nu(\i x) = \i^{\nu} I_\nu(x)$}
 We have a regular singular point at $x=0$ and the Frobenius ansatz gives
 \begin{align}
-0 &= ...
+0 &= \sum_{n\ge 0} a_n \klc*{(n+\alpha)(n+\alpha-1) + (n+\alpha) + x^2 - \nu^2 } x^{n+\alpha-2}.
+\end{align}
+Here, $P(\alpha) = \alpha^2 - \nu^2$ again yields $\alpha = \pm \nu$ and $a_n = \frac{-1}{(n+\alpha)^2 - \nu^2} a_{n-2}$.
+For $\alpha=\nu$, we get $a_{2n} = \frac{-1}{2n(2n+2\nu)}a_{2n-2} = \frac{(-1)^n}{2^n (1)_n 2^n (1+\nu)_n}$.
+Therefore,
+\begin{align}
+J_\nu(x) &= \sum_{n\ge 0} \frac{(-1)^n}{n! \Gamma(n+\nu+1)} \kla*{\frac{x}{2}}^{2n+\nu}
+\end{align}
+with $a_0=\frac{1}{2^\nu\Gamma(\nu+1)}$.
+The same also holds for $\nu\rightarrow -\nu$.
+
+If $\nu\neq 0,1,2,\dots$, $J_{\pm\nu}$ are linearly independent, otherwise $J_{-\nu} = (-1)^\nu J_\nu$ (explicit calculation with index shift in the above definition), and we need to find another solution.
+
+This is the Neumann function (or Bessel function of the second kind), which is defined as
+\begin{align}
+N_\nu(x) &= \frac{\cos(\pi\nu) J_\nu(x) - J_{-\nu}(x)}{\sin(\pi\nu)} = Y_\nu(x).
 \end{align}
 }
 
-TODO Lecture 6 page 18
+\subsection{Local behavior near irregular singular points}
+We know that if all solutions in the neighborhood of $x_0$ can be expanded in a Frobenius series, then $x_0$ is a regular singular point.
+At an irregular singular point, at least one solution must not have such a representation.
+
+This leads to the natural question, how a Frobenius series can fail at an irregular singular point.
+
+END LECTURE 6
 \end{document}
