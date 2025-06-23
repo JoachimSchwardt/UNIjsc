@@ -118,8 +118,7 @@ Inserting this back into the original equation, we find
 E &= \sum_{j=1}^3 E_j = \omega \kla*{n_1+n_2+n_3 + \frac{3}{2}}.
 \end{align}
 Ignoring the degeneracies for now, we clearly have $\epsilon = N+\frac{3}{2}$ with $N\in\mathbb{N}_0$, and we did not even pick up a major headache along the way; that spherical equation is really rather horrible...
-
-Furthermore, we absolutely \emph{can} also figure out the degeneracy, because we just need to count how many $(n_1,n_2,n_3)$-triples lead to the same integer $N$.
+Furthermore, we can also figure out the degeneracy, because we just need to count how many $(n_1,n_2,n_3)$-triples lead to the same integer $N$.
 %This can be done formally, but the pattern is sufficiently simple to be guessed from a few example.
 %For $N=0$, we only have $n_j=0$.
 %For $N=1$, we have $n_j=1$ for one $j$, and $n=0$ for the others, i.e. 3 options.
@@ -127,10 +126,10 @@ Furthermore, we absolutely \emph{can} also figure out the degeneracy, because we
 %For $N=3$, we have again 3 options $(3,0,0)$, 2 times 3 for $(2,1,0)$ and 1 for $(1,1,1)$.
 %For $N=4$, we have $4 + 2\cdot 3 + 3 + $
 The pattern can be guessed pretty easily, but one can also do this formally.
-At fixed $N$, we denote the number of possible triples by $g(N)$.
+At fixed $N$, we denote the number of possible triples by $g_3(N)$.
 Then,
 \begin{align}
-g(N) &= \sum_{n_1=0}^N g(N-n_1) = \sum_{n_1=0}^N \sum_{n_2=0}^{N-n_1} \underbrace{g(N-n_1-n_2)}_{=1}\\
+g_3(N) &= \sum_{n_1=0}^N g_2(N-n_1) = \sum_{n_1=0}^N \sum_{n_2=0}^{N-n_1} \underbrace{g_1(N-n_1-n_2)}_{=1}\\
 &= \sum_{n_1=0}^N (N-n_1+1) = (N+1)^2 - \frac{N(N+1)}{2} = \frac{(N+1)(N+2)}{2}.
 \end{align}
 %This gives $g(0)=1, g(1)=3, g(2)=6, g(3)=10, \dots$, and the total number of states is thus given by $1,4,10,20,35$, and we can interpret this as the sum of all possible spherical harmonics with $\ell \le N$ and $|m|\le \ell$.
@@ -139,6 +138,7 @@ g(N) &= \sum_{n_1=0}^N g(N-n_1) = \sum_{n_1=0}^N \sum_{n_2=0}^{N-n_1} \underbrac
 %\tilde{g}(N) &= \sum_{\ell=0}^{N} (2\ell + 1) = N(N+1) + N = (N+1)^2,
 %\end{align}
 %which is of course the same as
+%Counting all states up to a maximal $N$, we have $\sum_{n = 1}^{N}g(n) = N + \frac{3}{2} \frac{N(N+1)}{2} + \frac{1}{2} \frac{N(N+1)(2N+1)}{6}$, which simplifies to $\frac{1}{6} N^3 + N^2 + \frac{11}{6} N$.
 \section{Local analysis of a differential equation}
 \subsection{Bessel function with $\nu=3/2$}
 Consider $0=y'' + \frac{1}{x}y' + \kla*{1 - \frac{9}{4x^2}}y$ around $x=0$.
@@ -159,6 +159,7 @@ This is very helpful for analyzing repeated products of the form
 \begin{align}
 (kn-k+j)(kn-2k+j)\dots &= \prod_{l=0}^{n-1} (j+kl) = k^n \kla*{\frac{j}{k}}_n.
 \end{align}
+For example, $k=3$ and $j=k+1$ give $(3n+1)(3n-2)\dots = 3^n \kla*{\frac{4}{3}}_n$.
 }
 In general, $a_n = \frac{-1}{n(n + 2\alpha)} a_{n-2}$ gives
 \begin{align}
@@ -169,6 +170,9 @@ The first solution is therefore
 y(x) &= \sum_{n\ge 0} \frac{(-1)^n}{n! \Gamma(n+\alpha+1)} \kla*{\frac{x}{2}}^{2n}
 \end{align}
 with $a_0 = \frac{1}{\Gamma(\alpha+1)}$ (this is a Bessel function with $\nu=\alpha=\frac{3}{2}$).
+
+Because $\alpha_1 - \alpha_2 = 3$ is an integer and the RHS of the recursion is zero at $N=3$ (only $a_1$ occurs, which is zero), we have case 4.
+This means that there are two solutions in Frobenius form, i.e $J_{3/2}$ from above and $J_{-3/2}$.
 \subsection{Bessel function with $\nu=0$}
 Consider $0=y'' + \frac{1}{x}y' + y$ around $x=0$.
 This is a regular singular point, and the Frobenius ansatz leads to
@@ -185,17 +189,56 @@ The first solution is therefore
 y(x) &= \sum_{n\ge 0} \frac{(-1)^n}{n!^2} \kla*{\frac{x}{2}}^{2n}
 \end{align}
 with $a_0 = 1$ (this is a Bessel function with $\nu=\alpha=0$).
+
+Because $\alpha_2=\alpha_1$, this is case 2.
+We can therefore obtain our second linearly independent solution from the generalized $y(x,\alpha)$ by differentiation.
+For this, note that
+\begin{align}
+a_{2n}(\alpha) &= \frac{(-1)^n}{4^n \kla*{1+\frac{\alpha}{2}}_n^2},\\
+y(x,\alpha) &= x^\alpha \sum_{n\ge 0} a_{2n}(\alpha) x^{2n} = x^\alpha \sum_{n\ge 0} \frac{(-1)^n \Gamma\kla*{1+\frac{\alpha}{2}}^2}{\Gamma\kla*{n+1+\frac{\alpha}{2}}^2} \kla*{\frac{x}{2}}^{2n},\\
+y_2 &= \frac{\d}{\d \alpha} y(x,\alpha) \Big\vert_{\alpha=\alpha_1} = \log(x) y(x) + \sum_{n\ge 0} (-1)^n \frac{\d}{\d \alpha} \frac{\Gamma\kla*{1+\frac{\alpha}{2}}^2}{\Gamma\kla*{n+1+\frac{\alpha}{2}}^2} \bigg\vert_{\alpha=0} \kla*{\frac{x}{2}}^{2n}\\
+&= \log(x)y(x) + \sum_{n\ge 0} (-1)^n \frac{2}{n!} \frac{1}{2} \frac{\d}{\d \alpha} \frac{\Gamma\kla*{1+\alpha}}{\Gamma\kla*{n+1+\alpha}} \bigg\vert_{\alpha=0} \kla*{\frac{x}{2}}^{2n}.
+\end{align}
+The evaluation of the last derivative can be done via Digamma identities, but there is also a simpler way.
+Let $f(\alpha) = (1+\alpha)_n$.
+Then
+\begin{align}
+\frac{\d}{\d\alpha} \frac{1}{f(\alpha)} &= \frac{\d}{\d\alpha} \powe{-\log f} = -\frac{1}{f(\alpha)} \frac{\d}{\d\alpha} \log \kla[\bigg]{\prod_{k=1}^{n} (\alpha + k)} = -\frac{1}{f(\alpha)} \sum_{k=1}^{n} \frac{1}{\alpha + k}.
+\end{align}
+Inserting this back into our second solution gives
+\begin{align}
+y_2 &= \log(x)y_1 - \sum_{n\ge 1} \frac{(-1)^n}{n!^2} H_n \kla*{\frac{x}{2}}^{2n},
+\end{align}
+where $H_n = 1 + \frac{1}{2} + \dots + \frac{1}{n}$ is the $n$-th harmonic number.
 \subsection{Regular or irregular?}
 Consider $0 = y'' + \frac{1}{x}y' + \frac{\log (x)}{x^3} y$ as $x\rightarrow\infty$.
-Introducing $z=\frac{1}{x}$ gives $\frac{\d}{\d x} = \frac{\d z}{\d x} \frac{\d }{\d z} = -z^2 \frac{\d}{\d z}$ and
+Introducing $z=\frac{1}{x}$ gives $\frac{\d}{\d x} = \frac{\d z}{\d x} \frac{\d }{\d z} = -z^2 \frac{\d}{\d z}$, so
+\begin{align}
+y'(x) = y'(z) \frac{\d z}{\d x} = -z^2 y'(z) \quad\text{and}\quad y''(x) = -z^2 y''(z) \frac{\d z}{\d x} - 2z \frac{\d z}{\d x} y'(z) = z^4 y''(z) + 2z^3 y'(z).
+\end{align}
+The transformed ODE then becomes
 \begin{align}
 0 &= z^4 y'' + z^3 y' - z^3 \log(z) y,\\
 0 &= y'' + \frac{1}{z} y' - \frac{\log(z)}{z} y
 \end{align}
 where we now want to analyze $z=0$.
 This is an irregular singular point, because $z\log(z)$ is not analytic at $z=0$ (I think? Not sure whether the extra $z$ is enough to smooth everything out, although it does ensure that the function vanishes at zero. But I expect the branch-cut along the negative real axis does not go away).
-
-TODO: Lecture notes not out yet, so I do the rest first.
+My toolbox appears to be exhausted, so let us go back to the roots and apply dominant balance.
+Writing $y\sim\powe{S}$, we can attempt an asymptotic solution of
+\begin{align}
+0 &\sim S'' + \kla*{S'}^2 + \frac{1}{z} S' - \frac{\log(z)}{z}.
+\end{align}
+Note that $\int\frac{\log(x)}{x} = \frac{1}{2} \kla*{\log (x)}^2$.
+\begin{itemize}
+\item $S' \sim \log(z)$. Then $\frac{S'}{z} \gg S'^2$ and $\frac{S'}{z} \gg S''\sim \frac{1}{z}$ (ratio is $\log(z)$, which diverges at $z=0$), so this is consistent.
+The leading behavior is then $y\sim A\powe{z\log(z)-z} = Az^z \powe{-z}$ (which is actually not $\sim z!$, because we have $z\rightarrow 0$ rather than $z\rightarrow\infty$).
+\item $S'^2 \sim \frac{\log(z)}{z}$. Then $S' \sim \sqrt{\frac{\log(z)}{z}}$, but $\frac{S'}{z} \gg S'^2$ is inconsistent.
+\item $S''\sim \frac{\log(z)}{z}$. Then $S' \sim \frac{1}{2} \kla*{\log(z)}^2$, but this is inconsistent because $\frac{S'}{z} \gg S''$ by a factor of $\log(z)$.
+\item $S'^2 \sim \frac{S'}{z}$. Then $S'\sim \frac{1}{z}$, but $S'^2 \sim S''$ is not sufficient for dominant balance.
+\item $S'' \sim \frac{S'}{z}$. Then $S' \sim Az$, but this is also inconsistent because $\frac{\log(z)}{z} \gg S''$.
+\item $S''\sim -S'^2$. Then $S' \sim \frac{1}{z}$, but $S'' \sim \frac{S'}{z}$ is not sufficient.
+\end{itemize}
+Unless I missed an option, it appears that dominant balance only allows for the leading behavior $y(z) \sim Az^z\powe{-z}$.
 \subsection{Irregular singular point}
 Consider $0 = y'' - \frac{1}{x^2} y' + \frac{3}{x^3}y$ as $x\rightarrow 0$.
 This is an irregular singular point\footnote{In this case, I think we might get away with dominant balance, i.e. $y'' \sim \frac{1}{x^2} y'$.
@@ -227,6 +270,22 @@ Now setting $f=\powe{-a/x^b}g$ gives
 0 &= g'' + \frac{2ab}{x^{b+1}} g' - \frac{ab(b+1)}{x^{b+2}}g + \frac{a^2b^2}{x^{2b+2}} g + \kla*{\frac{6}{x} - \frac{1}{x^2}} \kla*{g' + \frac{ab}{x^{b+1}}g} + \frac{6}{x^2} g.
 \end{align}
 (but that still does not work..)
+
+Same here, back to dominant balance.
+$y\sim\powe{S}$ gives
+\begin{align}
+0 &\sim S'' + S'^2 - \frac{1}{x^2}S' + \frac{3}{x^3}.
+\end{align}
+\begin{itemize}
+\item $S''\sim -S'^2$. Then $S'\sim\frac{1}{x}$ is inconsistent with $\frac{1}{x^3}$.
+\item $S'' \sim \frac{S'}{x^2}$. Then $S' \sim \powe{-1/x}$, which is either inconsistent with $\frac{1}{x^3}$ (if $x\rightarrow 0^+$) or with $S'^2$ (if $x\rightarrow 0^-$).
+\item $S''\sim \frac{-3}{x^3}$. Then $S'\sim \frac{1}{x^2}$ and this is inconsistent with $S'^2$.
+\item $S'^2 \sim \frac{1}{x^2}$. Then $S'\sim\frac{1}{x}$ and this is inconsistent with $\frac{1}{x^3}$.
+\item $S'^2 \sim \frac{-3}{x^3}$.
+Then $S' \sim \pm\i \sqrt{3} x^{-3/2}$ is inconsistent with $\frac{S'}{x^2}$.
+\item $\frac{S'}{x^2} \sim \frac{3}{x^3}$. Then $S'\sim \frac{3}{x}$ and $S'',S'^2\ll\frac{3}{x^3}$, so this is consistent.
+\end{itemize}
+The only consistent solution is $S'\sim\frac{3}{x}$, so $y\sim Ax^3$ (corresponds to just ignoring the $y''$-term).
 \section{Local analysis of a differential equation}
 \subsection{Harmonic oscillator}
 Consider the simple harmonic oscillator $0=y''+\omega^2y$.
@@ -322,6 +381,64 @@ Assuming that $X\sim \powe{S_1(T) + \frac{1}{\epsilon} S_0(T)}$ as $\epsilon\rig
 X' &\sim \kla*{S_1' + \frac{1}{\epsilon} S_0'} X,\\
 X'' &\sim \kla*{S_1'' + \frac{1}{\epsilon}S_0''} X + \kla*{S_1' + \frac{1}{\epsilon} S_0'}^2 X,
 \end{align}
-i.e. $\powe{-T} = \epsilon^2\frac{X''}{X} \sim \kla*{\epsilon^2 S_1'' + \epsilon S_0''} + \kla*{\epsilon S_1' + S_0'}^2$.
+i.e. $-\powe{-T} = \epsilon^2\frac{X''}{X} \sim \kla*{\epsilon^2 S_1'' + \epsilon S_0''} + \kla*{\epsilon S_1' + S_0'}^2$.
+Expanding this and sorting by orders of $\epsilon$, we find
+\begin{align}
+-\powe{-T} \sim S_0'^2 \quad &\longrightarrow \quad S_0 \sim -2\powe{\i\frac{\pi}{2}}\powe{-T/2} + c_0,\\
+S_0'' \sim -2S_0'S_1' \quad &\longrightarrow \quad S_1 \sim \int \frac{1}{4} = \frac{T}{4} + c_1.
+\end{align}
+But this is not consistent with the $\epsilon^2$-term $S_1'' \sim -S_1'^2$.
+Anyway, we get $X\sim \powe{\frac{T}{4} - \frac{2}{\epsilon} \i \powe{-T/2}}$.
+The oscillatory part is fine (except the $\frac{1}{\epsilon}$, that does not seem right), but the divergent amplitude is clearly wrong.
+Substituting gives $x(t) \sim \powe{\frac{\epsilon t}{4} - \frac{2\i}{\epsilon} \powe{-\epsilon t/2}}$, which does not make it better.
+\subsection{Preview of multiple-scale expansion}
+Let $x(0)=1$ and $x'(0)=0$, and assume that $\tau=\epsilon t$ (slow timescale) and $t$ (fast timescale) are both independent variables.
+Introducing $T$ such that $\frac{\d T}{\d t} = g(\tau)$ gives $x(t)=X(T,\tau)$, where we now treat $T$ and $\tau$ as independent variables.
+The ODE becomes a PDE,
+\begin{align}
+-\powe{-\tau} X &= \frac{\d}{\d t} \kla*{\partial_TX \frac{\d T}{\d t} + \partial_\tau X \frac{\d \tau}{\d t}} = g^2 \partial_T^2X + 2\epsilon g \partial_T\partial_\tau X + \epsilon^2 \partial_\tau^2 X.
+\end{align}
+Expanding as $X=X_0+\epsilon X_1$ as $\epsilon\rightarrow 0^+$ leads to
+\begin{align}
+-\powe{-\tau} X_0 &= g^2\partial_T^2 X_0,\\
+-\powe{-\tau} X_1 &= g^2\partial_T^2 X_1 + 2g\partial_T \partial_\tau X_0,
+\end{align}
+where all higher order equations would require the next term $\epsilon^2X_2$ for consistency.
+Solving for $X_0$ gives $\powe{\pm\i \powe{-\tau/2} / g(\tau) T}$, and the initial conditions give $X_0 = A(\tau) \cos\kla*{\powe{-\tau/2} \frac{T}{g(\tau)}}$ with $A(\tau=0)=1$.
+%\footnote{One could try to brute-force it, but that almost never works. For $X_1$, we would get
+%\begin{align*}
+%\partial_T^2 X_1 + \frac{1}{g^2} \powe{-\tau} X_1 &= \frac{2}{g}\partial_\tau \frac{1}{g}\powe{-\tau/2} \sin\kla*{\powe{-\tau/2} \frac{T}{g(\tau)}} \\
+%&= -\frac{T}{g^3} \kla*{ 1 + \frac{g'}{2g}} \powe{-\tau} \cos\kla*{\powe{-\tau/2} \frac{T}{g}} - \frac{1}{g} \kla*{1 + \frac{g'}{2g^2}} \powe{-\tau/2} \sin\kla*{\powe{-\tau/2} \frac{T}{g}}.
+%\end{align*}
+%This is slightly horrible, but because the equation is only in terms of $T$, we may write the RHS as $f(T) = A\sin(\omega T) + BT\cos(\omega T)$.
+%With $\Omega = \frac{1}{g} \powe{-\tau/2}$, this leads to the ``ODE'' $\partial_T^2 X_1 + \Omega^2X_1 = f(T)$.
+%Letting $X_1 = a(T) \sin(\omega T) + b(T) \cos(\omega T)$, we get
+%\begin{align*}
+%X_1' &= a'\sin + b'\cos + a\omega \cos - b\omega \sin = \kla*{a'-b\omega}\sin + \kla*{b' + a\omega}\cos,\\
+%X_1'' &= \kla*{a'' - 2b'\omega - a\omega^2}\sin + \kla*{b'' + 2a' \omega - b\omega^2}\cos,\\
+%0 &= \kla*{a'' - 2b'\omega - a\omega^2 + a\Omega^2 - AT}\sin + \kla*{b'' + 2a' \omega - b\omega^2 + b\Omega^2 - BT}\cos.
+%\end{align*}
+%The coefficients must vanish, and the initial conditions for $X_1$ are $X_1(0)=0$ and $X_1'(0)=0$, which translates to $b(0)=0$ and $a(0) = -b'(0)$.
+%Still a pretty messy coupled system though.}.
+Here, it is reasonable to choose $g(\tau)=\powe{-\tau/2}$, as this decouples the occurrence of $\tau$ and $T$ in $X_0$.
+This now also defines $T$, because $\frac{\d T}{\d t} = g(\tau)$ can be integrated to give $T = T_0 + \frac{2}{\epsilon} \kla*{1 - \powe{-\epsilon t/2}}$ (and we may set $T_0=0$).
+
+Back to solving for $X_1$.
+The governing equation now takes the form
+\begin{align}
+\partial_T^2X_1 + X_1 &= -\frac{2}{g} \partial_\tau \partial_T X_0 = 2\powe{\tau/2} A'(\tau)\sin(T).
+\end{align}
+%Making the ansatz $X_1 = \cos(T)Y$ reduces it to
+%\begin{align}
+%Y''\cos - 2Y'\sin &= \frac{2A'}{g} \sin,
+%\end{align}
+%so $Y''=0$ and $A'=gY'$ with $Y=y_0(\tau)+y_1(\tau)T$.
+%Initial conditions give $y_0(0)=0$ and $y_1(0)=0$
+Dividing by $\sin(T)$, the RHS no longer depends on $T$, so the LHS must not either.
+Thus, $\partial_T^2X_1 + X_1 = C\sin(T)$ and $A'\powe{\tau/2} = \const$; unfortunately, this has the trivial solution $A\propto g$, so obviously $gA$ is \emph{not} constant.
+However, the final solution claims that $A=\powe{\tau/4}$, which is either a typo or is also not consistent with the claim that $Ag=\const$.
+
+Assuming $X=\powe{\tau/4} \cos(T)$, we get $x(t) = \powe{\epsilon t/4} \cos\kla*{\frac{2}{\epsilon} \klb*{1 - \powe{-\epsilon t/2}}}$.
+This solution eventually diverges, so it can only be valid on timescales $t\ll \frac{1}{\epsilon}$.
 
 \end{document}
