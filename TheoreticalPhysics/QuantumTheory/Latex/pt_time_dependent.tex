@@ -1,0 +1,144 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+
+\newcommand*{\Title}{Time-Dependent Perturbation Theory}
+\newcommand*{\Author}{Joachim Schwardt}
+
+\input{preamble_shared}
+\input{preamble}
+
+\newcommand{\D}{\text{D}}
+
+%\titlehead{titlehead}
+\subject{Quantum Theory}
+\title{\Title}
+\author{\Author}
+\date{\today}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{Time-dependent perturbation series}
+Consider the Hamiltionian $H(t)=H_0+V(t)$, where we assume to have complete knowledge of the eigenstates $H_0\Ket{n}=E_n\Ket{n}$.
+The full time-evolution operator in the Dirac (or interaction) picture is decomposed into $U(t)=U_0(t)S(t)$, where $U_0(t)=\powe{-\i H_0t}$ and $U(t)=\powe{-\i Ht}$.
+Inserting into the Schrödinger equation leads to
+\begin{align}
+\i\partial_t \Ket{\psi(t)} &= \i\partial_t U\Ket{\psi_0} = H_0\Ket{\psi(t)} + U_0\i\partial_t S\Ket{\psi_0} \overset{!}{=} H\Ket{\psi(t)} = H_0\Ket{\psi(t)} + V\Ket{\psi(t)}.
+\end{align}
+Introducing the transformed operator $V_\D = U_0^\dagger VU_0$ and canceling common terms leaves the equation
+\begin{align}
+\i\partial_t S\Ket{\psi_0} &= V_\D S\Ket{\psi_0}.
+\end{align}
+This is valid for any initial state $\Ket{\psi_0}$, and formally we can therefore lift the equation from the state-level to the operator-level.
+The operator equation $\i\partial_t S=V_\D S$ then admits the formal solution through a time-ordered exponential
+\begin{align}
+S(t) &= \mathcal{T} \exp\kla*{-\i \intx{0}{t}{V_\D(t')}{t'}},
+\end{align}
+which is comparatively easy to verify through explicit calculation\footnote{$\i\partial_t S = \mathcal{T} V_\D(t) \exp\kla*{\dots} = V_\D S$ is allowed because the time-ordering operator will pull the endpoint term $V_\D(t)$ to the left at every order of the series, leaving the expected result. This is formally easy, but of course the time-ordered exponential itself is usually incalculable.}.
+Writing $V_\D \rightarrow \lambda V_\D$, the corresponding series representation immediately leads to a power-series in the dimensionless parameter $\lambda$.
+The time-evolved state can generally be expressed as
+\begin{align}
+\Ket{\psi(t)} &= \sum_n \Ket{n} \brb*{n}{\psi(t)} = \sum_n \powe{-\i E_n t}\Ket{n} \brc*{n}{S(t)}{\psi_0} = \sum_n c_n(t) \powe{-\i E_n t}\Ket{n}.
+\end{align}
+One could of course also have guessed this general ansatz and derived a perturbation series by inserting it into the original Schrödinger equation, but the operator description via $S(t)$ is a little more elegant and a lot more universal.
+
+So what is the series expansion?
+Well, we can certainly write $S=\sum_k \lambda^k S_k$, where the $S_k$ are the coefficients of the $k$-th order in the time-ordered exponential.
+At $k=0$ we get the identity, $S_0=\mathbbm{1}$, and at $k=1$ we get $S_1=-\i \intx{0}{t}{V_\D(t')}{t'}$, since there is only one operator to time-order.
+Higher order terms can explicitly be rewritten as
+\begin{align}
+S_k &= \frac{\kla*{-\i}^k}{k!} \mathcal{T} \intx{0}{t}{ \dots \intx{0}{t}{V_\D(t_k) \dots V_\D(t_1) }{t_1}}{t_k} = \kla*{-\i}^k \intx{0}{t}{V_\D(t_k) \dots\intx{0}{t_2}{V_\D(t_1)}{t_1}\dots }{t_k}.
+\end{align}
+The coefficient functions then become 
+\begin{align}
+c_n(t) &= \brc*{n}{\kla*{\mathbbm{1} + \lambda S_1 + \dots}}{\psi_0} = \brb*{n}{\psi_0} - \i \lambda \intx{0}{t}{\brc*{n}{V_\D(t')}{\psi_0}}{t'} + \mathcal{O}\kla*{\lambda^2}.
+\end{align}
+One is usually most interested in the transitions from the initial state to other states, i.e. the amplitude $\brb*{n}{\psi(t)}$.
+The probability for such a transition then generally takes the form
+\begin{align}
+P_{\Ket{\psi_0} \rightarrow \Ket{n}}(t) &\equiv P_{n\psi_0}(t) = \abs*{ c_n(t) }^2,
+\end{align}
+which is why the computation of $c_n(t)$ is the essential part of this business.
+\section{Exact solutions}
+Usually the time-ordered exponential can not be computed explicitly, but in many practical cases one can at least dramatically simplify the mathematical complexity of the object itself.
+A key insight is that the time-ordering only orders \emph{operators}, i.e. so long as the actual time-dependence in $V(t)$ is only on a level of \emph{functions}, we can completely ignore $\mathcal{T}$!
+This even works for a superposition such as $V=f(t)A+g(t)B$, because after all the binomial theorems are applied, we only reorder the coefficient functions $f(t_4)$ and $g(t_7)$.
+Another way to see this is by noticing that the integral collapses to a simple function of $t$ times some constant operator, and for such arguments the time-ordering is irrelevant.
+\subsection{Harmonic oscillator with linear shift}
+The paradigmatic Hamiltonian for perturbation theory is of course the harmonic oscillator, $H_0=\omega\kla*{a^\dagger a+\frac{1}{2}}$, where $a = \frac{m\omega x + \i p}{\sqrt{2m\omega}}$.
+For a linear shift $x = \sqrt{\frac{1}{2m\omega}} \kla*{a + a^\dagger}$ over a time period $\tau$ we can define the perturbation as $V(t) = \gamma \kla*{a+a^\dagger}\Theta(t)\Theta(\tau-t)$.
+To avoid too many complications during the transition itself, let us focus on the time $t\ge \tau$ after the quench.
+If our initial state is a clean eigenstate, i.e. $\Ket{\psi_0} = \Ket{N}$, then this problem can still be solved exactly (albeit with some technical trickery).
+As a first useful identity, note that
+\begin{align}
+\brc*{n'}{\kla{a^\dagger}^{k'} a^k }{n} &= \sqrt{\frac{n'!}{(n'-k')!} \frac{n!}{(n-k)!}} \delta_{n'-k',n-k}
+\end{align}
+where the divergence of the factorial function at negative integers ensures that the overlap is zero for $n'<k'$ or $n<k$ (we can not remove more quanta than where initially there).
+Our time-evolution operator can be written as
+\begin{align}
+S(t) &= \mathcal{T} \exp\kla*{-\i \gamma \intx{0}{\tau}{ \klb*{a(t) + a^\dagger(t)} }{t}},
+\end{align}
+where the time-ordering can be ignored because the time-dependence is only contained in a function.
+To see this explicitly, we need to compute $a(t)$, which can be done in two ways.
+First, using the Lie-Hadamard formula
+\begin{align}
+\powe{A} B \powe{-A} &= B + \klb*{A,B} + \frac{1}{2!} \klb*{A,\klb*{A,B}} + \dots,
+\end{align}
+or second by realizing that $a(t)$ must satisfy the Heisenberg equation $\i\partial_t a(t) = \klb*{a(t),H_0}$.
+The latter is significantly easier in this case, because the commutator on the RHS is just $\omega a$, so $a(t) = \powe{-\i\omega t} a$.
+Plugging this into $S$, we obtain
+\begin{align}
+S(t) &= \powe{\phi^\ast a^\dagger - \phi a} = \powe{\phi^\ast a^\dagger} \powe{-\phi a} \powe{-\frac{1}{2} \klb*{\phi^\ast a^\dagger, -\phi a}} = \powe{\phi^\ast a^\dagger} \powe{-\phi a} \powe{-\frac{1}{2} \abs*{\phi}^2},
+\end{align}
+where $\phi = \i\gamma \intx{0}{\tau}{\powe{-\i\omega t}}{t} = -\frac{\gamma}{\omega} \kla*{\powe{-\i\omega\tau} - 1}$ and we used the special case of the Baker-Campbell-Hausdorff formula $\powe{A}\powe{B} = \powe{A+B+\frac{1}{2}\klb*{A,B}}$ valid for $\klb*{A,B}$ commuting with $A$ and $B$.
+Because our initial state is just $\Ket{N}$, the amplitude is now
+\begin{align}
+c_n(t) &= \brc*{n}{S(t)}{N} = \powe{-\frac{1}{2} \abs*{\phi}^2} \brc*{n}{\powe{\phi^\ast a^\dagger} \powe{-\phi a}}{N}\\
+&= \powe{-\frac{1}{2}\abs*{\phi}^2} \sum_{k'\ge 0} \sum_{k\ge 0} \frac{\kla*{\phi^\ast}^{k'} \kla*{-\phi}^k}{k'! k!} \brc*{n}{\kla{a^\dagger}^{k'} a^k}{N}\\
+&= \powe{-\frac{1}{2}\abs*{\phi}^2} \sum_{k'=0}^n \sum_{k=0}^N \frac{\kla*{\phi^\ast}^{k'} \kla*{-\phi}^k}{k'! k!} \sqrt{\frac{n!N!}{(n-k')!(N-k)!}} \delta_{n-k',N-k}.
+\end{align}
+The Kronecker-delta gives $k'=k+n-N$, which collapses one of the sums under the additional restrictions that $k'\in\klb*{0,n}$ for the respective $k\in\klb*{0,N}$.
+A lot of headaches thinking about the finite bounds can be avoided by mirroring both of the summation indexes, i.e. $k\rightarrow N-k$ and $k'\rightarrow n-k'$ (this does not change the limits of the summation).
+Then we have
+\begin{align}
+c_n(t) &= \powe{-\frac{1}{2}\abs*{\phi}^2} \sum_{k'=0}^n \sum_{k=0}^N \frac{\kla*{\phi^\ast}^{n-k'} \kla*{-\phi}^{N-k}}{(n-k')! (N-k)!} \sqrt{\frac{n!N!}{k'!k!}} \delta_{k',k}\\
+&= \powe{-\frac{1}{2}\abs*{\phi}^2} \sum_{k=0}^{\min\klc*{n,N}} \frac{ \sqrt{n!N!} \kla*{\phi^\ast}^{n-k} \kla*{-\phi}^{N-k}}{(n-k)! (N-k)! k!}
+\end{align}
+and the transition probabilities become
+\begin{align}
+P_{n,N}(t) &= \abs*{c_n(t)}^2 = \powe{-|\phi|^2} \abs*{\sum_{k=0}^{\min\klc*{n,N}} \frac{ \sqrt{n!N!} \kla*{\phi^\ast}^{n-k} \kla*{-\phi}^{N-k}}{(n-k)! (N-k)! k!}}^2 \equiv \powe{-|\phi|^2} \abs*{\Sigma_N(n)}^2.
+\end{align}
+%phi=0.13+0.88j; N=5; total = 0
+%from scipy import special
+%g = special.gamma
+%for n in range(0,20):
+%    phase = 0
+%    for k in range(0,min(n,N)+1):
+%        phase += np.sqrt(g(n+1)*g(N+1))/g(k+1)/g(n-k+1)/g(N-k+1) * (-phi)**(N-k) * np.conj(phi)**(n-k)
+%    new = np.exp(-np.abs(phi)**2) * np.abs(phase)**2
+%    total += new
+%    print(f"{n=}: {new=:.5e}")
+%print(f"{total = :.5e}")
+The probabilities must add to one, $\sum_{n\ge 0} P_{n,N}(t)=1$, which is certainly not easy to see from the explicit formula.
+To simplify the expression a bit, let us consider the case $n\ge N$.
+Then we find
+\begin{align}
+\Sigma_N(n) &= \sqrt{n!N!} |\phi|^{2N} \kla*{\phi^\ast}^{n-N} (-1)^N \sum_{k=0}^{N} \frac{(-1)^k  \abs*{\phi}^{-2k}}{k! (n-k)! (N-k)!}\\
+&= \frac{(-1)^N}{\sqrt{n!N!}} |\phi|^{2N-2n} \kla*{\phi^\ast}^{n-N} U\kla*{-n,N-n+1,|\phi|^2},
+\end{align} %https://www.wolframalpha.com/input?i=sum+x%5Ek%2Fk%21%2F+%28n-k%29%21+%2F%28N-k%29%21+from+k%3D0+to+N
+where $U(a,b,z)$ is the confluent hypergeometric function of the second kind (not that this would help).
+\subsubsection{Remarkable identity}
+For $z\in\mathbb{C}$ and $N\in\mathbb{N}_0$ we have the identity
+\begin{align}
+\sum_{n\ge 0} \abs*{\sum_{k=0}^{\min\klc*{n,N}} \frac{ \sqrt{n!N!} \kla*{z^\ast}^{n-k} \kla*{-z}^{N-k}}{(n-k)! (N-k)! k!}}^2 &= \powe{z^\ast z}.
+\end{align}
+
+
+
+\end{document}
