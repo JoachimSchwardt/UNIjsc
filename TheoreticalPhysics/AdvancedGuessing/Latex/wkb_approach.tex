@@ -1,0 +1,251 @@
+\documentclass[english, parskip=full]{scrartcl}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+
+\newcommand*{\Title}{WKB approach}
+\newcommand*{\Author}{Joachim Schwardt}
+
+\input{preamble_shared}
+\input{preamble}
+\input{glossary.tex}
+
+%\titlehead{titlehead}
+\subject{Advanced Guessing for Physicists}
+\title{\Title}
+\author{\Author}
+\date{\today}
+
+\usepackage[most]{tcolorbox}
+
+\definecolor{colorbackgrounddefinition}{RGB}{220,220,248}
+\definecolor{colorbackgroundnote}{RGB}{220,248,220}
+\definecolor{colorbackgroundexample}{RGB}{248,220,220}
+\definecolor{colordefinition}{RGB}{0,0,200}
+\definecolor{colornote}{RGB}{0,200,0}
+\definecolor{colorexample}{RGB}{140,0,100}
+
+\newcommand{\definition}[2]{\begin{tcolorbox}[colback=colorbackgrounddefinition,colframe=colordefinition, breakable,enhanced,title=\textbf{#1}.]#2\end{tcolorbox}}
+\newcommand{\note}[1]{\begin{tcolorbox}[colback=colorbackgroundnote,colframe=colornote, breakable,enhanced]#1\end{tcolorbox}}
+\newcommand{\example}[3]{\begin{tcolorbox}[colback=colorbackgroundexample,colframe=colorexample, breakable,enhanced,title={\textbf{#1}: #2.}]#3\end{tcolorbox}}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+%\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\section{WKB method} %https://journals.aps.org/prd/pdf/10.1103/PhysRevD.16.1740
+(Note: I am following Carl Bender's \emph{Numerological analysis of the WKB approximation in large order} for the general WKB series ansatz for the energy eigenvalues)
+
+The one-dimensional Schrödinger equation is $y''=Qy$ with $Q(x)=V(x)-E$ and the usual boundary conditions.
+We want bound-state solutions for arbitrarily large quantum number, so it is natural to assume an unbounded potential.
+What is less commonly mentioned is the assumption of a unique minimum, i.e. a double-well $x^4-x^2$ is not allowed (although for large $n$ the method may give decent results anyway).
+
+The standard semi-classical phasespace approach leads to the Bohr-Sommerfeld quantization with $n_0=\frac{1}{2}$ being the prediction from two turning points; but we are interested in a generalization that, at the cost of involving infinite series, is at least formally exact.
+The first step is to introduce a ``small'' expansion parameter $\epsilon$ in to the equation,
+\begin{align}
+\epsilon^2 y'' &= Qy.
+\end{align}
+Then we make the series ansatz $y=\exp\kla*{\frac{1}{\epsilon}\sum_{n\ge 0} \epsilon^n S_n}$ with unknown functions $S_n$.
+Inserting this into the modified Schrödinger equation yields\footnote{$\kla*{\powe{S}}' = S'\powe{S}$ and $\kla*{\powe{S}}'' = \kla*{S'' + S'^2}\powe{S}$}
+\begin{align}
+Q &= \epsilon \sum_{n\ge 0} \epsilon^n S_n'' + \sum_{n,m\ge 0} \epsilon^{n+m} S_n'S_m' = S_0'^2 + \sum_{n\ge 1} \epsilon^n \klc*{S_{n-1}'' + \sum_{l=0}^n S_l' S_{n-l}'},
+\end{align}
+i.e. $S_0' = \pm \sqrt{Q}$ (only the negative sign is valid) and $0=S_{n-1}'' + 2S_0'S_n' + \sum_{l=1}^{n-1} S_l'S_{n-l}'$.
+For convenience of notation, introduce $T_n=S_n'$, so $T_0=-\sqrt{Q}$.
+Recursively solving the equation gives $T_n = \frac{-1}{2T_0} \klc*{T_{n-1}' + \Sigma (\dots)}$, i.e.
+\begin{align*}
+T_1 &= \frac{-1}{2T_0} T_0' = -\frac{Q'}{4Q}\\
+T_2 &= \frac{-1}{2T_0} \klc*{T_1' + T_1^2} = \frac{1}{2\sqrt{Q}} \klc*{-\frac{Q''Q - Q'^2}{4Q^2} + \frac{Q'^2}{16Q^2}} = -\frac{Q''}{8Q^{3/2}} + \frac{5Q'^2}{32Q^{5/2}}\\
+T_3 &= \frac{1}{2\sqrt{Q}} \klc*{T_2' + 2T_1T_2} = \frac{1}{2\sqrt{Q}} \klc*{-\frac{Q'''}{8Q^{3/2}} + \frac{3Q''Q'}{16Q^{5/2}} + \frac{5Q'Q''}{16Q^{5/2}} - \frac{25Q'^3}{64Q^{7/2}} +\frac{Q'}{2Q}\klb*{\frac{Q''}{8Q^{3/2}} - \frac{5Q'^2}{32Q^{5/2}}}}\\
+&= -\frac{Q'''}{16Q^2} + \frac{9Q''Q'}{32Q^3} - \frac{15Q'^3}{64Q^3},
+\end{align*}
+and so on.
+The exact quantization condition now reads
+\begin{align}
+\frac{1}{2\i} \oint\sum_{k\ge 0} T_k(x)\,\d x &= n\pi,
+\end{align}
+where $n\in\mathbb{N}_0$ and the integral is along a closed contour in the complex plane that contains the two turnings points $x_1$ and $x_2$ on the real axis (note that $\epsilon=1$ here and $Q(x)=0$ defines a turning point).
+\subsection{Algebraic potentials}
+Consider $V=|x|^q$ with $q>0$.
+Then $Q=x^q-E$ gives turning points $x_{1,2} = \pm x = \pm E^{1/q}$.
+For the integrals $E_k = \frac{1}{2\i} \oint_{|z|>x} T_k(z)\,\d z$, we can deform the contour safely to two lines parallel to the real axis without touching the poles or crossing the branch-cut along the negative real axis.
+The lines have an infinitesimal offset $\epsilon \ll 1$ from the real axis, and the first integral then becomes\footnote{We evaluate a complex square-root via branch-cut along the negative real axis, i.e. $\sqrt{-x \pm \i\epsilon} = \pm\i \sqrt{x}$. The intuition is that we want the phase of the answer to be within $\klb*{0,\pi}$ to fix a branch, which gives $\sqrt{-x\pm\i\epsilon} \sim \i\sqrt{x} \powe{\i\pi n \pm \i\epsilon}$ with $n=0$ for the positive sign and $n=1$ for the negative sign.}
+\begin{align}
+E_0 &= \frac{1}{2\i} \oint_{|z| > x} T_0(z)\,\d z = \frac{-1}{2\i} \oint_{|z| > x} \sqrt{z^q-x^q}\,\d z = \frac{-1}{2\i} \intx{-x}{x}{\kla*{\sqrt{z^q - x^q - \i\epsilon} - \sqrt{z^q - x^q + \i\epsilon}}}{z}\\
+&= \intx{-x}{x}{\sqrt{x^q - z^q}}{z} = 2x^{\frac{q+2}{2}} \intx{0}{1}{\sqrt{1 - t^q}}{t} = 2x^{\frac{q+2}{2}} \intx{0}{1}{\sqrt{1 - u} \frac{1}{q} u^{\frac{1}{q}-1}}{u} = 2E^{\frac{q+2}{2q}} \frac{1}{q} B\kla*{\frac{1}{q},\frac{3}{2}},
+\end{align}
+%from scipy.integrate import quad
+%from scipy import special
+%b=special.beta
+%q=0.1353
+%quad(lambda x: np.sqrt(1-x**q), 0, 1), b(1/q,1.5)/q
+where $B(x,y)=\frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)} = \intx{0}{1}{t^{x-1}(1-t)^{y-1}}{t}$ is the Beta function.
+For the second integral, we find
+\begin{align}
+E_1 &= \frac{1}{2\i} \oint T_1 = \frac{-1}{8\i} \oint \frac{qz^{q-1}}{z^q-x^q}\,\d z = \frac{-1}{8\i} 2\pi\i \sum_{z_0=\pm x} \klb*{(z-z_0)\frac{qz^{q-1}}{z^q-x^q}}\Big\vert_{z=z_0} = -\frac{\pi}{2}
+\end{align}
+via the residue theorem (this result is generally true because $T_1\sim\kla*{\log Q}'$).
+The third integral simplifies in the same way as the first, i.e. the contour collapses to the real line,
+\begin{align}
+E_2 &= \intx{-x}{x}{\kla*{x^q-z^q}^{-3/2} \kla*{\frac{1}{8} q(q-1)z^{q-2} - \frac{5}{32} \frac{q^2z^{2q-2}}{z^q-x^q}}}{z}\\
+&= x^{1 - \frac{3}{2}q + q-2} 2\intx{0}{1}{\kla*{1-u}^{-3/2} \kla*{\frac{1}{8} q(q-1)u^{1-\frac{2}{q}} + \frac{5}{32} \frac{q^2 u^{2-2/q}}{1-u}} \frac{u^{1/q-1}}{q} }{u}\\
+&= 2E^{-\frac{1}{q}-\frac{1}{2}} \klc*{\frac{1}{8} (q-1)B\kla*{\frac{-1}{2}, 1 - \frac{1}{q}} + \frac{5q}{32} B\kla*{\frac{-3}{2},2-\frac{1}{q}}}.
+\end{align}
+%2*(5/32 *q*b(-3/2,2-1/q) + 1/8*(q-1)*b(-1/2, 1-1/q)), -2*(q-1)*2*np.sqrt(np.pi)*g(1-1/q)/2/g(5)/g(1/2-1/q)
+(Note: this matches the result in the paper even for fractional $q$)
+
+It is clear that higher orders will also only involve linear combinations of beta functions.
+However, explicitly computing the coefficients rapidly becomes too difficult to do by hand, so we will just stop at this order.
+
+\section{WKB analysis}
+Consider a Schrödinger equation $y''=\frac{1}{x^2}\kla*{\log x}^2 y$ as $x\rightarrow\infty$.
+Transforming to $s=\log x$, we get
+\begin{align}
+\partial_x &= \frac{\partial s}{\partial x} \partial_s = \frac{1}{x} \partial_s,\\
+\partial_x^2 &= -\frac{1}{x^2}\partial_s + \frac{1}{x^2} \partial_s^2 = \powe{-2s} \partial_s \kla*{\partial_s - 1},
+\end{align}
+which leads to the new equation $0 = y'' - y' - s^2 y$.
+Splitting off an exponential factor via $y(s) = \powe{s/2}z(s)$ leads to
+\begin{align}
+0 &= z'' + z' + \frac{1}{4} z - \frac{1}{2} z - z' - s^2z = z'' - \kla*{s^2 + \frac{1}{4}}z.
+\end{align}
+As $x\rightarrow\infty$, we also have $s\rightarrow\infty$.
+Starting with $z\sim \powe{S}$, we find $z''\sim \kla*{S''+S'^2}\powe{S}$ and
+\begin{align}
+S''+S'^2 &\sim s^2+\frac{1}{4}.
+\end{align}
+The dominant balance is $S'^2 \sim s^2$, so $S\sim \pm\frac{1}{2}s^2$.
+Splitting off this factor gives $z\sim \powe{\pm\frac{1}{2}s^2 + S}$ with a new $S$ that admits the equation
+\begin{align}
+S''\pm 1+\kla*{S'\pm s}^2 &\sim s^2+\frac{1}{4}.
+\end{align}
+Canceling terms leaves $S'' +S'^2 \pm 2sS' \sim \frac{1}{4} \mp 1$.
+The dominant balance $2sS'\sim \pm\frac{1}{4} - 1$, so $S\sim -\frac{4\mp 1}{8}\log s$ and our next step is $z\sim \powe{\pm \frac{1}{2}s^2 - \frac{4\mp 1}{8}\log s + S}$
+with
+\begin{align}
+S''\pm 1+\frac{4\mp 1}{8s^2} + \kla*{S'\pm s-\frac{4\mp 1}{8s}}^2 &\sim s^2 + \frac{1}{4}
+\end{align}
+simplifying to $S''+ \frac{4\pm 1}{8} \kla*{\frac{4\mp 1}{8} +1} \frac{1}{s^2} + S'^2 + 2sS' - \frac{4\mp 1}{4s}S' \sim 0$.
+The dominant balance is $2sS' \sim -\frac{1}{s^2} \frac{4\mp 1}{8} \kla*{\frac{4\mp 1}{8}+1}$, since $S' \sim \frac{-1}{2s^3} \frac{4\mp 1}{8} \kla*{\frac{4\mp 1}{8}+1}$ dominates $S'',S'^2,\frac{S'}{s}$.
+The next term is then $z\sim \powe{\pm\frac{1}{2}s^2 - \frac{4\mp 1}{8}\log s + \frac{4\mp 1}{32} \kla*{\frac{4\mp 1}{8}+1} \frac{1}{s^2} + S}$.
+
+%To check whether the leading behavior is correct, let us split off the factor via $z=\powe{S} g$ with $S=\frac{1}{2}s^2 - \frac{3}{8}\log s + \frac{3}{32} \kla*{\frac{3}{8}+1}\frac{1}{s^2}$.
+%Then $z'=\powe{S}\kla*{g'+S'g}$ and $z''= \powe{S} \klc*{g'' + 2S'g' + S''g + S'^2 g}$, so
+%\begin{align}
+%0 &= g'' + 2S'g' + \kla*{S'' + S'^2 - s^2 - \frac{1}{4}} g\\
+%&= g'' + 2\kla*{s - \frac{3}{8s}}g' + \frac{3}{8} \kla*{\frac{3}{8} + 1} \frac{1}{s^2} g
+%\end{align}
+%Transforming to $t=\frac{1}{s}$ then yields %$g'=-\frac{1}{s^2}g'$, $g''=\frac{1}{s^4}g'' + \frac{2}{s^3}g'$
+%\begin{align}
+%0 &= t^4 g'' + 2t^3 g' - 2\kla*{\frac{1}{t} - \frac{3t}{8}} t^2 g' + \frac{3}{8} \kla*{\frac{3}{8} + 1} t^2 g,\\
+%0 &= g'' + 2\kla*{\frac{3}{8} + 1 - \frac{1}{t^2}} \frac{1}{t} g' + \frac{3}{8} \kla*{\frac{3}{8} + 1} \frac{1}{t^2} g.
+%\end{align}
+%Since $t=0$ is not a regular singular point, we may not have a Frobenius series.
+%However, we may assume $g=\sum_{n\ge 0} a_n t^{n+\alpha}$ anyway and try to solve
+%\begin{align}
+%0 &= \sum_{n\ge 0} a_n \klc*{(n+\alpha)(n+\alpha-1) + \frac{11}{4}(n+\alpha) + \frac{33}{64} - (n+\alpha)\frac{2}{t^2}}t^{n+\alpha-2}.
+%\end{align}
+%As to be expected, there are immediate problems at $n=0$: there is no pairing for $t^{\alpha-4}$, so $\alpha=0$.
+%This eliminates the $t^{-4}$-term, but $t^{-3}$ remains problematic
+If WolframAlpha is to be believed, then these two solutions are mostly correct. %https://www.wolframalpha.com/input?i=y%27%27%3D%28x%5E2%2B1%2F4%29y
+Expanding $\powe{c/s^2} \sim 1 + \frac{c}{s^2} + \dots$ agrees with the exact expansion at least up to the first term of order $\frac{1}{s^2}$.
+%nv=np.arange(5)
+%from scipy import special
+%from fractions import Fraction
+%g=special.gamma
+%c=Fraction(33,256)
+%[Fraction(1,int(g(n+1))) * c**n for n in nv]
+
+\section{Eigenvalue problems}
+Consider a simple harmonic oscillator in QM, $\psi'' = \kla*{\frac{1}{4}x^2 - E}\psi$ with $\psi\kla*{|x|\rightarrow \infty}\rightarrow 0$.
+Direct series expansion leads to a (practically unsolvable) second order recursion equation, so we must first split off a factor via $\psi = \powe{-\frac{1}{4}x^2} f$, giving
+\begin{align}
+0 &= \powe{-\frac{1}{4} x^2} \klc*{f'' - xf' + \frac{1}{4}x^2 - \frac{1}{2} + E - \frac{1}{4}x^2}f.
+\end{align}
+Series expansion for $f$ then yields
+\begin{align}
+0 &= \sum_{n\ge 0} a_n \klc*{n(n-1) - \kla*{n+\frac{1}{2}-E} x^2}x^{n-2},
+\end{align}
+so $a_n = \frac{n+1/2 - E}{n(n-1)-1/4} a_{n-2}$.
+This is asymptotically $a_{2n} \sim \frac{1}{2^n n!}$, which gives $\sim\powe{\frac{1}{2}x^2}$ and thus divergence.
+The recursion must therefore terminate at finite $n$, giving $E_n=n+\frac{1}{2}$ with $n\ge 0$ (i.e. the first possible solution has $f=\const$).
+
+\subsection{WKB energies}
+Interestingly, the infinite series in the WKB method collapses for $q=2$ because all terms beyond $k=1$ vanish.
+We only show this explicitly for $E_{k=2}$, which here reads
+\begin{align}
+E_2&= E^{-\frac{q+2}{2q}} \frac{1}{4} \klc*{(q-1) \frac{\Gamma\kla*{-\frac{1}{2}}\Gamma\kla*{1 - \frac{1}{q}}}{\Gamma\kla*{\frac{1}{2} - \frac{1}{q}}} + \frac{5q}{4} \frac{\Gamma\kla*{-\frac{3}{2}}\Gamma\kla*{2 - \frac{1}{q}}}{\Gamma\kla*{\frac{1}{2} - \frac{1}{q}}}}\\
+&= E^{-\frac{q+2}{2q}} \frac{1}{4} \frac{\Gamma\kla*{-\frac{1}{2}}\Gamma\kla*{1 - \frac{1}{q}}}{\Gamma\kla*{\frac{1}{2} - \frac{1}{q}}} \klc*{(q-1) - \frac{5q}{6} \kla*{1 - \frac{1}{q}}} \\
+&= E^{-\frac{q+2}{2q}} \frac{-2}{24}(q-1) \frac{\sqrt{\pi}\Gamma\kla*{1 - \frac{1}{q}}}{\Gamma\kla*{\frac{1}{2} - \frac{1}{q}}}.
+\end{align}
+At $q=2$, this simplifies to $E\frac{-\pi}{12} \frac{1}{\Gamma(0)} = 0$ due to the divergence of $\Gamma$ at non-positive integers.
+Assuming that this behavior continues to higher orders\footnote{Formally showing this appears really difficult, but intuitively it is not that surprising: all higher terms will have sufficiently high orders of $Q$ in the denominator, and therefore all of the individual terms go to zero due to the suppression by $\frac{1}{\Gamma(0)}$. What is not so easy to see is why the cancellation only generates \emph{non-positive} integer arguments in the denominator (and \emph{only} in the denominator, otherwise the divergence could cancel). For what it's worth, this point is completely glossed over in the paper. C'est la vie..}, the exact quantization condition reduces to
+\begin{align}
+n\pi &= 2E \frac{1}{2} B\kla*{\frac{1}{2},\frac{3}{2}} - \frac{\pi}{2} = \frac{\pi}{2} E - \frac{\pi}{2},
+\end{align}
+which gives $E = 2n+1$.
+Because the actual potential is $\frac{1}{4}x^2$ rather than $x^2$, we have to rescale the energies accordingly.
+Half the frequency gives a quarter potential energy, and because energy is proportional to frequency we recover the $E=n+\frac{1}{2}$ from before\footnote{To be a bit more formal: If we had a solution to the ODE $y''=\kla*{x^2-E}y$, then $x\rightarrow \sqrt{\omega} x$ gives $\frac{1}{\omega} y'' = \kla*{\omega x^2-E}y$, so $y$ is a solution to $y''=\kla*{\omega^2x^2-\tilde{E}}y$ with $\tilde{E}=\omega E$ (the general lesson is that rescaling an ODE is not quite as trivial as multiplying by some prefactor because the differentials change as well)}.
+\subsection{Anharmonic oscillator}
+For the anharmonic potential $V=x^4$ we can just take $q=4$ and contend ourselves with the leading order.
+We have $E_0 = 2E^{3/4} \frac{1}{4} \frac{\Gamma\kla*{3/2} \Gamma\kla*{1/4}}{\Gamma\kla*{7/4}} = \frac{1}{3} E^{3/4} \sqrt{\pi} \rho$ with $\rho = \Gamma\kla*{\frac{1}{4}} / \Gamma\kla*{\frac{3}{4}}$.
+The second integral is
+\begin{align}
+E_2 &= E^{-3/4} \frac{-1}{12} 3 \frac{\sqrt{\pi} \Gamma\kla*{3/4}}{\Gamma\kla*{1/4}} = -\frac{1}{4} E^{-3/4} \frac{\sqrt{\pi}}{\rho}.
+\end{align}
+As $n\rightarrow\infty$, we expect $E\rightarrow\infty$.
+Therefore, even though we are missing infinitely many terms, the leading order correction should already be contained within $E_2$.
+We have to solve
+\begin{align}
+\frac{1}{3} E^{3/4} \sqrt{\pi}\rho - \frac{1}{4} E^{-3/4} \frac{\sqrt{\pi}}{\rho} + o\kla*{E^{-3/4}} &= \pi \kla*{n+\frac{1}{2}},
+\end{align}
+which we write as $x = m + \frac{1}{12x} + o\kla*{1/x}$ with $x=\frac{\rho}{3}E^{3/4}$ and $m=\sqrt{\pi} \kla*{n+\frac{1}{2}}$.
+Iterating once gives
+\begin{align}
+x&\sim m + \frac{1}{12m} + o\kla*{\frac{1}{m}},
+\end{align}
+and therefore
+\begin{align}
+E&\sim \kla*{\frac{3}{\rho}}^{4/3} \kla*{m + \frac{1}{12m} + o\kla*{\frac{1}{m}}}^{4/3} \sim \kla*{\frac{3}{\rho}}^{4/3} m^{4/3} \kla*{1 + \frac{1}{9m^2} + o\kla*{\frac{1}{m^2}}}.
+\end{align}
+(again matches the result from the paper, although I am rather curious how they found the approximations for much higher orders.
+This either requires an iteration scheme as I did above (which is certainly not completely straight-forward to do at such high order), or a numerical evaluation of the implicit equation [probably the latter, this is certainly easier than I thought because the values converge quickly])
+
+
+\section{Alpha decay}
+When an atom decays, it can emit a helium nucleus known as an $\alpha$-particle and transform into a lighter atom.
+This requires the $\alpha$-particle to tunnel through the (approximate) electromagnetic potential barrier $V(r)=-V_0$ for $r<R$ and $V(r) = \frac{2Ze^2}{r}$ for $r>R$.
+The radial Schrödinger equation for $u(r)=rR(r)$ is
+\begin{align}
+0 &= u''(r) + k(r)^2 u(r)
+\end{align}
+with $k(r)^2=2m\kla*{E-V(r) - \frac{\ell(\ell+1)}{2mr^2}}$.
+
+Let us start with the simplest case, i.e. set $\ell=0$.
+Then in the interior we have $u''=-k^2u$ with $k=\sqrt{2m\kla*{V_0+E}}=\const$ and $E=\frac{2Ze^2}{b} > 0$.
+Because $u(0)=0$, the only solution is $u(r)=A\sin(kr)$.
+Beyond the barrier, the equation is
+\begin{align}
+0 &= u''(r) + 2mE\kla*{1 - \frac{b}{r}} u(r)
+\end{align}
+and we want to solve this for $\epsilon = \frac{R}{b} \rightarrow 0$ (or rather, we want to find the transmission coefficient $|T|^2$).
+
+%The equation is kind enough to have a regular singular point for once, so we can actually just make a Frobenius ansatz to get
+%\begin{align}
+%0 &= \sum_{n\ge 0} a_n \klc*{(n+\alpha)(n+\alpha-1) + 2mEr^2 - 2mEbr}r^{n+\alpha-2}.
+%\end{align}
+%This gives $\alpha(\alpha-1)=0$, so $\alpha=1$ is our first solution.
+Writing $u=\powe{\pm\i k_0r}v$ with $k_0^2=2mE$ gives $0 = v'' \pm 2\i k_0 v' - \frac{2mEb}{r}v$.
+A series ansatz yields
+\begin{align}
+0 &= \sum_{n\ge 0} a_n \klc*{n(n-1) - \kla*{2mEb \mp 2\i k_0}r}r^{n-2},
+\end{align}
+so $a_n = ...a_{n-1}$
+
+TODO
+
+
+\end{document}
