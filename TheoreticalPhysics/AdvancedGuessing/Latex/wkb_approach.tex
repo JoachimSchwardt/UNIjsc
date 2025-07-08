@@ -224,6 +224,7 @@ The radial Schrödinger equation for $u(r)=rR(r)$ is
 \end{align}
 with $k(r)^2=2m\kla*{E-V(r) - \frac{\ell(\ell+1)}{2mr^2}}$.
 
+\subsection{First attempt: approximate wavefunction and probability current}
 Let us start with the simplest case, i.e. set $\ell=0$.
 Then in the interior we have $u''=-k^2u$ with $k=\sqrt{2m\kla*{V_0+E}}=\const$ and $E=\frac{2Ze^2}{b} > 0$.
 Because $u(0)=0$, the only solution is $u(r)=A\sin(kr)$.
@@ -231,21 +232,74 @@ Beyond the barrier, the equation is
 \begin{align}
 0 &= u''(r) + 2mE\kla*{1 - \frac{b}{r}} u(r)
 \end{align}
-and we want to solve this for $\epsilon = \frac{R}{b} \rightarrow 0$ (or rather, we want to find the transmission coefficient $|T|^2$).
+and we want to solve this for $\epsilon = \frac{R}{b} \rightarrow 0$ (or rather, we want to find the transmission coefficient $|t|^2$).
 
-%The equation is kind enough to have a regular singular point for once, so we can actually just make a Frobenius ansatz to get
+%%The equation is kind enough to have a regular singular point for once, so we can actually just make a Frobenius ansatz to get
+%%\begin{align}
+%%0 &= \sum_{n\ge 0} a_n \klc*{(n+\alpha)(n+\alpha-1) + 2mEr^2 - 2mEbr}r^{n+\alpha-2}.
+%%\end{align}
+%%This gives $\alpha(\alpha-1)=0$, so $\alpha=1$ is our first solution.
+%Writing $u=\powe{\pm\i k_0r}v$ with $k_0^2=2mE$ gives $0 = v'' \pm 2\i k_0 v' - \frac{2mEb}{r}v$.
+%A series ansatz yields
 %\begin{align}
-%0 &= \sum_{n\ge 0} a_n \klc*{(n+\alpha)(n+\alpha-1) + 2mEr^2 - 2mEbr}r^{n+\alpha-2}.
+%0 &= \sum_{n\ge 0} a_n \klc*{n(n-1) - \kla*{2mEb \mp 2\i k_0}r}r^{n-2},
 %\end{align}
-%This gives $\alpha(\alpha-1)=0$, so $\alpha=1$ is our first solution.
-Writing $u=\powe{\pm\i k_0r}v$ with $k_0^2=2mE$ gives $0 = v'' \pm 2\i k_0 v' - \frac{2mEb}{r}v$.
-A series ansatz yields
+%so $a_n = \frac{2mEb \mp 2\i k_0}{n(n-1)} a_{n-1} = \frac{n 2^n}{n!^2} \kla*{mEb\mp\i k_0}^n a_0$
+Let us try to find an integral representation in the form $u(r)=\int_C \powe{rz} p(z)\,\d z$.
+Writing $k_0^2=2mE$ and inserting into the ODE gives $0 = \int_C \powe{rz} p(z) \klb*{rz^2 + k_0^2 \kla*{r-b}}\,\d z$, and because the integrand only has linear terms in $r$, we attempt to find a representation as $\frac{\d}{\d z} \kla*{\powe{rz}S(z)}$.
+This leads to
 \begin{align}
-0 &= \sum_{n\ge 0} a_n \klc*{n(n-1) - \kla*{2mEb \mp 2\i k_0}r}r^{n-2},
+\powe{rz} S'(z) + r \powe{rz}S(z) &= \powe{rz} p(z) \klb*{rz^2 + k_0^2 \kla*{r-b}},
 \end{align}
-so $a_n = ...a_{n-1}$
+and therefore the two equations $S'(z)=-k_0^2 bp(z)$ and $S(z)=p(z)\kla*{z^2 + k_0^2}$.
+Dividing the first by the second yields $\frac{S'(z)}{S(z)} = -b \frac{k_0^2}{z^2+k_0^2}$, which can be integrated to $S(z) = S_0\exp\kla*{-bk_0 \arctan\kla*{\frac{z}{k_0}}}$ and
+\begin{align}
+p(z) &= \frac{S(z)}{z^2+k_0^2} = \frac{S_0}{z^2+k_0^2} \powe{-bk_0 \arctan\kla*{z/k_0}}.
+\end{align}
+Because $\powe{rz}S(z)$ is not zero anywhere, in order for $\powe{rz} S(z)\Big\vert_{\partial C}=0$ we need to choose a closed boundary (and hope that the logarithms in $\arctan(z)$ together with the exponential do not result in any branch cuts that would break the periodicity).
+Thus, we obtain (up to a constant prefactor) the integral representation
+\begin{align}
+u(r) &= \oint \frac{1}{z^2+1} \powe{rk_0 z - bk_0\arctan(z)}\,\d z.
+\end{align}
+%Actually, $\arctan(z) = \frac{1}{2\i} \log\kla*{\frac{1+\i z}{1-\i z}}$, so the exponential part is ($a=bk_0/2$)
+%\begin{align}
+%\powe{-2a\arctan(z)} &= \kla*{\frac{1+\i z}{1-\i z}}^{\i a}.
+%\end{align}
+(note: if this is going anywhere useful anytime soon, I do not see how. I think it is time to give up and go back to WKB..)
+\subsection{Second attempt: WKB formula}
+Within the WKB approximation, we have $|t|^2 \approx \powe{-2\gamma}$ with $\gamma = \intx{r_1}{r_2}{\kappa(r)}{r}$ and $\kappa(r)=\i k(r) = \sqrt{2m\klb*{V(r)-E}}$.
+For $r<R$, this is purely imaginary and thus only yields a phase that can be ignored.
+As such, although the value of $V_0$ is relevant for the problem to be well-defined (we need some potential well after all), it does not appear in the leading order WKB solution.
 
-TODO
+Similarly, we only need to integrate until $E>V(r_2)$, so
+\begin{align}
+\gamma &= \intx{R}{r_2}{\sqrt{2m \klb*{\frac{2Ze^2}{r} - E}}}{r} = \gamma_0 \intx{\epsilon}{1}{\sqrt{\frac{1}{x} - 1}}{x}
+\end{align}
+with $x=\frac{r}{b}$, $\epsilon=\frac{R}{b}$ and $\gamma_0 = \sqrt{4mZe^2b}$.
+The integral can be split into two parts.
+The full range gives $B\kla*{\frac{3}{2},\frac{1}{2}} = \frac{\pi}{2}$, and in the limit $\epsilon\ll 1$ the remaining part can be approximated as
+\begin{align}
+I_\epsilon &= \intx{0}{\epsilon}{\sqrt{\frac{1}{x} - 1}}{x} = \intx{0}{\epsilon}{ x^{-\frac{1}{2}} \kla*{1 - \frac{x}{2} + \mathcal{O}\kla*{x^2}} }{x} \sim 2\sqrt{\epsilon} - \frac{1}{3}\epsilon^{3/2} + \mathcal{O}\kla*{\epsilon^{5/2}}.
+\end{align}
+Keeping only the leading term, we obtain
+\begin{align}
+\gamma &\sim \gamma_0 \kla*{\frac{\pi}{2} - 2\sqrt{\epsilon}}
+\end{align}
+as $\epsilon\rightarrow 0$, and therefore $|t|^2 \sim \powe{-\gamma_0 \kla*{\pi - 4\sqrt{\epsilon}}}$.
+
+The transmission coefficient $T=|t|^2$ gives the probability that the $\alpha$-particle leaves the nucleus in a single collision.
+In order to get a lifetime, we also need to know how often such collisions actually occur.
+As a simple model, say that it has a constant velocity $v$ and thus collides with the boundary about $N=\frac{v}{R}$ times per time interval (although we are certainly making a crude approximation here. The velocity is also not an easy quantity, and whether counting collisions in this classical picture is a good model is also at least nontrivial).
+Then the (unnormalized) probability that the atom is still intact after time $t$ is $P(t)\propto \kla*{1-T}^{Nt}$, which we may rewrite as%\footnote{I found some literature that just inverts the transition rate, so $\tau \approx \frac{R}{vT}$. But in my opinion it makes more sense to take the lifetime as an expectation value of its probability distribution.}
+\begin{align}
+P(t) &= -N\log\kla*{1-T} \powe{Nt \log\kla*{1-T}}.
+\end{align}
+The expectation value of this distribution can then be interpreted as a lifetime, so $\tau = \intx{0}{\infty}{t P(t)}{t} = \frac{1}{-N \log\kla*{1-T}}$, which is approximately
+\begin{align}
+\tau &\approx \frac{1}{NT} \sim \frac{R}{v} \powe{\gamma_0 \kla*{\pi - 4\sqrt{\epsilon}}}.
+\end{align}
+%Surface tension can be interpreted as energy per area, $\sigma\propto \frac{E}{R^2}$, so identifying $v^2$ as a kinetic energy, the prefactor could also be seen as the inverse root of the surface tension.
+%Intuitively, this means that the lifetime decreases with an increase in tension, which at least seems rather reasonable.
 
 
 \end{document}
