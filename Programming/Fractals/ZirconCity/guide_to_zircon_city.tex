@@ -1,0 +1,294 @@
+\documentclass[english,landscape]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1cm, right=1cm, top=1.5cm, bottom=1.5cm, footskip=0cm]{geometry}
+\usepackage{tcolorbox}
+\usepackage[cache=false, outputdir=build]{minted}
+
+\newcommand*{\Title}{A Short Guide to\\Zircon City}
+\newcommand*{\Author}{Your Friendly Neighborhood Dragon}
+
+\input{preamble_shared}
+\input{preamble}
+
+%%%
+% 1. insert white page after coverimage
+% 2. split into a5 pages
+% 3. reorder to "normal reading order"
+% 4. https://bookletfree.com/ to create booklet layout from the ordered a5 pages
+
+\usepackage[usenames,dvipsnames]{xcolor}
+
+%\newcommand{\task}[2]{
+%\begin{tcolorbox}[arc=0mm, 
+%    bottomtitle=0.5mm,
+%    boxrule=0mm,
+%    colbacktitle=black!8!white, 
+%    colback=black!4!white,
+%    coltitle=black, 
+%    colframe=MidnightBlue,
+%    fonttitle=\bfseries, 
+%    left=2.5mm,
+%    leftrule=1mm,
+%    right=3.5mm,
+%    title={Task: #1},
+%    toptitle=0.75mm, ]
+%{#2}
+%\end{tcolorbox}
+%}
+
+\newtcolorbox{taskbox}[1]{arc=0mm, 
+    bottomtitle=0.5mm,
+    boxrule=0mm,
+    colbacktitle=black!8!white, 
+    colback=black!4!white,
+    coltitle=black, 
+    colframe=MidnightBlue,
+    fonttitle=\bfseries, 
+    left=2.5mm,
+    leftrule=1mm,
+    right=3.5mm,
+    title={Task: #1},
+    toptitle=0.75mm,
+}
+
+%\titlehead{titlehead}
+%\subject{SUBJECT}
+%\title{\Title}
+%\author{\Author}
+%\date{December 24,~2025}
+%\usepackage{background}
+%\backgroundsetup{
+%scale=1,
+%angle=0,
+%opacity=1,  %% adjust
+%contents={
+%\includegraphics[
+%width=\paperwidth,
+%height=0.5\paperheight]{titlepage_bg.png}}
+%}
+
+\begin{document}
+\pagestyle{empty}
+\newgeometry{left=0cm, right=0cm, top=0cm, bottom=0cm, footskip=0cm}
+\begin{minipage}[l]{0.5\pagewidth}
+\hspace{-0.5cm}\includegraphics[width=\paperheight,angle=90]{titlepage_bg.pdf}
+\end{minipage}%
+\begin{minipage}[c]{0.05\pagewidth}
+\,
+\end{minipage}%
+\begin{minipage}[c]{0.35\pagewidth}
+\begin{center}
+{\Large Lyapunov Fractals\\} \vspace{3mm}
+{\huge\bfseries\Title{}\\} \vspace{5mm}
+{\Large \Author{}\\} \vspace{1mm}
+{December 24,~2025}
+\end{center}
+\vspace{3cm}
+\tableofcontents
+\end{minipage}
+
+
+\restoregeometry
+
+\newpage
+\begin{minipage}[c]{0.4\pagewidth}
+\section{What is a Lyapunov Fractal?!}
+\begin{itemize}
+\item characterizes orbit stability in dynamical systems
+\item allows to determine ...\\ \emph{but who cares anyway, we just want pretty pictures}
+\end{itemize}
+\section{Pretty pictures}
+Ingredients:
+\begin{itemize}
+\item iteration: some formula that describes a sequence of points in time
+\item stability: how that sequence evolves
+\item colors!
+\end{itemize}
+\subsection{Iteration}
+Standard example: \enquote{logistic map},
+\begin{align}
+x_{n+1} &= r_n x_n (1-x_n), \label{eqn:logistic_map}
+\end{align}
+where $0\le r_n \le 4$ is a free parameter at every iteration $n$.
+To keep it simple, we always start with $x_0=\frac{1}{2}$ (and all points will be between zero and one, i.e. $0\le x_n \le 1$).
+\subsection{Stability}
+Lyapunov's definition:
+\begin{align}
+\lambda &= \lim_{N\rightarrow \infty} \frac{1}{N} \sum_{n=1}^{N} \log \abs*{\frac{\d x_{n+1}}{\d x_n}} \label{eqn:lyapunov}.
+\end{align}
+Idea: large derivative means large change means large $\lambda$, so $\lambda > 1$ for \enquote{chaotic} orbits (but we are mostly here for the pictures).
+\begin{taskbox}{What the Formula?}Using the formula of the map in \autoref{eqn:logistic_map}, compute the derivative in \autoref{eqn:lyapunov} (it is less bad than it looks, I promise).
+\end{taskbox}
+\end{minipage}%
+\begin{minipage}[c]{0.1\pagewidth}
+\,
+\end{minipage}%
+\begin{minipage}[c]{0.4\pagewidth}
+\subsection{Colors}
+Because a constant $r_n$ is not all that exciting, we do the next best thing and alternate between two values.
+For example, suppose that $r_n=2(=a)$ for even $n$ and $r_n=1(=b)$ for odd $n$ (so $r_0=a$, then $r_1=b$, then $r_2=a$ etc.; one calls this pattern $AB$).
+\begin{taskbox}{Code!}
+Compute $\lambda$ for the above example using the simplified \autoref{eqn:lyapunov} from the previous task.
+We do not care about speed yet, a simple Python \texttt{for}-loop should suffice.
+\begin{verbatim}
+def iterator(a_b, n_iter=1024):
+    """Compute the Lyapunov lambda given
+        -- pattern 'a_b' : tuple or list of values
+        -- number of iterations 'n_iterations'.
+    """
+    x_0 = 0.5
+    res = 0.0    # the Lyapunov lambda
+    for n in range(n_iter):
+        r_n = ... # get r_n from 'a_b'
+        # incrementally update 'res' and 'x_0'
+    return res
+\end{verbatim}
+\end{taskbox}
+The value of $\lambda$ is translated to color via a colormap.
+The covor image uses \texttt{matplotlib}'s \texttt{twilight} map.
+\section{Computing the image}
+A single $\lambda$ is not enough, we need more.
+Keeping the $AB$ pattern for the iteration, we can create a two-dimensional grid of $\lambda$'s by running $a$ from $0$ to $4$ (and likewise $b$).
+
+You can generate a 2d grid of $(a,b)$-values via
+\begin{verbatim}
+import numpy as np
+
+a_1d = np.linspace(0,4,100)
+b_1d = np.linspace(0,4,80)
+a_2d, b_2d = np.meshgrid(a_1d, b_1d)
+\end{verbatim}
+\end{minipage}
+\newpage
+\begin{minipage}[c]{0.4\pagewidth}
+\begin{taskbox}{The first fractal}
+Compute $\lambda$ for every $(a,b)$-pair.
+Here is some scaffolding:
+\begin{verbatim}
+def run_iterator_2d(a, b, sequence="AB", n_iter=1024):
+    results = np.zeros(a.shape, dtype=np.float64)
+    a_b = np.zeros(len(sequence), dtype=np.float64)
+    for i_a in range(a.shape[0]):
+        for i_b in range(a.shape[1]):
+            # fill 'a_b' with the current values
+            result = iterator(a_b, n_iter)
+            results[i_a, i_b] = result
+    return results
+\end{verbatim}
+\end{taskbox}
+\subsection{Visualization}
+You can create an empty \texttt{Axis} object via
+\begin{verbatim}
+import matplotlib.pyplot as plt
+
+fig, axis = plt.subplots()
+axis.axis("off")
+\end{verbatim}
+To visualize our \texttt{results} from the previous task, we can use the \texttt{imshow} function.
+It displays a colored rectangle for every point in the given dataset, but it has some \enquote{quirks}: the pixel positions are offset by half the rectangle's size.
+To correct for this, the following helper function is useful:
+\begin{verbatim}
+def get_extent(x, y):
+    """Compute the correct extent for an imshow plot with 
+    given (x,y)-values. MWE:
+    x = np.linspace(0, 4, 9); y = np.linspace(0, 2, 5)
+    x2, y2 = np.meshgrid(x,y)
+    data = np.sign(y2)/(1+x2**2)*y2**2
+    plt.imshow(data, extent=get_extent(x,y),
+               cmap="inferno", interpolation="none")
+    plt.scatter(x2, y2)
+    """
+    dx = x[1] - x[0]
+    dy = y[1] - y[0]
+    extent = [x[0] - dx/2, x[1] + dx/2,
+              y[0] - dy/2, y[1] + dy/2]
+    return extent
+\end{verbatim}
+\end{minipage}%
+\begin{minipage}[c]{0.1\pagewidth}
+\,
+\end{minipage}%
+\begin{minipage}[c]{0.4\pagewidth}
+\begin{taskbox}{Pretty picture}
+Analogous to the MWE in the docstring, use \texttt{imshow} to plot the Lyapunov fractal.
+
+Because stable values can have large negative $\lambda$, it can help to limit the color mapping to \texttt{vmin=-1} (keyword argument in \texttt{imshow}).
+\end{taskbox}
+\subsection{Colormaps}
+There are plenty of default colormaps, but you can also create a custom one.
+One way is to create a list of colors and have \texttt{matplotlib} linearly interpolate the RGB channels between them.
+This can be done via
+\begin{verbatim}
+from matplotlib.colors import LinearSegmentedColormap
+
+def get_colormap(color_list, cmap_name="custom"):
+    """Convert a list of colors to a colormap.
+    Format of 'color_list'-entries:
+        (location, (R, G, B)) where
+            -- first 'location' must be 0.0
+            -- last 'location'  must be 1.0
+    """
+    colormap = LinearSegmentedColormap.from_list(
+        cmap_name, color_list
+    )
+    return colormap
+\end{verbatim}
+Here is an example for how to create such a color list:
+\begin{verbatim}
+def convert_string_to_color_list(string):
+    """Simple example:
+    https://eltos.github.io/gradient/#0:4C71FF-100:FC4A53
+    """
+    segments = string.removeprefix("#").split("-")
+    color_list = []
+    for segment in segments:
+        loc_val, hex_val = segment.split(":")
+        location = float(loc_val) / 100
+        rgb = plt.matplotlib.colors.hex2color("#" + hex_val)
+        color_list.append((location, rgb))
+    return color_list
+\end{verbatim}
+Because $\lambda=0$ marks a transition between qualitatively distinct regions in a Lyapunov fractal, it is useful to choose a so-called \enquote{divergent} colormap.
+This means that the colormap has some pretty sudden change around the same value (often by a transition of the type color-white-color).
+\end{minipage}
+
+\newpage
+\begin{minipage}[c]{0.4\linewidth}
+\section{Speed it up!}
+The Python \texttt{for}-loops are pretty slow, but fortunately there is a simple fix (at least in this case):
+\begin{verbatim}
+import numba as nb
+\end{verbatim}
+The \texttt{numba} package allows JIT-compilation of sufficiently \enquote{simple} or \enquote{C-like} functions.
+\emph{When} it works, it is usually as simple as adding a decorator to the function definition, e.g.
+\begin{verbatim}
+@nb.njit
+def iterator(...)
+
+@nb.njit
+def run_iterator_2d(...)
+\end{verbatim}
+We can even parallelize the code using \texttt{nb.prange} instead of \texttt{range} in the outer loop and replacing the decorator by \texttt{nb.njit(parallel=True)}.
+But at that point, it is probably a good idea to turn to the GPU instead...
+\subsection{Power of the GPU}
+If we want to interactively modify the fractal, e.g. by zooming in or changing parameters, we need to reach at least $30$ fps for a decent user experience.
+That means computing the $\approx 10^3$ iterations for roughly $2000 \times 1000$ pixels in under $30\,$ms.
+That's $6\cdot 10^{10}$ iterations, and in particular just as many \texttt{log} calls -- not to mention the overhead of computing the actual orbit.
+Now with some SIMD-magic we can certainly do this on the CPU, but we might as well use the right tool for the job.
+\subsection{Fragment Shaders}
+Given that the author does not know what he is doing, it makes little sense to try and explain anything here.
+A first working example is in \texttt{main.cpp} (and the files included in it).
+It is not particularly pretty yet, but perhaps we can continue it some time :)
+
+
+
+\end{minipage}%
+\begin{minipage}[c]{0.1\linewidth}
+\,
+\end{minipage}%
+\begin{minipage}[c]{0.4\linewidth}
+\,
+\end{minipage}
+
+\end{document}
