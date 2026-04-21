@@ -87,7 +87,7 @@ a_n &= \lim_{x\rightarrow x_0} \frac{f(x) - \sum_{j=0}^{n-1} a_j\phi_j(x)}{\phi_
 \example{Example}{$\sqrt{9 + \epsilon} = a_1\phi_1 + a_2 \phi_2 + a_3\phi_3$ with $\phi_1=\cos\epsilon$, $\phi_2 = \sin\epsilon$, $\phi_3=\sin^2\epsilon$}{\begin{align}
 a_1 &= \lim_{\epsilon\rightarrow 0} \frac{\sqrt{9+\epsilon}}{\cos \epsilon} = 3,\\
 a_2 &= \lim_{\epsilon\rightarrow 0} \frac{\sqrt{9+\epsilon} - 3\cos\epsilon}{\sin\epsilon} = \frac{1}{6},\\
-a_3 &= \lim_{\epsilon\rightarrow 0} \frac{\sqrt{9+\epsilon - 3\cos\epsilon - \frac{1}{6} \sin\epsilon}}{\sin^2\epsilon} = \dots = \frac{323}{216}.
+a_3 &= \lim_{\epsilon\rightarrow 0} \frac{\sqrt{9+\epsilon} - 3\cos\epsilon - \frac{1}{6} \sin\epsilon}{\sin^2\epsilon} = \dots = \frac{323}{216}.
 \end{align}
 This is consistent with the known expansion $\sqrt{9+\epsilon} = 3 + \frac{1}{6} \epsilon - \frac{1}{216}\epsilon^2 + \mathcal{O}\kla*{\epsilon^3}$ in the sense that $3\cos\epsilon + \frac{1}{6}\sin\epsilon + \frac{323}{216}\sin^2\epsilon$ gives the same result after Taylor expansion.
 }
@@ -105,17 +105,38 @@ The problem can be traced back to $x=\infty$ being an essential singularity for 
 
 Wrong substitution of $x\sim \frac{1}{\epsilon}$  as $\epsilon\rightarrow 0$ instead only gives $f(x) \sim \powe{\frac{1}{\epsilon^2}}$, so the prefactor is incorrect.
 }
-\example{Differentiation}{$f(x)=x+\sin(x)$ as $x\rightarrow\infty$}{We have $f\sim x$, but $f'=1+\cos(x) \slashed{\sim} 1$.}
+\example{Differentiation}{$f(x)=x+\sin(x)$ as $x\rightarrow\infty$}{We have $f\sim x$, but $f'=1+\cos(x) \,\slashed{\sim}\, 1$.}
 These troubles emerge from asymptotic relations in the complex plane: $f(z) \sim g(z)$ is defined by $\frac{f(z)}{g(z)} \rightarrow 1$ independent of the path taken from $z\rightarrow z_0$.
 \example{Example}{$2\sinh(1/z)$ as $z\rightarrow 0$}{\begin{enumerate}
-\item $2\sinh(1/z) = \sim \powe{1/z}$ for $|\arg z| < \frac{\pi}{2}$
-\item $2\sinh(1/z) = \sim \powe{-1/z}$ for $\frac{\pi}{2} < \arg z < \frac{3\pi}{2}$
+\item $2\sinh(1/z) \sim \powe{1/z}$ for $|\arg z| < \frac{\pi}{2}$
+\item $2\sinh(1/z) \sim \powe{-1/z}$ for $\frac{\pi}{2} < \arg z < \frac{3\pi}{2}$
 \end{enumerate}
 The result depends on the direction, i.e. the choice of path.
 }
 }
 \section{Stokes Phenomenon}
-TODO: Lecture 1, p 11f.
+\definition{Exchange of dominance and subdominance}{
+Let $f(x)\sim g(x)$ as $x\rightarrow x_0$.
+This implies that in the expression $f(x)=g(x)+\klb*{f(x)-g(x)}$, the second term is subdominant, i.e. $\frac{f(x)-g(x)}{g(x)} \rightarrow 0$.
+Now if as in the previous example the asymptotic behavior depends on the path in the complex plane, this relation will only hold in a region of convergence.
+This region would e.g. be the two halves of the plane for the $\sinh(1/x)$ case.
+
+When the path is in the interior of the plane, $f-g$ is subdominant, but it becomes dominant beyond the Stokes line defined by the transition to $f-g\gg g$ (on the line, $f-g=\mathcal{O}(g)$, i.e. they have the same order of magnitude).
+
+The Stokes phenomenon is this exchange between dominance and subdominance.
+\note{
+This is a property of the exponential function, and specifically the essential singularity at $x=\infty$.
+
+If the subdominant term is smaller than the dominant term by a power of $(x-x_0)$ in all directions, then there is no Stokes phenomenon.
+}
+\note{
+\begin{enumerate}
+\item if both $\lim f$ and $\lim \frac{1}{f}$ exist for $x\rightarrow a$, then $a$ is a removable singularity
+\item if $\lim f$ exists but $\lim \frac{1}{f}$ does not, then $a$ is a zero of $f$ and a pole of $\frac{1}{f}$
+\item if neither limit exists, $a$ is an essential singularity (e.g. $\powe{1/x}$ at $a=0$)
+\end{enumerate}
+}
+}
 \chapter{Local and Global Analysis}
 \section{Methods of Perturbations and Dominant Balance}
 \definition{Local Analysis}{Powerful, but cannot provide global information on the behavior of solutions at two distantly separated points.
@@ -447,7 +468,104 @@ The transition rate (probability per time) from $\Ket{m}$ to $\Ket{n}$ is thus $
 \item spontaneous emission etc.
 \end{itemize}
 }
-\chapter{Advanced Guessing I: TODO}
+\chapter{Advanced Guessing I: Summation}
+Convergent series $S=\sum_{n\ge 0} a_n = \lim S_N$ result from perturbation theory.
+
+In practice we can only calculate few terms, so if convergence is slow (or even divergent..), this is may be pretty useless.
+
+\example{Slowness from singularity}{$\sum (-x)^n=\frac{1}{1+x}$}{
+The convergence is very slow as $x$ approaches the unit circle.
+As $x\rightarrow -1^-$, the limit function has a pole leading to slow convergence.
+As $x\rightarrow +1^-$, the remainder oscillates rapidly in sign and decays slowly: \enquote{transient}.
+}
+\definition{Shanks Transformation}{
+Eliminates the most pronounced transient behavior or eliminates the term in the remainder which has the slowest decay.
+
+Define $A_n=A+\alpha q^n$ with $|q|<1$, i.e. $A$ is the true limit value.
+Then $\frac{A_{n+1}-A}{A_{n}-A} = q$ and also $\frac{A_{n}-A}{A_{n-1}-A} = q$.
+Solving these equations for $A$ yields
+\begin{align}
+A &= \frac{A_{n+1} A_{n-1} - A_n^2}{A_{n+1} - 2A_n + A_{n-1}} \equiv S(A_n)
+\end{align}
+which defines the Shanks Transform (ST).
+\note{
+Here, we get exactly $S(A_n)=A$ because $A_n$ only has one transient term.
+But even if there are many transients, the transform eliminates the leading (i.e. slowest decaying) mode.
+
+In principle, one can iterate this to give $S(S(A_n))$ etc.
+}
+}
+\example{An exact geometric series}{$A_n=\sum_{k=0}^n (-x)^k=\frac{1}{x+1} - \frac{(-x)^{n+1}}{1+x}$}{
+Here, we find
+\begin{align}
+A_{n+1}+A_{n-1}-2A_n &= -(-x)^n (1+x),\\
+A_{n+1}A_{n-1} - A_n^2 &= -(-x)^n,
+\end{align}
+so $S(A_n)=A=\frac{1}{1+x}$ is exact because the sequence only has one transient.
+}
+\example{Multiple transients}{$A_n=A+\alpha q^n + \beta r^n$}{
+Consider $A(x)=\frac{1}{(1+x)(2+x)} = \sum_{k\ge 0} \kla*{1 - \frac{1}{2^{k+1}}}(-x)^k$ (Taylor series).
+Then $A_n=A(x) - \frac{(-x)^{n+1}}{1+x} + \frac{(-x/2)^{n+1}}{2+x}$, so $S(A_n)$ is not exactly $A(x)$.
+Still, convergence is faster!
+\note{
+We can compute the ST explicitly:
+\begin{align}
+S(A_n) &= \frac{A\alpha q^n \kla*{q + \frac{1}{q}-2} + A\beta r^n \kla*{r + \frac{1}{r} - 2} + \alpha \beta q^n r^n \kla*{\frac{q}{r} - 2 + \frac{r}{q}}}{\alpha q^n \kla*{q + \frac{1}{q}-2} + \beta r^n \kla*{r + \frac{1}{r} - 2}}\\
+&= A + \frac{\alpha \beta q^n r^n \kla*{q-r}^2}{\alpha q^n r(q-1)^2 + \beta r^n q (r-1)^2}\\
+&= A + \frac{\beta (q-r)^2}{(q-1)^2} \frac{(qr)^n}{rq^n + \frac{\beta}{\alpha} q r^n \kla*{\frac{r-1}{q-1}}^2}\\
+&= A + \frac{\beta (q-r)^2}{(q-1)^2} \sum_{j\ge 0} \kla*{-\frac{\beta}{\alpha}}^j \kla*{\frac{r-1}{q-1}}^{2j} \kla*{\frac{r^{j+1}}{q^j}}^{n-1}.
+\end{align}
+}
+In the example: $\frac{r^{j+1}}{q^j}=\frac{-x}{2^{j+1}}$, so ST gives a factor of $2^n$ improvement in the rate of convergence.
+}
+\example{Branch point singularity}{$\log(1+x) = \sum_{k\ge 1} (-1)^{k+1} \frac{1}{k} x^k$}{
+Converges only for $|x|\le 1$ and $x\neq -1$.
+\note{
+An alternating series is convergent if $|a_n|$ decreases monotonically and $a_n\rightarrow 0$.
+
+\textsc{Abel}'s theorem: if $G(x) = \sum_{n\ge 0} a_nx^n$ converges and RoC is 1, then $G(x) \rightarrow \sum a_n$ as $x\rightarrow 1^-$.
+}
+For $x=1$, this is a very slowly convergent series giving $\log 2=0.69314718$.
+First 7000 terms only give $0.693076\dots$ whereas $S^3(A_8)=0.6931472$.
+}
+\example{Inverse power series}{$\sum a_n$ with $\frac{a_{n+1}}{a_n} \sim c_0 + \frac{c_1}{n} + \frac{c_2}{n^2} + \dots$ as $n\rightarrow \infty$}{
+Assume $-1\le c_0 < 1$.
+Then the ST gives an improvement in rate of convergence; this is another class of series where ST works well.
+}
+\definition{Richardson Extrapolation}{
+Many slowly convergent series are not improved substantially by Shanks transformation.
+\example{Basel Problem}{$\sum_{n\ge 1} \frac{1}{n^2} = \frac{\pi^2}{6}$}{
+Using 
+\begin{align}
+\frac{\sin(x)}{x} &= \prod_{n\ge 1} \kla*{1 - \frac{x^2}{n^2\pi^2}} = 1 - \frac{x^2}{\pi^2} \sum_{n\ge 1} \frac{1}{n^2} + \mathcal{O}\kla*{x^4}
+\end{align}
+yields the exact result by comparing to the coefficient $\frac{-1}{6}$ of the expansion on the LHS.
+
+One finds $A_n \sim A - \frac{1}{n}$, but ST only gives $S(A_n) = A - \frac{1}{2n}$ (mere factor 2 improvement).
+}
+Assume that $A_n=\sum_{k=0}^n a_k \sim Q_0 + \frac{Q_1}{n} + \frac{Q_2}{n^2} + \dots $ such that $A_n \rightarrow Q_0$.
+Then find the $N$ equations
+\begin{align}
+A_{n+1} &= Q_0 + \frac{Q_1}{n+1} + \frac{Q_2}{(n+1)^2} + \dots,\\
+&\vdots\\
+A_{n+N} &= Q_0 + \frac{Q_1}{n+N} + \frac{Q_2}{(n+N)^2} + \dots,\\
+\end{align}
+The $N$-th Richardson Extrapolation (RE) is then given by
+\begin{align}
+Q_0 &= \sum_{k=0}^N \frac{A_{n+k} (n+k)^N (-1)^{k+N}}{k! (N-k)!} = R^N(A_n).
+\end{align}
+}
+\example{Basel Problem (again)}{IbP}{
+We can rewrite the series as
+\begin{align}
+A_n &= A - \sum_{k\ge n+1} \frac{1}{k^2} = A - \intx{0}{\infty}{\frac{t\powe{-nt}}{\powe{t} - 1}}{t}\\
+&\sim A - \frac{1}{n} + \frac{1}{2n^2} - \frac{1}{6n^3} + \dots
+\end{align}
+}
+\example{Riemann Zeta Function}{$\zeta(s) = \sum_{n\ge 1} \frac{1}{n^s}$}{
+Near $s=1$, this series converges very slowly (about $10^{20}$ terms needed for 1\% accuracy of $\zeta(1.1)$)
+}
+TODO lecture summations p. 18ff.
 \chapter{Advanced Guessing II: Integration}
 Why do we care about integrals?
 \begin{itemize}
@@ -683,7 +801,7 @@ I(x) &\koml{x\rightarrow\infty}{\sim} \frac{1}{2} \sum_{n\ge 0} \frac{\Gamma\kla
 \begin{itemize}
 \item we must have $\phi''(c) < 0$ for convergence
 \item it follows that \begin{align}
-I(x,\epsilon) &\sim \intx{c-\epsilon}{c+\epsilon}{f(c) \powe{x\phi(c)} \powe{\frac{1}{2}(t-c)^2 \phi''(c)}}{t} \sim f(c) \powe{x\phi(c)} \sqrt{\frac{2\pi}{x|\phi''(c)|}}
+I(x,\epsilon) &\sim \intx{c-\epsilon}{c+\epsilon}{f(c) \powe{x\phi(c)} \powe{\frac{x}{2}(t-c)^2 \phi''(c)}}{t} \sim f(c) \powe{x\phi(c)} \sqrt{\frac{2\pi}{x|\phi''(c)|}}
 \end{align}
 \note{If this happens at $t=a$ or $t=b$ (i.e. $c$ is at the boundary), then only half of the peak contributes and we need a factor of $\frac{1}{2}$ to correct this}
 \end{itemize}
