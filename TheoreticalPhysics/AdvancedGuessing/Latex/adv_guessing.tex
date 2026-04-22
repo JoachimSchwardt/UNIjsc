@@ -563,9 +563,196 @@ A_n &= A - \sum_{k\ge n+1} \frac{1}{k^2} = A - \intx{0}{\infty}{\frac{t\powe{-nt
 \end{align}
 }
 \example{Riemann Zeta Function}{$\zeta(s) = \sum_{n\ge 1} \frac{1}{n^s}$}{
-Near $s=1$, this series converges very slowly (about $10^{20}$ terms needed for 1\% accuracy of $\zeta(1.1)$)
+Near $s=1$, this series converges very slowly (about $10^{20}$ terms needed for 1\% accuracy of $\zeta(1.1)$).
+An exact formula is (see later)
+\begin{align}
+\zeta(s) &= \sum_{n=1}^N\frac{1}{n^s} + \frac{1}{\Gamma(s)} \intx{0}{\infty}{\frac{u^{s-1} \powe{-Nu}}{\powe{u}-1}}{u}.
+\end{align}
+Using $\frac{u}{\powe{u}-1} = 1-\frac{u}{2} + \sum_{n\ge 1} B_{2n} \frac{u^{2n}}{n!}$ with the \textsc{Bernoulli} numbers $B_{2n}$ leads to\footnote{$(z)_n=\Gamma(z+n)/\Gamma(z)$}
+\begin{align}
+\zeta(s) &= \sum_{n=1}^N\frac{1}{n^s} + \frac{1}{\Gamma(s)} \klc*{\frac{\Gamma(s-1)}{N^{s-1}} - \frac{1}{2} \frac{\Gamma(s)}{N^s} + \sum_{n\ge 1} \frac{B_{2n}}{n!} \frac{\Gamma(2n+s-1)}{N^{2n+s-1}}}\\
+&= \sum_{n=1}^N\frac{1}{n^s} + \frac{N^{1-s}}{s-1} - \frac{1}{2N^s} + \sum_{n\ge 1} \frac{B_{2n}}{n!} \frac{\kla*{s}_{2n-1}}{N^{2n+s-1}}.
+\end{align}
+For large $N$, an optimal truncation of the series gives an extremely accurate approximation: only 38 terms give $\zeta(1.1)$ to 26 decimals!
 }
-TODO lecture summations p. 18ff.
+In effect, this procedure is to accelerate the convergence of a \emph{slowly converging} series by replacing it with a \emph{divergent} series.
+\definition{Euler-Maclaurin Summation Formula}{
+\dots is the asymptotic (as $n\rightarrow\infty$) relation
+\begin{align}
+F(n) &= \sum_{k\ge 0} f(k) \sim \frac{1}{2} f(n) + \intx{0}{n}{f(t)}{t} + C + \sum_{j\ge 0} (-1)^{j} \frac{B_j}{j!}f^{(j-1)}(n),
+\end{align}
+where $C=\lim_{m\rightarrow \infty} C_m$ with
+\begin{align}
+C_m &= \frac{1}{2}f(0) + \sum_{j=0}^{m-1} \frac{(-1)^{j-1}B_j}{j!} f^{(j-1)}(0) + \frac{(-1)^m}{(m+1)!} \intx{0}{\infty}{B_{m+1} \kla*{t - \klb*{t}} f^{(m+1)}(t)}{t},
+\end{align}
+$B_n(x) = \frac{\d^n}{\d t^n} \frac{t\powe{xt}}{\powe{t}-1}\Big\vert_{t=0}$ and $B_n=B_n(0)$.
+}
+\example{Harmonic series}{$H_n = \sum_{k=1}^n \frac{1}{k}$}{
+Asymptotic relation
+\begin{align}
+H_n &\sim \log(n) + C + \frac{1}{2n} - \frac{B_2}{2n^2} - \frac{B_4}{4n^4} - \frac{B_6}{6n^6} + \dots
+\end{align}
+with $C=\gamma$.
+}
+\example{Stirling formula}{$\log(n!)$}{
+\begin{align}
+\log(n!) &= \sum_{k=0}^{n-1} \log(k+1) \sim \kla*{n + \frac{1}{2}} \log(n) - n + C + \frac{B_2}{2n} + \frac{B_4}{12n^3} + \frac{B_6}{30n^5} + \dots
+\end{align}
+with $C=\frac{1}{2}\log(2\pi)$.
+}
+(some further notes on EM summation formulas)
+\section{Dealing with Divergent Series}
+Perturbation methods commonly yield divergent series
+\begin{enumerate}
+\item regular PT: series converges only for values of $\epsilon$ inside the RoC
+\item singular PT: diverges for all $\epsilon \neq 0$
+\end{enumerate}
+How can we deal with a divergent series?
+
+In many cases, it is possible to assign a sensible meaning to the \enquote{sum} of the divergent series, and even to use the first few terms to approximate this sum.
+\definition{Euler Summation}{
+If $\sum_{n\ge 0} a_n$ is algebraically divergent (terms blow up like some power of $n$), then $f(x)=\sum a_nx^n$ converges for $|x|<1$.
+The Euler summation is then defined as $E=\lim_{x\rightarrow 1^-} f(x)$.
+\example{Examples}{}{
+$\sum_{n\ge 0} (-1)^n$ diverges, but $f(x)=\frac{1}{1+x}$ gives $E=\frac{1}{2}$.
+
+The series $1+0-1+0+1+\dots$ also diverges, but $f(x) = 1-x^2+x^4+\dots=\frac{1}{1+x^2}$ gives $E=\frac{1}{2}$.
+}
+}
+\definition{Borel Summation}{
+We have $1 = \frac{1}{n!} \intx{0}{\infty}{t^n\powe{-t}}{t}$, so
+\begin{align}
+\sum_{n\ge 0} a_n = \sum_{n\ge 0} \frac{a_n}{n!} \intx{0}{\infty}{t^n\powe{-t}}{t}.
+\end{align}
+Now define $B(\sum a_n) = \intx{0}{\infty}{\powe{-t} \sum_{n\ge 0} \frac{a_n t^n}{n!}}{t}$.
+\example{Examples}{}{
+$\sum_{n\ge 0} (-1)^n$ gives $B=\intx{0}{\infty}{\powe{-t} \powe{-t}}{t} = \frac{1}{2}$ (matches Euler result).
+
+$\sum_{n\ge 0} (-1)^n n!$ gives $B=\intx{0}{\infty}{\powe{-t} \frac{1}{1+t}}{t}$.
+}
+Suppose $\phi(x)=\sum_{n\ge 0} \frac{a_n}{n!}x^n$ converges for sufficiently small $x$ and that $B(x)=\intx{0}{\infty}{\powe{-t}\phi(xt)}{t}$ exists.
+Then
+\begin{align}
+B(x) &= \intx{0}{\infty}{\powe{-t/x}\phi(t) \frac{1}{x}}{t} \sim \sum_{n\ge 0} \frac{a_n}{n!} \intx{0}{\infty}{\powe{-t/x} t^n \frac{1}{x}}{t}=\sum_{n\ge 0} a_nx^n
+\end{align}
+as $x\rightarrow 0^+$.
+The asymptotic series diverges, but since $B(x)$ exists it makes sense to define the Borel sum of $\sum_{n\ge 0} a_n x^n$ as $B(x)$, giving $\sum a_n=B(1)$.
+}
+\definition{Generalized Borel Summation}{
+Assume $\phi(x)=\sum_{n\ge 0} \frac{a_n}{n!^k} x^n$ converges for sufficiently small $x$ and some positive integer $k$.
+Then we define 
+\begin{align}
+B(x) &= \intx{0}{\infty}{\dots \intx{0}{\infty}{\powe{-t_1-\dots-t_k} \phi(xt_1\dots t_k)}{t_k}\dots}{t_1}.
+\end{align}
+\example{Example}{}{
+$\sum_{n\ge 0} (-1)^n n!^2$ diverges, but $\phi(x) = \sum_{n\ge 0} (-1)^n x^n = \frac{1}{1+x}$ ($k=2$, $|x|<1$) gives a double integral representation of $B(1)$.
+}
+}
+\definition{Generic Summation}{
+\dots is any method that follows $\mathcal{S}\kla*{a_0+a_1+a_2+\dots}=S=a_0 + \mathcal{S}\kla*{a_1+a_2+\dots}$, where the terms have a unique order.
+Put differently, the method should be associative for finitely many terms.
+
+Furthermore, we want linearity, i.e. $\mathcal{S}\kla*{\sum \alpha a_n + \sum \beta b_n} = \alpha \mathcal{S}\kla*{\sum a_n} + \beta \mathcal{S}\kla*{\sum b_n}$.
+Explicitly, this is $\mathcal{S}\kla*{\kla*{\alpha a_0 + \beta b_0} + \kla*{\alpha a_1 + \beta b_1} + \dots} = \alpha \mathcal{S}\kla*{a_0 + a_1 + \dots} + \beta \mathcal{S}\kla*{b_0 + b_1 + \dots}$.
+\example{Example}{}{
+\begin{enumerate}
+\item $S=\mathcal{S}(1-1+1-1+\dots) = 1 + (-1) \mathcal{S}\kla*{1 - 1+1-\dots} = 1-S$, so $S=\frac{1}{2}$
+\item $S=\mathcal{S}(1+0-1+1+0-1+\dots)$ gives $3S=\mathcal{S}\kla*{(1+0-1) + (0-1+1) + \dots} + 1 + 1 + 0 = 2$, so $S=\frac{2}{3}$
+\item $S=\mathcal{S}\kla*{1+2+4+8+\dots} = 1 + 2S$, so $S=-1$
+\end{enumerate}
+}
+}
+\note{
+\begin{enumerate}
+\item if the series absolutely/uniformly convergent, the summation order does not matter
+\item otherwise, the order matters: e.g. $\mathcal{S}\kla*{1-1+1-1+\dots} = \frac{1}{2} != \mathcal{S}\kla*{1+0-1+1+0-1+\dots} = \frac{2}{3}$
+\item sum of positive numbers is \emph{negative}?! Well, basic rules of arithmetic are not working for infinitely many terms of a divergent series:
+\begin{itemize}
+\item summation procedure in fact operates in the complex plane
+\item in $\mathcal{C}$, no order of numbers: only one infinity vs. $\pm\infty$ in real numbers
+\item need not cross 0 to go from $+\infty$ to $-\infty$!
+\end{itemize}
+\item some divergent series really sup to infinity:
+\begin{itemize}
+\item $\zeta(s)$ has a singularity at $s=1$, so this is \enquote{smoothly} diverging to infinity at this point
+\item $S=\mathcal{S}(1+1+1+\dots) = 1 + S$ gives $S=\infty$; however, $\zeta(0)=-\frac{1}{2} \neq S$ and $\zeta(-1) = \frac{-1}{12}$
+\end{itemize}
+\end{enumerate}
+}
+\example{Riemann Zeta Function}{integral representation}{
+We have $\frac{\Gamma(s)}{n^{s}} = \intx{0}{\infty}{t^{s-1}\powe{-nt}}{t}$ for $\Re(s)>0$ and $n>0$.
+Thus,
+\begin{align}
+\Gamma(s)\zeta(s) &= \intx{0}{\infty}{\frac{t^{s-1}}{\powe{t}-1}}{t} = \intx{0}{\infty}{t^{s-1}\frac{1 - \powe{-Nt} + \powe{-Nt}}{\powe{t}-1}}{t}\\
+&= \intx{0}{\infty}{t^{s-1} \sum_{n=1}^N \powe{-nt}}{t} + \intx{0}{\infty}{t^{s-1}\frac{\powe{-Nt}}{\powe{t}-1}}{t} = \sum_{n=1}^N \frac{\Gamma(s)}{n^s} + \intx{0}{\infty}{t^{s-1}\frac{\powe{-Nt}}{\powe{t}-1}}{t}
+\end{align}
+}
+\definition{Ramanujan Summation}{
+Consider $\zeta(-1)$.
+We have $4S=\mathcal{S}\kla*{4+8+12+\dots}$, so $-3S = \mathcal{S}\kla*{1-2+3-4+\dots}$.
+We know that the latter is $\lim_{x\rightarrow 1^-} \frac{1}{\kla*{1+x}^2} = \frac{1}{4}$, so $S=\frac{-1}{12}$.
+\note{
+The Euler sum does not exist in this case.
+We have $f(x)=\sum nx^n = \frac{x}{(1-x)^2}$, so $E=\infty$.
+}
+}
+\definition{Zeta function Regularization}{
+We have the two series $\zeta(s) = \sum_{n\ge 1} \frac{1}{n^s} = \frac{1}{1 - 2^{1-s}} \sum_{n\ge 1} \frac{(-1)^{n+1}}{n^s}$, neither of which is valid at $s=0$.
+The analytic continuation is
+\begin{align}
+\zeta(s) &= \frac{(2\pi)^s}{\pi} \sin\kla*{\frac{\pi s}{2}} \Gamma(1-s) \zeta(1-s),
+\end{align}
+so $\zeta(0) = \frac{1}{\pi} \lim_{s\rightarrow 0} \sin\kla*{\frac{\pi s}{2}} \zeta(1-s)$.
+Using the relation $\zeta(1-s) \sim \frac{1}{s} + \gamma$ as $s\rightarrow 0$ and $\Gamma(s) \sim \frac{1}{s} - \gamma + \frac{\gamma^2+\pi^2/6}{2}s$ eventually gives $\zeta(0) = -\frac{1}{2}$.
+}
+What is the physical meaning of assigning a number to a divergent series?
+Assume that we have a hard problem with a PT $\sum a_n \epsilon^n$ (divergent series).
+This is merely a representation of the real physics, which is necessarily a finite number and understandable using the above tools.
+\example{A true physical answer}{$\frac{1}{4}$}{
+We have $\sum (-1)^n \epsilon^n$ which diverges at $\epsilon=3$.
+If we assume that $\epsilon\ll 1$, then we get $\frac{1}{1+\epsilon}$.
+The series diverges, but the analytic function is a perfectly adequate and \emph{understandable} representation of the regime accessible to PT.
+}
+To elaborate: Functions are abstract objects, and we always write down a mere representation of a function, e.g. via a power series.
+Consider the inverse problem:
+\example{Computing a function}{$\frac{1}{1-x}$}{
+Another representation of this function only works in a restricted region, namely $f(x)=\sum x^n$.
+Our goal is to find an asymptotic representation $f(x)\sim \sum a_n x^n$.
+
+We have two main problems:
+\begin{enumerate}
+\item assume we have a series representation. What if physical problems demand a value outside the RoC? The function is expected to have a value there, but our series does not (directly) reveal anything about it
+\item in practice, we only know a few terms of the series. Can we develop a machine to take each new term to approach the answer?
+If our representation of the answer is a divergent series $\sum a_n \epsilon^n$, then it is only reasonable to use a representation that actually converges at the desired value of $\epsilon$.
+\end{enumerate}
+}
+\example{Continued Exponential}{$\sum a_n x^n = b_0\powe{b_1x^{b_2x\dots}}$}{
+Expanding the RHS gives $a_0=b_0$, $a_1=b_0b_1$, $a_2=b_0b_1b_2 + \frac{1}{2} b_0 b_1^2$ etc.
+The series $\sum_{n\ge 0} \frac{x^n}{n!} (n+1)^{n-1}$ has RoC of $\frac{1}{\e}$, so it is not defined at $x=-1$.
+But $\powe{x \powe{x \dots}}$ is define, so continued exponentials can enlarge the area of convergence.
+}
+\section{Pade Summation and Continued Fractions}
+\definition{Pade Summation}{
+Goal: we want to represent a function by a convergent expression.
+In practice, we only know few terms of a PT: how to extract enough information to compute a good approximation?
+\begin{align}
+P^M_N(x) = \frac{\sum_{n=0}^M A_n x^n}{1 + \sum_{n=1}^N B_n x^n}
+\end{align}
+is a rational function, and we can match the $M+N+1$ coefficients to the Taylor expansion.
+}
+TODO lecture summations p. 26ff.
+\definition{Stieltjes Function}{
+\begin{align}
+\intx{0}{\infty}{\frac{\rho(t)}{1+xt}}{t}
+\end{align}
+TODO conditions
+}
+\note{Conclusions:
+\begin{enumerate}
+\item if a series is Stieltjes, the Pade sequences $P^N_N$ and $P_{N+1}^N$ converge and the limit functions are Stieltjes
+\item if the series coefficients $a_n$ uniquely determine $\rho(t)$, the limit function are identical and equal to the unique Stieltjes function whose asymptotic series is $\sum a_n x^n$ as $x\rightarrow 0^+$
+\end{enumerate}
+}
 \chapter{Advanced Guessing II: Integration}
 Why do we care about integrals?
 \begin{itemize}
@@ -1534,4 +1721,87 @@ At an irregular singular point, at least one solution must not have such a repre
 This leads to the natural question, how a Frobenius series can fail at an irregular singular point.
 
 END LECTURE 6
+\chapter{Summary}
+Credit to Josef Richter for bullet points.
+\section{Motivation}
+Physics problems: usually harder means more interesting, but how can we solve a hard problem?
+
+Rigorous methods are less general (i.e. less powerful) than approximate solutions in terms of elementary functions.
+Approaches: solve an easy problem first (guessing, or perturbative at $\epsilon=0$) and then refine the solution.
+Often, a hard problem decomposes into (infinitely) many easy problems.
+\section{Definitions and Tools}
+$f(x)\sim g(x)$ when $\frac{f(x)}{g(x)} \rightarrow 1$.
+
+Asymptotic sequence: if $\phi_n(x) \gg \phi_{n+1}(x)$ as $x\rightarrow x_0$, we can have an expansion with $f(x)-\sum_{n=0}^{N-1} a_n \phi_n(x) \ll \phi_N(x)$.
+E.g. $\phi_n(x)=x^n$ gives Taylor series; in general this asymptotic expansion does not have to converge!
+
+Transcendentally small terms are $\ll \frac{1}{x^n}$ for all $n$, so adding such terms does not change the expansion (i.e. it is in general not unique!)
+
+Dominant Balance: equations with multiple terms $0=\sum T_j(x)$ can be reduced to neglecting all terms that are consistent with e.g. $T_1\sim T_2$; this consistency can/must be checked afterward!
+\section{Integrals}
+Global behavior of ODEs and special functions.
+
+Integration by Parts can be helpful if the boundary term gives the asymptotic behavior (i.e. remaining integral is subdominant to the initial integral).
+Problems:
+\begin{itemize}
+\item real solution has non-integer power (may be cured by suitable substitution)
+\item remaining integral diverges (may be cured by splitting the integration range)
+\item in Laplace: $\intx{a}{b}{f(t) \powe{x\phi(t)}}{t} \sim \frac{1}{x} \frac{f(t)}{\phi'(t)} \powe{x\phi(t)} \Big\vert_a^b$ we may have $\phi'(t)=0$ on the interval (cured by expansion around peak)
+\end{itemize}
+Laplace method: $\powe{x\phi(t)}$ for large $x$ only cares about maximum $t=c$ of $\phi(t)$, so expand $f(t),\phi(t)$ around $c$.
+\begin{itemize}
+\item if $c$ is on the edge ($a$ or $b$), need to be careful with factors of 2
+\item if $c=c(x)$ is movable, first transform into the rest frame $s(t)$ where $s(c)$ is independent of $x$.
+\item special case: $\phi(t)=-t$ allows full asymptotic series via \textsc{Watson}'s Lemma: $I(x)\sim \sum_{n\ge 0} a_n \frac{\Gamma\kla*{\alpha + \beta n + 1}}{x^{\alpha+\beta n + 1}}$ where $f(t) = \sum_{n\ge 0} a_n t^{\alpha + \beta n}$.
+\end{itemize}
+Method of stationary phase: generalized Fourier integral $\intx{a}{b}{f(t) \powe{\i x\psi(t)}}{t}$.
+Oscillations cancel out at high frequencies, so IbP can give leading behavior if $f$ and $\psi$ are well behaved.
+But if $\psi'(c)=0$ we have a stationary phase, and $c$ gives the dominant contribution (as in Laplace method).
+Problem: only yields leading order, can not obtain corrections due to slow vanishing of the high frequency terms.
+
+Steepest Descent method: want to get the full expansion by applying Watson's Lemma together with the Cauchy theorem.
+Idea is to deform the contour $C$ to $C'$ such that $\Im \psi(t)$ is piecewise constant along the new contour, i.e. this is where the main contribution comes from (assuming non-positive real part of course, otherwise divergence).
+In practice this is a bit difficult because many pieces need to be considered (potential residues during the contour sweep, connecting edges need to be computed, often multiple paths etc.).
+
+Saddle point method: works if the main contribution comes from a saddle point; the steepest descent contours can intersect there.
+\section{Different equations (local analysis)}
+Often: second order (TM, QM) and we want to solve for local behavior.
+Consider $y''+P(x)y'+Q(x)y=0$.
+Then we classify a point $x_0$ as
+\begin{enumerate}
+\item ordinary: $P,Q$ analytic functions; \textsc{Fuchs} tells us that there are 2 analytic solutions expressible as power series $\sum a_n (x-x_0)^n$ obtainable by inserting the ansatz into the ODE
+\item regular singular: $(x-x_0)P$ and $(x-x_0)^2Q$ are analytic; \textsc{Fuchs} tells us that at least one solution is of Frobenius form, i.e. $\sum a_n (x-x_0)^{n+\alpha}$.
+Second solution depends on equations for $\alpha$ and recursion.
+If $\alpha_1-\alpha_2=n$ is not an integer, it is also of Frobenius form.
+If $n$ is an integer, we can construct the second solution from the first solution by involving $\log(x-x_0)$; finally, $n=0$ is a special case.
+\item irregular singular: remaining case. At least one solution is not in Frobenius form, typically we have behavior of essential singularity such as $\powe{1/(x-x_0)}$.
+Strategies: dominant balance and obtain soluble equation, then refine using corrections.
+Can also try $\powe{S(x)}$ ansatz and then iterate with $S=S_0+C$ (recursively pull off leading behavior).
+\end{enumerate}
+If $x_0=\infty$, substitute $t=\frac{1}{x}$ and classify the point $t_0=0$ instead.
+\section{Nonlinear oscillations}
+Consider a second order ODE that oscillates, e.g. $y''+y+\epsilon f(y)=0$ (HO plus perturbation).
+
+Ordinary PT: expand $y\sim \sum y_n\epsilon^n$ has the following problem: higher order equations are inhomogeneous ODE with secular terms that can diverge.
+
+Cure: Multiple time-scale analysis.
+Introduce $\tau = \epsilon t$ to get a PDE for $y(t,\tau)$ and expand analogously.
+Require terms in front of secular terms to vanish.
+
+Other options: Poincare ($\theta=\omega t$ with $2\pi$-periodic solution in $\theta$ and real frequency $\omega(\epsilon)$), Harmonic balance (lowest order Fourier components of $y$) or average method (transform to different set of equations and average over a period)
+
+TODO: something about locally $z=\i\omega_0 z + \epsilon |z|^2 z$?
+\section{WKB approximation}
+Physically relevant: find approximate solution to Schrödinger equation in limit $\hbar\rightarrow 0$ (or high quantum numbers).
+General form is $\epsilon^2y''=Qy$, and the sign of $Q$ determines whether the solution is dissipative ($+$) or dispersive/oscillatory ($-$).
+
+In regions of $x$ where the sign is fixed, we have a relatively simple $y(x) \sim \exp\klb*{\frac{1}{\delta} \sum \delta^n S_n}$ with $\delta=\epsilon$ and $S_0=\pm \intx{ }{x}{\sqrt{Q(t)}}{t}$ (geometrical optics), $S_1=\frac{-1}{4}\log Q(x)$ (physical optics) etc.
+
+If $Q(x_0)=0$, linearize around the root; solutions are then given by Airy functions.
+
+Matching: complete asymptotic solution by asymptotic matching in range $-1\ll x-x_0 \ll -\epsilon^{2/3}$ (for the region left of the zero, i.e. $Q<0$ for $x<x_0$) and $1\gg x-x_0 \gg \epsilon^{2/3}$ (for the region right of the zero, i.e. $Q>0$).
+
+Two turning-point problem: a Sturm-Liouville problem (eigenvalue problem): find non-trivial solutions using simple turning point problem twice.
+This gives connection conditions for the middle (dispersive) region and a discrete set of solutions with eigenvalues.
+For the Schrödinger equation: recover Bohr-Sommerfeld quantization $\oint p\,\d q = \kla*{n+\frac{1}{2}}h$.
 \end{document}
