@@ -1837,10 +1837,184 @@ To avoid the secular term, we need $\omega_1 = \frac{3}{8}$.
 \section{Examples of Multiple-Scale Analysis}
 \example{Damped Oscillator}{$y''+y+\epsilon y'^3=0$, $y(0)=1$, $y'(0)=0$}{
 If $\epsilon > 0$, $y(t)$ must decay to zero at large $t$.
-TODO LECTURE MULTIPLE SCALES p. 85ff.
+We may write $W=\frac{1}{2}y'^2 + \frac{1}{2}y^2$ with $W'=-\epsilon y'^4 \le 0$, where $W(t)$ is a decreasing function unless $y'=0$ for all $t$.
+Thus, $W\rightarrow 0$ and $y\rightarrow 0$.
+
+Set $\tau=\epsilon t$ and again let $y\sim Y_0(t,\tau) + \epsilon Y_1(t,\tau) + \dots$.
+At zeroth order we have $(Y_0)_{tt} + Y_0= 0$, giving $Y_0=A(\tau) \powe{\i t} + \hc$.
+At first order we have
+\begin{align}
+(Y_1)_{tt} + Y_1 &= -2(Y_0)_{t\tau} - (Y_0)_t^3 = -\powe{\i t} \klb*{2\i A' + e\i A^2\bar{A}} + \i\powe{3\i t}A^3 + \hc,
+\end{align}
+and to eliminate the secular term we need to set $2A'=-3A^2\bar{A}$.
+Writing $A=R\powe{\i \theta}$, this gives $0= 2R' + 2R\theta' + 3R^3$.
+A solution is $\theta'=0$ and $R'=-\frac{3}{2}R^3$, so $R=\frac{R(0)}{\sqrt{3\tau R(0)^2+1}}$.
+Initial conditions give $2R(0)\cos\theta(0)=1$ and $2R(0)\sin \theta(0)=0$, so $\theta=0$ and $R(0) = \frac{1}{2}$.
+Therefore, $y\sim 2R(\tau) \cos\kla*{t + \theta(\tau)} = \frac{1}{\sqrt{1+\frac{3}{4} \epsilon t}} \cos(t)$.
+}
+\example{A Limit Cycle: Rayleigh Oscillator}{$y''+y=\epsilon \kla*{1 - \frac{1}{3}y'^2}y'$ with $y(0)=0$, $y'(0)=2a$}{
+Assume that $y\sim Y_0(t,\tau) + \dots$ with $\tau = \epsilon t$.
+Then $Y_0=A(\tau)\powe{\i t} + \hc$ and
+\begin{align}
+(Y_1)_{tt} + Y_1 &= -2 (Y_0)_{t\tau} + (Y_0)_t - \frac{1}{3} (Y_0)_t^3\\
+&= -2\i A'\powe{\i t} + \i A\powe{\i t} - \frac{1}{3} 3\i A^2\bar{A}\powe{\i t} + \hc.
+\end{align}
+Eliminating the secular term gives $2A'=A - A^2\bar{A}$ or $2R'=R-R^3$ and $\theta'=0$.
+Thus, $R(\tau) = R(0)\klb*{\powe{-\tau} + R(0)^2\kla*{1-\powe{-\tau}}}^{-1/2}$ and initial conditions yield $\theta=-\frac{\pi}{2}$ and $R(0)=a$, giving $y\sim \frac{2a\sin t}{\sqrt{\powe{-\epsilon t} + a^2 \kla*{1 - \powe{-\epsilon t}}}}$.
+\note{
+For all $a$, we get $y\sim 2\sin t$ at large $t$ (Limit cycle).
+If $a<1$, $y(t)$ spirals outward to the LC, and if $a>1$, $y(t)$ spirals inward to the LC.
+}
+}
+\example{Damped Harmonic Oscillator}{$y''+2\epsilon y' + y = 0$ with $y(0)=a$ and $y'(0)=0$}{
+$Y_0=A(\tau)\powe{\i t} + \hc$ and
+\begin{align}
+(Y_1)_{tt}+Y_1 &= -2(Y_0)_{t\tau} - 2(Y_0)_t = -2\i \powe{\i t} \kla*{A'+A} + \hc
+\end{align}
+lead to $A'=-A$ or $A=A(0)\powe{-\tau}$.
+Initial conditions give $A(0)=\frac{a}{2}\in\mathbb{R}$ and thus $y\sim a\powe{-\epsilon t} \cos t$.
+\note{Error to exact solution is $\epsilon\sin t - \frac{1}{2} \epsilon^2 t\sin t + \dots$, so this works on timescales $t=\mathcal{O}(1/\epsilon)$ but eventually breaks down on $t=\mathcal{O}\kla*{1/\epsilon^2}$.}
+}
+\example{WKB physical optics approximation}{$y''+\omega(\epsilon t)^2y=0$}{
+The frequency is a slowly varying function and $\epsilon^2 y_{\tau\tau} + \omega^2 y = 0$ gives the WKB result $y\sim \omega^{-1/2} \exp\kla*{\pm \frac{\i}{\epsilon} \int^\tau \omega(s)}$.
+
+Multiple-scale expansion gives $Y_0=A\powe{\i\omega t} + \hc$ and
+\begin{align}
+(Y_1)_{tt} + \omega^2 Y_1 &= -2 (Y_0)_{t\tau} = -2\i \powe{\i\omega t} \kla*{(A\omega)_\tau + \i t A\omega \omega'} + \hc.
+\end{align}
+But this presents an issue: we can not eliminate the secular term without setting $A=0$.
+\note{In general, if the long-scale variable $\tau$ is linearly proportional to the short-scale $t$, then multiple-scale methods will fail unless the frequency of the unperturbed oscillator is a constant!}
+Cure: Find a transformation to a fixed-frequency oscillator with small perturbation.
+Let $T=f(t)$.
+Then $\frac{\d}{\d t} = f'(t)\frac{\d}{\d T}$ and $\frac{\d^2}{\d t^2} = f'' \frac{\d}{\d T} + f'^2 \frac{\d^2}{\d T^2}$, such that
+\begin{align}
+y''(T) + \frac{f''}{f'^2} y'(T) + \frac{\omega^2(\epsilon t)}{f'^2} y(T) &= 0.
+\end{align}
+Choosing $f'=\omega$ yields $T=f(t)=\int^t \omega (\epsilon x) = \frac{1}{\epsilon} \int^\tau \omega(s)$ and $y''(T) + y + \epsilon \frac{\omega'}{\omega^2} y' = 0$.
+
+Now expand as usual, $y=Y_0(T,\tau) + \epsilon Y_1(T,\tau) + \dots$ with $\frac{\d\tau}{\d T} = \epsilon \frac{\d t}{\d T} = \frac{\epsilon}{f'(t)} = \frac{\epsilon}{\omega(\tau)}$.
+At zeroth order we get $Y_0=A(\tau) \powe{\i T} + \hc$ and at first order we get
+\begin{align}
+(Y_1)_{TT} + Y_1 &= \frac{-2}{\omega} (Y_0)_{T\tau} - \frac{\omega'}{\omega^2} (Y_0)_T = -\i \powe{\i T} \kla*{\frac{2}{\omega} A' + \frac{\omega'}{\omega^2}A} + \hc
+\end{align}.
+We can eliminate the secular term with $2\frac{A'}{A} = -\frac{\omega'}{\omega}$, i.e. $A=\frac{1}{\sqrt{\omega}}$ and $Y_0=\frac{1}{\sqrt{\omega}} \powe{\pm\i T}$.
+}
+\example{Aging spring}{$y''+\powe{-\epsilon t}y=0$}{
+Slowly shrinking (i.e. non-constant) frequency $\omega(\tau) = \powe{-\tau/2}$.
+Let $T$ be the fast time-scale and $\frac{\d T}{\d t} = g(\tau)$.
+Then $y'=y_T g + y_\tau \epsilon$ and $y''=g^2 y_{TT} + \epsilon \kla*{2gy_{T\tau} + g'y_T} + \epsilon^2 y_{\tau\tau}$.
+
+Inserting the expansion of $y$: zeroth order gives $g^2 (Y_0)_{TT} + \powe{-\tau} Y_0 = 0$, so we choose $g=\powe{-\tau/2} \equiv \omega$ to get $Y_0=A(\tau) \powe{\i T} + \hc$.
+The first order gives $g^2 (Y_1)_{TT} + \powe{-\tau} Y_1 = -2g (Y_0)_{T\tau} - g' (Y_0)_T$...
+
+TODO finish example: LECTURE MULTIPLE SCALES p. 92ff.
+}
+\example{Boundary-Layer problem}{$\epsilon y'' + ay' + by=0$ with $a>0$, $y(0)=A$ and $y(1)=B$}{
+The solution has a BL of thickness $\epsilon$ at $x=0$.
+We have a short scale $t$ (inner solution in the BL) and a long scale $x=\epsilon t$ (outer solution).
+
+Since the multiple-scale method starts in the short scale, we rewrite the DE with $y(t)$ (instead of $y(x)$), which gives $y'' + ay' + \epsilon by=0$.
+
+Let $y\sim Y_0(t,x) + \epsilon Y_1(t,x) + \dots$.
+Then $(Y_0)_{tt} + a(Y_0)_t = 0$ gives $Y_0(t,x)=A_1(x)+A_2(x)\powe{-at}$, and at first order we find
+\begin{align}
+(Y_1)_{tt} + a(Y_1)_t &= -2 (Y_0)_{tx} - a(Y_0)_x - bY_0 = -\kla*{aA_1' + bA_1} + \kla*{aA_2' - bA_2} \powe{-at}.
+\end{align}
+The RHS is a solution of the associated homogeneous equation, so this is a secular term!
+To eliminate it, we set $aA_1'=-bA_1$, i.e. $A_1=C_1\powe{-bx/a}$.
+If $aA_2'\neq bA_2$, there will also be a secular term of the form $t\powe{-t}$, but this does not occur in the leading order of the BL theory, so we do not need to eliminate it.
+
+The solution now reads $y(t)=C_1\powe{-bx/a} + A_2(x) \powe{-at} + \mathcal{O}(\epsilon)$.
+Since $t=\frac{x}{\epsilon}$, this leads to $A_2(x)=A_2(0)+\mathcal{O}(\epsilon)$ and thus $y=C_1\powe{-bx/a} + C_2\powe{-ax/\epsilon}+\mathcal{O}(\epsilon)$.
 }
 
+\chapter{WKB Analysis}
+WKB theory is useful for linear ODEs and PDEs in which the highest derivative is multiplied by $\epsilon \ll 1$.
+In the linear context, WKB is included in Boundary Layer (BL) theory as a special case (but BL theory can also handle non-linear problems).
+WKB theory is ideal for problems where there is a global breakdown (as opposed to a local breakdown) in the solution as $\epsilon\rightarrow 0^+$.
+\note{BL theory: local breakdown, i.e. rapid change within the BL.
 
+WKB theory: global breakdown, i.e. something happens to the entire domain.}
+It arises often in Quantum Mechanics (QM), optics or other fields that deal with slow-modulated waves or oscillations, i.e. slow motion of the envelop and fast motion inside it.
+\section{Global breakdown of the solution}
+Consider $\epsilon y''+y=0$ with $y(0)=0$ and $y(1)=1$.
+This has an exact solution of $y(x)=\frac{\sin\kla*{x/\sqrt{\epsilon}}}{\sin\kla*{1/\sqrt{\epsilon}}}$ for $\epsilon \neq \frac{1}{(n\pi)^2}$.
+The frequency of the oscillation diverges.
+\note{
+There is no BL in this problem and the solution becomes more oscillatory over the whole domain as $\epsilon\rightarrow 0^+$.
+Thus, WKB can handle this problem while BL can not!
+}
+The WKB approximation, order by order in powers of $\epsilon$, consists of exponentials of elementary integrals of algebraic functions and well-known special functions such as Airy or parabolic cylinder functions.
+It is suitable for linear DEs of any order, for initial value and boundary-value problems, and for eigenvalue problems.
+The main limitation is that WKB is only useful for linear equations, because the linearity is required for the recursive construction of the approximation.
+\subsection{Dissipative and Dispersive Phenomena}
+The BL theory matches slowly varying (change $\mathcal{O}(1)$ over an interval of size $\mathcal{O}(1)$) outer solutions to rapidly varying (change $\mathcal{O}(1)$ over an interval of size $s\rightarrow 0$ as $\epsilon\rightarrow 0^+$) inner solutions.
+The outer solution remains smooth while the inner solution becomes discontinuous across the BL since the thickness of the BL tends to zero, hence the local breakdown inside the BL.
+The local breakdown occurs when the approximate solution is exponentially increasing or decreasing (dissipative!), e.g. the solution of a DE having a strong positive or negative damping term.
+
+In contrast, the global breakdown occurs throughout the finite interval and is associated with rapidly oscillatory or dispersive behavior, e.g. $\epsilon y''+y=0$ without damping has an outer solution ($\epsilon=0$) of $y\equiv 0$, which is a terrible approximation.
+\section{WKB Approximation}
+Dissipative and dispersive phenomena are both characterized by exponentials with real or imaginary exponents respectively.
+We seek an approximate solution $y(x)\sim A(x) \powe{\frac{1}{\delta} S(x)}$ for small $\delta$, and the phase $S(x)$ is assumed to slowly vary in a breakdown region.
+\note{\begin{enumerate}
+\item when $S$ is real, there is a boundary layer of thickness $\delta(\epsilon)$
+\item when $S$ is imaginary, there is a region of rapid oscillation with wavelength of order $\delta$
+\item when $S$ is constant, there is an outer solution in BL theory or a slowly varying amplitude $A$
+\end{enumerate}
+}
+Now, we combine $A$ and $S$ in a single exponential power series of the form
+\begin{align}
+y(x) &\sim \exp\kla*{\frac{1}{\delta} \sum_{n\ge 0} \delta^n S_n(x)}.
+\end{align}
+Consider a Schrödinger equation $\epsilon^2 y''=Q(x)y$ where $Q\neq 0$ ($Q(x_0)=0$ is a turning point; see later).
+Then we find
+\begin{align}
+y' &\sim \kla*{\frac{1}{\delta} \sum_{n\ge 0} \delta^n S_n'(x)} y,\\
+y'' &\sim \frac{1}{\delta} \kla*{\frac{1}{\delta} \sum_{n\ge 0} \delta^n S_n'(x)}^2 y + \frac{1}{\delta} \kla*{\frac{1}{\delta} \sum_{n\ge 0} \delta^n S_n''(x)} y.
+\end{align}
+Inserting this leads to the expansion
+\begin{align}
+\frac{\epsilon^2}{\delta^2} S_0'^2 + \frac{2\epsilon^2}{\delta} S_0'S_1' + \frac{\epsilon^2}{\delta} S_0'' + \dots &= Q(x).
+\end{align}
+Dominant balance: $\frac{\epsilon^2}{\delta^2} = \mathcal{O}(1)$, so $\epsilon=\delta$ (which is called \emph{distinguished limit} in BL theory).
+The leading order is $S_0'^2=Q$, so $S_0=\pm \int^x \sqrt{Q(t)}$.
+The first order is $2S_0'S_1'+S_0''=0$, so $S_1=-\frac{1}{4} \log Q(x)$.
+The higher order equations are
+\begin{align}
+2S_0'S_n' + S_{n-1}'' + \sum_{j=1}^{n-1} S_j'S_{n-j}' &= 0.
+\end{align}
+The solution is a linear combination of both $S_0$-terms with $C_\pm$ constants.
+\note{The next terms are
+\begin{align}
+S_2 &= \pm \int^x \frac{1}{\sqrt{Q}} \klb*{\frac{Q''}{8Q} - \frac{5Q'^2}{32Q^{2}}},\\
+S_3 &= -\frac{Q''}{16Q^2} + \frac{5Q'^2}{64Q^3},\\
+S_4 &= \pm \int^x \frac{1}{\sqrt{Q^3}} \klb*{\frac{Q^{(4)}}{32 Q} - \frac{7Q'Q'''}{32Q^2} - \frac{19Q''^2}{128Q^2} + \frac{221Q''Q'^2}{256 Q^3} - \frac{1105 Q'^4}{2048 Q^4}},\\
+S_5 &= -\frac{Q^{(4)}}{64Q^3} + \frac{7Q'Q'''}{64Q^4} + \frac{5Q''^2}{64Q^4} - \frac{113Q'^2Q''}{256Q^5} + \frac{565Q'^4}{2048Q^6}.
+\end{align}
+}
+\example{Initial-value problem}{$\epsilon^2y''=Q(x)y$ with $y(0)=A$ and $y'(0)=B$}{
+We have $y\sim C_+ Q^{-1/4} \powe{\frac{1}{\epsilon}\int_0^x \sqrt{Q(t)}} + C_- (\dots)$.
+Then $A=Q^{-1/4}(0)(C_++C_-)$ and $B=-\frac{1}{4} Q'(0) Q^{-5/4}(0) (C_++C_-) + \frac{1}{\epsilon} Q^{1/4}(0) (C_+-C_-)$.
+If $A=0$ and $B=1$, we have $C_-=-C_+=\frac{\epsilon}{2}Q^{-1/4}(0)$.
+For example, $Q(x)=\kla*{1+x^2}^2$ gives $y(x)\sim \frac{\epsilon}{\sqrt{1+x^2}} \sinh\kla*{\frac{1}{\epsilon} \kla*{x + \frac{x^3}{3}}}$.
+}
+\subsection{Boundary-Layer revisited}
+TODO LECTURE WKB p. 31ff.
+\subsection{Sturm-Liouville problem}
+Consider $y''+EQ(x)y=0$ with $Q>0$ and $y(0)=y(\pi)=0$.
+This has an infinite number of nontrivial solutions with discrete, non-degenerate eigenvalues $E_n$ and eigenfunctions $y_n(x)$.
+Note that $\intx{0}{\pi}{y_n(x)y_m(x)Q(x)}{x}=\delta_{nm}$ is a normalization condition.
+
+WKB gives an approximation for large $n$ as
+\begin{align}
+y &\sim C_1 Q^{-1/4} \sin \klb*{\sqrt{E} \int^x \sqrt{Q}} + C_2 Q^{-1/4} \cos \klb*{\dots}
+\end{align}
+as $\epsilon=\frac{1}{\sqrt{E}}\rightarrow 0^+$, i.e. $E\rightarrow \infty$.
+Initial conditions imply $C_2=0$ and $\intx{0}{\pi}{\sqrt{Q(t)}}{t} = \frac{n\pi}{\sqrt{E}}$, so the eigenvalues are
+\begin{align}
+E_n &= \frac{n^2\pi^2}{S_1^2}.
+\end{align}
+TODO LECTURE WKB p. 35ff.
 
 
 \chapter{Summary}
