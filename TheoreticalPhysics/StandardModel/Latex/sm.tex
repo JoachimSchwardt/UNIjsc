@@ -1,0 +1,340 @@
+\documentclass[english, parskip=full]{scrbook}
+\usepackage[english]{babel}  % Sprache auf Deutsch 
+\usepackage[utf8]{inputenc}  % Kodierung der Datei
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=3cm, footskip=1.5cm]{geometry}
+
+\newcommand*{\Title}{The Standard Model of Particle Physics}
+\newcommand*{\Author}{Joachim Schwardt}
+
+\input{preamble_shared}
+\input{preamble}
+\input{glossary.tex}
+
+%\titlehead{titlehead}
+\subject{Theoretical Particle Physics}
+\title{\Title}
+\author{\Author}
+\date{\today}
+
+\usepackage[most]{tcolorbox}
+
+%https://tex.stackexchange.com/questions/29769/colored-box-in-new-environment
+%\newsavebox{\selvestebox}
+%\newenvironment{colbox}[1]
+%  {\newcommand\colboxcolor{#1}%
+%   \begin{lrbox}{\selvestebox}%
+%   \begin{minipage}{\dimexpr\columnwidth-2\fboxsep\relax}}
+%  {\end{minipage}\end{lrbox}%
+%   \begin{center}
+%   \colorbox[HTML]{\colboxcolor}{\usebox{\selvestebox}}
+%   \end{center}}
+
+%\newcommand{\definition}[2]{\begin{colbox}{F8E0E0}\emph{Definition}: \textbf{#1}. \\ #2\end{colbox}}
+%\newcommand{\note}[1]{\begin{colbox}{E0F8E0}\emph{Note}: #1\end{colbox}}
+%\newcommand{\example}[3]{\begin{colbox}{E0E0F8}\emph{Example}: \textbf{#1}: #2. \\ #3\end{colbox}}
+
+\definecolor{colorbackgrounddefinition}{RGB}{220,220,248}
+\definecolor{colorbackgroundnote}{RGB}{220,248,220}
+\definecolor{colorbackgroundexample}{RGB}{248,220,220}
+\definecolor{colordefinition}{RGB}{0,0,200}
+\definecolor{colornote}{RGB}{0,200,0}
+\definecolor{colorexample}{RGB}{140,0,100}
+
+\newcommand{\definition}[2]{\begin{tcolorbox}[colback=colorbackgrounddefinition,colframe=colordefinition, breakable,enhanced,title=\textbf{#1}.]#2\end{tcolorbox}}
+\newcommand{\note}[1]{\begin{tcolorbox}[colback=colorbackgroundnote,colframe=colornote, breakable,enhanced]#1\end{tcolorbox}}
+\newcommand{\example}[3]{\begin{tcolorbox}[colback=colorbackgroundexample,colframe=colorexample, breakable,enhanced,title={\textbf{#1}: #2.}]#3\end{tcolorbox}}
+
+\newcommand{\p}{\text{p}}
+
+\begin{document}
+
+%\begin{titlepage}
+\maketitle  % Titel setzen
+\tableofcontents  % Inhaltsverzeichnis setzen
+%\end{titlepage}
+
+\chapter{Lie-Groups and Representations}
+\section{Definition of a Group}
+A group $(G,\circ)$ is a set $G=\klc*{g_i}$ with an operation $\circ$ that admits the following rules:
+\begin{enumerate}
+\item closure: $g_i\circ g_j=g_k\in G$ for all $i,j$ (i.e. the group operation always remains in the group)
+\item associative: $g_i\circ \kla*{g_j\circ g_k} = \kla*{g_i\circ g_j}\circ g_k$
+\item identity: $e\circ g_i=g_i=g_i\circ e$ for all $i$
+\item (unique) inverse: $g_i\circ g_i^{-1}=e=g_i^{-1}\circ g_i$ for all $i$; the inverse element $g_i^{-1}\in G$ is unique
+\end{enumerate}
+If $g_i\circ g_j=g_j\circ g_i$ for all $i,j$, i.e. the group elements commute, the group is called Abelian.
+\example{Some Groups}{}{
+$\kla*{\klc*{1},\cdot}$, $\kla*{\klc*{\pm 1}, \cdot}$, $\kla*{\klc*{0,1},\text{XOR}}$, $\kla*{\klc*{\sigma_0,\sigma_j},\cdot}$.
+
+Cyclic group $Z_n=\klc*{1,\omega_n,\omega_n^2,\dots,\omega_n^{n-1}}$ with $\omega_n = \powe{\i 2\pi/n}$ (the multiplication operation is implied and often omitted).
+}
+\section{Representations}
+A representation is a mapping of group elements $g\mapsto \mathcal{R}(g)$ such that $g_1\circ g_2 = g_3$ implies $\mathcal{R}(g_1) \cdot \mathcal{R}(g_2) = \mathcal{R}(g_3)$, where $\cdot$ is a potentially distinct operation adequate on the space of the representation (e.g. matrix multiplication).
+There are special representations:
+\begin{enumerate}
+\item \emph{fundamental} repr.: all other representations can be generated from this repr. by direct products (e.g. angular momentum)
+\item \emph{adjoint} repr.: constructed from the \emph{structure constants} of the group, $\klb*{T^a,T^b} = \i f_{abc} T^c$ (Lie-Algebra; summation over repeated indexes is implied). Explicitly, $\kla*{\tilde{T}^a}_{bc} = -\i f_{abc}$ are the components
+\item \emph{equivalent} repr.: $T^i$ and $\tilde{T}^i$ are equivalent if they are related by a single similarity transform, i.e. $\tilde{T}^i = UT^i U^{-1}$ for all $i$
+\end{enumerate}
+\section{Lie-Groups}
+In \emph{continuous} groups, elements are labeled by $r$ real parameters $\bm{\alpha}=(\alpha_1,\dots,\alpha_r)$ such that $g(\bm{0})=e$ and $g(\bm{\alpha}) \in G$.
+This implies
+\begin{align}
+g\kla*{\bm{\alpha}} g\kla*{\bm{\beta}} &= g\kla*{\bm{\gamma}\kla*{\bm{\alpha},\bm{\alpha}}}
+\end{align}
+with some analytic function $\bm{\gamma}$.
+
+Consider for example a coordinate transformation (or Lorentz transform in case of an internal parameter space).
+Then we have $x_i' = f_i\kla*{x;\bm{\alpha}}$ with $x=\kla*{x_1,\dots,x_N}$ and $f_i\kla*{x;\bm{0}} = x_i$, i.e. an infinitesimal transform is a small deviation from the identity.
+Explicitly, writing $x_i'=x_i+\d x_i$ gives
+\begin{align}
+\d x_i &= \sum_{\rho=1}^r \frac{\partial f_i}{\partial \alpha_\rho} \d \alpha_\rho = \bm{\alpha} \cdot \nabla_{\bm{\alpha}} f_i.
+\end{align}
+A function $F(x)$ then transforms to $F'=F+\d F$ with $\d F=\sum_{i=1}^N \frac{\partial F}{\partial x_i} \d x_i$.
+We can express this as
+\begin{align}
+F' &= \kla*{1 - \i \d\bm{\alpha} \cdot \bm{T}} F,
+\end{align}
+where $T_\rho = \i\sum_{i=1}^N \frac{\partial f_i}{\partial\alpha_\rho} \frac{\partial F}{\partial x_i}$ are the \emph{generators} of the infinitesimal transformation.
+
+By expanding around the identity, the group elements in a Lie-Group can be written as
+\begin{align}
+g\kla*{\bm{\alpha}} &= 1 - \i \alpha_a T^a + \mathcal{O}\kla*{\alpha^2} = \powe{-\i\alpha_a T^a} = \lim_{k\rightarrow\infty} \kla*{1 - \i \frac{\alpha_a T^a}{k}}^k.
+\end{align}
+Considering the commutation of two transformations, we also find the relation
+\begin{align}
+g(\theta)g(\phi)g(\theta)^{-1} g(\phi)^{-1} &= 1 + g(\theta)\klb*{g(\phi), g(\theta)^{-1}} g(\phi)^{-1} = 1 + g(\theta) \i\theta_a (-\i)\phi_b \klb*{T^a,T^b} g(\phi)^{-1}\\
+&= 1 + \theta_a \phi_b\klb*{T^a,T^b} + \mathcal{O}\kla*{\theta^2,\phi^2} \overset{!}{=} g(\xi) = 1 - \i \xi_c T^c + \mathcal{O}\kla*{\xi^2}.
+\end{align}
+From this we may read off $\xi_c = C_c^{ab}\theta_a\phi_b$ with $\i C_c^{ab} T^c = \klb*{T^a,T^b}$.
+Clearly $C_c^{ab}=-C_c^{ba}$, and in general the coefficients define the group multiplication rules.
+\section{Compact Lie-Groups}
+If the volume of the parametrization is finite, i.e. the set $A=\klc*{\bm{\alpha}}$ has finite measure, a Lie-Group is compact (e.g. $\powe{\i\theta \tau}$ with $\theta\in [0,2\pi)$ and some generator $\tau$).
+\definition{Representation Theorem}{
+Any repr. of a compact Lie-Group is equivalent to a repr. by unitary operators, and any repr. satisfies the same fundamental algebra, i.e. $\klb*{T^a_\mathcal{R}, T^b_\mathcal{R}} = \i f_{abc} T^c_\mathcal{R}$.
+
+Explicitly, this means that all group elements are of the form $U=\powe{\i \theta_a T^a}$.
+}
+The linear combination $\theta_a T^a$ spans a vector-space with (finite) basis $\klc*{T^a}$ and $\klb*{T^a,T^b} = \i f_{abc} T^c$.
+\subsection{Properties}
+Normalization: we have $\tr\kla*{\klb*{T^a,T^b}}=0$ for all $a,b$ due to the cyclicity of the trace.
+Using the Lie-Algebra, this gives $f_{abc} \tr\kla*{T^c}=0$, and because this holds for all combinations, we can conclude $\tr\kla*{T^c}=0$ unless $f_{abc}\equiv 0$ (e.g. for an Abelian group).
+\note{One can show that $\tr\kla*{T^aT^b}=\lambda \delta_{ab}$ for some fixed constant $\lambda$, and by convention generators are normalized such that $\lambda=\frac{1}{2}$.
+}
+\subsection{Examples}
+Some compact simple Lie-Groups are $SU(N)$ or $SO(N)$.
+Simple means that no subgroup commutes with the rest, i.e. for every invertible subgroup $H\subset G$ one has $g_jh_ig_j^{-1}\in H$ for all $h_i\in H$ and $g_j\in G$.
+\note{There are two trivial invertible subgroups: the group itself and the trivial group $\klc*{e}$.}
+Semi-simple LGs are direct products of simple groups, e.g. $SU(2)\times SU(3)$ (non semi-simple may be $SU(2)\times SU(2) \times SU(3)$).
+
+Non-compact LGs are e.g. the Lorentz group or the Poincare group.
+\subsection{Special Unitary Group}
+The groups $SU(N)$ with elements $U\in\mathbb{C}^{N\times N}$ and $U^\dagger U=UU^\dagger = \mathbbm{1}$ and $\det(U)=+1$ have $r=N^2-1$ generators.
+This is derived from $2N^2$ total real parameters, minus $N(N-1)$ from the off-diagonal symmetry and minus $N$ from the real-valued diagonal.
+A final $-1$ comes from the special property, i.e. $\det(U)=+1$ rather than $\det(U)=\pm 1$.
+
+One may write $U=\powe{\i \theta_a T^a}$ with $a=1,\dots,r$ and the expansion of $U^\dagger U = \mathbbm{1} + \i\theta_a \kla*{T^a - T^{a\dagger}} + \dots$ gives $T^a = \kla*{T^a}^\dagger$, i.e. all generators are Hermitian.
+Similarly, using 
+\begin{align}
+\det \exp A &= \exp \tr A,
+\end{align}
+one finds that $\det(U)=1$ implies $\tr\kla*{T^a}=0$.
+\example{$SU(2)$}{\textsc{Pauli} matrices}{
+The fundamental repr. is $T^a = \frac{1}{2}\sigma^a$ with $f_{abc}=\epsilon_{abc}$ and $\sigma^1 = \begin{psmallmatrix} 0 & 1 \\ 1 & 0 \end{psmallmatrix}$, $\sigma^2 = \begin{psmallmatrix} 0 & -\i \\ \i & 0 \end{psmallmatrix}$ and $\sigma^3 = \begin{psmallmatrix} 1 & 0 \\ 0 & -1 \end{psmallmatrix}$.
+}
+\example{$SU(3)$}{\textsc{Gellmann} matrices}{
+The fundamental repr. is $T^a = \frac{1}{2}\lambda^a$ ($3\times 3$-matrices) with $f_{abc}=???$ and $\lambda^i = \begin{psmallmatrix} \sigma^i & 0 \\ 0 & 0 \end{psmallmatrix}$ for $i=1,2,3$ and $\lambda^4=\begin{psmallmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 1 & 0 & 0 \end{psmallmatrix}$, $\lambda^5=\begin{psmallmatrix} 0 & 0 & -\i \\ 0 & 0 & 0 \\ \i & 0 & 0 \end{psmallmatrix}$, $\lambda^6 = \begin{psmallmatrix} 0 & 0 \\ 0 & \sigma^1 \end{psmallmatrix}$, $\lambda^7 = \begin{psmallmatrix} 0 & 0 \\ 0 & \sigma^2 \end{psmallmatrix}$ and $\lambda^8=\begin{psmallmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & -2 \end{psmallmatrix}$.
+
+One can show that $\klc*{\lambda^a,\lambda^b} = \frac{4}{3} \delta_{ab} + 2d_{abc}\lambda^c$ with the totally symmetric $d_{abc}=\frac{1}{4} \tr \kla*{\lambda^a\klc*{\lambda^b,\lambda^c}}$ complementing the totally anti-symmetric $f_{abc} = \frac{1}{4} \tr
+\kla*{\lambda^a \klb*{\lambda^b,\lambda^c}}$.
+Combined, this gives
+\begin{align}
+\lambda^a\lambda^b &= \frac{2}{3} \delta_{ab} + \kla*{d_{abc} + \i f_{abc}}\lambda^c.
+\end{align}
+}
+\example{Relation between $SU(2)$ and $SO(3)$}{Rotations}{
+Both groups have 3 generators, and we may relate them by defining $X=\bm{x}\cdot \bm{\sigma}$ with $\bm{x} \in \mathbb{R}^3$ and $X\in\mathbb{C}^{2\times 2}$.
+Explicitly, $X = \begin{psmallmatrix} z & x - \i y \\ x + \i y & -z \end{psmallmatrix}$ and $\det(X) = -\abs*{\bm{x}}^2$.
+
+TODO: $4\pi$ vs. $2\pi$ rotations as a consequence of the similarity transform $X'=UXU^\dagger = X'^\dagger$ due to $f(-U)=f(U)$?
+}
+\chapter{Local Symmetry}
+In the transformation $\psi'=\powe{-\i \theta_a T^a}\psi$, we can distinguish global ($\theta=\const$) and local transformations ($\theta_a(x)$ depends on space-time coordinates).
+\section{Classical Electrodynamics}
+Many scalar and vector potentials $\phi,\bm{A}$ lead to the same physical electromagnetic fields $\bm{E},\bm{B}$, so we may specify a specific gauge (e.g. Lorentz gauge, $\partial_\mu A^\mu=0$).
+\begin{itemize}
+\item electro-statics: $\partial_t \bm{E} = \partial_t \bm{B} = 0$ gives $\bm{E}=-\nabla\phi$, so $\phi \rightarrow \phi + \const$ changes nothing
+\item magneto-statics: $\nabla\cdot \bm{B} = 0$ implies $\bm{B}=\nabla\times \bm{A}$ and thus $\bm{A}\rightarrow \bm{A} + \nabla \Lambda$ again changes nothing
+\item electro-dynamics: $\nabla\times \bm{E} + \partial_t \bm{B} = 0$ gives $\bm{E}=-\nabla\phi - \partial_t\bm{A}$ (same transformations leave fields unchanged)
+\end{itemize}
+The field-strength tensor is defined as $F^{\mu\nu} = \partial^\mu A^\nu - \partial^\nu A^\mu$ with $A^\mu =(\phi,\bm{A})$ and the gauge transformation $A^\mu(x)\rightarrow A^\mu(x)+\partial^\mu \Lambda(x)$.
+The Lagrangian is $\mathcal{L} = -\frac{1}{4} F^{\mu\nu} F_{\mu\nu} - J^\mu A_\mu$, such that the action $\mathcal{S} = \int \mathcal{L}\,\d^4x$ is gauge invariant.
+The equations of motion are $\partial_\mu F^{\mu\nu}=J^\nu$ (\textsc{Maxwell}) and $\partial_\mu J^\mu = 0$ (continuity).
+\section{Quantum Electrodynamics}
+Introduce the \textsc{Dirac}-equation $\kla*{\i \slashed{\partial} - m}\psi=0$ with the  \textsc{Dirac}-matrices $\gamma^\mu$ with $\klc*{\gamma^\mu,\gamma^\nu } = 2g^{\mu\nu}$, $\slashed{A} = \gamma^\mu A_\mu$ and $\kla*{\gamma^\mu }^\dagger = \gamma^0 \gamma^\mu \gamma^0 = (\gamma^0, -\bm{\gamma}$).
+The usual representation is $\gamma^\mu = \begin{psmallmatrix} 0 & \sigma_\mu \\ \sigma_\mu & 0 \end{psmallmatrix}$ for $\mu=0,1,2,3$.
+One also defines $\gamma^5=\i\gamma^0\gamma^1\gamma^2\gamma^3$ with $\klb*{\gamma^5,\gamma^\mu }=0$, $\kla*{\gamma^5}^\dagger = \gamma^5$ and $\klc*{\gamma^5, S_{\mu\nu}}=0$, where
+\begin{align}
+S_{\mu\nu} &= \frac{\i}{4} \klb*{\gamma_\mu,\gamma_\nu }.
+\end{align}
+For an infinitesimal Lorentz transformation, we have $x'^\mu = \Lambda^\mu_{\ \nu} x^\nu = \kla*{\delta^\mu_{\ \nu} + \omega^\mu_{\ \nu}}x^\nu$, giving $\psi'=S(\Lambda)\psi$ with $S(\Lambda) = 1 - \frac{\i}{2} \omega^{\mu\nu} S_{\mu\nu}$.
+
+The Dirac Lagrangian is $\mathcal{L} = \bar{\psi} \kla*{\i\slashed{\partial} - m}\psi$ with $\bar{\psi} = \psi^\dagger \gamma^0$, and the Dirac equation follows from the Euler-Lagrange equations $0=\frac{\partial\mathcal{L}}{\partial\bar{\psi}}$.
+A local phase transform $\psi'=\powe{-\i g\theta(x)}\psi$ changes the Lagrangian, and one therefore introduces the \emph{covariant derivative}
+\begin{align}
+D^\mu &= \partial^\mu + \i g A^\mu(x)
+\end{align}
+to get the (invariant) modified Lagrangian $\mathcal{L} = \bar{\psi} \kla*{\i\slashed{D} - m}\psi$ with $A'^\mu=A^\mu + \partial^\mu \theta(x)$.
+\note{$D'_\mu\psi' = \powe{-\i g\theta} \partial_\mu \psi - \i g\psi' \partial_\mu \theta + \i g A'_\mu \psi' = \powe{-\i \theta} D_\mu\psi$, so $D'_\mu U\psi = UD_\mu \psi$}
+The full Lagrangian in QED is
+\begin{align}
+\mathcal{L} &= \bar{\psi} \kla*{\i\slashed{D} - m}\psi - \frac{1}{4} F^{\mu\nu}F_{\mu\nu}.
+\end{align}
+The gauge term describes the dynamics of the gauge fields $A^\mu$, the Dirac term describes the dynamics of $\psi$, and $\slashed{D}$ describes the interaction between both.
+\section{Yang-Mills Theory}
+Non-Abelian gauge theory for some $N$-component \emph{matter field} $\Phi=(\phi_1,\dots,\phi_N)$.
+The transformation $\Phi'=U\kla*{\theta(x)} \Phi$ has $U=\powe{-\i \theta(x)}$ and $\theta(x)=\theta_a(x)T^a$ with $a=1,\dots,r$ generators, and each $T^a$ is an $N\times N$-matrix ($N$-dimensional representation of some simple compact LG).
+Any field combinations that do not contain derivatives, e.g. mass terms $\Phi^\dagger \Phi$ or \textsc{Yukawa} interaction terms $y_{ijk} \phi_i\phi_j\phi_k$ are invariant under this transformation.
+Kinetic terms are however not invariant and require the introduction of gauge fields.
+
+We define $D_\mu=\partial_\mu + \i gA_\mu$ with $A^\mu = A^\mu_a T^a$, where $A^\mu_a$ are real-valued vector gauge fields and $g$ is an arbitrary coupling constant.
+Expressed in terms of the components, we have
+\begin{align}
+\kla*{D_\mu \Phi}_i &= \kla*{\partial_\mu \delta_{ij} + \i g A_\mu^a \kla*{T^a}_{ij} }\Phi_j.
+\end{align}
+The covariant derivatives specify the gauge boson interactions with the matter fields, and to determine the corresponding transformation of the gauge fields we demand $\kla*{D_\mu \Phi}' = UD_\mu\Phi$ (same as in QED).
+\note{Explicit calculation:
+\begin{align}
+\kla*{D^\mu \Phi}' &= \kla*{\partial^\mu + \i g A'^\mu } U\Phi = \kla*{\partial^\mu U}\Phi + U\partial^\mu \Phi + \i g UU^\dagger A'^\mu U\Phi \overset{!}{=} U \kla*{\partial^\mu + \i g A^\mu }\Phi,
+\end{align}
+so $A^\mu = U^\dagger A'^\mu U -\i \frac{1}{g} U^\dagger \kla*{\partial^\mu U}$.
+}
+One finds
+\begin{align}
+A'^\mu &= U A^\mu U^\dagger + \i \frac{1}{g} \kla*{\partial^\mu U} U^\dagger.
+\end{align}
+For infinitesimal $\theta$, we can simplify this relation by considering the individual components.
+Using $U=1 - \i \theta$, we find
+\begin{align}
+A'^\mu &= A^\mu - \i \theta A^\mu + \i A^\mu \theta + \frac{1}{g} \partial^\mu \theta = A^\mu_a \kla*{T^a - \i \theta_b \klb*{T^b,T^a}} + \frac{1}{g}\partial^\mu \theta_a T^a,
+\end{align}
+so $A'^\mu_a = A^\mu_a + \theta_b A^\mu_c f_{bca} T^a + \frac{1}{g} \partial^\mu \theta_a$ (or with $f_{abc}$).
+The general field-strength tensors
+\begin{align}
+F^{\mu\nu} &= \frac{1}{\i g} \klb*{D^\mu,D^\nu} = \partial^\mu A^\nu - \partial^\nu A^\mu +\i g \klb*{A^\mu,A^\nu }
+\end{align}
+is then gauge covariant, i.e. $F'^{\mu\nu} = UF^{\mu\nu}U^\dagger$.
+The gauge Lagrangian $\mathcal{L} = -\frac{1}{4} F^{\mu\nu}_a F^a_{\mu\nu} = -\frac{1}{2} \tr\kla*{F^{\mu\nu} F_{\mu\nu}}$ is then the direct generalization of the one in QED (note that $F^{\mu\nu} = F^{\mu\nu}_a T^a$).
+\subsection{Parallel Transport}
+An equivalent derivation of the covariant derivative comes from the idea of parallel transport: the phase at $x$ is \enquote{parallel} to the phase at $x+\d x$ if the phases differ by $gA_\mu(x)\d x^\mu$.
+Defining the Parallel Transport of a spinor as $\hat{\psi}(x;\d x)$, we then want that the act of transforming $\psi\rightarrow\psi'=U\psi$ commutes with the PT, i.e.
+\begin{align}
+\hat{\psi}'(x;\d x) &= U(x+\d x) \hat{\psi}(x; \d x)\overset{!}{=} \powe{\i g A_\mu \d x^\mu} U(x)\psi.
+\end{align}
+Expanding to leading order in $\d x$ gives
+\begin{align}
+\kla*{U + \partial_\mu U \d x^\mu }\kla*{1 + \i g A_\mu \d x^\mu } &= U + \partial_\mu U \d x^\mu + \i g U A_\mu \d x^\mu \overset{!}{=}  \kla*{1 + \i g A'_\mu \d x^\mu} U, 
+\end{align}
+so $A'_\mu = U A_\mu U^\dagger - \i \frac{1}{g} \kla*{\partial_\mu U}U^\dagger$.
+\chapter{Quantum Field Theory}
+Quantum Mechanics + Special Relativity + Field Theory and the rules for creating field excitations (as well as describe their dynamics).
+\section{Field description in QFT}
+A field $\phi(x)$ has a conjugate momentum $\Pi(x)$ with $\klb*{\phi(\bm{x},t),\Pi(\bm{y},t)} = \i\delta(\bm{x}-\bm{y})$.
+\subsection{Complex Scalar field}
+A real scalar field is
+\begin{align}
+\phi_i(x) &= \int \kla*{a_i(\bm{k}) \powe{-\i kx} + a_i^\dagger(\bm{k}) \powe{\i kx}} \,\tilde{\d} k
+\end{align}
+with $\tilde{\d}k = \frac{\d^3k}{(2\pi)^3 2\omega_k}$ and $\omega_k^2 = \bm{k}^2 + M^2$ with some particle mass $M$ and $i=1,2$.
+A possible Lagrangian is $\mathcal{L} = \sum_i \frac{1}{2} \partial_\mu\phi_i \partial^\mu\phi_i - \frac{1}{2} M^2\phi_i$.
+\note{$\klb*{a_i(\bm{k}),a_j^\dagger(\bm{k}')} = \delta_{ij} (2\pi)^3 \delta(\bm{k}-\bm{k}')$}
+We can construct a complex scalar field $\phi=\frac{1}{\sqrt{2}} \kla*{\phi_1 - \i \phi_2}$ with $\phi^\dagger = \kla*{\phi}^\dagger$ and
+\begin{align}
+\phi(x) &= \int \kla*{a(\bm{k}) \powe{-\i kx} + b^\dagger(\bm{k}) \powe{\i kx}} \,\tilde{\d} k,
+\end{align}
+where $a=\frac{a_1-\i a_2}{\sqrt{2}}$ and $b^\dagger=\frac{a_1^\dagger - \i a_2^\dagger}{\sqrt{2}}$.
+A possible Lagrangian is $\mathcal{L} = \partial_\mu\phi^\dagger \partial^\mu\phi - M^2\phi^\dagger \phi$ and the Hamiltonian is $H=\int \kla*{a(\bm{k})^\dagger a(\bm{k}) + b(\bm{k})^\dagger b(\bm{k})}\,\frac{d^3k}{(2\pi)^3}$.
+\note{$\klb*{a(\bm{k}),a^\dagger(\bm{k}')} = (2\pi)^3 \delta(\bm{k}-\bm{k}') = \klb*{b(\bm{k}),b^\dagger(\bm{k}')}$}
+The phase transform $\phi'=\powe{-\i\alpha}\phi$ leads to the \textsc{Noether} current $J^\mu=\frac{\partial\mathcal{L}}{\partial \partial_\mu\phi} \delta \phi$, i.e. $N_\phi^\mu = \i \kla*{\phi^\dagger \partial^\mu \phi - \phi \partial^\mu \phi^\dagger}$ and the conserved charge $N_\phi = \int \kla*{a^\dagger a - b^\dagger b}$ (i.e. difference between particles and anti-particles is conserved).
+\subsection{Dirac fields}
+The conjugate field is $\Pi=\frac{\partial\mathcal{L}}{\partial \dot{\psi}} = \i \psi^\dagger$ and $\klc*{\psi(\bm{x},t),\Pi(\bm{y},t)} = \i\delta\kla*{\bm{x} - \bm{y}}$.
+\definition{Chirality}{
+Define the projectors $P_L = \frac{1}{2}\kla*{1 - \gamma^5}$ and $P_R= \frac{1}{2}\kla*{1 + \gamma^5}$ and split $\psi=P_L\psi + P_R\psi = \psi_L + \psi_R$.
+Then the two fields are eigenstates of $\gamma^5$ with $\gamma^5\psi_L=-\psi_L$ and $\gamma^5\psi_R=+\psi_R$.
+}
+A Lorentz transformation $S(\Lambda)$ has $S(\Lambda_1\Lambda_2) = S(\Lambda_1)S(\Lambda_2)$ and $\psi(x)\rightarrow \psi'(\Lambda x) = S(\Lambda) \psi(x)$; similarly, $\bar{\psi}(x) \rightarrow \bar{\psi}'(\Lambda x) = \bar{\psi}(x) S(\Lambda)^{-1}$.
+Then $\bar{\psi}\psi$ is a Lorentz scalar (i.e. invariant under $S$), and $\bar{\psi} \gamma^\mu \psi$ is a Lorentz vector (i.e. $v'^\mu = \Lambda^\mu_{\ \nu} v^\nu$).
+Meanwhile $\bar{\psi}\gamma^5\psi$ is a pseudo-scalar (also transforms trivially) and $\bar{\psi}\gamma^5\gamma^\mu\psi$ is a pseudo-vector (also transforms like a vector).
+
+To construct the field, one can make an ansatz (for spin-$\frac{1}{2}$)
+\begin{align}
+\psi &= \int \sum_{s=1,2} \kla*{c_s(\bm{k}) u\kla*{\bm{k},s} \powe{-\i kx} + d_s^\dagger\kla*{\bm{k}} v\kla*{\bm{k},s}\powe{\i kx}}\,\tilde{d}k.
+\end{align}
+Pauli's exclusion principle states that no two fermions may be in the same state, which requires anti-symmetric creation and annihilation operators.
+In particular, writing $c_s^\dagger\kla*{\bm{k}}\Ket{0} = \Ket{\bm{k},s; 0}$ and $d_s^\dagger\kla*{\bm{k}} \Ket{0} = \Ket{0; \bm{k},s}$, one has $\Ket{\bm{k}_1,s_1; \bm{k}_2,s_2} = \Ket{\bm{k}_2,s_2;\bm{k}_1,s_1}$.
+\note{$\klc*{c_s\kla*{\bm{k}}, c_r\kla*{\bm{k}'}^\dagger} = \delta_{sr} (2\pi)^3 \delta\kla*{\bm{k} - \bm{k}'} = \klc*{d_s\kla*{\bm{k}}, d_r\kla*{\bm{k}'}^\dagger}$}
+Inserting $\psi=u(p)\powe{-\i px}$ and $\psi=v(p)\powe{-\i px}$ into the Dirac equation gives $\kla*{\slashed{p} - m}u(p)=0=\kla*{\slashed{p}+m}v(p)=0$.
+In the rest-frame, one has $\slashed{p} = m\gamma^0$, so the eigenvalues are $\pm m$ in either case.
+\note{Completeness: $\sum_s u_s\bar{u}_s = \slashed{p}+m$ and $\sum_s v_s\bar{v}_s = \slashed{p}-m$
+
+Orthonormality: $\bar{u}_s u_r = \delta_{sr} 2m$ and $\bar{v}_s v_r = -\delta_{sr} 2m$
+}
+The Hamilton $H=\int \mathcal{H}\,\d^3x$ with $\mathcal{H}=\Pi \dot{\psi} - \mathcal{L} = \bar{\psi} \i\gamma^0 \partial_t \psi - \bar{\psi} \kla*{\i \slashed{\partial} - m}\psi$ can be written as
+\begin{align}
+H &= \int \bar{\psi} \kla*{-\i \gamma^k \partial_k + m}\psi = \int \bar{\psi} \i \gamma^0\partial_t\psi = \int \Pi \partial_t\psi.
+\end{align}
+\section{Scattering Matrix and Feynman Rules}
+Consider a matrix element $\brc*{f}{S}{i}=S_{fi}$ for a process $p_1 + \dots + p_n\rightarrow p_1' + \dots + p_{n'}'$.
+Then in general, one may write this as
+\begin{align}
+S_{fi} &= \brc*{p_1\dots p_n}{\mathcal{T}\exp\kla*{\i \int \mathcal{L}_\text{int}}}{p_1'\dots p_{n'}'}.
+\end{align}
+Typical Propagators:
+\begin{itemize}
+\item scalar: $\frac{\i}{p^2 - m^2 + \i \epsilon}$
+\item Dirac: $\frac{\i}{\slashed{p} - m + \i\epsilon}$
+\item vector: $\frac{-\i g^{\mu\nu}}{p^2-m^2+\i\epsilon}$
+\end{itemize}
+The \textsc{Gell-Mann--Low} formula is
+\begin{align}
+\brc*{\Omega}{\mathcal{T} \phi(x_1)\dots \phi(x_n)}{\Omega} &= \frac{\brc*{0}{\mathcal{T}\phi(x_1) \dots \phi(x_n)\powe{\i S}}{0}}{\brc*{0}{\mathcal{T}\phi(x_1) \dots \phi(x_n)}{0}},
+\end{align}
+where the exponential is expanded into its Taylor series.
+\example{Contractions for}{$\mathcal{L} = g\phi_0\phi^\dagger\phi$}{
+TODO
+}
+\chapter{The Standard Model}
+\section{Fields and Gauge Group}
+\section{Standard Model Lagrangian}
+\section{Mass Eigenstates and Flavor Mixing}
+\chapter{Exercises}
+\section{Introduction}
+\example{Lie-Hadamard Formula}{$\powe{A}B\powe{-A}$}{
+Define $F(s)=\powe{sA}B\powe{-sA}$.
+Because the series expansion of the operator-valued exponential converges uniformly, we can write $F(s)=\sum_{n\ge 0} \frac{1}{n!}s^n\frac{\d^n F}{\d s^n} \Big\vert_{s=0}$.
+Computing the derivatives is done recursively, i.e.
+\begin{align}
+F'(s) &= AF(s) - F(s)A = \klb*{A,F(s)},\\
+F''(s) &= \klb*{A,F'(s)},\\
+\frac{\d^n F(s)}{\d s^n} &= \klb*{A,\klb*{A,\dots,\klb*{A,F(s)}}} \equiv \klb*{A,F(s)}_n,
+\end{align}
+where the iterated commutator admits $\klb*{A,B}_0=B$ and $\klb*{A,B}_{n+1}=\klb*{A,\klb*{A,B}_n}$.
+Because $F(0)=B$, we then find the Lie-Hadamard formula
+\begin{align}
+F(s) &= \powe{sA}B\powe{-sA} = \sum_{n\ge 0} \frac{s^n}{n!} \klb*{A,B}_n = B + s\klb*{A,B} + \frac{s^2}{2!} \klb*{A,\klb*{A,B}} + \dots.
+\end{align}
+}
+\example{Pauli Spin Matrices}{}{
+We have $\klb*{\sigma_i,\sigma_j} = 2\i\epsilon_{ijk} \sigma_k$ and $\sigma_i=\sigma_i^\dagger = \sigma_i^{-1}$.
+From this, we can compute
+\begin{align}
+\klc*{\sigma_1,\sigma_3} &= \klc*{\sigma_1, \frac{1}{2\i} \klb*{\sigma_1,\sigma_2}} = \frac{1}{2\i}\sigma_1\klb*{\sigma_1,\sigma_2} + \frac{1}{2\i} \klb*{\sigma_1,\sigma_2}\sigma_1\\
+&= \frac{1}{2\i} \klb*{\sigma_1^2,\sigma_2} = \frac{1}{2\i}\klb*{\sigma_0,\sigma_2} = 0.
+\end{align}
+Similarly one finds $\klc*{\sigma_i,\sigma_j}=2\i\delta_{ij}$.
+Combining this with the commutator, we get the explicit multiplication rule
+\begin{align}
+\sigma_i\sigma_j &= \sigma_0 \delta_{ij} + \i \epsilon_{ijk} \sigma_k.
+\end{align}
+}
+\end{document}
