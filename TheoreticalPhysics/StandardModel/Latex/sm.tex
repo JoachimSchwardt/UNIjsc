@@ -300,13 +300,179 @@ The \textsc{Gell-Mann--Low} formula is
 \brc*{\Omega}{\mathcal{T} \phi(x_1)\dots \phi(x_n)}{\Omega} &= \frac{\brc*{0}{\mathcal{T}\phi(x_1) \dots \phi(x_n)\powe{\i S}}{0}}{\brc*{0}{\mathcal{T}\phi(x_1) \dots \phi(x_n)}{0}},
 \end{align}
 where the exponential is expanded into its Taylor series.
-\example{Contractions for}{$\mathcal{L} = g\phi_0\phi^\dagger\phi$}{
-TODO
+\example{Contractions}{for $\mathcal{L} = g\phi_0\phi^\dagger\phi$}{
+Consider evaluating $\brc*{0}{\mathcal{T}\phi_0(x_1)\phi_0(x_2)\powe{\i S}}{0}$.
+Then expanding $\powe{\i S}$ gives a series starting with $\Delta_0=brc*{0}{\mathcal{T}\phi_0(x_1)\phi_0(x_2)}{0}$.
+The first order term involves 5 (i.e. an odd number) of fields and is therefore zero.
+This is always true, for any such expression, because after applying commutators one will always be left with either a lone creation or annihilation operator, either of which annihilates the vacuum when swapped all the way to the left (or right).
+The second order has 8 terms and is thus generally not zero.
+We can find the result by considering all possible \emph{contractions} of
+\begin{align}
+\brc*{0}{\mathcal{T}\phi_0(1)\phi_0(2)\phi_0(3)\phi^\dagger(3)\phi(3) \phi_0(4)\phi^\dagger(4)\phi(4) }{0}.
+\end{align}
+Valid contractions are $\phi_0$ with $\phi_0$ and $\phi$ with $\phi^\dagger$.
+Here, the combinations are
+\begin{enumerate}
+\item $\phi_1\phi_3$, $\phi_2\phi_4$ or $\phi_1\phi_4$, $\phi_2\phi_3$ or $\phi_1\phi_2$, $\phi_3\phi_4$ (for the $\phi_0$-terms)
+\item $\phi_3^\dagger\phi_4$, $\phi_3\phi_4^\dagger$ or $\phi_3^\dagger\phi_3$, $\phi_4^\dagger\phi_4$ (for the $\phi\phi^\dagger$-terms)
+\end{enumerate}
+However, most of these combinations lead to \emph{disconnected} graphs when written as a \textsc{Feynman} diagram.
+It is possible to show that only the connected diagrams give any contribution, because all the other diagrams actually cancel out when dividing by the non-interacting value $\Delta_0$.
+
+Here, the only valid diagram is $\phi_1\phi_3$, $\phi_2\phi_4$, $\phi_3^\dagger\phi_4$, $\phi_3\phi_4^\dagger$.
+\definition{Vertex Rule}{
+To find out the contribution from a vertex, one can simply compute the partial derivatives of the Lagrangian with respect to all the fields involved at the vertex.
+In the example above, this gives
+\begin{align}
+\frac{\partial^3\mathcal{L}}{\partial\phi_0\partial \phi\partial\phi^\dagger} &= g.
+\end{align}
+Note that the vertex contributes $\i g$ because of $\powe{+\i S}$.
+}
 }
 \chapter{The Standard Model}
 \section{Fields and Gauge Group}
+The Standard Model (SM) is an indirect product group
+\begin{align}
+\mathcal{G}_\text{SM} &= \underbrace{SU(3)_c}_\text{QCD} \times \underbrace{SU(2)_L \times U(1)_Y}_\text{electroweak}.
+\end{align}
+The covariant derivative is given by\footnote{The couplings are also sometimes written as $g_1\equiv g_Y$, $g_2\equiv g_W$ and $g_3\equiv g_S$.}
+\begin{align}
+D^\mu &= \partial^\mu + \i g_1YB^\mu + \i g_2 T^a W_a^\mu + \i g_3 T_s^a G_a^\mu,
+\end{align}
+representing 8 gluons $G_a$ and $3+1$ electroweak bosons $B,W_a$.
+Note that $T^a=\frac{1}{2}\sigma^a$ are the 3 Pauli matrices and $T_s^a=\frac{1}{2}\lambda^a$ are the 8 Gellmann matrices.
 \section{Standard Model Lagrangian}
+The full Lagrangian is built from several terms.
+First, we have the gauge Lagrangian
+\begin{align}
+\mathcal{L} &= -\frac{1}{4} B^{\mu\nu} B_{\mu\nu} - \frac{1}{4} W_a^{\mu\nu} W^a_{\mu\nu} - \frac{1}{4} G_a^{\mu\nu} G^a_{\mu\nu},
+\end{align}
+where the field-strength tensors are given by
+\begin{align}
+B^{\mu\nu} &= \partial^\mu B^\nu - \partial^\nu B^\mu,\\
+W_a^{\mu\nu} &= \partial^\mu W_a^\nu - \partial^\nu W_a^\mu - g_2\epsilon_{abc} W_b^\mu W_c^\nu,\\
+G_a^{\mu\nu} &= \partial^\mu G_a^\nu - \partial^\nu G_a^\mu - g_3 f_{abc} G_b^\mu G_c^\nu.
+\end{align}
+Next, we have the \textsc{Higgs} boson.
+This is an $SU(2)$-doublet $\Phi=\begin{psmallmatrix} \phi^+ \\ \phi^0 \end{psmallmatrix}$ and an $SU(3)$-singlet with hypercharge $Y=\frac{1}{2}$.
+We therefore write $\Phi\kla*{1,2,\frac{1}{2}}$, i.e. in order the terms represent the singlet with respect to the strong force, the doublet with respect to the weak force, and the actual hypercharge $Y$ with respect to the $U(1)$.
+Being a singlet means that $T_s^a\Phi=0$ for all $a=1,\dots,8$, and similar eigenvalue equations hold for the other singlets.
+The Lagrangian for the Higgs is $\mathcal{L}=-V(\Phi)$ with $V(\Phi)=-\mu^2\Phi^\dagger \Phi + \lambda \kla*{\Phi^\dagger\Phi}^2$.
+\subsection{Matter Fields}
+Next, we have the matter fields, which are all fermions (even though most of the gauge bosons are also massive) and whose properties are listed in \autoref{table:fermion_SM_fields}.
+%cells = [
+%    ["", "$SU(3)$", "$SU(2)$", "symbol", r"$\text{charge}+Y$", "$Q$"],
+%    [("Quarks",(4,1)),("triplet",(4,1)),("doublet",(2,1)),(r"$Q_L\begin{psmallmatrix} u_L \\ d_L \end{psmallmatrix}$",(2,1)),(r"\kla*{3,2,\frac{1}{6}}",(2,1)), r"$\frac{2}{3}$"],
+%    [r"$\frac{-1}{3}$"],
+%    [("singlet",(2,1)),"$u_R$",r"\kla*{3,1,\frac{2}{3}}", r"$\frac{2}{3}$"],
+%    ["$d_R$",r"\kla*{3,1,\frac{-1}{3}}", r"$\frac{-1}{3}$"],
+%]
+%table = tables.Table(cells)
+%table.create_table()
+%print(table)
+\begin{table}[!htp]
+\centering
+\begin{tabular}{*{7}{c}}\toprule
+ & $SU(3)$ & $SU(2)$ & symbol & $\text{charge}+Y$ & $Q$ & generations \\ \midrule
+\multirow{4}{*}{Quarks} & \multirow{4}{*}{triplet} & \multirow{2}{*}{doublet} & \multirow{2}{*}{$Q_L=\begin{psmallmatrix} u_L \\ d_L \end{psmallmatrix}$} & \multirow{2}{*}{$\kla*{3,2,\frac{1}{6}}$} & $2/3$ & \texttt{up}, \texttt{charm} and \texttt{top} \\
+ &  &  &  &  & $-1/3$ & $u$, $c$ and $t$ \\
+  &  & \multirow{2}{*}{singlet} & $u_R$ & $\kla*{3,1,\frac{2}{3}}$ & $2/3$ & \texttt{down}, \texttt{strange} and \texttt{bottom}\\
+  &  &  & $d_R$ & $\kla*{3,1,-\frac{1}{3}}$ & $-1/3$ & $d$, $s$ and $b$ \\ \midrule
+\multirow{4}{*}{Leptons} & \multirow{4}{*}{singlet} & \multirow{2}{*}{doublet} & \multirow{2}{*}{$L_L=\begin{psmallmatrix} \nu_L \\ e_L \end{psmallmatrix}$} & \multirow{2}{*}{$\kla*{1,2,-\frac{1}{2}}$} & $0$ & \multirow{2}{*}{\texttt{electron}, \texttt{muon} and \texttt{tau}} \\
+ &  &  &  &  & $-1$ & \\
+  &  & \multirow{2}{*}{singlet} & $\nu_R$ & --- & --- & \multirow{2}{*}{$e$, $\mu$ and $\tau$} \\
+  &  &  & $e_R$ & $\kla*{1,1,-1}$ & $-1$ & \\ \bottomrule
+\end{tabular}
+\caption{The electric charge $Q$ is given by $Q=T_3+Y$ where $T_3$ is the $z$-component of the $SU(2)$.
+This is $\pm \frac{1}{2}$ for the doublets and zero for the singlets.
+Note that there are no right-handed neutrinos in the SM, and that for each of these fields there are 3 generations $i$ (e.g. $u_{Ri}$).}
+\label{table:fermion_SM_fields}
+\end{table}
+
+The kinetic Lagrangian for the Higgs is $\mathcal{L} = D_\mu \Phi^\dagger D^\mu\Phi$, and for the other matter fields it is
+\begin{align}
+\mathcal{L} &= \sum_{i=1}^3 \bar{Q}_{Li} \i\slashed{D}Q_{Li} + \bar{u}_{Ri} \i\slashed{D}u_{Ri} + \bar{d}_{Ri} \i\slashed{D}d_{Ri} + \bar{L}_{Li} \i\slashed{D}L_{Li} + \bar{e}_{Ri} \i\slashed{D}e_{Ri}.
+\end{align}
+In the following we will implicitly assume that repeated indexes are summed.
+For the quarks, the covariant derivative gives (color index $k$)
+\begin{align}
+D_\mu Q_{Lik} &= \kla*{\klb*{\partial_\mu + \i g_2 T^a W^a_\mu + \i g_1 \frac{1}{6} B_\mu } \delta_{kl} + \i g_3 T^a_{s,kl} G^a_\mu} Q_{Lil},\\
+D_\mu u_{Rik} &= \kla*{\klb*{\partial_\mu + \i g_1 \frac{2}{3} B_\mu } \delta_{kl} + \i g_3 T^a_{s,kl} G^a_\mu} u_{Ril},\\
+D_\mu d_{Rik} &= \kla*{\klb*{\partial_\mu + \i g_1 \frac{-1}{3} B_\mu } \delta_{kl} + \i g_3 T^a_{s,kl} G^a_\mu} d_{Ril}.
+\end{align}
+For the leptons and the Higgs, we instead have
+\begin{align}
+D_\mu L_{Li} &= \kla*{\partial_\mu + \i g_2 T^a W^a_\mu + \i g_1 \frac{-1}{2} B_\mu} L_{Li},\\
+D_\mu e_{Ri} &= \kla*{\partial_\mu + \i g_1 (-1) B_\mu} e_{Ri},\\
+D_\mu \Phi &= \kla*{\partial_\mu + \i g_2 T^a W^a_\mu + \i g_1 \frac{1}{2} B_\mu} \Phi.
+\end{align}
+\subsection{Yukawa terms}
+TODO
+\section{Electroweak Theory}
+Here, we focus on the group $SU(2)_L\times U(1)_Y$.
+Explicitly, we can write $T^a W^a = \frac{1}{2}W^3\sigma^3 + \frac{1}{\sqrt{2}}W$, where $W=\begin{psmallmatrix} 0 & W_+ \\ W_- & 0 \end{psmallmatrix}$ with $W_\pm = \frac{1}{\sqrt{2}}\kla*{W^1 \mp \i W^2}$ and we omitted the spacetime index $\mu$.
+We introduce the $Z$-boson and the photon-field $A$ through the transformation
+\begin{align}
+\begin{pmatrix}
+A \\ Z
+\end{pmatrix} &= \begin{pmatrix}
+\cos\theta_W & \sin\theta_W \\ -\sin\theta_W & \cos\theta_W
+\end{pmatrix} \begin{pmatrix}
+B \\ W^3
+\end{pmatrix},
+\end{align}
+where $\theta_W\equiv \theta$ is the \textsc{Weinberg} angle and the inverse transform gives $B=c_\theta A - s_\theta Z$ as well as $W^3 = s_\theta A + c_\theta Z$.
+By defining $\tan \theta_W = \frac{g_1}{g_2}$ and introducing the elementary electric charge $e=g_1c_\theta=g_2s_\theta$, we can rewrite the covariant derivative for $L_L$ as
+%\begin{align}
+%D &= \partial + \i g_2 T^a W^a + \i g_1 \frac{-1}{2} B = \partial + \i g_2 \frac{1}{\sqrt{2}} W + \i g_2 \frac{1}{2} W^3 \sigma^3 - \i g_1 \frac{1}{2} B\sigma^0\\
+%&= \partial + \i g_2 \frac{1}{\sqrt{2}}W + \frac{\i}{2} \begin{pmatrix}
+%g_2W^3 - g_1B & 0 \\ 0 & -g_2W^3 - g_1B
+%\end{pmatrix}\\
+%&= \partial + \i g_2 \frac{1}{\sqrt{2}}W + \frac{\i}{2} \begin{pmatrix}
+%g_2\kla*{s_\theta A + c_\theta Z} - g_1\kla*{c_\theta A - s_\theta Z} & 0 \\ 0 & -g_2\kla*{s_\theta A + c_\theta Z} - g_1\kla*{c_\theta A - s_\theta Z}
+%\end{pmatrix}\\
+%&= \partial + \i g_2 \frac{1}{\sqrt{2}}W + \frac{\i}{2} \begin{pmatrix}
+%e A + g_2c_\theta Z - e A + g_1 s_\theta Z & 0 \\ 0 & -e A - g_2 c_\theta Z - e A + g_1 s_\theta Z
+%\end{pmatrix}\\
+%&= \partial + \i g_2 \frac{1}{\sqrt{2}}W + \i \begin{pmatrix}
+%0 & 0 \\ 0 & -e
+%\end{pmatrix} A + \frac{\i}{2} \kla*{g_1s_\theta + g_2c_\theta \sigma^3} Z
+%\end{align}
+\begin{align}
+D &= \partial + \i g_2 T^a W^a + \i g_1 \frac{-1}{2} B = \partial + \i g_2 \frac{1}{\sqrt{2}} W + \i g_2 \frac{1}{2} W^3 \sigma^3 - \i g_1 \frac{1}{2} B\\
+&= \partial + \i g_2 \frac{1}{\sqrt{2}} W + \i g_2 \frac{1}{2} \kla*{s_\theta A + c_\theta Z} \sigma^3 - \i g_1 \frac{1}{2} \kla*{c_\theta A - s_\theta Z}\\
+&= \partial + \i g_2 \frac{1}{\sqrt{2}} W + \i \frac{1}{2} \kla*{e A + g_2 c_\theta Z} \sigma^3 + \i \frac{1}{2} \kla*{-e A + g_1 s_\theta Z}\\
+&= \partial + \i g_2 \frac{1}{\sqrt{2}} W + \i \begin{pmatrix}
+0 & 0 \\ 0 & -e
+\end{pmatrix} A + \frac{\i}{2} \kla*{g_1s_\theta + g_2c_\theta \sigma^3} Z.
+\end{align}
+To get the expression for $Q_L$, we need to account for the different hypercharge.
+Starting in the third line, this implies
+\begin{align}
+D &= \partial + \i g_2 \frac{1}{\sqrt{2}} W + \i \frac{1}{2} \kla*{e A + g_2 c_\theta Z} \sigma^3 + \i \frac{1}{6} \kla*{e A - g_1 s_\theta Z}\\
+&= \partial + \i g_2 \frac{1}{\sqrt{2}} W + \i \begin{pmatrix}
++\frac{2}{3}e & 0 \\ 0 & -\frac{1}{3}e
+\end{pmatrix} A + \frac{\i}{6} \kla*{-g_1s_\theta + 3g_2c_\theta \sigma^3} Z.
+\end{align}
+Focusing only on the photon interaction terms in the kinetic matter Lagrangians $\bar{\psi}\i\slashed{D}\psi$, we have $\mathcal{L}=-eA_\mu J^\mu_\text{em}$ with the electromagnetic current
+\begin{align}
+J_\text{em}^\mu &= -\bar{e} \gamma^\mu + \frac{2}{3} \bar{u} \gamma^\mu u - \frac{1}{3} \bar{d} \gamma^\mu d
+\end{align}
+for both left- and right-handed particles (and all generations).
+The $W$-boson terms are given by $\mathcal{L} = \frac{g_2}{\sqrt{8}} W_\mu^+ J_\text{ch}^\mu + \hc$ with the charged weak current
+\begin{align}
+J_\text{ch}^\mu &= 2\bar{\nu}_{L} \gamma^\mu e_L + 2\bar{u}_L\gamma^\mu d_L = \bar{\nu} \gamma^\mu \kla*{1-\gamma^5} e + \bar{u} \gamma^\mu \kla*{1-\gamma^5} d.
+\end{align}
+Finally, the $Z$-boson terms are $\mathcal{L} = \frac{g_2}{2c_\theta} Z_\mu \sum_f \bar{f} \kla*{g^f_v \gamma^\mu - g^f_a \gamma^\mu \gamma^5}f$, where the sum is over all fermion fields and the couplings are $g^f_v = g^f_a - 2Qs_\theta^2$ with
+\begin{align}
+g^f_a &= \begin{cases} +\frac{1}{2} & \text{for }\nu_e,\nu_\mu,\nu_\tau \text{ and } u,c,t \\ -\frac{1}{2} & \text{for }e,\mu,\tau \text{ and } d,s,b \end{cases}.
+\end{align}
+TODO actually check this calculation (I really can't say that I'm looking forward to it. Maybe I'll do it for one of the fields...)
+
+For the Higgs, TODO
+
 \section{Mass Eigenstates and Flavor Mixing}
+TODO
 \chapter{Exercises}
 \section{Introduction}
 \example{Lie-Hadamard Formula}{$\powe{A}B\powe{-A}$}{
