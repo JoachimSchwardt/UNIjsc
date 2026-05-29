@@ -481,7 +481,7 @@ Because the series expansion of the operator-valued exponential converges unifor
 Computing the derivatives is done recursively, i.e.
 \begin{align}
 F'(s) &= AF(s) - F(s)A = \klb*{A,F(s)},\\
-F''(s) &= \klb*{A,F'(s)},\\
+F''(s) &= \klb*{A,F'(s)} = \klb*{A,\klb*{A,F(s)}},\\
 \frac{\d^n F(s)}{\d s^n} &= \klb*{A,\klb*{A,\dots,\klb*{A,F(s)}}} \equiv \klb*{A,F(s)}_n,
 \end{align}
 where the iterated commutator admits $\klb*{A,B}_0=B$ and $\klb*{A,B}_{n+1}=\klb*{A,\klb*{A,B}_n}$.
@@ -503,4 +503,162 @@ Combining this with the commutator, we get the explicit multiplication rule
 \sigma_i\sigma_j &= \sigma_0 \delta_{ij} + \i \epsilon_{ijk} \sigma_k.
 \end{align}
 }
+\example{Equivalent Representation}{$SU(2)$}{
+Let $L_i=\frac{1}{2}\sigma_i$ with $i=1,2,3$ be a representation of $SU(2)$.
+Then we define the conjugate representation as $L_i^\ast = -\kla*{L_i}^\ast = -\kla*{L_i}^\transpose$.
+Using $U=\sigma_2=U^\dagger$, we find
+\begin{align}
+UL_1U &= -U^2L_1=-L_1=L_1^\ast,\\
+UL_2U &= \frac{1}{2}U = L_2=-\kla*{L_i}\ast = L_2^\ast,\\
+UL_3U &= -U^2L_3=-L_3=L_3^\ast.
+\end{align}
+Therefore, this is an equivalent representation.
+}
+\example{Jacobi Identity}{Adjoint Representation}{
+The adjoint representation is defined as $\kla*{\tilde{T}_a}_{bc}=-\i f_{abc}$, where $\klb*{T_a,T_b}=\i f_{abc}T_c$ is the Lie-Algebra for the generators.
+
+The Jacobi-identity is
+\begin{align}
+\klb*{\klb*{A,B},C} + \klb*{\klb*{B,C},A} &= \klb*{AB-BA,C} + \kla*{BC-CB,A}\\
+&= ABC-CAB-BAC+CBA+BCA-ABC-CBA+ACB\\
+&= -CAB-BAC+BCA+ACB = \klb*{A,C}B-B\klb*{A,C} = -\klb*{\klb*{C,A},B}.
+\end{align}
+For the Lie-Algebra, this gives
+\begin{align}
+0 &= \i f_{abc}\klb*{T_d,T_c}+\i f_{bcd}\klb*{T_d,T_a} + \i f_{cad} \klb*{T_d,T_b}\\
+&= -f_{abd}f_{dcg}T_g-f_{bcd}f_{dag}T_g-f_{cad}f_{dbg}T_g.
+\end{align}
+Since this must hold for any combination of indices, we can conclude that
+\begin{align}
+f_{abd}f_{dcg}+f_{bcd}f_{dag}+f_{cad}f_{dbg} &= 0.
+\end{align}
+}
+\example{Global symmetry}{$SU(2)$}{
+Consider a simple model of isospin in terms of nucleons and pions.
+The nucleon field is $\psi=\kla*{\psi_p,\psi_n}$ and the pion field is $\pi=\kla*{\pi_1,\pi_2,\pi_3}$.
+We defined $\pi^0=\pi_3$ and $\pi^\pm=\frac{1}{\sqrt{2}}\kla*{\pi_1\mp\i\pi_2}$, where $\pi_i=\pi_i^\dagger$, and $\pi^\pm$ annihilate the states $\Ket{\pi^\pm}$.
+
+Under $SU(2)$, $\psi$ transforms as a doublet and $\pi$ as a triplet.
+Let $T_i=\frac{1}{2}\sigma^i$ with $f_{abc}=\epsilon_{abc}$.
+Then the adjoint representation reads
+\begin{align}
+\tilde{T}_1 &= -\i\kla*{\epsilon_{1bc}}_{bc} = -\i \begin{pmatrix}
+0&0&0 \\ 0&0&1 \\ 0&-1&0
+\end{pmatrix},\qquad
+\tilde{T}_2 = -\i\kla*{\epsilon_{2bc}}_{bc} = -\i \begin{pmatrix}
+0&0&-1 \\ 0&0&0 \\ 1&0&0
+\end{pmatrix},\qquad
+\tilde{T}_3 = -\i\kla*{\epsilon_{3bc}}_{bc} = -\i \begin{pmatrix}
+0&1&0 \\ -1&0&0 \\ 0&0&0
+\end{pmatrix}.
+\end{align}
+Defining the unitary matrix
+\begin{align}
+U &= \frac{1}{\sqrt{2}}\begin{pmatrix}
+1 & -\i & 0 \\ 1 & \i & 0 \\ 0 & 0 & \sqrt{2}
+\end{pmatrix},
+\end{align}
+we find $A_i=UT_iU^\dagger$ with
+\begin{align}
+A_1 &= \frac{1}{\sqrt{2}} \begin{pmatrix}
+0&0&-1 \\ 0&0&1 \\ -1&1&0
+\end{pmatrix},\qquad
+A_2 = \frac{\i}{\sqrt{2}} \begin{pmatrix}
+0&0&1 \\ 0&0&1 \\ -1&-1&0
+\end{pmatrix},\qquad
+A_3 = \begin{pmatrix}
+1&0&0 \\ 0&-1&0 \\ 0&0&0
+\end{pmatrix}.
+\end{align}
+Given the usual Gell-Mann matrices, we can identify $\tilde{T}_1=\lambda_7$, $\tilde{T}_2=-\lambda_5$, $\tilde{T}_3=\lambda_2$ and $A_1=\frac{1}{\sqrt{2}}\kla*{\lambda_6-\lambda_4}$,$A_2=\frac{1}{\sqrt{2}}\kla*{-\lambda_7-\lambda_5}$, $A_3=\lambda_3$.
+
+Note that $A_3$ contains the eigenvalues of $\pi'=U\pi=\kla*{\pi^+,\pi^-,\pi^0}$.
+}
+\example{Lagrangian}{Simple Isospin Model}{
+Consider the density
+\begin{align}
+\mathcal{L}_0=\bar{\psi}\kla*{\i\slashed{\partial}-m + \i g_\pi\gamma^5 \bm{\pi}\cdot\bm{\sigma}}\psi + \frac{1}{2} \klb*{\kla*{\partial_\mu\bm{\pi}}^2 - \mu^2 \bm{\pi}^2} - \lambda\kla*{\bm{\pi}^2}^2
+\end{align}
+and define $\Pi=\frac{1}{\sqrt{2}}\bm{\pi}\cdot\bm{\sigma}$.
+
+Notice that $\tr\Pi=0$ because $\tr\sigma_i=0$.
+Using $2\Pi^2=\kla*{\bm{\pi}\cdot\bm{\sigma}}^2=\bm{\pi}^2\sigma_0$, we also find $\bm{\pi}^2=\frac{1}{2}\tr\Pi^2$ and $\kla*{\partial_\mu\bm{\pi}}^2=\frac{1}{2}\tr\kla*{\partial_\mu\Pi}^2$.
+Thus,
+\begin{align}
+\mathcal{L}_0 &= \bar{\psi}\kla*{\i\slashed{\partial}-m + \i g_\pi \sqrt{2}\gamma^5 \Pi}\psi + \frac{1}{4}\tr \klb*{\kla*{\partial_\mu\Pi}^2 - \mu^2 \Pi^2} - \lambda \frac{1}{4} \klb*{\tr\Pi^2}^2.
+\end{align}
+Because of the cyclicity of the trace, all of the latter terms are invariant under a global symmetry transformation with $U=\powe{\i\bm{\beta}\cdot\bm{\sigma}/2}$ with constant $\bm{\beta}$.
+Likewise, all the factors of $U$ and $U^\dagger$ also cancel in the first term.
+
+If we add the term $\mathcal{L}_1=-\epsilon\bar{\psi}\sigma_3\psi$ to the Lagrangian, then this is no longer the case.
+Let us compute the transformed Lagrangian explicitly.
+We have
+\begin{align}
+\bar{\psi}U^\dagger \sigma_3 U\psi &\equiv \bar{\psi} M \psi,
+\end{align}
+where using $\powe{\i x\bm{n}\cdot\bm{\sigma}} = \cos(x) + \i \sin(x) \bm{n}\cdot\bm{\sigma}$ we find
+\begin{align}
+M &= U^\dagger U\sigma_3 + U^\dagger \klb*{\sigma_3,U} = \sigma_3 + U^\dagger \i\sin(x) \bm{n}\cdot \klb*{\sigma_3,\bm{\sigma}}\\
+&= \sigma_3 + U^\dagger \i \sin(x)n_k 2\i\epsilon_{3kl}\sigma_l = \sigma_3 - 2 U^\dagger \sin(x) \kla*{\bm{n}\times \bm{\sigma}}_3.
+\end{align}
+Here, $x=\frac{\beta}{2}$ and $\bm{\beta}=\beta\bm{n}$.
+Crucially, this is different from $\mathcal{L}_1$ whenever $\bm{\beta}$ is not parallel to $\bm{e}_3$, i.e. for rotations that are not around the $z$-axis.
+
+Finally, note that the Isospin is given by $T_3$.
+For the nucleons, we find $T_3^p=+\frac{1}{2}$ and $T_3^n=-\frac{1}{2}$ (proton and neutron).
+For the pions, we find $T_3^{\pi^0}=0$ and $T_3^{\pi^\pm}=\pm 1$.
+}
+\section{Non-Abelian Gauge Transformations}
+A multiplet of fermion fields $\psi(x)$ transforms as
+\begin{align}
+\psi(x) &\rightarrow\psi'(x)=U\kla*{\theta(x)} \psi(x),
+\end{align}
+where $U\kla*{\theta(x)}=\exp\kla*{-\i\theta(x)}$ with $\theta(x)=\theta_a(x)T_a$.
+We have $\klb*{T_a,T_b}=\i c_{abc}T_c$ and $\tr\kla*{T_aT_b}=\frac{1}{2}\delta_{ab}$.
+The covariant derivative is given by
+\begin{align}
+D_\mu &= \partial_\mu + \i gA_\mu
+\end{align}
+with a gauge field matrix $A_\mu(x)=A_\mu^a(x)T_a$.
+\example{Gauge Transform}{Multiplet Fermion Fields}{
+Let us explicitly compute
+\begin{align}
+\kla*{D_\mu \psi}' &= \kla*{\partial_\mu + \i gA_\mu'} U\psi = U\kla*{\partial_\mu + \i g U^\dagger A_\mu' U}\psi + \kla*{\partial_\mu U}\psi\\
+&= U \kla*{D_\mu + \i g \kla*{U^\dagger A_\mu' U - A_\mu } + U^\dagger \kla*{\partial_\mu U}}\psi.
+\end{align}
+We want this to have the form $UD_\mu\psi$, which we can achieve by letting the gauge fields transform as
+\begin{align}
+A_\mu' &= U A_\mu U^\dagger + \frac{\i}{g} \kla*{\partial_\mu U} U^\dagger.
+\end{align}
+For infinitesimal $\theta(x)$, we have $U = 1 -\i\theta_aT_a$ and thus
+\begin{align}
+A_\mu'^a &= 2\tr\klb*{A_\mu' T^a} = 2\tr\klb*{UA_\mu U^\dagger + \frac{\i}{g} \kla*{\partial_\mu U}U^\dagger}\\
+&= 2\tr\klb*{A_\mu T_a + A_\mu \i \theta_bT_b T_a - \i\theta_bT_b A_\mu T_a + \frac{1}{g} \partial_\mu \theta_bT_b T_a}\\
+&= A_\mu^a + 2\i\theta_b A_\mu^c\tr\klb*{\klb*{T_c,T_b} T_a} + \frac{1}{g} \partial_\mu \theta_a\\
+&= A_\mu^a + \frac{1}{g} \partial_\mu \theta_a + 2c_{bcd} \theta_b A_\mu^c\tr\klb*{T_d T_a}\\
+&= A_\mu^a + \frac{1}{g} \partial_\mu \theta_a + c_{bca} \theta_b A_\mu^c.
+\end{align}
+}
+For a global transform, $\partial_\mu\theta=0$ such that $A_\mu'^a=A_\mu^a + c_{abc}\theta_bA_\mu^c$.
+Since the adjoint representation is $\kla*{T_a}_{bc}=-\i c_{abc}$, this is equivalent to $A_\mu'=UA_\mu U^\dagger$.
+This is precisely the way that matter fields transform, e.g. $\Phi'=U\Phi U^\dagger$.
+
+Using $D_\mu=\partial_\mu + \i gA_\mu^a T_a = \partial_\mu + g\kla*{c_{abc}}_{bc} A_\mu^a$, we can compute
+\begin{align}
+\frac{1}{g} \kla*{D_\mu\theta}^a &= \frac{1}{g}\partial_\mu \theta^a + c_{cab} A_\mu^c \theta^b,
+\end{align}
+such that for local transformations in the adjoint representation we have
+\begin{align}
+A_\mu'^a &= A_\mu^a + \frac{1}{g} \kla*{D_\mu \theta}^a.
+\end{align}
+\example{Unitary Gauge}{Scalar Doublet}{
+Consider a scalar doublet $\Phi = \powe{\i \bm{\sigma} \cdot \frac{1}{v} \bm{\chi}} \kla*{0, \frac{v+\eta(x)}{\sqrt{2}}}$, where $\chi^a(x)$ and $\eta(x)$ are real scalar fields with vanishing vacuum expectation values $\bra*{\eta}_0=\bra*{\chi^a}_0=0$.
+We define another doublet as $\Phi^u = U(x)\Phi = \frac{1}{\sqrt{2}} \kla*{0, v + \eta(x)}$.
+Then according to the formula we derived previously, we now need to transform the gauge fields to $B_\mu\equiv A_\mu'$ with
+\begin{align}
+\frac{\bm{\sigma}}{2}\cdot \bm{B}_\mu &= U \frac{\bm{\sigma}}{2}\cdot \bm{A}_\mu U^\dagger + \frac{\i}{g} \kla*{\partial_\mu U}U^\dagger.
+\end{align}
+Then $D_\mu\Phi^u = UD_\mu\Phi$ (this is exactly the same algebra as before, just different symbols).
+}
+TODO rest of 2b
 \end{document}
