@@ -473,6 +473,211 @@ For the Higgs, TODO
 
 \section{Mass Eigenstates and Flavor Mixing}
 TODO
+
+\chapter{Renormalization of the Electroweak SM}
+\section{On-shell renormalization}
+\section{Ward identity}
+\section{One-loop correction examples}
+We will perform the one-loop calculations using dimensional regularization.
+As a precursor, the key idea is to integrate over the loop momentum $k$ not in 4-dimensional but rather $D=4-2\epsilon$ dimensions\footnote{this $\epsilon$ is of course different from the one in the propagators}.
+To keep the dimension intact, we then introduce a mass-scale $\mu$ to scale the integration measure $\frac{\d^4k}{(2\pi)^4} \rightarrow \mu^{4-D}\frac{\d^Dk}{(2\pi)^D}$.
+For divergent integrals, we then split the result into a finite part and a collection of poles, which may then later be canceled by the introduction of counter-terms.
+\subsection{Master integral}
+The so-called Master integral is defined as
+\begin{align}
+I=\mu^{4-D}\intrndpi{D}{\frac{(n-1)!}{\kla*{k^2-Q+\i\epsilon}^n}}{k}.
+\end{align}
+First, consider the $k^0$-integral.
+Its poles are at $\pm\sqrt{|\bm{k}|^2+Q}\mp\i\epsilon$ (do not think too hard about $\bm{k}$; it has a non-integer number of entries, but fortunately its precise form is irrelevant due to the arbitrary $Q$).
+Both poles are avoided in the following contour, so
+\begin{align}
+0 &= \int_{\mathbb{R}} \kla*{k^0=t} + \int_0^{\pi/2} \kla*{k^0=R\powe{\i t}} + \int_{\mathbb{R}} \kla*{k^0=-\i t} + \int_{\pi/2}^\pi \kla*{k^0=R\powe{-\i t}}.
+\end{align}
+Both of the arcs go to zero as $R\rightarrow\infty$, although this involves some more work in the case of $n=1$.
+Rearranging, we find $\int_{\mathbb{R}} \kla*{k^0=t} = \i\int_{\mathbb{R}} \kla*{k^0=-\i t}$, which completes the \textsc{Wick} rotation.
+Crucially, we now have an effectively Euclidean momentum $k_E=(-\i k^0,\bm{k})$ with magnitude $k_E^2=-(k^0)^2-\bm{k}^2$.
+Thus, the master integral can be resolved in spherical coordinates,
+\begin{align}
+I &= \i\mu^{4-D} \intx{0}{\infty}{ \frac{1}{(2\pi)^D} \int\d\Omega_D \frac{(n-1)!}{\kla*{-k^2-Q}^n} k^{D-1} }{k} \\
+&= \i\mu^{4-D}\frac{S_D}{(2\pi)^D}(n-1)!(-1)^n Q^{D/2-n} \intx{0}{\infty}{\frac{t^{D/2-1}}{2\kla*{t+Q}^n}}{t}.
+\end{align}
+Here, $S_D=\int\Omega_D$ can be computed by considering the Gaussian integral
+\begin{align}
+\intrnd{D}{\powe{-k^2}}{k} &= \sqrt{\pi}^D = \int\Omega_D \intx{0}{\infty}{\powe{-k^2} k^{D-1}}{k} = S_D \frac{1}{2}\intx{0}{\infty}{\powe{-t} t^{D/2-1}}{t},
+\end{align}
+giving $S_D = \frac{2\pi^{D/2}}{\Gamma(D/2)}$.
+Using the Beta function
+\begin{align}
+B(x,y) &= \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)} = \intx{0}{1}{t^{x-1}(1-t)^{y-1}}{t} = \intx{0}{\infty}{\frac{t^{x-1}}{(1+t)^{x+y}}}{t}, % = 2\intx{0}{\pi/2}{\sin(t)^{2x-1}\cos(t)^{2y-1}}{t},
+\end{align}
+we can then resolve the remaining integral to
+\begin{align}
+I &= \i\mu^{4-D}\frac{\pi^{D/2}}{(2\pi)^D \Gamma(D/2)}(n-1)!(-1)^n B\kla*{\frac{D}{2}, n-\frac{D}{2}} \\
+&= (-1)^n \i \frac{1}{(4\pi)^{D/2}} \mu^{4-D} \frac{\Gamma\kla*{n-D/2}}{Q^{n-D/2}} = (-1)^n \frac{\i}{16\pi^2} \kla*{4\pi\frac{\mu^2}{Q}}^\epsilon \frac{\Gamma\kla*{n-2+\epsilon}}{Q^{n-2}}.
+\end{align}
+By expanding in leading order of $\epsilon$, we can simplify this to
+\begin{align}
+I &= (-1)^n \frac{\i}{16\pi^2} Q^{2-n} \kla*{1 + \epsilon\log\klb*{4\pi \frac{\mu^2}{Q}}} \Gamma(n-2+\epsilon).
+\end{align}
+Using $\Gamma(\epsilon)=\frac{1}{\epsilon}\Gamma(1+\epsilon)=\frac{1}{\epsilon}\kla*{1 + \epsilon\Gamma'(1)} = \frac{1}{\epsilon}-\gamma$, we then get (for $n=2$)
+\begin{align}
+I &= \frac{\i}{16\pi^2} \kla*{\Delta + \log\klb*{\frac{\mu^2}{Q}}}
+\end{align}
+with $\Delta = \frac{1}{\epsilon}-\gamma + \log(4\pi)$, and for $n=1$
+\begin{align}
+I &= -\frac{\i}{16\pi^2} Q \kla*{1 + \epsilon\log\klb*{4\pi\frac{\mu^2}{Q}}}\frac{\Gamma(\epsilon)}{\epsilon-1} = \frac{\i}{16\pi^2} Q \kla*{1 + \epsilon\log\klb*{4\pi\frac{\mu^2}{Q}}} (1+\epsilon) \kla*{\frac{1}{\epsilon} - \gamma}\\
+&= \frac{\i}{16\pi^2} Q \kla*{\Delta+1 + \log\klb*{\frac{\mu^2}{Q}}}.
+\end{align}
+For $n\ge 3$ the integral is convergent and we simply get the scale-independent
+\begin{align}
+I &= (-1)^n \frac{\i}{16\pi^2} \frac{(n-3)!}{Q^{n-2}}.
+\end{align}
+Next, consider a QED-analog model with a massless real scalar field $\phi$ and a massive complex scalar field $\psi$, where
+\begin{align}
+\mathcal{L} &= \frac{1}{2}\partial_\mu\phi\partial^\mu\phi + \partial_\mu\psi^\dagger \partial^\mu\psi - m^2\psi^\dagger \psi + g\phi\psi^\dagger\psi.
+\end{align}
+At one-loop order, there are four 1PI (one-part irreducible) diagrams,
+\begin{align}
+\phi \overset{\psi\ \mathrm{tadpole}}{\longrightarrow} 0 &= \i g \frac{\i}{16\pi^2} A_0(m),\\
+\phi \overset{\psi\ \mathrm{loop}}{\longrightarrow} \phi &= (\i g)^2 \frac{\i}{16\pi^2} B_0\kla*{p^2,m,m},\\
+\psi \overset{\mathrm{virtual}\ \phi}{\longrightarrow} \psi &= (\i g)^2 \frac{\i}{16\pi^2} B_0\kla*{p^2,m,0},\\
+\phi \overset{\text{exchange virtual}\ \phi}{\longrightarrow} \psi + \psi^\dagger &= \dots
+\end{align}
+Here, we made use of the $A$ and $B$ functions for one and two external legs respectively.
+Specifically,
+\begin{align}
+A_0(m) &= \frac{16\pi^2}{\i} \int \frac{1}{\kla*{k^2-m^2}} = m^2 \kla*{\Delta+1 + \log\klb*{\frac{\mu^2}{m^2}}},\\
+B_0(p,m_1,m_2) &= \frac{16\pi^2}{\i} \int \frac{1}{\kla*{k^2-m_1^2}} \frac{1}{\klb*{\kla*{k+p}^2-m_2^2}} \\
+&= \frac{16\pi^2}{\i} \int \frac{1}{\klb*{k^2-Q(x)}^2} = \int m^2\kla*{\Delta + \log\klb*{\frac{\mu^2}{Q(x)}}}
+\end{align}
+with $Q(x)=p^2x(x-1)+m_1^2(1-x)+m_2^2x$.
+To understand how the second (and also higher order terms) can be reduced to this form, we need to understand the Feynman parametrization formula.
+\section{Feynman parametrization formula}
+The general theorem we will derive here is the remarkable identity
+\begin{align}
+\prod_{j=1}^n \frac{1}{A_j^{\alpha_j}} &= \frac{\Gamma\kla*{\sum \alpha_j}}{\prod \Gamma\kla*{\alpha_j}} \intx{0}{1}{ \dots \intx{0}{1}{ \delta\kla*{1-\sum x_j} \frac{\prod x_j^{\alpha_j-1}}{\klb*{\sum x_jA_j}^{\sum \alpha_j}} }{x_1} \dots }{x_n}
+\end{align}
+for any complex numbers $A_j$ for which zero is not contained in their \emph{convex hull}, and provided that $\Re\alpha_j>0$ for all $j=1,\dots,n$.
+We can derive this in a constructive manner.
+Let us start with the simpler identity
+\begin{align}
+\frac{1}{A^\alpha} &= \frac{1}{\Gamma(\alpha)} \intx{0}{\infty}{s^{\alpha-1}\powe{-sA}}{s} = \frac{1}{\Gamma(\alpha)} \partial_{-A}^{\alpha-1} \intx{0}{\infty}{\powe{-sA}}{s}.
+\end{align}
+Then the product over all terms can be written as some higher order derivative of
+\begin{align}
+\intx{0}{\infty}{\dots \intx{0}{\infty}{ \powe{-\kla*{s_1A_1+\dots+s_nA_n}} }{s_1}}{s_n}.
+\end{align}
+Let us now perform the substitutions $x=s_1+\dots+s_n$ and $x_j=\frac{s_j}{x}$ for $j=1,\dots,n-1$.
+After the first substitution, the integration measure is still the same, and from the perspective of the other integrals $x$ can be viewed as a constant.
+Then each of the other substitutions gives a factor of $x$, so we find (writing $x_n=1-x_1-\dots-x_{n-1}$)
+\begin{align}
+\intx{0}{1}{\dots \intx{0}{1}{ \intx{0}{\infty}{ x^{n-1} \powe{-x\kla*{x_1A_1+\dots + x_nA_n}} }{x}}{x_1}\dots}{x_{n-1}}.
+\end{align}
+The integral over $x$ can now be performed using the definition of the $\Gamma$-function and gives
+\begin{align}
+\intx{0}{1}{\dots \intx{0}{1}{ \frac{\Gamma(n)}{\klb*{\sum x_jA_j}^n} }{x_1} \dots}{x_{n-1}} &= \Gamma(n) \intx{0}{1}{\dots \intx{0}{1}{ \delta\kla*{1 - \sum x_j} \frac{1}{\klb*{\sum x_jA_j}^n} }{x_1} \dots}{x_{n}}.
+\end{align}
+But in order to get the general formula with $\alpha_j\neq 1$ we should first perform the derivatives to get
+\begin{align}
+\intx{0}{1}{\dots \intx{0}{1}{ \intx{0}{\infty}{ x^{n-1} (xx_1)^{\alpha_1-1} \dots (xx_n)^{\alpha_n-1} \powe{-x\kla*{x_1A_1+\dots + x_nA_n}} }{x}}{x_1}\dots}{x_{n-1}}.
+\end{align}
+We can still perform the $x$-integral and introduce the Dirac delta, so
+\begin{align}
+\Gamma\kla*{n + \sum(\alpha_j-1)} \intx{0}{1}{\dots \intx{0}{1}{ \delta\kla*{1 - \sum x_j} \frac{\prod x_j^{\alpha_j-1}}{\klb*{\sum x_jA_j}^{n + \sum(\alpha_j-1)}} }{x_1} \dots}{x_{n}}.
+\end{align}
+The $n$ cancels with the $-1$ contributions from all the $(\alpha_j-1)$ terms, and this therefore completes the proof.
+It is crucial that $\sum x_jA_j > 0$ for all $x$, which relates to the requirement about the convex hull of the $A_j$.
+\section{Anomalous magnetic moment}
+One of the most famous results from the SM is the extremely accurate calculation of the anomalous magnetic moment $a_\mu=\frac{g-2}{2}$.
+Of course not only QED contributes to this calculation, but the leading order correction (and by far the largest contribution over all) is determined by it.
+The process involves the scattering $\gamma+\ell \rightarrow\bar{\ell}$, which can be shown to admit the general form
+\begin{align}
+-\i e \bar{u}(p') \klb*{\gamma^\mu F_1\kla*{q^2} + \frac{\i \sigma^{\mu\nu}}{2m} q_\nu F_2\kla*{q^2}}u(p),
+\end{align}
+where $q=p'-p$ is the exchange momentum.
+By writing $\sigma^{\mu\nu}q_\nu = \frac{\i}{2}\klb*{\gamma^\mu\gamma^\nu - \gamma^\nu\gamma^\mu }q_\nu = \frac{\i}{2} \klb*{\gamma^\mu \slashed{q} - \slashed{q}\gamma^\mu }$ we can obtain (apply the Dirac equations $\slashed{p}u(p)=mu(p)$ etc.)
+\begin{align}
+\frac{\i \sigma^{\mu\nu}}{2m} q_\nu F_2\kla*{q^2} &= -\frac{1}{4m} F_2\kla*{q^2} \klb*{ \gamma^\mu \slashed{p}' - \gamma^\mu \slashed{p} - \slashed{p}'\gamma^\mu + \slashed{p}\gamma^\mu }\\
+&= -\frac{1}{4m} F_2\kla*{q^2} \klb*{ \gamma^\mu \gamma^\nu p_\nu' + p_\nu \gamma^\nu \gamma^\mu - 2m\gamma^\mu}\\
+&= -\frac{1}{4m} F_2\kla*{q^2} \klb*{ 2p'^\mu + 2p^\mu - 4m\gamma^\mu}.
+\end{align}
+The last term is of the $F_1$-form and can thus be absorbed in that function.
+The only pure $F_2$-contribution is therefore of the form $(p+p')^\mu$, and of course the physical result should use $q^2\simeq 0$ since it is a photon (i.e. has no mass), so $a_\mu=F_2(0)$. (TODO: perhaps some more information about why these terms take this form and why only the $F_2$-term is relevant for $g-2$).
+\subsection{Setting up the diagram}
+The only one-loop diagram for this process is given by
+\begin{align}
+\ell_L(p) \rightarrow \ell(k) + \gamma(k-p) \rightarrow \gamma(q) + \ell(k+q) + \gamma(k-p) \rightarrow \gamma(q) + \ell_R(p').
+\end{align}
+The matrix element is therefore given by
+\begin{align}
+\i\mathcal{M} &= \intrndpi{4}{ \bar{u}(p') \frac{-\i g_{\alpha\beta}}{(k-p)^2+\i\epsilon} \kla{-\i e\gamma^\beta} \frac{\i}{\slashed{k} + \slashed{q} - m + \i\epsilon} \kla*{-\i e\gamma^\mu } \frac{\i}{\slashed{k} - m+\i\epsilon}\kla*{-\i e\gamma^\alpha} u(p) }{k}\\
+&= -e^3 \intrndpi{4}{\bar{u}(p') \frac{\gamma_\alpha \kla*{\slashed{k} + \slashed{q} + m} \gamma^\mu \kla*{\slashed{k} + m} \gamma^\alpha}{\klb*{(k-p)^2} \klb*{\kla*{k+q}^2-m^2} \klb*{k^2-m^2}} u(p)}{k}.
+\end{align}
+Let us introduce $\kappa=k+q$ and define $A=\kappa^2-m^2$, $B=k^2-m^2$ and $C=(k-p)^2$.
+Then applying the Feynman parametrization yields
+\begin{align}
+\frac{1}{ABC} &= 2\int \delta(1-x-y-z) \frac{1}{\klb*{xA+yB+zC}^3}.
+\end{align}
+Let us first evaluate the denominator,
+\begin{align}
+xA+yB+zC &= x\kappa^2-xm^2 + yk^2-ym^2 + zk^2+zp^2-2zkp\\
+&= k^2 \kla*{x + y + z} + k\kla*{2xq - 2zp} + xq^2 - xm^2-ym^2+zp^2.
+\end{align}
+Using $p^2=m^2$ and $(q+p)^2=q^2+2qp+p^2=p'^2$ gives $qp=-\frac{1}{2}q^2$, and completing the square gives
+\begin{align}
+xA+yB+zC &= \kla*{k+xq-zp}^2 - \kla*{xq-zp}^2 + xq^2- xm^2-ym^2+zm^2\\
+&= \tilde{k}^2 - xq^2 \kla*{2-y} - m^2\kla*{1-z}^2.
+\end{align}
+Next we have to treat the numerator.
+Note that the denominator is symmetric in $\tilde{k} = k+xq-zp$, so any terms linear in $\tilde{k}$ can simply be set to zero.
+\subsection{Various contractions}
+Here we list all the contraction identities required for this calculation.
+Note that in general one can perform these in $D$ rather than 4 dimensions, and even though we will not need those terms (the integral converges so $\epsilon=0$ does not contribute any $\frac{1}{\epsilon}$-factors), we still give the complete formulas here.
+To start, consider
+\begin{align}
+\gamma_\mu\gamma^\mu = g_{\mu\nu} \gamma^\mu\gamma^\nu = g_{\mu\nu} \frac{1}{2} \klc*{\gamma^\mu,\gamma^\nu } = g_{\mu\nu} g^{\mu\nu} = D.
+\end{align}
+Similarly, we may then evaluate
+\begin{align}
+\gamma_\mu \gamma^\nu\gamma^\mu &= \gamma_\mu 2g^{\mu\nu} - \gamma_\mu\gamma^\mu\gamma^\nu = (2-D)\gamma^\nu,\\
+\gamma_\mu \gamma^\nu \gamma^\rho\gamma^\mu &= \gamma_\mu\gamma^\nu \kla*{2g^{\rho\mu} - \gamma^\mu\gamma^\rho } = \gamma_\mu\gamma^\nu 2g^{\rho\mu} - \gamma_\mu \kla*{2g_{\nu\mu} - \gamma^\mu \gamma^\nu }\gamma^\rho\\
+&= 2\gamma^\rho\gamma^\nu - 2\gamma^\nu \gamma^\rho + D\gamma^\nu\gamma^\rho = 4g^{\nu\rho} - (4-D) \gamma^\nu\gamma^\rho.
+\end{align}
+Because writing explicit indices is pretty tiresome (and pretty redundant), we can compress this into the simpler notation (numbers are easier to memorize than letters, and certain patterns such as ascending order are easier to recognize in this form)
+\begin{align}
+\gamma_a\gamma^1\gamma^a &= (2-D)\gamma^1,\\
+\gamma_a\gamma^1\gamma^2\gamma^a &= 4g^{12} - (4-D)\gamma^1\gamma^2,\\
+\gamma_a\gamma^1\gamma^2\gamma^3\gamma^a &= \gamma_a \gamma^1\gamma^2 \kla*{2g^{3a} - \gamma^a\gamma^3} = 2\gamma^3\gamma^1\gamma^2 - \gamma_a \gamma^1 \kla*{2g^{2a} - \gamma^a \gamma^2}\gamma^3\\
+&= 2\gamma^3\gamma^1\gamma^2 - 2\gamma^2\gamma^1\gamma^3 + \gamma_a \kla*{2g^{1a} - \gamma^a \gamma^1}\gamma^2\gamma^3\\
+&= 2\gamma^3\gamma^1\gamma^2 - 2\gamma^2\gamma^1\gamma^3 + 2\gamma^1\gamma^2\gamma^3 - D\gamma^1\gamma^2\gamma^3\\
+&= -2\gamma^3\gamma^2\gamma^1 + (4-D)\gamma^1\gamma^2\gamma^3.
+\end{align}
+Now we face the daunting task of simplifying the full numerator $\text{num}$.
+As mentioned, we can safely set $D=4$ because there will not be any divergence in the loop integral later on.
+Thus, dropping terms linear in $\tilde{k}$,
+\begin{align}
+\text{num} &= \gamma_a \kla*{\kappa_1\gamma^1 + m}\gamma^2 \kla*{k_3\gamma^3+m}\gamma^a\\
+&= -2m^2 \gamma^2 + 4m\kappa^2 + 4mk^2 - 2k_3\gamma^3 \gamma^2 \kappa_1\gamma^1\\
+&= -2m^2\gamma^\mu - 2\slashed{k}\gamma^\mu \kla*{\slashed{k}+\slashed{q}} + 8mk^\mu + 4mq^\mu\\
+&= -2m^2\gamma^\mu - 2\kla*{\tilde{\slashed{k}}-xq+zp} \gamma^\mu \kla*{\tilde{\slashed{k}}-x\slashed{q}+z\slashed{p}+\slashed{q}} + 8m\kla*{\tilde{k}-x\slashed{q}+z\slashed{p}}^\mu + 4mq^\mu\\
+&= -2m^2\gamma^\mu + 4mq^\mu - 8m \kla*{xq-zp}^\mu -2\tilde{\slashed{k}}\gamma^\mu \tilde{\slashed{k}} - 2\kla*{x\slashed{q}-z\slashed{p}}\gamma^\mu \kla*{(x-1)\slashed{q}-z\slashed{p}}.
+\end{align}
+Since we are only interested in the $F_2$-contributions here, we can drop any term that is of the form $\klb*{\dots}\gamma^\mu$.
+Thus, when applied to the two spinors $u(p)$ on the left and $\bar{u}(p')$ on the right, we are left with
+\begin{align}
+\dots &= 4m\kla*{p'^\mu-p^\mu } - 8m\kla*{xp'^\mu - (x+z)p^\mu } - 2\tilde{\slashed{k}} 2\tilde{k}^\mu - 2\kla*{x\slashed{p}'-(x+z)\slashed{p}} \gamma^\mu \kla*{(x-1)\slashed{p}' + y\slashed{p}}\\
+&= 4m\kla*{p'^\mu (1-2x) + p^\mu (1-2y)} - 4\tilde{\slashed{k}} \tilde{k}^\mu - 2\kla*{xm-(x+z)\slashed{p}}\gamma^\mu \kla*{(x-1)\slashed{p}'+ym}\\
+%&= 4m\kla*{p'^\mu (1-2x) + p^\mu (1-2y)} - 4\tilde{\slashed{k}} \tilde{k}^\mu - 2xm\gamma^\mu (x-1)\slashed{p}' +2(x+z)\slashed{p}\gamma^\mu (x-1)\slashed{p}' - 2xm\gamma^\mu ym + 2(x+z)\slashed{p}\gamma^\mu ym
+&= 4m\kla*{p'^\mu (1-2x) + p^\mu (1-2y)} - 4\tilde{\slashed{k}} \tilde{k}^\mu -2(1-y)\slashed{p}\gamma^\mu (1-x)\slashed{p}'\\
+&= 4m\kla*{p'^\mu (1-2x) + p^\mu (1-2y)} - 4\tilde{\slashed{k}} \tilde{k}^\mu -2(1-x)(1-y) \kla*{2p'^\mu \slashed{p} - \slashed{p}\slashed{p}'\gamma^\mu}\\
+&= 4m\kla*{p'^\mu (1-2x) + p^\mu (1-2y)} - 4\tilde{\slashed{k}} \tilde{k}^\mu -4m(1-x)(1-y) p'^\mu.
+\end{align}
+The only terms proportional to $p^\mu$ and $p'^\mu$ are thus given by
+\begin{align}
+\i\mathcal{M} &= \int 2\delta\kla*{1-x-y-z}\frac{4m p^\mu \kla*{1-2y} + 4m p'^\mu \kla*{(1-x)(1+y)-1}}{\klb*{\tilde{k}^2 - m^2\kla*{1-z}^2}^3} \\
+&= 8m \int \frac{ p^\mu \kla*{1-2y} + p'^\mu \kla*{(y+z)(1+y)-1}}{\klb*{\tilde{k}^2 - m^2\kla*{1-z}^2}^3}
+\end{align}
+TODO something here went wrong, we are meant to get some $p+p'$ term with $4mz$ as coefficient...
 \chapter{Exercises}
 \section{Introduction}
 \example{Lie-Hadamard Formula}{$\powe{A}B\powe{-A}$}{
@@ -547,8 +752,8 @@ Then the adjoint representation reads
 \end{pmatrix},\qquad
 \tilde{T}_2 = -\i\kla*{\epsilon_{2bc}}_{bc} = -\i \begin{pmatrix}
 0&0&-1 \\ 0&0&0 \\ 1&0&0
-\end{pmatrix},\qquad
-\tilde{T}_3 = -\i\kla*{\epsilon_{3bc}}_{bc} = -\i \begin{pmatrix}
+\end{pmatrix},\\
+\tilde{T}_3 &= -\i\kla*{\epsilon_{3bc}}_{bc} = -\i \begin{pmatrix}
 0&1&0 \\ -1&0&0 \\ 0&0&0
 \end{pmatrix}.
 \end{align}
