@@ -652,32 +652,47 @@ Because writing explicit indices is pretty tiresome (and pretty redundant), we c
 &= 2\gamma^3\gamma^1\gamma^2 - 2\gamma^2\gamma^1\gamma^3 + 2\gamma^1\gamma^2\gamma^3 - D\gamma^1\gamma^2\gamma^3\\
 &= -2\gamma^3\gamma^2\gamma^1 + (4-D)\gamma^1\gamma^2\gamma^3.
 \end{align}
-Now we face the daunting task of simplifying the full numerator $\text{num}$.
+Now we face the daunting task of simplifying the full numerator.
 As mentioned, we can safely set $D=4$ because there will not be any divergence in the loop integral later on.
 Thus, dropping terms linear in $\tilde{k}$,
 \begin{align}
 \text{num} &= \gamma_a \kla*{\kappa_1\gamma^1 + m}\gamma^2 \kla*{k_3\gamma^3+m}\gamma^a\\
 &= -2m^2 \gamma^2 + 4m\kappa^2 + 4mk^2 - 2k_3\gamma^3 \gamma^2 \kappa_1\gamma^1\\
 &= -2m^2\gamma^\mu - 2\slashed{k}\gamma^\mu \kla*{\slashed{k}+\slashed{q}} + 8mk^\mu + 4mq^\mu\\
-&= -2m^2\gamma^\mu - 2\kla*{\tilde{\slashed{k}}-xq+zp} \gamma^\mu \kla*{\tilde{\slashed{k}}-x\slashed{q}+z\slashed{p}+\slashed{q}} + 8m\kla*{\tilde{k}-x\slashed{q}+z\slashed{p}}^\mu + 4mq^\mu\\
+&= -2m^2\gamma^\mu - 2\kla*{\tilde{\slashed{k}}-x\slashed{q}+z\slashed{p}} \gamma^\mu \kla*{\tilde{\slashed{k}}-x\slashed{q}+z\slashed{p}+\slashed{q}} + 8m\kla*{\tilde{k}-x\slashed{q}+z\slashed{p}}^\mu + 4mq^\mu\\
 &= -2m^2\gamma^\mu + 4mq^\mu - 8m \kla*{xq-zp}^\mu -2\tilde{\slashed{k}}\gamma^\mu \tilde{\slashed{k}} - 2\kla*{x\slashed{q}-z\slashed{p}}\gamma^\mu \kla*{(x-1)\slashed{q}-z\slashed{p}}.
 \end{align}
 Since we are only interested in the $F_2$-contributions here, we can drop any term that is of the form $\klb*{\dots}\gamma^\mu$.
 Thus, when applied to the two spinors $u(p)$ on the left and $\bar{u}(p')$ on the right, we are left with
+%\begin{align}
+%\dots &= 4m\kla*{p'^\mu-p^\mu } - 8m\kla*{xp'^\mu - (x+z)p^\mu } - 2\tilde{\slashed{k}} 2\tilde{k}^\mu - 2\kla*{x\slashed{p}'-(x+z)\slashed{p}} \gamma^\mu \kla*{(x-1)\slashed{p}' + y\slashed{p}}\\
+%&= 4m\kla*{p'^\mu (1-2x) + p^\mu (1-2y)} - 4\tilde{\slashed{k}} \tilde{k}^\mu - 2\kla*{xm-(x+z)\slashed{p}}\gamma^\mu \kla*{(x-1)\slashed{p}'+ym}\\
+%%&= 4m\kla*{p'^\mu (1-2x) + p^\mu (1-2y)} - 4\tilde{\slashed{k}} \tilde{k}^\mu - 2xm\gamma^\mu (x-1)\slashed{p}' +2(x+z)\slashed{p}\gamma^\mu (x-1)\slashed{p}' - 2xm\gamma^\mu ym + 2(x+z)\slashed{p}\gamma^\mu ym
+%&= 4m\kla*{p'^\mu (1-2x) + p^\mu (1-2y)} - 4\tilde{\slashed{k}} \tilde{k}^\mu -2(1-y)\slashed{p}\gamma^\mu (1-x)\slashed{p}'\\
+%&= 4m\kla*{p'^\mu (1-2x) + p^\mu (1-2y)} - 4\tilde{\slashed{k}} \tilde{k}^\mu -2(1-x)(1-y) \kla*{2p'^\mu \slashed{p} - \slashed{p}\slashed{p}'\gamma^\mu}\\
+%&= 4m\kla*{p'^\mu (1-2x) + p^\mu (1-2y)} - 4\tilde{\slashed{k}} \tilde{k}^\mu -4m(1-x)(1-y) p'^\mu.
+%\end{align}
 \begin{align}
 \dots &= 4m\kla*{p'^\mu-p^\mu } - 8m\kla*{xp'^\mu - (x+z)p^\mu } - 2\tilde{\slashed{k}} 2\tilde{k}^\mu - 2\kla*{x\slashed{p}'-(x+z)\slashed{p}} \gamma^\mu \kla*{(x-1)\slashed{p}' + y\slashed{p}}\\
 &= 4m\kla*{p'^\mu (1-2x) + p^\mu (1-2y)} - 4\tilde{\slashed{k}} \tilde{k}^\mu - 2\kla*{xm-(x+z)\slashed{p}}\gamma^\mu \kla*{(x-1)\slashed{p}'+ym}\\
 %&= 4m\kla*{p'^\mu (1-2x) + p^\mu (1-2y)} - 4\tilde{\slashed{k}} \tilde{k}^\mu - 2xm\gamma^\mu (x-1)\slashed{p}' +2(x+z)\slashed{p}\gamma^\mu (x-1)\slashed{p}' - 2xm\gamma^\mu ym + 2(x+z)\slashed{p}\gamma^\mu ym
-&= 4m\kla*{p'^\mu (1-2x) + p^\mu (1-2y)} - 4\tilde{\slashed{k}} \tilde{k}^\mu -2(1-y)\slashed{p}\gamma^\mu (1-x)\slashed{p}'\\
-&= 4m\kla*{p'^\mu (1-2x) + p^\mu (1-2y)} - 4\tilde{\slashed{k}} \tilde{k}^\mu -2(1-x)(1-y) \kla*{2p'^\mu \slashed{p} - \slashed{p}\slashed{p}'\gamma^\mu}\\
-&= 4m\kla*{p'^\mu (1-2x) + p^\mu (1-2y)} - 4\tilde{\slashed{k}} \tilde{k}^\mu -4m(1-x)(1-y) p'^\mu.
+&= \dots - 4\kla[\big]{\tilde{k}^\mu }^2\gamma^\mu -2(1-y)\slashed{p}\gamma^\mu (1-x)\slashed{p}' + 2my(1-y)\slashed{p}\gamma^\mu + 2mx(1-x)\gamma^\mu\slashed{p}'\\
+&= \dots + 4mx(1-x) p'^\mu + 4my(1-y) p^\mu - 2(1-y)(1-x) \kla*{2p^\mu - \gamma^\mu \slashed{p}}\slashed{p}'\\
+&= 4m\kla*{p'^\mu (1-x-x^2) + p^\mu (x-xy-y^2)} + 2(1-y)(1-x) \gamma^\mu \kla*{2pp' -\slashed{p}'m}\\
+&= 4m\kla*{p'^\mu (y-xy-x^2) + p^\mu (x-xy-y^2)}.
 \end{align}
 The only terms proportional to $p^\mu$ and $p'^\mu$ are thus given by
 \begin{align}
-\i\mathcal{M} &= \int 2\delta\kla*{1-x-y-z}\frac{4m p^\mu \kla*{1-2y} + 4m p'^\mu \kla*{(1-x)(1+y)-1}}{\klb*{\tilde{k}^2 - m^2\kla*{1-z}^2}^3} \\
-&= 8m \int \frac{ p^\mu \kla*{1-2y} + p'^\mu \kla*{(y+z)(1+y)-1}}{\klb*{\tilde{k}^2 - m^2\kla*{1-z}^2}^3}
+\frac{\i\mathcal{M}}{-e^3} &= \int 2\delta\kla*{1-x-y-z}\frac{4m p^\mu \kla*{y-xy-x^2} + 4m p'^\mu \kla*{x-xy-y^2}}{\klb*{\tilde{k}^2 - m^2\kla*{1-z}^2}^3} \\
+&= 8m\kla*{p^\mu+p'^\mu } \int \frac{(1-x-z)(1-x)-x^2}{\klb*{\tilde{k}^2 - m^2\kla*{1-z}^2}^3}\\
+&= 8m\kla*{p+p'}^\mu \int \frac{(-1)^3}{\Gamma(3)} \frac{\i}{16\pi^2} \frac{\Gamma(3-2)}{Q^{3-2}} \klc*{1-2x-z+xz}\\
+&= 8m\kla*{p+p'}^\mu \intx{0}{1}{ \frac{-\i}{32\pi^2} \frac{-z+\frac{1}{2}z}{m^2 (1-z)^2} }{z} = \frac{\i}{8m\pi^2} \kla*{p+p'}^\mu \intx{0}{1}{\frac{z}{(1-z)^2}}{z}
 \end{align}
-TODO something here went wrong, we are meant to get some $p+p'$ term with $4mz$ as coefficient...
+We will come back to the divergent integral in a moment, but let us first note that the final result for our $a_\mu$-correction is
+\begin{align}
+F_2(0) &= \frac{e^2}{4\pi^2} I = \frac{\alpha}{\pi} I.
+\end{align}
+(we are almost there, but I don't see any reasonable way to get $I=\frac{1}{2}$. I can't say I'm a fan of just writing divergent integrals and \enquote{regularizing} them later at leisure. Unscientific may be a strong word, but it does certainly come to mind...)
 \chapter{Exercises}
 \section{Introduction}
 \example{Lie-Hadamard Formula}{$\powe{A}B\powe{-A}$}{
