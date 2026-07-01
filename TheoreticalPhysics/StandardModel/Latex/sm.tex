@@ -692,7 +692,7 @@ We will come back to the divergent integral in a moment, but let us first note t
 \begin{align}
 F_2(0) &= \frac{e^2}{4\pi^2} I = \frac{\alpha}{\pi} I.
 \end{align}
-(we are almost there, but I don't see any reasonable way to get $I=\frac{1}{2}$. I can't say I'm a fan of just writing divergent integrals and \enquote{regularizing} them later at leisure. Unscientific may be a strong word, but it does certainly come to mind...)
+(we are almost there, but I don't see any reasonable way to get $I=\frac{1}{2}$. Maybe this is one of the IR-divergences that Peter Marquard mentioned and that cancels? Or I am just missing some other trick)
 \chapter{Exercises}
 \section{Introduction}
 \example{Lie-Hadamard Formula}{$\powe{A}B\powe{-A}$}{
@@ -879,6 +879,241 @@ Then according to the formula we derived previously, we now need to transform th
 \frac{\bm{\sigma}}{2}\cdot \bm{B}_\mu &= U \frac{\bm{\sigma}}{2}\cdot \bm{A}_\mu U^\dagger + \frac{\i}{g} \kla*{\partial_\mu U}U^\dagger.
 \end{align}
 Then $D_\mu\Phi^u = UD_\mu\Phi$ (this is exactly the same algebra as before, just different symbols).
+
+We have $F_{\mu\nu}=\frac{1}{\i g}\klb*{D_\mu,D_\nu }$ and $D_\mu'U=UD_\mu$, so $U^\dagger D_\mu'D_\nu' U=D_\mu D_\nu$ and $U^\dagger F'_{\mu\nu}U=F_{\mu\nu}$.
+Thus
+\begin{align}
+F'^a_{\mu\nu} F_a'^{\mu\nu} &= 2\tr\klc*{F'_{\mu\nu} F'^{\mu\nu}} = 2\tr\klc*{U^\dagger F_{\mu\nu} F^{\mu\nu} U} = 2\tr\klc*{F_{\mu\nu} F^{\mu\nu}} = F^a_{\mu\nu} F_a^{\mu\nu} \equiv F^2.
+\end{align}
+Now consider the Lagrangian $\mathcal{L} = \kla*{D^\mu \Phi}^\dagger D_\mu\Phi - V(\Phi) - \frac{1}{4}F^2$.
+Since we already showed that $F^2$ is invariant and $V(\Phi)=-\mu^2\Phi^\dagger\Phi + \lambda \kla*{\Phi^\dagger \Phi}^2$ is also clearly invariant, the entire Lagrangian is invariant under the gauge transformation.
+Mass terms of the $B$-fields can only come from the kinetic contribution (the $G^2$ terms have too high powers of $B$), so we need to evaluate the product of $D_\mu \Phi^u = \partial_\mu \Phi^u + \i \frac{g}{2}\bm{\sigma}\cdot\bm{B}_\mu \Phi^u$,
+\begin{align}
+\kla*{D^\mu \Phi^u}^\dagger D_\mu\Phi^u &= \dots + \frac{g^2}{4} \kla*{\bm{\sigma}\cdot\bm{B}_\mu }\bm{\sigma}\cdot\bm{B}^\mu \kla*{\Phi^u}^\dagger \Phi^u = \dots + \frac{g^2}{4} B_\mu B^\mu  \frac{1}{2} \kla*{v+\eta(x)}^2.
+\end{align}
+In the groundstate $\eta=0$, leaving us with $\frac{1}{8}g^2v^2B^2$ and therefore $M_B = \frac{gv}{2}$.
 }
-TODO rest of 2b
+\example{Wick's Theorem}{Complex Scalar Fields}{
+Spin-0 particles with electric charges can be described in terms of complex scalar fields defined as
+\begin{align}
+\phi(x) &= \int \kla*{a(p)\powe{-\i px} + b^\dagger(p)\powe{\i px}} \,\tilde{\d}p \equiv \phi^-(x)+\phi^+(x).
+\end{align}
+The creation operators satisfy the usual commutation relations $\klb*{a(p),a^\dagger(p')} = (2\pi)^3 2p^0 \delta(\bm{p}-\bm{p}')$ and $\tilde{\d}p = \frac{\d^3p}{(2\pi)^3 2p^0}$.
+We want to compute time-ordered ground-state expectation values of the form $\brc*{0}{\mathcal{T} \phi(x_1)\phi(x_2)}{0}$.
+First of all, any expectation value with an odd number of fields must give zero.
+This is because both a lone creation and annihilation operator destroy either the Bra on the left or the Ket on the right, while commutators always reduced the number of remaining operators by 2.
+Second, it is clear that $\phi_-\Ket{0} = 0$ and $\Bra{0}\phi_+=0$, such that
+\begin{align}
+\brc*{0}{\mathcal{T} \phi(x_1)\phi(x_2)}{0} &= \brc*{0}{\mathcal{T} \phi_-(x_1)\phi_+(x_2)}{0}.
+\end{align}
+But the commutator of these fields is given by
+\begin{align}
+\klb*{\phi_-(x),\phi_+(y)} &= \int \klb*{a(p)\powe{-\i px}, b^\dagger(p')\powe{\i p'y}} \,\tilde{\d}p\tilde{\d}p' = 0.
+\end{align}
+In fact, the only non-trivial commutators are
+\begin{align}
+\klb*{\phi_+(x),\phi_+^\dagger(y)} &= \int \klb*{b^\dagger(p)\powe{\i px}, b(p')\powe{-\i p'y}} \,\tilde{\d}p\tilde{\d}p' = -\int \powe{\i p(x-y)} \,\tilde{\d}p,\\
+\klb*{\phi_-(x),\phi_-^\dagger(y)} &= \int \klb*{a(p)\powe{-\i px}, a^\dagger(p')\powe{\i p'y}} \,\tilde{\d}p\tilde{\d}p' = \int \powe{\i p(x-y)} \,\tilde{\d}p \equiv \Delta_F(x-y).
+\end{align}
+This leads to $\brc*{0}{\mathcal{T} \phi(x_1)\phi(x_2)}{0}=0$ and
+\begin{align}
+\brc*{0}{\mathcal{T} \phi(x_1)\phi^\dagger(x_2)}{0} &= \brc*{0}{\mathcal{T} \phi_-(x_1)\phi_-^\dagger(x_2)}{0} \\
+&= \brc*{0}{\mathcal{T} \klb*{\phi_-(x_1),\phi_-^\dagger(x_2)}}{0} = \Delta_F(x_1-x_2) \equiv \Delta_{12}.
+\end{align}
+Let us now consider what happens with more than two fields.
+Since $\klb*{\phi(x),\phi^\dagger(y)} = \Delta_F-\Delta_F=0$, we can always bring any field configuration into normal-ordered form, i.e. all the $\phi^\dagger$ are to the right and all the $\phi$ are to the left.
+Then it is also clear that we must have a $\phi^\dagger$ for every $\phi$, since we otherwise have one too many $a$ or $a^\dagger$ that annihilates the contribution in the end.
+As such, the only non-zero term has the form
+\begin{align}
+\brc*{0}{\mathcal{T} \phi(x_1)\dots \phi(x_n)\phi^\dagger(x_{n+1}) \dots\phi^\dagger(x_{2n})}{0} &= \brc*{0}{\mathcal{T} \phi_1\dots \phi_n\phi^\dagger_{n+1} \dots\phi^\dagger_{2n}}{0},
+\end{align}
+where we defined $\phi_j \equiv \phi_-(x_j)$ with $\klb*{\phi_j,\phi^\dagger_k}= \Delta_{jk}$.
+Now we can commute $\phi_n$ all the way to the right and pick up $n$ different terms,
+\begin{align}
+\brc[\big]{0}{\mathcal{T} \prod_{j=1}^n \phi_j \prod_{k=n+1}^{2n} \phi^\dagger_k}{0} &= \brc[\big]{0}{\mathcal{T} \prod_{j=1}^{n-1} \phi_j \sum_{l_1=n+1}^{2n} \Delta_{nl_1} \prod_{k\neq l_1} \phi^\dagger_k}{0}\\
+&= \sum_{l_1=n+1}^{2n} \Delta_{nl_1} \sum_{l_2=n+1,l_2\neq l_1}^{2n} \Delta_{n-1,l_2} \brc[\big]{0}{\mathcal{T} \prod_{j=1}^{n-2} \phi_j \prod_{k\neq l_1,l_2} \phi^\dagger_k}{0}\\
+&= \dots = \sum_{\text{pairings }\pi} \Delta_{1,\pi(1)} \dots \Delta_{n,\pi(n)}.
+\end{align}
+Here, $\pi$ are all the possible mappings from $j=1,\dots,n$ to $k=n+1,\dots,2n$.
+For example, $1$ can choose $n$ possible $\phi^\dagger$-fields, and after that $2$ can choose from $n-1$ options etc., giving $n!$ many permutations $\pi$.
+In the case of $n=2$, we find
+\begin{align}
+\brc*{0}{\mathcal{T} \phi(x_1)\phi(x_2)\phi^\dagger(x_3) \phi^\dagger(x_4)}{0} &= \Delta_{13}\Delta_{24} + \Delta_{14}\Delta_{23}.
+\end{align}
+}
+Let us now take a closer look at the Feynman propagator $\Delta_F(x) = \int \powe{\i px}\,\tilde{\d}p$.
+It will be very useful to evaluate the 1d-integral
+\begin{align}
+Y(t) &= \intrpi{\frac{\i\powe{-\i Et}}{E^2 - q^2 + \i\epsilon}}{E},
+\end{align}
+which has poles at $E_\pm=\pm \sqrt{q^2 -\i\epsilon} = \pm |q| \mp \i\epsilon$, since $\epsilon^2=0$ (infinitesimal number).
+For $t>0$, we must close the contour in the lower half of the complex plane to get a convergent arc-integral.
+For $t<0$, we can substitute $E\rightarrow -E$ in the integral to get $Y(-|t|) = Y(|t|)$.
+Let us therefore consider $t>0$, in which case the lower arc-integral vanishes as the radius $R\rightarrow\infty$, and the residue theorem then gives
+\begin{align}
+Y(t) &= \underbrace{(-1)\cdot}_{\text{clockwise contour orientation}} 2\pi\i \frac{\i}{2\pi} \lim_{E\rightarrow E_+} \frac{\powe{-\i Et}}{E-E_-} = \frac{1}{2|q|} \powe{-\i |q|t}.
+\end{align}
+Combined with the symmetry, we get the general result $Y(t) = \frac{1}{2|q|} \powe{-\i |qt|}$.
+Rewriting $\Delta_F$, we then obtain
+\begin{align}
+\Delta_F(x) &= \intrndpi{3}{ \frac{\powe{\i E(\bm{p})t}}{2E(\bm{p})} \powe{-\i \bm{p}\cdot \bm{x}} }{p}.
+\end{align}
+Since $t<0$ due to the time-ordering (the argument is always $x-y$ with $x^0>y^0$), we can write this as
+\begin{align}
+\Delta_F(x) &= \intrndpi{3}{ Y(t) \powe{-\i \bm{p}\cdot \bm{x}}}{p} = \intrndpi{3}{ \frac{\i \powe{-\i Et} \powe{\i \bm{p}\cdot \bm{x}}}{E^2 - E(\bm{p})^2 + \i\epsilon} \frac{\d E}{2\pi} }{p} = \intrndpi{4}{ \frac{\i}{p^2-m^2 + \i\epsilon} \powe{-\i px} }{p}.
+\end{align}
+Here, we recognize the propagator in momentum space, $\frac{\i}{p^2-m^2+\i\epsilon}$.
+The time-ordering is then performed automatically by the term $+\i\epsilon$, which makes the momentum-space representation rather convenient.
+\example{Feynman Propagator}{Real Space}{
+We can also try to compute the integral explicitly.
+Firstly,
+\begin{align}
+\Delta_F(x) &= \frac{1}{(2\pi)^3} \intx{0}{\infty}{\intx{0}{\pi}{\intx{0}{2\pi}{ \frac{\powe{\i\sqrt{m^2 + p^2} t}}{2\sqrt{m^2+p^2}} \powe{-\i px\cos\theta} p^2\sin\theta }{\varphi}}{\theta}}{p}\\
+&= \frac{1}{(2\pi)^2} \intx{0}{\infty}{\frac{\powe{\i\sqrt{m^2 + p^2} t}}{2\sqrt{m^2+p^2}} p^2 \intx{-1}{1}{ \powe{-\i pxu} }{u}}{p}\\
+&= \frac{1}{(2\pi)^2} \intx{0}{\infty}{\frac{\powe{\i E(p)t}}{E(p)} p^2 \frac{\sin(px)}{px} }{p}\\
+&= \frac{1}{4\pi x} \frac{1}{2\pi\i} \intr{\frac{\powe{\i E(p)t}}{E(p)} p\powe{\i px}}{p}
+\end{align}
+%&= \frac{1}{(2\pi)^2} \intrpi{\intx{0}{\infty}{\frac{\i \powe{-\i Et}}{E^2 - m^2 - p^2 + \i\epsilon} p^2 \frac{2\sin(px)}{px} }{p} }{E}\\
+%&= \frac{1}{(2\pi)^3} \frac{1}{x} \intr{\intr{\frac{p\powe{-\i Et}}{E^2 - m^2 - p^2 + \i\epsilon} \powe{\i px} }{p} }{E}
+}
+\section{Standard Model Lagrangian}
+\subsection{The Higgs Sector of the Standard Model}
+We have $\mathcal{L}=\abs*{D_\mu\Phi(x)}^2 - V(\Phi)$ with $V(\Phi)=-\mu^2 |\Phi|^2 + \lambda |\Phi|^4$ and $\mu^2,\lambda > 0$.
+\example{Higgs Potential}{Vacuum Expectation Value}{
+The potential minimization condition is $V'=0$, or equivalently $\frac{\d V}{\d |\Phi|^2} = 0$.
+This gives $\mu^2 = 2\lambda |\Phi|^2$, or $|\Phi_\text{min}|^2 = \frac{\mu^2}{2\lambda}$.
+Note that $V_\text{min}=V(\Phi_\text{min}) = -\lambda |\Phi_\text{min}|^4$.
+}
+\example{Higgs doublet}{VEV}{
+Let $\bra*{\Phi(x)}_0 = \frac{1}{\sqrt{2}} \kla*{0, v}$.
+Then $Q_\text{em} = T^3 + Y$, where $Y=\frac{1}{2}$ and $T^3=+\frac{1}{2}$ for the upper and $T^3=-\frac{1}{2}$ for the lower component.
+Since only the lower component is non-zero, this is therefore invariant under the $U(1)_\text{em}$ symmetric transformation because $Q=0$ for the only non-zero entry.
+}
+\example{Higgs Potential}{Expand around minimum}{
+Writing $\Phi(x) = \kla*{\phi^+(x), \frac{v+h(x)}{\sqrt{2}} + \i \phi^0(x)}$ with a complex field $\phi^+$ and real fields $h,\phi^0$, all of which have vanishing VEV.
+We want to find the mass term for the physical Higgs boson field $h$.
+For that, we need to expand the Higgs potential,
+\begin{align}
+\Phi^\dagger\Phi &= \phi^+\phi^- + \frac{1}{2}(v+h)^2 + \kla*{\phi^0}^2 \equiv R + vh + \frac{1}{2}h^2,\\
+|\Phi|^4 &= R^2 + 2Rvh + Rh^2 + v^2h^2 + vh^3 + \frac{1}{4}h^4.
+\end{align}
+The Higgs mass corresponds to the coefficient of $h^2$, so $\frac{1}{2}M_h^2 = -\mu^2 \frac{1}{2} + \lambda\kla*{\bra{R}_0+v^2}$.
+Since $\bra*{R}_0=\frac{1}{2}v^2$, we find $M_h^2 = -\mu^2 + 3\lambda v^2 = 2\lambda v^2$ (since $\mu^2=\lambda v^2$).
+}
+\example{Higgs Gauge Fields}{Bilinear terms}{
+Define $W^\pm = \frac{1}{\sqrt{2}} \kla*{W^1 \mp \i W^2}$.
+Then we can write (we always omit the spcaetime index $\mu$ here)
+\begin{align}
+D\Phi &= \partial\Phi + \frac{\i g_2}{\sqrt{2}} \begin{pmatrix}
+0 & W^+ \\ W^- & 0
+\end{pmatrix}\Phi + \frac{\i}{2} \begin{pmatrix}
+g_W W^3 + g_Y B & 0 \\ 0 & -g_Y W^3 + g_Y B
+\end{pmatrix}\Phi \\
+&= \klb*{\partial + \frac{\i g_W}{\sqrt{2}} W + \frac{\i}{2} \kla*{\sigma^3 g_Y W^3 + g_YB}}\Phi.
+\end{align}
+The bilinear terms of $B$ and $W^3$ are
+\begin{align}
+|D\Phi|^2 &= \dots + \frac{v^2}{4} \kla*{g_W^2 \kla*{W^3}^2 + g_Y^2B^2 - 2g_Yg_W BW^3} \\
+&= \dots + \frac{v^2}{4}\begin{pmatrix}
+B & W^3
+\end{pmatrix} \begin{pmatrix}
+g_Y^2 & -g_Yg_W \\ -g_Yg_W & g_W^2
+\end{pmatrix} \begin{pmatrix}
+B \\ W^3
+\end{pmatrix} = \dots + \begin{pmatrix}
+B & W^3
+\end{pmatrix} \mathcal{M}^2 \begin{pmatrix}
+B \\ W^3
+\end{pmatrix}.
+\end{align}
+The mass eigenstates would have a diagonal matrix $\mathcal{M}^2$, so we can find the Weinberg angle by finding the right matrix such that
+\begin{align}
+\begin{pmatrix}
+A \\ Z
+\end{pmatrix} &= \begin{pmatrix}
+c_\theta & s_\theta \\ -s_\theta & c_\theta
+\end{pmatrix} \begin{pmatrix}
+B \\ W^3
+\end{pmatrix}.
+\end{align}
+As a preliminary, note that $M=\begin{psmallmatrix} a^2 & -ab \\ -ab & b^2 \end{psmallmatrix}$ can be written as $M=UDU^\dagger$ (real $a,b$) with
+\begin{align}
+D &= \begin{pmatrix}
+0 & 0 \\ 0 & a^2+b^2
+\end{pmatrix}, \qquad U &= \frac{1}{\sqrt{a^2+b^2}} \begin{pmatrix}
+b & -a \\ a & b
+\end{pmatrix}.
+\end{align}
+Thus, $c_\theta = \frac{g_W}{\sqrt{g_Y^2+g_W^2}}$ and $s_\theta = \frac{g_Y}{\sqrt{g_Y^2+g_W^2}}$, and $M_\gamma=0$ while $M_Z = \frac{v}{2}\sqrt{g_Y^2+g_W^2} = \frac{vg_W}{2c_\theta}$.
+}
+\example{Gauge Bosons}{Interaction vertices}{
+The interaction vertices come from the $\lambda\Phi^4$-term, which reads (omitting the factor of $\lambda$)
+\begin{align}
+\phi^-\phi^+\phi^-\phi^+ + \kla*{\phi^0}^4 + 2\kla*{\phi^0}^2 \phi^-\phi^+ + \kla*{\phi^0}^2h^2 + \phi^-\phi^+ h^2.
+\end{align}
+This gives
+\begin{align}
+\phi^-\phi^+ \rightarrow \phi^-\phi^+ &= 4\i\lambda,\\
+\phi^-\phi^+ \rightarrow \phi^0\phi^0 &= 4\i\lambda,\\
+\phi^-\phi^+ \rightarrow hh &= 2\i\lambda,\\
+\phi^0\phi^0 \rightarrow hh &= 4\i\lambda,\\
+\phi^0\phi^0 \rightarrow \phi^0\phi^0 &= 24\i\lambda.
+\end{align}
+The masses come from the $-\mu^2\Phi^2$-term and are $M_{\phi^\pm}^2 = \lambda v^2$ and $M_{\phi^0}^2 = 2\lambda v^2$.
+}
+\subsection{Fermion-Gauge Interactions}
+The Lagrangian for the fermion kinetic term reads
+\begin{align}
+\mathcal{L} &= \sum_{j=1}^3 \kla*{\bar{Q}_{Lj}\i\slashed{D}Q_{Lj} + \bar{L}_{Lj}\i\slashed{D}L_{Lj} + \bar{u}_{Rj}\i\slashed{D}u_{Rj} + \bar{d}_{Rj}\i\slashed{D}d_{Rj} + \bar{e}_{Rj}\i\slashed{D}e_{Rj}}.
+\end{align}
+\example{Covariant Derivatives}{}{
+The covariant derivatives are
+\begin{align}
+Q_L &:& D &= \partial + \i g_S T_a^s G^a + \i g_W T_aW^a + \i g_Y \frac{1}{6} B,\\
+u_R &:& D &= \partial + \i g_S T_a^s G^a + \i g_Y \frac{2}{3} B,\\
+d_R &:& D &= \partial + \i g_S T_a^s G^a + \i g_Y \frac{-1}{3} B,\\
+\Phi &:& D &= \partial + \i g_W T_aW^a + \i g_Y \frac{1}{2} B,\\
+L_L &:& D &= \partial + \i g_W T_aW^a + \i g_Y \frac{-1}{2} B,\\
+e_R &:& D &= \partial + \i g_Y (-1) B.
+\end{align}
+Note that the strong interaction mixes the colors, i.e. $Dd_{Rk} = \dots + \i g_S T_{a,kl}^s G^a d_{Rl}$ and so on.
+}
+\example{Muon Field}{}{
+The terms for the muon field are
+\begin{align}
+\mathcal{L} &= \bar{\mu}_{Rj}\i\slashed{D}\mu_{Rj} + \bar{L}_{Lj}\i\slashed{D}L_{Lj}\\
+&= \bar{\mu}_{Rj} \kla*{\i\slashed{\partial} + g_YB} \mu_{Rj} + \bar{L}_{Lj}\kla*{\i\slashed{\partial} - g_W T_a W^a + \frac{1}{2} g_YB } L_{Lj}.
+\end{align}
+Writing $e=g_Yc_\theta=g_Ws_\theta$ and $B=c_\theta A - s_\theta Z$ and $W^3 = c_\theta Z + s_\theta A$, we can then express this as (omitting some Feynman-slashes)
+\begin{align}
+\mathcal{L} &= \bar{\mu}_{Rj} \kla*{\i\slashed{\partial} + eA - g_Ys_\theta Z}\mu_{Rj} + \bar{L}_{Lj} \kla*{\i\slashed{\partial} + eA\begin{psmallmatrix}0&0\\0&1\end{psmallmatrix} + \frac{-1}{2} \kla*{g_Wc_\theta \sigma^3 + g_Ys_\theta}Z - \frac{g_W}{\sqrt{2}} W } L_{Lj}
+\end{align}
+with $W=\begin{psmallmatrix}0&W^+\\W^-&0\end{psmallmatrix}$.
+For convenience, we list a couple of trigonometric identities,
+\begin{align}
+g_Ys_\theta + g_Wc_\theta &= e\cot\theta + e \tan\theta  = e \cot\theta \kla*{1 + \tan^2\theta} = e\cot\theta\sec^2\theta \\
+&= e \frac{1}{\sin\theta\cos\theta} = e \frac{2}{\sin 2\theta} = \frac{g_W}{c_\theta} \equiv \kappa_+,\\
+g_Ys_\theta - g_Wc_\theta &= e\cot\theta \kla*{-1 + \tan^2\theta} = g_W \frac{g_W}{\sqrt{g_Y^2+g_W^2}} \frac{g_Y^2 - g_W^2}{g_W^2} \\
+&= \frac{g_Y^2 - g_W^2}{\sqrt{g_Y^2+g_W^2}} \equiv \kappa_-.
+\end{align}
+The Lagrangian contains the kinetic terms $\bar{\mu} \i\slashed{\partial} \mu + \bar{\nu}_L \i\slashed{\partial} \nu_L$ as well as the interaction terms
+\begin{align}
+\mathcal{L} &= e\bar{\mu} \slashed{A} \mu - g_Ys_\theta \bar{\mu} \slashed{Z}P_R \mu - \frac{\kappa_+}{2} \bar{\nu}_L \slashed{Z}\nu_L - \frac{\kappa_-}{2} \bar{\mu} \slashed{Z} P_L\mu - \frac{g_W}{\sqrt{2}} \bar{\nu} \slashed{W}^+ P_L\mu + \hc\\
+&= e\bar{\mu} \slashed{A} \mu - \frac{g_W}{2c_\theta} \bar{\nu}_L \slashed{Z}\nu_L - \frac{g_W}{2c_\theta} \bar{\mu} \slashed{Z} \mu - \frac{\kappa_-}{2} \bar{\mu} \slashed{Z} \gamma^5\mu + W^\pm
+\end{align}
+(note: something is wrong here, the $\kappa_-$-coefficient seems incorrect)
+}
+\subsection{Yukawa Interactions in the Standard Model}
+The Yukawa terms are
+\begin{align}
+\mathcal{L} &= -\bar{L}_L \Phi Y_l e_R - \bar{Q}_L\Phi Y_d d_R - \bar{Q}_L \tilde{\Phi} Y_u u_R + \hc
+\end{align}
+with $\tilde{\Phi}=\i\sigma^y \Phi^\ast$ and complex $3\times 3$-matrices $Y_{l,d,u}$.
+Introducing mass eigenstates $\hat{u}_{R/L} = V_{R/L}^u u_{R/L}$, $\hat{d}_{R/L} = V_{R/L}^d d_{R/L}$ gives the diagonal form
+\begin{align}
+\frac{v}{\sqrt{2}} V_L^d Y^d V_R^{d\dagger} &= \frac{v}{\sqrt{2}} \diag\kla*{y_d,y_s,y_b} = \diag\kla*{m_d,m_s,m_b},\\
+\frac{v}{\sqrt{2}} V_L^u Y^u V_R^{u\dagger} &= \frac{v}{\sqrt{2}} \diag\kla*{y_u,y_c,y_t} = \diag\kla*{m_u,m_c,m_t}.
+\end{align}
+(\dots)
+
 \end{document}
