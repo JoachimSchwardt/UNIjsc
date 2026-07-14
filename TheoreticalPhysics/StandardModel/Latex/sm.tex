@@ -589,7 +589,7 @@ The $n$ cancels with the $-1$ contributions from all the $(\alpha_j-1)$ terms, a
 It is crucial that $\sum x_jA_j > 0$ for all $x$, which relates to the requirement about the convex hull of the $A_j$.
 \section{Anomalous magnetic moment}
 One of the most famous results from the SM is the extremely accurate calculation of the anomalous magnetic moment $a_\mu=\frac{g-2}{2}$.
-Of course not only QED contributes to this calculation, but the leading order correction (and by far the largest contribution over all) is determined by it.
+Of course not only QED contributes to this calculation, but the leading order correction (and by far the largest contribution overall) is determined by it.
 The process involves the scattering $\gamma+\ell \rightarrow\bar{\ell}$, which can be shown to admit the general form
 \begin{align}
 -\i e \bar{u}(p') \klb*{\gamma^\mu F_1\kla*{q^2} + \frac{\i \sigma^{\mu\nu}}{2m} q_\nu F_2\kla*{q^2}}u(p),
@@ -685,14 +685,16 @@ The only terms proportional to $p^\mu$ and $p'^\mu$ are thus given by
 \begin{align}
 \frac{\i\mathcal{M}}{-e^3} &= \int 2\delta\kla*{1-x-y-z}\frac{4m p^\mu \kla*{y-xy-x^2} + 4m p'^\mu \kla*{x-xy-y^2}}{\klb*{\tilde{k}^2 - m^2\kla*{1-z}^2}^3} \\
 &= 8m\kla*{p^\mu+p'^\mu } \int \frac{(1-x-z)(1-x)-x^2}{\klb*{\tilde{k}^2 - m^2\kla*{1-z}^2}^3}\\
-&= 8m\kla*{p+p'}^\mu \int \frac{(-1)^3}{\Gamma(3)} \frac{\i}{16\pi^2} \frac{\Gamma(3-2)}{Q^{3-2}} \klc*{1-2x-z+xz}\\
-&= 8m\kla*{p+p'}^\mu \intx{0}{1}{ \frac{-\i}{32\pi^2} \frac{-z+\frac{1}{2}z}{m^2 (1-z)^2} }{z} = \frac{\i}{8m\pi^2} \kla*{p+p'}^\mu \intx{0}{1}{\frac{z}{(1-z)^2}}{z}
+&= 8m\kla*{p+p'}^\mu \intx{0}{1}{\intx{0}{1-z}{\frac{(-1)^3}{\Gamma(3)} \frac{\i}{16\pi^2} \frac{\Gamma(3-2)}{Q^{3-2}} \klc*{1-2x-z+xz} }{x}}{z} \\
+&= 8m\kla*{p+p'}^\mu \intx{0}{1}{ \frac{-\i}{32\pi^2} \frac{1-z - (1-z)^2 - z(1-z) + \frac{1}{2}(1-z)^2z}{m^2 (1-z)^2} }{z} \\
+&= \frac{\i}{4m\pi^2} \kla*{p+p'}^\mu \intx{0}{1}{\frac{1 - (1-z) - z + \frac{1}{2}z(1-z)}{1-z}}{z} \\
+&= \frac{\i}{4m\pi^2} \kla*{p+p'}^\mu \intx{0}{1}{\frac{z}{2}}{z} = \frac{\i}{16m\pi^2} \kla*{p+p'}^\mu.
 \end{align}
-We will come back to the divergent integral in a moment, but let us first note that the final result for our $a_\mu$-correction is
+Since $F_2(0) \kla*{p+p'}^\mu = -\frac{2m}{e} \mathcal{M}$, we finally get
 \begin{align}
-F_2(0) &= \frac{e^2}{4\pi^2} I = \frac{\alpha}{\pi} I.
+a_\mu &= F_2(0) = \frac{e^2}{8\pi^2} = \frac{\alpha}{2\pi}
 \end{align}
-(we are almost there, but I don't see any reasonable way to get $I=\frac{1}{2}$. Maybe this is one of the IR-divergences that Peter Marquard mentioned and that cancels? Or I am just missing some other trick)
+for the correction to $g-2$.
 \chapter{Exercises}
 \section{Introduction}
 \example{Lie-Hadamard Formula}{$\powe{A}B\powe{-A}$}{
