@@ -119,7 +119,8 @@ The linear combination $\theta_a T^a$ spans a vector-space with (finite) basis $
 \subsection{Properties}
 Normalization: we have $\tr\kla*{\klb*{T^a,T^b}}=0$ for all $a,b$ due to the cyclicity of the trace.
 Using the Lie-Algebra, this gives $f_{abc} \tr\kla*{T^c}=0$, and because this holds for all combinations, we can conclude $\tr\kla*{T^c}=0$ unless $f_{abc}\equiv 0$ (e.g. for an Abelian group).
-\note{One can show that $\tr\kla*{T^aT^b}=\lambda \delta_{ab}$ for some fixed constant $\lambda$, and by convention generators are normalized such that $\lambda=\frac{1}{2}$.
+\note{One can assume that $\tr\kla*{T^aT^b}=\lambda \delta_{ab}$ for some fixed constant $\lambda$, and by convention generators are normalized such that $\lambda=\frac{1}{2}$.
+This follows from using a properly normalized orthogonal basis (for an arbitrary basis, the trace is generally not diagonal; but it is always possible to orthogonalize any chosen set of basis elements).
 }
 \subsection{Examples}
 Some compact simple Lie-Groups are $SU(N)$ or $SO(N)$.
@@ -173,7 +174,7 @@ The equations of motion are $\partial_\mu F^{\mu\nu}=J^\nu$ (\textsc{Maxwell}) a
 \section{Quantum Electrodynamics}
 Introduce the \textsc{Dirac}-equation $\kla*{\i \slashed{\partial} - m}\psi=0$ with the  \textsc{Dirac}-matrices $\gamma^\mu$ with $\klc*{\gamma^\mu,\gamma^\nu } = 2g^{\mu\nu}$, $\slashed{A} = \gamma^\mu A_\mu$ and $\kla*{\gamma^\mu }^\dagger = \gamma^0 \gamma^\mu \gamma^0 = (\gamma^0, -\bm{\gamma}$).
 The usual representation is $\gamma^\mu = \begin{psmallmatrix} 0 & \sigma_\mu \\ \sigma_\mu & 0 \end{psmallmatrix}$ for $\mu=0,1,2,3$.
-One also defines $\gamma^5=\i\gamma^0\gamma^1\gamma^2\gamma^3$ with $\klb*{\gamma^5,\gamma^\mu }=0$, $\kla*{\gamma^5}^\dagger = \gamma^5$ and $\klc*{\gamma^5, S_{\mu\nu}}=0$, where
+One also defines $\gamma^5=\i\gamma^0\gamma^1\gamma^2\gamma^3$ with $\klc*{\gamma^5,\gamma^\mu }=0$, $\kla*{\gamma^5}^\dagger = \gamma^5$ and $\klb*{\gamma^5, S_{\mu\nu}}=0$, where
 \begin{align}
 S_{\mu\nu} &= \frac{\i}{4} \klb*{\gamma_\mu,\gamma_\nu }.
 \end{align}
@@ -218,7 +219,7 @@ Using $U=1 - \i \theta$, we find
 \begin{align}
 A'^\mu &= A^\mu - \i \theta A^\mu + \i A^\mu \theta + \frac{1}{g} \partial^\mu \theta = A^\mu_a \kla*{T^a - \i \theta_b \klb*{T^b,T^a}} + \frac{1}{g}\partial^\mu \theta_a T^a,
 \end{align}
-so $A'^\mu_a = A^\mu_a + \theta_b A^\mu_c f_{bca} T^a + \frac{1}{g} \partial^\mu \theta_a$ (or with $f_{abc}$).
+so $A'^\mu_a = A^\mu_a + \theta_b A^\mu_c f_{bca} + \frac{1}{g} \partial^\mu \theta_a$ (or with $f_{abc}$).
 The general field-strength tensors
 \begin{align}
 F^{\mu\nu} &= \frac{1}{\i g} \klb*{D^\mu,D^\nu} = \partial^\mu A^\nu - \partial^\nu A^\mu +\i g \klb*{A^\mu,A^\nu }
